@@ -1,0 +1,3 @@
+﻿ReinforceID,ReinforceCosts,ReinforceStats,ReinforceRates,,,,,,,
+강화 아이디,A->B레벨 비용,A->B레벨 증가량,A->B레벨 확률,,,,,,,
+Int,Int_Arr,Int_Arr,Int_Arr,,,,,,,

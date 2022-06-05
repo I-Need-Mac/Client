@@ -14,20 +14,24 @@ public class DebugManager
         }
     }
 
-    public void PrintDebug(Object target) {
+    public void PrintDebug(object target) {
         if (printDebug)
             Debug.Log(target);
         
     }
-    public void PrintDebug(Object target, Object value)
+    public void PrintDebug(object target, object value)
     {
         if (printDebug)
             Debug.Log(target+" : "+value);
 
     }
+    public void PrintDebug(string target)
+    {
+        if (printDebug)
+            Debug.Log(target);
 
 
 
-
-
+    }
+   
 }

@@ -104,7 +104,8 @@ public partial class WebRequestManager
 
 
 
-    public async Task<object> Get(string url, Dictionary<string, string> data = null)
+
+    public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
     {
         using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{url}?{GetStringForm(data)}"))
         {
@@ -119,11 +120,13 @@ public partial class WebRequestManager
                     await Task.Yield();
             }
             Debug.Log(request.result);
+            var jsonString = request.downloadHandler.text;
+            var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
 
-            return request.downloadHandler.data;
+            return dataObj;
 
         }
 
@@ -134,7 +137,7 @@ public partial class WebRequestManager
     }
 
 
-    public async Task<object> Post(string url, Dictionary<string, string> data)
+    public async Task<object> Post<T>(string url, Dictionary<string, string> data)
     {
         using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}/{url}", GetWWWForm(data)))
         {
@@ -148,13 +151,14 @@ public partial class WebRequestManager
                 else
                     await Task.Yield();
             }
-
+            var jsonString = request.downloadHandler.text;
+            var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
             Debug.Log(request.result);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
 
-            return request.downloadHandler.data;
+            return dataObj;
 
         }
 
@@ -163,26 +167,20 @@ public partial class WebRequestManager
         return default;
 
     }
-    public WWWForm Parameter_Login(string steamID)
+
+
+    public async Task<RECIEVE_LOGIN> RequestLogin(string ID)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("userID", steamID);
-        return form;
+
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data.Add("ID", "test data");
+        return (RECIEVE_LOGIN)await Post<RECIEVE_LOGIN>(APIAdressManager.REQUEST_LOGIN, data);
     }
 
 
-
-
-
-
-    public WWWForm Parameter_user(string name, string nickName)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("code", "");
-        form.AddField("name", name);
-        form.AddField("nickName", nickName);
-        return form;
-    }
 }
 
-
+public class RECIEVE_LOGIN
+{
+    public string ID;
+}

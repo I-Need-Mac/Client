@@ -10,22 +10,21 @@ public class GameSetter : MonoBehaviour
     // Start is called before the first frame update
     protected async void Start()  
     {
-   
-        SettingManager.Instance.ReadSettingFile(); //게임 설정 파일 로드
+
+        SettingManager.Instance.ReadSettingFile();
 
         //WebRequestManager.Instance.ReceiveEventHandlerEvent += Instance_ReceiveEventHandlerEvent;
         //PostData_User();
         Dictionary<string, string> data = new Dictionary<string, string>();
         data.Add("title", "test data");
-        Debug.Log( await WebRequestManager.Instance.Get("",data));
+        RECIEVE_LOGIN t = await WebRequestManager.Instance.RequestLogin("");
+        t.ID = "";
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-
-
 }

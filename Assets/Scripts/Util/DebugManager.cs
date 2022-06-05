@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DebugManager 
 {
-    private bool printDebug = true;
+    private const bool printDebug = true;
     private static DebugManager _instance { get; set; }
     public static DebugManager Instance
     {

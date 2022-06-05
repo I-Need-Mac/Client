@@ -18,9 +18,8 @@ public class SettingManager
         }
     }
 
-    private FileStream settingFile = new FileStream("./setting.txt", FileMode.Open);
-
-
+    private FileStream settingFileR;
+    private FileStream settingFileW;
     private static SettingManager _instance { get; set; }
     public static SettingManager Instance
     {
@@ -31,10 +30,29 @@ public class SettingManager
         }
     }
 
+    public void WriteSettingFile() {
+        settingFileW = new FileStream("./setting.txt", FileMode.Create);
+        StreamWriter sw = new StreamWriter(settingFileW);
+        DebugManager.Instance.PrintDrawLine();
+        DebugManager.Instance.PrintDebug("셋팅 파일 저장");
+        foreach (KeyValuePair<string, int> item in settings)
+        {
+            sw.Write(item.Key + "=" + item.Value+"\n");
+            DebugManager.Instance.PrintDebug("셋팅 파일 작성", item.Key+" : "+item.Value);
+        }
+        sw.Close();
+        DebugManager.Instance.PrintDebug("셋팅 파일 저장 종료");
+        DebugManager.Instance.PrintDrawLine();
+    }
+
+
     public void ReadSettingFile() {
-        StreamReader sr = new StreamReader(settingFile);              
+        settingFileR = new FileStream("./setting.txt", FileMode.Open);
+        StreamReader sr = new StreamReader(settingFileR);
 
-
+        DebugManager.Instance.PrintDrawLine();
+        DebugManager.Instance.PrintDebug("셋팅 파일 로드");
+        
         string source = sr.ReadLine();       
         string [] values;
         while (source != null)
@@ -48,14 +66,39 @@ public class SettingManager
             source = sr.ReadLine();    // 한줄 읽는다.        
         }
         sr.Close();
+
+        foreach(KeyValuePair<string,int> item in settings)
+        {
+            DebugManager.Instance.PrintDebug(item.Key,item.Value);
+        }
+
+        DebugManager.Instance.PrintDebug("셋팅 파일 로드 완료");
+        DebugManager.Instance.PrintDrawLine();
     }
 
-    public int GetSettingValue(String target) { 
+
+    public int GetSettingValue(string target) { 
         if(settings.TryGetValue(target, out int value)){
+            DebugManager.Instance.PrintDrawLine();
+            DebugManager.Instance.PrintDebug("Setting 파일 값 호출", target + " : " + value);
+            DebugManager.Instance.PrintDrawLine();
             return value;
         }
         return -1;
         
     }
-        
+    public bool SetSettingValue(string target, int value)
+    {
+        if (settings[target]!= null)
+        {
+            settings[target] = value;
+            DebugManager.Instance.PrintDrawLine();
+            DebugManager.Instance.PrintDebug("Setting 파일 값 세팅", target + " : " + value);
+            DebugManager.Instance.PrintDrawLine();
+            return true;
+        }
+        return false;
+
+    }
+
 }

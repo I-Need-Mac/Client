@@ -11,7 +11,10 @@ public class SteamTest : MonoBehaviour
         if (!SteamManager.Initialized) { return;}
         string name = SteamFriends.GetPersonaName();
 
-        Debug.Log(name);
+        SettingManager.Instance.ReadSettingFile();
+        SettingManager.Instance.GetSettingValue("test");
+        SettingManager.Instance.SetSettingValue("test",5);
+        SettingManager.Instance.WriteSettingFile();
     }
 
     // Update is called once per frame

@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class DebugManager 
 {
-    private const bool printDebug = true;
+    private const bool _isPrintDebug = true;
+    public  bool isPrintDebug
+    {
+        get {
+            return _isPrintDebug;
+        }
+    }
     private static DebugManager _instance { get; set; }
     public static DebugManager Instance
     {
@@ -15,19 +21,19 @@ public class DebugManager
     }
 
     public void PrintDebug(object target) {
-        if (printDebug)
+        if (isPrintDebug)
             Debug.Log(target);
         
     }
     public void PrintDebug(object target, object value)
     {
-        if (printDebug)
+        if (isPrintDebug)
             Debug.Log(target+" : "+value);
 
     }
     public void PrintDebug(string target)
     {
-        if (printDebug)
+        if (isPrintDebug)
             Debug.Log(target);
 
 
@@ -36,7 +42,7 @@ public class DebugManager
 
     public void PrintDrawLine()
     {
-        if (printDebug)
+        if (isPrintDebug)
             Debug.Log("------------------------------------------------------------------");
     }
 

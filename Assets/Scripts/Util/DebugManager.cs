@@ -33,5 +33,11 @@ public class DebugManager
 
 
     }
-   
+
+    public void PrintDrawLine()
+    {
+        if (printDebug)
+            Debug.Log("------------------------------------------------------------------");
+    }
+
 }

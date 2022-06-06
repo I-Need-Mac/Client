@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public partial class WebRequestManager
+public partial class WebRequestManager : SingleTon<WebRequestManager>
 {
     #region ResponseCode
     public enum EResponse
@@ -43,14 +43,7 @@ public partial class WebRequestManager
 
     public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
     //Singleton을 활용하여 1개의 인스턴스 유지 및 접근 효율성 증가
-    private static WebRequestManager _instance { get; set; }
-    public static WebRequestManager Instance
-    {
-        get
-        {
-            return _instance ?? (_instance = new WebRequestManager());
-        }
-    }
+
     public bool IsConnectInternet()
     {
 
@@ -90,7 +83,6 @@ public partial class WebRequestManager
 
     private string GetStringForm(Dictionary<string, string> forms)
     {
-  
         string form = "";
 
         foreach (KeyValuePair<string, string> value in forms)
@@ -99,7 +91,6 @@ public partial class WebRequestManager
         }
 
         return form = form.Substring(0, form.Length - 1);
-        
     }
 
 
@@ -109,13 +100,10 @@ public partial class WebRequestManager
 
     public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
     {
-        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}{url}?{GetStringForm(data)}"))
+        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{url}?{GetStringForm(data)}"))
         {
             float timeout = 0f;
             request.SendWebRequest();
-
-
-            Debug.Log($"{WEBSERVICE_HOST}{url}?{GetStringForm(data)}");
             while (!request.isDone)
             {
                 timeout += Time.deltaTime;
@@ -127,7 +115,7 @@ public partial class WebRequestManager
             Debug.Log(request.result);
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
-            Debug.Log(dataObj);
+
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
 
@@ -136,38 +124,6 @@ public partial class WebRequestManager
         }
 
 
-
-        return default;
-
-    }
-
-    public async Task<object> Get<T>(string url)
-    {
-        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}{url}"))
-        {
-            float timeout = 0f;
-            request.SendWebRequest();
-
-
-            Debug.Log($"{WEBSERVICE_HOST}{url}");
-            while (!request.isDone)
-            {
-                timeout += Time.deltaTime;
-                if (timeout > TIMEOUT)
-                    return default;
-                else
-                    await Task.Yield();
-            }
-            Debug.Log(request.downloadHandler.text);
-            var jsonString = request.downloadHandler.text;
-            var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
-           // Debug.Log(dataObj);
-            if (request.result != UnityWebRequest.Result.Success)
-                Debug.LogError($"Failed: {request.error}");
-            Debug.Log(dataObj);
-            return dataObj;
-
-        }
 
         return default;
 
@@ -176,10 +132,11 @@ public partial class WebRequestManager
 
     public async Task<object> Post<T>(string url, Dictionary<string, string> data)
     {
-        using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}{url}", GetWWWForm(data)))
+        using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}/{url}", GetWWWForm(data)))
         {
             float timeout = 0f;
             request.SendWebRequest();
+            Debug.Log("Send2");
             while (!request.isDone)
             {
                 timeout += Time.deltaTime;
@@ -208,15 +165,16 @@ public partial class WebRequestManager
 
     public async Task<RECIEVE_LOGIN> RequestLogin(string ID)
     {
+
         Dictionary<string, string> data = new Dictionary<string, string>();
         data.Add("ID", "test data");
+
+        Debug.Log("Send1");
+
         return (RECIEVE_LOGIN)await Post<RECIEVE_LOGIN>(APIAdressManager.REQUEST_LOGIN, data);
     }
 
-    public async Task<object> RequestGetTest()
-    {
-        return await Get<object>(APIAdressManager.REQUEST_GETTEST);
-    }
+
 }
 
 public class RECIEVE_LOGIN

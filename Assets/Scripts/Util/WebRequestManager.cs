@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public partial class WebRequestManager
+public partial class WebRequestManager : SingleTon<WebRequestManager>
 {
     #region ResponseCode
     public enum EResponse
@@ -43,14 +43,7 @@ public partial class WebRequestManager
 
     public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
     //Singleton을 활용하여 1개의 인스턴스 유지 및 접근 효율성 증가
-    private static WebRequestManager _instance { get; set; }
-    public static WebRequestManager Instance
-    {
-        get
-        {
-            return _instance ?? (_instance = new WebRequestManager());
-        }
-    }
+
     public bool IsConnectInternet()
     {
 
@@ -114,7 +107,7 @@ public partial class WebRequestManager
             while (!request.isDone)
             {
                 timeout += Time.deltaTime;
-                if (timeout < TIMEOUT)
+                if (timeout > TIMEOUT)
                     return default;
                 else
                     await Task.Yield();
@@ -143,10 +136,11 @@ public partial class WebRequestManager
         {
             float timeout = 0f;
             request.SendWebRequest();
+            Debug.Log("Send2");
             while (!request.isDone)
             {
                 timeout += Time.deltaTime;
-                if (timeout < TIMEOUT)
+                if (timeout > TIMEOUT)
                     return default;
                 else
                     await Task.Yield();
@@ -174,6 +168,9 @@ public partial class WebRequestManager
 
         Dictionary<string, string> data = new Dictionary<string, string>();
         data.Add("ID", "test data");
+
+        Debug.Log("Send1");
+
         return (RECIEVE_LOGIN)await Post<RECIEVE_LOGIN>(APIAdressManager.REQUEST_LOGIN, data);
     }
 

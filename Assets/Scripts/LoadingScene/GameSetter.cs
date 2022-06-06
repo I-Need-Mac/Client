@@ -17,8 +17,9 @@ public class GameSetter : MonoBehaviour
         //PostData_User();
         Dictionary<string, string> data = new Dictionary<string, string>();
         data.Add("title", "test data");
-        RECIEVE_LOGIN t = await WebRequestManager.Instance.RequestLogin("");
-        t.ID = "";
+       // RECIEVE_LOGIN t = await WebRequestManager.Instance.RequestLogin("");
+       // t.ID = "";
+       Debug.Log(await WebRequestManager.Instance.RequestGetTest());
 
     }
 

@@ -4,7 +4,7 @@ public class SingleTon<T> where T : new()
     private static readonly object _lock = new object();
     private static T m_gInstance = default(T);
 
-    public static T GetInstance
+    public static T Instance
     {
         get
         {

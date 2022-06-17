@@ -15,11 +15,13 @@ public class GameSetter : MonoBehaviour
 
         //WebRequestManager.Instance.ReceiveEventHandlerEvent += Instance_ReceiveEventHandlerEvent;
         //PostData_User();
-        Dictionary<string, string> data = new Dictionary<string, string>();
-        data.Add("title", "test data");
+       // Dictionary<string, string> data = new Dictionary<string, string>();
+       // data.Add("title", "test data");
        // RECIEVE_LOGIN t = await WebRequestManager.Instance.RequestLogin("");
        // t.ID = "";
-       Debug.Log(await WebRequestManager.Instance.RequestLogin(""));
+      // Debug.Log(await WebRequestManager.Instance.RequestLogin(""));
+        Debug.Log(LocalizeManager.Instance.GetText("test"));
+
 
     }
 

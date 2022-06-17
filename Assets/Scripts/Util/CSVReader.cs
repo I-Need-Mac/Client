@@ -9,6 +9,7 @@ public class CSVReader
 	static string SPLIT_RE = @",(?=(?:[^""]*""[^""]*"")*(?![^""]*""))";
 	static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
 	static char[] TRIM_CHARS = { '\"' };
+    const string TABLE_HOME = "Table/";
 
 	public static List<Dictionary<string, object>> Read(string file)
 	{
@@ -98,6 +99,43 @@ public class CSVReader
             }
 
             dataDic.Add(int.Parse(val[0]), _dataList);
+        }
+
+        return dataDic;
+    }
+
+    public static Dictionary<string, Dictionary<string,object>> IDRead(string file)
+    {
+        TextAsset data = Resources.Load(TABLE_HOME+file) as TextAsset;
+
+        if (data == null)
+        {
+            Debug.LogErrorFormat("[Read] {0} 파일을 찾을 수 없습니다.", TABLE_HOME + file);
+            return null;
+        }
+
+        var lines = Regex.Split(data.text, LINE_SPLIT_RE);
+
+        if (lines.Length <= 3)
+        {
+            Debug.LogErrorFormat("[Read] 해당 파일의 내용이 부족합니다.");
+            return null;
+        }
+
+        Dictionary<string, Dictionary<string, object>> dataDic = new Dictionary<string, Dictionary<string, object>>();
+        string[] h = Regex.Split(lines[0], SPLIT_RE);
+
+        for (int i = 3; i < lines.Length; i++)
+        {
+            string[] val = Regex.Split(lines[i], SPLIT_RE);
+
+            Dictionary<string, object> _dataList = new Dictionary<string, object>();
+            for (int j = 1; j < val.Length; j++)
+            {
+                _dataList.Add(h[j],val[j]);
+            }
+
+            dataDic.Add(val[0], _dataList);
         }
 
         return dataDic;

@@ -1,105 +1,183 @@
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
-public class WebRequestManager
+public partial class WebRequestManager : SingleTon<WebRequestManager>
 {
-    public delegate void ReceiveEventHandler(object obj);
-    public event ReceiveEventHandler ReceiveEventHandlerEvent;
-    public string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080/";
+    #region ResponseCode
+    public enum EResponse
+    {
+        eSuccess = 200,
+        eNotFount = 404,
+        eQueryError = 500,
+    }
 
+    #endregion
+
+
+    private bool isPostUsing = false;
+    private Queue<int> postQueue = new Queue<int>();
+
+    /// <summary>
+    /// API 종료 여부
+    /// </summary>
+    private bool isAPIFinished = false;
+
+    /// <summary>
+    /// API 수신 성공 여부
+    /// </summary>
+    private bool isSuccessApiReceived = false;
+
+    /// <summary>
+    /// 타임아웃
+    /// </summary>
+    const float TIMEOUT = 3.0f;
+
+
+    public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
     //Singleton을 활용하여 1개의 인스턴스 유지 및 접근 효율성 증가
-    private static WebRequestManager _instance { get; set; }
-    public static WebRequestManager Instance
+
+    public bool IsConnectInternet()
     {
-        get
+
+        if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            return _instance ?? (_instance = new WebRequestManager());
+            DebugManager.Instance.PrintDebug("인터넷 끊힘");
+            return false;
         }
+        else return true;
+    }
+    /// <summary>
+    /// Byte[] 형을 String 형으로 캐스팅 합니다.
+    /// </summary>
+    /// <param name="strByte"></param>
+    /// <returns></returns>
+    private string ByteToString(byte[] strByte)
+    {
+        return Encoding.Default.GetString(strByte);
     }
 
-    //Get 함수 제네릭 타입을 활용하여 다양한 타입 리턴값 대응
-    public IEnumerator Get<T>(string uri, string prameter = "")
-    {
-        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{uri}/{prameter}"))
-        {
-            yield return request.SendWebRequest();
-            try
-            {
-                var jsonString = request.downloadHandler.text;
-
-                //json 객체로 변환
-                var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
-
-                //이벤트로 데이터를 보낸다.이벤트 등록한곳에서 받을 수 있게
-                ReceiveEventHandlerEvent(dataObj);
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-    }
-
-    public IEnumerator Get<T>(string uri, WWWForm parameter)
-    {
-        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{uri}/{parameter.data}"))
-        {
-            yield return request.SendWebRequest();
-            try
-            {
-                var jsonString = request.downloadHandler.text;
-
-                //json 객체로 변환
-                var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
-
-                //이벤트로 데이터를 보낸다.이벤트 등록한곳에서 받을 수 있게
-                ReceiveEventHandlerEvent(dataObj);
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-    }
-
-    public IEnumerator Post(string uri, WWWForm parameter)
-    {
-        using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}/{uri}", parameter))
-        {
-            yield return request.SendWebRequest();
-            Debug.Log(request.result);
-        }
-    }
-
-    //Post 함수 Json객체를 활용하여 파라미터를 내보낸다
-    //핵심은 json 파싱하여 객체로 보내면 json 형식이 깨져버려서 반드시 byte로 변환 후 보내야한다.
-    //   request.uploadHandler와  request.SetRequestHeader이 핵심이다
-    public IEnumerator Post(string uri, string parameter)
-    {
-        using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}/{uri}", parameter))
-        {
-            byte[] jsonToSend = new UTF8Encoding().GetBytes(parameter);
-            request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-            request.SetRequestHeader("Content-Type", "application/json");
-            yield return request.SendWebRequest();
-            Debug.Log(request.result);
-        }
-    }
-
-
-    public WWWForm Parameter_point(string point, string userCode, string itemCode)
+    /// <summary>
+    /// Dictionary를 WWWForm으로 옮겨 WWWForm을 반환합니다.
+    /// </summary>
+    /// <param name="forms">[Dictionary : Map]</param>
+    /// <returns></returns>
+    private WWWForm GetWWWForm(Dictionary<string, string> forms)
     {
         WWWForm form = new WWWForm();
-        form.AddField("userCode", userCode);
-        form.AddField("point", point);
-        form.AddField("itemCode", itemCode);
+
+        foreach (KeyValuePair<string, string> value in forms)
+        {
+            form.AddField(value.Key, value.Value);
+        }
+
         return form;
     }
+
+    private string GetStringForm(Dictionary<string, string> forms)
+    {
+        string form = "";
+
+        foreach (KeyValuePair<string, string> value in forms)
+        {
+            form += (value.Key + "=" + value.Value + "&");
+        }
+
+        return form = form.Substring(0, form.Length - 1);
+    }
+
+
+
+
+
+
+    public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{url}?{GetStringForm(data)}"))
+        {
+            float timeout = 0f;
+            request.SendWebRequest();
+            while (!request.isDone)
+            {
+                timeout += Time.deltaTime;
+                if (timeout > TIMEOUT)
+                    return default;
+                else
+                    await Task.Yield();
+            }
+            Debug.Log(request.result);
+            var jsonString = request.downloadHandler.text;
+            var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
+
+            if (request.result != UnityWebRequest.Result.Success)
+                Debug.LogError($"Failed: {request.error}");
+
+            return dataObj;
+
+        }
+
+
+
+        return default;
+
+    }
+
+
+    public async Task<object> Post<T>(string url, Dictionary<string, string> data)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}/{url}", GetWWWForm(data)))
+        {
+            float timeout = 0f;
+            request.SendWebRequest();
+            Debug.Log("Send2");
+            while (!request.isDone)
+            {
+                timeout += Time.deltaTime;
+                if (timeout > TIMEOUT)
+                    return default;
+                else
+                    await Task.Yield();
+            }
+            var jsonString = request.downloadHandler.text;
+            var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
+            Debug.Log(request.result);
+
+            if (request.result != UnityWebRequest.Result.Success)
+                Debug.LogError($"Failed: {request.error}");
+
+            return dataObj;
+
+        }
+
+
+
+        return default;
+
+    }
+
+
+    public async Task<RECIEVE_LOGIN> RequestLogin(string ID)
+    {
+
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data.Add("ID", "test data");
+
+        Debug.Log("Send1");
+
+        return (RECIEVE_LOGIN)await Post<RECIEVE_LOGIN>(APIAdressManager.REQUEST_LOGIN, data);
+    }
+
+
 }
 
-
+public class RECIEVE_LOGIN
+{
+    public string ID;
+}

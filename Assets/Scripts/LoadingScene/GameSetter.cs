@@ -12,7 +12,7 @@ public class GameSetter : MonoBehaviour
     {
 
         SettingManager.Instance.ReadSettingFile();
-
+        SoundManager.Instance.CreateSoundManager();
         //WebRequestManager.Instance.ReceiveEventHandlerEvent += Instance_ReceiveEventHandlerEvent;
         //PostData_User();
        // Dictionary<string, string> data = new Dictionary<string, string>();

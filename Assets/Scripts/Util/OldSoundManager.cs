@@ -8,7 +8,7 @@ public enum AudioSource_Kind
         , eVoice, eBGM, eNull
 }
 
-public class SoundManager : MonoBehaviour
+public class OldSoundManager : MonoBehaviour
 {
     [SerializeField]
     private AudioSource[] m_arrEffectAudioSource = new AudioSource[(int)AudioSource_Kind.eNull];

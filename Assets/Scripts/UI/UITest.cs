@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // UI테스트용
-public class UITest : MonoBehaviour
+public class UITest : UIPage
 {
-    // Start is called before the first frame update
+    enum Buttons
+    {
+
+    }
+
+    enum Images
+    {
+
+    }
+
     void Start()
     {
-        
+        UIManager.Instance.Init();
     }
 }

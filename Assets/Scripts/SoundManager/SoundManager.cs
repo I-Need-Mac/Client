@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SoundManager : SingleTon<SoundManager>
@@ -7,6 +8,8 @@ public class SoundManager : SingleTon<SoundManager>
     Dictionary<string, AudioClip> audioClipsList = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioSource> audioSourceList = null;
 
+    private const float soundNomalizer = 10.0f;
+    private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
 
     public void CreateSoundManager()
     {
@@ -16,8 +19,8 @@ public class SoundManager : SingleTon<SoundManager>
             return;
         }
         audioSourceList = new Dictionary<string, AudioSource>();
-      
-        
+
+
 
         GameObject gameManager = GameObject.Find("SoundManager");
         {
@@ -26,59 +29,78 @@ public class SoundManager : SingleTon<SoundManager>
         }
         GameObject.DontDestroyOnLoad(gameManager);
 
-        audioSourceList.Add("BASE_ONE",gameManager.AddComponent<AudioSource>());
-        audioSourceList.Add("BASE_LOOP",gameManager.AddComponent<AudioSource>());
-
-        audioSourceList["BASE_ONE"].loop = false;
-        audioSourceList["BASE_LOOP"].loop = true;
-
+        GameObject bgmRequester = GameObject.Find("BGMRequester");
+        if (bgmRequester != null)
+        {
+            DebugManager.Instance.PrintDebug("찾음");
+            (bgmRequester.gameObject.GetComponent<SoundRequesterBGM>()).RequestShootSound();
+        }
+        else
+        {
+            DebugManager.Instance.PrintDebug("응 없어");
+        }
     }
 
-    public void AddAudioClip(string audioKey, AudioClip audioClip)
+    public bool AddAudioClip(string audioKey, AudioClip audioClip)
     {
         DebugManager.Instance.PrintDebug(audioClip != null, "Invalid AudioClip! AudioKey= " + audioKey.ToString());
 
         if (audioClipsList.ContainsKey(audioKey) == true)
         {
             DebugManager.Instance.PrintDebug("Already Registed AudioClip! AudioKey= " + audioKey.ToString());
-            return;
+            return false;
         }
         audioClipsList.Add(audioKey, audioClip);
 
-       
+        return true;
+
     }
 
-    public void AddAudioSource(string audioSourceKey,  bool isLoop)
+    public bool AddAudioSource(string audioSourceKey, bool isLoop, AudioSourceSetter audioSetting)
     {
         GameObject gameManager = GameObject.Find("SoundManager");
-        {
-            gameManager = new GameObject("SoundManager");
-            DebugManager.Instance.PrintDebug(gameManager != null, "Can not create new SoundManager GameeObject");
-        }
-        GameObject.DontDestroyOnLoad(gameManager);
 
-        DebugManager.Instance.PrintDebug( "Invalid AudioSource AudioSourceKey= " + audioSourceKey);
 
-        if (audioClipsList.ContainsKey(audioSourceKey) == true)
+        if (audioSourceList.ContainsKey(audioSourceKey) == true)
         {
             DebugManager.Instance.PrintDebug("Already Registed AudioSource! AudioSource= " + audioSourceKey);
-            return;
         }
+        else
+        {
 
+            audioSourceList.Add(audioSourceKey, gameManager.AddComponent<AudioSource>());
+            audioSourceList[audioSourceKey].loop = isLoop;
+            audioSourceList[audioSourceKey].volume = SettingManager.Instance.GetSettingValue(audioSetting.audioType) / soundNomalizer;
 
-        audioSourceList.Add(audioSourceKey, gameManager.AddComponent<AudioSource>());
-        audioSourceList[audioSourceKey].loop = isLoop;
-      
+            audioSourceList[audioSourceKey].bypassEffects = audioSetting.isBypassEffects;
+            audioSourceList[audioSourceKey].priority = audioSetting.priority;
+            audioSourceList[audioSourceKey].pitch = audioSetting.pitch;
+            audioSourceList[audioSourceKey].panStereo = audioSetting.streoPan;
+            audioSourceList[audioSourceKey].outputAudioMixerGroup = audioSetting.audioMixerGroup;
 
+            return true;
+        }
+        return false;
     }
-    public void SetAudioSound(int soundVol, string audioSourceKey) {
+
+
+    public void SetAudioSound(int soundVol, string audioSourceKey)
+    {
         if (audioClipsList.ContainsKey(audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist AudioSource! AudioSource= " + audioSourceKey);
             return;
         }
 
-        audioSourceList[audioSourceKey].volume = soundVol;
+        audioSourceList[audioSourceKey].volume = soundVol / soundNomalizer;
+    }
+
+    public void SetAllAudioSound(int soundVol)
+    {
+        foreach (KeyValuePair<string, AudioSource> items in audioSourceList)
+        {
+            audioSourceList[items.Key].volume = soundVol / soundNomalizer;
+        }
     }
 
 
@@ -89,22 +111,28 @@ public class SoundManager : SingleTon<SoundManager>
             DebugManager.Instance.PrintDebug("Not exist AudioClip! AudioKey= " + audioKey);
             return;
         }
+        if (audioSourceList.ContainsKey(audioSourceKey) == false)
+        {
+            DebugManager.Instance.PrintDebug("Not exist audioSourceKey! audioSourceKey= " + audioSourceKey);
+            return;
+        }
 
-    
+
         DebugManager.Instance.PrintDebug("Shoot Sound with AudioSourceKey= " + audioSourceKey);
         DebugManager.Instance.PrintDebug("Shoot Sound with AudioKey= " + audioKey);
 
-        if (audioSourceList[audioSourceKey].loop)
-        {
 
-            audioSourceList[audioSourceKey].Stop();
-            audioSourceList[audioSourceKey].clip = audioClipsList[audioKey];
-            audioSourceList[audioSourceKey].Play();
-        }
-        else
-        {
+        audioSourceList[audioSourceKey].Stop();
+        audioSourceList[audioSourceKey].clip = audioClipsList[audioKey];
+        audioSourceList[audioSourceKey].Play();
 
-            audioSourceList[audioSourceKey].PlayOneShot(audioClipsList[audioKey]);
-        }
+
+
+    }
+
+
+    public List<string> GetAudioSourceID()
+    {
+        return audioSourceList.Keys.ToList();
     }
 }

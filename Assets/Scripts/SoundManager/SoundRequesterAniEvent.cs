@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundRequesterAniEvent : MonoBehaviour
+public class SoundRequesterAniEvent : SoundRequester
 {
     // Start is called before the first frame update
-    void Start()
+    public void AniEvent()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        RequestShootSound();
     }
 }

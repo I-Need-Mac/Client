@@ -17,29 +17,33 @@ using UnityEngine;
  */
 
 // UI를 관리 합니다.
-public class UIManager : SingletonBehaviour<UIManager>
+public class UIManager : MonoSingleton<UIManager>
 {
     // UI프리팹 저장 경로
-    const string UiPrefabsPath = "Prefabs";
-    const string UiSceneRoot = "@UI_Scene_Root";
+    const string UiPrefabsPath = "Prefabs/UI";
+    const string UiPageRoot = "@UI_Page_Root";
     const string UiPopupRoot = "@UI_Popup_Root";
 
     // 페이지 최대치는 5개로 합니다.
-    const int MaxPageOrder = 5;
+    const int MaxPageOrder = 50;
 
     // ui render 우선순위
     int pageOrder = 0;
     int popupOrder = 0;
 
     // UI페이지 관리
-    UIPage[] pageAry = new UIPage[MaxPageOrder];
+    public UIPage[] pageAry = new UIPage[MaxPageOrder];
+    public UI_Book[] bookPageAry = new UI_Book[MaxPageOrder];
+    public GameObject[] bookPageObj = new GameObject[MaxPageOrder];
 
     // UI팝업 관리
     Stack<UIPopup> popupStack = new Stack<UIPopup>();
 
+    public Dictionary<int, List<object>> book = new Dictionary<int, List<object>>();
+    public Dictionary<int, List<object>> page = new Dictionary<int, List<object>>();
+
     public void Init()
     {
-        pageAry = null;
         popupStack.Clear();
 
         popupOrder = MaxPageOrder;
@@ -56,7 +60,7 @@ public class UIManager : SingletonBehaviour<UIManager>
             return;
 
         // 인스턴스를 생성, 씬에 올립니다.
-        GameObject go = Instantiate(prefab.gameObject);
+        GameObject go = GameObject.Instantiate(prefab.gameObject);
         if (go == null)
             return;
 
@@ -109,7 +113,7 @@ public class UIManager : SingletonBehaviour<UIManager>
         if (ui == null)
             return;
 
-        Destroy(ui.gameObject);
+        GameObject.Destroy(ui.gameObject);
         popupOrder--;
 
         if (popupOrder == 1)
@@ -120,7 +124,7 @@ public class UIManager : SingletonBehaviour<UIManager>
                 return;
             }
 
-            Destroy(popupRoot);
+            GameObject.Destroy(popupRoot);
         }
     }
     #endregion
@@ -132,12 +136,16 @@ public class UIManager : SingletonBehaviour<UIManager>
         if (name == null)
             name = typeof(T).ToString();
 
-        T prefab = Resources.Load<T>($"{UiPrefabsPath}/{name}");
+        GameObject prefab = Resources.Load<GameObject>($"{UiPrefabsPath}/{name}");
         if (prefab == null)
             return;
 
+        //T prefab = Resources.Load<T>($"{UiPrefabsPath}/{name}");
+        //if (prefab == null)
+        //    return;
+
         // 인스턴스를 생성, 씬에 올립니다.
-        GameObject go = Instantiate(prefab.gameObject);
+        GameObject go = GameObject.Instantiate(prefab);
         if (go == null)
             return;
 
@@ -148,28 +156,90 @@ public class UIManager : SingletonBehaviour<UIManager>
 
         // 페이지에 등록합니다.
         pageAry[pageOrder] = ui;
-
+        
         // 우선순위를 정렬합니다.
         // 캔버스에 접근합니다.
-        Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        canvas.sortingOrder = pageOrder;
-        pageOrder++;
+        //Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+        //canvas.sortingOrder = pageOrder;
+        //pageOrder++;
 
         // 팝업전용폴더로 옮겨줍니다.
-        GameObject popupRoot = Util.CreateObject(UiPopupRoot);
+        GameObject popupRoot = Util.CreateObject(UiPageRoot);
         if (popupRoot == null)
         {
             return;
         }
 
-        go.transform.SetParent(popupRoot.transform);
+        GameObject obj = GameObject.Find("Canvas");
+        obj.transform.position = new Vector3(0, 0, 0);
+        obj.transform.SetParent(popupRoot.transform);
+
+        Canvas can = obj.GetComponent<Canvas>();
+        can.sortingOrder = pageOrder;
+        pageOrder++;
+
+        go.transform.SetParent(obj.transform);
+    }
+
+    // 페이지를 셋팅합니다.
+    public void SetBookPage<T>(string name = null) where T : UI_Book
+    {
+        if (name == null)
+            name = typeof(T).ToString();
+
+        GameObject prefab = Resources.Load<GameObject>($"{UiPrefabsPath}/{name}");
+        if (prefab == null)
+            return;
+
+        //T prefab = Resources.Load<T>($"{UiPrefabsPath}/{name}");
+        //if (prefab == null)
+        //    return;
+
+        // 인스턴스를 생성, 씬에 올립니다.
+        GameObject go = GameObject.Instantiate(prefab);
+        if (go == null)
+            return;
+
+        bookPageObj[pageOrder] = go;
+        go.SetActive(false);
+
+        // T컴포넌트를 가져옵니다.
+        T ui = Util.GetOrAddComponent<T>(go);
+        if (ui == null)
+            return;
+
+        // 페이지에 등록합니다.
+        bookPageAry[pageOrder] = ui;
+
+        // 우선순위를 정렬합니다.
+        // 캔버스에 접근합니다.
+        //Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+        //canvas.sortingOrder = pageOrder;
+        //pageOrder++;
+
+        // 팝업전용폴더로 옮겨줍니다.
+        GameObject popupRoot = Util.CreateObject(UiPageRoot);
+        if (popupRoot == null)
+        {
+            return;
+        }
+
+        GameObject obj = GameObject.Find("Canvas");
+        obj.transform.position = new Vector3(0, 0, 0);
+        obj.transform.SetParent(popupRoot.transform);
+
+        Canvas can = obj.GetComponent<Canvas>();
+        can.sortingOrder = pageOrder;
+        pageOrder++;
+
+        go.transform.SetParent(obj.transform);
     }
 
     // 메인 씬 UI를 
     public void DestroyPageUI<T>() where T : UIPage
     {
         // 파괴할 일이있나?
-        Destroy(pageAry[pageOrder].gameObject);
+        GameObject.Destroy(pageAry[pageOrder].gameObject);
         pageAry[pageOrder] = null;
         pageOrder--;
 
@@ -179,7 +249,7 @@ public class UIManager : SingletonBehaviour<UIManager>
             return;
         }
 
-        Destroy(popupRoot);
+        GameObject.Destroy(popupRoot);
     }
     #endregion
 }

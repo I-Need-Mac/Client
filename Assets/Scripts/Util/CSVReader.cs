@@ -10,6 +10,7 @@ public class CSVReader
 	static string LINE_SPLIT_RE = @"\r\n|\n\r|\n|\r";
 	static char[] TRIM_CHARS = { '\"' };
     const string TABLE_HOME = "Table/";
+    const int IGNORE_COUNT = 3;
 
 	public static List<Dictionary<string, object>> Read(string file)
 	{
@@ -148,8 +149,9 @@ public class CSVReader
 
         return null;
     }
+
     public static Dictionary<int, List<object>> FileRead(string file )
-    {
+     {
         TextAsset data = Resources.Load(file) as TextAsset;
 
         if (data == null)
@@ -160,7 +162,7 @@ public class CSVReader
 
         var lines = Regex.Split(data.text, LINE_SPLIT_RE);
 
-        if (lines.Length <= 3)
+        if (lines.Length <= IGNORE_COUNT)
         {
             Debug.LogErrorFormat("[Read] 해당 파일의 내용이 부족합니다.");
             return null;
@@ -168,7 +170,7 @@ public class CSVReader
 
         Dictionary<int, List<object>> dataDic = new Dictionary<int, List<object>>();
         string[] h = Regex.Split(lines[0], SPLIT_RE);
-        for (int i = 3; i < lines.Length; i++)
+        for (int i = IGNORE_COUNT; i < lines.Length - 1; i++)
         {
             string[] val = Regex.Split(lines[i], SPLIT_RE);
 

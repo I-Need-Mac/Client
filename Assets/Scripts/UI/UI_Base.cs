@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 // UI라면 사용하는 모든 기능을 정의합니다.
-// 페이지와 팝업은 이 베이스를 상속 받도록 합니다.
+// 큰 단위의UI는 베이스를 상속 받도록 합니다.
 public class UI_Base : MonoBehaviour
 {
     public T CreateUI<T>(string name = null) where T : UI_Base

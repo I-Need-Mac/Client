@@ -15,10 +15,21 @@ public class UI_Test : MonoBehaviour
 
     void Start()
     {
-        //UIManager.Instance.ShowUI(UIManager.UI_Prefab.UI_StoryBook);
         // csv read
-        //CSVReader.FileRead("Table/StoryTable");
-        //CSVReader.FileRead("Table/PageTable");
+        // 스토리 테이블 읽기
+        Dictionary<int, List<object>> storyData = CSVReader.FileRead("Table/StoryTable");
+        foreach (KeyValuePair<int, List<object>> pair in storyData)
+        {
+            Debug.Log(pair.Key);
+
+            // 테이블에 있는 페이지를 읽어옵니다.
+            List<object> list = pair.Value;
+            for( int i = 0; i < list.Count; i++ )
+            {
+            }
+        }
+
+        //Dictionary<int, List<object>> pageData = CSVReader.FileRead("Table/Story/TEST1");
 
         //int cnt = 0;
         //foreach(KeyValuePair<int, List<object>> pair in UIManager.Instance.page)

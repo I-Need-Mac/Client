@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// 메인화면UI
 public class UI_Main : UI_Base
 {
     enum Buttons
@@ -44,7 +45,11 @@ public class UI_Main : UI_Base
                 UIManager.Instance.OpenUI<UI_Skill>();
                 break;
             case Buttons.StoryBook:
-                UIManager.Instance.OpenUI<UI_StoryBook>();
+                UI_StoryBook ui = UIManager.Instance.OpenUI<UI_StoryBook>();
+                if (ui == null)
+                    return;
+
+                ui.SetData(UI_StoryBook.StoryBookID.STORY_BOOK_TITLE1);
                 break;
             default:
                 break;

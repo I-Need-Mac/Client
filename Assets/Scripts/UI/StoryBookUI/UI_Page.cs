@@ -16,4 +16,10 @@ public class UI_Page : UI_Popup
     enum Texts
     {
     }
+
+
+    public void SetData(int id, List<object> data)
+    {
+
+    }
 }

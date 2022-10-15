@@ -17,8 +17,4 @@ public class UIEventHandler : MonoBehaviour, IPointerClickHandler
             OnClickHandler.Invoke(eventData);
         }
     }
-
-
-    // 키보드 이벤트도 추가할 수 있습니다.
-
 }

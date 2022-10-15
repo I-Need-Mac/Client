@@ -6,6 +6,24 @@ using UnityEngine.UI;
 
 public class UI_StoryBook : UI_Popup
 {
+    public enum StoryTableInfo
+    {
+        StoryTitle,
+        StoryPage,
+        StoryPath,
+        StoryBGM,
+    }
+
+    // StoryTable과 맞춥니다
+    public enum StoryBookID
+    {
+        STORY_BOOK_TITLE1 = 1001,
+        STORY_BOOK_TITLE2,
+        STORY_BOOK_TITLE3,
+        STORY_BOOK_TITLE4,
+        STORY_BOOK_TITLE5,
+    }
+
     enum Buttons
     {
         PreArrow,
@@ -25,9 +43,8 @@ public class UI_StoryBook : UI_Popup
     {
     }
 
-    public int page = 0;
+    List<UI_Page> pages = new List<UI_Page>();
 
-    // Start is called before the first frame update
     void Start()
     {
         Bind<Button>(typeof(Buttons));
@@ -40,6 +57,33 @@ public class UI_StoryBook : UI_Popup
         }
     }
 
+    public void SetData(StoryBookID id)
+    {
+        // 페이지 생성
+        Dictionary<int, List<object>> pageInfo = UIData.PageTableData[(int)id];
+
+        int pagePos = -420;
+        int index = 0;
+        foreach (KeyValuePair<int, List<object>> pair in pageInfo)
+        {
+            UI_Page page = Util.Load<UI_Page>($"{Define.UiPrefabsPath}/UI_Page");
+            page.SetData(pair.Key, pair.Value);
+            pages.Add(page);
+
+            // 페이지 position 셋팅
+            GameObject go = Util.CreateObject(page.gameObject);
+            go.transform.SetParent(this.transform);
+            go.name = go.name + "_" + index;
+
+            RectTransform rt = go.GetComponent<RectTransform>();
+            rt.anchoredPosition = new Vector2(pagePos, 0);
+            pagePos *= -1;
+
+            index++;
+        }
+    }
+
+    // 버튼 클릭 이벤트
     public void OnClickButton(PointerEventData data)
     {
         Buttons buttonValue = (Buttons)FindEnumValue<Buttons>(data.pointerClick.name);

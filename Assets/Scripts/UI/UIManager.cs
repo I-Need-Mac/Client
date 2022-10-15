@@ -6,7 +6,48 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// UI를 관리 합니다. (Create/Show/Hide)
+public class UIData
+{
+    #region UI테이블 관련
+    public enum UITable
+    {
+        StoryTable,
+    }
+
+    // 스토리 데이터
+    static Dictionary<int, List<object>> storyTableData = new Dictionary<int, List<object>>();
+    public static Dictionary<int, List<object>> StoryData { get { return storyTableData; } }
+
+    static Dictionary<int, Dictionary<int, List<object>>> pageTableData = new Dictionary<int, Dictionary<int, List<object>>>();
+    public static Dictionary<int, Dictionary<int, List<object>>> PageTableData { get { return pageTableData; } }
+
+    public static void ReadData()
+    {
+        // 스토리 테이블을 읽습니다.
+        storyTableData = CSVReader.FileRead("Table/" + Enum.GetName(typeof(UITable), UITable.StoryTable));
+
+        int index = 0;
+        foreach (KeyValuePair<int, List<object>> pair in storyTableData)
+        {
+            Debug.Log(pair.Key);
+
+            // 테이블에 있는 페이지를 읽어옵니다.
+            List<object> list = pair.Value;
+            string pageTable = list[(int)UI_StoryBook.StoryTableInfo.StoryPath].ToString();
+            Dictionary<int, List<object>> pageData = CSVReader.FileRead("Table/Story/" + pageTable);
+            if (pageData == null)
+                continue;
+
+            if (pageData.Count == 0)
+                continue;
+
+            pageTableData.Add(pair.Key, pageData);
+        }
+    }
+    #endregion
+}
+
+// UI를 관리 합니다. (Create/Open/Close)
 public class UIManager : MonoSingleton<UIManager>
 {
     public enum UI_Prefab
@@ -32,6 +73,9 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void Init()
     {
+        // UI관련 테이블을 읽습니다.
+        UIData.ReadData();
+
         // 이벤트 시스템을 추가합니다.
         GameObject go = GameObject.Find("EventSystem");
         if( go == null )
@@ -108,13 +152,13 @@ public class UIManager : MonoSingleton<UIManager>
     }
 
     // ui를 엽니다
-    public void OpenUI<T>() where T : UI_Base
+    public T OpenUI<T>() where T : UI_Base
     {
         UI_Popup popup = FindPopupUI(typeof(T).Name);
 
         // 이미 띄위져있는 팝업 입니다.
         if (IsCurrentPopup(popup))
-            return;
+            return null;
         
         // 오브젝트로 생성합니다.
         GameObject go = Util.CreateObject(popup.gameObject);
@@ -126,17 +170,20 @@ public class UIManager : MonoSingleton<UIManager>
         // 현재 보여지는 팝업 수 증가
         currentPopupCount++;
 
-        // 팝업전용폴더로 옮겨줍니다.
-        GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
-        if (popupRoot == null)
-        {
-            return;
-        }
-        go.transform.SetParent(popupRoot.transform);
         go.SetActive(true);
 
         // 실시간 ui리스트에 추가합니다.
         currentPopup.AddFirst(popup);
+
+        // 팝업전용폴더로 옮겨줍니다.
+        GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
+        if (popupRoot == null)
+        {
+            return null;
+        }
+        go.transform.SetParent(popupRoot.transform);
+
+        return go.GetComponent<T>();
     }
 
     // ui를 닫습니다

@@ -3,253 +3,187 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-/*
- * 개선할것
- * 1. UI를 올릴떄마다 리소스를 로드하는것이 부담되는지 생각해보기
- * 만약 부담이 된다면 게임 시작시 미리 리소스를 로드해두고 셋팅할 때 로드해둔 리소스를 쓰도록한다.
- * 2. UI마다 캔버스가 붙어있는것 개선
- * 지금 코드로는 UI마다 캔버스가 다 붙어있어야 하므로 하나의 캔버스에 하위로 붙여서 할 수 있도록 개선필요
- * 3. 팝업 코드 기능 변경 필요 (PC에 맞게 수정)
- * 
- * 추가할것
- * 팝업 기능 분류해야함 (전체 팝업 / 인벤 팝업 / Message팝업 등
- */
-
-// UI를 관리 합니다.
+// UI를 관리 합니다. (Create/Show/Hide)
 public class UIManager : MonoSingleton<UIManager>
 {
-    // UI프리팹 저장 경로
-    const string UiPrefabsPath = "Prefabs/UI";
-    const string UiPageRoot = "@UI_Page_Root";
-    const string UiPopupRoot = "@UI_Popup_Root";
+    public enum UI_Prefab
+    {
+        UI_Main,
+        UI_Inventory,
+        UI_Skill,
+        UI_StoryBook,
+    }
 
-    // 페이지 최대치는 5개로 합니다.
-    const int MaxPageOrder = 50;
+    // 메인 UI 우선순위
+    int mainUiOrder = 0;
+    // 팝업UI 우선순위
+    int currentPopupCount = 0;
 
-    // ui render 우선순위
-    int pageOrder = 0;
-    int popupOrder = 0;
+    // 메인 UI
+    UI_Main mainUI;
+    // UI전체 팝업 목록
+    List<UI_Popup> popupList = new List<UI_Popup>();
 
-    // UI페이지 관리
-    public UIPage[] pageAry = new UIPage[MaxPageOrder];
-    public UI_Book[] bookPageAry = new UI_Book[MaxPageOrder];
-    public GameObject[] bookPageObj = new GameObject[MaxPageOrder];
-
-    // UI팝업 관리
-    Stack<UIPopup> popupStack = new Stack<UIPopup>();
-
-    public Dictionary<int, List<object>> book = new Dictionary<int, List<object>>();
-    public Dictionary<int, List<object>> page = new Dictionary<int, List<object>>();
+    // 실시간 팝업 목록
+    LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
 
     public void Init()
     {
-        popupStack.Clear();
-
-        popupOrder = MaxPageOrder;
-    }
-
-    #region POPUP
-    public void SetPopupUI<T>(string name = null) where T : UIPopup
-    {
-        if (name == null)
-            name = typeof(T).ToString();
-
-        T prefab = Resources.Load<T>($"{UiPrefabsPath}/{name}");
-        if (prefab == null)
-            return;
-
-        // 인스턴스를 생성, 씬에 올립니다.
-        GameObject go = GameObject.Instantiate(prefab.gameObject);
-        if (go == null)
-            return;
-
-        // T컴포넌트를 가져옵니다.
-        T ui = Util.GetOrAddComponent<T>(go);
-        if (ui == null)
-            return;
-
-        // 스택에 추가합니다.
-        popupStack.Push(ui);
-
-        // 우선순위를 정렬합니다.
-        // 캔버스에 접근합니다.
-        Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        canvas.sortingOrder = popupOrder;
-        popupOrder++;
-
-        // 팝업전용폴더로 옮겨줍니다.
-        GameObject popupRoot = Util.CreateObject(UiPopupRoot);
-        if (popupRoot == null)
-        {
-            return;
+        // 이벤트 시스템을 추가합니다.
+        GameObject go = GameObject.Find("EventSystem");
+        if( go == null )
+        {   // 이벤트 시스템이 없다면 하나 생성합니다.
+            go = new GameObject("EventSystem");
+            Util.GetOrAddComponent<EventSystem>(go);
+            Util.GetOrAddComponent<StandaloneInputModule>(go);
         }
 
-        go.transform.SetParent(popupRoot.transform);
+        // 스택 초기화
+        popupList.Clear();
+
+        // ui를 생성합니다.
+        Create();
+
+        // 메인 UI는 항상 최상위에 그려집니다.
+        mainUiOrder = 0;
+        // 초기 우선순위 셋팅
+        currentPopupCount = 0;
     }
 
-    public void ClosePopupUI<T>() where T : UIPopup
+    // UI를 생성합니다.
+    public void Create()
     {
-        if (popupStack.Count == 0)
-            return;
+        string[] names = Enum.GetNames(typeof(UI_Prefab));
 
-        Type type = typeof(T);
+        // 메인 UI를 생성합니다.
+        mainUI = Util.Load<UI_Main>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_Main]}");
+        if (mainUI == null)
+            Debug.Log("mainUI is NULL");
 
-        if (popupStack.Peek().GetType() != type)
+        // 캔버스를 셋팅합니다.
+        SetCanvas(mainUI.gameObject);
+        Util.CreateObject(mainUI.gameObject);
+
+        // 전체 UI리스트를 셋팅합니다.
+        for ( int i = 0; i < names.Length; i++ )
         {
-            Debug.Log($"Fail Close {type.ToString()} UI");
-            return;
-        }
+            if (i == (int)UI_Prefab.UI_Main)
+                continue;
 
-        CloseTopPopupUI();
-    }
-
-    public void CloseTopPopupUI()
-    {
-        if (popupStack.Count == 0)
-            return;
-
-        UIPopup ui = popupStack.Pop();
-        if (ui == null)
-            return;
-
-        GameObject.Destroy(ui.gameObject);
-        popupOrder--;
-
-        if (popupOrder == 1)
-        {   // 마지막 팝업은 삭제할 때 팝업전용 오브젝트도 같이 삭제합니다.
-            GameObject popupRoot = Util.CreateObject(UiPopupRoot);
-            if (popupRoot == null)
+            // 팝업 UI를 생성합니다.
+            UI_Popup popup = Util.Load<UI_Popup>($"{Define.UiPrefabsPath}/{names[i]}");
+            if ( popup == null )
             {
-                return;
+                Debug.Log(names[i] + " is NULL");
+                continue;
             }
 
-            GameObject.Destroy(popupRoot);
+            // 캔버스를 셋팅합니다.
+            SetCanvas(popup.gameObject);
+
+            // 활성시키지 않은 상태로 초기화 합니다.
+            popup.gameObject.SetActive(false);
+
+            // 리스트에 추가합니다.
+            popupList.Add(popup);
         }
     }
-    #endregion
 
-    #region PAGE
-    // 페이지를 셋팅합니다.
-    public void SetPageUI<T>(string name = null) where T : UIPage
+    // 캔버스를 셋팅합니다.
+    private void SetCanvas(GameObject go)
     {
-        if (name == null)
-            name = typeof(T).ToString();
+        Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        // 우선순위를 0으로 초기화 합니다.
+        canvas.sortingOrder = 0;
 
-        GameObject prefab = Resources.Load<GameObject>($"{UiPrefabsPath}/{name}");
-        if (prefab == null)
+        CanvasScaler canvasScaler = Util.GetOrAddComponent<CanvasScaler>(go);
+        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        canvasScaler.referenceResolution = new Vector2(Define.uiScreenWidth, Define.uiScreenHeight);
+
+        Util.GetOrAddComponent<GraphicRaycaster>(go);
+    }
+
+    // ui를 엽니다
+    public void OpenUI<T>() where T : UI_Base
+    {
+        UI_Popup popup = FindPopupUI(typeof(T).Name);
+
+        // 이미 띄위져있는 팝업 입니다.
+        if (IsCurrentPopup(popup))
             return;
-
-        //T prefab = Resources.Load<T>($"{UiPrefabsPath}/{name}");
-        //if (prefab == null)
-        //    return;
-
-        // 인스턴스를 생성, 씬에 올립니다.
-        GameObject go = GameObject.Instantiate(prefab);
-        if (go == null)
-            return;
-
-        // T컴포넌트를 가져옵니다.
-        T ui = Util.GetOrAddComponent<T>(go);
-        if (ui == null)
-            return;
-
-        // 페이지에 등록합니다.
-        pageAry[pageOrder] = ui;
         
-        // 우선순위를 정렬합니다.
-        // 캔버스에 접근합니다.
-        //Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        //canvas.sortingOrder = pageOrder;
-        //pageOrder++;
+        // 오브젝트로 생성합니다.
+        GameObject go = Util.CreateObject(popup.gameObject);
+
+        // 우선순위 지정
+        Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
+        canvas.sortingOrder = mainUiOrder + 1;
+        
+        // 현재 보여지는 팝업 수 증가
+        currentPopupCount++;
 
         // 팝업전용폴더로 옮겨줍니다.
-        GameObject popupRoot = Util.CreateObject(UiPageRoot);
+        GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
         if (popupRoot == null)
         {
             return;
         }
+        go.transform.SetParent(popupRoot.transform);
+        go.SetActive(true);
 
-        GameObject obj = GameObject.Find("Canvas");
-        obj.transform.position = new Vector3(0, 0, 0);
-        obj.transform.SetParent(popupRoot.transform);
-
-        Canvas can = obj.GetComponent<Canvas>();
-        can.sortingOrder = pageOrder;
-        pageOrder++;
-
-        go.transform.SetParent(obj.transform);
+        // 실시간 ui리스트에 추가합니다.
+        currentPopup.AddFirst(popup);
     }
 
-    // 페이지를 셋팅합니다.
-    public void SetBookPage<T>(string name = null) where T : UI_Book
+    // ui를 닫습니다
+    public void CloseUI<T>() where T : UI_Base
     {
-        if (name == null)
-            name = typeof(T).ToString();
-
-        GameObject prefab = Resources.Load<GameObject>($"{UiPrefabsPath}/{name}");
-        if (prefab == null)
+        // 닫을 팝업이 없습니다.
+        if (currentPopup.Count <= 0)
             return;
 
-        //T prefab = Resources.Load<T>($"{UiPrefabsPath}/{name}");
-        //if (prefab == null)
-        //    return;
-
-        // 인스턴스를 생성, 씬에 올립니다.
-        GameObject go = GameObject.Instantiate(prefab);
-        if (go == null)
-            return;
-
-        bookPageObj[pageOrder] = go;
-        go.SetActive(false);
-
-        // T컴포넌트를 가져옵니다.
-        T ui = Util.GetOrAddComponent<T>(go);
-        if (ui == null)
-            return;
-
-        // 페이지에 등록합니다.
-        bookPageAry[pageOrder] = ui;
-
-        // 우선순위를 정렬합니다.
-        // 캔버스에 접근합니다.
-        //Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        //canvas.sortingOrder = pageOrder;
-        //pageOrder++;
-
-        // 팝업전용폴더로 옮겨줍니다.
-        GameObject popupRoot = Util.CreateObject(UiPageRoot);
-        if (popupRoot == null)
+        // 리스트에서 제외
+        LinkedList<UI_Popup>.Enumerator enummerator = currentPopup.GetEnumerator();
+        UI_Popup pop = enummerator.Current;
+        while(pop == null)
         {
-            return;
+            enummerator.MoveNext();
+            pop = enummerator.Current;
+
+            if (pop.name != typeof(T).Name)
+                continue;
+
+            currentPopup.Remove(pop);
         }
 
-        GameObject obj = GameObject.Find("Canvas");
-        obj.transform.position = new Vector3(0, 0, 0);
-        obj.transform.SetParent(popupRoot.transform);
+        // 오브젝트 삭제
+        GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
+        GameObject findObject = Util.FindChild(popupRoot, typeof(T).Name);
+        Destroy(findObject);
 
-        Canvas can = obj.GetComponent<Canvas>();
-        can.sortingOrder = pageOrder;
-        pageOrder++;
-
-        go.transform.SetParent(obj.transform);
+        currentPopupCount--;
     }
 
-    // 메인 씬 UI를 
-    public void DestroyPageUI<T>() where T : UIPage
+    private UI_Popup FindPopupUI(string name)
     {
-        // 파괴할 일이있나?
-        GameObject.Destroy(pageAry[pageOrder].gameObject);
-        pageAry[pageOrder] = null;
-        pageOrder--;
-
-        GameObject popupRoot = Util.CreateObject(UiPopupRoot);
-        if (popupRoot == null)
+        // 팝업 리스트에서 해당하는 팝업을 찾습니다.
+        for( int i = 0; i < popupList.Count; i++ )
         {
-            return;
+            if(popupList[i].name == name)
+            {
+                return popupList[i];
+            }
         }
 
-        GameObject.Destroy(popupRoot);
+        return null;
     }
-    #endregion
+
+    private bool IsCurrentPopup(UI_Popup name)
+    {
+        return currentPopup.Contains(name);
+    }
 }

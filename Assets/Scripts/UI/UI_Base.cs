@@ -7,8 +7,35 @@ using UnityEngine.UI;
 
 // UI라면 사용하는 모든 기능을 정의합니다.
 // 페이지와 팝업은 이 베이스를 상속 받도록 합니다.
-public class UIBase : MonoBehaviour
+public class UI_Base : MonoBehaviour
 {
+    public T CreateUI<T>(string name = null) where T : UI_Base
+    {   // UI를 생성합니다.
+        if (name == null)
+            name = typeof(T).ToString();
+
+        // UI의 프리팹을 로드합니다.
+        T prefab = Resources.Load<T>($"{Define.UiPrefabsPath}/{name}");
+        if (prefab == null)
+            return null;
+
+        return prefab;
+    }
+
+    // 팝업을 열도록 합니다.
+    public virtual void OpenUI<T>() where T : UI_Base
+    {
+        // 매니저를 통해 팝업을 엽니다.
+        UIManager.Instance.OpenUI<T>();
+    }
+
+    // 팝업을 닫습니다.
+    public virtual void CloseUI<T>() where T : UI_Base
+    {
+        // 매니저를 통해 팝업을 엽니다.
+        UIManager.Instance.CloseUI<T>();
+    }
+
     // 이벤트용 UI리스트
     Dictionary<Type, UnityEngine.Object[]> uiList = new Dictionary<Type, UnityEngine.Object[]>();
 

@@ -6,6 +6,20 @@ using UnityEngine.SceneManagement;
 // 유틸로 쓰는 함수들
 public class Util : MonoBehaviour
 {
+    public static T Load<T>(string path) where T : UI_Base
+    {
+        return Resources.Load<T>(path);
+    }
+
+    public static GameObject CreateObject(GameObject go)
+    {
+        GameObject createObject = GameObject.Instantiate(go);
+        string reName = createObject.name.Replace("(Clone)", "").Trim();
+        createObject.name = reName;
+
+        return createObject;
+    }
+
     // 하위 자식을 찾습니다.
     public static T FindChild<T>(GameObject go, string name = null, bool recursive = false) where T : UnityEngine.Object
     {
@@ -69,7 +83,7 @@ public class Util : MonoBehaviour
         return component;
     }
 
-    public static GameObject CreateObject(string name)
+    public static GameObject GetOrCreateObjectInActiveScene(string name)
     {
         Scene activeScene = SceneManager.GetActiveScene();
 

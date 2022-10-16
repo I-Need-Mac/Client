@@ -1,9 +1,0 @@
--,,,,,,,,
-,,3개의 문단 텍스트 아이디,,,문단에 해당하는 보이스 패스,,,이미지 패스
-PageID,PageType,TextBox1,TextBox2,TextBox3,VoicePath1,VoicePath2,VoicePath3,ImagePath
-1001,Text,Test~~~,TestStory2,TestStory3,TextVoice1,TextVoice2,TextVoice3,None
-1002,Picture,None22,None,None,None,None,None,TestImage1
-1003,Text,TestStory4,None,None,TextVoice2,TextVoice3,TextVoice4,None
-1004,Text,TestStory5,TestStory6,None,TextVoice3,TextVoice4,TextVoice5,None
-1005,PictureTextTop,TestStory7,NoneBox2,None,TextVoice6,None,None,TestImage1
-1006,PictureTextBottom,TestStory8,None,None,TextVoice7,None,None,TestImage1

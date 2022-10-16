@@ -6,47 +6,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIData
-{
-    #region UI테이블 관련
-    public enum UITable
-    {
-        StoryTable,
-    }
-
-    // 스토리 데이터
-    static Dictionary<int, List<object>> storyTableData = new Dictionary<int, List<object>>();
-    public static Dictionary<int, List<object>> StoryData { get { return storyTableData; } }
-
-    static Dictionary<int, Dictionary<int, List<object>>> pageTableData = new Dictionary<int, Dictionary<int, List<object>>>();
-    public static Dictionary<int, Dictionary<int, List<object>>> PageTableData { get { return pageTableData; } }
-
-    public static void ReadData()
-    {
-        // 스토리 테이블을 읽습니다.
-        storyTableData = CSVReader.FileRead("Table/" + Enum.GetName(typeof(UITable), UITable.StoryTable));
-
-        int index = 0;
-        foreach (KeyValuePair<int, List<object>> pair in storyTableData)
-        {
-            Debug.Log(pair.Key);
-
-            // 테이블에 있는 페이지를 읽어옵니다.
-            List<object> list = pair.Value;
-            string pageTable = list[(int)UI_StoryBook.StoryTableInfo.StoryPath].ToString();
-            Dictionary<int, List<object>> pageData = CSVReader.FileRead("Table/Story/" + pageTable);
-            if (pageData == null)
-                continue;
-
-            if (pageData.Count == 0)
-                continue;
-
-            pageTableData.Add(pair.Key, pageData);
-        }
-    }
-    #endregion
-}
-
 // UI를 관리 합니다. (Create/Open/Close)
 public class UIManager : MonoSingleton<UIManager>
 {
@@ -103,7 +62,7 @@ public class UIManager : MonoSingleton<UIManager>
         string[] names = Enum.GetNames(typeof(UI_Prefab));
 
         // 메인 UI를 생성합니다.
-        mainUI = Util.Load<UI_Main>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_Main]}");
+        mainUI = Util.UILoad<UI_Main>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_Main]}");
         if (mainUI == null)
             Debug.Log("mainUI is NULL");
 
@@ -118,7 +77,7 @@ public class UIManager : MonoSingleton<UIManager>
                 continue;
 
             // 팝업 UI를 생성합니다.
-            UI_Popup popup = Util.Load<UI_Popup>($"{Define.UiPrefabsPath}/{names[i]}");
+            UI_Popup popup = Util.UILoad<UI_Popup>($"{Define.UiPrefabsPath}/{names[i]}");
             if ( popup == null )
             {
                 Debug.Log(names[i] + " is NULL");

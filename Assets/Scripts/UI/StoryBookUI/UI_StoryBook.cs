@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class UI_StoryBook : UI_Popup
 {
+    const int PAGE_UNIT = 2;
+    const int PAGE_RECT_POSITION = 420;
+
     public enum StoryTableInfo
     {
         StoryTitle,
@@ -29,8 +32,8 @@ public class UI_StoryBook : UI_Popup
         PreArrow,
         NextArrow,
 
+        ContentSkip,
         PageSkip,
-        AllSkip,
 
         Close
     }
@@ -41,9 +44,20 @@ public class UI_StoryBook : UI_Popup
 
     enum Texts
     {
+        PageInfo
     }
 
-    List<UI_Page> pages = new List<UI_Page>();
+    [SerializeField]
+    Text pageText;
+    [SerializeField]
+    Image background;
+
+    List<UI_Page> pageList = new List<UI_Page>();
+    int totalPage = 0;
+    int currentPage = 0;
+    int skipPage = 0;
+
+    StoryBookID bookId = 0;
 
     void Start()
     {
@@ -55,52 +69,150 @@ public class UI_StoryBook : UI_Popup
         {
             BindUIEvent(GetButton(i).gameObject, (PointerEventData data) => { OnClickButton(data); }, Define.UIEvent.Click);
         }
+
+        currentPage = 0;
     }
 
     public void SetData(StoryBookID id)
     {
         // 페이지 생성
+        bookId = id;
         Dictionary<int, List<object>> pageInfo = UIData.PageTableData[(int)id];
-
-        int pagePos = -420;
+        totalPage = pageInfo.Count;
+        
+        int pagePos = PAGE_RECT_POSITION * -1;
         int index = 0;
         foreach (KeyValuePair<int, List<object>> pair in pageInfo)
         {
-            UI_Page page = Util.Load<UI_Page>($"{Define.UiPrefabsPath}/UI_Page");
-            page.SetData(pair.Key, pair.Value);
-            pages.Add(page);
+            // 페이지 데이터 로드
+            UI_Page page = Util.UILoad<UI_Page>($"{Define.UiPrefabsPath}/UI_Page");
+
+            // 씬에 올립니다.
+            UI_Page instPage = GameObject.Instantiate<UI_Page>(page);
+            // 페이지 데이터 셋팅
+            instPage.SetData(pair.Key, pair.Value);
+
+            GameObject go = instPage.gameObject;
+
+            // 이름 셋팅
+            string reName = go.name.Replace("(Clone)", "").Trim();
+            go.name = reName + "_" + index++;
+
+            // 책 하위에 위치
+            go.transform.SetParent(this.transform);
+
+            // 초기화시 활성은 꺼주도록 합니다.
+            go.SetActive(false);
 
             // 페이지 position 셋팅
-            GameObject go = Util.CreateObject(page.gameObject);
-            go.transform.SetParent(this.transform);
-            go.name = go.name + "_" + index;
-
             RectTransform rt = go.GetComponent<RectTransform>();
             rt.anchoredPosition = new Vector2(pagePos, 0);
             pagePos *= -1;
 
-            index++;
+            // 리스트에 추가
+            pageList.Add(instPage);
         }
+        
+        // 1페이지로 셋팅
+        ActivePage(0);
+    }
+
+    // 페이지를 활성화 합니다.
+    void ActivePage(int page)
+    {
+        if (page >= totalPage || page < 0)
+            return;
+
+        // 전체 비활성
+        for( int i = 0; i < pageList.Count; i++ )
+        {
+            pageList[i].gameObject.SetActive(false);
+        }
+
+        // 해당 페이지만 활성
+        pageList[page].gameObject.SetActive(true);
+        pageList[page + 1].gameObject.SetActive(true);
+
+        if(pageList[page].TYPE == UI_Page.PageType.Picture)
+        {
+            pageList[page + 1].ActivePage();
+            skipPage = page + 1;
+        }
+        else
+        {
+            pageList[page].ActivePage();
+            pageList[page + 1].ClearPage();
+            skipPage = page;
+        }
+
+        currentPage = page;
+
+        // 페이지 표시
+        pageText.text = (currentPage + 1) + "/" + (currentPage + PAGE_UNIT);
     }
 
     // 버튼 클릭 이벤트
-    public void OnClickButton(PointerEventData data)
+    void OnClickButton(PointerEventData data)
     {
         Buttons buttonValue = (Buttons)FindEnumValue<Buttons>(data.pointerClick.name);
         if ((int)buttonValue < -1)
             return;
 
-        Debug.Log(data.pointerClick.name);
-
         switch (buttonValue)
         {
             case Buttons.PreArrow:
+                ActivePage(currentPage - PAGE_UNIT);
                 break;
             case Buttons.NextArrow:
+                ActivePage(currentPage + PAGE_UNIT);
+                break;
+            case Buttons.ContentSkip:
+                {
+                    // 한 문단 스킵
+                    bool isLast = false;
+                    if (pageList[skipPage].IsPageSkippable())
+                    {
+                        pageList[skipPage].SkipPage(out isLast, false);
+
+                        if (isLast) // 마지막 문단인 경우 다음 페이지로
+                        {
+                            skipPage++;
+
+                            if (skipPage == currentPage + 1)
+                            {
+                                pageList[skipPage].ActivePage();
+                            }
+                            else if (skipPage == currentPage + PAGE_UNIT)
+                            {
+                                if (pageList[skipPage - 1].TYPE == UI_Page.PageType.Text)
+                                {
+                                    skipPage--;
+                                    break;
+                                }
+
+                                ActivePage(currentPage + PAGE_UNIT);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(pageList[skipPage].TYPE == UI_Page.PageType.Picture)
+                        {
+
+                        }
+                        ActivePage(currentPage + PAGE_UNIT);
+                    }
+                }
+
                 break;
             case Buttons.PageSkip:
-                break;
-            case Buttons.AllSkip:
+                {
+                    // 한쪽 스킵
+                    bool isLast = false;
+                    pageList[currentPage].SkipPage(out isLast, true);
+                    pageList[currentPage + 1].SkipPage(out isLast, true);
+                }
+                
                 break;
             case Buttons.Close:
                 CloseUI<UI_StoryBook>();

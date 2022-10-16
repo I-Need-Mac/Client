@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 // 유틸로 쓰는 함수들
 public class Util : MonoBehaviour
 {
-    public static T Load<T>(string path) where T : UI_Base
+    public static T UILoad<T>(string path) where T : UI_Base
     {
         return Resources.Load<T>(path);
     }
 
-    public static GameObject CreateObject(GameObject go)
+    public static GameObject CreateObject(GameObject go = null)
     {
         GameObject createObject = GameObject.Instantiate(go);
         string reName = createObject.name.Replace("(Clone)", "").Trim();

@@ -7,14 +7,14 @@ public class MonsterSpawner : MonoBehaviour
     private int limitAmount;
 
     #region Setter
-    //¸ó½ºÅÍ ½ºÆù Á¦ÇÑ ¼ö ¼³Á¤
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void SetLimitAmount(int _limitAmount)
     {
         limitAmount = _limitAmount;
     }
     #endregion
 
-    //tableID °ªÀÇ ¸ó½ºÅÍ Å×ÀÌºí ·Îµå ÈÄ ºÒ·¯¿Â Á¤º¸ ÀúÀå
+    //tableID ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void LoadMonsterSpawnTable(string tableID)
     {
         if (string.IsNullOrEmpty(tableID))

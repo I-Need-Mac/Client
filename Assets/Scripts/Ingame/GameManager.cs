@@ -1,19 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [field : Header("--- Object Pool ---")]
+    [field : SerializeField] public ProjectilePool projectilePool { get; private set; }
+    [field : SerializeField] public ObjectPool monsterPool { get; private set; }
+
+    [Header("--- Text ---")]
+    [SerializeField] private TMP_Text text_timer;
+
+    private int curTime;
     private int limitTime;
     private Coroutine gameTimerCor;
 
-    #region Setter
-    //½ºÅ×ÀÌÁö Á¦ÇÑ ½Ã°£ ¼³Á¤
-    public void SetLimitTime(int _limitTime)
+    private void Awake()
     {
-        limitTime = _limitTime;
+        //monsterPool.AddObject();
+
+        Init();
+    }
+
+    #region Setter
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public void SetLimitTime(int limitTime)
+    {
+        this.limitTime = limitTime;
     }
     #endregion
+
+    private void Init()
+    {
+        text_timer.gameObject.SetActive(true);
+        text_timer.text = "";
+    }
+
+    private void TimeOver()
+    {
+        text_timer.text = "";
+    }
 
     #region Coroutine
     public void StartGameTimer()
@@ -36,16 +65,24 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameTimer()
     {
-        float curTime = 0;
+        var waitTime = new WaitForSeconds(1f);
+        int m, s;
 
-        while (curTime >= limitTime)
+        curTime = limitTime / 1000;
+
+        while (curTime > 0)
         {
-            curTime += Time.deltaTime;
+            m = curTime / 60;
+            s = curTime - (m * 60);
 
-            yield return null;
+            text_timer.text = string.Format("{0:D2} : {1:D2}", m, s);
+
+            curTime--;
+
+            yield return waitTime;
         }
 
-        //TODO :: °ÔÀÓ ¿À¹ö Ã³¸®
+        TimeOver();
     }
     #endregion
 }

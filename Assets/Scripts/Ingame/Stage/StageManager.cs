@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    private int stageWidth;        //½ºÅ×ÀÌÁö Æø
-    private int stageHeight;       //½ºÅ×ÀÌÁö ³ôÀÌ
-    private int playerSponeX;      //ÇÃ·¹ÀÌ¾î ½ºÆù ÁÂÇ¥ X
-    private int playerSponeY;      //ÇÃ·¹ÀÌ¾î ½ºÆù ÁÂÇ¥ Y
-    private string monsterSponeID; //¸÷ ½ºÆù Å×ÀÌºí
-    private int limitTime;         //Á¦ÇÑ ½Ã°£
-    private int limitAmount;       //¸÷ Á¦ÇÑ ¼ö
-    private int[] rewardID;        //º¸»ó ¾ÆÀÌµð
-    private int[] rewardAmount;    //º¸»ó °³¼ö
-    private int introID;           //ÀÎÆ®·Î ID
-    private int outroID;           //¾Æ¿ôÆ®·Î ID
+    private int stageWidth;        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    private int stageHeight;       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private int playerSponeX;      //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ X
+    private int playerSponeY;      //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ Y
+    private string monsterSponeID; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
+    private int limitTime;         //ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
+    private int limitAmount;       //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    private int[] rewardID;        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
+    private int[] rewardAmount;    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private int introID;           //ï¿½ï¿½Æ®ï¿½ï¿½ ID
+    private int outroID;           //ï¿½Æ¿ï¿½Æ®ï¿½ï¿½ ID
 
     [Header("--- Script ---")]
     [SerializeField] private GameManager GAME;
@@ -45,43 +45,44 @@ public class StageManager : MonoBehaviour
 
     private bool LoadStageTable(int stageID)
     {
-        Dictionary<string, object> stageTableInfo = CSVReader.FindRead("StageTable", "StageID", stageID);
+        Debug.LogFormat("[LoadStageTable] Find {0} StageTable", stageID);
+        //Dictionary<string, object> stageTableInfo = CSVReader.FindRead("StageTable", "StageID", stageID);
 
-        if (stageTableInfo != null)
-        {
-            try
-            {
-                stageWidth = (int)stageTableInfo["StageWidth"];
-                stageHeight = (int)stageTableInfo["StageHeight"];
-                playerSponeX = (int)stageTableInfo["PlayerSponeX"];
-                playerSponeY = (int)stageTableInfo["PlayerSponeY"];
-                monsterSponeID = (string)stageTableInfo["MonsterSponeID"];
-                limitTime = (int)stageTableInfo["LimitTime"];
-                limitAmount = (int)stageTableInfo["LimitAmount"];
-                rewardID = (int[])stageTableInfo["RewardID"];
-                rewardAmount = (int[])stageTableInfo["RewardAmount"];
-                introID = (int)stageTableInfo["IntroID"];
-                outroID = (int)stageTableInfo["OutroID"];
+        //if (stageTableInfo != null)
+        //{
+        //    try
+        //    {
+        //        stageWidth = (int)stageTableInfo["StageWidth"];
+        //        stageHeight = (int)stageTableInfo["StageHeight"];
+        //        playerSponeX = (int)stageTableInfo["PlayerSponeX"];
+        //        playerSponeY = (int)stageTableInfo["PlayerSponeY"];
+        //        monsterSponeID = (string)stageTableInfo["MonsterSponeID"];
+        //        limitTime = (int)stageTableInfo["LimitTime"];
+        //        limitAmount = (int)stageTableInfo["LimitAmount"];
+        //        rewardID = (int[])stageTableInfo["RewardID"];
+        //        rewardAmount = (int[])stageTableInfo["RewardAmount"];
+        //        introID = (int)stageTableInfo["IntroID"];
+        //        outroID = (int)stageTableInfo["OutroID"];
 
-                return true;
-            }
-            catch (InvalidCastException invalidCastEx)
-            {
-                Debug.LogError("[LoadStageTable] Data Type Error");
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("[LoadStageTable] Failed Load Table");
+        //        return true;
+        //    }
+        //    catch (InvalidCastException invalidCastEx)
+        //    {
+        //        Debug.LogError("[LoadStageTable] Data Type Error");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.LogError("[LoadStageTable] " + ex.Message);
 
-                //TODO :: ½ºÅ×ÀÌÁö ÀÔÀå ½ÇÆÐ Ã³¸® (·Îºñ È­¸éÀ¸·Î ÀÌµ¿)
-            }
-        }
-        else
-        {
-            Debug.LogError("[LoadStageTable] stageTableInfo is null.");
+        //        //TODO :: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ (ï¿½Îºï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½)
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.LogError("[LoadStageTable] stageTableInfo is null.");
 
-            //TODO :: ½ºÅ×ÀÌÁö ÀÔÀå ½ÇÆÐ Ã³¸® (·Îºñ È­¸éÀ¸·Î ÀÌµ¿ or ÆÄÀÏ Àç°Ë»ö)
-        }
+        //    //TODO :: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ (ï¿½Îºï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ or ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ë»ï¿½)
+        //}
 
         return false;
     }

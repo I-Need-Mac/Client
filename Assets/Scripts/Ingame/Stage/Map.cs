@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    //¸Ê Å©±â ¼³Á¤
+    //ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void SetMapSize(int width, int height)
     {
-        this.transform.position = Vector2.zero;
-
         transform.localScale = new Vector2(width, height);
+
+        transform.position = Vector2.zero;
     }
 }

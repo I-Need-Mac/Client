@@ -46,43 +46,43 @@ public class StageManager : MonoBehaviour
     private bool LoadStageTable(int stageID)
     {
         Debug.LogFormat("[LoadStageTable] Find {0} StageTable", stageID);
-        Dictionary<string, object> stageTableInfo = CSVReader.FindRead("StageTable", "StageID", stageID);
+        //Dictionary<string, object> stageTableInfo = CSVReader.FindRead("StageTable", "StageID", stageID);
 
-        if (stageTableInfo != null)
-        {
-            try
-            {
-                stageWidth = (int)stageTableInfo["StageWidth"];
-                stageHeight = (int)stageTableInfo["StageHeight"];
-                playerSponeX = (int)stageTableInfo["PlayerSponeX"];
-                playerSponeY = (int)stageTableInfo["PlayerSponeY"];
-                monsterSponeID = (string)stageTableInfo["MonsterSponeID"];
-                limitTime = (int)stageTableInfo["LimitTime"];
-                limitAmount = (int)stageTableInfo["LimitAmount"];
-                rewardID = (int[])stageTableInfo["RewardID"];
-                rewardAmount = (int[])stageTableInfo["RewardAmount"];
-                introID = (int)stageTableInfo["IntroID"];
-                outroID = (int)stageTableInfo["OutroID"];
+        //if (stageTableInfo != null)
+        //{
+        //    try
+        //    {
+        //        stageWidth = (int)stageTableInfo["StageWidth"];
+        //        stageHeight = (int)stageTableInfo["StageHeight"];
+        //        playerSponeX = (int)stageTableInfo["PlayerSponeX"];
+        //        playerSponeY = (int)stageTableInfo["PlayerSponeY"];
+        //        monsterSponeID = (string)stageTableInfo["MonsterSponeID"];
+        //        limitTime = (int)stageTableInfo["LimitTime"];
+        //        limitAmount = (int)stageTableInfo["LimitAmount"];
+        //        rewardID = (int[])stageTableInfo["RewardID"];
+        //        rewardAmount = (int[])stageTableInfo["RewardAmount"];
+        //        introID = (int)stageTableInfo["IntroID"];
+        //        outroID = (int)stageTableInfo["OutroID"];
 
-                return true;
-            }
-            catch (InvalidCastException invalidCastEx)
-            {
-                Debug.LogError("[LoadStageTable] Data Type Error");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("[LoadStageTable] " + ex.Message);
+        //        return true;
+        //    }
+        //    catch (InvalidCastException invalidCastEx)
+        //    {
+        //        Debug.LogError("[LoadStageTable] Data Type Error");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.LogError("[LoadStageTable] " + ex.Message);
 
-                //TODO :: 스테이지 입장 실패 처리 (로비 화면으로 이동)
-            }
-        }
-        else
-        {
-            Debug.LogError("[LoadStageTable] stageTableInfo is null.");
+        //        //TODO :: 스테이지 입장 실패 처리 (로비 화면으로 이동)
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.LogError("[LoadStageTable] stageTableInfo is null.");
 
-            //TODO :: 스테이지 입장 실패 처리 (로비 화면으로 이동 or 파일 재검색)
-        }
+        //    //TODO :: 스테이지 입장 실패 처리 (로비 화면으로 이동 or 파일 재검색)
+        //}
 
         return false;
     }

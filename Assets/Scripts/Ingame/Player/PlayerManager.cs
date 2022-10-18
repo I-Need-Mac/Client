@@ -31,19 +31,19 @@ public class PlayerManager : MonoBehaviour
         SetPlayerStat();
 
         Init();
-
-        StartCoroutine(Fire());
     }
 
     private void Init()
     {
+        player.Init();
+
         maxHp = 0;
     }
 
     //플레이어 위치 변경
     public void SetPlayerPos(Vector2 newPos)
     {
-        transform.position = newPos;
+        player.transform.position = newPos;
     }
 
     private void SetPlayerStat()
@@ -90,47 +90,47 @@ public class PlayerManager : MonoBehaviour
     private void GetSkillData(int skillID, ref SkillData skillData)
     {
         Debug.LogFormat("[GetSkillData] Find {0} SkillTable", skillID);
-        Dictionary<string, object> skillTableInfo = CSVReader.FindRead("SkillTable", "SkillID", skillID);
+        //Dictionary<string, object> skillTableInfo = CSVReader.FindRead("SkillTable", "SkillID", skillID);
 
-        if (skillTableInfo != null)
-        {
-            try
-            {
-                skillData.skillID = (int)skillTableInfo["SkillID"];
-                skillData.name = (string)skillTableInfo["Name"];
-                skillData.desc = (string)skillTableInfo["Desc"];
-                skillData.icon = (string)skillTableInfo["Icon"];
-                skillData.coolTime = (int)skillTableInfo["Cooltime"];
-                skillData.skillCut = (bool)skillTableInfo["Skill_Cut"];
-                skillData.cutDire = (string)skillTableInfo["Cut_dire"];
-                skillData.skillImg = (string)skillTableInfo["SkillImage"];
-                skillData.atkDis = (int)skillTableInfo["AttackDistance"];
-                skillData.isEffect = (bool)skillTableInfo["IsEffect"];
-                skillData.isUltimate = (bool)skillTableInfo["IsUltimate"];
-                skillData.damage = (int)skillTableInfo["Damage"];
-                skillData.speed = (int)skillTableInfo["Speed"];
-                skillData.isSplash = (bool)skillTableInfo["IsSplash"];
-                skillData.isPenetrate = (bool)skillTableInfo["IsPenetrate"];
-                skillData.splashRange = (int)skillTableInfo["SplashRange"];
-                skillData.projectileSizeMulti = (int)skillTableInfo["ProjectileSizeMulti"];
-                skillData.skillEffectParam = (int)skillTableInfo["SkillEffectParam"];
-                skillData.skillEffect = EnumUtil<SkillEffect>.ParseString(skillTableInfo["SkillEffect"].ToString());
-                skillData.skillTarget = EnumUtil<SkillTarget>.ParseString(skillTableInfo["SkillTarget"].ToString());
-                skillData.projectileType = EnumUtil<ProjectileType>.ParseString(skillTableInfo["ProjectileType"].ToString());
-            }
-            catch (InvalidCastException invalidCastEx)
-            {
-                Debug.LogError("[GetSkillData] Data Type Error");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("[GetSkillData] " + ex.Message);
-            }
-        }
-        else
-        {
-            Debug.LogError("[GetSkillData] skillTableInfo is null.");
-        }
+        //if (skillTableInfo != null)
+        //{
+        //    try
+        //    {
+        //        skillData.skillID = (int)skillTableInfo["SkillID"];
+        //        skillData.name = (string)skillTableInfo["Name"];
+        //        skillData.desc = (string)skillTableInfo["Desc"];
+        //        skillData.icon = (string)skillTableInfo["Icon"];
+        //        skillData.coolTime = (int)skillTableInfo["Cooltime"];
+        //        skillData.skillCut = (bool)skillTableInfo["Skill_Cut"];
+        //        skillData.cutDire = (string)skillTableInfo["Cut_dire"];
+        //        skillData.skillImg = (string)skillTableInfo["SkillImage"];
+        //        skillData.atkDis = (int)skillTableInfo["AttackDistance"];
+        //        skillData.isEffect = (bool)skillTableInfo["IsEffect"];
+        //        skillData.isUltimate = (bool)skillTableInfo["IsUltimate"];
+        //        skillData.damage = (int)skillTableInfo["Damage"];
+        //        skillData.speed = (int)skillTableInfo["Speed"];
+        //        skillData.isSplash = (bool)skillTableInfo["IsSplash"];
+        //        skillData.isPenetrate = (bool)skillTableInfo["IsPenetrate"];
+        //        skillData.splashRange = (int)skillTableInfo["SplashRange"];
+        //        skillData.projectileSizeMulti = (int)skillTableInfo["ProjectileSizeMulti"];
+        //        skillData.skillEffectParam = (int)skillTableInfo["SkillEffectParam"];
+        //        skillData.skillEffect = EnumUtil<SkillEffect>.ParseString(skillTableInfo["SkillEffect"].ToString());
+        //        skillData.skillTarget = EnumUtil<SkillTarget>.ParseString(skillTableInfo["SkillTarget"].ToString());
+        //        skillData.projectileType = EnumUtil<ProjectileType>.ParseString(skillTableInfo["ProjectileType"].ToString());
+        //    }
+        //    catch (InvalidCastException invalidCastEx)
+        //    {
+        //        Debug.LogError("[GetSkillData] Data Type Error");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.LogError("[GetSkillData] " + ex.Message);
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.LogError("[GetSkillData] skillTableInfo is null.");
+        //}
     }
 
     #region UI
@@ -157,24 +157,4 @@ public class PlayerManager : MonoBehaviour
 
     }
     #endregion
-
-    private IEnumerator Fire()
-    {
-        //var fireDelay = new WaitForSeconds(fireTime);
-        var fireDelay = new WaitForSeconds(1f);
-
-        while (true)
-        {
-            GameObject projectileObj = GAME.projectilePool.GetObject();
-            Projectile projectile = projectileObj.GetComponent<Projectile>();
-
-            projectileObj.transform.position = player.transform.position;
-            projectileObj.SetActive(true);
-
-            Vector2 monsterPos = GameObject.FindGameObjectWithTag("Monster").transform.position;
-            projectile.Fire_Straight(monsterPos);
-
-            yield return fireDelay;
-        }
-    }
 }

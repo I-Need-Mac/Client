@@ -2,39 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#region Enum
-public enum SkillEffect
-{
-    Stun,
-    Slow,
-    Nuckback,
-    Boom
-}
-
-public enum SkillTarget
-{
-    Melee,
-    Front,
-    Back,
-    Top,
-    Bottom,
-    RandomDrop,
-    Random,
-    Near,
-    Boss
-}
-
-public enum ProjectileType
-{
-    Straight,
-    Protect,
-    Satellite,
-    Drop,
-    Boomerang,
-    Range
-}
-#endregion
-
 public class SkillData
 {
     public int skillID;             //스킬 아이디

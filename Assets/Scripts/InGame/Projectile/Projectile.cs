@@ -1,43 +1,98 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Projectile : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public abstract class Projectile : MonoBehaviour
 {
-    [SerializeField] private int speed;
+    private ProjectilePool projectilePool;
+    protected Rigidbody2D rb;
+    protected Image image;
 
-    private ProjectileType projectileType;
-    private bool isMyProjectile;
+    protected ProjectileType projectileType;
 
-    private Vector2 movePos;
-    private bool isMove;
+    protected int speed;
+    private int splashRange;
 
-    #region MonoBehaviour Function
+    protected float atkDis; //공격 사거리
+
+    private bool isMyProjectile; //플레이어, 적 총알 구분
+    private bool isPenetrate;   //관통 여부
+
+    //투사체 활성화 세팅
+    protected abstract void ActiveSetting(Transform caster, Vector2 endPos, SkillData skillData);
+    protected abstract void Move();
+
+    #region Setter
+    public void SetIsMyProjectile(bool isMyProjectile)
+    {
+        this.isMyProjectile = isMyProjectile;
+    }
+    #endregion
+
+    #region MonoBehaviour Method
+    private void Awake()
+    {
+        projectilePool = FindObjectOfType<ProjectilePool>(true);
+        rb = GetComponent<Rigidbody2D>();
+
+        Init();
+    }
+
     private void Update()
     {
-        if (isMove)
-        {
-            Move();
-        }
+        Move();
     }
 
     private void OnBecameInvisible()
     {
-        Remove();
+        Remove(); //카메라 밖으로 나갔을 때 오브젝트 비활성화
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isMyProjectile)
+        bool isCollision = (isMyProjectile && collision.CompareTag("Monster"))
+            || (!isMyProjectile && collision.CompareTag("Player"));
+
+        if (isCollision)
         {
-            if (collision.CompareTag("Enemy"))
+            if (isMyProjectile)
             {
-                Remove();
+                var monster = collision.GetComponent<Monster>();
+
+                if (monster != null)
+                {
+                    //TODO :: 몬스터 hp 감소
+                }
+                else
+                {
+                    Debug.LogError("[Projectile.OnTriggerEnter2D] isMyProjectile : true\ncollision : " + collision);
+                }
             }
-        }
-        else
-        {
-            if (collision.CompareTag("Player"))
+            else
+            {
+                var player = collision.GetComponent<Player>();
+
+                if (player != null)
+                {
+                    //TODO :: 플레이어 hp 감소
+                }
+                else
+                {
+                    Debug.LogError("[Projectile.OnTriggerEnter2D] isMyProjectile : false\ncollision : " + collision);
+                }
+            }
+
+            if (projectileType == ProjectileType.Boom)
+            {
+                transform.localScale = Vector2.one * splashRange;
+                speed = 0;
+
+                Invoke("Remove", 1f); //폭발 지속시간
+            }
+            //관통 x, 오브젝트 비활성화
+            else if (!isPenetrate)
             {
                 Remove();
             }
@@ -45,36 +100,46 @@ public class Projectile : MonoBehaviour
     }
     #endregion
 
-    private void Move()
+    protected void Remove()
     {
-        switch (projectileType)
+        if (projectilePool != null)
         {
-            case ProjectileType.Straight:
-                transform.Translate(movePos * Time.deltaTime * speed);
-                break;
+            //오브젝트 풀에 해당 투사체 오브젝트 반환
+            projectilePool.ReturnProjectile(projectileType, gameObject);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            Debug.LogError("[Projectile.Remove] projectilePool is null");
         }
     }
 
-    private void Remove()
-    {
-        isMove = false;
-        movePos = Vector2.zero;
-
-        gameObject.SetActive(false);
-    }
-
-    public void SetIsMyProjectile(bool isMyProjectile)
-    {
-        this.isMyProjectile = isMyProjectile;
-    }
-
-    public void Fire_Straight(Vector3 targetPos)
+    #region Public Method
+    public void Init()
     {
         projectileType = ProjectileType.Straight;
+        speed = 0;
+        atkDis = 0;
+        isPenetrate = false;
 
-        movePos = targetPos - transform.position;
-        movePos.Normalize();
-
-        isMove = true;
+        //rigid body 이동 초기화
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 0;
     }
+
+    public void Fire(Transform caster, Vector2 endPos, SkillData skillData)
+    {
+        transform.position = caster.position; //시전자 위치로 초기화
+
+        speed = skillData.speed;
+        atkDis = skillData.atkDis;
+        projectileType = skillData.projectileType;
+        splashRange = skillData.splashRange;
+        transform.localScale = Vector2.one * skillData.projectileSizeMulti; //크기 배율만큼 설정
+
+        ActiveSetting(caster, endPos, skillData); //투사체 활성화 세팅
+
+        gameObject.SetActive(true);
+    }
+    #endregion
 }

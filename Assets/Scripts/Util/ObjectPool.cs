@@ -5,9 +5,14 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject objPrefab;
-    [SerializeField] private int addCount = 50;
+    [SerializeField] private int addCount = 100;
 
     private Queue<GameObject> objQueue = new Queue<GameObject>();
+
+    private void Awake()
+    {
+        AddObject();
+    }
 
     public GameObject GetObject()
     {
@@ -22,6 +27,9 @@ public class ObjectPool : MonoBehaviour
 
     public void ReturnObject(GameObject obj)
     {
+        obj.transform.parent = this.transform;
+        obj.SetActive(false);
+
         objQueue.Enqueue(obj);
     }
 

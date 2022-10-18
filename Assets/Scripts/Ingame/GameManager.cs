@@ -7,8 +7,9 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("--- Script ---")]
-    public ObjectPool projectilePool;
+    [field : Header("--- Object Pool ---")]
+    [field : SerializeField] public ProjectilePool projectilePool { get; private set; }
+    [field : SerializeField] public ObjectPool monsterPool { get; private set; }
 
     [Header("--- Text ---")]
     [SerializeField] private TMP_Text text_timer;
@@ -19,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        projectilePool.AddObject();
+        //monsterPool.AddObject();
 
         Init();
     }

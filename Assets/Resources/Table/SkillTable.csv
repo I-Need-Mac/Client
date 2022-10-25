@@ -1,3 +1,0 @@
-SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damage,Speed,IsSplash,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType
-스킬아이디,스킬이름,스킬 설명,스킬설명 기획용,아이콘,쿨타임,스킬컷씬 유무,스킬 컷씬 경로,스킬 이미지,사거리,스킬 바로 시전여부,궁극기 여부,투사체 개수,피해,투사체 스피드,스플래쉬 여부,관통여부,폭발 반지름,투사체 사이즈 배율,스킬 효과,스킬 효과 파람,스킬 발사 타겟,스킬 날아가는 형태
-int,String,String,String,String,Int,Bool,String,String,int,bool,bool,int,int,int,bool,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType

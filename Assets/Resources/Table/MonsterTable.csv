@@ -1,3 +1,0 @@
-﻿MonsterID,MonsterName,HP,Attack,MoveSpeed,AtkDistance,SkillID,ExpDropRate,TreasureDropRate,MoneyDropRate,MonsterImage
-몬스터 아이디,몬스터 이름(로컬 아이디,몬스터 체력,몬스터 공격력,몬스터 이동 속도,사거리,몬스터 스킬,경험치 드랍률,보물 드랍률,돈 드랍률,몬스터 이미지
-int ,String,int ,int ,int ,int ,int ,int ,int ,int ,String

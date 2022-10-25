@@ -1,0 +1,5 @@
+StageID,StageWidth,StageHeight,PlayerSponeX,PlayerSponeY,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmount,IntroID,OutroID
+스테이지 아이디,스테이지 폭,스테이지 높이,플레이어 스폰 X좌표,플레어이 스폰 Y좌표,몹 스폰 테이블 ID,제한 시간,몹 제한 수,보상 아이디,보상 개수,인트로ID,아웃트로ID
+Int,Int,Int,Int,Int,String,Int,Int,Int_Arr,Int_Arr,Int,Int
+10101,50,50,0,0,MonsterSponeTable1,30000,10,"1,2,3","1,2,3",1,0
+10102,55,55,10,10,MonsterSponeTable2,10000,15,"1,2","1,2",0,0

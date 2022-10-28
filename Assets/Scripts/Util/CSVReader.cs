@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 public class CSVReader
 {
@@ -17,7 +18,7 @@ public class CSVReader
 
 	//	if (data == null)
  //       {
-	//		Debug.LogErrorFormat("[Read] {0} ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.", file);
+	//		Debug.LogErrorFormat("[Read] {0} íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", file);
 	//		return null;
  //       }
 
@@ -25,7 +26,7 @@ public class CSVReader
 
 	//	if (lines.Length <= 3)
 	//	{
-	//		Debug.LogErrorFormat("[Read] ÇØ´ç ÆÄÀÏÀÇ ³»¿ëÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+	//		Debug.LogErrorFormat("[Read] í•´ë‹¹ íŒŒì¼ì˜ ë‚´ìš©ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
 	//		return null;
 	//	}
 
@@ -73,7 +74,7 @@ public class CSVReader
 
  //       if (data == null)
  //       {
- //           Debug.LogErrorFormat("[FindRead] {0} ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.", file);
+ //           Debug.LogErrorFormat("[FindRead] {0} íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", file);
  //           return null;
  //       }
 
@@ -81,7 +82,7 @@ public class CSVReader
 
  //       if (lines.Length <= 3)
  //       {
- //           Debug.LogErrorFormat("[FindRead] ÇØ´ç ÆÄÀÏÀÇ ³»¿ëÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+ //           Debug.LogErrorFormat("[FindRead] í•´ë‹¹ íŒŒì¼ì˜ ë‚´ìš©ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
  //           return null;
  //       }
 
@@ -154,7 +155,7 @@ public class CSVReader
 
  //       if (data == null)
  //       {
- //           Debug.LogErrorFormat("[Read] {0} ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.", file);
+ //           Debug.LogErrorFormat("[Read] {0} íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", file);
  //           return null;
  //       }
 
@@ -162,7 +163,7 @@ public class CSVReader
 
  //       if (lines.Length <= 3)
  //       {
- //           Debug.LogErrorFormat("[Read] ÇØ´ç ÆÄÀÏÀÇ ³»¿ëÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+ //           Debug.LogErrorFormat("[Read] í•´ë‹¹ íŒŒì¼ì˜ ë‚´ìš©ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
  //           return null;
  //       }
 
@@ -190,7 +191,7 @@ public class CSVReader
 
         if (data == null)
         {
-            Debug.LogErrorFormat("[Read] {0} ÆÄÀÏÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.", TABLE_HOME + file);
+            Debug.LogErrorFormat("[Read] {0} íŒŒì¼ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.", TABLE_HOME + file);
             return null;
         }
 
@@ -198,7 +199,7 @@ public class CSVReader
 
         if (lines.Length <= 3)
         {
-            Debug.LogErrorFormat("[Read] ÇØ´ç ÆÄÀÏÀÇ ³»¿ëÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+            Debug.LogErrorFormat("[Read] í•´ë‹¹ íŒŒì¼ì˜ ë‚´ìš©ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
             return null;
         }
 
@@ -212,7 +213,16 @@ public class CSVReader
             Dictionary<string, object> _dataList = new Dictionary<string, object>();
             for (int j = 1; j < val.Length; j++)
             {
-                _dataList.Add(h[j],val[j]);
+                //_dataList.Add(h[j],val[j]);
+                if (val[j].Contains("|"))
+                {
+                    List<string> list = Regex.Split(val[j], "[|]").ToList();
+                    _dataList.Add(h[j], list);
+                }
+                else
+                {
+                    _dataList.Add(h[j], val[j]);
+                }
             }
 
             dataDic.Add(val[0], _dataList);

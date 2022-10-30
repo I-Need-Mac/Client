@@ -185,7 +185,7 @@ public class CSVReader
  //       return dataDic;
  //   }
 
-    public static Dictionary<string, Dictionary<string,object>> IDRead(string file)
+    public static Dictionary<string, Dictionary<string,object>> Read(string file)
     {
         TextAsset data = Resources.Load(TABLE_HOME+file) as TextAsset;
 

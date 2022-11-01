@@ -1,4 +1,4 @@
-SturctureID,StructureName,FrontalImagePath,TopImagePath,Gimmick,Gimmick_Param,IsPassable,CastTime,LayerOrder
+SturctureID,StructureName,FrontalPath,TopPath,Gimmick,GimmickParam,IsPassable,CastTime,LayerOrder
 오브젝트 ID,오브젝트 이름,정면 이미지 패스,상단면 이미지 패스,기믹 효과 정의,기믹 정의 시 요구되는 N,오브젝트 통과 가능 여부,기믹 효과 시전 시간,오브젝트 레이어 순서
 int,LocalizeID,String,String,GimmickEnum,int,Bool,int,int
 101,FieldStructure_Untidytile1,dummy,Null,Tile,0,TRUE,0,5
@@ -14,7 +14,7 @@ int,LocalizeID,String,String,GimmickEnum,int,Bool,int,int
 201,FieldStructure_Letterbox,dummy,dummy,Obstacle,0,FALSE,0,5
 202,FieldStructure_Backpane,Null,dummy,Obstacle,0,FALSE,0,5
 203,FieldStructure_Mobpillar,Null,dummy,Obstacle,0,FALSE,0,5
-204,FieldStructure_Altar,dummy,dummy,Obstacle,0,FALSE,0,3
+204,FieldStructure_Altar,dummy,dummy,Obstacle,0,FALSE,0,2
 205,FieldStructure_Wall,dummy,dummy,Obstacle,0,FALSE,0,2
 206,FieldStructure_Humancorpse,Null,dummy,Obstacle,0,FALSE,0,2
 207,FieldStructure_Mobcorpse,Null,dummy,Obstacle,0,FALSE,0,2
@@ -30,6 +30,6 @@ int,LocalizeID,String,String,GimmickEnum,int,Bool,int,int
 407,FieldStructure_Destructionstone3,Null,dummy,BeamCircle,1,TRUE,1,2
 408,FieldStructure_Destructionstone4,Null,dummy,BeamCross,0,TRUE,1,2
 409,FieldStructure_Demonattack,Null,dummy,SurpriseBox,1,FALSE,1,2
-410,FieldStructure_Warningpunishment,dummy,Null,Warning,2,TRUE,0,2
-411,FieldStructure_Devinepunishment,Null,dummy,Punishment,0.5,TRUE,0,2
-412,FieldStructure_Poisonmist,Null,dummy,DebuffMovespeed,0.5,TRUE,0,0
+410,FieldStructure_Warning,dummy,Null,Warning,2,TRUE,0,2
+411,FieldStructure_Punishment,Null,dummy,Punishment,0.5,TRUE,0,2
+412,FieldStructure_Poisonmist,Null,dummy,DebuffSpeed,0.5,TRUE,0,0

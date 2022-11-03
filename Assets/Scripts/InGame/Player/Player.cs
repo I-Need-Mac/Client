@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int Speed;
-    private Rigidbody2D Rigid;
-    private Vector3 Dir;
+    [SerializeField] private int speed;
+    private Rigidbody2D rigid;
+    private Vector3 dir;
 
     private void Start()
     {
-        Rigid = GetComponent<Rigidbody2D>();
-        Dir = Vector3.zero;
+        rigid = GetComponent<Rigidbody2D>();
+        dir = Vector3.zero;
     }
 
     /*
@@ -30,13 +30,13 @@ public class Player : MonoBehaviour
 
     private void KeyDir()
     {
-        Dir.x = Input.GetAxis("Horizontal");    //left, right
-        Dir.y = Input.GetAxis("Vertical");      //up, down
+        dir.x = Input.GetAxis("Horizontal");    //left, right
+        dir.y = Input.GetAxis("Vertical");      //up, down
     }
 
     private void Move()
     {
-        Rigid.MovePosition((Vector3)Rigid.position + (Dir * Speed * Time.fixedDeltaTime));
+        rigid.MovePosition((Vector3)rigid.position + (dir * speed * Time.fixedDeltaTime));
     }
 
 }

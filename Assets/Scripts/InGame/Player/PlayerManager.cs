@@ -5,14 +5,15 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField] private Player player;
+    [SerializeField] private string testCharacterId; //테스트용 필드
 
-    private PlayerData playerData;
-    private int maxHp;
+    private PlayerData playerData; //플레이어의 데이터를 가지는 객체
+    private int maxHp; //최대 체력
 
     private void Awake()
     {
         playerData = player.playerData;
-        SetPlayerStatus("1022");
+        SetPlayerStatus(testCharacterId);
     }
 
     //캐릭터에 스탯 부여
@@ -21,7 +22,8 @@ public class PlayerManager : MonoBehaviour
         Dictionary<string, object> findRow = FindCharacter(characterId);
         if(findRow == null)
         {
-            Debug.Log("[Error] 존재하지 않는 캐릭터입니다");
+            //없는 캐릭터일 경우 에러메시지 송출
+            Debug.LogError("존재하지 않는 캐릭터입니다");
             return;
         }
 
@@ -38,9 +40,9 @@ public class PlayerManager : MonoBehaviour
         playerData.SetMoveSpeed(Convert.ToInt32(findRow["MoveSpeed"]));
         playerData.SetGetItemRange(Convert.ToInt32(findRow["GetItemRange"]));
 
-        //Debug.Log("캐릭터 이름: "+playerData.characterName);
-        //Debug.Log("캐릭터 체력: "+playerData.hp);
-        //Debug.Log("캐릭터 공격력: "+playerData.attack);
+        //Debug.Log("캐릭터 이름: " + playerData.characterName);
+        //Debug.Log("캐릭터 체력: " + playerData.hp);
+        //Debug.Log("캐릭터 공격력: " + playerData.attack);
         //Debug.Log("캐릭터 크리티컬 확률: " + playerData.criRatio);
         //Debug.Log("캐릭터 크리티컬 데미지: " + playerData.criDamage);
         //Debug.Log("캐릭터 쿨타임 감소량: " + playerData.coolDown);
@@ -57,12 +59,11 @@ public class PlayerManager : MonoBehaviour
     {
         Dictionary<string, Dictionary<string, object>> playerStatusTable = CSVReader.Read("CharacterTable");
 
-        foreach (string id in playerStatusTable.Keys)
+        //foreach -> ContainsKey로 변경
+        //가독성을 위함, 유의미한 성능차이 없음
+        if (playerStatusTable.ContainsKey(characterId))
         {
-            if (characterId.Equals(id))
-            {
-                return playerStatusTable[id];
-            }
+            return playerStatusTable[characterId];
         }
         //찾는 캐릭터가 없을 경우 null 리턴
         return null;

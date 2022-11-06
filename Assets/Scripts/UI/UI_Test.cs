@@ -17,17 +17,17 @@ public class UI_Test : MonoBehaviour
     {
         // csv read
         // 스토리 테이블 읽기
-        Dictionary<int, List<object>> storyData = CSVReader.FileRead("Table/StoryTable");
-        foreach (KeyValuePair<int, List<object>> pair in storyData)
-        {
-            Debug.Log(pair.Key);
+        //Dictionary<int, List<object>> storyData = CSVReader.FileRead("Table/StoryTable");
+        //foreach (KeyValuePair<int, List<object>> pair in storyData)
+        //{
+        //    Debug.Log(pair.Key);
 
-            // 테이블에 있는 페이지를 읽어옵니다.
-            List<object> list = pair.Value;
-            for( int i = 0; i < list.Count; i++ )
-            {
-            }
-        }
+        //    // 테이블에 있는 페이지를 읽어옵니다.
+        //    List<object> list = pair.Value;
+        //    for( int i = 0; i < list.Count; i++ )
+        //    {
+        //    }
+        //}
 
         //Dictionary<int, List<object>> pageData = CSVReader.FileRead("Table/Story/TEST1");
 

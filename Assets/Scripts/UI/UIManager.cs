@@ -11,9 +11,12 @@ public class UIManager : MonoSingleton<UIManager>
 {
     public enum UI_Prefab
     {
-        UI_Main,
-        UI_Inventory,
-        UI_Skill,
+        UI_StartMain,
+        UI_GameMain,
+
+        UI_Login,
+        UI_Agreement,
+
         UI_StoryBook,
     }
 
@@ -23,7 +26,7 @@ public class UIManager : MonoSingleton<UIManager>
     int currentPopupCount = 0;
 
     // 메인 UI
-    UI_Main mainUI;
+    UI_StartMain mainUI;
     // UI전체 팝업 목록
     List<UI_Popup> popupList = new List<UI_Popup>();
 
@@ -62,9 +65,12 @@ public class UIManager : MonoSingleton<UIManager>
         string[] names = Enum.GetNames(typeof(UI_Prefab));
 
         // 메인 UI를 생성합니다.
-        mainUI = Util.UILoad<UI_Main>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_Main]}");
+        mainUI = Util.UILoad<UI_StartMain>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_StartMain]}");
         if (mainUI == null)
+        {
             Debug.Log("mainUI is NULL");
+            return;
+        }
 
         // 캔버스를 셋팅합니다.
         SetCanvas(mainUI.gameObject);
@@ -73,7 +79,7 @@ public class UIManager : MonoSingleton<UIManager>
         // 전체 UI리스트를 셋팅합니다.
         for ( int i = 0; i < names.Length; i++ )
         {
-            if (i == (int)UI_Prefab.UI_Main)
+            if (i == (int)UI_Prefab.UI_StartMain)
                 continue;
 
             // 팝업 UI를 생성합니다.

@@ -12,12 +12,12 @@ public class LoadMapManager : SingleTon<LoadMapManager>
         sceneData = CSVReader.Read("StageTable");
     }
 
-    public string SceneNumberToMapName(string sceneNumber)
+    public string SceneNumberToMapName(int sceneNumber)
     {
         DebugManager.Instance.PrintDebug("[LoadMapManager] Loading Scene Number : " + sceneNumber);
 
         string returnMapName;
-        returnMapName = Convert.ToString(sceneData[sceneNumber]["MapID"]);
+        returnMapName = Convert.ToString(sceneData[sceneNumber.ToString()]["MapID"]);
         DebugManager.Instance.PrintDebug("[LoadMapManager] Loading Map Name : " + returnMapName);
 
         return returnMapName;

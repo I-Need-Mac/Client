@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class UIData
 {
-    #region UIÅ×ÀÌºí °ü·Ã
+    #region UIí…Œì´ë¸” ê´€ë ¨
     public enum UITable
     {
         StoryTable,
     }
 
-    // ½ºÅä¸® µ¥ÀÌÅÍ
+    // ìŠ¤í† ë¦¬ ë°ì´í„°
     static Dictionary<int, List<object>> storyTableData = new Dictionary<int, List<object>>();
     public static Dictionary<int, List<object>> StoryData { get { return storyTableData; } }
 
@@ -19,26 +19,26 @@ public class UIData
 
     public static void ReadData()
     {
-        // ½ºÅä¸® Å×ÀÌºíÀ» ÀĞ½À´Ï´Ù.
-        storyTableData = CSVReader.FileRead("Table/" + Enum.GetName(typeof(UITable), UITable.StoryTable));
+        // ìŠ¤í† ë¦¬ í…Œì´ë¸”ì„ ì½ìŠµë‹ˆë‹¤.
+        //storyTableData = CSVReader.FileRead("Table/" + Enum.GetName(typeof(UITable), UITable.StoryTable));
 
-        int index = 0;
-        foreach (KeyValuePair<int, List<object>> pair in storyTableData)
-        {
-            Debug.Log(pair.Key);
+        //int index = 0;
+        //foreach (KeyValuePair<int, List<object>> pair in storyTableData)
+        //{
+        //    Debug.Log(pair.Key);
 
-            // Å×ÀÌºí¿¡ ÀÖ´Â ÆäÀÌÁö¸¦ ÀĞ¾î¿É´Ï´Ù.
-            List<object> list = pair.Value;
-            string pageTable = list[(int)UI_StoryBook.StoryTableInfo.StoryPath].ToString();
-            Dictionary<int, List<object>> pageData = CSVReader.FileRead("Table/Story/" + pageTable);
-            if (pageData == null)
-                continue;
+        //    // í…Œì´ë¸”ì— ìˆëŠ” í˜ì´ì§€ë¥¼ ì½ì–´ì˜µë‹ˆë‹¤.
+        //    List<object> list = pair.Value;
+        //    string pageTable = list[(int)UI_StoryBook.StoryTableInfo.StoryPath].ToString();
+        //    Dictionary<int, List<object>> pageData = CSVReader.FileRead("Table/Story/" + pageTable);
+        //    if (pageData == null)
+        //        continue;
 
-            if (pageData.Count == 0)
-                continue;
+        //    if (pageData.Count == 0)
+        //        continue;
 
-            pageTableData.Add(pair.Key, pageData);
-        }
+        //    pageTableData.Add(pair.Key, pageData);
+        //}
     }
     #endregion
 }

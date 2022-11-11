@@ -115,33 +115,33 @@ public class Player : MonoBehaviour
     #endregion
 
     //스탯 증감 관련
-    #region INCREASE STATUS
+    #region Modify STATUS
     //increment는 버프+디버프 값 이하 status에 모두 동일하게 적용
     //버프, 디버프의 기본 수치는 0
 
     //체력 증감 함수
-    private void IncreaseHp(int buff = 0, int deBuff = 0)
+    private void ModifyHp(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         hp += increment;
     }
 
     //공격력 증감 함수
-    private void IncreaseAttack(int buff = 0, int deBuff = 0)
+    private void ModifyAttack(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         attack += increment;
     }
 
     //크리티컬확률 증감 함수
-    private void IncreaseCriRatio(int buff = 0, int deBuff = 0)
+    private void ModifyCriRatio(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         criRatio += increment;
     }
 
     //크리티컬데미지 증감함수
-    private void IncreaseCriDamage(int buff = 0, int deBuff = 0)
+    private void ModifyCriDamage(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         criDamage += increment;
@@ -149,7 +149,7 @@ public class Player : MonoBehaviour
 
     //재사용대기시간 증감 함수
     //재사용대기시간 = 기존재사용대기시간*(재사용대기시간감소^2/(재사용대기시간감소^2+재사용대기시간감소상수))*재사용대기시간감소최대치조절계수/10000
-    private void IncreaseCoolDown(int buff = 0, int deBuff = 0)
+    private void ModifyCoolDown(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         float calculateCoolDown = coolDown * (increment * increment / (increment * increment + coolTimeConstant)) * coolTimeCoefficient / PER;
@@ -157,35 +157,35 @@ public class Player : MonoBehaviour
     }
 
     //체젠량 증감 함수
-    private void IncreaseHpRegen(int buff = 0, int deBuff = 0)
+    private void ModifyHpRegen(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         hpRegen += increment;
     }
 
     //쉴드개수 증감함수
-    private void IncreaseShield(int buff = 0, int deBuff = 0)
+    private void ModifyShield(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         shield += increment;
     }
 
     //투사체 개수 증감 함수
-    private void IncreaseProjectileAdd(int buff = 0, int deBuff = 0)
+    private void ModifyProjectileAdd(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         projectileAdd += increment;
     }
 
     //이동속도 증감 함수
-    private void IncreaseMoveSpeed(int buff = 0, int deBuff = 0)
+    private void ModifyMoveSpeed(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         moveSpeed *= 1 + (buff - deBuff);
     }
 
     //아이템획득범위 증감함수
-    private void IncreaseGetItemRange(int buff = 0, int deBuff = 0)
+    private void ModifyGetItemRange(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         getItemRange += increment;

@@ -1,3 +1,4 @@
+using SKILLCONSTANT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ public class Player : MonoBehaviour
 
     public PlayerData playerData { get; private set; } = new PlayerData();
 
-    //유틸, 유니티와 관련
+    /*유틸, 유니티와 관련*/
     #region Util & Unity
     //상수값 읽어오는 함수
     private int findConstant(string constantName)
@@ -96,7 +97,8 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    //키보드 입력 및 움직임 관련
+
+    /*키보드 입력 및 움직임 관련*/
     #region key input & movement
     //키보드 입력을 받아 방향을 결정하는 함수
     private void KeyDir()
@@ -114,7 +116,8 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    //스탯 증감 관련
+
+    /*스탯 증감 관련*/
     #region Modify STATUS
     //increment는 버프+디버프 값 이하 status에 모두 동일하게 적용
     //버프, 디버프의 기본 수치는 0
@@ -193,7 +196,8 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    //캐릭터 로직 관련
+
+    /*캐릭터 로직 관련*/
     #region Character Logic
     //크리티컬 판별 함수
     private bool IsCritical()
@@ -202,12 +206,23 @@ public class Player : MonoBehaviour
     }
 
     //최종적으로 몬스터에게 가하는 데미지 계산 함수
-    //오리지널데미지 = 공격력 * 스킬피해
+    //스킬 데미지 계산 방식에 따라 따로 계산
+    //오리지널데미지 = 공격력 + or * 스킬피해
     //크리티컬데미지 = 오리지널데미지 * 크리티컬데미지
     //일단 스킬피해 제외하고 구현
-    private int TotalDamage(int skillDamage)
+    private int TotalDamage(int skillDamage, CALC_DAMAGE_TYPE type)
     {
-        int originalDamage = attack * skillDamage;
+        int originalDamage;
+        if (type == CALC_DAMAGE_TYPE.PLUS)
+        {
+            originalDamage = attack + skillDamage;
+        }
+        else
+        {
+            originalDamage = attack * skillDamage;
+        }
+
+        //크리티컬 체크
         if (IsCritical())
         {
             return (int)(originalDamage * (1 + criDamage / PER)); //소수점 버림
@@ -262,4 +277,5 @@ public class Player : MonoBehaviour
     //    DebugManager.Instance.PrintDebug("현재체력: {0}", currentHp);
     //}
     #endregion
+
 }

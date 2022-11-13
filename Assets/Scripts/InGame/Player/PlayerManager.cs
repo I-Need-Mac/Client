@@ -12,7 +12,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
 
     private PlayerData playerData; //플레이어의 데이터를 가지는 객체
 
-    private void Awake()
+    protected override void Awake()
     {
         playerData = player.playerData;
         PlayerSetting(FindCharacter(testCharacterId));

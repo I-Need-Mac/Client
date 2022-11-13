@@ -14,8 +14,11 @@ public class UIManager : MonoSingleton<UIManager>
         UI_StartMain,
         UI_GameMain,
 
+        UI_NickName,
         UI_Login,
         UI_Agreement,
+        UI_ESCPopup,
+        UI_MyInfo,
 
         UI_StoryBook,
     }
@@ -56,7 +59,7 @@ public class UIManager : MonoSingleton<UIManager>
         // 메인 UI는 항상 최상위에 그려집니다.
         mainUiOrder = 0;
         // 초기 우선순위 셋팅
-        currentPopupCount = 0;
+        currentPopupCount = mainUiOrder;
     }
 
     // UI를 생성합니다.
@@ -130,10 +133,9 @@ public class UIManager : MonoSingleton<UIManager>
 
         // 우선순위 지정
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        canvas.sortingOrder = mainUiOrder + 1;
-        
         // 현재 보여지는 팝업 수 증가
         currentPopupCount++;
+        canvas.sortingOrder = currentPopupCount;
 
         go.SetActive(true);
 

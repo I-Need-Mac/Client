@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2222110973691964540}
   - component: {fileID: 5028101389830374510}
   - component: {fileID: 6463223947906066281}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PressKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 7459406037827423193}
   - component: {fileID: 8276975599413324739}
   - component: {fileID: 2288669459324070365}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Version
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: -6685878808184368226}
   - component: {fileID: -2856660743534142958}
   - component: {fileID: -3539901456458090957}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI_StartMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,11 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb50c004c28831409354e7888379255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleImage: {fileID: 0}
-  versionImage: {fileID: 0}
-  pressKeyImage: {fileID: 0}
-  steamLogin: {fileID: 0}
-  termsAgree: {fileID: 0}
 --- !u!223 &-6685878808184368226
 Canvas:
   m_ObjectHideFlags: 0
@@ -357,7 +352,7 @@ GameObject:
   - component: {fileID: 4410568521506554031}
   - component: {fileID: 9072581276512450374}
   - component: {fileID: 2316052925026125582}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}

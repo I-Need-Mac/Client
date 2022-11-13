@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// UI테스트용
-public class UITest : MonoBehaviour
+public class UI_Agreement : UI_Popup
 {
     // Start is called before the first frame update
     void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         
     }

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 페이지 기능
-public class UIPage : UIBase
+// 팝업 기능
+public class UI_Popup : UI_Base
 {
     
 }

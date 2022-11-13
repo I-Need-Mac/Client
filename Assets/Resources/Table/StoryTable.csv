@@ -1,3 +1,6 @@
-﻿StoryID,StoryTitle,StoryPage,StoryPath
-스토리 아이디,스토리 제목,스토리 페이지수,스토리 csv명
-int,String,int,String
+﻿StoryID,StoryTitle,StoryPage,StoryPath,StoryBGM
+스토리 아이디,스토리 제목,스토리 페이지수,스토리 csv명,스토리 BGM
+int,String,int,String,String
+1001,StoryTitle_Dummy1,8,TEST1,TESTMusic1
+1002,StoryTitle_Dummy2,3,TEST2,TESTMusic2
+1003,StoryTitle_Dummy3,10,TEST3,TESTMusic3

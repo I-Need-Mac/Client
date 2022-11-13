@@ -1,32 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using SKILLCONSTANT;
 
 public class SkillData
 {
-    public int skillID;             //½ºÅ³ ¾ÆÀÌµğ
-    public int coolTime;            //ÄğÅ¸ÀÓ
-    public int atkDis;              //»ç°Å¸®
-    public int projectileCount;     //Åõ»çÃ¼ °³¼ö
-    public int damage;              //ÇÇÇØ
-    public int speed;               //Åõ»çÃ¼ ½ºÇÇµå
-    public int splashRange;         //Æø¹ß ¹İÁö¸§
-    public int projectileSizeMulti; //Åõ»çÃ¼ »çÀÌÁî ¹èÀ²
-    public int skillEffectParam;    //½ºÅ³ È¿°ú ÆÄ¶÷
+    public int skillId { get; private set; }                        //ìŠ¤í‚¬ idê°’
+    public int coolTime { get; private set; }                       //ìŠ¤í‚¬ì˜ ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„
+    public int attackDistance { get; private set; }                 //ìŠ¤í‚¬ ì‚¬ê±°ë¦¬
+    public int damage { get; private set; }                         //ìŠ¤í‚¬ ê³µê²©ë ¥
+    public int skillEffectParam { get; private set; }               //ìŠ¤í‚¬ ì´í™íŠ¸ íŒŒë¼ë¯¸í„°
+    public bool skillCut { get; private set; }                      //í•„ì‚¬ê¸° ì—°ì¶œ ê°’
+    public bool isEffect { get; private set; }                      //ê²Œì„ ì‹œì‘ ì‹œ ìŠ¤í‚¬ ë°œë™ ì—¬ë¶€
+    public bool isUltimate { get; private set; }                    //ìŠ¤í‚¬ì˜ íƒ€ì…ì´ ê¶ê·¹ê¸°ì¸ì§€ ì—¬ë¶€
+    public string name { get; private set; }                        //ìŠ¤í‚¬ ì´ë¦„
+    public string desc { get; private set; }                        //ìŠ¤í‚¬ ì„¤ëª…
+    public string icon { get; private set; }                        //ìŠ¤í‚¬ ì•„ì´ì½˜ ë°ì´í„° ì—°ê²°ê°’
+    public string cutDire { get; private set; }                     //í•„ì‚´ê¸° ì»·ì”¬ ì—°ì¶œ ê°’
+    public string skillImage { get; private set; }                  //ìŠ¤í‚¬ ë°œë™ ì‹œ ì‚¬ìš©í•  ì• ë‹ˆë©”ì´ì…˜ íŒŒì¼ ì´ë¦„
+    public SKILL_EFFECT skillEffect { get; private set; }           //ìŠ¤í‚¬ ì´í™íŠ¸
+    public SKILL_TARGET skillTarget { get; private set; }           //ìŠ¤í‚¬ ë°œë™ ëŒ€ìƒ
+    public CALC_DAMAGE_TYPE calcDamageType { get; private set; }    //ë°ë¯¸ì§€ ê³„ì‚° ë°©ì‹
 
-    public string name;     //½ºÅ³ ÀÌ¸§
-    public string desc;     //½ºÅ³ ¼³¸í
-    public string icon;     //¾ÆÀÌÄÜ
-    public string cutDire;  //½ºÅ³ ÄÆ¾À °æ·Î
-    public string skillImg; //½ºÅ³ ÀÌ¹ÌÁö
+    //ê°€ë…ì„±ì„ ìœ„í•´ íˆ¬ì‚¬ì²´ ì „ìš©ì€ ë”°ë¡œ ì •ë¦¬
+    public int projectileCount { get; private set; }                //íˆ¬ì‚¬ì²´ ê°œìˆ˜
+    public int speed { get; private set; }                          //íˆ¬ì‚¬ì²´ ì†ë„
+    public int splashRange { get; private set; }                    //ìŠ¤í”Œë ˆì‰¬ ë²”ìœ„ (ì›ì˜ ë°˜ì§€ë¦„)
+    public int projectileSizeMulti { get; private set; }            //íˆ¬ì‚¬ì²´ í¬ê¸° ë°°ìœ¨
+    public bool isPenetrate { get; private set; }                   //ìŠ¤í‚¬ì˜ ê´€í†µ ì—¬ë¶€
+    public PROJECTILE_TYPE projectileType { get; private set; }     //íˆ¬ì‚¬ì²´ íƒ€ì…
 
-    public bool skillCut;    //½ºÅ³ ÄÆ¾À À¯¹«
-    public bool isEffect;    //½ºÅ³ ¹Ù·Î ½ÃÀü ¿©ºÎ
-    public bool isUltimate;  //±Ã±Ø±â ¿©ºÎ
-    public bool isSplash;    //½ºÇÃ·¡½¬ ¿©ºÎ
-    public bool isPenetrate; //°üÅë ¿©ºÎ
-    
-    public SkillEffect skillEffect;       //½ºÅ³ È¿°ú
-    public SkillTarget skillTarget;       //½ºÅ³ ¹ß»ç Å¸°Ù
-    public ProjectileType projectileType; //½ºÅ³ ³¯¾Æ°¡´Â ÇüÅÂ
+    public void SetSkillId(int skillId) { this.skillId = skillId; }
+    public void SetCoolTime(int coolTime) { this.coolTime = coolTime; }
+    public void SetAttackDistance(int attackDistance) { this.attackDistance = attackDistance; }
+    public void SetProjectileCount(int projectileCount) { this.projectileCount = projectileCount; }
+    public void SetDamage(int damage) { this.damage = damage; }
+    public void SetSpeed(int speed) { this.speed = speed; }
+    public void SetSplashRange(int splashRange) { this.splashRange = splashRange; }
+    public void SetProjectileSizeMulti(int projectileSizeMulti) { this.projectileSizeMulti = projectileSizeMulti; }
+    public void SetSkillEffectParam(int skillEffectParam) { this.skillEffectParam = skillEffectParam; }
+    public void SetSkillCut(bool skillCut) { this.skillCut = skillCut; }
+    public void SetIsEffect(bool isEffect) { this.isEffect = isEffect; }
+    public void SetIsUltimate(bool isUltimate) { this.isUltimate = isUltimate; }
+    public void SetIsPenetrate(bool isPenetrate) { this.isPenetrate = isPenetrate; }
+    public void SetName(string name) { this.name = name; }
+    public void SetDesc(string desc) { this.desc = desc; }
+    public void SetIcon(string icon) { this.icon = icon; }
+    public void SetCutDire(string cutDire) { this.cutDire = cutDire; }
+    public void SetSkillImage(string skillImage) { this.skillImage = skillImage; }
+    public void SetSkillEffect(SKILL_EFFECT skillEffect) { this.skillEffect = skillEffect; }
+    public void SetSkillTarget(SKILL_TARGET skillTarget) { this.skillTarget = skillTarget; }
+    public void SetProjectileType(PROJECTILE_TYPE projectileType) { this.projectileType = projectileType; }
+    public void SetCalcDamageType(CALC_DAMAGE_TYPE calcDamageType) { this.calcDamageType = calcDamageType; }
 }

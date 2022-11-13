@@ -1,28 +1,35 @@
+using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
-// UIÅ×½ºÆ®¿ë
+// UIí…ŒìŠ¤íŠ¸ìš©
 public class UI_Test : MonoBehaviour
 {
     private void Awake()
     {
+        SettingManager.Instance.ReadSettingFile();
+        SoundManager.Instance.CreateSoundManager();
+
         // manager init
         UIManager.Instance.Init();
 
+        
         // csv read
         //Dictionary<int, List<object>> csvRead = CSVReader.FileRead("Table/StoryTable");
     }
 
     void Start()
     {
+        
         // csv read
-        // ½ºÅä¸® Å×ÀÌºí ÀĞ±â
+        // ìŠ¤í† ë¦¬ í…Œì´ë¸” ì½ê¸°
         //Dictionary<int, List<object>> storyData = CSVReader.FileRead("Table/StoryTable");
         //foreach (KeyValuePair<int, List<object>> pair in storyData)
         //{
         //    Debug.Log(pair.Key);
 
-        //    // Å×ÀÌºí¿¡ ÀÖ´Â ÆäÀÌÁö¸¦ ÀĞ¾î¿É´Ï´Ù.
+        //    // í…Œì´ë¸”ì— ìˆëŠ” í˜ì´ì§€ë¥¼ ì½ì–´ì˜µë‹ˆë‹¤.
         //    List<object> list = pair.Value;
         //    for( int i = 0; i < list.Count; i++ )
         //    {

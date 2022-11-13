@@ -5,15 +5,24 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_GameMain : UI_Popup
+public class UI_ESCPopup : UI_Popup
 {
     enum GameObjects
     {
-        StoryMode,
-        SelectSorcerer,
-        Soul,
-        Sorcere
+        MyInfo,
+        RankBoard,
+        Friend,
+        Setting
     }
+
+    [SerializeField]
+    Text myInfoText;
+    [SerializeField]
+    Text rankingText;
+    [SerializeField]
+    Text friendText;
+    [SerializeField]
+    Text settingText;
 
     void Start()
     {
@@ -24,6 +33,11 @@ public class UI_GameMain : UI_Popup
         {
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
         }
+
+        myInfoText.text = LocalizeManager.Instance.GetText("UI_MyInfo");
+        rankingText.text = LocalizeManager.Instance.GetText("UI_RankingBoard");
+        friendText.text = LocalizeManager.Instance.GetText("UI_Friend");
+        settingText.text = LocalizeManager.Instance.GetText("UI_Setting");
     }
 
     public void OnClickObject(PointerEventData data)
@@ -36,25 +50,18 @@ public class UI_GameMain : UI_Popup
 
         switch (imageValue)
         {
-            case GameObjects.StoryMode:
+            case GameObjects.MyInfo:
+                this.CloseUI<UI_ESCPopup>();
+                UIManager.Instance.OpenUI<UI_MyInfo>();
                 break;
-            case GameObjects.SelectSorcerer:
+            case GameObjects.RankBoard:
                 break;
-            case GameObjects.Soul:
+            case GameObjects.Friend:
                 break;
-            case GameObjects.Sorcere:
+            case GameObjects.Setting:
                 break;
             default:
                 break;
-        }
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UIManager.Instance.OpenUI<UI_ESCPopup>();
-            //Debug.Log("anykey");
         }
     }
 }

@@ -12,7 +12,12 @@ public class UI_ESCPopup : UI_Popup
         MyInfo,
         RankBoard,
         Friend,
-        Setting
+        Setting,
+    }
+
+    enum Images
+    {
+        Close,
     }
 
     [SerializeField]
@@ -27,11 +32,17 @@ public class UI_ESCPopup : UI_Popup
     void Start()
     {
         Bind<GameObject>(typeof(GameObjects));
-
         Array objectValue = Enum.GetValues(typeof(GameObjects));
         for (int i = 0; i < objectValue.Length; i++)
         {
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
+        }
+
+        Bind<Image>(typeof(Images));
+        Array imageValue = Enum.GetValues(typeof(Images));
+        for (int i = 0; i < imageValue.Length; i++)
+        {
+            BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
 
         myInfoText.text = LocalizeManager.Instance.GetText("UI_MyInfo");
@@ -51,7 +62,6 @@ public class UI_ESCPopup : UI_Popup
         switch (imageValue)
         {
             case GameObjects.MyInfo:
-                this.CloseUI<UI_ESCPopup>();
                 UIManager.Instance.OpenUI<UI_MyInfo>();
                 break;
             case GameObjects.RankBoard:
@@ -59,6 +69,24 @@ public class UI_ESCPopup : UI_Popup
             case GameObjects.Friend:
                 break;
             case GameObjects.Setting:
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void OnClickImage(PointerEventData data)
+    {
+        Images imageValue = (Images)FindEnumValue<Images>(data.pointerClick.name);
+        if ((int)imageValue < -1)
+            return;
+
+        Debug.Log(data.pointerClick.name);
+
+        switch (imageValue)
+        {
+            case Images.Close:
+                this.CloseUI<UI_ESCPopup>();
                 break;
             default:
                 break;

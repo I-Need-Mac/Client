@@ -6,36 +6,28 @@ using UnityEngine;
 public class Skill : MonoBehaviour
 {
     private SkillData skillData;
-    private string skillId;
-    //값에 변화가 생기는 데이터들 관리
-    private int coolTime;
-    private int attackDistance;
-    private int damage;
-    //투사체용
-    private int projectileCount;
-    private int speed;
-    private int splashRange;
-    private int projectileSizeMulti;
-    private bool isPenetrate;
-    private PROJECTILE_TYPE projectileType;
 
-    private void SkillSetting()
+    public Skill(string skillId)
     {
-        SkillLoad(FindSkill(skillId));
-
-        coolTime = skillData.coolTime;
-        attackDistance = skillData.attackDistance;
-        damage = skillData.damage;
-
-        projectileCount = skillData.projectileCount;
-        speed = skillData.speed;
-        splashRange = skillData.splashRange;
-        projectileSizeMulti = skillData.projectileSizeMulti;
-        isPenetrate = skillData.isPenetrate;
-        projectileType = skillData.projectileType;
+        skillData = new SkillData();
+        SkillDataLoad(FindSkill(skillId));
+        if (IsProjectileSkill(skillData))
+        {
+            //TO DO :: 투사체 생성
+        }
     }
 
-    private void SkillLoad(Dictionary<string, object> skillInfo)
+    private bool IsProjectileSkill(SkillData skillData)
+    {
+        return Enum.IsDefined(typeof(PROJECTILE_TYPE), skillData.projectileType);
+    }
+
+    private void SkillLevelUp()
+    {
+        SkillDataLoad(FindSkill(Convert.ToString(skillData.skillId + 1)));
+    }
+
+    private void SkillDataLoad(Dictionary<string, object> skillInfo)
     {
         if (skillInfo == null)
         {

@@ -1,5 +1,4 @@
 SturctureID,StructureName,FrontalPath,TopPath,Gimmick,GimmickParam,IsPassable,CastTime,LayerOrder
-오브젝트 ID,오브젝트 이름,정면 이미지 패스,상단면 이미지 패스,기믹 효과 정의,기믹 정의 시 요구되는 N,오브젝트 통행 가능 여부,기믹 효과 시전 시간,오브젝트 레이어 순서
 int,LocalizeID,String,String,GimmickEnum,int_arr,Bool,int,int
 101,FieldStructure_Untidytile1,Map/Tile/Map_Tile_Rock_01,Null,Tile,0,TRUE,0,5
 102,FieldStructure_Untidytile2,Map/Tile/Map_Tile_Rock_02,Null,Tile,0,TRUE,0,5

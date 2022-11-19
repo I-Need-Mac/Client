@@ -5,14 +5,14 @@ public class ProjectileStraight : Projectile
 {
     protected override void Move()
     {
-        movePos.Normalize();
-        transform.Translate(7 * Time.fixedDeltaTime * movePos);
+        direction.Normalize();
+        transform.Translate(7 * Time.fixedDeltaTime * direction);
     }
 
-    public override void Fire(Transform caster, Vector3 direction)
+    public override void Fire(Transform caster, Vector3 pos)
     {
         transform.position = caster.position;
-        movePos = direction;
+        direction = pos;
         gameObject.SetActive(true);
     }
 

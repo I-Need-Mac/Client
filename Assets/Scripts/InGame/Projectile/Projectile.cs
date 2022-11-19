@@ -17,19 +17,19 @@ public abstract class Projectile : MonoBehaviour
     protected int projectileSizeMulti;
     protected bool isPenetrate;
     protected PROJECTILE_TYPE projectileType;
-    protected Vector3 movePos;
+    protected Vector3 direction;
     //protected SkillData skillData;
 
     //각 투사체 타입별로 따로 구현
     //Fire -> 발사 / Move -> 투사체의 움직임
     protected abstract void Move();
-    public abstract void Fire(Transform caster, Vector3 destination);
+    public abstract void Fire(Transform caster, Vector3 pos);
     
     private void Awake()
     {
         projectilePoolManager = FindObjectOfType<ProjectilePoolManager>();
         projectileRigidBody = GetComponent<Rigidbody2D>();
-        movePos = Vector3.right;
+        direction = Vector3.right;
         //skillData = new SkillData();
     }
 

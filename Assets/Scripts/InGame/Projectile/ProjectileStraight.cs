@@ -18,9 +18,4 @@ public class ProjectileStraight : Projectile
         gameObject.SetActive(true);
     }
 
-    private void FixedUpdate()
-    {
-        Move();
-    }
-
 }

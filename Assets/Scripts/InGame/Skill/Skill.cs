@@ -1,26 +1,15 @@
 using SKILLCONSTANT;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Skill : MonoBehaviour
+public class Skill
 {
-    private SkillData skillData;
+    public SkillData skillData { get; private set; }
 
     public Skill(string skillId)
     {
         skillData = new SkillData();
         SkillDataLoad(FindSkill(skillId));
-        if (IsProjectileSkill(skillData))
-        {
-            //TO DO :: 투사체 생성
-        }
-    }
-
-    //투사체를 사용하는 스킬인지 판별하는 함수
-    private bool IsProjectileSkill(SkillData skillData)
-    {
-        return Enum.IsDefined(typeof(PROJECTILE_TYPE), skillData.projectileType);
     }
 
     private void SkillLevelUp()

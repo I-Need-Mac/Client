@@ -278,4 +278,8 @@ public class Player : MonoBehaviour
     //}
     #endregion
 
+    #region Skill
+    //
+    #endregion
+
 }

@@ -17,6 +17,7 @@ public class Skill : MonoBehaviour
         }
     }
 
+    //투사체를 사용하는 스킬인지 판별하는 함수
     private bool IsProjectileSkill(SkillData skillData)
     {
         return Enum.IsDefined(typeof(PROJECTILE_TYPE), skillData.projectileType);

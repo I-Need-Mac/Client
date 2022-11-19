@@ -10,8 +10,10 @@ public class Player : MonoBehaviour
     private const float PER = 10000f; //분율 수치 ex)100 -> 백분율, 1000 -> 천분율, 10000 -> 만분율
     private const string CONFIG_VALUE = "ConfigValue";
 
+    private ProjectilePoolManager projectilePoolManager;
     private Rigidbody2D playerRigidbody;
     private Vector3 playerDirection;
+    private Vector3 lookDirection;
     private float coolTimeConstant;     //재사용대기시간감소상수
     private float coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
     /*
@@ -33,8 +35,45 @@ public class Player : MonoBehaviour
 
     public PlayerData playerData { get; private set; } = new PlayerData();
 
-    /*유틸, 유니티와 관련*/
-    #region Util & Unity
+    /*Unity Mono*/
+    #region Mono
+    private void Awake()
+    {
+        projectilePoolManager = FindObjectOfType<ProjectilePoolManager>();
+        playerRigidbody = GetComponent<Rigidbody2D>();
+        playerDirection = Vector3.zero;
+        lookDirection = Vector3.right;
+        coolTimeConstant = findConstant("CoolTimeConstant");
+        coolTimeCoefficient = findConstant("CoolTimeCoefficient");
+    }
+
+    //playerData의 경우 Awake단계에서 PlayerManager로 인한 데이터 셋팅이 이루어지지 않으므로 Start에 배치
+    private void Start()
+    {
+        statusSetting(playerData);
+        StartCoroutine(HpRegeneration());
+        StartCoroutine(Fire());
+    }
+
+    /*
+     *키보드 입력이랑 움직이는 부분은 안정성을 위해 분리시킴
+     *Update -> 키보드 input
+     *FixedUpdate -> movement
+     */
+    private void Update()
+    {
+        KeyDir();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+        DebugManager.Instance.PrintDebug(lookDirection);
+    }
+    #endregion
+
+    /*유틸*/
+    #region Util
     //상수값 읽어오는 함수
     private int findConstant(string constantName)
     {
@@ -65,38 +104,7 @@ public class Player : MonoBehaviour
         moveSpeed = playerData.moveSpeed;
         getItemRange = playerData.getItemRange;
     }
-
-    private void Awake()
-    {
-        playerRigidbody = GetComponent<Rigidbody2D>();
-        playerDirection = Vector3.zero;
-        coolTimeConstant = findConstant("CoolTimeConstant");
-        coolTimeCoefficient = findConstant("CoolTimeCoefficient");
-    }
-
-    //playerData의 경우 Awake단계에서 PlayerManager로 인한 데이터 셋팅이 이루어지지 않으므로 Start에 배치
-    private void Start()
-    {
-        statusSetting(playerData);
-        StartCoroutine(HpRegeneration());
-    }
-
-    /*
-     *키보드 입력이랑 움직이는 부분은 안정성을 위해 분리시킴
-     *Update -> 키보드 input
-     *FixedUpdate -> movement
-     */
-    private void Update()
-    {
-        KeyDir();
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-    }
     #endregion
-
 
     /*키보드 입력 및 움직임 관련*/
     #region key input & movement
@@ -107,6 +115,12 @@ public class Player : MonoBehaviour
         playerDirection.x = Input.GetAxis("Horizontal");
         //up, down
         playerDirection.y = Input.GetAxis("Vertical");
+        //쳐다보는 방향 저장
+        if (playerDirection != Vector3.zero)
+        {
+            lookDirection = playerDirection;
+        }
+
     }
 
     //리지드바디의 MovePosition을 이용해 움직임을 구현
@@ -248,13 +262,16 @@ public class Player : MonoBehaviour
     //현재 체력은 currentHp로 따로 빼서 사용
     private IEnumerator HpRegeneration()
     {
-        //정해진 초(HP_REGEN_PER_SECOND)마다 실행
-        yield return new WaitForSeconds(HP_REGEN_PER_SECOND);
-        
-        //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
-        if (currentHp < playerData.hp)
+        while (true)
         {
-            currentHp += hpRegen;
+            //정해진 초(HP_REGEN_PER_SECOND)마다 실행
+            yield return new WaitForSeconds(1);
+
+            //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
+            if (currentHp < playerData.hp)
+            {
+                currentHp += hpRegen;
+            }
         }
     }
 
@@ -279,7 +296,36 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Skill
-    //
+    //TO DO : 스킬 로직 설계
+    
+    private IEnumerator Fire()
+    {
+        yield return new WaitForSeconds(1);
+        while (true)
+        {
+            //foreach (Skill skill in playerData.skills.Values)
+            //{
+            //    if (skill.skillData.isEffect)
+            //    {
+            //        yield return new WaitForSeconds(skill.skillData.coolTime);
+            //    }
+
+            //    PROJECTILE_TYPE type = skill.skillData.projectileType;
+            //    switch (type)
+            //    {
+            //        case PROJECTILE_TYPE.STRAIGHT:
+            //            Projectile projectile = projectilePoolManager.SpawnProjectile(type, skill.skillData);
+            //            projectile.Fire(playerRigidbody, playerDirection);
+            //            break;
+            //    }
+            //}
+            Projectile projectile = projectilePoolManager.SpawnProjectile(PROJECTILE_TYPE.STRAIGHT, new SkillData());
+            projectile.Fire(transform, lookDirection);
+
+            yield return new WaitForSeconds(2);
+        }
+    }
+
     #endregion
 
 }

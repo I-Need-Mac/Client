@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public abstract class Projectile : MonoBehaviour
 {
+    private const float RELEASE_TIME = 2f; //투사체 소멸 시간
+
     private ProjectilePoolManager projectilePoolManager;
 
     protected Rigidbody2D projectileRigidBody;
@@ -14,6 +16,7 @@ public abstract class Projectile : MonoBehaviour
     protected int splashRange;
     protected int projectileSizeMulti;
     protected bool isPenetrate;
+    protected PROJECTILE_TYPE projectileType;
     //protected SkillData skillData;
 
     //각 투사체 타입별로 따로 구현
@@ -28,6 +31,21 @@ public abstract class Projectile : MonoBehaviour
         //skillData = new SkillData();
     }
 
+    private void FixedUpdate()
+    {
+        Move();
+    }
+
+    //카메라에 안잡힐 때
+    private void OnBecameInvisible()
+    {
+        Invoke("ReleaseProjectile", RELEASE_TIME);
+    }
+
+    private void ReleaseProjectile()
+    {
+        projectilePoolManager.DeSpawnProjectile(this, projectileType);
+    }
 
     //풀에서 꺼내 쓸 때 스킬 정보를 업데이트하는 함수
     //스킬 레벨업시 데이터 변동을 고려하기 위함
@@ -46,5 +64,6 @@ public abstract class Projectile : MonoBehaviour
         splashRange = skillData.splashRange;
         projectileSizeMulti = skillData.projectileSizeMulti;
         isPenetrate = skillData.isPenetrate;
+        projectileType = skillData.projectileType;
     }
 }

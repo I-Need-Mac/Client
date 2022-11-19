@@ -29,5 +29,5 @@ public class PlayerData
     public void SetProjectileAdd(int projectileAdd) { this.projectileAdd = projectileAdd; }
     public void SetMoveSpeed(int moveSpeed) { this.moveSpeed = moveSpeed; }
     public void SetGetItemRange(int getItemRange) { this.getItemRange = getItemRange; }
-    public void SetSkill(Skill skill) { skills.Add(skill.name, skill); }
+    public void SetSkill(Skill skill) { skills.Add(skill.skillData.name, skill); }
 }

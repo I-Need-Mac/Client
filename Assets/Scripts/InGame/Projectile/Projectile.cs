@@ -17,6 +17,7 @@ public abstract class Projectile : MonoBehaviour
     protected int projectileSizeMulti;
     protected bool isPenetrate;
     protected PROJECTILE_TYPE projectileType;
+    protected Vector3 movePos;
     //protected SkillData skillData;
 
     //각 투사체 타입별로 따로 구현
@@ -28,6 +29,7 @@ public abstract class Projectile : MonoBehaviour
     {
         projectilePoolManager = FindObjectOfType<ProjectilePoolManager>();
         projectileRigidBody = GetComponent<Rigidbody2D>();
+        movePos = Vector3.right;
         //skillData = new SkillData();
     }
 
@@ -50,10 +52,6 @@ public abstract class Projectile : MonoBehaviour
     //풀에서 꺼내 쓸 때 스킬 정보를 업데이트하는 함수
     //스킬 레벨업시 데이터 변동을 고려하기 위함
     //Init 역할도 함
-    //public void SkillDataUpdate(SkillData skillData)
-    //{
-    //    this.skillData = skillData;
-    //}
     public void SkillDataUpdate(SkillData skillData)
     {
         coolTime = skillData.coolTime;

@@ -3,12 +3,10 @@ using UnityEngine;
 
 public class ProjectileStraight : Projectile
 {
-    Vector3 movePos = Vector3.zero;
-
     protected override void Move()
     {
         movePos.Normalize();
-        transform.Translate(movePos * Time.fixedDeltaTime * 7);
+        transform.Translate(7 * Time.fixedDeltaTime * movePos);
     }
 
     public override void Fire(Transform caster, Vector3 direction)

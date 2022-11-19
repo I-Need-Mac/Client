@@ -16,23 +16,27 @@ public class ProjectilePoolManager : MonoSingleton<ProjectilePoolManager>
 
     private void Awake()
     {
-        pools = new Dictionary<PROJECTILE_TYPE, ProjectilePool>();
-        pools.Add(PROJECTILE_TYPE.STRAIGHT, straight);
-        pools.Add(PROJECTILE_TYPE.PROTECT, protect);
-        pools.Add(PROJECTILE_TYPE.SATELLITE, satellite);
-        pools.Add(PROJECTILE_TYPE.DROP, drop);
-        pools.Add(PROJECTILE_TYPE.BOOMERANG, boomerang);
-        pools.Add(PROJECTILE_TYPE.RANGE, range);
-        pools.Add(PROJECTILE_TYPE.BOOM, boom);
+        pools = new Dictionary<PROJECTILE_TYPE, ProjectilePool>
+        {
+            { PROJECTILE_TYPE.STRAIGHT, straight },
+            { PROJECTILE_TYPE.PROTECT, protect },
+            { PROJECTILE_TYPE.SATELLITE, satellite },
+            { PROJECTILE_TYPE.DROP, drop },
+            { PROJECTILE_TYPE.BOOMERANG, boomerang },
+            { PROJECTILE_TYPE.RANGE, range },
+            { PROJECTILE_TYPE.BOOM, boom }
+        };
 
     }
 
-    public Projectile SpawnProjectile(PROJECTILE_TYPE type = PROJECTILE_TYPE.STRAIGHT)
+    public Projectile SpawnProjectile(PROJECTILE_TYPE type, SkillData skillData)
     {
-        return pools[type].GetProjectile();
+        Projectile projectile = pools[type].GetProjectile();
+        projectile.SkillDataUpdate(skillData); //스킬 정보 업데이트
+        return projectile;
     }
 
-    public void DeSpawnProjectile(Projectile projectile, PROJECTILE_TYPE type = PROJECTILE_TYPE.STRAIGHT)
+    public void DeSpawnProjectile(Projectile projectile, PROJECTILE_TYPE type)
     {
         pools[type].ReleaseProjectile(projectile);
     }

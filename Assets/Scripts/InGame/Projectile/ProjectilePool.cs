@@ -22,7 +22,7 @@ public class ProjectilePool : MonoBehaviour
         }
         Projectile projectile = pool.Pop();
         projectile.gameObject.transform.SetParent(transform);
-        projectile.gameObject.SetActive(true);
+        //projectile.gameObject.SetActive(true);
         return projectile;
     }
 

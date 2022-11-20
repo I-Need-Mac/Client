@@ -1,4 +1,5 @@
 SturctureID,StructureName,FrontalPath,TopPath,Gimmick,GimmickParam,IsPassable,CastTime,LayerOrder
+,,,,,,,,
 int,LocalizeID,String,String,GimmickEnum,int_Arr,Bool,int,int
 101,FieldStructure_Untidytile1,Map/Tile/Map_Tile_Rock_01,Null,Tile,0,TRUE,0,5
 102,FieldStructure_Untidytile2,Map/Tile/Map_Tile_Rock_02,Null,Tile,0,TRUE,0,5

@@ -5,7 +5,6 @@ public class ProjectileStraight : Projectile
 {
     protected override void Move()
     {
-        direction.Normalize();
         transform.Translate(7 * Time.fixedDeltaTime * direction);
     }
 
@@ -13,6 +12,7 @@ public class ProjectileStraight : Projectile
     {
         transform.position = caster.position;
         direction = pos;
+        direction.Normalize();
         gameObject.SetActive(true);
     }
 

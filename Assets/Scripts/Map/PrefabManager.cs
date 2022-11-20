@@ -90,23 +90,12 @@ public class PrefabManager : MonoBehaviour
         front.gameObject.layer = layerOrder;
         top.gameObject.layer = layerOrder;
 
-        /*
-        if (frontalPath != "Null" && topPath != "Null")
-        {
-            float topHeight = 0f;
-            Sprite[] topSprites = Resources.LoadAll<Sprite>("Arts/" + topPath);
-            topHeight = topSprites[0].bounds.size.y;
-            float frontHeight = 0f;
-            Sprite[] frontSprites = Resources.LoadAll<Sprite>("Arts/" + frontalPath);
-            frontHeight = frontSprites[0].bounds.size.y;
 
-            top.transform.position = new Vector3(0, (topHeight+frontHeight) / 2, 0);
-        }
-        */
-        
+
         float topHeight = 0f;
         float frontHeight = 0f;
 
+        
         // Front 이미지 삽입 및 높이 받기
         if (frontalPath == "Null")
         {
@@ -144,11 +133,13 @@ public class PrefabManager : MonoBehaviour
         }
         
         // Top 오브젝트를 Front 바로 위에 붙이기
-        if(frontalPath != "Null" && topPath != "Null")
+        if(frontalPath != "Null" && topPath != "Null" && currentType != GimmickType.Teleport)
         {
             top.transform.localPosition = new Vector3(0, (topHeight + frontHeight) / 2, 0);
         }
         
+
+
         // 통행 불가 시 콜라이더 설정
         if(!isPassable)
         {
@@ -175,6 +166,20 @@ public class PrefabManager : MonoBehaviour
 
                 break;
             case GimmickType.Teleport:
+                // front 설정
+                front.AddComponent<BoxCollider2D>();
+                BoxCollider2D colliderFront = front.GetComponent<BoxCollider2D>();
+                colliderFront.isTrigger = true;
+                front.AddComponent<Teleport>();
+                Teleport scriptFront = front.GetComponent<Teleport>();
+                scriptFront.telleportTo = top;
+                // top 설정
+                top.AddComponent<BoxCollider2D>();
+                BoxCollider2D colliderTop = top.GetComponent<BoxCollider2D>();
+                colliderTop.isTrigger = true;
+                top.AddComponent<Teleport>();
+                Teleport scriptTop = top.GetComponent<Teleport>();
+                scriptTop.telleportTo = front;
 
                 break;
             case GimmickType.Heal:

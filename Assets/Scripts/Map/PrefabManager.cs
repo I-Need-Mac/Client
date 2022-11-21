@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GimmickType     // 게임 속 버튼의 집합을 만들어준다.
+
+public enum GimmickType
 {
     Tile,
     Obstacle,
@@ -21,6 +22,7 @@ public enum GimmickType     // 게임 속 버튼의 집합을 만들어준다.
     DebuffSpeed
 }
 
+
 public class PrefabManager : MonoBehaviour
 {
     private string structureID;
@@ -38,47 +40,63 @@ public class PrefabManager : MonoBehaviour
         string frontalPath;
         string topPath;
         GimmickType currentType;
-        int gimmickParameter;
+        string _gimmickParameter;
+        string[] gimmickParameterSplit;
+        int[] gimmickParameter = new int[10];
         bool isPassable = false;
         string _isPassable;
         int castTime;
         int layerOrder;
 
+
+        // StructureName, FrontalPath, TopPath, GimmickType 받아오기
         structureName = fieldStructureData[structureID]["StructureName"].ToString();
         frontalPath = fieldStructureData[structureID]["FrontalPath"].ToString();
         topPath = fieldStructureData[structureID]["TopPath"].ToString();
         currentType = (GimmickType)System.Enum.Parse(typeof(GimmickType),fieldStructureData[structureID]["Gimmick"].ToString());
-        // currentType = (GimmickType)fieldStructureData[structureID]["Gimmick"];
-        gimmickParameter = int.Parse(fieldStructureData[structureID]["GimmickParam"].ToString());
+
+
+        // GimmickParameter 배열로 받아오기
+        _gimmickParameter = fieldStructureData[structureID]["GimmickParam"].ToString();
+        gimmickParameterSplit = _gimmickParameter.Split(',');
+        for (int i = 0; i < gimmickParameterSplit.Length; i++)
+        {
+            gimmickParameterSplit[i] = gimmickParameterSplit[i].Replace("\"", "");
+            gimmickParameter[i] = int.Parse(gimmickParameterSplit[i]);
+        }
+
+
+        // isPassable 받아오기
         _isPassable = fieldStructureData[structureID]["IsPassable"].ToString();
-        if(_isPassable == "TRUE") isPassable = true;
-        else if(_isPassable == "FALSE") isPassable = false;
+        if (_isPassable == "TRUE")
+        {
+            isPassable = true;
+        }
+        else if (_isPassable == "FALSE") 
+        {
+            isPassable = false;
+        }
+
+        // CastTime, LayerOrder int형으로 받아오기
         castTime = int.Parse(fieldStructureData[structureID]["CastTime"].ToString());
         layerOrder = int.Parse(fieldStructureData[structureID]["LayerOrder"].ToString());
 
-
+        // 프리팹의 Front, Top 오브젝트 받아오기
         GameObject front = transform.GetChild(0).gameObject;
         GameObject top = transform.GetChild(1).gameObject;
 
+        // 오브젝트 레이어 설정
+        this.gameObject.layer = layerOrder;
+        front.gameObject.layer = layerOrder;
+        top.gameObject.layer = layerOrder;
 
 
-        /*
-        if (frontalPath != "Null" && topPath != "Null")
-        {
-            float topHeight = 0f;
-            Sprite[] topSprites = Resources.LoadAll<Sprite>("Arts/" + topPath);
-            topHeight = topSprites[0].bounds.size.y;
-            float frontHeight = 0f;
-            Sprite[] frontSprites = Resources.LoadAll<Sprite>("Arts/" + frontalPath);
-            frontHeight = frontSprites[0].bounds.size.y;
-
-            top.transform.position = new Vector3(0, (topHeight+frontHeight) / 2, 0);
-        }
-        */
 
         float topHeight = 0f;
         float frontHeight = 0f;
 
+        
+        // Front 이미지 삽입 및 높이 받기
         if (frontalPath == "Null")
         {
             Destroy(front);
@@ -90,11 +108,13 @@ public class PrefabManager : MonoBehaviour
             Sprite[] frontSprites = Resources.LoadAll<Sprite>("Arts/" + frontalPath);
             frontSpriteR.sprite = frontSprites[0];
             frontHeight = frontSprites[0].bounds.size.y;
+            // front.transform.position = new Vector3(0, 0, 0);
             // Sprite sprites = ImageLoader.Instance.LoadLocalImageToSprite(frontalPath);
             // spriteR.sprite = sprites;
 
         }
 
+        // Top 이미지 삽입 및 높이 받기
         if (topPath == "Null")
         {
             Destroy(top);
@@ -106,23 +126,28 @@ public class PrefabManager : MonoBehaviour
             Sprite[] topSprites = Resources.LoadAll<Sprite>("Arts/" + topPath);
             topSpriteR.sprite = topSprites[0];
             topHeight = topSprites[0].bounds.size.y;
+            // top.transform.position = new Vector3(0, 0, 0);
             // Sprite sprites = ImageLoader.Instance.LoadLocalImageToSprite(topPath);
             // spriteR.sprite = sprites;
 
         }
         
-        if(frontalPath != "Null" && topPath != "Null")
+        // Top 오브젝트를 Front 바로 위에 붙이기
+        if(frontalPath != "Null" && topPath != "Null" && currentType != GimmickType.Teleport)
         {
-            top.transform.position = new Vector3(0, (topHeight + frontHeight) / 2, 0);
+            top.transform.localPosition = new Vector3(0, (topHeight + frontHeight) / 2, 0);
         }
         
+
+
+        // 통행 불가 시 콜라이더 설정
         if(!isPassable)
         {
             front.AddComponent<BoxCollider2D>();
         }
         
-
-
+        
+        // GimmickType 별 기능 수행
         switch(currentType)
         {
             case GimmickType.Tile:
@@ -141,6 +166,20 @@ public class PrefabManager : MonoBehaviour
 
                 break;
             case GimmickType.Teleport:
+                // front 설정
+                front.AddComponent<BoxCollider2D>();
+                BoxCollider2D colliderFront = front.GetComponent<BoxCollider2D>();
+                colliderFront.isTrigger = true;
+                front.AddComponent<Teleport>();
+                Teleport scriptFront = front.GetComponent<Teleport>();
+                scriptFront.telleportTo = top;
+                // top 설정
+                top.AddComponent<BoxCollider2D>();
+                BoxCollider2D colliderTop = top.GetComponent<BoxCollider2D>();
+                colliderTop.isTrigger = true;
+                top.AddComponent<Teleport>();
+                Teleport scriptTop = top.GetComponent<Teleport>();
+                scriptTop.telleportTo = front;
 
                 break;
             case GimmickType.Heal:
@@ -173,21 +212,5 @@ public class PrefabManager : MonoBehaviour
 
         }
 
-        this.gameObject.layer = layerOrder;
-
-
-
-        /*
-        string frontalPath;
-        frontalPath = fieldStructureData[structureName]["FrontalPath"].ToString();
-
-        DebugManager.Instance.PrintDebug("[LoadImage]" + structureName + frontalPath);
-
-        SpriteRenderer spriteR = gameObject.GetComponent<SpriteRenderer>();
-        // Sprite[] sprites = Resources.LoadAll<Sprite>("Art/" + frontalPath);
-        // spriteR.sprite = sprites[0];
-        Sprite sprites = ImageLoader.Instance.LoadLocalImageToSprite(frontalPath);
-        spriteR.sprite = sprites;
-        */
     }
 }

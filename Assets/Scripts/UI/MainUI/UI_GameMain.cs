@@ -37,6 +37,7 @@ public class UI_GameMain : UI_Popup
         switch (imageValue)
         {
             case GameObjects.StoryMode:
+                UIManager.Instance.OpenUI<UI_StoryMain>();
                 break;
             case GameObjects.SelectSorcerer:
                 break;

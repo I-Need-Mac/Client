@@ -20,6 +20,8 @@ public class UIManager : MonoSingleton<UIManager>
         UI_ESCPopup,
         UI_MyInfo,
 
+        UI_StoryMain,
+
         UI_StoryBook,
     }
 
@@ -29,7 +31,7 @@ public class UIManager : MonoSingleton<UIManager>
     int currentPopupCount = 0;
 
     // 메인 UI
-    UI_StartMain mainUI;
+    UI_Base mainUI;
     // UI전체 팝업 목록
     List<UI_Popup> popupList = new List<UI_Popup>();
 
@@ -69,6 +71,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         // 메인 UI를 생성합니다.
         mainUI = Util.UILoad<UI_StartMain>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_StartMain]}");
+        //mainUI = Util.UILoad<UI_GameMain>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_GameMain]}");
         if (mainUI == null)
         {
             Debug.Log("mainUI is NULL");
@@ -78,6 +81,7 @@ public class UIManager : MonoSingleton<UIManager>
         // 캔버스를 셋팅합니다.
         SetCanvas(mainUI.gameObject);
         Util.CreateObject(mainUI.gameObject);
+        mainUI.gameObject.SetActive(true);
 
         // 전체 UI리스트를 셋팅합니다.
         for ( int i = 0; i < names.Length; i++ )

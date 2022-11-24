@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: d11ca22562abaa3418cf43fa34b7b5af
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Jaemin2.0
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 614ba2d777767d04baaba9087ee3bd91, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

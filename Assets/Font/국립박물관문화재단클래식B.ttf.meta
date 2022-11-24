@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 6ad95f696da00a44b98b28b8d5f3f787
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - MuseumClassic Bold
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a4bab19f906079c41a78b045491bc397, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

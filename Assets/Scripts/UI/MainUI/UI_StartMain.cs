@@ -15,7 +15,7 @@ public class UI_StartMain : UI_Base
 
     float time = 0.0f;
 
-    // ½ÃÀÛ Ã¢
+    // ì‹œì‘ ì°½
     Image pressKeyImage;
 
     void Start()
@@ -24,7 +24,7 @@ public class UI_StartMain : UI_Base
 
         Array imageValue = Enum.GetValues(typeof(Images));
 
-        // ¹öÆ° ÀÌº¥Æ® µî·Ï
+        // ë²„íŠ¼ ì´ë²¤íŠ¸ ë“±ë¡
         for (int i = 0; i < imageValue.Length; i++)
         {
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
@@ -44,7 +44,7 @@ public class UI_StartMain : UI_Base
         switch (imageValue)
         {
             case Images.PressKey:
-                UIManager.Instance.OpenUI<UI_Login>();
+                UIManager.Instance.OpenUI<UI_NickName>();
                 break;
             default:
                 break;

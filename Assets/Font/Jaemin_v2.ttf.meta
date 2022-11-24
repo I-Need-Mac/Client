@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d11ca22562abaa3418cf43fa34b7b5af
+guid: 4a64c1d567aebfc4cb3e022d078d122c
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -10,8 +10,7 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Jaemin2.0
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 614ba2d777767d04baaba9087ee3bd91, type: 3}
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

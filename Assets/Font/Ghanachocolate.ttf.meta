@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e25a6cce6af6bf64292b0b93010100cc
+guid: fc04c9622edf90649943440c035d4cd9
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -10,7 +10,8 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Ghanachocolate
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e6b6f61dbc60ac44bba9c411f976a783, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

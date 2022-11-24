@@ -11,8 +11,8 @@ public class UIData
     }
 
     // 스토리 데이터
-    static Dictionary<int, List<object>> storyTableData = new Dictionary<int, List<object>>();
-    public static Dictionary<int, List<object>> StoryData { get { return storyTableData; } }
+    static Dictionary<string, Dictionary<string, object>> storyTableData = new Dictionary<string, Dictionary<string, object>>();
+    public static Dictionary<string, Dictionary<string, object>> StoryData { get { return storyTableData; } }
 
     static Dictionary<int, Dictionary<int, List<object>>> pageTableData = new Dictionary<int, Dictionary<int, List<object>>>();
     public static Dictionary<int, Dictionary<int, List<object>>> PageTableData { get { return pageTableData; } }
@@ -20,25 +20,45 @@ public class UIData
     public static void ReadData()
     {
         // 스토리 테이블을 읽습니다.
-        //storyTableData = CSVReader.FileRead("Table/" + Enum.GetName(typeof(UITable), UITable.StoryTable));
+        storyTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.StoryTable));
 
-        //int index = 0;
-        //foreach (KeyValuePair<int, List<object>> pair in storyTableData)
-        //{
-        //    Debug.Log(pair.Key);
+        foreach (KeyValuePair<string, Dictionary<string, object>> pair in storyTableData)
+        {
+            if (pair.Key == "")
+                continue;
 
-        //    // 테이블에 있는 페이지를 읽어옵니다.
-        //    List<object> list = pair.Value;
-        //    string pageTable = list[(int)UI_StoryBook.StoryTableInfo.StoryPath].ToString();
-        //    Dictionary<int, List<object>> pageData = CSVReader.FileRead("Table/Story/" + pageTable);
-        //    if (pageData == null)
-        //        continue;
+            Debug.Log(pair.Key);
 
-        //    if (pageData.Count == 0)
-        //        continue;
+            // 테이블에 있는 페이지를 읽어옵니다.
+            Dictionary<string, object> list = pair.Value;
 
-        //    pageTableData.Add(pair.Key, pageData);
-        //}
+            object pageTable;
+            list.TryGetValue(UI_StoryBook.StoryTableInfo.StoryPath.ToString(), out pageTable);
+            //string pageTable = list[(int)UI_StoryBook.StoryTableInfo.StoryPath].ToString();
+            Dictionary<string, Dictionary<string, object>> pageData = CSVReader.Read("Story/" + pageTable);
+            if (pageData == null)
+                continue;
+
+            if (pageData.Count == 0)
+                continue;
+
+            Dictionary<int, List<object>> addList = new Dictionary<int, List<object>>();
+            foreach (KeyValuePair<string, Dictionary<string, object>> pagePair in pageData)
+            {
+                if (pagePair.Key == "")
+                    continue;
+
+                List<object> createList = new List<object>();
+                foreach(KeyValuePair<string, object> valuePair in pagePair.Value)
+                {
+                    createList.Add(valuePair.Value);
+                }
+
+                addList.Add(int.Parse(pagePair.Key), createList);
+            }
+
+            pageTableData.Add(int.Parse(pair.Key), addList);
+        }
     }
     #endregion
 }

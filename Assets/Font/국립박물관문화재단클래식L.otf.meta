@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e9764d7cc7d66a340afd88a8a2bd4228
+guid: 1b9c696deaff65a439cbfb62e6d5c776
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -11,7 +11,7 @@ TrueTypeFontImporter:
   fontNames:
   - MuseumClassic Light
   fallbackFontReferences:
-  - {fileID: 12800000, guid: 280e7c41ca3631245a1f05c2c26189d9, type: 3}
+  - {fileID: 12800000, guid: 438e4e539dd9f51479900e6aa0956256, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

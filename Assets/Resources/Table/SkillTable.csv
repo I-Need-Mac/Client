@@ -1,3 +1,12 @@
-﻿SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damge,Speed,IsSplash,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam
-스킬아이디,스킬이름,스킬 설명,스킬설명 기획용,아이콘,쿨타임,스킬컷씬 유무,스킬 컷씬 경로,스킬 이미지,사거리,스킬 바로 시전여부,궁극기 여부,투사체 개수,피해,투사체 스피드,스플래쉬 여부,관통여부,폭발 반지름,투사체 사이즈 배율,스킬 효과,스킬 효과 파람
-int,String,String,String,String,Int,Bool,String,String,int,bool,bool,int,int,int,bool,bool,int,int,EffectEnum,int
+SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType
+스킬아이디,스킬이름,스킬 설명,스킬설명 기획용,아이콘,쿨타임,스킬컷씬 유무,스킬 컷씬 경로,스킬 이미지,사거리,스킬 바로 시전여부,궁극기 여부,투사체 개수,피해,투사체 스피드,관통여부,폭발 반지름,투사체 사이즈 배율,스킬 효과,스킬 효과 파람,스킬 발사 타겟,스킬 날아가는 형태
+int,String,String,String,String,Int,Bool,String,String,int,bool,bool,int,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType
+10100,Skill_TestName1,Skill_TestExplain1,테스트 스킬 설명,Dummy,1000,FALSE,Null,Dummy,1000,TRUE,FALSE,1,5,1000,TRUE,0,1,,,Melee,Straight
+10101,Skill_TestName1,Skill_TestExplain1,테스트 스킬 설명,Dummy,1500,FALSE,Null,Dummy,1500,TRUE,FALSE,2,5,1000,FALSE,0,2,,,Front,Straight
+10102,Skill_TestName1,Skill_TestExplain1,테스트 스킬 설명,Dummy,2000,FALSE,Null,Dummy,2000,TRUE,FALSE,3,5,1000,TRUE,0,3,,,Back,Straight
+10200,Skill_TestName2,Skill_TestExplain2,테스트 스킬 설명,Dummy,1000,FALSE,Null,Dummy,3000,TRUE,FALSE,1,5,1000,FALSE,0,1,Stun,2,Top,Protect
+10300,Skill_TestName3,Skill_TestExplain3,테스트 스킬 설명,Dummy,1000,FALSE,Null,Dummy,3000,TRUE,FALSE,1,5,1000,TRUE,0,1,Slow,30,Bottom,Satellite
+10400,Skill_TestName4,Skill_TestExplain4,테스트 스킬 설명,Dummy,1000,FALSE,Null,Dummy,3000,TRUE,FALSE,1,5,1000,FALSE,0,1,Nuckback,50,RandomDrop,Drop
+10500,Skill_TestName5,Skill_TestExplain5,테스트 스킬 설명,Dummy,1000,FALSE,Null,Dummy,3000,TRUE,FALSE,1,5,1000,TRUE,100,1,Boom,100,Random,Boomerang
+10600,Skill_TestName6,Skill_TestExplain6,테스트 스킬 설명,Dummy,1000,FALSE,Null,Dummy,3000,TRUE,FALSE,1,5,1000,FALSE,0,1,Nuckback,100,Near,Range
+10700,Skill_TestName7,Skill_TestExplain7,테스트 스킬 설명,Dummy,1000,FALSE,Null,Dummy,3000,TRUE,FALSE,1,5,1000,TRUE,0,1,,,Melee,Boom

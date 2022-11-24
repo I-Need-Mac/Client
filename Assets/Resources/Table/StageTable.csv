@@ -1,4 +1,6 @@
-﻿StageID,StageWidth,StageHeight,PlayerSponeX,PlayerSponeY,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID
-스테이지 아이디,스테이지 폭,스테이지 높이,플레이어 스폰 X좌표,플레어이 스폰 Y좌표,몹 스폰 테이블 ID,제한 시간 ,몹 제한 수,보상 아이디,보상 개수,인트로ID,아웃트로ID
-Int,Int,Int,Int,Int,String,Int,Int,Int_Arr,Int_Arr,Int,Int
-10101,3000,3000,100,100,Stage1,5000,30,100,100,1025,1026
+StageID,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID,MapID,NextStageID,ChapterCategory
+스테이지 아이디,몹 스폰 테이블 ID,제한 시간 ,몹 제한 수,보상 아이디,보상 개수,인트로ID,아웃트로ID,맵 ID,다음 스테이지 ID,스테이지가 포함된 챕터 구분
+Int,String,Int,Int,Int_Arr,Int_Arr,StoryID,StoryID,String,int,ChapterID
+10101,TEST,30000,50,1,1,101,101,Map1,10102,101
+10102,TEST,30000,50,1,1,102,102,Map2,10103,101
+10103,TEST,30000,50,1,1,103,103,Map3,,101

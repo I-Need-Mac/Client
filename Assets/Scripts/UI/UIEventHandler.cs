@@ -2,16 +2,16 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// UIì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬
+// UIÀÌº¥Æ® ÇÚµé·¯
 public class UIEventHandler : MonoBehaviour, IPointerClickHandler
 {
     public Action<PointerEventData> OnClickHandler = null;
 
-    // ì˜¤ë¸Œì íŠ¸ì—ì„œ í¬ì¸í„°ë¥¼ ëˆ„ë¥´ê³  ë™ì¼í•œ ì˜¤ë¸Œì íŠ¸ì—ì„œ ë—„ ë•Œ í˜¸ì¶œ
+    // ¿ÀºêÁ§Æ®¿¡¼­ Æ÷ÀÎÅÍ¸¦ ´©¸£°í µ¿ÀÏÇÑ ¿ÀºêÁ§Æ®¿¡¼­ ¶¿ ¶§ È£Ãâ
     public void OnPointerClick(PointerEventData eventData)
     {
-        // ìš°ì„  í´ë¦­ ì´ë²¤íŠ¸ë§Œ ì²˜ë¦¬í•˜ë„ë¡ í•©ë‹ˆë‹¤.
-        // ì¶”í›„ mouse over, up, downë“± ì´ë²¤íŠ¸ë¥¼ ì¶”ê°€í•˜ë„ë¡ í•©ë‹ˆë‹¤.
+        // ¿ì¼± Å¬¸¯ ÀÌº¥Æ®¸¸ Ã³¸®ÇÏµµ·Ï ÇÕ´Ï´Ù.
+        // ÃßÈÄ mouse over, up, downµî ÀÌº¥Æ®¸¦ Ãß°¡ÇÏµµ·Ï ÇÕ´Ï´Ù.
         if (OnClickHandler != null)
         {
             OnClickHandler.Invoke(eventData);

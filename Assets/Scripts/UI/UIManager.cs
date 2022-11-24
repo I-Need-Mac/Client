@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// UIë¥¼ ê´€ë¦¬ í•©ë‹ˆë‹¤. (Create/Open/Close)
+// UI¸¦ °ü¸® ÇÕ´Ï´Ù. (Create/Open/Close)
 public class UIManager : MonoSingleton<UIManager>
 {
     public enum UI_Prefab
@@ -14,82 +14,75 @@ public class UIManager : MonoSingleton<UIManager>
         UI_StartMain,
         UI_GameMain,
 
-        UI_NickName,
         UI_Login,
         UI_Agreement,
-        UI_ESCPopup,
-        UI_MyInfo,
-
-        UI_StoryMain,
 
         UI_StoryBook,
     }
 
-    // ë©”ì¸ UI ìš°ì„ ìˆœìœ„
+    // ¸ŞÀÎ UI ¿ì¼±¼øÀ§
     int mainUiOrder = 0;
-    // íŒì—…UI ìš°ì„ ìˆœìœ„
+    // ÆË¾÷UI ¿ì¼±¼øÀ§
     int currentPopupCount = 0;
 
-    // ë©”ì¸ UI
-    UI_Base mainUI;
-    // UIì „ì²´ íŒì—… ëª©ë¡
+    // ¸ŞÀÎ UI
+    UI_StartMain mainUI;
+    // UIÀüÃ¼ ÆË¾÷ ¸ñ·Ï
     List<UI_Popup> popupList = new List<UI_Popup>();
 
-    // ì‹¤ì‹œê°„ íŒì—… ëª©ë¡
+    // ½Ç½Ã°£ ÆË¾÷ ¸ñ·Ï
     LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
 
     public void Init()
     {
-        // UIê´€ë ¨ í…Œì´ë¸”ì„ ì½ìŠµë‹ˆë‹¤.
+        // UI°ü·Ã Å×ÀÌºíÀ» ÀĞ½À´Ï´Ù.
         UIData.ReadData();
 
-        // ì´ë²¤íŠ¸ ì‹œìŠ¤í…œì„ ì¶”ê°€í•©ë‹ˆë‹¤.
+        // ÀÌº¥Æ® ½Ã½ºÅÛÀ» Ãß°¡ÇÕ´Ï´Ù.
         GameObject go = GameObject.Find("EventSystem");
         if( go == null )
-        {   // ì´ë²¤íŠ¸ ì‹œìŠ¤í…œì´ ì—†ë‹¤ë©´ í•˜ë‚˜ ìƒì„±í•©ë‹ˆë‹¤.
+        {   // ÀÌº¥Æ® ½Ã½ºÅÛÀÌ ¾ø´Ù¸é ÇÏ³ª »ı¼ºÇÕ´Ï´Ù.
             go = new GameObject("EventSystem");
             Util.GetOrAddComponent<EventSystem>(go);
             Util.GetOrAddComponent<StandaloneInputModule>(go);
         }
 
-        // ìŠ¤íƒ ì´ˆê¸°í™”
+        // ½ºÅÃ ÃÊ±âÈ­
         popupList.Clear();
 
-        // uië¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+        // ui¸¦ »ı¼ºÇÕ´Ï´Ù.
         Create();
 
-        // ë©”ì¸ UIëŠ” í•­ìƒ ìµœìƒìœ„ì— ê·¸ë ¤ì§‘ë‹ˆë‹¤.
+        // ¸ŞÀÎ UI´Â Ç×»ó ÃÖ»óÀ§¿¡ ±×·ÁÁı´Ï´Ù.
         mainUiOrder = 0;
-        // ì´ˆê¸° ìš°ì„ ìˆœìœ„ ì…‹íŒ…
-        currentPopupCount = mainUiOrder;
+        // ÃÊ±â ¿ì¼±¼øÀ§ ¼ÂÆÃ
+        currentPopupCount = 0;
     }
 
-    // UIë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+    // UI¸¦ »ı¼ºÇÕ´Ï´Ù.
     public void Create()
     {
         string[] names = Enum.GetNames(typeof(UI_Prefab));
 
-        // ë©”ì¸ UIë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+        // ¸ŞÀÎ UI¸¦ »ı¼ºÇÕ´Ï´Ù.
         mainUI = Util.UILoad<UI_StartMain>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_StartMain]}");
-        //mainUI = Util.UILoad<UI_GameMain>($"{Define.UiPrefabsPath}/{names[(int)UI_Prefab.UI_GameMain]}");
         if (mainUI == null)
         {
             Debug.Log("mainUI is NULL");
             return;
         }
 
-        // ìº”ë²„ìŠ¤ë¥¼ ì…‹íŒ…í•©ë‹ˆë‹¤.
+        // Äµ¹ö½º¸¦ ¼ÂÆÃÇÕ´Ï´Ù.
         SetCanvas(mainUI.gameObject);
         Util.CreateObject(mainUI.gameObject);
-        mainUI.gameObject.SetActive(true);
 
-        // ì „ì²´ UIë¦¬ìŠ¤íŠ¸ë¥¼ ì…‹íŒ…í•©ë‹ˆë‹¤.
+        // ÀüÃ¼ UI¸®½ºÆ®¸¦ ¼ÂÆÃÇÕ´Ï´Ù.
         for ( int i = 0; i < names.Length; i++ )
         {
             if (i == (int)UI_Prefab.UI_StartMain)
                 continue;
 
-            // íŒì—… UIë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+            // ÆË¾÷ UI¸¦ »ı¼ºÇÕ´Ï´Ù.
             UI_Popup popup = Util.UILoad<UI_Popup>($"{Define.UiPrefabsPath}/{names[i]}");
             if ( popup == null )
             {
@@ -97,23 +90,23 @@ public class UIManager : MonoSingleton<UIManager>
                 continue;
             }
 
-            // ìº”ë²„ìŠ¤ë¥¼ ì…‹íŒ…í•©ë‹ˆë‹¤.
+            // Äµ¹ö½º¸¦ ¼ÂÆÃÇÕ´Ï´Ù.
             SetCanvas(popup.gameObject);
 
-            // í™œì„±ì‹œí‚¤ì§€ ì•Šì€ ìƒíƒœë¡œ ì´ˆê¸°í™” í•©ë‹ˆë‹¤.
+            // È°¼º½ÃÅ°Áö ¾ÊÀº »óÅÂ·Î ÃÊ±âÈ­ ÇÕ´Ï´Ù.
             popup.gameObject.SetActive(false);
 
-            // ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•©ë‹ˆë‹¤.
+            // ¸®½ºÆ®¿¡ Ãß°¡ÇÕ´Ï´Ù.
             popupList.Add(popup);
         }
     }
 
-    // ìº”ë²„ìŠ¤ë¥¼ ì…‹íŒ…í•©ë‹ˆë‹¤.
+    // Äµ¹ö½º¸¦ ¼ÂÆÃÇÕ´Ï´Ù.
     private void SetCanvas(GameObject go)
     {
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        // ìš°ì„ ìˆœìœ„ë¥¼ 0ìœ¼ë¡œ ì´ˆê¸°í™” í•©ë‹ˆë‹¤.
+        // ¿ì¼±¼øÀ§¸¦ 0À¸·Î ÃÊ±âÈ­ ÇÕ´Ï´Ù.
         canvas.sortingOrder = 0;
 
         CanvasScaler canvasScaler = Util.GetOrAddComponent<CanvasScaler>(go);
@@ -123,30 +116,31 @@ public class UIManager : MonoSingleton<UIManager>
         Util.GetOrAddComponent<GraphicRaycaster>(go);
     }
 
-    // uië¥¼ ì—½ë‹ˆë‹¤
+    // ui¸¦ ¿±´Ï´Ù
     public T OpenUI<T>() where T : UI_Base
     {
         UI_Popup popup = FindPopupUI(typeof(T).Name);
 
-        // ì´ë¯¸ ë„ìœ„ì ¸ìˆëŠ” íŒì—… ì…ë‹ˆë‹¤.
+        // ÀÌ¹Ì ¶çÀ§Á®ÀÖ´Â ÆË¾÷ ÀÔ´Ï´Ù.
         if (IsCurrentPopup(popup))
             return null;
         
-        // ì˜¤ë¸Œì íŠ¸ë¡œ ìƒì„±í•©ë‹ˆë‹¤.
+        // ¿ÀºêÁ§Æ®·Î »ı¼ºÇÕ´Ï´Ù.
         GameObject go = Util.CreateObject(popup.gameObject);
 
-        // ìš°ì„ ìˆœìœ„ ì§€ì •
+        // ¿ì¼±¼øÀ§ ÁöÁ¤
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        // í˜„ì¬ ë³´ì—¬ì§€ëŠ” íŒì—… ìˆ˜ ì¦ê°€
+        canvas.sortingOrder = mainUiOrder + 1;
+        
+        // ÇöÀç º¸¿©Áö´Â ÆË¾÷ ¼ö Áõ°¡
         currentPopupCount++;
-        canvas.sortingOrder = currentPopupCount;
 
         go.SetActive(true);
 
-        // ì‹¤ì‹œê°„ uië¦¬ìŠ¤íŠ¸ì— ì¶”ê°€í•©ë‹ˆë‹¤.
+        // ½Ç½Ã°£ ui¸®½ºÆ®¿¡ Ãß°¡ÇÕ´Ï´Ù.
         currentPopup.AddFirst(popup);
 
-        // íŒì—…ì „ìš©í´ë”ë¡œ ì˜®ê²¨ì¤ë‹ˆë‹¤.
+        // ÆË¾÷Àü¿ëÆú´õ·Î ¿Å°ÜÁİ´Ï´Ù.
         GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
         if (popupRoot == null)
         {
@@ -157,14 +151,14 @@ public class UIManager : MonoSingleton<UIManager>
         return go.GetComponent<T>();
     }
 
-    // uië¥¼ ë‹«ìŠµë‹ˆë‹¤
+    // ui¸¦ ´İ½À´Ï´Ù
     public void CloseUI<T>() where T : UI_Base
     {
-        // ë‹«ì„ íŒì—…ì´ ì—†ìŠµë‹ˆë‹¤.
+        // ´İÀ» ÆË¾÷ÀÌ ¾ø½À´Ï´Ù.
         if (currentPopup.Count <= 0)
             return;
 
-        // ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œì™¸
+        // ¸®½ºÆ®¿¡¼­ Á¦¿Ü
         LinkedList<UI_Popup>.Enumerator enummerator = currentPopup.GetEnumerator();
         UI_Popup pop = enummerator.Current;
         while(pop == null)
@@ -178,7 +172,7 @@ public class UIManager : MonoSingleton<UIManager>
             currentPopup.Remove(pop);
         }
 
-        // ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
+        // ¿ÀºêÁ§Æ® »èÁ¦
         GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
         GameObject findObject = Util.FindChild(popupRoot, typeof(T).Name);
         Destroy(findObject);
@@ -188,7 +182,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     private UI_Popup FindPopupUI(string name)
     {
-        // íŒì—… ë¦¬ìŠ¤íŠ¸ì—ì„œ í•´ë‹¹í•˜ëŠ” íŒì—…ì„ ì°¾ìŠµë‹ˆë‹¤.
+        // ÆË¾÷ ¸®½ºÆ®¿¡¼­ ÇØ´çÇÏ´Â ÆË¾÷À» Ã£½À´Ï´Ù.
         for( int i = 0; i < popupList.Count; i++ )
         {
             if(popupList[i].name == name)

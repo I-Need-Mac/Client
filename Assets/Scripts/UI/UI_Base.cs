@@ -5,16 +5,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// UIë¼ë©´ ì‚¬ìš©í•˜ëŠ” ëª¨ë“  ê¸°ëŠ¥ì„ ì •ì˜í•©ë‹ˆë‹¤.
-// í° ë‹¨ìœ„ì˜UIëŠ” ë² ì´ìŠ¤ë¥¼ ìƒì† ë°›ë„ë¡ í•©ë‹ˆë‹¤.
+// UI¶ó¸é »ç¿ëÇÏ´Â ¸ğµç ±â´ÉÀ» Á¤ÀÇÇÕ´Ï´Ù.
+// Å« ´ÜÀ§ÀÇUI´Â º£ÀÌ½º¸¦ »ó¼Ó ¹Şµµ·Ï ÇÕ´Ï´Ù.
 public class UI_Base : MonoBehaviour
 {
     public T CreateUI<T>(string name = null) where T : UI_Base
-    {   // UIë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+    {   // UI¸¦ »ı¼ºÇÕ´Ï´Ù.
         if (name == null)
             name = typeof(T).ToString();
 
-        // UIì˜ í”„ë¦¬íŒ¹ì„ ë¡œë“œí•©ë‹ˆë‹¤.
+        // UIÀÇ ÇÁ¸®ÆÕÀ» ·ÎµåÇÕ´Ï´Ù.
         T prefab = Resources.Load<T>($"{Define.UiPrefabsPath}/{name}");
         if (prefab == null)
             return null;
@@ -22,24 +22,24 @@ public class UI_Base : MonoBehaviour
         return prefab;
     }
 
-    // íŒì—…ì„ ì—´ë„ë¡ í•©ë‹ˆë‹¤.
+    // ÆË¾÷À» ¿­µµ·Ï ÇÕ´Ï´Ù.
     public virtual void OpenUI<T>() where T : UI_Base
     {
-        // ë§¤ë‹ˆì €ë¥¼ í†µí•´ íŒì—…ì„ ì—½ë‹ˆë‹¤.
+        // ¸Å´ÏÀú¸¦ ÅëÇØ ÆË¾÷À» ¿±´Ï´Ù.
         UIManager.Instance.OpenUI<T>();
     }
 
-    // íŒì—…ì„ ë‹«ìŠµë‹ˆë‹¤.
+    // ÆË¾÷À» ´İ½À´Ï´Ù.
     public virtual void CloseUI<T>() where T : UI_Base
     {
-        // ë§¤ë‹ˆì €ë¥¼ í†µí•´ íŒì—…ì„ ì—½ë‹ˆë‹¤.
+        // ¸Å´ÏÀú¸¦ ÅëÇØ ÆË¾÷À» ¿±´Ï´Ù.
         UIManager.Instance.CloseUI<T>();
     }
 
-    // ì´ë²¤íŠ¸ìš© UIë¦¬ìŠ¤íŠ¸
+    // ÀÌº¥Æ®¿ë UI¸®½ºÆ®
     Dictionary<Type, UnityEngine.Object[]> uiList = new Dictionary<Type, UnityEngine.Object[]>();
 
-    // UIì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬ë¥¼ ì—°ê²°í•©ë‹ˆë‹¤.
+    // UIÀÌº¥Æ® ÇÚµé·¯¸¦ ¿¬°áÇÕ´Ï´Ù.
     public void BindUIEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.None)
     {
         UIEventHandler evt = Util.GetOrAddComponent<UIEventHandler>(go);
@@ -55,10 +55,10 @@ public class UI_Base : MonoBehaviour
         } 
     }
 
-    // UIìš”ì†Œë¥¼ ë°”ì¸ë”© í•©ë‹ˆë‹¤.
+    // UI¿ä¼Ò¸¦ ¹ÙÀÎµù ÇÕ´Ï´Ù.
     protected void Bind<T>(Type type) where T : UnityEngine.Object
     {
-        // enumì— ìˆëŠ” ë¦¬ìŠ¤íŠ¸ë“¤ì„ stringìœ¼ë¡œ ë½‘ì•„ì˜¬ ìˆ˜ ìˆìŒ.
+        // enum¿¡ ÀÖ´Â ¸®½ºÆ®µéÀ» stringÀ¸·Î »Ì¾Æ¿Ã ¼ö ÀÖÀ½.
         string[] names = Enum.GetNames(type);
         UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
 
@@ -84,14 +84,14 @@ public class UI_Base : MonoBehaviour
 
     protected T Get<T>(int idx) where T : UnityEngine.Object
     {
-        // íƒ€ì…ì— ëŒ€í•œ ë¦¬ìŠ¤íŠ¸ë¥¼ ê°€ì ¸ì˜¨ë‹¤
+        // Å¸ÀÔ¿¡ ´ëÇÑ ¸®½ºÆ®¸¦ °¡Á®¿Â´Ù
         UnityEngine.Object[] objects = null;
         if (uiList.TryGetValue(typeof(T), out objects) == false)
         {
             return null;
         }
 
-        // ê°€ì ¸ì˜¨ ë¦¬ìŠ¤íŠ¸ì— ë§ëŠ” ì¸ë±ìŠ¤ ìš”ì†Œë¥¼ Të¡œ ìºìŠ¤íŒ…í•´ì„œ ë°˜í™˜
+        // °¡Á®¿Â ¸®½ºÆ®¿¡ ¸Â´Â ÀÎµ¦½º ¿ä¼Ò¸¦ T·Î Ä³½ºÆÃÇØ¼­ ¹İÈ¯
         return objects[idx] as T;
     }
 

@@ -6,19 +6,13 @@ using UnityEngine.UI;
 
 public class UI_Login : UI_Popup
 {
+    // Ω∫∆¿ ∑Œ±◊¿Œ
+    Image steamLogin;
+
     enum Images
     {
         LoginButton,
     }
-
-    [SerializeField]
-    Text titleText;
-    [SerializeField]
-    Text loginText;
-    [SerializeField]
-    Text autoLoginText;
-
-    Toggle autoLogin;
 
     // Start is called before the first frame update
     void Start()
@@ -27,15 +21,11 @@ public class UI_Login : UI_Popup
 
         Array imageValue = Enum.GetValues(typeof(Images));
 
-        // Î≤ÑÌäº Ïù¥Î≤§Ìä∏ Îì±Î°ù
+        // πˆ∆∞ ¿Ã∫•∆Æ µÓ∑œ
         for (int i = 0; i < imageValue.Length; i++)
         {
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
-
-        titleText.text = LocalizeManager.Instance.GetText("UI_Login");
-        loginText.text = LocalizeManager.Instance.GetText("UI_LoginWithSteam");
-        autoLoginText.text = LocalizeManager.Instance.GetText("UI_AutoLogin");
     }
 
     public void OnClickImage(PointerEventData data)
@@ -49,8 +39,6 @@ public class UI_Login : UI_Popup
         switch (imageValue)
         {
             case Images.LoginButton:
-                this.CloseUI<UI_Login>();
-                UIManager.Instance.OpenUI<UI_Agreement>();
                 break;
             default:
                 break;

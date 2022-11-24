@@ -1,4 +1,4 @@
-PageID,PageType,TextBox1,TextBox2,TextBox3,VoicePath1,VoicePath2,VoicePath3,ImagePath
+-,,,,,,,,
 ,,3개의 문단 텍스트 아이디,,,문단에 해당하는 보이스 패스,,,이미지 패스
 PageID,PageType,TextBox1,TextBox2,TextBox3,VoicePath1,VoicePath2,VoicePath3,ImagePath
 1001,Text,"Unity is a cross-platform game engine developed by Unity Technologies, first announced and released in June 2005 at Apple Worldwide Developers Conference as a Mac OS X game engine.",None,The engine can be used to create three-dimensional (3D) and two-dimensional (2D) games,TextVoice1,TextVoice2,TextVoice3,None

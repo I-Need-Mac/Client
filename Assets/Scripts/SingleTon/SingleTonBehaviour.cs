@@ -46,11 +46,11 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (_instance == null)
             {
-                // ì œë„¤ë¦­ í˜•ìœ¼ë¡œ ê²Œì„ ì˜¤ë¸Œì íŠ¸ ë¡œë“œ (DontDestroyë¡œ)
+                // Á¦³×¸¯ ÇüÀ¸·Î °ÔÀÓ ¿ÀºêÁ§Æ® ·Îµå (DontDestroy·Î)
                 GameObject gameObject = new GameObject(typeof(T).ToString());
                 GameObject.DontDestroyOnLoad(gameObject);
 
-                // ì»´í¬ë„ŒíŠ¸ ì…‹íŒ…
+                // ÄÄÆ÷³ÍÆ® ¼ÂÆÃ
                 _instance = gameObject.AddComponent<T>();
             }
 

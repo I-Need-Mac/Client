@@ -17,7 +17,7 @@ public class UI_StoryBook : UI_Popup
         StoryBGM,
     }
 
-    // StoryTableê³¼ ë§ì¶¥ë‹ˆë‹¤
+    // StoryTable°ú ¸ÂÃä´Ï´Ù
     public enum StoryBookID
     {
         STORY_BOOK_TITLE1 = 1001,
@@ -64,7 +64,7 @@ public class UI_StoryBook : UI_Popup
         Bind<Button>(typeof(Buttons));
         Array buttonValue = Enum.GetValues(typeof(Buttons));
 
-        // ë²„íŠ¼ ì´ë²¤íŠ¸ ë“±ë¡
+        // ¹öÆ° ÀÌº¥Æ® µî·Ï
         for(int i = 0; i < buttonValue.Length; i++)
         {
             BindUIEvent(GetButton(i).gameObject, (PointerEventData data) => { OnClickButton(data); }, Define.UIEvent.Click);
@@ -75,7 +75,7 @@ public class UI_StoryBook : UI_Popup
 
     public void SetData(StoryBookID id)
     {
-        // í˜ì´ì§€ ìƒì„±
+        // ÆäÀÌÁö »ı¼º
         bookId = id;
         Dictionary<int, List<object>> pageInfo = UIData.PageTableData[(int)id];
         totalPage = pageInfo.Count;
@@ -84,52 +84,52 @@ public class UI_StoryBook : UI_Popup
         int index = 0;
         foreach (KeyValuePair<int, List<object>> pair in pageInfo)
         {
-            // í˜ì´ì§€ ë°ì´í„° ë¡œë“œ
+            // ÆäÀÌÁö µ¥ÀÌÅÍ ·Îµå
             UI_Page page = Util.UILoad<UI_Page>($"{Define.UiPrefabsPath}/UI_Page");
 
-            // ì”¬ì— ì˜¬ë¦½ë‹ˆë‹¤.
+            // ¾À¿¡ ¿Ã¸³´Ï´Ù.
             UI_Page instPage = GameObject.Instantiate<UI_Page>(page);
-            // í˜ì´ì§€ ë°ì´í„° ì…‹íŒ…
+            // ÆäÀÌÁö µ¥ÀÌÅÍ ¼ÂÆÃ
             instPage.SetData(pair.Key, pair.Value);
 
             GameObject go = instPage.gameObject;
 
-            // ì´ë¦„ ì…‹íŒ…
+            // ÀÌ¸§ ¼ÂÆÃ
             string reName = go.name.Replace("(Clone)", "").Trim();
             go.name = reName + "_" + index++;
 
-            // ì±… í•˜ìœ„ì— ìœ„ì¹˜
+            // Ã¥ ÇÏÀ§¿¡ À§Ä¡
             go.transform.SetParent(this.transform);
 
-            // ì´ˆê¸°í™”ì‹œ í™œì„±ì€ êº¼ì£¼ë„ë¡ í•©ë‹ˆë‹¤.
+            // ÃÊ±âÈ­½Ã È°¼ºÀº ²¨ÁÖµµ·Ï ÇÕ´Ï´Ù.
             go.SetActive(false);
 
-            // í˜ì´ì§€ position ì…‹íŒ…
+            // ÆäÀÌÁö position ¼ÂÆÃ
             RectTransform rt = go.GetComponent<RectTransform>();
             rt.anchoredPosition = new Vector2(pagePos, 0);
             pagePos *= -1;
 
-            // ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+            // ¸®½ºÆ®¿¡ Ãß°¡
             pageList.Add(instPage);
         }
         
-        // 1í˜ì´ì§€ë¡œ ì…‹íŒ…
+        // 1ÆäÀÌÁö·Î ¼ÂÆÃ
         ActivePage(0);
     }
 
-    // í˜ì´ì§€ë¥¼ í™œì„±í™” í•©ë‹ˆë‹¤.
+    // ÆäÀÌÁö¸¦ È°¼ºÈ­ ÇÕ´Ï´Ù.
     void ActivePage(int page)
     {
         if (page >= totalPage || page < 0)
             return;
 
-        // ì „ì²´ ë¹„í™œì„±
+        // ÀüÃ¼ ºñÈ°¼º
         for( int i = 0; i < pageList.Count; i++ )
         {
             pageList[i].gameObject.SetActive(false);
         }
 
-        // í•´ë‹¹ í˜ì´ì§€ë§Œ í™œì„±
+        // ÇØ´ç ÆäÀÌÁö¸¸ È°¼º
         pageList[page].gameObject.SetActive(true);
         pageList[page + 1].gameObject.SetActive(true);
 
@@ -147,11 +147,11 @@ public class UI_StoryBook : UI_Popup
 
         currentPage = page;
 
-        // í˜ì´ì§€ í‘œì‹œ
+        // ÆäÀÌÁö Ç¥½Ã
         pageText.text = (currentPage + 1) + "/" + (currentPage + PAGE_UNIT);
     }
 
-    // ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸
+    // ¹öÆ° Å¬¸¯ ÀÌº¥Æ®
     void OnClickButton(PointerEventData data)
     {
         Buttons buttonValue = (Buttons)FindEnumValue<Buttons>(data.pointerClick.name);
@@ -168,13 +168,13 @@ public class UI_StoryBook : UI_Popup
                 break;
             case Buttons.ContentSkip:
                 {
-                    // í•œ ë¬¸ë‹¨ ìŠ¤í‚µ
+                    // ÇÑ ¹®´Ü ½ºÅµ
                     bool isLast = false;
                     if (pageList[skipPage].IsPageSkippable())
                     {
                         pageList[skipPage].SkipPage(out isLast, false);
 
-                        if (isLast) // ë§ˆì§€ë§‰ ë¬¸ë‹¨ì¸ ê²½ìš° ë‹¤ìŒ í˜ì´ì§€ë¡œ
+                        if (isLast) // ¸¶Áö¸· ¹®´ÜÀÎ °æ¿ì ´ÙÀ½ ÆäÀÌÁö·Î
                         {
                             skipPage++;
 
@@ -207,7 +207,7 @@ public class UI_StoryBook : UI_Popup
                 break;
             case Buttons.PageSkip:
                 {
-                    // í•œìª½ ìŠ¤í‚µ
+                    // ÇÑÂÊ ½ºÅµ
                     bool isLast = false;
                     pageList[currentPage].SkipPage(out isLast, true);
                     pageList[currentPage + 1].SkipPage(out isLast, true);

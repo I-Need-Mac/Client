@@ -2,7 +2,7 @@ using BFM;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectilePoolManager : MonoSingleton<ProjectilePoolManager>
+public class ProjectilePoolManager : SingletonBehaviour<ProjectilePoolManager>
 {
     [SerializeField] ProjectilePool straight;
     [SerializeField] ProjectilePool protect;
@@ -14,7 +14,7 @@ public class ProjectilePoolManager : MonoSingleton<ProjectilePoolManager>
 
     private Dictionary<PROJECTILE_TYPE, ProjectilePool> pools;
 
-    private void Awake()
+    protected override void Awake()
     {
         pools = new Dictionary<PROJECTILE_TYPE, ProjectilePool>
         {

@@ -18,7 +18,7 @@ public class ProjectileSatellite : Projectile
         //    Mathf.Sin((angle + Time.fixedDeltaTime)%360f * Mathf.Deg2Rad), 0f
         //    ) * radius;
         angle += Time.fixedDeltaTime * tempSpeed;
-        transform.position = caster.position+new Vector3(Mathf.Cos(angle*Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * radius;
+        transform.position = caster.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * radius;
     }
 
     public override void Fire(Transform caster, Vector3 pos)

@@ -12,7 +12,7 @@ public class ProjectilePool : MonoBehaviour
         pool = new Stack<Projectile>();
         AddProjectile();
     }
-
+    
     //projectile을 사용하기 위해 pool에서 꺼내는 함수
     public Projectile GetProjectile()
     {

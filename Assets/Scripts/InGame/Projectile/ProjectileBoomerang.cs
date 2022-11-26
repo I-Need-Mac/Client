@@ -14,7 +14,6 @@ public class ProjectileBoomerang : Projectile
             transform.Translate(5 * Time.fixedDeltaTime * direction);
             if(Vector2.Distance(transform.position, direction * attackDistanceTemp) <= 2f)
             {
-                DebugManager.Instance.PrintDebug("돌아가!");
                 direction *= -1;
                 isReturn = true;
             }

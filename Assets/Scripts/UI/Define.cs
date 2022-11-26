@@ -1,18 +1,18 @@
 public class Define
 {
-    // UIÈ­¸é Å©±â
+    // UIí™”ë©´ í¬ê¸°
     public const int uiScreenWidth = 1920;
     public const int uiScreenHeight = 1080;
 
-    // UIÇÁ¸®ÆÕ ÀúÀå °æ·Î
+    // UIí”„ë¦¬íŒ¹ ì €ì¥ ê²½ë¡œ
     public const string UiPrefabsPath = "Prefabs/UI";
-    public const string UiImagePath = "Art/Image/UI";
+    public const string UiImagePath = "Arts/UI";
 
     public const string UiPopupRoot = "@UI_Popup_Root";
 
 
     public enum UIEvent
-    {   // UIÀÌº¥Æ® ÇÚµé·¯ °ü·Ã
+    {   // UIì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬ ê´€ë ¨W
         None = 0,
         Click,
         Enter,

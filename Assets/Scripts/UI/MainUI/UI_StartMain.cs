@@ -9,7 +9,6 @@ public class UI_StartMain : UI_Base
     enum Images
     {
         Title,
-        Version,
         PressKey,
     }
 
@@ -17,6 +16,9 @@ public class UI_StartMain : UI_Base
 
     // 시작 창
     Image pressKeyImage;
+
+    [SerializeField]
+    Text version;
 
     void Start()
     {
@@ -30,6 +32,7 @@ public class UI_StartMain : UI_Base
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
 
+        version.text = "ver. 1.0.0";
         pressKeyImage = GetImage((int)Images.PressKey).gameObject.GetComponent<Image>();
     }
 

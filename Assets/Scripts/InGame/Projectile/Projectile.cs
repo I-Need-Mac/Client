@@ -3,9 +3,7 @@ using UnityEngine.UI;
 
 public abstract class Projectile : MonoBehaviour
 {
-    private const float RELEASE_TIME = 2f; //투사체 소멸 시간
-
-    private ProjectilePoolManager projectilePoolManager;
+    private const float RELEASE_TIME = 10f; //투사체 소멸 시간
 
     protected Rigidbody2D projectileRigidBody;
     protected int coolTime;
@@ -20,6 +18,8 @@ public abstract class Projectile : MonoBehaviour
     protected Vector3 direction;
     //protected SkillData skillData;
 
+    public float angle { get; set; }
+
     //각 투사체 타입별로 따로 구현
     //Fire -> 발사 / Move -> 투사체의 움직임
     protected abstract void Move();
@@ -27,7 +27,6 @@ public abstract class Projectile : MonoBehaviour
     
     private void Awake()
     {
-        projectilePoolManager = FindObjectOfType<ProjectilePoolManager>();
         projectileRigidBody = GetComponent<Rigidbody2D>();
         direction = Vector3.right;
         //skillData = new SkillData();
@@ -44,9 +43,15 @@ public abstract class Projectile : MonoBehaviour
         Invoke("ReleaseProjectile", RELEASE_TIME);
     }
 
+    //카메라에 다시 잡히면 Release Cancel
+    private void OnBecameVisible()
+    {
+        CancelInvoke("ReleaseProjectile");
+    }
+
     private void ReleaseProjectile()
     {
-        projectilePoolManager.DeSpawnProjectile(this, projectileType);
+        ProjectilePoolManager.Instance.DeSpawnProjectile(this, projectileType);
     }
 
     //풀에서 꺼내 쓸 때 스킬 정보를 업데이트하는 함수

@@ -10,10 +10,10 @@ public class Player : MonoBehaviour
     private const float PER = 10000f; //분율 수치 ex)100 -> 백분율, 1000 -> 천분율, 10000 -> 만분율
     private const string CONFIG_VALUE = "ConfigValue";
 
-    private ProjectilePoolManager projectilePoolManager;
+    [SerializeField] [Range(1f, 100f)]private int c = 1;
+
     private Rigidbody2D playerRigidbody;
     private Vector3 playerDirection;
-    private Vector3 lookDirection;
     private float coolTimeConstant;     //재사용대기시간감소상수
     private float coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
     /*
@@ -34,12 +34,12 @@ public class Player : MonoBehaviour
     private int getItemRange;
 
     public PlayerData playerData { get; private set; } = new PlayerData();
+    public Vector3 lookDirection { get; private set; } //바라보는 방향
 
     /*Unity Mono*/
     #region Mono
     private void Awake()
     {
-        projectilePoolManager = FindObjectOfType<ProjectilePoolManager>();
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
         lookDirection = Vector3.right;
@@ -52,8 +52,9 @@ public class Player : MonoBehaviour
     {
         statusSetting(playerData);
         StartCoroutine(HpRegeneration());
-        StartCoroutine(Fire());
+        Fire();
     }
+
 
     /*
      *키보드 입력이랑 움직이는 부분은 안정성을 위해 분리시킴
@@ -68,7 +69,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        DebugManager.Instance.PrintDebug(lookDirection);
     }
     #endregion
 
@@ -265,7 +265,7 @@ public class Player : MonoBehaviour
         while (true)
         {
             //정해진 초(HP_REGEN_PER_SECOND)마다 실행
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(HP_REGEN_PER_SECOND);
 
             //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
             if (currentHp < playerData.hp)
@@ -295,34 +295,25 @@ public class Player : MonoBehaviour
     //}
     #endregion
 
+    /*스킬 관련*/
     #region Skill
-    //TO DO : 스킬 로직 설계
-    
-    private IEnumerator Fire()
+    private void Fire()
     {
-        yield return new WaitForSeconds(1);
-        while (true)
+        playerData.SetSkill(new Skill("10101", this));
+        playerData.SetSkill(new Skill("10300", this));
+        playerData.SetSkill(new Skill("10500", this));
+        for (int i = 0; i < playerData.skills.Count; i++)
         {
-            //foreach (Skill skill in playerData.skills.Values)
-            //{
-            //    if (skill.skillData.isEffect)
-            //    {
-            //        yield return new WaitForSeconds(skill.skillData.coolTime);
-            //    }
-
-            //    PROJECTILE_TYPE type = skill.skillData.projectileType;
-            //    switch (type)
-            //    {
-            //        case PROJECTILE_TYPE.STRAIGHT:
-            //            Projectile projectile = projectilePoolManager.SpawnProjectile(type, skill.skillData);
-            //            projectile.Fire(playerRigidbody, playerDirection);
-            //            break;
-            //    }
-            //}
-            Projectile projectile = projectilePoolManager.SpawnProjectile(PROJECTILE_TYPE.STRAIGHT, new SkillData());
-            projectile.Fire(transform, lookDirection);
-
-            yield return new WaitForSeconds(2);
+            Skill skill = playerData.skills[i];
+            switch (skill.skillData.projectileType)
+            {
+                case PROJECTILE_TYPE.SATELLITE:
+                    StartCoroutine(skill.SatelliteSkill());
+                    break;
+                default:
+                    StartCoroutine(skill.ShootSkill());
+                    break;
+            }
         }
     }
 

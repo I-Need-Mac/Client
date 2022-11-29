@@ -29,9 +29,9 @@ public class ProjectilePoolManager : SingletonBehaviour<ProjectilePoolManager>
 
     }
 
-    public Projectile SpawnProjectile(PROJECTILE_TYPE type, SkillData skillData)
+    public Projectile SpawnProjectile(SkillData skillData)
     {
-        Projectile projectile = pools[type].GetProjectile();
+        Projectile projectile = pools[skillData.projectileType].GetProjectile();
         projectile.SkillDataUpdate(skillData); //스킬 정보 업데이트
         return projectile;
     }

@@ -5,7 +5,7 @@ public class ProjectileStraight : Projectile
 {
     protected override void Move()
     {
-        transform.Translate(7 * Time.fixedDeltaTime * direction);
+        transform.Translate(skillData.speed * Time.fixedDeltaTime * direction);
     }
 
     public override void Fire(Transform caster, Vector3 pos)

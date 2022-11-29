@@ -6,17 +6,17 @@ public abstract class Projectile : MonoBehaviour
     private const float RELEASE_TIME = 10f; //투사체 소멸 시간
 
     protected Rigidbody2D projectileRigidBody;
-    protected int coolTime;
-    protected int attackDistance;
-    protected int damage;
-    protected int projectileCount;
-    protected int speed;
-    protected int splashRange;
-    protected int projectileSizeMulti;
-    protected bool isPenetrate;
-    protected PROJECTILE_TYPE projectileType;
+    //protected int coolTime;
+    //protected int attackDistance;
+    //protected int damage;
+    //protected int projectileCount;
+    //protected int speed;
+    //protected int splashRange;
+    //protected int projectileSizeMulti;
+    //protected bool isPenetrate;
+    //protected PROJECTILE_TYPE projectileType;
     protected Vector3 direction;
-    //protected SkillData skillData;
+    protected SkillData skillData;
 
     public float angle { get; set; }
 
@@ -51,7 +51,7 @@ public abstract class Projectile : MonoBehaviour
 
     private void ReleaseProjectile()
     {
-        ProjectilePoolManager.Instance.DeSpawnProjectile(this, projectileType);
+        ProjectilePoolManager.Instance.DeSpawnProjectile(this, skillData.projectileType);
     }
 
     //풀에서 꺼내 쓸 때 스킬 정보를 업데이트하는 함수
@@ -59,14 +59,6 @@ public abstract class Projectile : MonoBehaviour
     //Init 역할도 함
     public void SkillDataUpdate(SkillData skillData)
     {
-        coolTime = skillData.coolTime;
-        attackDistance = skillData.attackDistance;
-        damage = skillData.damage;
-        projectileCount = skillData.projectileCount;
-        speed = skillData.speed;
-        splashRange = skillData.splashRange;
-        projectileSizeMulti = skillData.projectileSizeMulti;
-        isPenetrate = skillData.isPenetrate;
-        projectileType = skillData.projectileType;
+        this.skillData = skillData;
     }
 }

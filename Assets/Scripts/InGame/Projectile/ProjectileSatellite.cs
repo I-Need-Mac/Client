@@ -4,10 +4,6 @@ using UnityEngine;
 public class ProjectileSatellite : Projectile
 {
     private Transform caster;
-    private Vector3 pos;
-    private int count = 3;
-    private float tempSpeed = 30f;
-    private float radius = 4f;
 
     protected override void Move()
     {
@@ -17,14 +13,27 @@ public class ProjectileSatellite : Projectile
         //    Mathf.Cos((angle + Time.fixedDeltaTime)%360f * Mathf.Deg2Rad),
         //    Mathf.Sin((angle + Time.fixedDeltaTime)%360f * Mathf.Deg2Rad), 0f
         //    ) * radius;
-        angle += Time.fixedDeltaTime * tempSpeed;
-        transform.position = caster.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * radius;
+        //Quaternion.AngleAxis(angle, axis);
+        //Quaternion.AngleAxis(angle, Vector3.forward);
+
+        //angle = Time.fixedDeltaTime * tempSpeed;
+        //Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+        //Vector3 v = caster.position - transform.position;
+        //v = q * v;
+        //transform.position = caster.position + v;
+
+        //angle += Time.fixedDeltaTime * tempSpeed;
+        //transform.position = caster.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * radius;
+
+        Quaternion rotate = Quaternion.Euler(0, 0, skillData.speed * Time.fixedDeltaTime);
+        direction = (rotate * direction).normalized;
+        transform.position = caster.position + direction * skillData.attackDistance;
     }
 
     public override void Fire(Transform caster, Vector3 pos)
     {
-        this.pos = pos;
-        transform.position = caster.position + pos * radius;
+        transform.position = caster.position + pos * skillData.attackDistance;
+        direction = transform.position - caster.position;
         this.caster = caster;
         gameObject.SetActive(true);
     }

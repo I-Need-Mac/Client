@@ -44,8 +44,10 @@ public class PrefabManager : MonoBehaviour
         // var _gimmickParameter;
         // string[] gimmickParameterSplit;
         int[] gimmickParameter = new int[10];
-        bool isPassable = false;
-        string _isPassable;
+        bool topIsPassable = false;
+        string _topIsPassable;
+        bool frontIsPassable = false;
+        string _frontIsPassable;
         int castTime;
         int layerOrder;
 
@@ -85,14 +87,24 @@ public class PrefabManager : MonoBehaviour
         
 
         // isPassable 받아오기
-        _isPassable = fieldStructureData[structureID]["IsPassable"].ToString();
-        if (_isPassable == "TRUE")
+        _topIsPassable = fieldStructureData[structureID]["TopIsPassible"].ToString();
+        if (_topIsPassable == "TRUE")
         {
-            isPassable = true;
+            topIsPassable = true;
         }
-        else if (_isPassable == "FALSE") 
+        else if (_topIsPassable == "FALSE") 
         {
-            isPassable = false;
+            topIsPassable = false;
+        }
+
+        _frontIsPassable = fieldStructureData[structureID]["FrontIsPassable"].ToString();
+        if (_frontIsPassable == "TRUE")
+        {
+            frontIsPassable = true;
+        }
+        else if (_frontIsPassable == "FALSE")
+        {
+            frontIsPassable = false;
         }
 
         // CastTime, LayerOrder int형으로 받아오기
@@ -106,7 +118,10 @@ public class PrefabManager : MonoBehaviour
         // 오브젝트 레이어 설정
         this.gameObject.layer = layerOrder;
         front.gameObject.layer = layerOrder;
-        top.gameObject.layer = layerOrder;
+        if (topPath != "Null")
+        {
+            top.gameObject.layer = layerOrder - 2;
+        }
 
 
 
@@ -151,7 +166,7 @@ public class PrefabManager : MonoBehaviour
         }
         
         // Top 오브젝트를 Front 바로 위에 붙이기
-        if(frontalPath != "Null" && topPath != "Null" && currentType != GimmickType.Teleport)
+        if(topPath != "Null" && currentType != GimmickType.Teleport)
         {
             top.transform.localPosition = new Vector3(0, (topHeight + frontHeight) / 2, 0);
         }
@@ -159,14 +174,18 @@ public class PrefabManager : MonoBehaviour
 
 
         // 통행 불가 시 콜라이더 설정
-        if(!isPassable)
+        if (!frontIsPassable)
         {
             front.AddComponent<BoxCollider2D>();
         }
-        
-        
+        if (!topIsPassable && topPath != "Null")
+        {
+            top.AddComponent<BoxCollider2D>();
+        }
+
+
         // GimmickType 별 기능 수행
-        switch(currentType)
+        switch (currentType)
         {
             case GimmickType.Tile:
 

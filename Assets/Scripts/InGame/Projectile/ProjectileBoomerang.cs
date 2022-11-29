@@ -4,29 +4,31 @@ using UnityEngine;
 
 public class ProjectileBoomerang : Projectile
 {
-    bool isReturn = false;
-    int attackDistanceTemp = 7;
+    private bool isReturn;
+    private float distance;
 
     protected override void Move()
     {
+        float speed = Time.fixedDeltaTime * skillData.speed;
         if (!isReturn)
         {
-            transform.Translate(5 * Time.fixedDeltaTime * direction);
-            if(Vector2.Distance(transform.position, direction * attackDistanceTemp) <= 2f)
-            {
-                direction *= -1;
-                isReturn = true;
-            }
+            transform.Translate(direction * speed);
+            distance += speed;
+            isReturn = distance >= skillData.attackDistance;
         }
-        transform.Translate(5 * Time.fixedDeltaTime * direction);
+        else
+        {
+            transform.Translate(direction * speed * -1);
+        }
     }
 
     public override void Fire(Transform caster, Vector3 pos)
     {
         transform.position = caster.position;
-        isReturn = false;
         direction = pos;
         direction.Normalize();
+        isReturn = false;
+        distance = 0f;
         gameObject.SetActive(true);
     }
 

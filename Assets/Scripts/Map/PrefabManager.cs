@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 public enum GimmickType
@@ -40,8 +41,8 @@ public class PrefabManager : MonoBehaviour
         string frontalPath;
         string topPath;
         GimmickType currentType;
-        string _gimmickParameter;
-        string[] gimmickParameterSplit;
+        // var _gimmickParameter;
+        // string[] gimmickParameterSplit;
         int[] gimmickParameter = new int[10];
         bool isPassable = false;
         string _isPassable;
@@ -57,14 +58,31 @@ public class PrefabManager : MonoBehaviour
 
 
         // GimmickParameter 배열로 받아오기
-        _gimmickParameter = fieldStructureData[structureID]["GimmickParam"].ToString();
-        gimmickParameterSplit = _gimmickParameter.Split(',');
+        try
+        {
+            var _gimmickParameter = (List<string>)fieldStructureData[structureID]["GimmickParam"];
+            // gimmickParameterSplit = _gimmickParameter.Split(',');
+
+            int i = 0;
+            foreach (string s in _gimmickParameter)
+            {
+                gimmickParameter[i] = int.Parse(s);
+                i++;
+            }
+        }
+        catch (InvalidCastException e)
+        {
+            gimmickParameter[0] = int.Parse(fieldStructureData[structureID]["GimmickParam"].ToString());
+        }
+
+        /*
         for (int i = 0; i < gimmickParameterSplit.Length; i++)
         {
             gimmickParameterSplit[i] = gimmickParameterSplit[i].Replace("\"", "");
             gimmickParameter[i] = int.Parse(gimmickParameterSplit[i]);
         }
-
+        */
+        
 
         // isPassable 받아오기
         _isPassable = fieldStructureData[structureID]["IsPassable"].ToString();

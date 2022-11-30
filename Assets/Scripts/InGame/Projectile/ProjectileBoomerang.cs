@@ -9,7 +9,7 @@ public class ProjectileBoomerang : Projectile
 
     protected override void Move()
     {
-        float speed = Time.fixedDeltaTime * skillData.speed;
+        float speed = Time.deltaTime * skillData.speed;
         if (!isReturn)
         {
             transform.Translate(direction * speed);

@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     private const float PER = 10000f; //분율 수치 ex)100 -> 백분율, 1000 -> 천분율, 10000 -> 만분율
     private const string CONFIG_VALUE = "ConfigValue";
 
+    [SerializeField] private string skillId = "10101";
+
     private Rigidbody2D playerRigidbody;
     private Vector3 playerDirection;
     private float coolTimeConstant;     //재사용대기시간감소상수
@@ -32,9 +34,46 @@ public class Player : MonoBehaviour
     private int getItemRange;
 
     public PlayerData playerData { get; private set; } = new PlayerData();
+    public Vector3 lookDirection { get; private set; } //바라보는 방향
 
-    /*유틸, 유니티와 관련*/
-    #region Util & Unity
+    /*Unity Mono*/
+    #region Mono
+    private void Awake()
+    {
+        playerRigidbody = GetComponent<Rigidbody2D>();
+        playerDirection = Vector3.zero;
+        lookDirection = Vector3.right;
+        coolTimeConstant = findConstant("CoolTimeConstant");
+        coolTimeCoefficient = findConstant("CoolTimeCoefficient");
+    }
+
+    //playerData의 경우 Awake단계에서 PlayerManager로 인한 데이터 셋팅이 이루어지지 않으므로 Start에 배치
+    private void Start()
+    {
+        statusSetting(playerData);
+        StartCoroutine(HpRegeneration());
+        Fire();
+    }
+
+
+    /*
+     *키보드 입력이랑 움직이는 부분은 안정성을 위해 분리시킴
+     *Update -> 키보드 input
+     *FixedUpdate -> movement
+     */
+    private void Update()
+    {
+        KeyDir();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+    }
+    #endregion
+
+    /*유틸*/
+    #region Util
     //상수값 읽어오는 함수
     private int findConstant(string constantName)
     {
@@ -65,38 +104,7 @@ public class Player : MonoBehaviour
         moveSpeed = playerData.moveSpeed;
         getItemRange = playerData.getItemRange;
     }
-
-    private void Awake()
-    {
-        playerRigidbody = GetComponent<Rigidbody2D>();
-        playerDirection = Vector3.zero;
-        coolTimeConstant = findConstant("CoolTimeConstant");
-        coolTimeCoefficient = findConstant("CoolTimeCoefficient");
-    }
-
-    //playerData의 경우 Awake단계에서 PlayerManager로 인한 데이터 셋팅이 이루어지지 않으므로 Start에 배치
-    private void Start()
-    {
-        statusSetting(playerData);
-        StartCoroutine(HpRegeneration());
-    }
-
-    /*
-     *키보드 입력이랑 움직이는 부분은 안정성을 위해 분리시킴
-     *Update -> 키보드 input
-     *FixedUpdate -> movement
-     */
-    private void Update()
-    {
-        KeyDir();
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
-    }
     #endregion
-
 
     /*키보드 입력 및 움직임 관련*/
     #region key input & movement
@@ -107,6 +115,12 @@ public class Player : MonoBehaviour
         playerDirection.x = Input.GetAxis("Horizontal");
         //up, down
         playerDirection.y = Input.GetAxis("Vertical");
+        //쳐다보는 방향 저장
+        if (playerDirection != Vector3.zero)
+        {
+            lookDirection = playerDirection;
+        }
+
     }
 
     //리지드바디의 MovePosition을 이용해 움직임을 구현
@@ -248,13 +262,16 @@ public class Player : MonoBehaviour
     //현재 체력은 currentHp로 따로 빼서 사용
     private IEnumerator HpRegeneration()
     {
-        //정해진 초(HP_REGEN_PER_SECOND)마다 실행
-        yield return new WaitForSeconds(HP_REGEN_PER_SECOND);
-        
-        //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
-        if (currentHp < playerData.hp)
+        while (true)
         {
-            currentHp += hpRegen;
+            //정해진 초(HP_REGEN_PER_SECOND)마다 실행
+            yield return new WaitForSeconds(HP_REGEN_PER_SECOND);
+
+            //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
+            if (currentHp < playerData.hp)
+            {
+                currentHp += hpRegen;
+            }
         }
     }
 
@@ -276,6 +293,36 @@ public class Player : MonoBehaviour
     //    currentHp -= 10;
     //    DebugManager.Instance.PrintDebug("현재체력: {0}", currentHp);
     //}
+    #endregion
+
+    /*스킬 관련*/
+    #region Skill
+    private void TempSkillSet(string str)
+    {
+        playerData.SetSkill(new Skill(str, this));
+        //playerData.SetSkill(new Skill("10101", this)); //straight
+        //playerData.SetSkill(new Skill("10300", this)); //satellite
+        //playerData.SetSkill(new Skill("10500", this)); //boomerang
+    }
+
+    private void Fire()
+    {
+        TempSkillSet(skillId);
+        for (int i = 0; i < playerData.skills.Count; i++)
+        {
+            Skill skill = playerData.skills[i];
+            switch (skill.skillData.projectileType)
+            {
+                case PROJECTILE_TYPE.SATELLITE:
+                    StartCoroutine(skill.SatelliteSkill());
+                    break;
+                default:
+                    StartCoroutine(skill.ShootSkill());
+                    break;
+            }
+        }
+    }
+
     #endregion
 
 }

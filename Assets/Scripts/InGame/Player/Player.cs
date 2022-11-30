@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private const float PER = 10000f; //분율 수치 ex)100 -> 백분율, 1000 -> 천분율, 10000 -> 만분율
     private const string CONFIG_VALUE = "ConfigValue";
 
-    [SerializeField] [Range(1f, 100f)]private int c = 1;
+    [SerializeField] private string skillId = "10101";
 
     private Rigidbody2D playerRigidbody;
     private Vector3 playerDirection;
@@ -297,11 +297,17 @@ public class Player : MonoBehaviour
 
     /*스킬 관련*/
     #region Skill
+    private void TempSkillSet(string str)
+    {
+        playerData.SetSkill(new Skill(str, this));
+        //playerData.SetSkill(new Skill("10101", this)); //straight
+        //playerData.SetSkill(new Skill("10300", this)); //satellite
+        //playerData.SetSkill(new Skill("10500", this)); //boomerang
+    }
+
     private void Fire()
     {
-        playerData.SetSkill(new Skill("10101", this));
-        playerData.SetSkill(new Skill("10300", this));
-        playerData.SetSkill(new Skill("10500", this));
+        TempSkillSet(skillId);
         for (int i = 0; i < playerData.skills.Count; i++)
         {
             Skill skill = playerData.skills[i];

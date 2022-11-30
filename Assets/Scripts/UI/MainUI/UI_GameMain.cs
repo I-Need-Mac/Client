@@ -15,6 +15,15 @@ public class UI_GameMain : UI_Popup
         Sorcere
     }
 
+    [SerializeField]
+    Text storyModeText;
+    [SerializeField]
+    Text selectSorcererText;
+    [SerializeField]
+    Text soulText;
+    [SerializeField]
+    Text sorcereText;
+
     void Start()
     {
         Bind<GameObject>(typeof(GameObjects));
@@ -24,6 +33,11 @@ public class UI_GameMain : UI_Popup
         {
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
         }
+
+        storyModeText.text = LocalizeManager.Instance.GetText("UI_StoryMode");
+        selectSorcererText.text = LocalizeManager.Instance.GetText("UI_SelectSorcerer");
+        soulText.text = LocalizeManager.Instance.GetText("UI_Soul");
+        sorcereText.text = LocalizeManager.Instance.GetText("UI_Sorcer");
     }
 
     public void OnClickObject(PointerEventData data)
@@ -37,6 +51,7 @@ public class UI_GameMain : UI_Popup
         switch (imageValue)
         {
             case GameObjects.StoryMode:
+                UIManager.Instance.OpenUI<UI_StoryMain>();
                 break;
             case GameObjects.SelectSorcerer:
                 break;

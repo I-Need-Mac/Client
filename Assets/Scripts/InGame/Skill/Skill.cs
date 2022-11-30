@@ -36,9 +36,9 @@ public class Skill
     //shoot type skill activation
     public IEnumerator ShootSkill()
     {
-        if (skillData.isEffect)
+        if (!skillData.isEffect)
         {
-            yield return new WaitForSeconds(skillData.coolTime/1000);
+            yield return new WaitForSeconds(skillData.coolTime);
         }
         while (true)
         {
@@ -47,9 +47,9 @@ public class Skill
                 Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
                 projectile.Fire(player.transform, player.lookDirection);
                 projectiles.Add(projectile);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.2f); //발사 간격
             }
-            yield return new WaitForSeconds(skillData.coolTime/1000);
+            yield return new WaitForSeconds(skillData.coolTime);
         }
     }
 
@@ -67,14 +67,13 @@ public class Skill
             DebugManager.Instance.PrintDebug("존재하지 않는 스킬입니다");
             return;
         }
-        //skillData.SetSkillId(Convert.ToInt32(skillInfo["SkillID"]));
         skillData.SetCoolTime(Convert.ToInt32(skillInfo["Cooltime"]));
         skillData.SetAttackDistance(Convert.ToInt32(skillInfo["AttackDistance"]));
         skillData.SetDamage(Convert.ToInt32(skillInfo["Damage"]));
         skillData.SetSkillEffectParam(Convert.ToInt32(skillInfo["SkillEffectParam"]));
-        skillData.SetSkillCut(Convert.ToBoolean(skillInfo["Skill_Cut"]));
-        skillData.SetIsEffect(Convert.ToBoolean(skillInfo["IsEffect"]));
-        skillData.SetIsUltimate(Convert.ToBoolean(skillInfo["IsUltimate"]));
+        skillData.SetSkillCut(Convert.ToBoolean(Convert.ToString(skillInfo["Skill_Cut"]).ToLower()));
+        skillData.SetIsEffect(Convert.ToBoolean(Convert.ToString(skillInfo["IsEffect"]).ToLower()));
+        skillData.SetIsUltimate(Convert.ToBoolean(Convert.ToString(skillInfo["IsUltimate"]).ToLower()));
         skillData.SetName(Convert.ToString(skillInfo["Name"]));
         skillData.SetDesc(Convert.ToString(skillInfo["Desc"]));
         skillData.SetIcon(Convert.ToString(skillInfo["Icon"]));
@@ -98,6 +97,7 @@ public class Skill
 
         if (skillTable.ContainsKey(skillId))
         {
+            skillData.SetSkillId(Convert.ToInt32(skillId));
             return skillTable[skillId];
         }
         //찾는 스킬이 없을 경우 null

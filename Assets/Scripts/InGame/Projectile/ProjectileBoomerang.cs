@@ -25,6 +25,7 @@ public class ProjectileBoomerang : Projectile
     public override void Fire(Transform caster, Vector3 pos)
     {
         transform.position = caster.position;
+        transform.localScale *= skillData.projectileSizeMulti;
         direction = pos;
         direction.Normalize();
         isReturn = false;

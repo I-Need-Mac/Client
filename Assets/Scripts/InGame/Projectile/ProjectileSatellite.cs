@@ -18,6 +18,7 @@ public class ProjectileSatellite : Projectile
     public override void Fire(Transform caster, Vector3 pos)
     {
         transform.position = caster.position + pos * skillData.attackDistance;
+        transform.localScale *= skillData.projectileSizeMulti;
         direction = transform.position - caster.position;
         this.caster = caster;
         gameObject.SetActive(true);

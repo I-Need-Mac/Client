@@ -32,7 +32,7 @@ public abstract class Projectile : MonoBehaviour
         //skillData = new SkillData();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }

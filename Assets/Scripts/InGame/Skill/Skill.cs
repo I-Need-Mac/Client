@@ -33,7 +33,15 @@ public class Skill
         yield return new WaitForSeconds(5); //지속시간인데 이거 물어봐야함 스킬데이터에없음
     }
 
-    //shoot type skill activation
+    //Protect type skill activation
+    public void ProtectSkill()
+    {
+        Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
+        projectile.Fire(player.transform, Vector3.zero);
+        projectiles.Add(projectile);
+    }
+
+    //Shoot type skill activation
     public IEnumerator ShootSkill()
     {
         if (!skillData.isEffect)

@@ -316,6 +316,9 @@ public class Player : MonoBehaviour
                 case PROJECTILE_TYPE.SATELLITE:
                     StartCoroutine(skill.SatelliteSkill());
                     break;
+                case PROJECTILE_TYPE.PROTECT:
+                    skill.ProtectSkill();
+                    break;
                 default:
                     StartCoroutine(skill.ShootSkill());
                     break;

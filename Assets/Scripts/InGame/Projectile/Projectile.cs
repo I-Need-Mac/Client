@@ -29,7 +29,6 @@ public abstract class Projectile : MonoBehaviour
     {
         projectileRigidBody = GetComponent<Rigidbody2D>();
         direction = Vector3.right;
-        //skillData = new SkillData();
     }
 
     private void FixedUpdate()

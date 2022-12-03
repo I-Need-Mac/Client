@@ -25,6 +25,9 @@ public class UIManager : MonoSingleton<UIManager>
         UI_StoryBook,
     }
 
+    GameObject uiCamera = null;
+    GameObject uiCanvas = null;
+
     // 메인 UI 우선순위
     int mainUiOrder = 0;
     // 팝업UI 우선순위
@@ -51,6 +54,34 @@ public class UIManager : MonoSingleton<UIManager>
             Util.GetOrAddComponent<EventSystem>(go);
             Util.GetOrAddComponent<StandaloneInputModule>(go);
         }
+
+        // UI용 카메라를 추가합니다.
+        uiCamera = GameObject.Find("UICamera");
+        if (uiCamera == null)
+        {
+            GameObject loadCamera = Resources.Load<GameObject>($"{Define.UiPrefabsPath}" + "/UICamera");
+            uiCamera = Instantiate(loadCamera);
+        }
+
+        // 캔버스를 추가합니다.
+        uiCanvas = GameObject.Find("UICanvas");
+        if (uiCanvas == null)
+        {   // 이벤트 시스템이 없다면 하나 생성합니다.
+            GameObject canvas = Resources.Load<GameObject>($"{Define.UiPrefabsPath}" + "/UICanvas");
+            uiCanvas = Instantiate(canvas);
+        }
+
+        // 컴포넌트 셋팅
+        Canvas c = Util.GetOrAddComponent<Canvas>(uiCanvas);
+        c.renderMode = RenderMode.ScreenSpaceCamera;
+        c.worldCamera = uiCamera.GetComponent<Camera>();
+        c.sortingOrder = 0;
+
+        CanvasScaler canvasScaler = Util.GetOrAddComponent<CanvasScaler>(uiCanvas);
+        canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        canvasScaler.referenceResolution = new Vector2(Define.uiScreenWidth, Define.uiScreenHeight);
+
+        Util.GetOrAddComponent<GraphicRaycaster>(uiCanvas);
 
         // 스택 초기화
         popupList.Clear();
@@ -79,8 +110,10 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         // 캔버스를 셋팅합니다.
-        SetCanvas(mainUI.gameObject);
-        Util.CreateObject(mainUI.gameObject);
+        //SetCanvas(mainUI.gameObject);
+        GameObject goMain = Util.CreateObject(mainUI.gameObject);
+        // 책 하위에 위치
+        goMain.transform.SetParent(uiCanvas.transform);
         mainUI.gameObject.SetActive(true);
 
         // 전체 UI리스트를 셋팅합니다.
@@ -98,7 +131,7 @@ public class UIManager : MonoSingleton<UIManager>
             }
 
             // 캔버스를 셋팅합니다.
-            SetCanvas(popup.gameObject);
+            //SetCanvas(popup.gameObject);
 
             // 활성시키지 않은 상태로 초기화 합니다.
             popup.gameObject.SetActive(false);
@@ -112,7 +145,9 @@ public class UIManager : MonoSingleton<UIManager>
     private void SetCanvas(GameObject go)
     {
         Canvas canvas = Util.GetOrAddComponent<Canvas>(go);
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = uiCamera.GetComponent<Camera>();
+        //canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         // 우선순위를 0으로 초기화 합니다.
         canvas.sortingOrder = 0;
 
@@ -146,13 +181,16 @@ public class UIManager : MonoSingleton<UIManager>
         // 실시간 ui리스트에 추가합니다.
         currentPopup.AddFirst(popup);
 
-        // 팝업전용폴더로 옮겨줍니다.
-        GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
-        if (popupRoot == null)
-        {
-            return null;
-        }
-        go.transform.SetParent(popupRoot.transform);
+        //// 팝업전용폴더로 옮겨줍니다.
+        //GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
+        //if (popupRoot == null)
+        //{
+        //    return null;
+        //}
+
+        // 책 하위에 위치
+        go.transform.SetParent(uiCanvas.transform);
+        //go.transform.SetParent(popupRoot.transform);
 
         return go.GetComponent<T>();
     }
@@ -179,8 +217,9 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         // 오브젝트 삭제
-        GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
-        GameObject findObject = Util.FindChild(popupRoot, typeof(T).Name);
+        //GameObject popupRoot = Util.GetOrCreateObjectInActiveScene(Define.UiPopupRoot);
+        //GameObject findObject = Util.FindChild(popupRoot, typeof(T).Name);
+        GameObject findObject = Util.FindChild(uiCanvas, typeof(T).Name);
         Destroy(findObject);
 
         currentPopupCount--;

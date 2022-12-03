@@ -45,6 +45,7 @@ public class UI_NickName : UI_Popup
         confirm.color = Color.gray;
 
         titleText.text = LocalizeManager.Instance.GetText("UI_MakeNickname");
+        Debug.Log(titleText.text);
         noticeText.text = LocalizeManager.Instance.GetText("Nickname_Able").Replace("\"", "");
 
         ableText.text = "";

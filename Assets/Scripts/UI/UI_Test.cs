@@ -9,7 +9,7 @@ public class UI_Test : MonoBehaviour
     private void Awake()
     {
         SettingManager.Instance.ReadSettingFile();
-        SoundManager.Instance.CreateSoundManager();
+        //SoundManager.Instance.CreateSoundManager();
 
         // manager init
         UIManager.Instance.Init();

@@ -1,4 +1,4 @@
-lang=2
+lang=0
 BGM_SOUND=1
 EFFECT_SOUND=1
 VOCIE_SOUND=1

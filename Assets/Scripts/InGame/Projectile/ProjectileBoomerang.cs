@@ -6,13 +6,21 @@ public class ProjectileBoomerang : Projectile
 {
     private bool isReturn;
     private float distance;
+    private Vector3 v = Vector3.zero;
+    private float speed;
 
     protected override void Move()
     {
+        //float speed = Time.fixedDeltaTime * skillData.speed;
         float speed = Time.fixedDeltaTime * skillData.speed;
         if (!isReturn)
         {
+            if(distance > skillData.attackDistance * 0.8f)
+            {
+                speed *= 0.2f;
+            }
             transform.Translate(direction * speed);
+            //transform.position = Vector3.SmoothDamp(transform.position, transform.position + direction * skillData.attackDistance, ref v, 0.5f);
             distance += speed;
             isReturn = distance >= skillData.attackDistance;
         }

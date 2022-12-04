@@ -14,6 +14,7 @@ public class ProjectileBoom : Projectile
         
         if(distance >= skillData.attackDistance)
         {
+
             gameObject.SetActive(false);
         }
     }

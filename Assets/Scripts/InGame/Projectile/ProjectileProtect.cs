@@ -15,7 +15,7 @@ public class ProjectileProtect : Projectile
     {
         this.caster = caster;
         transform.position = caster.position;
-        transform.localScale *= skillData.projectileSizeMulti;
+        transform.localScale = Vector3.one * skillData.projectileSizeMulti;
         gameObject.SetActive(true);
     }
 

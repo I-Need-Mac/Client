@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillId: 10101
+  skillId: 10200
 --- !u!212 &176520350
 SpriteRenderer:
   m_ObjectHideFlags: 0

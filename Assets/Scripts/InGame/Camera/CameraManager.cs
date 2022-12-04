@@ -9,7 +9,7 @@ public class CameraManager : SingletonBehaviour<CameraManager>
     protected override void Awake()
     {
         virtualCamera = transform.Find("Cinemachine").GetComponent<CinemachineVirtualCamera>();
-        ConfinerSetting("Floors");
+        ConfinerSetting("Floor");
     }
 
     private void ConfinerSetting(string mapName)

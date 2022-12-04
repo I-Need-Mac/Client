@@ -10,7 +10,7 @@ public class ProjectileSatellite : Projectile
         //angle += Time.fixedDeltaTime * skillData.speed;
         //transform.position = caster.position + new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0) * 5;
 
-        Quaternion rotate = Quaternion.Euler(0, 0, (skillData.speed * 10) * Time.deltaTime);
+        Quaternion rotate = Quaternion.Euler(0, 0, (skillData.speed * 10) * Time.fixedDeltaTime);
         direction = (rotate * direction).normalized;
         transform.position = caster.position + direction * skillData.attackDistance;
     }
@@ -18,6 +18,7 @@ public class ProjectileSatellite : Projectile
     public override void Fire(Transform caster, Vector3 pos)
     {
         transform.position = caster.position + pos * skillData.attackDistance;
+        transform.localScale *= skillData.projectileSizeMulti;
         direction = transform.position - caster.position;
         this.caster = caster;
         gameObject.SetActive(true);

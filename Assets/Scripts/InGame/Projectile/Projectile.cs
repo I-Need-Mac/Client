@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public abstract class Projectile : MonoBehaviour
 {
-    private const float RELEASE_TIME = 5f; //투사체 소멸 시간
+    private const float RELEASE_TIME = 3f; //투사체 소멸 시간
 
     protected Rigidbody2D projectileRigidBody;
     //protected int coolTime;
@@ -29,10 +29,9 @@ public abstract class Projectile : MonoBehaviour
     {
         projectileRigidBody = GetComponent<Rigidbody2D>();
         direction = Vector3.right;
-        //skillData = new SkillData();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }

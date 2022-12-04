@@ -14,7 +14,7 @@ public class ProjectileDrop : Projectile
     public override void Fire(Transform caster, Vector3 pos)
     {
         transform.position = caster.position;
-        transform.localScale *= skillData.projectileSizeMulti;
+        transform.localScale = Vector3.one * skillData.projectileSizeMulti;
         projectileRigidBody.gravityScale = skillData.attackDistance * COEFFICIENT;
         direction = new Vector3(0, skillData.attackDistance, 0);
         direction.x += Random.Range(-1 * skillData.attackDistance, skillData.attackDistance) * COEFFICIENT / 2;

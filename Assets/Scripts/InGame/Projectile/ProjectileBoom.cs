@@ -23,7 +23,7 @@ public class ProjectileBoom : Projectile
     {
         distance = 0f;
         transform.position = caster.position;
-        transform.localScale *= skillData.projectileSizeMulti;
+        transform.localScale = Vector3.one * skillData.projectileSizeMulti;
         direction = pos;
         direction.Normalize();
         gameObject.SetActive(true);

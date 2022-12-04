@@ -393,7 +393,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &176520349
 MonoBehaviour:
@@ -1930,6 +1930,10 @@ PrefabInstance:
     - target: {fileID: 4433094954464631022, guid: 8b779b54d968d454ab2d250d4041bcab, type: 3}
       propertyPath: m_Name
       value: Map1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6427996492677392656, guid: 8b779b54d968d454ab2d250d4041bcab, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b779b54d968d454ab2d250d4041bcab, type: 3}

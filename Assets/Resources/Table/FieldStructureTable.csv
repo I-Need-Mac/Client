@@ -13,7 +13,7 @@ int,LocalizeID,String,String,GimmickEnum,int_Arr,Bool,Bool,int,int
 110,FieldStructure_Bloodpuddle4,Map/Blood/Map_Blood_BloodPuddle_04,Null,Tile,0,TRUE,TRUE,0,4
 201,FieldStructure_Letterbox,Map/Structure/Wall/Map_Wall_Arch_00,Null,Obstacle,0,TRUE,FALSE,0,5
 202,FieldStructure_Background,Map/WallPaper/Map_WallPaper_Background_00,Null,Obstacle,0,TRUE,FALSE,0,5
-203,FieldStructure_AltarFloor,Map/WallPaper/Map_WallPaper_Altarfloor_00,Null,Tile,0,TRUE,FALSE,0,5
+203,FieldStructure_AltarFloor,Map/WallPaper/Map_WallPaper_Altarfloor_00,Null,Tile,0,TRUE,TRUE,0,5
 204,FieldStructure_Mobpillar,Map/Structure/Wall/Map_Wall_MobPillar_00,Null,Obstacle,0,TRUE,FALSE,0,5
 205,FieldStructure_Altar,Map/Structure/Gimmick/Map_Gimmick_Altar_00,Map/Structure/Gimmick/Map_Gimmick_AltarTop_00,Obstacle,0,TRUE,FALSE,0,2
 206,FieldStructure_Wall,Map/Structure/Gimmick/Map_Gimmick_Wall_00,Map/Structure/Gimmick/Map_Gimmick_WallTop_00,Obstacle,0,TRUE,FALSE,0,2

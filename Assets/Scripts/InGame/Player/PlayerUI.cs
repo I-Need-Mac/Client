@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] private Slider slider;
+    [SerializeField] private Slider hpBar;
+    [SerializeField] private Slider expBar;
     [SerializeField] private Player player;
     [SerializeField] private Text playerLevel;
     [SerializeField] private Text playerName;
@@ -14,8 +15,8 @@ public class PlayerUI : MonoBehaviour
     private void Start()
     {
         DebugManager.Instance.PrintDebug(player.playerData.hp);
-        slider.maxValue = player.playerData.hp;
-        slider.value = slider.maxValue;
+        hpBar.maxValue = player.playerData.hp;
+        hpBar.value = hpBar.maxValue;
         playerLevel.text += "1";
         playerName.text = player.playerData.characterName;
     }
@@ -25,8 +26,8 @@ public class PlayerUI : MonoBehaviour
         if (Input.GetKey(KeyCode.K))
         {
             player.ModifyHp(0, 5);
-            DebugManager.Instance.PrintDebug(slider.value);
+            DebugManager.Instance.PrintDebug(hpBar.value);
         }
-        slider.value = player.hp;
+        hpBar.value = player.hp;
     }
 }

@@ -21,14 +21,14 @@ public class Player : MonoBehaviour
      *기본값들의 변화는 생기지 않음 -> 혼을 이용해서 게임 스타트 초기에만 변화를 주는 형태
      *그러므로 기본 값들에 변화를 주지 않기 위해서 임시 변수를 생성해야함
      */
-    private int hp;
+    public int hp;
     private int currentHp;
     private int attack;
     private int criRatio;
     private int criDamage;
     private float coolDown;
     private int hpRegen;
-    private int shield;
+    public int shield;
     private int projectileAdd;
     private int moveSpeed;
     private int getItemRange;
@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
     //버프, 디버프의 기본 수치는 0
 
     //체력 증감 함수
-    private void ModifyHp(int buff = 0, int deBuff = 0)
+    public void ModifyHp(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         hp += increment;
@@ -315,6 +315,9 @@ public class Player : MonoBehaviour
             {
                 case PROJECTILE_TYPE.SATELLITE:
                     StartCoroutine(skill.SatelliteSkill());
+                    break;
+                case PROJECTILE_TYPE.PROTECT:
+                    skill.ProtectSkill();
                     break;
                 default:
                     StartCoroutine(skill.ShootSkill());

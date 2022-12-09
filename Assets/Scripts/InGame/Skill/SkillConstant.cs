@@ -5,7 +5,7 @@ namespace SKILLCONSTANT
     {
         STUN,
         SLOW,
-        NUCK_BACK,
+        NUCKBACK,
         BOOM,
     }
 
@@ -16,7 +16,7 @@ namespace SKILLCONSTANT
         BACK,
         TOP,
         BOTTOM,
-        RANDOM_DROP,
+        RANDOMDROP,
         RANDOM,
         NEAR,
         BOSS,

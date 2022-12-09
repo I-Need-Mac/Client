@@ -8,12 +8,10 @@ public class Skill
 {
     public SkillData skillData { get; private set; }
 
-    private List<Projectile> projectiles;
     private Player player;
 
     public Skill(string skillId, Player player)
     {
-        projectiles = new List<Projectile>();
         skillData = new SkillData();
         SkillDataLoad(FindSkill(skillId));
         this.player = player;
@@ -28,12 +26,18 @@ public class Skill
             projectile.angle = (360f / skillData.projectileCount) * (i + 1);
             Vector3 spawnPos = new Vector3(Mathf.Cos(projectile.angle * Mathf.Deg2Rad), Mathf.Sin(projectile.angle * Mathf.Deg2Rad), 0);
             projectile.Fire(player.transform, spawnPos);
-            projectiles.Add(projectile);
         }
         yield return new WaitForSeconds(5); //지속시간인데 이거 물어봐야함 스킬데이터에없음
     }
 
-    //shoot type skill activation
+    //Protect type skill activation
+    public void ProtectSkill()
+    {
+        Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
+        projectile.Fire(player.transform, Vector3.zero);
+    }
+
+    //Shoot type skill activation
     public IEnumerator ShootSkill()
     {
         if (!skillData.isEffect)
@@ -46,7 +50,6 @@ public class Skill
             {
                 Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
                 projectile.Fire(player.transform, player.lookDirection);
-                projectiles.Add(projectile);
                 yield return new WaitForSeconds(0.2f); //발사 간격
             }
             yield return new WaitForSeconds(skillData.coolTime);

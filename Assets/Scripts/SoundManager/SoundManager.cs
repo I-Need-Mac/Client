@@ -32,12 +32,12 @@ public class SoundManager : SingleTon<SoundManager>
         GameObject bgmRequester = GameObject.Find("BGMRequester");
         if (bgmRequester != null)
         {
-            DebugManager.Instance.PrintDebug("√£¿Ω");
+            DebugManager.Instance.PrintDebug("Ï∞æÏùå");
             (bgmRequester.gameObject.GetComponent<SoundRequesterBGM>()).RequestShootSound();
         }
         else
         {
-            DebugManager.Instance.PrintDebug("¿¿ æ¯æÓ");
+            DebugManager.Instance.PrintDebug("Ïùë ÏóÜÏñ¥");
         }
     }
 
@@ -77,6 +77,9 @@ public class SoundManager : SingleTon<SoundManager>
             audioSourceList[audioSourceKey].pitch = audioSetting.pitch;
             audioSourceList[audioSourceKey].panStereo = audioSetting.streoPan;
             audioSourceList[audioSourceKey].outputAudioMixerGroup = audioSetting.audioMixerGroup;
+
+            audioSourceList[audioSourceKey].volume = audioSetting.volume;
+            audioSourceList[audioSourceKey].spatialBlend = audioSetting.spatialBlend;
 
             return true;
         }

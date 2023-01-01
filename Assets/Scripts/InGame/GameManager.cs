@@ -7,82 +7,88 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [field : Header("--- Object Pool ---")]
-    [field : SerializeField] public ProjectilePool projectilePool { get; private set; }
-    [field : SerializeField] public ObjectPool monsterPool { get; private set; }
+    [SerializeField] private PlayerPool playerPool;
+    [SerializeField] private string map;
+    [SerializeField] private string player;
 
-    [Header("--- Text ---")]
-    [SerializeField] private TMP_Text text_timer;
+    
 
-    private int curTime;
-    private int limitTime;
-    private Coroutine gameTimerCor;
+    //[field : Header("--- Object Pool ---")]
+    //[field : SerializeField] public ProjectilePool projectilePool { get; private set; }
+    //[field : SerializeField] public ObjectPool monsterPool { get; private set; }
 
-    private void Awake()
-    {
-        //monsterPool.AddObject();
+    //[Header("--- Text ---")]
+    //[SerializeField] private TMP_Text text_timer;
 
-        Init();
-    }
+    //private int curTime;
+    //private int limitTime;
+    //private Coroutine gameTimerCor;
 
-    #region Setter
-    //�������� ���� �ð� ����
-    public void SetLimitTime(int limitTime)
-    {
-        this.limitTime = limitTime;
-    }
-    #endregion
+    //private void Awake()
+    //{
+    //    //monsterPool.AddObject();
 
-    private void Init()
-    {
-        text_timer.gameObject.SetActive(true);
-        text_timer.text = "";
-    }
+    //    Init();
+    //}
 
-    private void TimeOver()
-    {
-        text_timer.text = "";
-    }
+    //#region Setter
+    ////�������� ���� �ð� ����
+    //public void SetLimitTime(int limitTime)
+    //{
+    //    this.limitTime = limitTime;
+    //}
+    //#endregion
 
-    #region Coroutine
-    public void StartGameTimer()
-    {
-        StopGameTimer();
+    //private void Init()
+    //{
+    //    text_timer.gameObject.SetActive(true);
+    //    text_timer.text = "";
+    //}
 
-        if (gameTimerCor == null)
-        {
-            gameTimerCor = StartCoroutine(GameTimer());
-        }
-    }
+    //private void TimeOver()
+    //{
+    //    text_timer.text = "";
+    //}
 
-    public void StopGameTimer()
-    {
-        if (gameTimerCor != null)
-        {
-            StopCoroutine(gameTimerCor);
-        }
-    }
+    //#region Coroutine
+    //public void StartGameTimer()
+    //{
+    //    StopGameTimer();
 
-    private IEnumerator GameTimer()
-    {
-        var waitTime = new WaitForSeconds(1f);
-        int m, s;
+    //    if (gameTimerCor == null)
+    //    {
+    //        gameTimerCor = StartCoroutine(GameTimer());
+    //    }
+    //}
 
-        curTime = limitTime / 1000;
+    //public void StopGameTimer()
+    //{
+    //    if (gameTimerCor != null)
+    //    {
+    //        StopCoroutine(gameTimerCor);
+    //    }
+    //}
 
-        while (curTime > 0)
-        {
-            m = curTime / 60;
-            s = curTime - (m * 60);
+    //private IEnumerator GameTimer()
+    //{
+    //    var waitTime = new WaitForSeconds(1f);
+    //    int m, s;
 
-            text_timer.text = string.Format("{0:D2} : {1:D2}", m, s);
+    //    curTime = limitTime / 1000;
 
-            curTime--;
+    //    while (curTime > 0)
+    //    {
+    //        m = curTime / 60;
+    //        s = curTime - (m * 60);
 
-            yield return waitTime;
-        }
+    //        text_timer.text = string.Format("{0:D2} : {1:D2}", m, s);
 
-        TimeOver();
-    }
-    #endregion
+    //        curTime--;
+
+    //        yield return waitTime;
+    //    }
+
+    //    TimeOver();
+    //}
+    //#endregion
 }

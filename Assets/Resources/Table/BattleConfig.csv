@@ -1,4 +1,4 @@
-Config Index,?€??ê°?,
+Config Index,ConfigType,ConfigValue
 BC_Index,BC_Type,BC_Value
 !String,Enum,!Int
 AttackLevel,Constant,4

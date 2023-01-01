@@ -107,6 +107,8 @@ public class UI_StoryBook : UI_Popup
             // 페이지 position 셋팅
             RectTransform rt = go.GetComponent<RectTransform>();
             rt.anchoredPosition = new Vector2(pagePos, 0);
+            rt.anchoredPosition3D = new Vector3(pagePos, 0, 0);
+            rt.localScale = new Vector3(1, 1, 1);
             pagePos *= -1;
 
             // 리스트에 추가

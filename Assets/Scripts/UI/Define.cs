@@ -7,6 +7,7 @@ public class Define
     // UI프리팹 저장 경로
     public const string UiPrefabsPath = "Prefabs/UI";
     public const string UiImagePath = "Arts/UI";
+    public const string UiCharacterPath = "Arts/Character";
 
     public const string UiPopupRoot = "@UI_Popup_Root";
 

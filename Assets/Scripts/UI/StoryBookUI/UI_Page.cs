@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-// ÆäÀÌÁö ±â´É
+// í˜ì´ì§€ ê¸°ëŠ¥
 public class UI_Page : UI_Popup
 {
     public enum PageTableInfo
@@ -78,11 +78,11 @@ public class UI_Page : UI_Popup
 
     public void SetData(int id, List<object> data)
     {
-        // ÆäÀÌÁö Å¸ÀÔº°·Î ÆäÀÌÁö ±¸¼ºÀ» ÇØÁİ´Ï´Ù.
+        // í˜ì´ì§€ íƒ€ì…ë³„ë¡œ í˜ì´ì§€ êµ¬ì„±ì„ í•´ì¤ë‹ˆë‹¤.
         string typeName = data[(int)PageTableInfo.PageType].ToString();
         string[] pageTypes = Enum.GetNames(typeof(PageType));
 
-        // ¸ğµç Å¸ÀÔÀ» ²¨Áİ´Ï´Ù.
+        // ëª¨ë“  íƒ€ì…ì„ êº¼ì¤ë‹ˆë‹¤.
         for (int i = 0; i < pageTypes.Length; i++)
         {
             GameObject go = Util.FindChild(this.gameObject, pageTypes[i]);
@@ -92,14 +92,14 @@ public class UI_Page : UI_Popup
             go.SetActive(false);
         }
 
-        // ÇØ´çÇÏ´Â Å¸ÀÔ¸¸ È°¼º ÇÕ´Ï´Ù.
+        // í•´ë‹¹í•˜ëŠ” íƒ€ì…ë§Œ í™œì„± í•©ë‹ˆë‹¤.
         GameObject activeObject = Util.FindChild(this.gameObject, typeName);
         if (activeObject)
             activeObject.SetActive(true);
 
-        // Å¸ÀÔ¿¡ ¸Â´Â µ¥ÀÌÅÍ¸¦ ¼ÂÆÃÇÕ´Ï´Ù.
+        // íƒ€ì…ì— ë§ëŠ” ë°ì´í„°ë¥¼ ì…‹íŒ…í•©ë‹ˆë‹¤.
         if (typeName == pageTypes[(int)PageType.Text])
-        {   // ÅØ½ºÆ® Å¸ÀÔ
+        {   // í…ìŠ¤íŠ¸ íƒ€ì…
             type = PageType.Text;
 
             textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
@@ -111,30 +111,30 @@ public class UI_Page : UI_Popup
             text.bottomText.text = null;
         }
         else if (typeName == pageTypes[(int)PageType.Picture])
-        {   // ÀÌ¹ÌÁö Å¸ÀÔ
+        {   // ì´ë¯¸ì§€ íƒ€ì…
             type = PageType.Picture;
 
-            string path = $"{Define.UiImagePath}" + data[(int)PageTableInfo.ImagePath].ToString();
+            string path = $"{Define.UiCharacterPath}/" + data[(int)PageTableInfo.ImagePath].ToString();
             picture.sprite = Resources.Load<Sprite>(path);
         }
         else if (typeName == pageTypes[(int)PageType.PictureTextTop])
-        {   // ÅØ½ºÆ®-ÀÌ¹ÌÁö Å¸ÀÔ
+        {   // í…ìŠ¤íŠ¸-ì´ë¯¸ì§€ íƒ€ì…
             type = PageType.PictureTextTop;
 
             textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
             //pictureTextTop.text.text = data[(int)PageTableInfo.TextBox1].ToString();
             
-            string path = $"{Define.UiImagePath}" + data[(int)PageTableInfo.ImagePath].ToString();
+            string path = $"{Define.UiCharacterPath}/" + data[(int)PageTableInfo.ImagePath].ToString();
             pictureTextTop.picture.sprite = Resources.Load<Sprite>(path);
         }
         else if (typeName == pageTypes[(int)PageType.PictureTextBottom])
-        {   // ÀÌ¹ÌÁö-ÅØ½ºÆ® Å¸ÀÔ
+        {   // ì´ë¯¸ì§€-í…ìŠ¤íŠ¸ íƒ€ì…
             type = PageType.PictureTextBottom;
 
             textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
             //pictureTextBottom.text.text = data[(int)PageTableInfo.TextBox1].ToString();
 
-            string path = $"{Define.UiImagePath}" + data[(int)PageTableInfo.ImagePath].ToString();
+            string path = $"{Define.UiCharacterPath}/" + data[(int)PageTableInfo.ImagePath].ToString();
             pictureTextBottom.picture.sprite = Resources.Load<Sprite>(path);
         }
         else
@@ -185,13 +185,13 @@ public class UI_Page : UI_Popup
         {
             case PageType.Text:
                 if (isPageSkip)
-                {   // ÇÑ ÂÊÀ» ½ºÅµÇÕ´Ï´Ù.
+                {   // í•œ ìª½ì„ ìŠ¤í‚µí•©ë‹ˆë‹¤.
                     text.topText.SkipTypeText();
                     text.middleText.SkipTypeText();
                     text.bottomText.SkipTypeText();
                 }
                 else
-                {   // ÇÑ ¹®´ÜÀ» ½ºÅµÇÕ´Ï´Ù.
+                {   // í•œ ë¬¸ë‹¨ì„ ìŠ¤í‚µí•©ë‹ˆë‹¤.
                     if (text.topText.IsSkippable())
                     {
                         text.topText.SkipTypeText();
@@ -228,7 +228,7 @@ public class UI_Page : UI_Popup
         switch (type)
         {
             case PageType.Text:
-                // ½ºÅµÇÒ°Ô ¾ø½À´Ï´Ù.
+                // ìŠ¤í‚µí• ê²Œ ì—†ìŠµë‹ˆë‹¤.
                 if (!text.topText.IsSkippable() && !text.middleText.IsSkippable() 
                     && !text.bottomText.IsSkippable())
                     return false;

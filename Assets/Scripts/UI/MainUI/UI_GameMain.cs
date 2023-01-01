@@ -12,7 +12,8 @@ public class UI_GameMain : UI_Popup
         StoryMode,
         SelectSorcerer,
         Soul,
-        Sorcere
+        Sorcere,
+        StoryBook
     }
 
     [SerializeField]
@@ -54,10 +55,15 @@ public class UI_GameMain : UI_Popup
                 UIManager.Instance.OpenUI<UI_StoryMain>();
                 break;
             case GameObjects.SelectSorcerer:
+                UIManager.Instance.OpenUI<UI_SelectSorcerer>();
                 break;
             case GameObjects.Soul:
                 break;
             case GameObjects.Sorcere:
+                break;
+            case GameObjects.StoryBook:
+                UI_StoryBook storyBook = UIManager.Instance.OpenUI<UI_StoryBook>();
+                storyBook.SetData(UI_StoryBook.StoryBookID.STORY_BOOK_TITLE1);
                 break;
             default:
                 break;

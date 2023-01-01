@@ -15,6 +15,12 @@ public class UI_StoryMain : UI_Popup
 
     [SerializeField]
     Text title;
+
+    [SerializeField]
+    Text stageTitle;
+    [SerializeField]
+    Text stageSub;
+
     [SerializeField]
     GameObject chapterList;
     [SerializeField]
@@ -32,6 +38,40 @@ public class UI_StoryMain : UI_Popup
         }
 
         title.text = LocalizeManager.Instance.GetText("UI_StoryMode");
+
+        string stageTitleText = LocalizeManager.Instance.GetText("UI_CurrentStage");
+        stageTitle.text = String.Format(stageTitleText, 1, 1);
+
+        stageSub.text = "악을 멀리하고 선을 가까이 하라.";
+
+        string eleText = LocalizeManager.Instance.GetText("UI_StageList");
+
+        GameObject go = Util.FindChild(stageList.gameObject, "Content", true);
+        UIStageElement ele = Util.UILoad<UIStageElement>($"{Define.UiPrefabsPath}/UIStageElement");
+        ele.text.text = String.Format(eleText, "첫");
+        GameObject instance = Instantiate(ele.gameObject) as GameObject;
+
+        instance.transform.SetParent(go.transform);
+        RectTransform rect = instance.GetComponent<RectTransform>();
+        rect.localScale = new Vector3(1, 1, 1);
+
+        UIStageElement ele2 = Util.UILoad<UIStageElement>($"{Define.UiPrefabsPath}/UIStageElement");
+        ele2.text.text = String.Format(eleText, 2);
+        GameObject instance2 = Instantiate(ele2.gameObject) as GameObject;
+
+        instance2.transform.SetParent(go.transform);
+        RectTransform rect2 = instance2.GetComponent<RectTransform>();
+        rect2.localScale = new Vector3(1, 1, 1);
+
+        UIStageElement ele3 = Util.UILoad<UIStageElement>($"{Define.UiPrefabsPath}/UIStageElement");
+        ele3.text.text = String.Format(eleText, 3);
+        GameObject instance3 = Instantiate(ele3.gameObject) as GameObject;
+
+        instance3.transform.SetParent(go.transform);
+        RectTransform rect3 = instance3.GetComponent<RectTransform>();
+        rect3.localScale = new Vector3(1, 1, 1);
+
+        //UIData.StageData
     }
 
     public void OnClickImage(PointerEventData data)

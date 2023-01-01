@@ -148,7 +148,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -204,11 +204,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbdcfaf81677ce240810634f99446b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleText: {fileID: 3676714212964268059}
-  checkTextTop: {fileID: 2066945746034153284}
-  checkTextBottom: {fileID: 6333578665262658924}
-  contentTextTop: {fileID: 854454859840019241}
-  contentTextBottom: {fileID: 7179223213764695964}
+  titleText: {fileID: 4450136604238138805}
+  checkTextTop: {fileID: 7097202605953719603}
+  checkTextBottom: {fileID: 692241353972781560}
+  contentTextTop: {fileID: 3349259992916591372}
+  contentTextBottom: {fileID: 6226398278182138382}
   toggleTop: {fileID: 2880083561998738917}
   toggleBottom: {fileID: 320237803947070393}
 --- !u!1 &376773258894663281
@@ -307,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7709856196288029694}
   - component: {fileID: 8736571240657768481}
-  - component: {fileID: 6333578665262658924}
+  - component: {fileID: 6226398278182138382}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -342,7 +342,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579590357264340816}
   m_CullTransparentMesh: 1
---- !u!114 &6333578665262658924
+--- !u!114 &6226398278182138382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -367,7 +367,7 @@ MonoBehaviour:
     m_FontSize: 8
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 8
     m_MaxSize: 40
     m_Alignment: 5
     m_AlignByGeometry: 0
@@ -783,7 +783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5550307764049551881}
   - component: {fileID: 8339422437368454238}
-  - component: {fileID: 3676714212964268059}
+  - component: {fileID: 4450136604238138805}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -818,7 +818,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758859433154865581}
   m_CullTransparentMesh: 1
---- !u!114 &3676714212964268059
+--- !u!114 &4450136604238138805
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 23
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
@@ -1647,8 +1647,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2295723889743510215}
   m_HandleRect: {fileID: 855390698923301392}
   m_Direction: 2
-  m_Value: 0.9999999
-  m_Size: 0.23333336
+  m_Value: 1
+  m_Size: 0.23333333
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1663,7 +1663,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2380349644277567354}
   - component: {fileID: 1672038570020860903}
-  - component: {fileID: 2066945746034153284}
+  - component: {fileID: 3349259992916591372}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -1698,7 +1698,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5913564227245169805}
   m_CullTransparentMesh: 1
---- !u!114 &2066945746034153284
+--- !u!114 &3349259992916591372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1723,7 +1723,7 @@ MonoBehaviour:
     m_FontSize: 8
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 8
     m_MaxSize: 40
     m_Alignment: 5
     m_AlignByGeometry: 0
@@ -1742,7 +1742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3318794976389787964}
   - component: {fileID: 299798658196916445}
-  - component: {fileID: 854454859840019241}
+  - component: {fileID: 7097202605953719603}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1777,7 +1777,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6194937588080356928}
   m_CullTransparentMesh: 1
---- !u!114 &854454859840019241
+--- !u!114 &7097202605953719603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2248,7 +2248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8382100573776602452}
   - component: {fileID: 4144088984231811053}
-  - component: {fileID: 7179223213764695964}
+  - component: {fileID: 692241353972781560}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -2283,7 +2283,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8440302703020193916}
   m_CullTransparentMesh: 1
---- !u!114 &7179223213764695964
+--- !u!114 &692241353972781560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2327,7 +2327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1757424306972267828}
   - component: {fileID: 1592536254403479771}
-  - component: {fileID: 2468130203684126622}
+  - component: {fileID: 5817147100902727511}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -2362,7 +2362,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8899037104868620054}
   m_CullTransparentMesh: 1
---- !u!114 &2468130203684126622
+--- !u!114 &5817147100902727511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2375,7 +2375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2387,7 +2387,7 @@ MonoBehaviour:
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 0
+    m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0

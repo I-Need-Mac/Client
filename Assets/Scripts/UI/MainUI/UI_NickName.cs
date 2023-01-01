@@ -19,6 +19,8 @@ public class UI_NickName : UI_Popup
     Text noticeText;
     [SerializeField]
     Text ableText;
+    [SerializeField]
+    Text confirmText;
 
     Image confirm;
 
@@ -47,6 +49,9 @@ public class UI_NickName : UI_Popup
         titleText.text = LocalizeManager.Instance.GetText("UI_MakeNickname");
         Debug.Log(titleText.text);
         noticeText.text = LocalizeManager.Instance.GetText("Nickname_Able").Replace("\"", "");
+
+        confirmText.text = "확인";
+
 
         ableText.text = "";
 

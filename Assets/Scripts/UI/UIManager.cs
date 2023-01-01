@@ -23,6 +23,8 @@ public class UIManager : MonoSingleton<UIManager>
         UI_StoryMain,
 
         UI_StoryBook,
+        UI_SelectSorcerer,
+        UI_SelectSorcererInfo,
     }
 
     GameObject uiCamera = null;

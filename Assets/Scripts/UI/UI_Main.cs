@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 
 // UI테스트용
-public class UI_Test : MonoBehaviour
+public class UI_Main : MonoBehaviour
 {
     private void Awake()
     {

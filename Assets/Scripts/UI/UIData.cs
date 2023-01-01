@@ -8,6 +8,8 @@ public class UIData
     public enum UITable
     {
         StoryTable,
+        StageTable,
+        CharacterTable,
     }
 
     // 스토리 데이터
@@ -17,7 +19,22 @@ public class UIData
     static Dictionary<int, Dictionary<int, List<object>>> pageTableData = new Dictionary<int, Dictionary<int, List<object>>>();
     public static Dictionary<int, Dictionary<int, List<object>>> PageTableData { get { return pageTableData; } }
 
+    // 스테이지 데이터
+    static Dictionary<string, Dictionary<string, object>> stageTableData = new Dictionary<string, Dictionary<string, object>>();
+    public static Dictionary<string, Dictionary<string, object>> StageData { get { return storyTableData; } }
+
+    // 캐릭터 데이터
+    static Dictionary<string, Dictionary<string, object>> characterTableData = new Dictionary<string, Dictionary<string, object>>();
+    public static Dictionary<string, Dictionary<string, object>> CharacterData { get { return characterTableData; } }
+
     public static void ReadData()
+    {
+        ReadStoryData();
+        ReadStageData();
+        ReadCharacterData();
+    }
+
+    static void ReadStoryData()
     {
         // 스토리 테이블을 읽습니다.
         storyTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.StoryTable));
@@ -49,7 +66,7 @@ public class UIData
                     continue;
 
                 List<object> createList = new List<object>();
-                foreach(KeyValuePair<string, object> valuePair in pagePair.Value)
+                foreach (KeyValuePair<string, object> valuePair in pagePair.Value)
                 {
                     createList.Add(valuePair.Value);
                 }
@@ -59,6 +76,18 @@ public class UIData
 
             pageTableData.Add(int.Parse(pair.Key), addList);
         }
+    }
+
+    static void ReadStageData()
+    {
+        // 스테이지 테이블을 읽습니다.
+        stageTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.StageTable));
+    }
+
+    static void ReadCharacterData()
+    {
+        // 스테이지 테이블을 읽습니다.
+        characterTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.CharacterTable));
     }
     #endregion
 }

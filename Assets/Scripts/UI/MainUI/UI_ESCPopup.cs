@@ -13,6 +13,7 @@ public class UI_ESCPopup : UI_Popup
         RankBoard,
         Friend,
         Setting,
+        GameQuit,
     }
 
     enum Images
@@ -69,6 +70,9 @@ public class UI_ESCPopup : UI_Popup
             case GameObjects.Friend:
                 break;
             case GameObjects.Setting:
+                break;
+            case GameObjects.GameQuit:
+                Application.Quit();
                 break;
             default:
                 break;

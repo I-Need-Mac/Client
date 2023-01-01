@@ -2,47 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [SerializeField] private GameObject objPrefab;
-    [SerializeField] private int addCount = 100;
+    [SerializeReference] private T prefab;
+    [SerializeField] [Range(1, 1000)] private int count = 1;
 
-    private Queue<GameObject> objQueue = new Queue<GameObject>();
+    private Stack<T> pool;
 
     private void Awake()
     {
+        pool = new Stack<T>();
         AddObject();
     }
 
-    public GameObject GetObject()
+    public T GetObject()
     {
-        if (objQueue.Count <= 0)
+        if (pool.Count == 0)
         {
             AddObject();
         }
 
-        GameObject obj = objQueue.Dequeue();
+        T obj = pool.Pop();
+        obj.transform.SetParent(transform);
         return obj;
     }
 
-    public void ReturnObject(GameObject obj)
+    public void ReleaseObject(T obj)
     {
-        obj.transform.parent = this.transform;
-        obj.SetActive(false);
-
-        objQueue.Enqueue(obj);
+        obj.gameObject.SetActive(false);
+        obj.transform.SetParent(transform);
+        pool.Push(obj);
     }
 
     public void AddObject()
     {
-        GameObject obj;
-
-        for (int i = 0; i < addCount; i++)
+        for (int i = 0; i < count; i++)
         {
-            obj = Instantiate(objPrefab, this.transform);
-            obj.SetActive(false);
-
-            objQueue.Enqueue(obj);
+            T obj = Instantiate(prefab, transform);
+            obj.gameObject.SetActive(false);
+            pool.Push(obj);
         }
     }
 }

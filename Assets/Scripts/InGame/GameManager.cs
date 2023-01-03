@@ -7,11 +7,29 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private PlayerPool playerPool;
+    [SerializeField] private PlayerPoolManager playerPoolManager;
     [SerializeField] private string map;
     [SerializeField] private string player;
 
-    
+    private void Start()
+    {
+        Spawn();
+    }
+
+    private void Spawn()
+    {
+        string name = LoadMapManager.Instance.SceneNumberToMapName(10101);
+        GameObject temp = LoadMapManager.Instance.LoadMapNameToMapObject(name);
+        GameObject map = Instantiate(temp, transform);
+        map.gameObject.transform.SetParent(transform.Find("MapGeneratePos").transform);
+        map.gameObject.transform.localScale = Vector3.one;
+        map.transform.position = new Vector3(map.transform.position.x, map.transform.position.y, 1);
+        map.gameObject.SetActive(true);
+
+        Player p = playerPoolManager.SpawnPlayer(transform.Find("PlayerSpawnPos").transform);
+        p.transform.localScale = Vector3.one / 2;
+        p.transform.position = new Vector3(p.transform.position.x, p.transform.position.y, 0);
+    }
 
     //[field : Header("--- Object Pool ---")]
     //[field : SerializeField] public ProjectilePool projectilePool { get; private set; }

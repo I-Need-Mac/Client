@@ -23,14 +23,14 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
         }
 
         T obj = pool.Pop();
-        obj.transform.SetParent(transform);
+        obj.gameObject.transform.SetParent(transform);
         return obj;
     }
 
     public void ReleaseObject(T obj)
     {
         obj.gameObject.SetActive(false);
-        obj.transform.SetParent(transform);
+        obj.gameObject.transform.SetParent(transform);
         pool.Push(obj);
     }
 

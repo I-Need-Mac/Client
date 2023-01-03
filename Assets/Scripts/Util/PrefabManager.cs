@@ -34,6 +34,8 @@ public class PrefabManager : MonoBehaviour
     {
         structureID = this.gameObject.name;
 
+        structureID = structureID.Substring(0, 3);
+
         fieldStructureData = CSVReader.Read("FieldStructureTable");
 
 

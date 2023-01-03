@@ -31,14 +31,14 @@ public class ProjectilePoolManager : SingletonBehaviour<ProjectilePoolManager>
 
     public Projectile SpawnProjectile(SkillData skillData)
     {
-        Projectile projectile = pools[skillData.projectileType].GetProjectile();
+        Projectile projectile = pools[skillData.projectileType].GetObject();
         projectile.SkillDataUpdate(skillData); //스킬 정보 업데이트
         return projectile;
     }
 
     public void DeSpawnProjectile(Projectile projectile, PROJECTILE_TYPE type)
     {
-        pools[type].ReleaseProjectile(projectile);
+        pools[type].ReleaseObject(projectile);
     }
 
 }

@@ -1,4 +1,5 @@
 using SKILLCONSTANT;
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,11 +12,17 @@ public class Player : MonoBehaviour
     private const string CONFIG_VALUE = "ConfigValue";
 
     [SerializeField] private string skillId = "10101";
+    [SerializeField] private AnimationReferenceAsset[] animationClips;
+    [SerializeField] private SkeletonAnimation skeletonAnimation;
 
     private Rigidbody2D playerRigidbody;
     private Vector3 playerDirection;
     private float coolTimeConstant;     //재사용대기시간감소상수
     private float coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
+    
+    private PlayerAnimationConstant animationState;
+    
+    private string currentAnimation;
     /*
      *캐릭터 스탯의 경우
      *기본값들의 변화는 생기지 않음 -> 혼을 이용해서 게임 스타트 초기에만 변화를 주는 형태
@@ -43,6 +50,9 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
         lookDirection = Vector3.right;
+        animationState = PlayerAnimationConstant.IDLE;
+        transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+
         coolTimeConstant = findConstant("CoolTimeConstant");
         coolTimeCoefficient = findConstant("CoolTimeCoefficient");
     }
@@ -64,6 +74,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
+        SetCurrentAnimation(animationState);
     }
 
     private void FixedUpdate()
@@ -115,10 +126,24 @@ public class Player : MonoBehaviour
         playerDirection.x = Input.GetAxis("Horizontal");
         //up, down
         playerDirection.y = Input.GetAxis("Vertical");
-        //쳐다보는 방향 저장
+
+        if (playerDirection.x < 0)
+        {
+            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
+        else if (playerDirection.x > 0)
+        {
+            transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+        }
+        
         if (playerDirection != Vector3.zero)
         {
-            lookDirection = playerDirection;
+            lookDirection = playerDirection; //쳐다보는 방향 저장
+            animationState = PlayerAnimationConstant.WALK; //움직이는 중
+        }
+        else
+        {
+            animationState = PlayerAnimationConstant.IDLE;
         }
 
     }
@@ -130,6 +155,32 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    /* 애니메이션 */
+    #region
+    private void PlayAnimation(AnimationReferenceAsset clip, bool loop, float timeScale)
+    {
+        if (clip.name.Equals(currentAnimation))
+        {
+            return;
+        }
+        skeletonAnimation.state.SetAnimation(0, clip, loop).TimeScale = timeScale;
+        currentAnimation = clip.name;
+    }
+
+    private void SetCurrentAnimation(PlayerAnimationConstant animationState)
+    {
+        switch (animationState)
+        {
+            case PlayerAnimationConstant.IDLE:
+                skeletonAnimation.timeScale = 0f;
+                break;
+            case PlayerAnimationConstant.WALK:
+                skeletonAnimation.timeScale = 1f;
+                PlayAnimation(animationClips[(int)PlayerAnimationConstant.WALK], true, 1f);
+                break;
+        }
+    }
+    #endregion
 
     /*스탯 증감 관련*/
     #region Modify STATUS

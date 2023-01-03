@@ -35,7 +35,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
             return;
         }
 
-        playerData.SetCharacterName(characterData["Character_Name"].ToString());
+        playerData.SetCharacterName(characterData["CharacterName"].ToString());
         playerData.SetHp(Convert.ToInt32(characterData["HP"]));
         playerData.SetAttack(Convert.ToInt32(characterData["Attack"]));
         playerData.SetCriRatio(Convert.ToInt32(characterData["CriRatio"]));

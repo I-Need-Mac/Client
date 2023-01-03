@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
-        SetCurrentAnimation(animationState);
+        //SetCurrentAnimation(animationState);
     }
 
     private void FixedUpdate()
@@ -127,14 +127,14 @@ public class Player : MonoBehaviour
         //up, down
         playerDirection.y = Input.GetAxis("Vertical");
 
-        if (playerDirection.x < 0)
-        {
-            transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-        }
-        else if (playerDirection.x > 0)
-        {
-            transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
-        }
+        //if (playerDirection.x < 0)
+        //{
+        //    transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        //}
+        //else if (playerDirection.x > 0)
+        //{
+        //    transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+        //}
         
         if (playerDirection != Vector3.zero)
         {
@@ -157,29 +157,29 @@ public class Player : MonoBehaviour
 
     /* 애니메이션 */
     #region
-    private void PlayAnimation(AnimationReferenceAsset clip, bool loop, float timeScale)
-    {
-        if (clip.name.Equals(currentAnimation))
-        {
-            return;
-        }
-        skeletonAnimation.state.SetAnimation(0, clip, loop).TimeScale = timeScale;
-        currentAnimation = clip.name;
-    }
+    //private void PlayAnimation(AnimationReferenceAsset clip, bool loop, float timeScale)
+    //{
+    //    if (clip.name.Equals(currentAnimation))
+    //    {
+    //        return;
+    //    }
+    //    skeletonAnimation.state.SetAnimation(0, clip, loop).TimeScale = timeScale;
+    //    currentAnimation = clip.name;
+    //}
 
-    private void SetCurrentAnimation(PlayerAnimationConstant animationState)
-    {
-        switch (animationState)
-        {
-            case PlayerAnimationConstant.IDLE:
-                skeletonAnimation.timeScale = 0f;
-                break;
-            case PlayerAnimationConstant.WALK:
-                skeletonAnimation.timeScale = 1f;
-                PlayAnimation(animationClips[(int)PlayerAnimationConstant.WALK], true, 1f);
-                break;
-        }
-    }
+    //private void SetCurrentAnimation(PlayerAnimationConstant animationState)
+    //{
+    //    switch (animationState)
+    //    {
+    //        case PlayerAnimationConstant.IDLE:
+    //            skeletonAnimation.timeScale = 0f;
+    //            break;
+    //        case PlayerAnimationConstant.WALK:
+    //            skeletonAnimation.timeScale = 1f;
+    //            PlayAnimation(animationClips[(int)PlayerAnimationConstant.WALK], true, 1f);
+    //            break;
+    //    }
+    //}
     #endregion
 
     /*스탯 증감 관련*/

@@ -46,7 +46,8 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
         lookDirection = Vector3.right;
-        transform.localScale = new Vector3(-0.5f, 0.5f, 0.5f);
+        float defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
 
         anime = GetComponent<SpineManager>();
 

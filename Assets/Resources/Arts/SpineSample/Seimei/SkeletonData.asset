@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: Main_Macia_Ingame_psd_01_SkeletonData
+  m_Name: SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 981a61b28fb9ec946857bc6a4f579413, type: 2}
+  - {fileID: 11400000, guid: 781b3b14f80dd334284bca5ed3939a57, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: 8260c4d9e0ec1b641b0bd18054607c6b, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 7b9173b0dc3b9f046b51027c5e06b279, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0

@@ -19,10 +19,6 @@ public class SpineManager : MonoBehaviour
     private void Awake()
     {
         animationState = AnimationConstant.IDLE;
-    }
-
-    private void Start()
-    {
         SpineSetting();
     }
 
@@ -30,6 +26,7 @@ public class SpineManager : MonoBehaviour
     {
         string path = SPINE_HOME + characterName + "/";
         SkeletonAnimation character = transform.Find("Character").GetComponent<SkeletonAnimation>();
+        //SkeletonAnimation character = GetComponent<SkeletonAnimation>();
         character.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(path + "SkeletonData");
         animationClips[0] = Resources.Load<AnimationReferenceAsset>(path + "ReferenceAssets/IDLE");
         animationClips[1] = Resources.Load<AnimationReferenceAsset>(path + "ReferenceAssets/RUN");

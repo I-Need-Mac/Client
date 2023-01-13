@@ -121,9 +121,9 @@ public class Player : MonoBehaviour
     private void KeyDir()
     {
         //left, right
-        playerDirection.x = Input.GetAxis("Horizontal");
+        playerDirection.x = Input.GetAxisRaw("Horizontal");
         //up, down
-        playerDirection.y = Input.GetAxis("Vertical");
+        playerDirection.y = Input.GetAxisRaw("Vertical");
 
         anime.SetDirection(playerDirection);
 
@@ -142,7 +142,8 @@ public class Player : MonoBehaviour
     //리지드바디의 MovePosition을 이용해 움직임을 구현
     private void Move()
     {
-        playerRigidbody.MovePosition((Vector3)playerRigidbody.position + (playerDirection * moveSpeed * Time.fixedDeltaTime));
+        //playerRigidbody.MovePosition((Vector3)playerRigidbody.position + (playerDirection * moveSpeed * Time.fixedDeltaTime));
+        playerRigidbody.velocity = playerDirection.normalized * moveSpeed;
     }
     #endregion
 

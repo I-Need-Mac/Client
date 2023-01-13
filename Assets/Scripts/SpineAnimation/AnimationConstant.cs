@@ -2,5 +2,5 @@
 public enum AnimationConstant
 {
     IDLE,
-    WALK,
+    RUN,
 }

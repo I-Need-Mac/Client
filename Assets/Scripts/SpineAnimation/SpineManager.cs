@@ -1,4 +1,5 @@
 using Spine.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,7 @@ using UnityEngine;
 public class SpineManager : MonoBehaviour
 {
     const string SPINE_HOME = "Arts/SpineSample/";
+    const string SPINE_STATE = "ReferenceAssets/";
 
     [SerializeField] private string characterName;
     [SerializeField] private AnimationReferenceAsset[] animationClips;
@@ -15,21 +17,33 @@ public class SpineManager : MonoBehaviour
     public AnimationConstant animationState { get; set; }
 
     private string currentAnimation;
+    private string path;
 
     private void Awake()
     {
         animationState = AnimationConstant.IDLE;
+        path = SPINE_HOME + characterName + "/";
+        skeletonAnimation.timeScale = 1f;
         SpineSetting();
     }
 
     private void SpineSetting()
     {
-        string path = SPINE_HOME + characterName + "/";
         SkeletonAnimation character = transform.Find("Character").GetComponent<SkeletonAnimation>();
-        //SkeletonAnimation character = GetComponent<SkeletonAnimation>();
         character.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(path + "SkeletonData");
-        animationClips[0] = Resources.Load<AnimationReferenceAsset>(path + "ReferenceAssets/IDLE");
-        animationClips[1] = Resources.Load<AnimationReferenceAsset>(path + "ReferenceAssets/RUN");
+
+        SpineClipSetting();
+    }
+
+    private void SpineClipSetting()
+    {
+        AnimationReferenceAsset[] clips = Resources.LoadAll<AnimationReferenceAsset>(path + SPINE_STATE);
+
+        for (int i = 0; i < clips.Length; i++)
+        {
+            int index = (int)(AnimationConstant)Enum.Parse(typeof(AnimationConstant), clips[i].name.ToUpper());
+            animationClips[index] = clips[i];
+        }
     }
 
     private void PlayAnimation(AnimationReferenceAsset clip, bool loop, float timeScale)
@@ -44,14 +58,13 @@ public class SpineManager : MonoBehaviour
 
     public void SetCurrentAnimation()
     {
-        skeletonAnimation.timeScale = 1f;
         switch (animationState)
         {
             case AnimationConstant.IDLE:
                 PlayAnimation(animationClips[(int)AnimationConstant.IDLE], true, 1f);
                 break;
-            case AnimationConstant.WALK:
-                PlayAnimation(animationClips[(int)AnimationConstant.WALK], true, 1f);
+            case AnimationConstant.RUN:
+                PlayAnimation(animationClips[(int)AnimationConstant.RUN], true, 1f);
                 break;
         }
     }

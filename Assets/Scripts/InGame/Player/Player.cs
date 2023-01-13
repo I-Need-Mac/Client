@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
         if (playerDirection != Vector3.zero)
         {
             lookDirection = playerDirection; //쳐다보는 방향 저장
-            anime.animationState = AnimationConstant.WALK; //움직이는 중
+            anime.animationState = AnimationConstant.RUN; //움직이는 중
         }
         else
         {

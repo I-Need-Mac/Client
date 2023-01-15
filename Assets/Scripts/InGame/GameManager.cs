@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using System;
+
+public enum LayerOrder
+{
+
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -22,12 +28,13 @@ public class GameManager : MonoBehaviour
         GameObject temp = LoadMapManager.Instance.LoadMapNameToMapObject(name);
         GameObject map = Instantiate(temp, transform);
         map.gameObject.transform.SetParent(transform.Find("MapGeneratePos").transform);
-        map.gameObject.transform.localScale = Vector3.one;
+        float defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        map.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
         map.transform.position = new Vector3(map.transform.position.x, map.transform.position.y, 1);
         map.gameObject.SetActive(true);
 
         Player p = playerPoolManager.SpawnPlayer(transform.Find("PlayerSpawnPos").transform);
-        p.transform.localScale = Vector3.one / 2;
+        p.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
         p.transform.position = new Vector3(p.transform.position.x, p.transform.position.y, 0);
     }
 

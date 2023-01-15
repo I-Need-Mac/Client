@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private const string CONFIG_VALUE = "ConfigValue";
 
     [SerializeField] private string skillId = "10101";
+    [SerializeField] private int moveSpeed = 5;
 
     private Rigidbody2D playerRigidbody;
     private Vector3 playerDirection;
@@ -33,7 +34,6 @@ public class Player : MonoBehaviour
     private int hpRegen;
     public int shield;
     private int projectileAdd;
-    private int moveSpeed;
     private int getItemRange;
 
     public PlayerData playerData { get; private set; } = new PlayerData();
@@ -46,8 +46,6 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
         lookDirection = Vector3.right;
-        float defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
-        transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
 
         anime = GetComponent<SpineManager>();
 

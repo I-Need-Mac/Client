@@ -13,6 +13,7 @@ public class SpineManager : MonoBehaviour
     [SerializeField] private string characterName;
     [SerializeField] private AnimationReferenceAsset[] animationClips;
     [SerializeField] private SkeletonAnimation skeletonAnimation;
+    [SerializeField] private float spineSpeed = 1;
 
     public AnimationConstant animationState { get; set; }
 
@@ -23,8 +24,13 @@ public class SpineManager : MonoBehaviour
     {
         animationState = AnimationConstant.IDLE;
         path = SPINE_HOME + characterName + "/";
-        skeletonAnimation.timeScale = 1f;
+        skeletonAnimation.timeScale = spineSpeed;
         SpineSetting();
+    }
+
+    private void Update()
+    {
+        skeletonAnimation.timeScale = spineSpeed;
     }
 
     private void SpineSetting()

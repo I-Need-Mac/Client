@@ -5,60 +5,122 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    public MonsterData monsterData { get; private set; } = new MonsterData();
-    private Player player;
+    public string monsterID;
+    private Dictionary<string, Dictionary<string, object>> monsterDataTable = new Dictionary<string, Dictionary<string, object>>();
+    private Dictionary<string, object> monsterData = new Dictionary<string, object>();
+    string monsterName;
+    public int hp;
+    int attack;
+    int moveSpeed;
+    int atkSpeed;
+    int viewDistance;
+    int atkDistance;
+    int skillID;
+    int dropID;
+    string monsterImage;
+    string attackType;
+    public GameObject player;
 
-    public bool isBoss { get; private set; }
+    // public bool isBoss { get; private set; }
 
-    #region MonoBehaviour Function
-    private void Awake()
+    private void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = GameObject.FindWithTag("Player");
+
+        // ----------테스트용!!------------------
+        monsterID = this.gameObject.name;
+        monsterID = monsterID.Substring(0, 3);
+
+        monsterDataTable = CSVReader.Read("MonsterTable");
+        monsterData = monsterDataTable[monsterID];
+
+        monsterName = (string)monsterData["MonsterName"];
+        hp = int.Parse(monsterData["HP"].ToString());
+        attack = int.Parse(monsterData["Attack"].ToString());
+        moveSpeed = int.Parse(monsterData["MoveSpeed"].ToString());
+        atkSpeed = int.Parse(monsterData["AtkSpeed"].ToString());
+        viewDistance = int.Parse(monsterData["ViewDistance"].ToString());
+        atkDistance = int.Parse(monsterData["AtkDistance"].ToString());
+        skillID = int.Parse(monsterData["SkillID"].ToString());
+        dropID = int.Parse(monsterData["DropID"].ToString());
+        monsterImage = (string)monsterData["MonsterImage"];
+        attackType = (string)monsterData["AttackType"];
     }
+
+    private float sqrDistToPlayer = 0 ;
+    private float nextTimeAttack = 0 ;
+    //public float 
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, monsterData.moveSpeed * Time.deltaTime);
-    }
-    #endregion
+        /*
+        sqrDistToPlayer = (player.transform.position - transform.position).sqrMagnitude;
+        // 이동
+        if (sqrDistToPlayer < Mathf.Pow(viewDistance, 2))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
+        }
 
-    public void LoadMonsterTable(int monsterID)
+        // 자동공격
+        if (Time.time > nextTimeAttack)
+        {
+            sqrDistToPlayer = (player.transform.position - transform.position).sqrMagnitude;
+            if (sqrDistToPlayer < Mathf.Pow(atkDistance, 2))
+            {
+                nextTimeAttack = Time.time + atkSpeed;
+                Debug.Log(attack);
+                // 플레이어 체력 mosterData.attack 만큼 감소
+            }
+        }
+
+        //아이템 드롭
+        if ( hp <= 0 )
+        {
+            Debug.Log(dropID);
+        }
+        */
+    }
+    /*
+    public void LoadMonsterTable(string monsterID)
     {
-        //Dictionary<string, object> monsterTableInfo = CSVReader.FindRead("MonsterTable", "MonsterID", monsterID);
+        Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
+        Dictionary<string, object> monsterTableInfo = monsterTable[monsterID];
 
-        //if (monsterTableInfo != null)
-        //{
-        //    try
-        //    {
-        //        monsterData.SetMonsterName((string)monsterTableInfo["MonsterName"]);
-        //        monsterData.SetHp((int)monsterTableInfo["HP"]);
-        //        monsterData.SetAttack((int)monsterTableInfo["Attack"]);
-        //        monsterData.SetMoveSpeed((int)monsterTableInfo["MoveSpeed"]);
-        //        monsterData.SetAtkDistance((int)monsterTableInfo["AtkDistance"]);
-        //        monsterData.SetSkillID((int)monsterTableInfo["SkillID"]);
-        //        monsterData.SetExpDropRate((int)monsterTableInfo["ExpDropRate"]);
-        //        monsterData.SetTreasureDropRate((int)monsterTableInfo["TreasureDropRate"]);
-        //        monsterData.SetMoneyDropRate((int)monsterTableInfo["MoneyDropRate"]);
-        //        monsterData.SetMonsterImage((string)monsterTableInfo["MonsterImage"]);
-        //    }
-        //    catch (InvalidCastException invalidCastEx)
-        //    {
-        //        Debug.LogError("[LoadMonsterTable] Data Type Error");
+        if (monsterTableInfo != null)
+        {
+            try
+            {
+                monsterData.SetMonsterName((string)monsterTableInfo["MonsterName"]);
+                monsterData.SetHp((int)monsterTableInfo["HP"]);
+                monsterData.SetAttack((int)monsterTableInfo["Attack"]);
+                monsterData.SetMoveSpeed((int)monsterTableInfo["MoveSpeed"]);
+                monsterData.SetAtkSpeed((int)monsterTableInfo["AtkSpeed"]);
+                monsterData.SetViewDistance((int)monsterTableInfo["ViewDistance"]);
+                monsterData.SetAtkDistance((int)monsterTableInfo["AtkDistance"]);
+                monsterData.SetSkillID((int)monsterTableInfo["SkillID"]);
+                monsterData.SetDropID((int)monsterTableInfo["DropID"]);
+                monsterData.SetMonsterImage((string)monsterTableInfo["MonsterImage"]);
+                monsterData.SetAttackType((string)monsterTableInfo["AttackType"]);
+            }
+            catch (InvalidCastException invalidCastEx)
+            {
+                Debug.LogError("[LoadMonsterTable] Data Type Error");
 
-        //        gameObject.SetActive(false);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.LogError("[LoadMonsterTable] " + ex.Message);
+                gameObject.SetActive(false);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("[LoadMonsterTable] " + ex.Message);
 
-        //        gameObject.SetActive(false);
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.LogError("[LoadMonsterTable] stageTableInfo is null.");
+                gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            Debug.LogError("[LoadMonsterTable] stageTableInfo is null.");
 
-        //    gameObject.SetActive(false);
-        //}
+            gameObject.SetActive(false);
+        }
     }
+    */
 }

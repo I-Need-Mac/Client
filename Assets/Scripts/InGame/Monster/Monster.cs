@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Random = UnityEngine.Random;
+
 public class Monster : MonoBehaviour
 {
     public string monsterID;
@@ -11,12 +13,13 @@ public class Monster : MonoBehaviour
     string monsterName;
     public int hp;
     int attack;
-    int moveSpeed;
+    public int moveSpeed;
     int atkSpeed;
-    int viewDistance;
-    int atkDistance;
+    public int viewDistance;
+    public int atkDistance;
     int skillID;
-    int dropID;
+    string groupSource;
+    int groupSourceRate;
     string monsterImage;
     string attackType;
     public GameObject player;
@@ -42,18 +45,20 @@ public class Monster : MonoBehaviour
         viewDistance = int.Parse(monsterData["ViewDistance"].ToString());
         atkDistance = int.Parse(monsterData["AtkDistance"].ToString());
         skillID = int.Parse(monsterData["SkillID"].ToString());
-        dropID = int.Parse(monsterData["DropID"].ToString());
+        groupSource = (string)monsterData["GroupSource"];
+        groupSourceRate = int.Parse(monsterData["GroupSourceRate"].ToString());
         monsterImage = (string)monsterData["MonsterImage"];
         attackType = (string)monsterData["AttackType"];
     }
 
-    private float sqrDistToPlayer = 0 ;
+    public float sqrDistToPlayer = 0 ;
     private float nextTimeAttack = 0 ;
     //public float 
 
     private void Update()
     {
-        /*
+        if (player == null)
+            player = GameObject.FindWithTag("Player");
         sqrDistToPlayer = (player.transform.position - transform.position).sqrMagnitude;
         // 이동
         if (sqrDistToPlayer < Mathf.Pow(viewDistance, 2))
@@ -76,9 +81,14 @@ public class Monster : MonoBehaviour
         //아이템 드롭
         if ( hp <= 0 )
         {
-            Debug.Log(dropID);
+            if (Random.Range(0, 10000) <= groupSourceRate)
+            {
+                Debug.Log(groupSource);
+            }
+            // 임시로, 이후 스폰매니저에서 담당
+            Destroy(this);
         }
-        */
+        
     }
     /*
     public void LoadMonsterTable(string monsterID)

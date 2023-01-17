@@ -519,7 +519,7 @@ GameObject:
   - component: {fileID: 1431175200}
   - component: {fileID: 1431175199}
   m_Layer: 0
-  m_Name: 801
+  m_Name: 101
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -539,7 +539,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterID: 
   hp: 0
+  moveSpeed: 0
+  viewDistance: 0
+  atkDistance: 0
   player: {fileID: 0}
+  sqrDistToPlayer: 0
 --- !u!212 &1431175200
 SpriteRenderer:
   m_ObjectHideFlags: 0

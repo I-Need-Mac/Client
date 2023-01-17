@@ -701,6 +701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillId: 10102
+  moveSpeed: 10
   hp: 0
   shield: 0
 --- !u!114 &8356449094741141204
@@ -720,6 +721,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   skeletonAnimation: {fileID: 1044205718512837729}
+  spineSpeed: 1
 --- !u!50 &8356449094741141200
 Rigidbody2D:
   serializedVersion: 4

@@ -1,3 +1,13 @@
-﻿MonsterID,MonsterName,HP,Attack,MoveSpeed,AtkDistance,SkillID,ExpDropRate,TreasureDropRate,MoneyDropRate,MonsterImage
-몬스터 아이디,몬스터 이름(로컬 아이디,몬스터 체력,몬스터 공격력,몬스터 이동 속도,사거리,몬스터 스킬,경험치 드랍률,보물 드랍률,돈 드랍률,몬스터 이미지
-int ,String,int ,int ,int ,int ,int ,int ,int ,int ,String
+MonsterID,MonsterName,HP,Attack,MoveSpeed,AtkSpeed,ViewDistance,AtkDistance,SkillID,GroupSource,GroupSourceRate,MonsterImage,AttackType
+몬스터 아이디,몬스터 이름(로컬 아이디,몬스터 체력,몬스터 공격력,몬스터 이동 속도,몬스터 공격 속도,몬스터 시야 범위,몬스터 공격 사거리,몬스터 스킬,그룹 소스,그룹 소스 확률,몬스터 이미지,선공 AI 판단
+int ,String,int ,int ,int ,float,int,int,int ,String,int ,String,Enum
+101,MobName_101,500,300,128,1,99999,10,0,Wall,10000,Siwoo,Bold
+102,MobName_102,800,600,120,1,99999,10,0,Wall,10000,SeiMei,Bold
+103,MobName_103,500,900,112,1,99999,10,0,Wall,10000,SeiMei,Bold
+201,MobName_201,1500,1200,104,0,99999,10,0,Wall2,10000,Siwoo,Shy
+202,MobName_202,1000,1500,96,0.5,99999,10,0,Wall2,10000,SeiMei,Bold
+203,MobName_203,1200,1800,88,1.2,99999,10,0,Wall2,10000,SeiMei,Bold
+301,MobName_301,3000,2100,80,0.3,99999,10,0,Wall,10000,Siwoo,Bold
+302,MobName_302,2500,2400,72,0.7,99999,10,0,Wall,10000,SeiMei,Bold
+303,MobName_303,2000,2700,64,0.8,99999,256,0,Wall,10000,SeiMei,Bold
+401,MobName_401,5000,3000,56,0.9,99999,10,0,Wall2,10000,SeiMei,Bold

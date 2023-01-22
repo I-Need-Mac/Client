@@ -24,11 +24,15 @@ public class Monster : MonoBehaviour
     string attackType;
     public GameObject player;
 
+    private SpineManager anime;
+    private Vector3 monsterDirection;
+
     // public bool isBoss { get; private set; }
 
     private void Start()
     {
         player = GameObject.FindWithTag("Player");
+        anime = GetComponent<SpineManager>();
 
         // ----------테스트용!!------------------
         monsterID = this.gameObject.name;
@@ -60,6 +64,23 @@ public class Monster : MonoBehaviour
         if (player == null)
             player = GameObject.FindWithTag("Player");
         sqrDistToPlayer = (player.transform.position - transform.position).sqrMagnitude;
+
+        // 몬스터 방향 결정
+        monsterDirection = player.transform.position - transform.position;
+        anime.SetDirection(monsterDirection);
+        if (monsterDirection != Vector3.zero)
+        {
+            //lookDirection = playerDirection;
+            anime.animationState = AnimationConstant.RUN;
+        }
+        else
+        {
+            anime.animationState = AnimationConstant.IDLE;
+        }
+
+        anime.SetCurrentAnimation();
+        
+        
         // 이동
         if (sqrDistToPlayer < Mathf.Pow(viewDistance, 2))
         {
@@ -90,6 +111,7 @@ public class Monster : MonoBehaviour
         }
         
     }
+
     /*
     public void LoadMonsterTable(string monsterID)
     {

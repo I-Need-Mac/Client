@@ -71,11 +71,28 @@ public class Player : MonoBehaviour
     {
         KeyDir();
         anime.SetCurrentAnimation();
+        TestFunction();
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    private void TestFunction()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            moveSpeed += 1;
+            anime.SetSpineSpeed(moveSpeed);
+            DebugManager.Instance.PrintDebug("MoveSpeed: {0}", moveSpeed);
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            moveSpeed -= 1;
+            anime.SetSpineSpeed(moveSpeed);
+            DebugManager.Instance.PrintDebug("MoveSpeed: {0}", moveSpeed);
+        }
     }
     #endregion
 
@@ -213,6 +230,7 @@ public class Player : MonoBehaviour
     {
         int increment = buff + deBuff;
         moveSpeed *= 1 + (buff - deBuff);
+        anime.SetSpineSpeed(moveSpeed);
     }
 
     //아이템획득범위 증감함수

@@ -62,6 +62,22 @@ public class SpineManager : MonoBehaviour
         currentAnimation = clip.name;
     }
 
+    public void SetSpineSpeed(float speed)
+    {
+        float weight = 0;
+        if (speed > 5)
+        {
+            weight = ((float)Math.Pow(speed - 5, 2.0f / 3.0f) + (float)Math.Sqrt(speed - 5) - 1.0f) / 10.0f;
+        }
+        else
+        {
+            weight = (0.5f - speed / 10.0f) * -1.0f;
+        }
+        spineSpeed = 1 + weight;
+        DebugManager.Instance.PrintDebug("SpineSpeed: {0}", spineSpeed);
+        DebugManager.Instance.PrintDebug("Weight: {0}", weight);
+    }
+
     public void SetCurrentAnimation()
     {
         switch (animationState)

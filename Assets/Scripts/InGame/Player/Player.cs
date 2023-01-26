@@ -20,21 +20,8 @@ public class Player : MonoBehaviour
     private float coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
 
     private SpineManager anime;
-    /*
-     *캐릭터 스탯의 경우
-     *기본값들의 변화는 생기지 않음 -> 혼을 이용해서 게임 스타트 초기에만 변화를 주는 형태
-     *그러므로 기본 값들에 변화를 주지 않기 위해서 임시 변수를 생성해야함
-     */
-    public int hp;
-    private int currentHp;
-    private int attack;
-    private int criRatio;
-    private int criDamage;
-    private float coolDown;
-    private int hpRegen;
-    public int shield;
-    private int projectileAdd;
-    private int getItemRange;
+
+    private PlayerData weight = new PlayerData(); //증감치
 
     public PlayerData playerData { get; private set; } = new PlayerData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
@@ -56,7 +43,6 @@ public class Player : MonoBehaviour
     //playerData의 경우 Awake단계에서 PlayerManager로 인한 데이터 셋팅이 이루어지지 않으므로 Start에 배치
     private void Start()
     {
-        statusSetting(playerData);
         StartCoroutine(HpRegeneration());
         Fire();
     }
@@ -114,20 +100,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void statusSetting(PlayerData playerData)
-    {
-        hp = playerData.hp;
-        currentHp = hp;
-        attack = playerData.attack;
-        criRatio = playerData.criRatio;
-        criDamage = playerData.criDamage;
-        coolDown = playerData.coolDown;
-        hpRegen = playerData.hpRegen;
-        shield = playerData.shield;
-        projectileAdd = playerData.projectileAdd;
-        moveSpeed = playerData.moveSpeed;
-        getItemRange = playerData.getItemRange;
-    }
     #endregion
 
     /*키보드 입력 및 움직임 관련*/
@@ -163,81 +135,74 @@ public class Player : MonoBehaviour
     #endregion
 
     /*스탯 증감 관련*/
-    #region Modify STATUS
+    #region STATUS
     //increment는 버프+디버프 값 이하 status에 모두 동일하게 적용
     //버프, 디버프의 기본 수치는 0
 
-    //체력 증감 함수
-    public void ModifyHp(int buff = 0, int deBuff = 0)
+    //체력
+    public int ReturnHp()
     {
-        int increment = buff + deBuff;
-        hp += increment;
+        return playerData.hp + weight.hp;
     }
 
-    //공격력 증감 함수
-    private void ModifyAttack(int buff = 0, int deBuff = 0)
+    //공격력
+    public int ReturnAttack()
     {
-        int increment = buff + deBuff;
-        attack += increment;
+        return playerData.attack + weight.attack;
     }
 
-    //크리티컬확률 증감 함수
-    private void ModifyCriRatio(int buff = 0, int deBuff = 0)
+    //크리티컬확률
+    public int ReturnCriRatio()
     {
-        int increment = buff + deBuff;
-        criRatio += increment;
+        return playerData.criRatio + weight.criRatio;
     }
 
     //크리티컬데미지 증감함수
-    private void ModifyCriDamage(int buff = 0, int deBuff = 0)
+    public int ReturnCriDamage()
     {
-        int increment = buff + deBuff;
-        criDamage += increment;
+        return playerData.criDamage + weight.criDamage;
     }
 
-    //재사용대기시간 증감 함수
     //재사용대기시간 = 기존재사용대기시간*(재사용대기시간감소^2/(재사용대기시간감소^2+재사용대기시간감소상수))*재사용대기시간감소최대치조절계수/10000
-    private void ModifyCoolDown(int buff = 0, int deBuff = 0)
+    public float ReturnCoolDown()
     {
-        int increment = buff + deBuff;
-        float calculateCoolDown = coolDown * (increment * increment / (increment * increment + coolTimeConstant)) * coolTimeCoefficient / PER;
-        coolDown = calculateCoolDown;
+        return playerData.coolDown * ((float)Math.Pow(weight.coolDown, 2) / ((float)Math.Pow(weight.coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient / PER;
     }
 
-    //체젠량 증감 함수
-    private void ModifyHpRegen(int buff = 0, int deBuff = 0)
+    //체젠량
+    public int ReturnHpRegen()
     {
-        int increment = buff + deBuff;
-        hpRegen += increment;
+        return playerData.hpRegen + weight.hpRegen;
     }
 
-    //쉴드개수 증감함수
-    private void ModifyShield(int buff = 0, int deBuff = 0)
+    //쉴드 개수
+    public int ReturnShield()
     {
-        int increment = buff + deBuff;
-        shield += increment;
+        return playerData.shield + weight.shield;
     }
 
-    //투사체 개수 증감 함수
-    private void ModifyProjectileAdd(int buff = 0, int deBuff = 0)
+    //투사체 증가 개수
+    public int ReturnProjectileAdd()
     {
-        int increment = buff + deBuff;
-        projectileAdd += increment;
+        return playerData.projectileAdd + weight.projectileAdd;
     }
 
-    //이동속도 증감 함수
+    //이동속도
     private void ModifyMoveSpeed(int buff = 0, int deBuff = 0)
     {
         int increment = buff + deBuff;
         moveSpeed *= 1 + (buff - deBuff);
         anime.SetSpineSpeed(moveSpeed);
     }
-
-    //아이템획득범위 증감함수
-    private void ModifyGetItemRange(int buff = 0, int deBuff = 0)
+    public float ReturnMoveSpeed()
     {
-        int increment = buff + deBuff;
-        getItemRange += increment;
+        return playerData.moveSpeed * (1 + weight.moveSpeed);
+    }
+
+    //아이템 획득 범위
+    public int ReturnGetItemRange()
+    {
+        return playerData.getItemRange + weight.getItemRange;
     }
 
     #endregion
@@ -248,7 +213,7 @@ public class Player : MonoBehaviour
     //크리티컬 판별 함수
     private bool IsCritical()
     {
-        return UnityEngine.Random.Range(0f, 1f) <= (criRatio / PER);
+        return UnityEngine.Random.Range(0f, 1f) <= (ReturnCriRatio() / PER);
     }
 
     //최종적으로 몬스터에게 가하는 데미지 계산 함수
@@ -261,17 +226,17 @@ public class Player : MonoBehaviour
         int originalDamage;
         if (type == CALC_DAMAGE_TYPE.PLUS)
         {
-            originalDamage = attack + skillDamage;
+            originalDamage = ReturnAttack() + skillDamage;
         }
         else
         {
-            originalDamage = attack * skillDamage;
+            originalDamage = ReturnAttack() * skillDamage;
         }
 
         //크리티컬 체크
         if (IsCritical())
         {
-            return (int)(originalDamage * (1 + criDamage / PER)); //소수점 버림
+            return (int)(originalDamage * (1 + ReturnCriDamage() / PER)); //소수점 버림
         }
         return originalDamage;
     }
@@ -281,9 +246,9 @@ public class Player : MonoBehaviour
     //쉴드가 없을 경우 받은 데미지 그대로 리턴
     private int IsShield(int monsterDamage)
     {
-        if(shield > 0)
+        if(ReturnShield() > 0)
         {
-            --shield;
+            weight.SetShield(weight.shield - 1);
             return 1;
         }
         return monsterDamage;
@@ -300,9 +265,9 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(HP_REGEN_PER_SECOND);
 
             //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
-            if (currentHp < playerData.hp)
+            if (ReturnHp() < playerData.hp && ReturnHp() >= 0)
             {
-                currentHp += hpRegen;
+                weight.SetHp(weight.hp + ReturnHpRegen());
             }
         }
     }

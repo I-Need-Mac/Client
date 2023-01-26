@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerData
 {
@@ -32,4 +33,20 @@ public class PlayerData
     public void SetGetItemRange(int getItemRange) { this.getItemRange = getItemRange; }
     //public void SetSkill(Skill skill) { skills.Add(skill.skillData.name, skill); }
     public void SetSkill(Skill skill) { skills.Add(skill); }
+
+    public void SetStat(PlayerData playerData)
+    {
+        characterName = playerData.characterName;
+        hp = playerData.hp;
+        attack = playerData.attack;
+        criRatio = playerData.criRatio;
+        criDamage = playerData.criDamage;
+        coolDown = playerData.coolDown;
+        hpRegen = playerData.hpRegen;
+        shield = playerData.shield;
+        projectileAdd = playerData.projectileAdd;
+        moveSpeed = playerData.moveSpeed;
+        getItemRange = playerData.getItemRange;
+        skills = playerData.skills.ToList();
+    }
 }

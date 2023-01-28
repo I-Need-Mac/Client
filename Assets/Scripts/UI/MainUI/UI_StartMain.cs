@@ -65,9 +65,17 @@ public class UI_StartMain : UI_Base
         color.a += time;
         pressKeyImage.color = color;
 
-        if (Input.anyKeyDown)
+        OnPressKeyDown();
+    }
+
+    public void OnPressKeyDown()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            //Debug.Log("anykey");
+            if (!UIManager.Instance.IsUiPopup("UI_ESCPopup"))
+                UIManager.Instance.OpenUI<UI_ESCPopup>();
+            else
+                UIManager.Instance.CloseUI<UI_ESCPopup>();
         }
     }
 }

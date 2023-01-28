@@ -47,7 +47,7 @@ public class UI_StoryMain : UI_Popup
         string eleText = LocalizeManager.Instance.GetText("UI_StageList");
 
         GameObject go = Util.FindChild(stageList.gameObject, "Content", true);
-        UIStageElement ele = Util.UILoad<UIStageElement>($"{Define.UiPrefabsPath}/UIStageElement");
+        UI_StageElement ele = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
         ele.text.text = String.Format(eleText, "첫");
         GameObject instance = Instantiate(ele.gameObject) as GameObject;
 
@@ -55,7 +55,7 @@ public class UI_StoryMain : UI_Popup
         RectTransform rect = instance.GetComponent<RectTransform>();
         rect.localScale = new Vector3(1, 1, 1);
 
-        UIStageElement ele2 = Util.UILoad<UIStageElement>($"{Define.UiPrefabsPath}/UIStageElement");
+        UI_StageElement ele2 = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
         ele2.text.text = String.Format(eleText, 2);
         GameObject instance2 = Instantiate(ele2.gameObject) as GameObject;
 
@@ -63,7 +63,7 @@ public class UI_StoryMain : UI_Popup
         RectTransform rect2 = instance2.GetComponent<RectTransform>();
         rect2.localScale = new Vector3(1, 1, 1);
 
-        UIStageElement ele3 = Util.UILoad<UIStageElement>($"{Define.UiPrefabsPath}/UIStageElement");
+        UI_StageElement ele3 = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
         ele3.text.text = String.Format(eleText, 3);
         GameObject instance3 = Instantiate(ele3.gameObject) as GameObject;
 

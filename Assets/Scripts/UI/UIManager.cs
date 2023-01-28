@@ -143,6 +143,19 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
 
+    public bool IsUiPopup(string uiName)
+    {
+        foreach(UI_Popup popup in currentPopup)
+        {
+            if( popup.name == uiName )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // 캔버스를 셋팅합니다.
     private void SetCanvas(GameObject go)
     {

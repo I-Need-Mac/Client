@@ -70,12 +70,12 @@ public class UI_GameMain : UI_Popup
         }
     }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            UIManager.Instance.OpenUI<UI_ESCPopup>();
-            //Debug.Log("anykey");
-        }
-    }
+    //public void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        UIManager.Instance.OpenUI<UI_ESCPopup>();
+    //        Debug.Log("anykey");
+    //    }
+    //}
 }

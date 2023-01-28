@@ -217,7 +217,7 @@ public class UI_StoryBook : UI_Popup
                 
                 break;
             case Buttons.Close:
-                CloseUI<UI_StoryBook>();
+                UIManager.Instance.CloseUI<UI_StoryBook>();
                 break;
             default:
                 break;

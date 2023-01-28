@@ -1,6 +1,6 @@
-StageID,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID,MapID,NextStageID,ChapterCategory
-ìŠ¤í…Œì´ì§€ ì•„ì´ë””,ëª¹ ìŠ¤í° í…Œì´ë¸” ID,ì œí•œ ì‹œê°„ ,ëª¹ ì œí•œ ìˆ˜,ë³´ìƒ ì•„ì´ë””,ë³´ìƒ ê°œìˆ˜,ì¸íŠ¸ë¡œID,ì•„ì›ƒíŠ¸ë¡œID,ë§µ ID,ë‹¤ìŒ ìŠ¤í…Œì´ì§€ ID,ìŠ¤í…Œì´ì§€ê°€ í¬í•¨ëœ ì±•í„° êµ¬ë¶„
-Int,String,Int,Int,Int_Arr,Int_Arr,StoryID,StoryID,String,int,ChapterID
-10101,TEST,30000,50,1,1,101,101,Map1,10102,101
-10102,TEST,30000,50,1,1,102,102,Map2,10103,101
-10103,TEST,30000,50,1,1,103,103,Map3,,101
+StageID,StageName,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID,MapID,NextStageID,ChapterCategory
+½ºÅ×ÀÌÁö ¾ÆÀÌµğ,½ºÅ×ÀÌÁö ¼ÒÁ¦¸ñ,¸÷ ½ºÆù Å×ÀÌºí ID,Á¦ÇÑ ½Ã°£,¸÷ Á¦ÇÑ ¼ö,º¸»ó ¾ÆÀÌµğ,º¸»ó °³¼ö,ÀÎÆ®·ÎID,¾Æ¿ôÆ®·ÎID,¸Ê ID,´ÙÀ½ ½ºÅ×ÀÌÁö ID,½ºÅ×ÀÌÁö°¡ Æ÷ÇÔµÈ Ã©ÅÍ ±¸ºĞ
+Int,String,String,Int,Int,Int_Arr,Int_Arr,StoryID,StoryID,String,int,ChapterID
+10101,¾ÇÀ» ¸Ö¸®ÇÏ°í ¼±À» °¡±îÀÌ ÇÏ¶ó.,TEST,30000,50,1,1,101,101,Map1,10102,101
+10102,±×µé¿¡°Ô ±¸¿øÀ».,TEST,30000,50,1,1,102,102,Map2,10103,101
+10103,¼±À» ÇàÇÏ´Ù ³«½ÉÇÏÁö ¸¶¶ó.,TEST,30000,50,1,1,103,103,Map3,,101

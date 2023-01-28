@@ -15,20 +15,15 @@ public class UI_SelectSorcerer : UI_Popup
 
     enum Images
     {
-        Sorcerer_0,
-        Sorcerer_1,
-        Sorcerer_2,
-        Sorcerer_3,
-        Sorcerer_4,
-        Sorcerer_5,
-
         BackBtn
     }
 
     [SerializeField]
     Text titleText;
     [SerializeField]
-    List<GameObject> characterList = new List<GameObject>();
+    GameObject sorcererObject;
+    [SerializeField]
+    List<GameObject> sorcererList = new List<GameObject>();
 
     void Start()
     {
@@ -41,14 +36,38 @@ public class UI_SelectSorcerer : UI_Popup
 
         titleText.text = LocalizeManager.Instance.GetText("UI_SelectSorcerer");
 
-        //Dictionary<string, Dictionary<string, object>> characterList = UIData.CharacterData;
-        //foreach (KeyValuePair<string, Dictionary<string, object>> data in characterList)
-        //{
-        //    foreach( KeyValuePair<string, object> val in data.Value )
-        //    {
+        UI_Sorcerer sorcerer = Util.UILoad<UI_Sorcerer>(Define.UiPrefabsPath + "/UI_Sorcerer");
 
-        //    }
-        //}
+        Dictionary<string, Dictionary<string, object>> characterList = UIData.CharacterData;
+        foreach (KeyValuePair<string, Dictionary<string, object>> data in characterList)
+        {
+            if (data.Key == "")
+                continue;
+
+            GameObject instance = Instantiate(sorcerer.gameObject) as GameObject;
+            instance.name = "sorcerer_" + data.Key;
+            instance.transform.SetParent(sorcererObject.transform);
+            instance.transform.localScale = Vector3.one;
+
+            RectTransform rect = instance.GetComponent<RectTransform>();
+            rect.anchoredPosition3D = Vector3.zero;
+
+            sorcererList.Add(instance);
+
+
+            foreach (KeyValuePair<string, object> val in data.Value)
+            {
+
+            }
+        }
+
+        SetPositionCharacterImage();
+    }
+
+    public void SetPositionCharacterImage()
+    {
+        // 1개 = 0
+        // 2개
     }
 
     public void OnClickImage(PointerEventData data)
@@ -63,24 +82,6 @@ public class UI_SelectSorcerer : UI_Popup
         {
             case Images.BackBtn:
                 UIManager.Instance.CloseUI<UI_SelectSorcerer>();
-                break;
-            case Images.Sorcerer_0:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_1:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_2:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_3:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_4:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_5:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
                 break;
             default:
                 break;

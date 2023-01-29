@@ -53,14 +53,14 @@ public class GameManager : MonoBehaviour
 
     private void RecursiveChild(Transform trans, LayerConstant layer)
     {
-        DebugManager.Instance.PrintDebug((int)layer);
         trans.gameObject.layer = (int)layer;
-        trans.position = new Vector3(trans.position.x, trans.position.y, (int)layer);
+        trans.localPosition = new Vector3(trans.position.x, trans.position.y, (int)layer);
 
         foreach (Transform child in trans)
         {
             if (child.name.Equals("Camera"))
             {
+                RecursiveChild(child, LayerConstant.POISONFOG);
                 continue;
             }
             RecursiveChild(child, layer);

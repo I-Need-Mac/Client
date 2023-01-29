@@ -12,10 +12,19 @@ public class CameraManager : SingletonBehaviour<CameraManager>
 
     private void Start()
     {
-        gameObject.layer = (int)LayerConstant.POISONFOG;
-        transform.position = new Vector3(transform.position.x, transform.position.y, (int)LayerConstant.POISONFOG);
         virtualCamera = transform.Find("Cinemachine").GetComponent<CinemachineVirtualCamera>();
         ConfinerSetting("Floor");
+    }
+
+    private void RecursiveChild(Transform trans, LayerConstant layer)
+    {
+        trans.gameObject.layer = (int)layer;
+        trans.localPosition = new Vector3(trans.position.x, trans.position.y, (int)layer);
+
+        foreach (Transform child in trans)
+        {
+            RecursiveChild(child, layer);
+        }
     }
 
     private void ConfinerSetting(string mapName)

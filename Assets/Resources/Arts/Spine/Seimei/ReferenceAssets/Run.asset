@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3e95a05e4c9774397eeeb7bdee8ccb, type: 3}
   m_Name: Run
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 7727541a55d97b94ba33aee4f8319cc7, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 418702f19e048e34ebdd7678c991c0b0, type: 2}
   animationName: Run

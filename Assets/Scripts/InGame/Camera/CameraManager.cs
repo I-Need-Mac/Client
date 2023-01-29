@@ -12,6 +12,8 @@ public class CameraManager : SingletonBehaviour<CameraManager>
 
     private void Start()
     {
+        gameObject.layer = (int)LayerConstant.POISONFOG;
+        transform.position = new Vector3(transform.position.x, transform.position.y, (int)LayerConstant.POISONFOG);
         virtualCamera = transform.Find("Cinemachine").GetComponent<CinemachineVirtualCamera>();
         ConfinerSetting("Floor");
     }

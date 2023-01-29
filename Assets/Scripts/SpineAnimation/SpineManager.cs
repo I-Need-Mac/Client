@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class SpineManager : MonoBehaviour
 {
-    const string SPINE_HOME = "Arts/SpineSample/";
+    const string SPINE_HOME = "Arts/Spine/";
     const string SPINE_STATE = "ReferenceAssets/";
 
     [SerializeField] private string characterName;
@@ -80,15 +80,7 @@ public class SpineManager : MonoBehaviour
 
     public void SetCurrentAnimation()
     {
-        switch (animationState)
-        {
-            case AnimationConstant.IDLE:
-                PlayAnimation(animationClips[(int)AnimationConstant.IDLE], true, 1f);
-                break;
-            case AnimationConstant.RUN:
-                PlayAnimation(animationClips[(int)AnimationConstant.RUN], true, 1f);
-                break;
-        }
+        PlayAnimation(animationClips[(int)animationState], true, 1f);
     }
 
     public void SetDirection(Vector3 direction)

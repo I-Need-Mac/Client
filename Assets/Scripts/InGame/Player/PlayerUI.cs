@@ -14,20 +14,20 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
-        DebugManager.Instance.PrintDebug(player.playerData.hp);
-        hpBar.maxValue = player.playerData.hp;
-        hpBar.value = hpBar.maxValue;
-        playerLevel.text += "1";
-        playerName.text = player.playerData.characterName;
+        //DebugManager.Instance.PrintDebug(player.playerData.hp);
+        //hpBar.maxValue = player.playerData.hp;
+        //hpBar.value = hpBar.maxValue;
+        //playerLevel.text += "1";
+        //playerName.text = player.playerData.characterName;
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.K))
-        {
-            player.ModifyHp(0, 5);
-            DebugManager.Instance.PrintDebug(hpBar.value);
-        }
-        hpBar.value = player.hp;
+        //if (Input.GetKey(KeyCode.K))
+        //{
+        //    player.ModifyHp(0, 5);
+        //    DebugManager.Instance.PrintDebug(hpBar.value);
+        //}
+        //hpBar.value = player.hp;
     }
 }

@@ -56,67 +56,116 @@
     <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\InGame\Projectile\Proj_Straight.cs" />
-    <Compile Include="Assets\Scripts\UI\UIBase.cs" />
+    <Compile Include="Assets\Scripts\InGame\Skill\Skill.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_StartMain.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\Projectile.cs" />
+    <Compile Include="Assets\Scripts\InGame\Player\PlayerUI.cs" />
+    <Compile Include="Assets\Scripts\InGame\GameManager.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectilePoolManager.cs" />
+    <Compile Include="Assets\Scripts\InGame\Monster\MonsterData.cs" />
+    <Compile Include="Assets\Scripts\Map\LoadTopImage.cs" />
+    <Compile Include="Assets\Scripts\InGame\Monster\Monster.cs" />
+    <Compile Include="Assets\Scripts\System\Constants.cs" />
+    <Compile Include="Assets\Scripts\Map\Load.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_NickName.cs" />
+    <Compile Include="Assets\Scripts\Map\LoadFrontalImage.cs" />
+    <Compile Include="Assets\Scripts\Util\DebugManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UIEventHandler.cs" />
+    <Compile Include="Assets\Scripts\UI\Util.cs" />
+    <Compile Include="Assets\Scripts\SingleTon\SingleTon.cs" />
+    <Compile Include="Assets\StovePCSDK\StovePCSDKManager.cs" />
+    <Compile Include="Assets\Scripts\UI\StoryBookUI\UI_StoryBook.cs" />
+    <Compile Include="Assets\Scripts\UI\StoryBookUI\UI_Page.cs" />
+    <Compile Include="Assets\Scripts\Util\CSVReader.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_ESCPopup.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectileStraight.cs" />
+    <Compile Include="Assets\Scripts\SpineAnimation\SpineManager.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_SelectSorcerer.cs" />
+    <Compile Include="Assets\Scripts\UI\UIStageElement.cs" />
+    <Compile Include="Assets\Scripts\InGame\Monster\MonsterSpawner.cs" />
+    <Compile Include="Assets\Scripts\Util\PrefabLoader.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_Login.cs" />
+    <Compile Include="Assets\Scripts\Map\MapList.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectileBoomerang.cs" />
+    <Compile Include="Assets\Scripts\Util\LoadMapManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_Base.cs" />
     <Compile Include="Assets\Scripts\Util\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\InGame\Skill\SkillData.cs" />
     <Compile Include="Assets\Scripts\InGame\Player\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\InGame\Reward.cs" />
     <Compile Include="Assets\Scripts\Steam\SteamTest.cs" />
-    <Compile Include="Assets\Scripts\InGame\GameManager.cs" />
+    <Compile Include="Assets\Scripts\SpineAnimation\AnimationConstant.cs" />
     <Compile Include="Assets\Scripts\InGame\InGameEnum.cs" />
-    <Compile Include="Assets\Scripts\UI\UITest.cs" />
-    <Compile Include="Assets\Scripts\CameraManager.cs" />
+    <Compile Include="Assets\Scripts\InGame\Skill\SkillConstant.cs" />
     <Compile Include="Assets\Scripts\InGame\Player\PlayerData.cs" />
-    <Compile Include="Assets\Scripts\InGame\Monster\MonsterData.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectilePool.cs" />
+    <Compile Include="Assets\Scripts\Util\PrefabManager.cs" />
     <Compile Include="Assets\Scripts\Util\OldSoundManager.cs" />
-    <Compile Include="Assets\Scripts\InGame\Projectile\Proj_Satellite.cs" />
     <Compile Include="Assets\Scripts\Util\EnumUtil.cs" />
-    <Compile Include="Assets\Scripts\InGame\Monster\Monster.cs" />
+    <Compile Include="Assets\Scripts\UI\Define.cs" />
+    <Compile Include="Assets\Scripts\UI\StoryBookUI\TypeTextComponent.cs" />
     <Compile Include="Assets\Scripts\SoundManager\SoundRequesterBtn.cs" />
-    <Compile Include="Assets\Scripts\System\Constants.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_Skill.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectileRange.cs" />
     <Compile Include="Assets\Scripts\InGame\Stage\Map.cs" />
     <Compile Include="Assets\Scripts\SoundManager\SoundRequester.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_MyInfo.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_Inventory.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_Agreement.cs" />
     <Compile Include="Assets\Scripts\SoundManager\SoundManager.cs" />
-    <Compile Include="Assets\Scripts\Util\DebugManager.cs" />
-    <Compile Include="Assets\Scripts\UI\UIEventHandler.cs" />
-    <Compile Include="Assets\Scripts\InGame\Projectile\Proj_Protect.cs" />
-    <Compile Include="Assets\Scripts\InGame\Projectile\Proj_Drop.cs" />
-    <Compile Include="Assets\Scripts\SingleTon\SingleTon.cs" />
-    <Compile Include="Assets\Scripts\InGame\Projectile\Proj_Range.cs" />
-    <Compile Include="Assets\Scripts\UI\UIPage.cs" />
+    <Compile Include="Assets\Scripts\Util\ImageLoader.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectileConstant.cs" />
+    <Compile Include="Assets\TestBtn.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectileDrop.cs" />
+    <Compile Include="Assets\Scripts\InGame\Player\PlayerPool.cs" />
+    <Compile Include="Assets\Scripts\InGame\Camera\CameraManager.cs" />
+    <Compile Include="Assets\Scripts\Map\Teleport.cs" />
     <Compile Include="Assets\Scripts\SoundManager\SoundRequesterHit.cs" />
     <Compile Include="Assets\Scripts\SoundManager\AudioSourceSetter.cs" />
-    <Compile Include="Assets\Scripts\Util\CSVReader.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectileBoom.cs" />
     <Compile Include="Assets\Scripts\Steamworks.NET\SteamManager.cs" />
     <Compile Include="Assets\Scripts\Util\WebRequestManager.cs" />
     <Compile Include="Assets\Scripts\Util\APIAdressManager.cs" />
-    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectilePool.cs" />
     <Compile Include="Assets\Scripts\System\WaitForUpdate.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectileSatellite.cs" />
+    <Compile Include="Assets\Scripts\InGame\Projectile\ProjectileProtect.cs" />
+    <Compile Include="Assets\Scripts\UI\UIData.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_Main.cs" />
     <Compile Include="Assets\Scripts\InGame\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_GameMain.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
-    <Compile Include="Assets\Scripts\InGame\Monster\MonsterSpawner.cs" />
     <Compile Include="Assets\Scripts\SoundManager\SoundRequesterAniEvent.cs" />
-    <Compile Include="Assets\Scripts\UI\UIPopup.cs" />
+    <Compile Include="Assets\Scripts\UI\UI_Popup.cs" />
     <Compile Include="Assets\Scripts\SingleTon\SingleTonBehaviour.cs" />
-    <Compile Include="Assets\Scripts\InGame\Projectile\Proj_Boomerang.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_StoryMain.cs" />
     <Compile Include="Assets\Scripts\LoadingScene\GameSetter.cs" />
     <Compile Include="Assets\Scripts\Util\SettingManager.cs" />
+    <Compile Include="Assets\Scripts\UI\MainUI\UI_SelectSorcererInfo.cs" />
     <Compile Include="Assets\Scripts\SoundManager\SoundRequesterBGM.cs" />
     <Compile Include="Assets\Scripts\Util\LocalizeManager.cs" />
     <Compile Include="Assets\Scripts\InGame\Stage\StageManager.cs" />
-    <Compile Include="Assets\Scripts\InGame\Projectile\Projectile.cs" />
+    <Compile Include="Assets\Scripts\InGame\Player\PlayerPoolManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\StovePCSDK\Plugins\x86_64\msvcp140.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\StovePCSDK\Plugins\x86_64\StovePCSDK.dll" />
+    <None Include="Assets\Spine\version.txt" />
     <None Include="Assets\Newtonsoft.Json.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\StovePCSDK\Plugins\x86_64\msvcp100.dll" />
+    <None Include="Assets\StovePCSDK\Plugins\x86_64\StovePCSDK.NET.dll" />
     <None Include="Assets\com.rlabrecque.steamworks.net\Plugins\steam_api.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\StovePCSDK\Plugins\x86_64\vcruntime140.dll" />
+    <None Include="Assets\Resources\Arts\SpineSample\Seimei\skeleton.atlas.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\com.rlabrecque.steamworks.net\Plugins\steam_api64.dll" />
+    <None Include="Assets\Resources\Arts\SpineSample\Macia\Main_Macia_Ingame_psd_01.atlas.txt" />
+    <None Include="Assets\Resources\Arts\SpineSample\Siwoo\Main_Siwoo_Ingame_psd_01.atlas.txt" />
+    <None Include="Assets\Resources\Arts\SpineSample\Main_Siwoo_Ingame_Spine\Main_Siwoo_Ingame_psd_01.atlas.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
@@ -125,6 +174,9 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\StovePCSDK\Plugins\x86_64\msvcr100.dll" />
+    <None Include="Assets\StovePCSDK\Plugins\x86_64\sgup_api64.dll" />
+    <None Include="Assets\StovePCSDK\Plugins\x86_64\concrt140.dll" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
@@ -358,6 +410,9 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StovePCSDK.NET">
+      <HintPath>Assets\StovePCSDK\Plugins\x86_64\StovePCSDK.NET.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\Unity\Hub\Editor\2020.3.34f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -767,6 +822,12 @@
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Triangle.Editor.dll</HintPath>
     </Reference>
@@ -796,6 +857,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="spine-unity-examples-editor.csproj">
+      <Project>{1191741A-1D57-8706-38EF-BFA7B73FCB4B}</Project>
+      <Name>spine-unity-examples-editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity.csproj">
+      <Project>{E8A9D7EA-73F8-B7F5-1B4D-6E7800E3A064}</Project>
+      <Name>spine-unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity-examples.csproj">
+      <Project>{70A4D1A2-A761-4EA2-9D55-48B09E4DC2F8}</Project>
+      <Name>spine-unity-examples</Name>
+    </ProjectReference>
     <ProjectReference Include="com.rlabrecque.steamworks.net.editor.csproj">
       <Project>{6CA53EF3-D8C1-8ED4-6279-080D9E785864}</Project>
       <Name>com.rlabrecque.steamworks.net.editor</Name>
@@ -803,6 +876,14 @@
     <ProjectReference Include="com.rlabrecque.steamworks.net.csproj">
       <Project>{D94156EF-04E2-6AC7-F1F7-49D68D027D13}</Project>
       <Name>com.rlabrecque.steamworks.net</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-unity-editor.csproj">
+      <Project>{4042B1AA-6C60-BDAD-1EE0-4ECB41011DF5}</Project>
+      <Name>spine-unity-editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="spine-csharp.csproj">
+      <Project>{A245DAA6-90AC-1177-E006-26984F22B171}</Project>
+      <Name>spine-csharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

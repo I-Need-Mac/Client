@@ -158,8 +158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 77, y: 0}
-  m_SizeDelta: {x: 512.9828, y: 95.2511}
+  m_AnchoredPosition: {x: 30.8, y: -0.000020027}
+  m_SizeDelta: {x: 369.7182, y: 68.6496}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &82769546
 MonoBehaviour:
@@ -250,8 +250,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 365.01135, y: -113.614075}
-  m_SizeDelta: {x: 730.0139, y: 227.23657}
+  m_AnchoredPosition: {x: 248.15924, y: -65.91937}
+  m_SizeDelta: {x: 496.3097, y: 131.8471}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &119999867
 MonoBehaviour:
@@ -577,8 +577,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -237.24, y: -79}
-  m_SizeDelta: {x: 115.4983, y: 49.6434}
+  m_AnchoredPosition: {x: -166.85185, y: -47.99999}
+  m_SizeDelta: {x: 67.8173, y: 27.5815}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &775890867
 MonoBehaviour:
@@ -922,8 +922,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -265.75, y: -0.000011683}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -205, y: 0.000019073}
+  m_SizeDelta: {x: 61.0493, y: 61.0493}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1006515119
 MonoBehaviour:
@@ -1294,8 +1294,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -330.65088, y: -79}
-  m_SizeDelta: {x: 68.7183, y: 49.6434}
+  m_AnchoredPosition: {x: -221.7, y: -48}
+  m_SizeDelta: {x: 40.3494, y: 27.5815}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1593231427
 MonoBehaviour:
@@ -1319,7 +1319,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 20
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2

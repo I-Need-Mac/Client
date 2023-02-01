@@ -8,6 +8,6 @@ public class TestBtn : MonoBehaviour
     // Start is called before the first frame update
     public void SceneChange() { 
     
-        SceneManager.LoadScene("StageSetUPTest");
+        SceneManager.LoadScene("BattleScene");
     }
 }

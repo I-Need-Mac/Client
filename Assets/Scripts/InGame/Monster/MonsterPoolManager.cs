@@ -20,8 +20,8 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
     public Monster SpawnMonster(Transform transform, string name)
     {
         Monster monster = pools[name].GetObject();
-        monster.gameObject.layer = (int) LayerConstant.SPAWNOBJECT;
-        monster.transform.localPosition = new Vector3(monster.transform.localPosition.x, monster.transform.localPosition.y, (int)LayerConstant.SPAWNOBJECT);
+        monster.gameObject.layer = (int) LayerConstant.MONSTER;
+        monster.transform.localPosition = new Vector3(monster.transform.localPosition.x, monster.transform.localPosition.y, (int)LayerConstant.MONSTER);
         monster.gameObject.SetActive(true);
         return monster;
     }

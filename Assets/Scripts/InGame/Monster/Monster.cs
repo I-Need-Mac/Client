@@ -36,7 +36,10 @@ public class Monster : MonoBehaviour
     {
         monsterRigidbody.velocity = Vector3.zero;
         monsterRigidbody.angularVelocity = 0f;
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 2f);
+        float z = transform.position.z;
+        Vector3 vector = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 2f);
+        vector.z = z;
+        transform.position = vector;
     }
 
     //public float 

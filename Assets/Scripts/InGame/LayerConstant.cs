@@ -7,4 +7,5 @@ public enum LayerConstant
     OBSTACLE = 3,
     GIMMICK = 4,
     MAP = 5,
+    MONSTER = 6,
 }

@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    private int limitAmount;
+    [SerializeField] private MonsterPoolManager monsterPoolManager;
 
-    #region Setter
-    //���� ���� ���� �� ����
-    public void SetLimitAmount(int _limitAmount)
+    private void Awake()
     {
-        limitAmount = _limitAmount;
     }
-    #endregion
 
-    //tableID ���� ���� ���̺� �ε� �� �ҷ��� ���� ����
-    public void LoadMonsterSpawnTable(string tableID)
+    private void Start()
     {
-        if (string.IsNullOrEmpty(tableID))
-        {
-            Debug.LogError("[LoadMonsterSpawnTable] tableID is null or empty.");
-        }
-        else
-        {
+        StartCoroutine(SpawnMonster());
+    }
 
+    private IEnumerator SpawnMonster()
+    {
+        yield return new WaitForSeconds(2f);
+
+        while (true)
+        {
+            Monster monster = monsterPoolManager.SpawnMonster(transform);
+            yield return new WaitForSeconds(4f);
         }
     }
 }

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ProjectilePoolManager : SingletonBehaviour<ProjectilePoolManager>
 {
-    [SerializeField] ProjectilePool straight;
-    [SerializeField] ProjectilePool protect;
-    [SerializeField] ProjectilePool satellite;
-    [SerializeField] ProjectilePool drop;
-    [SerializeField] ProjectilePool boomerang;
-    [SerializeField] ProjectilePool range;
-    [SerializeField] ProjectilePool boom;
+    [SerializeField] private ProjectilePool straight;
+    [SerializeField] private ProjectilePool protect;
+    [SerializeField] private ProjectilePool satellite;
+    [SerializeField] private ProjectilePool drop;
+    [SerializeField] private ProjectilePool boomerang;
+    [SerializeField] private ProjectilePool range;
+    [SerializeField] private ProjectilePool boom;
 
     private Dictionary<PROJECTILE_TYPE, ProjectilePool> pools;
 

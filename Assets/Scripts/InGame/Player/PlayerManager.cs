@@ -13,11 +13,12 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
 
     protected override void Awake()
     {
-        playerData = player.playerData;
+        
     }
 
     private void Start()
     {
+        playerData = player.playerData;
         PlayerSetting(FindCharacter(Convert.ToString(player.playerId)));
         //PlayerSetting(FindCharacter(testCharacterId));
     }

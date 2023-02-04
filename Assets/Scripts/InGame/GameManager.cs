@@ -71,6 +71,13 @@ public class GameManager : SingletonBehaviour<GameManager>
                 RecursiveChild(child, LayerConstant.POISONFOG);
                 continue;
             }
+
+            if (child.name.Equals("FieldStructure"))
+            {
+                RecursiveChild(child, LayerConstant.OBSTACLE);
+                continue;
+            }
+
             RecursiveChild(child, layer);
         }
     }

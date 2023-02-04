@@ -66,19 +66,21 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         foreach (Transform child in trans)
         {
-            if (child.name.Equals("Camera"))
+            switch (child.name)
             {
-                RecursiveChild(child, LayerConstant.POISONFOG);
-                continue;
+                case "Camera":
+                    RecursiveChild(child, LayerConstant.POISONFOG);
+                    break;
+                case "FieldStructure":
+                    RecursiveChild(child, LayerConstant.OBSTACLE);
+                    break;
+                case "Top":
+                    RecursiveChild(child, LayerConstant.OBSTACLE - 2);
+                    break;
+                default:
+                    RecursiveChild(child, layer);
+                    break;
             }
-
-            if (child.name.Equals("FieldStructure"))
-            {
-                RecursiveChild(child, LayerConstant.OBSTACLE);
-                continue;
-            }
-
-            RecursiveChild(child, layer);
         }
     }
 

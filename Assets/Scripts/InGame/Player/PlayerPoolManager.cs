@@ -21,4 +21,9 @@ public class PlayerPoolManager : SingletonBehaviour<PlayerPoolManager>
         player.gameObject.SetActive(true);
         return player;
     }
+
+    public void DeSpawnPlayer(Player player)
+    {
+        playerPool.ReleaseObject(player);
+    }
 }

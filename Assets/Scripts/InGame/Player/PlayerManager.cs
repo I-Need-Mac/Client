@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerManager : SingletonBehaviour<PlayerManager>
 {
     [SerializeField] private Player player;
-    [SerializeField] private string testCharacterId; //테스트용 필드: 캐릭터id
     [SerializeField] private Vector2 spawnPos; //테스트용 필드: 스폰위치
 
     private PlayerData playerData; //플레이어의 데이터를 가지는 객체

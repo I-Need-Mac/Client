@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
 
         coolTimeConstant = findConstant("CoolTimeConstant");
         coolTimeCoefficient = findConstant("CoolTimeCoefficient");
+
     }
 
     //playerData의 경우 Awake단계에서 PlayerManager로 인한 데이터 셋팅이 이루어지지 않으므로 Start에 배치

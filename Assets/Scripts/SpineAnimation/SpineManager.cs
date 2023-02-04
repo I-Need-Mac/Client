@@ -10,7 +10,6 @@ public class SpineManager : MonoBehaviour
     const string SPINE_HOME = "Arts/Spine/";
     const string SPINE_STATE = "ReferenceAssets/";
 
-    [SerializeField] private string characterName;
     [SerializeField] private AnimationReferenceAsset[] animationClips;
     [SerializeField] private SkeletonAnimation skeletonAnimation;
     [SerializeField] private float spineSpeed = 1;
@@ -22,21 +21,49 @@ public class SpineManager : MonoBehaviour
 
     private void Awake()
     {
-        animationState = AnimationConstant.IDLE;
-        path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(PlayerPoolManager.Instance.playerId), "CharacterSpinePath") + "/";
-        skeletonAnimation.timeScale = spineSpeed;
         SpineSetting();
     }
 
     private void Update()
     {
         skeletonAnimation.timeScale = spineSpeed;
+        SpineChange();
+    }
+
+    private void SpineChange()
+    {
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            PlayerPoolManager.Instance.playerId = 101;
+            SpineSetting();
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            PlayerPoolManager.Instance.playerId = 102;
+            SpineSetting();
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
+            PlayerPoolManager.Instance.playerId = 103;
+            SpineSetting();
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+            PlayerPoolManager.Instance.playerId = 104;
+            SpineSetting();
+        }
     }
 
     private void SpineSetting()
     {
+        animationState = AnimationConstant.IDLE;
+        path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(PlayerPoolManager.Instance.playerId), "CharacterSpinePath") + "/";
+        skeletonAnimation.timeScale = spineSpeed;
+
         SkeletonAnimation character = transform.Find("Character").GetComponent<SkeletonAnimation>();
         character.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(path + "SkeletonData");
+        skeletonAnimation.skeletonDataAsset = character.skeletonDataAsset;
+        skeletonAnimation.Initialize(true);
 
         SpineClipSetting();
     }

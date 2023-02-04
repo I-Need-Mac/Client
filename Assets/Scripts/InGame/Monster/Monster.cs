@@ -29,13 +29,13 @@ public class Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        monsterRigidbody.velocity = Vector3.zero;
-        monsterRigidbody.angularVelocity = 0f;
         Move();
     }
 
     private void Move()
     {
+        monsterRigidbody.velocity = Vector3.zero;
+        monsterRigidbody.angularVelocity = 0f;
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 2f);
     }
 

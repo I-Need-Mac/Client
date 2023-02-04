@@ -17,12 +17,12 @@ public class MonsterSpawner : MonoBehaviour
 
     private IEnumerator SpawnMonster()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         while (true)
         {
             Monster monster = monsterPoolManager.SpawnMonster(transform);
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(3f);
         }
     }
 }

@@ -17,9 +17,9 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
         };
     }
 
-    public Monster SpawnMonster(Transform transform)
+    public Monster SpawnMonster(Transform transform, string name)
     {
-        Monster monster = pools["temp1"].GetObject();
+        Monster monster = pools[name].GetObject();
         monster.gameObject.layer = (int) LayerConstant.SPAWNOBJECT;
         monster.transform.localPosition = new Vector3(monster.transform.localPosition.x, monster.transform.localPosition.y, (int)LayerConstant.SPAWNOBJECT);
         monster.gameObject.SetActive(true);
@@ -28,6 +28,6 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
 
     public void DespawnMonster(Monster monster)
     {
-        pools["temp1"].ReleaseObject(monster);
+        pools[monster.monsterData.monsterName].ReleaseObject(monster);
     }
 }

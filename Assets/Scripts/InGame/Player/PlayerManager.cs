@@ -15,14 +15,12 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     protected override void Awake()
     {
         playerData = player.playerData;
-        PlayerSetting(FindCharacter(testCharacterId));
-        SetPlayerSpawnPos(spawnPos);
     }
 
-    //플레이어 스폰 위치
-    private void SetPlayerSpawnPos(Vector2 newPos)
+    private void Start()
     {
-        player.transform.position = newPos;
+        PlayerSetting(FindCharacter(Convert.ToString(player.playerId)));
+        //PlayerSetting(FindCharacter(testCharacterId));
     }
 
     //캐릭터에 스탯 부여

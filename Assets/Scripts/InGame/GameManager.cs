@@ -5,20 +5,28 @@ using UnityEngine.UI;
 
 using TMPro;
 using System;
+using BFM;
 
-
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonBehaviour<GameManager>
 {
     [SerializeField] private PlayerPoolManager playerPoolManager;
+
+    [SerializeField] private int mapId;
+    [SerializeField] private int playerId;
 
     private GameObject map;
     private Player player;
 
     private float defaultScale;
 
-    private void Start()
+    protected override void Awake()
     {
         defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        playerPoolManager.playerId = playerId;
+    }
+
+    private void Start()
+    {
         Spawn();
     }
 
@@ -31,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     private void MapLoad()
     {
-        string name = LoadMapManager.Instance.SceneNumberToMapName(10101);
+        string name = LoadMapManager.Instance.SceneNumberToMapName(mapId);
         GameObject mapPrefab = LoadMapManager.Instance.LoadMapNameToMapObject(name);
         map = Instantiate(mapPrefab, transform);
         map.gameObject.transform.SetParent(transform.Find("MapGeneratePos").transform);

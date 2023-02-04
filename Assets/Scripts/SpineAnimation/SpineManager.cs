@@ -23,7 +23,7 @@ public class SpineManager : MonoBehaviour
     private void Awake()
     {
         animationState = AnimationConstant.IDLE;
-        path = SPINE_HOME + characterName + "/";
+        path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(PlayerPoolManager.Instance.playerId), "CharacterSpinePath") + "/";
         skeletonAnimation.timeScale = spineSpeed;
         SpineSetting();
     }

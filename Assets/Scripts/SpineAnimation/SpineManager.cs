@@ -7,10 +7,9 @@ using UnityEngine;
 
 public class SpineManager : MonoBehaviour
 {
-    const string SPINE_HOME = "Arts/SpineSample/";
+    const string SPINE_HOME = "Arts/Spine/";
     const string SPINE_STATE = "ReferenceAssets/";
 
-    [SerializeField] private string characterName;
     [SerializeField] private AnimationReferenceAsset[] animationClips;
     [SerializeField] private SkeletonAnimation skeletonAnimation;
     [SerializeField] private float spineSpeed = 1;
@@ -22,21 +21,49 @@ public class SpineManager : MonoBehaviour
 
     private void Awake()
     {
-        animationState = AnimationConstant.IDLE;
-        path = SPINE_HOME + characterName + "/";
-        skeletonAnimation.timeScale = spineSpeed;
         SpineSetting();
     }
 
     private void Update()
     {
         skeletonAnimation.timeScale = spineSpeed;
+        SpineChange();
+    }
+
+    private void SpineChange()
+    {
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
+            PlayerPoolManager.Instance.playerId = 101;
+            SpineSetting();
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha2))
+        {
+            PlayerPoolManager.Instance.playerId = 102;
+            SpineSetting();
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha3))
+        {
+            PlayerPoolManager.Instance.playerId = 103;
+            SpineSetting();
+        }
+        if (Input.GetKeyUp(KeyCode.Alpha4))
+        {
+            PlayerPoolManager.Instance.playerId = 104;
+            SpineSetting();
+        }
     }
 
     private void SpineSetting()
     {
+        animationState = AnimationConstant.IDLE;
+        path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(PlayerPoolManager.Instance.playerId), "CharacterSpinePath") + "/";
+        skeletonAnimation.timeScale = spineSpeed;
+
         SkeletonAnimation character = transform.Find("Character").GetComponent<SkeletonAnimation>();
         character.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(path + "SkeletonData");
+        skeletonAnimation.skeletonDataAsset = character.skeletonDataAsset;
+        skeletonAnimation.Initialize(true);
 
         SpineClipSetting();
     }
@@ -62,17 +89,25 @@ public class SpineManager : MonoBehaviour
         currentAnimation = clip.name;
     }
 
+    public void SetSpineSpeed(float speed)
+    {
+        float weight = 0;
+        if (speed > 5)
+        {
+            weight = ((float)Math.Pow(speed - 5, 2.0f / 3.0f) + (float)Math.Sqrt(speed - 5) - 1.0f) / 10.0f;
+        }
+        else
+        {
+            weight = (0.5f - speed / 10.0f) * -1.0f;
+        }
+        spineSpeed = 1 + weight;
+        DebugManager.Instance.PrintDebug("SpineSpeed: {0}", spineSpeed);
+        DebugManager.Instance.PrintDebug("Weight: {0}", weight);
+    }
+
     public void SetCurrentAnimation()
     {
-        switch (animationState)
-        {
-            case AnimationConstant.IDLE:
-                PlayAnimation(animationClips[(int)AnimationConstant.IDLE], true, 1f);
-                break;
-            case AnimationConstant.RUN:
-                PlayAnimation(animationClips[(int)AnimationConstant.RUN], true, 1f);
-                break;
-        }
+        PlayAnimation(animationClips[(int)animationState], true, 1f);
     }
 
     public void SetDirection(Vector3 direction)

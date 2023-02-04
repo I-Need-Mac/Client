@@ -5,17 +5,25 @@ using UnityEngine.UI;
 
 using TMPro;
 using System;
+using BFM;
 
-public enum LayerOrder
-{
-
-}
-
-public class GameManager : MonoBehaviour
+public class GameManager : SingletonBehaviour<GameManager>
 {
     [SerializeField] private PlayerPoolManager playerPoolManager;
-    [SerializeField] private string map;
-    [SerializeField] private string player;
+
+    [SerializeField] private int mapId;
+    [SerializeField] private int playerId;
+
+    private GameObject map;
+    private Player player;
+
+    private float defaultScale;
+
+    protected override void Awake()
+    {
+        defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        playerPoolManager.playerId = playerId;
+    }
 
     private void Start()
     {
@@ -24,18 +32,56 @@ public class GameManager : MonoBehaviour
 
     private void Spawn()
     {
-        string name = LoadMapManager.Instance.SceneNumberToMapName(10101);
-        GameObject temp = LoadMapManager.Instance.LoadMapNameToMapObject(name);
-        GameObject map = Instantiate(temp, transform);
-        map.gameObject.transform.SetParent(transform.Find("MapGeneratePos").transform);
-        float defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
-        map.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
-        map.transform.position = new Vector3(map.transform.position.x, map.transform.position.y, 1);
-        map.gameObject.SetActive(true);
+        MapLoad();
+        PlayerLoad();
+        AssignLayerAndZ();
+    }
 
-        Player p = playerPoolManager.SpawnPlayer(transform.Find("PlayerSpawnPos").transform);
-        p.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
-        p.transform.position = new Vector3(p.transform.position.x, p.transform.position.y, 0);
+    private void MapLoad()
+    {
+        string name = LoadMapManager.Instance.SceneNumberToMapName(mapId);
+        GameObject mapPrefab = LoadMapManager.Instance.LoadMapNameToMapObject(name);
+        map = Instantiate(mapPrefab, transform);
+        map.gameObject.transform.SetParent(transform.Find("MapGeneratePos").transform);
+        map.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+        map.gameObject.SetActive(true);
+    }
+
+    private void PlayerLoad()
+    {
+        player = playerPoolManager.SpawnPlayer(transform.Find("PlayerSpawnPos").transform);
+        player.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+    }
+
+    private void AssignLayerAndZ()
+    {
+        RecursiveChild(player.transform, LayerConstant.SPAWNOBJECT);
+        RecursiveChild(map.transform, LayerConstant.MAP);
+    }
+
+    private void RecursiveChild(Transform trans, LayerConstant layer)
+    {
+        trans.gameObject.layer = (int)layer;
+        trans.localPosition = new Vector3(trans.localPosition.x, trans.localPosition.y, (int)layer);
+
+        foreach (Transform child in trans)
+        {
+            switch (child.name)
+            {
+                case "Camera":
+                    RecursiveChild(child, LayerConstant.POISONFOG);
+                    break;
+                case "FieldStructure":
+                    RecursiveChild(child, LayerConstant.OBSTACLE);
+                    break;
+                case "Top":
+                    RecursiveChild(child, LayerConstant.OBSTACLE - 2);
+                    break;
+                default:
+                    RecursiveChild(child, layer);
+                    break;
+            }
+        }
     }
 
     //[field : Header("--- Object Pool ---")]

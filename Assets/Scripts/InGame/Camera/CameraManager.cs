@@ -16,6 +16,17 @@ public class CameraManager : SingletonBehaviour<CameraManager>
         ConfinerSetting("Floor");
     }
 
+    private void RecursiveChild(Transform trans, LayerConstant layer)
+    {
+        trans.gameObject.layer = (int)layer;
+        trans.localPosition = new Vector3(trans.position.x, trans.position.y, (int)layer);
+
+        foreach (Transform child in trans)
+        {
+            RecursiveChild(child, layer);
+        }
+    }
+
     private void ConfinerSetting(string mapName)
     {
         DebugManager.Instance.PrintDebug("test: "+GameObject.Find(mapName));

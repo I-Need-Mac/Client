@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerManager : SingletonBehaviour<PlayerManager>
 {
     [SerializeField] private Player player;
-    [SerializeField] private string testCharacterId; //테스트용 필드: 캐릭터id
     [SerializeField] private Vector2 spawnPos; //테스트용 필드: 스폰위치
 
     private PlayerData playerData; //플레이어의 데이터를 가지는 객체
@@ -15,14 +14,12 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     protected override void Awake()
     {
         playerData = player.playerData;
-        PlayerSetting(FindCharacter(testCharacterId));
-        SetPlayerSpawnPos(spawnPos);
     }
 
-    //플레이어 스폰 위치
-    private void SetPlayerSpawnPos(Vector2 newPos)
+    private void Start()
     {
-        player.transform.position = newPos;
+        PlayerSetting(FindCharacter(Convert.ToString(player.playerId)));
+        //PlayerSetting(FindCharacter(testCharacterId));
     }
 
     //캐릭터에 스탯 부여

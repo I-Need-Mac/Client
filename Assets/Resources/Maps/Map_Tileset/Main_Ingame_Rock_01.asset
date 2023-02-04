@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Map_Tile_Floor_02
+  m_Name: Main_Ingame_Rock_01
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: e4bcafb5daab5a5408fb701c9c87c8b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f67d06d214cde14e87deeca2adeb95b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

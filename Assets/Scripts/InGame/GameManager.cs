@@ -62,7 +62,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void RecursiveChild(Transform trans, LayerConstant layer)
     {
         trans.gameObject.layer = (int)layer;
-        trans.localPosition = new Vector3(trans.position.x, trans.position.y, (int)layer);
+        trans.localPosition = new Vector3(trans.localPosition.x, trans.localPosition.y, (int)layer);
 
         foreach (Transform child in trans)
         {

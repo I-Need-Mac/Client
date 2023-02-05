@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 3589881761093409044}
   - component: {fileID: 2193838890645252517}
   m_Layer: 5
-  m_Name: UIStageElement
+  m_Name: UI_StageElement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

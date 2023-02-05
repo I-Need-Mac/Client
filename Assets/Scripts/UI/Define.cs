@@ -8,6 +8,7 @@ public class Define
     public const string UiPrefabsPath = "Prefabs/UI";
     public const string UiImagePath = "Arts/UI";
     public const string UiCharacterPath = "Arts/Character";
+    public const string UiArtsPath = "Arts";
 
     public const string UiPopupRoot = "@UI_Popup_Root";
 

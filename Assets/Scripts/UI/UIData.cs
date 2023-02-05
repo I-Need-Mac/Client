@@ -10,6 +10,28 @@ public class UIData
         StoryTable,
         StageTable,
         CharacterTable,
+        SkillTable
+    }
+
+    public enum CharacterTableCol
+    {
+        CharacterId,
+        CharacterName,          // 캐릭터 이름
+        MainShowImagePath,    // 캐릭터 선택 이미지 경로
+        SkillID_01,              // 캐릭터 궁극기 id
+        SkillID_02              // 캐릭터 스킬 id
+    }
+
+    public enum SkillTableCol
+    {
+        Name,
+        Desc,
+        SkillImage,
+    }
+
+    public enum StageTableCol
+    {
+        StageName,
     }
 
     // 스토리 데이터
@@ -21,17 +43,23 @@ public class UIData
 
     // 스테이지 데이터
     static Dictionary<string, Dictionary<string, object>> stageTableData = new Dictionary<string, Dictionary<string, object>>();
-    public static Dictionary<string, Dictionary<string, object>> StageData { get { return storyTableData; } }
+    public static Dictionary<string, Dictionary<string, object>> StageData { get { return stageTableData; } }
 
     // 캐릭터 데이터
     static Dictionary<string, Dictionary<string, object>> characterTableData = new Dictionary<string, Dictionary<string, object>>();
     public static Dictionary<string, Dictionary<string, object>> CharacterData { get { return characterTableData; } }
+
+    // 스킬 데이터
+    static Dictionary<string, Dictionary<string, object>> skillTableData = new Dictionary<string, Dictionary<string, object>>();
+    public static Dictionary<string, Dictionary<string, object>> SkillData { get { return skillTableData; } }
+
 
     public static void ReadData()
     {
         ReadStoryData();
         ReadStageData();
         ReadCharacterData();
+        ReadSkillData();
     }
 
     static void ReadStoryData()
@@ -82,12 +110,28 @@ public class UIData
     {
         // 스테이지 테이블을 읽습니다.
         stageTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.StageTable));
+        foreach(string val in stageTableData.Keys)
+        {
+            UIManager.Instance.selectStageID = int.Parse(val);
+            break;
+        }
     }
 
     static void ReadCharacterData()
     {
-        // 스테이지 테이블을 읽습니다.
+        // 캐릭터 테이블을 읽습니다.
         characterTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.CharacterTable));
+        foreach (string val in characterTableData.Keys)
+        {
+            UIManager.Instance.selectCharacterID = int.Parse(val);
+            break;
+        }
+    }
+
+    static void ReadSkillData()
+    {
+        // 스킬 테이블을 읽습니다.
+        skillTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.SkillTable));
     }
     #endregion
 }

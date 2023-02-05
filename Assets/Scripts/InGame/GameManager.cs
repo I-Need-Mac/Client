@@ -14,6 +14,18 @@ public class GameManager : SingletonBehaviour<GameManager>
     [SerializeField] private int mapId;
     [SerializeField] private int playerId;
 
+    public int MapID
+    {
+        get { return mapId; }
+        set { mapId = value; }
+    }
+
+    public int PlayerID
+    {
+        get { return playerId; }
+        set { playerId = value; }
+    }
+
     private GameObject map;
     private Player player;
 

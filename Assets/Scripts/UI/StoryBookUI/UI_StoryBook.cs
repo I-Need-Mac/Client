@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_StoryBook : UI_Popup
@@ -177,10 +178,9 @@ public class UI_StoryBook : UI_Popup
             case Buttons.NextArrow:
                 if (currentPage >= totalPage)
                 {
-                    // 스토리 끝나면 인게임으로 고공
-                    // 선택된 스테이지id, 캐릭터id 전투씬으로 넘기깅
-                    //UIManager.Instance.selectCharacterID;
-                    //UIManager.Instance.selectStageID;
+                    SceneManager.LoadScene("Ingame");
+                    GameManager.Instance.MapID = UIManager.Instance.selectStageID;
+                    GameManager.Instance.PlayerID = UIManager.Instance.selectCharacterID;
                 }
 
                 ActivePage(currentPage + PAGE_UNIT);

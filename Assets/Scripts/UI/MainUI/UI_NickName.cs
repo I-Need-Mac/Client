@@ -73,7 +73,7 @@ public class UI_NickName : UI_Popup
                     return;
 
                 // 회원가입 진행
-                WebHandShakeFromPost();
+                // WebHandShakeFromPost();
 
                 this.CloseUI<UI_NickName>();
                 UIManager.Instance.OpenUI<UI_Agreement>();

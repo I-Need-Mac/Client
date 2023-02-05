@@ -76,7 +76,7 @@ public class UI_NickName : UI_Popup
                 WebHandShakeFromPost();
 
                 this.CloseUI<UI_NickName>();
-                UIManager.Instance.OpenUI<UI_Login>();
+                UIManager.Instance.OpenUI<UI_Agreement>();
                 break;
             default:
                 break;

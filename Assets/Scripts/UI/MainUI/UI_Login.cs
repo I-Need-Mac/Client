@@ -52,7 +52,9 @@ public class UI_Login : UI_Popup
         {
             case Images.LoginButton:
                 // 로그인 처리
-                WebLoginFromPost();
+                // WebLoginFromPost();
+                this.CloseUI<UI_Login>();
+                UIManager.Instance.OpenUI<UI_NickName>();
                 break;
             default:
                 break;

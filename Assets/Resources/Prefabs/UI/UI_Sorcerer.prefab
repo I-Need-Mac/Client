@@ -105,6 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0f5125c25090b4aaebbf102b399bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectImage: {fileID: 8269118354234350466}
+  sorcererName: {fileID: 8250765067277738913}
+  ultiImage: {fileID: 5315950602720509418}
 --- !u!1 &3720060855267139540
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,8 +217,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 600}
+  m_AnchoredPosition: {x: 0, y: 30}
+  m_SizeDelta: {x: 1100, y: 660}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7979191156328168656
 CanvasRenderer:
@@ -267,7 +270,7 @@ GameObject:
   - component: {fileID: 3221194644020898202}
   - component: {fileID: 8250765067277738913}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

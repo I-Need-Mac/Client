@@ -47,7 +47,7 @@ public class UI_StartMain : UI_Base
         switch (imageValue)
         {
             case Images.PressKey:
-                UIManager.Instance.OpenUI<UI_NickName>();
+                UIManager.Instance.OpenUI<UI_Login>();
                 break;
             default:
                 break;

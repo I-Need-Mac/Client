@@ -27,6 +27,9 @@ public class UIManager : MonoSingleton<UIManager>
         UI_SelectSorcererInfo,
     }
 
+    public int selectCharacterID;
+    public int selectStageID;
+
     GameObject uiCamera = null;
     GameObject uiCanvas = null;
 
@@ -42,6 +45,11 @@ public class UIManager : MonoSingleton<UIManager>
 
     // 실시간 팝업 목록
     LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
+
+    private void Update()
+    {
+        
+    }
 
     public void Init()
     {

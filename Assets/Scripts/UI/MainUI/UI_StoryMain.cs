@@ -42,9 +42,9 @@ public class UI_StoryMain : UI_Popup
         string stageTitleText = LocalizeManager.Instance.GetText("UI_CurrentStage");
         stageTitle.text = String.Format(stageTitleText, 1, 1);
 
-        stageSub.text = "악을 멀리하고 선을 가까이 하라.";
-
         string eleText = LocalizeManager.Instance.GetText("UI_StageList");
+
+        SetData();
 
         GameObject go = Util.FindChild(stageList.gameObject, "Content", true);
         UI_StageElement ele = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
@@ -70,8 +70,22 @@ public class UI_StoryMain : UI_Popup
         instance3.transform.SetParent(go.transform);
         RectTransform rect3 = instance3.GetComponent<RectTransform>();
         rect3.localScale = new Vector3(1, 1, 1);
+    }
 
-        //UIData.StageData
+    void SetData()
+    {
+        Dictionary<string, Dictionary<string, object>> stageData = UIData.StageData;
+
+        foreach (KeyValuePair<string, Dictionary<string, object>> data in stageData)
+        {
+            foreach (KeyValuePair<string, object> val in data.Value)
+            {
+                if (val.Key == UIData.StageTableCol.StageName.ToString())
+                {
+                    stageSub.text = val.Value.ToString();
+                }
+            }
+        }
     }
 
     public void OnClickImage(PointerEventData data)

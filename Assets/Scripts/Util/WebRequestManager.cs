@@ -41,8 +41,9 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
     const float TIMEOUT = 3.0f;
 
 
-    //public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
-    public const string WEBSERVICE_HOST = "http://13.125.55.10:8080/api";
+    // public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
+    // public const string WEBSERVICE_HOST = "http://13.125.55.10:8080/api";
+    public const string WEBSERVICE_HOST = "http://13.209.13.32:8080/api";
     //Singleton을 활용하여 1개의 인스턴스 유지 및 접근 효율성 증가
 
     public bool IsConnectInternet()
@@ -104,7 +105,7 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
 
     public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
     {
-        using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}/{url}", GetStringForm(data)))
+        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{url}"))
         {
             float timeout = 0f;
             request.SendWebRequest();

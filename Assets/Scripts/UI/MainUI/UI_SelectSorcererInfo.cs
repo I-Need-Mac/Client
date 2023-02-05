@@ -157,7 +157,7 @@ public class UI_SelectSorcererInfo : UI_Popup
 
             if (val.Key == UIData.CharacterTableCol.CharacterName.ToString())
             {
-                sorcererName.text = val.Value.ToString();
+                sorcererName.text = LocalizeManager.Instance.GetText(val.Value.ToString());
             }
             else if (val.Key == UIData.CharacterTableCol.MainShowImagePath.ToString())
             {

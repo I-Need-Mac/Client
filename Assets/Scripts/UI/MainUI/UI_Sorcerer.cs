@@ -115,7 +115,7 @@ public class UI_Sorcerer : UI_Base
             
             if (val.Key == UIData.CharacterTableCol.CharacterName.ToString())
             {
-                name = val.Value.ToString();
+                name = LocalizeManager.Instance.GetText(val.Value.ToString());
             }
             else if (val.Key == UIData.CharacterTableCol.MainShowImagePath.ToString())
             {

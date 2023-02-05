@@ -14,18 +14,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     [SerializeField] private int mapId;
     [SerializeField] private int playerId;
 
-    public int MapID
-    {
-        get { return mapId; }
-        set { mapId = value; }
-    }
-
-    public int PlayerID
-    {
-        get { return playerId; }
-        set { playerId = value; }
-    }
-
     private GameObject map;
     private Player player;
 
@@ -39,6 +27,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void Start()
     {
+        mapId = UIManager.Instance.selectStageID;
+        playerId = UIManager.Instance.selectCharacterID;
+
         Spawn();
     }
 

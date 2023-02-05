@@ -178,9 +178,7 @@ public class UI_StoryBook : UI_Popup
             case Buttons.NextArrow:
                 if (currentPage >= totalPage)
                 {
-                    SceneManager.LoadScene("Ingame");
-                    GameManager.Instance.MapID = UIManager.Instance.selectStageID;
-                    GameManager.Instance.PlayerID = UIManager.Instance.selectCharacterID;
+                    SceneManager.LoadScene("BattleScene");
                 }
 
                 ActivePage(currentPage + PAGE_UNIT);

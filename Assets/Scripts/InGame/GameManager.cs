@@ -32,12 +32,12 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void Spawn()
     {
-        MapLoad();
-        PlayerLoad();
+        MapLoad(mapId);
+        PlayerLoad(playerId);
         AssignLayerAndZ();
     }
 
-    private void MapLoad()
+    private void MapLoad(int mapId)
     {
         string name = LoadMapManager.Instance.SceneNumberToMapName(mapId);
         GameObject mapPrefab = LoadMapManager.Instance.LoadMapNameToMapObject(name);
@@ -47,8 +47,9 @@ public class GameManager : SingletonBehaviour<GameManager>
         map.gameObject.SetActive(true);
     }
 
-    private void PlayerLoad()
+    private void PlayerLoad(int playerId)
     {
+        playerPoolManager.playerId = playerId;
         player = playerPoolManager.SpawnPlayer(transform.Find("PlayerSpawnPos").transform);
         player.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
     }

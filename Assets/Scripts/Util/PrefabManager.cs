@@ -34,6 +34,8 @@ public class PrefabManager : MonoBehaviour
     {
         structureID = this.gameObject.name;
 
+        structureID = structureID.Substring(0, 3);
+
         fieldStructureData = CSVReader.Read("FieldStructureTable");
 
 
@@ -117,10 +119,13 @@ public class PrefabManager : MonoBehaviour
 
         // 오브젝트 레이어 설정
         this.gameObject.layer = layerOrder;
+        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0);
         front.gameObject.layer = layerOrder;
+        front.transform.position = new Vector3 (front.transform.position.x, front.transform.position.y, layerOrder);
         if (topPath != "Null")
         {
-            top.gameObject.layer = layerOrder - 2;
+            top.gameObject.layer = layerOrder - 2 ;
+            top.transform.position = new Vector3(top.transform.position.x, top.transform.position.y, layerOrder - 2) ;
         }
 
 

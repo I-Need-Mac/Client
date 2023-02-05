@@ -1,4 +1,4 @@
-Config Index,타입,값
+Config Index,ConfigType,ConfigValue
 BC_Index,BC_Type,BC_Value
 !String,Enum,!Int
 AttackLevel,Constant,4
@@ -36,3 +36,4 @@ BulletDelay,Constant,5000
 RetryCost,Constant,50
 RetryMaxTime,Constant,1
 EffectCount,Constant,8
+ImageMultiple,Coefficient,0.5

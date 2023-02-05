@@ -22,6 +22,9 @@ public class AudioSourceSetter {
     [Range(0, 3)] public int pitch = 1;
     [Range(-1, 1)] public int streoPan = 0;
 
+    [Range(0, 1)] public float volume = 0;
+    [Range(0, 1)] public float spatialBlend = 0;
+
     private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
 
     public string audioType

@@ -14,6 +14,21 @@ public class CSVReader
 
     private static Dictionary<string, Dictionary<string, Dictionary<string, object>>> cachedTable = new Dictionary<string, Dictionary<string, Dictionary<string, object>>>();
 
+    public static object Read(string file, string row, string col)
+    {
+        Dictionary<string, Dictionary<string, object>> dataDic = Read(file);
+        if (dataDic.ContainsKey(row))
+        {
+            Dictionary<string, object> dataDicRow = dataDic[row];
+            if (dataDicRow.ContainsKey(col))
+            {
+                return dataDicRow[col];
+            }
+        }
+
+        DebugManager.Instance.PrintDebug("[Read] {0} 데이터를 찾을 수 없습니다.", col);
+        return null;
+    }
 
     public static Dictionary<string, Dictionary<string, object>> Read(string file)
     {

@@ -1,4 +1,5 @@
 using SKILLCONSTANT;
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,11 +12,14 @@ public class Player : MonoBehaviour
     private const string CONFIG_VALUE = "ConfigValue";
 
     [SerializeField] private string skillId = "10101";
+    [SerializeField] private int moveSpeed = 5;
 
     private Rigidbody2D playerRigidbody;
     private Vector3 playerDirection;
     private float coolTimeConstant;     //재사용대기시간감소상수
     private float coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
+
+    private SpineManager anime;
     /*
      *캐릭터 스탯의 경우
      *기본값들의 변화는 생기지 않음 -> 혼을 이용해서 게임 스타트 초기에만 변화를 주는 형태
@@ -30,7 +34,6 @@ public class Player : MonoBehaviour
     private int hpRegen;
     public int shield;
     private int projectileAdd;
-    private int moveSpeed;
     private int getItemRange;
 
     public PlayerData playerData { get; private set; } = new PlayerData();
@@ -43,6 +46,9 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
         lookDirection = Vector3.right;
+
+        anime = GetComponent<SpineManager>();
+
         coolTimeConstant = findConstant("CoolTimeConstant");
         coolTimeCoefficient = findConstant("CoolTimeCoefficient");
     }
@@ -64,11 +70,29 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
+        anime.SetCurrentAnimation();
+        TestFunction();
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    private void TestFunction()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            moveSpeed += 1;
+            anime.SetSpineSpeed(moveSpeed);
+            DebugManager.Instance.PrintDebug("MoveSpeed: {0}", moveSpeed);
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            moveSpeed -= 1;
+            anime.SetSpineSpeed(moveSpeed);
+            DebugManager.Instance.PrintDebug("MoveSpeed: {0}", moveSpeed);
+        }
     }
     #endregion
 
@@ -112,13 +136,20 @@ public class Player : MonoBehaviour
     private void KeyDir()
     {
         //left, right
-        playerDirection.x = Input.GetAxis("Horizontal");
+        playerDirection.x = Input.GetAxisRaw("Horizontal");
         //up, down
-        playerDirection.y = Input.GetAxis("Vertical");
-        //쳐다보는 방향 저장
+        playerDirection.y = Input.GetAxisRaw("Vertical");
+
+        anime.SetDirection(playerDirection);
+
         if (playerDirection != Vector3.zero)
         {
-            lookDirection = playerDirection;
+            lookDirection = playerDirection; //쳐다보는 방향 저장
+            anime.animationState = AnimationConstant.RUN; //움직이는 중
+        }
+        else
+        {
+            anime.animationState = AnimationConstant.IDLE;
         }
 
     }
@@ -126,10 +157,10 @@ public class Player : MonoBehaviour
     //리지드바디의 MovePosition을 이용해 움직임을 구현
     private void Move()
     {
-        playerRigidbody.MovePosition((Vector3)playerRigidbody.position + (playerDirection * moveSpeed * Time.fixedDeltaTime));
+        //playerRigidbody.MovePosition((Vector3)playerRigidbody.position + (playerDirection * moveSpeed * Time.fixedDeltaTime));
+        playerRigidbody.velocity = playerDirection.normalized * moveSpeed;
     }
     #endregion
-
 
     /*스탯 증감 관련*/
     #region Modify STATUS
@@ -199,6 +230,7 @@ public class Player : MonoBehaviour
     {
         int increment = buff + deBuff;
         moveSpeed *= 1 + (buff - deBuff);
+        anime.SetSpineSpeed(moveSpeed);
     }
 
     //아이템획득범위 증감함수

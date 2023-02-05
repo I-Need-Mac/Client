@@ -26,7 +26,8 @@ public class LoadMapManager : SingleTon<LoadMapManager>
     public GameObject LoadMapNameToMapObject(string mapName)
     {
         GameObject returnMap;
-        returnMap = PrefabLoader.Instance.LoadPrefabToGameObject(mapName);
+        //returnMap = PrefabLoader.Instance.LoadPrefabToGameObject(mapName);
+        returnMap = PrefabLoader.Instance.LoadMapToGameObject(mapName);
         DebugManager.Instance.PrintDebug("[LoadMapManager] Loading Map : " + mapName);
         return returnMap;
     }

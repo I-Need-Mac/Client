@@ -1,0 +1,9 @@
+GroupSource,GroupID,IsMultiple,PackageID,PackageProbability
+그룹아이디,그룹 소스,그룹 내 독립 확률로 시행,패키지 ID,패키지당 드랍 확률(만분율)
+int,String,bool,String,int
+10101,Wall,FALSE,WallPackage1,3000
+10102,Wall,FALSE,WallPackage2,3000
+10103,Wall,FALSE,WallPackage3,4000
+10201,Wall2,TRUE,WallPackage1,5000
+10202,Wall2,TRUE,WallPackage2,3000
+10203,Wall2,TRUE,WallPackage3,4000

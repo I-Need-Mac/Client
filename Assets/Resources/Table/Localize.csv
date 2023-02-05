@@ -1,8 +1,138 @@
 LocalizeID,Korean,English,Japanese
 로컬라이즈아이디,한국어,영어,일본어
 String,String,String,String
-Unlock_Percent_Text,해금 진행도,,
+CharName_GwiTae,귀태,GwiTae,ギュテ
+CharName_HoJin,호진,HoJin,ホジン
+CharName_JinSiWoo,진시우,JinSiWoo,ジン・シウ
+CharName_LeeYaeJi,키노하나 세이메이,LeeYaeJi,リ・イェジ
+CharName_Macia,마키아,Macia,マキア・スメルティ
+CharName_Macia Smerti,마키아 스메르티,Macia Smerti,マキア・スメルティ
+CharName_Mago,마고,Mago,マコ
+CharName_Sinwol,신월,Sinwol,新月
+CharName_SiWoo,시우,SiWoo,シウ
+CharName_Ulises,율리세스,Ulises,ルイズ・オブセシア
+CharName_Ulises Obsessia,율리세스 오브세시아,Ulises Obsessia,ルイズ・オブセシア
+CharName_YaeJi,세이메이,YaeJi,イェジ
+CharName_YunHoJin,윤호진,YunHoJin,ユン・ホジン
+CharDesc_YaeJi,Test,YaeJi,
+CharDesc_HoJin,Test,HoJin,
+CharDesc_Ulises,Test,Ulises,
+CharDesc_Macia,Test,Macia,
+CharDesc_Sinwol,Test,Sinwol,
+CharDesc_SiWoo,Test,SiWoo,
+FieldStructure_Altar,제단,Altar,祭壇
+FieldStructure_Backpane,맵제단영역백판,Backpane,バックプレーン（背面領域白紙）
+FieldStructure_Beatingflesh,박동하는살덩이,BeatingFlesh,動く肉片
+FieldStructure_Bloodpuddle1,피웅덩이1,Bloodpuddle1,血溜まり1
+FieldStructure_Bloodpuddle2,피웅덩이2,Bloodpuddle2,血溜まり2
+FieldStructure_Bloodpuddle3,피웅덩이3,Bloodpuddle3,血溜まり3
+FieldStructure_Bloodpuddle4,피웅덩이4,Bloodpuddle4,血溜まり4
+FieldStructure_Blueflame,푸른불꽃,BlueFlame,青い炎
+FieldStructure_Demonattack,악마의습격,DemonAttack,悪魔の襲撃
+FieldStructure_Destructionstone1,파괴의돌1,Destructionstone1,破壊の石1
+FieldStructure_Destructionstone2,파괴의돌2,Destructionstone2,破壊の石2
+FieldStructure_Destructionstone3,파괴의돌3,Destructionstone3,破壊の石3
+FieldStructure_Destructionstone4,파괴의돌4,Destructionstone4,破壊の石4
+FieldStructure_Humancorpse,인간시체더미,HumanCorpse,人間の死体
+FieldStructure_Letterbox,맵밖레터박스,Letterbox,レターボックス（郵便箱）
+FieldStructure_Mixedcorpse,복합시체더미,MixedCorpse,死体の山
+FieldStructure_Mobcorpse,요괴시체더미,MobCorpse,妖怪の死体
+FieldStructure_Mobpillar,요괴로뒤덮인기둥,Mobpillar,妖怪柱
+FieldStructure_Mobstatue,소요괴석상,Topmobstatue,小妖怪石像
+FieldStructure_Poisonmist,독안개,PoisonMist,毒霧
+FieldStructure_Punishment,신벌,Punishment,天罰
+FieldStructure_Santuary,성소,Santuary,聖域
+FieldStructure_Santuarycircle,성소마법진,SantuaryCircle,聖域魔法陣
+FieldStructure_Teleportcircle,이형환위,TeleportCircle,移形換位
+FieldStructure_Tidytile1,정돈된타일1,Tidytile1,整頓されているタイル1
+FieldStructure_Tidytile2,정돈된타일2,Tidytile2,整頓されているタイル2
+FieldStructure_Untidytile1,정돈되지않은타일1,Untidytile1,整頓されていないタイル1
+FieldStructure_Untidytile2,정돈되지않은타일2,Untidytile2,整頓されていないタイル2
+FieldStructure_Untidytile3,정돈되지않은타일3,Untidytile3,整頓されていないタイル3
+FieldStructure_Untidytile4,정돈되지않은타일4,Untidytile4,整頓されていないタイル4
+FieldStructure_Wall,벽,Wall,壁
+FieldStructure_Warning,신벌경고,Warning,天罰の警告
 Locked_Text,잠김,,
+MobName_101,하급 악마,,
+MobName_102,고모귀,,
+MobName_103,화광수,,
+MobName_201,그슨새,,
+MobName_202,독가귀,,
+MobName_203,터럭손,,
+MobName_301,그슨대,,
+MobName_302,거구귀,,
+MobName_303,니엔,,
+MobName_401,살덩이 거인,,
+MobName_402,바사고,,
+Nickname_Able,사용 할 수 있는 닉네임입니다.,,使用可能なニックネーム
+Nickname_Language,"영어, 한국어만 가능합니다",,英語と韓国語だけ使用できます
+Nickname_Less,닉네임의 글자 수가 적습니다.,,ニックネームの文字数が足りません
+Nickname_LimitWord,사용할 수 없는 단어가 포함되었습니다.,,使用できない文字が含まれています
+Nickname_SameName,중복된 닉네임입니다.,,この名前は既に使用されています
+Nickname_Lot,글자가 너무 많습니다.,,
+Not_Ues1,빛을 잃은 생명들에게 고한다.,,光を失いし生命達に告ぐ
+Not_Ues10,승자 없는 싸움과 절망을 반복했다.,,勝者なき戦いと絶望を繰り返した
+Not_Ues11,빛을 잃어버린 자들이여,,光を失いし者達よ
+Not_Ues12,믿음을 잃고 죽지 못해 사는 자들이여,,進行を失い死ぬこともできず生きる者たちよ
+Not_Ues13,혼을 가지지 못한 자,,魂を持たぬ者
+Not_Ues14,믿음이 없는 자,,信仰がない者
+Not_Ues15,끝없는 배신과 함께하는 자,,終わりのない裏切りと共に在る者
+Not_Ues16,증오하는 자,,憎しみを持つ者
+Not_Ues17,그들로부터 어머니의 생명을 되찾아,,その者達から母の生命を取り戻す
+Not_Ues18,잃어버린 빛과 축복을 되찾으면,,失われし光と祝福をもたらすなら
+Not_Ues19,어머니께서 돌아오리.,,母が戻ってくるだろう
+Not_Ues2,위대한 어머니의 생명은 흩어졌다.,,偉大なる母の生命が散らばった
+Not_Ues20,가장 빛이 없는 자가,,最も光がない者が
+Not_Ues21,가장 큰 빛을 가지고,,最も大きな光をもって
+Not_Ues22,"그들의 근원, 혼돈의 땅에서",,その者達の源、混沌の地に
+Not_Ues23,어머니의 피를 취해 세상을 가득 채우리라,,母の血を取り世界を満たしつくそう
+Not_Ues3,경계의 저편 그들의 근원인 혼돈의 땅에서,,境界の彼方、それらの根源である混沌の地に
+Not_Ues4,생명의 대리자들은 믿음을 저버렸고,,生命の代理者たちは信仰を捨て
+Not_Ues5,혼돈과 죽음이 가득했던 날 우리들의 어머니께선 자취를 감추셨다.,,混沌と死が満ちていた日我らの母は姿を隠された
+Not_Ues6,어머니를 잃은 자식들은 힘을 잃었으며,,母を失いし子らは力を失い
+Not_Ues7,혼돈 속에서 그 생명을 잃어갔으니,,混沌の中でその生命を失っていき
+Not_Ues8,거짓 된 자들이 흩어진 어머니의 생명을 취해,,偽物達が母の生命を得て
+Not_Ues9,그 힘에 미쳐 파괴와 고통을 낳았으며,,その力で狂気と破壊を生み
+Prolog_Line1,형제들이여 어머니를 잃은 그날을 기억하는가.,,
+Prolog_Line10,어머니의 생명을 처음으로 취한 번뇌에 빠진자로부터,,
+Prolog_Line11,어머니의 살점을 처음으로 취한 탐욕에 빠진자로부터,,
+Prolog_Line12,어머니의 살점과 생명을 되찾아올것이다.,,
+Prolog_Line13,가장 큰 어둠으로 경계의 저편을 무너트리고,,
+Prolog_Line14,가장 큰 빛으로 어머니를 부활시키리.,,
+Prolog_Line15,혼돈과 빛은 하나가 되어,,
+Prolog_Line16,새로운 세상을 어머니로 가득 채우리라.,,
+Prolog_Line2,"우리들의 어머니를 빼앗긴, ",,
+Prolog_Line3,혼돈과 죽음이 가득했던 경계의 저편에서 우리들의 아버지와 함께 숨 죽여 울던 그날을.,,
+Prolog_Line4,"형제들이여,",,
+Prolog_Line5,곧 어머니의 살점과 생명을 취하던 배신자들을 단죄할 자가 나타나리라.,,
+Prolog_Line6,"9번째 푸른달의 그림자가 경계를 덮은 날,",,
+Prolog_Line7,그 누구보다 어두운 곳에서 태어난 우리들의 영웅이 첫 숨결을 내뱉으리..,,
+Prolog_Line8,그는 우리들로부터 빼앗아간 그들과는 다른 힘을 가지고 태어날 것이다.,,
+Prolog_Line9,어머니의 첫번째 배신자인 영원한 권태에 빠진자로부터,,
+Skill_TestExplain1,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain10,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain2,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain3,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain4,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain5,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain6,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain7,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain8,테스트 스킬 설명,,テストスキル説明
+Skill_TestExplain9,테스트 스킬 설명,,テストスキル説明
+Skill_TestName1,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName10,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName2,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName3,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName4,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName5,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName6,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName7,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName8,테스트 스킬 네임,,テストスキルネーム
+Skill_TestName9,테스트 스킬 네임,,テストスキルネーム
+SorcererNest_LeftTime,남은 시간 {0} : {1},,
+SorcererNest_LeftTimeSec,남은 시간 {0}초,,
+SorcererNest_MyBoxes,보유 상자,,
+SorcererNest_TouchToOpen,클릭하여 해금,,
 TestStory3,,,
 TestStory4,,,
 TestStory5,,,
@@ -10,96 +140,43 @@ TestStory6,,,
 TestStory7,,,
 TestStory8,,,
 TestStory9,,,
-CharName_Sinwol,신월,Sinwol,新月
-CharName_LeeYaeJi,이예지,LeeYaeJi,リ・イェジ
-CharName_Macia Smerti,마키아 스메르티,Macia Smerti,マキア・スメルティ
-CharName_Ulises Obsessia,율리세스 오브세시아,Ulises Obsessia,ルイズ・オブセシア
-CharName_JinSiWoo,진시우,JinSiWoo,ジン・シウ
-CharName_YunHoJin,윤호진,YunHoJin,ユン・ホジン
-CharName_Mago,마고,Mago,マコ
-CharName_GwiTae,귀태,GwiTae,ギュテ
-CharName_YaeJi,예지,YaeJi,イェジ
-CharName_Macia,마키아,Macia,マキア・スメルティ
-CharName_Ulises,율리세스,Ulises,ルイズ・オブセシア
-CharName_SiWoo,시우,SiWoo,シウ
-CharName_HoJin,호진,HoJin,ホジン
-FieldStructure_Untidytile1,정돈되지않은타일1,Untidytile1,整頓されていないタイル1
-FieldStructure_Untidytile2,정돈되지않은타일2,Untidytile2,整頓されていないタイル2
-FieldStructure_Untidytile3,정돈되지않은타일3,Untidytile3,整頓されていないタイル3
-FieldStructure_Untidytile4,정돈되지않은타일4,Untidytile4,整頓されていないタイル4
-FieldStructure_Tidytile1,정돈된타일1,Tidytile1,整頓されているタイル1
-FieldStructure_Tidytile2,정돈된타일2,Tidytile2,整頓されているタイル2
-FieldStructure_Bloodpuddle1,피웅덩이1,Bloodpuddle1,血溜まり1
-FieldStructure_Bloodpuddle2,피웅덩이2,Bloodpuddle2,血溜まり2
-FieldStructure_Bloodpuddle3,피웅덩이3,Bloodpuddle3,血溜まり3
-FieldStructure_Bloodpuddle4,피웅덩이4,Bloodpuddle4,血溜まり4
-FieldStructure_Letterbox,맵밖레터박스,Letterbox,レターボックス（郵便箱）
-FieldStructure_Backpane,맵제단영역백판,Backpane,バックプレーン（背面領域白紙）
-FieldStructure_Mobpillar,요괴로뒤덮인기둥,Mobpillar,妖怪柱
-FieldStructure_Altar,제단,Altar,祭壇
-FieldStructure_Wall,벽,Wall,壁
-FieldStructure_Humancorpse,인간시체더미,HumanCorpse,人間の死体
-FieldStructure_Mobcorpse,요괴시체더미,MobCorpse,妖怪の死体
-FieldStructure_Mixedcorpse,복합시체더미,MixedCorpse,死体の山
-FieldStructure_Beatingflesh,박동하는살덩이,BeatingFlesh,動く肉片
-FieldStructure_Blueflame,푸른불꽃,BlueFlame,青い炎
-FieldStructure_Mobstatue,소요괴석상,Topmobstatue,小妖怪石像
-FieldStructure_Teleportcircle,이형환위,TeleportCircle,移形換位
-FieldStructure_Santuary,성소,Santuary,聖域
-FieldStructure_Santuarycircle,성소마법진,SantuaryCircle,聖域魔法陣
-FieldStructure_Destructionstone1,파괴의돌1,Destructionstone1,破壊の石1
-FieldStructure_Destructionstone2,파괴의돌2,Destructionstone2,破壊の石2
-FieldStructure_Destructionstone3,파괴의돌3,Destructionstone3,破壊の石3
-FieldStructure_Destructionstone4,파괴의돌4,Destructionstone4,破壊の石4
-FieldStructure_Demonattack,악마의습격,DemonAttack,悪魔の襲撃
-FieldStructure_Warning,신벌경고,Warning,天罰の警告
-FieldStructure_Punishment,신벌,Punishment,天罰
-FieldStructure_Poisonmist,독안개,PoisonMist,毒霧
-Nickname_Able,사용 할 수 있는 닉네임입니다.,,使用可能なニックネーム
-Nickname_Less,닉네임의 글자 수가 적습니다.,,ニックネームの文字数が足りません
-Nickname_LimitWord,사용할 수 없는 단어가 포함되었습니다.,,使用できない文字が含まれています
-Nickname_SameName,중복된 닉네임입니다.,,この名前は既に使用されています
-Nickname_Language,"영어, 한국어만 가능합니다",,英語と韓国語だけ使用できます
-UI_StoryMode,스토리모드,,ストーリーモード
-UI_SelectSorcerer,주술사 선택,,呪術者選択
-UI_Soul,혼,,魂
-UI_Sorcer,주술사,,呪術者
-UI_MakeNickname,닉네임 생성,,ニックネーム選択
-UI_Agreement,약관 동의,,利用規約同意
 UI_AgreeCheck,약관에 동의합니다.,,利用規約に同意します
+UI_Agreement,약관 동의,,利用規約同意
+UI_Attack,공격,,
+UI_AutoLogin,자동으로 로그인하기,,自動ログイン
+UI_ChapterSelect,{0}째장,,第{0}章
 UI_ConnectID,동의하고 계정 불러오기,,同意してアカウント接続
+UI_CoolDown,재사용 대기시간 감소,,
+UI_CriRatio,치명타 확률,,
+UI_CurrentStage,{0}번째장 {1}번째 이야기,,第｛0｝章　第｛1｝話
+UI_CustomerCenter,문의 및 후원,,お問い合わせ
+UI_Email,team.theblackgames@gmail.com,team.theblackgames@gmail.com,team.theblackgames@gmail.com
+UI_Friend,친구,,フレンド
+UI_GameOff,게임 종료,,
+UI_GetItemRange,아이템 획득 범위,,
+UI_HP,체력,,
+UI_HPRegen,초당 체력 회복,,
 UI_Login,로그인,,ログイン
 UI_LoginWithSteam,스팀으로 로그인,,Steamでログイン
-UI_AutoLogin,자동으로 로그인하기,,自動ログイン
+UI_MakeNickname,닉네임 생성,,ニックネーム選択
+UI_MoveSpeed,이동 속도,,
 UI_MyInfo,내 정보,,個人情報
+UI_OpenKakaoTalk,https://open.kakao.com/o/soKo5OBe,https://open.kakao.com/o/soKo5OBe,https://open.kakao.com/o/soKo5OBe
+UI_ProjectileAdd,투사체 증가,,
 UI_RankingBoard,랭킹보드,,ランキングボード
-UI_Friend,친구,,フレンド
+UI_SelectSorcerer,주술사 선택,,呪術者選択
 UI_Setting,설정,,設定
-UI_CustomerCenter,문의 및 후원,,お問い合わせ
-UI_Email,team.theblackgames@gmail.com,,
-UI_OpenKakaoTalk,https://open.kakao.com/o/soKo5OBe,,
-UI_ChapterSelect,{0}째장,,
-UI_StageList,{0}번째 이야기,,
-UI_SoulSettings,혼 설정,,
-UI_Start,시작하기,,
-UI_CurrentStage,{0}번째장 {1}번째 이야기,,
-Skill_TestName1,테스트 스킬 네임,,
-Skill_TestName2,테스트 스킬 네임,,
-Skill_TestName3,테스트 스킬 네임,,
-Skill_TestName4,테스트 스킬 네임,,
-Skill_TestName5,테스트 스킬 네임,,
-Skill_TestName6,테스트 스킬 네임,,
-Skill_TestName7,테스트 스킬 네임,,
-Skill_TestName8,테스트 스킬 네임,,
-Skill_TestName9,테스트 스킬 네임,,
-Skill_TestName10,테스트 스킬 네임,,
-Skill_TestExplain1,테스트 스킬 설명,,
-Skill_TestExplain2,테스트 스킬 설명,,
-Skill_TestExplain3,테스트 스킬 설명,,
-Skill_TestExplain4,테스트 스킬 설명,,
-Skill_TestExplain5,테스트 스킬 설명,,
-Skill_TestExplain6,테스트 스킬 설명,,
-Skill_TestExplain7,테스트 스킬 설명,,
-Skill_TestExplain8,테스트 스킬 설명,,
-Skill_TestExplain9,테스트 스킬 설명,,
-Skill_TestExplain10,테스트 스킬 설명,,
+UI_Shield,실드,,
+UI_Skill,스킬,,
+UI_Sorcer,주술사,,呪術者
+UI_Soul,혼,,魂
+UI_SoulSettings,혼 설정,,魂設定
+UI_StageList,{0}번째 이야기,,第{0}話
+UI_Start,시작하기,,開始
+UI_Stat,능력치,,
+UI_Story,스토리,,
+UI_StoryMode,스토리모드,,ストーリーモード
+Unlock_Percent_Text,해금 진행도,,
+UI_NickName,{플레이어 닉네임},,
+UI_ClearTime_Text,클리어 타임 평균,,
+UI_ClearTime,{01}:{23},,

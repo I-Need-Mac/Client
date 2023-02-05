@@ -4,85 +4,116 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using TMPro;
+using System;
+
+public enum LayerOrder
+{
+
+}
 
 public class GameManager : MonoBehaviour
 {
-    [field : Header("--- Object Pool ---")]
-    [field : SerializeField] public ProjectilePool projectilePool { get; private set; }
-    [field : SerializeField] public ObjectPool monsterPool { get; private set; }
+    [SerializeField] private PlayerPoolManager playerPoolManager;
+    [SerializeField] private string map;
+    [SerializeField] private string player;
 
-    [Header("--- Text ---")]
-    [SerializeField] private TMP_Text text_timer;
-
-    private int curTime;
-    private int limitTime;
-    private Coroutine gameTimerCor;
-
-    private void Awake()
+    private void Start()
     {
-        //monsterPool.AddObject();
-
-        Init();
+        Spawn();
     }
 
-    #region Setter
-    //�������� ���� �ð� ����
-    public void SetLimitTime(int limitTime)
+    private void Spawn()
     {
-        this.limitTime = limitTime;
-    }
-    #endregion
+        string name = LoadMapManager.Instance.SceneNumberToMapName(10101);
+        GameObject temp = LoadMapManager.Instance.LoadMapNameToMapObject(name);
+        GameObject map = Instantiate(temp, transform);
+        map.gameObject.transform.SetParent(transform.Find("MapGeneratePos").transform);
+        float defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        map.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+        map.transform.position = new Vector3(map.transform.position.x, map.transform.position.y, 1);
+        map.gameObject.SetActive(true);
 
-    private void Init()
-    {
-        text_timer.gameObject.SetActive(true);
-        text_timer.text = "";
-    }
-
-    private void TimeOver()
-    {
-        text_timer.text = "";
+        Player p = playerPoolManager.SpawnPlayer(transform.Find("PlayerSpawnPos").transform);
+        p.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+        p.transform.position = new Vector3(p.transform.position.x, p.transform.position.y, 0);
     }
 
-    #region Coroutine
-    public void StartGameTimer()
-    {
-        StopGameTimer();
+    //[field : Header("--- Object Pool ---")]
+    //[field : SerializeField] public ProjectilePool projectilePool { get; private set; }
+    //[field : SerializeField] public ObjectPool monsterPool { get; private set; }
 
-        if (gameTimerCor == null)
-        {
-            gameTimerCor = StartCoroutine(GameTimer());
-        }
-    }
+    //[Header("--- Text ---")]
+    //[SerializeField] private TMP_Text text_timer;
 
-    public void StopGameTimer()
-    {
-        if (gameTimerCor != null)
-        {
-            StopCoroutine(gameTimerCor);
-        }
-    }
+    //private int curTime;
+    //private int limitTime;
+    //private Coroutine gameTimerCor;
 
-    private IEnumerator GameTimer()
-    {
-        var waitTime = new WaitForSeconds(1f);
-        int m, s;
+    //private void Awake()
+    //{
+    //    //monsterPool.AddObject();
 
-        curTime = limitTime / 1000;
+    //    Init();
+    //}
 
-        while (curTime > 0)
-        {
-            m = curTime / 60;
-            s = curTime - (m * 60);
+    //#region Setter
+    ////�������� ���� �ð� ����
+    //public void SetLimitTime(int limitTime)
+    //{
+    //    this.limitTime = limitTime;
+    //}
+    //#endregion
 
-            text_timer.text = string.Format("{0:D2} : {1:D2}", m, s);
+    //private void Init()
+    //{
+    //    text_timer.gameObject.SetActive(true);
+    //    text_timer.text = "";
+    //}
 
-            curTime--;
+    //private void TimeOver()
+    //{
+    //    text_timer.text = "";
+    //}
 
-            yield return waitTime;
-        }
+    //#region Coroutine
+    //public void StartGameTimer()
+    //{
+    //    StopGameTimer();
 
-        TimeOver();
-    }
-    #endregion
+    //    if (gameTimerCor == null)
+    //    {
+    //        gameTimerCor = StartCoroutine(GameTimer());
+    //    }
+    //}
+
+    //public void StopGameTimer()
+    //{
+    //    if (gameTimerCor != null)
+    //    {
+    //        StopCoroutine(gameTimerCor);
+    //    }
+    //}
+
+    //private IEnumerator GameTimer()
+    //{
+    //    var waitTime = new WaitForSeconds(1f);
+    //    int m, s;
+
+    //    curTime = limitTime / 1000;
+
+    //    while (curTime > 0)
+    //    {
+    //        m = curTime / 60;
+    //        s = curTime - (m * 60);
+
+    //        text_timer.text = string.Format("{0:D2} : {1:D2}", m, s);
+
+    //        curTime--;
+
+    //        yield return waitTime;
+    //    }
+
+    //    TimeOver();
+    //}
+    //#endregion
 }

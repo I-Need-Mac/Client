@@ -113,7 +113,6 @@ public class UI_Page : UI_Popup
         else if (typeName == pageTypes[(int)PageType.Picture])
         {   // 이미지 타입
             type = PageType.Picture;
-
             string path = $"{Define.UiCharacterPath}/" + data[(int)PageTableInfo.ImagePath].ToString();
             picture.sprite = Resources.Load<Sprite>(path);
         }

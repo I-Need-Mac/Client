@@ -72,8 +72,11 @@ public class UI_NickName : UI_Popup
                 if (!isCreate)
                     return;
 
+                // 회원가입 진행
+                // WebHandShakeFromPost();
+
                 this.CloseUI<UI_NickName>();
-                UIManager.Instance.OpenUI<UI_Login>();
+                UIManager.Instance.OpenUI<UI_Agreement>();
                 break;
             default:
                 break;
@@ -107,5 +110,25 @@ public class UI_NickName : UI_Popup
         ableText.color = Color.green;
         confirm.color = Color.white;
         isCreate = true;
+    }
+
+    async void WebHandShakeFromPost()
+    {
+        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        sendData.Add("steam_id", "mongplee92");
+        sendData.Add("nick_name", "mongplee92");
+        sendData.Add("admin_level", "0");
+
+        var data = await WebRequestManager.Instance.Post<Dictionary<string, object>>("/user/handshake", sendData);
+
+        //switch(data.result)
+        //{
+        //    case 100:
+        //        // result 100 : 회원가입 성공
+        //        break;
+        //    case 200:
+        //        // result 200 : 중복된 닉네임
+        //        break;
+        //}
     }
 }

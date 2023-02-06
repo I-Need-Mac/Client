@@ -7,28 +7,19 @@ using UnityEngine.UI;
 
 public class UI_SelectSorcerer : UI_Popup
 {
-    enum TableIndex
-    {
-        Character_Name,
-        Image_Path
-    }
+    
 
     enum Images
     {
-        Sorcerer_0,
-        Sorcerer_1,
-        Sorcerer_2,
-        Sorcerer_3,
-        Sorcerer_4,
-        Sorcerer_5,
-
         BackBtn
     }
 
     [SerializeField]
     Text titleText;
     [SerializeField]
-    List<GameObject> characterList = new List<GameObject>();
+    GameObject sorcererObject;
+    [SerializeField]
+    List<GameObject> sorcererList = new List<GameObject>();
 
     void Start()
     {
@@ -41,14 +32,45 @@ public class UI_SelectSorcerer : UI_Popup
 
         titleText.text = LocalizeManager.Instance.GetText("UI_SelectSorcerer");
 
-        //Dictionary<string, Dictionary<string, object>> characterList = UIData.CharacterData;
-        //foreach (KeyValuePair<string, Dictionary<string, object>> data in characterList)
-        //{
-        //    foreach( KeyValuePair<string, object> val in data.Value )
-        //    {
+        Dictionary<string, Dictionary<string, object>> characterData = UIData.CharacterData;
+        UI_Sorcerer sorcerer = Util.UILoad<UI_Sorcerer>(Define.UiPrefabsPath + "/UI_Sorcerer");
 
-        //    }
-        //}
+        foreach (KeyValuePair<string, Dictionary<string, object>> data in characterData)
+        {
+            if (data.Key == "")
+                continue;
+
+            // 생성
+            GameObject instance = Instantiate(sorcerer.gameObject) as GameObject;
+            instance.GetComponent<UI_Sorcerer>().SetSorcerer(int.Parse(data.Key), data.Value);
+            instance.name = "sorcerer_" + data.Key;
+            instance.transform.SetParent(sorcererObject.transform);
+            instance.transform.localScale = Vector3.one;
+
+            RectTransform rect = instance.GetComponent<RectTransform>();
+            rect.anchoredPosition3D = Vector3.zero;
+
+            sorcererList.Add(instance);
+        }
+
+        // 위치 셋팅
+        SetCharacterPos();
+    }
+
+    private void SetCharacterPos()
+    {
+        RectTransform r = sorcererList[0].GetComponent<RectTransform>();
+        r.anchoredPosition3D = new Vector3(-750, 0, 0);
+        r = sorcererList[1].GetComponent<RectTransform>();
+        r.anchoredPosition3D = new Vector3(-450, 0, 0);
+        r = sorcererList[2].GetComponent<RectTransform>();
+        r.anchoredPosition3D = new Vector3(-150, 0, 0);
+        r = sorcererList[3].GetComponent<RectTransform>();
+        r.anchoredPosition3D = new Vector3(150, 0, 0);
+        r = sorcererList[4].GetComponent<RectTransform>();
+        r.anchoredPosition3D = new Vector3(450, 0, 0);
+        r = sorcererList[5].GetComponent<RectTransform>();
+        r.anchoredPosition3D = new Vector3(750, 0, 0);
     }
 
     public void OnClickImage(PointerEventData data)
@@ -63,24 +85,6 @@ public class UI_SelectSorcerer : UI_Popup
         {
             case Images.BackBtn:
                 UIManager.Instance.CloseUI<UI_SelectSorcerer>();
-                break;
-            case Images.Sorcerer_0:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_1:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_2:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_3:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_4:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                break;
-            case Images.Sorcerer_5:
-                UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
                 break;
             default:
                 break;

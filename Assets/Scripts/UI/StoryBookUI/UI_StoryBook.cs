@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_StoryBook : UI_Popup
@@ -122,8 +123,17 @@ public class UI_StoryBook : UI_Popup
     // 페이지를 활성화 합니다.
     void ActivePage(int page)
     {
-        if (page >= totalPage || page < 0)
+        if (page >= totalPage)
+        {
+            currentPage = totalPage;
             return;
+        }
+
+        if(page < 0)
+        {
+            currentPage = 0;
+            return;
+        }
 
         // 전체 비활성
         for( int i = 0; i < pageList.Count; i++ )
@@ -166,7 +176,13 @@ public class UI_StoryBook : UI_Popup
                 ActivePage(currentPage - PAGE_UNIT);
                 break;
             case Buttons.NextArrow:
+                if (currentPage >= totalPage)
+                {
+                    SceneManager.LoadScene("BattleScene");
+                }
+
                 ActivePage(currentPage + PAGE_UNIT);
+                
                 break;
             case Buttons.ContentSkip:
                 {
@@ -217,7 +233,7 @@ public class UI_StoryBook : UI_Popup
                 
                 break;
             case Buttons.Close:
-                CloseUI<UI_StoryBook>();
+                UIManager.Instance.CloseUI<UI_StoryBook>();
                 break;
             default:
                 break;

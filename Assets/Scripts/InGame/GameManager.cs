@@ -27,6 +27,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void Start()
     {
+        mapId = UIManager.Instance.selectStageID;
+        playerId = UIManager.Instance.selectCharacterID;
+
         Spawn();
     }
 

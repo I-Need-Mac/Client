@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIStageElement : UI_Base
+public class UI_StageElement : UI_Base
 {
     public Text text;
 }

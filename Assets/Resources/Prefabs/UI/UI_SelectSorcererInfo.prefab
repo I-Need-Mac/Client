@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 1731370329745974022}
   - component: {fileID: 6213492084298994362}
   m_Layer: 5
-  m_Name: Text
+  m_Name: storyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 6059683133249822998}
   - component: {fileID: 3433685322729915031}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -675,7 +675,7 @@ GameObject:
   - component: {fileID: 1062561569268256114}
   - component: {fileID: 1793896227593660719}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -971,9 +971,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f9208146a4f09b449276186b51581cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleText: {fileID: 7107557676439818348}
+  storyText: {fileID: 6213492084298994362}
+  statText: {fileID: 688066038006702784}
+  skillText: {fileID: 662145966399689008}
+  sorcererName: {fileID: 894130225012066893}
+  selectImage: {fileID: 8886857833596030053}
   StoryContents: {fileID: 3485938080047922000}
+  storyTopText: {fileID: 3433685322729915031}
+  storyMiddleText: {fileID: 176092039284815406}
+  storyBottomText: {fileID: 1793896227593660719}
   StatContents: {fileID: 1684099281152981997}
   SkillContents: {fileID: 4172968410035377690}
+  Skill_1_Image: {fileID: 7846289497991025079}
+  Skill_1_Name: {fileID: 3802463682340583212}
+  Skill_1_Context: {fileID: 8890954946307444568}
+  Skill_2_Image: {fileID: 3052153512795031514}
+  Skill_2_Name: {fileID: 1074262283247007352}
+  Skill_2_Context: {fileID: 3709141154501056185}
 --- !u!1 &2692833131822882339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,7 +1081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &85716912908896776
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2829,7 +2844,7 @@ GameObject:
   - component: {fileID: 1432663985729262527}
   - component: {fileID: 688066038006702784}
   m_Layer: 5
-  m_Name: Text
+  m_Name: statText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2930,8 +2945,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -49, y: 366}
-  m_SizeDelta: {x: 272.767, y: 85.2865}
+  m_AnchoredPosition: {x: -0.00096797943, y: 366}
+  m_SizeDelta: {x: 315.44, y: 85.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2992513179811234024
 CanvasRenderer:
@@ -3306,7 +3321,7 @@ GameObject:
   - component: {fileID: 843013474078704513}
   - component: {fileID: 176092039284815406}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Middle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3536,7 +3551,7 @@ GameObject:
   - component: {fileID: 2342030057761995527}
   - component: {fileID: 662145966399689008}
   m_Layer: 5
-  m_Name: Text
+  m_Name: skillText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

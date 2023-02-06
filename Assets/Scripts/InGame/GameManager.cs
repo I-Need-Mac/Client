@@ -11,8 +11,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 {
     [SerializeField] private PlayerPoolManager playerPoolManager;
 
-    [SerializeField] private int mapId;
-    [SerializeField] private int playerId;
+    //[SerializeField] private int mapId;
+    //[SerializeField] private int playerId;
+    private int mapId;
+    private int playerId;
 
     private GameObject map;
     private Player player;
@@ -22,13 +24,13 @@ public class GameManager : SingletonBehaviour<GameManager>
     protected override void Awake()
     {
         defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        mapId = UIManager.Instance.selectStageID;
+        playerId = UIManager.Instance.selectCharacterID;
         playerPoolManager.playerId = playerId;
     }
 
     private void Start()
     {
-        mapId = UIManager.Instance.selectStageID;
-        playerId = UIManager.Instance.selectCharacterID;
 
         Spawn();
     }

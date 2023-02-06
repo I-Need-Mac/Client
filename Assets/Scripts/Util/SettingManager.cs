@@ -47,8 +47,8 @@ public class SettingManager
 
 
     public void ReadSettingFile() {
-        //settingFileR = new FileStream("./setting.txt", FileMode.Open);
-        settingFileR = new FileStream("./Assets/Resources/setting.txt", FileMode.Open);
+        settingFileR = new FileStream("./setting.txt", FileMode.Open);
+        //settingFileR = new FileStream("./Assets/Resources/setting.txt", FileMode.Open);
         StreamReader sr = new StreamReader(settingFileR);
 
         DebugManager.Instance.PrintDrawLine();

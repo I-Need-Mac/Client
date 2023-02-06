@@ -10,6 +10,8 @@ public class Monster : MonoBehaviour
     private GameObject player;
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
+    private Ray2D ray;
+    private RaycastHit2D hitData;
 
     public MonsterData monsterData { get; private set; }
     public Vector3 lookDirection { get; private set; } //바라보는 방향
@@ -29,17 +31,27 @@ public class Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Tracking();
         Move();
     }
 
     private void Move()
     {
-        monsterRigidbody.velocity = Vector3.zero;
-        monsterRigidbody.angularVelocity = 0f;
-        float z = transform.position.z;
-        Vector3 vector = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 2f);
-        vector.z = z;
-        transform.position = vector;
+        //monsterRigidbody.velocity = Vector3.zero;
+        //monsterRigidbody.angularVelocity = 0f;
+        //float z = transform.position.z;
+        //Vector3 vector = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 2f);
+        //vector.z = z;
+        //transform.position = vector;
+
+        monsterRigidbody.velocity = (player.transform.position - transform.position).normalized * 3f;
+    }
+
+    private void Tracking()
+    {
+        monsterDirection = (player.transform.position - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, player.transform.position);
+        Debug.DrawRay(transform.position, monsterDirection * distance, Color.red);
     }
 
     //public float 

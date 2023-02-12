@@ -17,7 +17,7 @@ public class PlayerItem : MonoBehaviour
     {
         gameObject.tag = "ItemCollider";
         itemCollider.isTrigger = true;
-        itemCollider.radius = player.playerData.getItemRange;
+        itemCollider.radius = player.ReturnGetItemRange();
     }
 
 }

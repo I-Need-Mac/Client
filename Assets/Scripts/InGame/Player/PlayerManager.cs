@@ -6,21 +6,19 @@ using UnityEngine;
 //싱글톤 사용
 public class PlayerManager : SingletonBehaviour<PlayerManager>
 {
-    [SerializeField] private Player player;
-    [SerializeField] private Vector2 spawnPos; //테스트용 필드: 스폰위치
+    //private Player player;
 
-    private PlayerData playerData; //플레이어의 데이터를 가지는 객체
+    public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
 
     protected override void Awake()
     {
-        
+        //player = transform.parent.GetComponent<Player>();
+        //DebugManager.Instance.PrintDebug(GameManager.Instance.GetPlayerId());
+        PlayerSetting(FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
     }
 
     private void Start()
     {
-        playerData = player.playerData;
-        PlayerSetting(FindCharacter(Convert.ToString(player.playerId)));
-        //PlayerSetting(FindCharacter(testCharacterId));
     }
 
     //캐릭터에 스탯 부여
@@ -33,7 +31,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
             return;
         }
 
-        playerData.SetCharacterName(characterData["CharacterName"].ToString());
+        playerData.SetCharacterName(Convert.ToString(characterData["CharacterName"]));
         playerData.SetHp(Convert.ToInt32(characterData["HP"]));
         playerData.SetAttack(Convert.ToInt32(characterData["Attack"]));
         playerData.SetCriRatio(Convert.ToInt32(characterData["CriRatio"]));

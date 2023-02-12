@@ -20,12 +20,13 @@ public class Player : MonoBehaviour
     private float coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
 
     private SpineManager anime;
+    private PlayerManager playerManager;
 
     private PlayerData weight = new PlayerData(); //증감치
 
     public PlayerData playerData { get; private set; } = new PlayerData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
-    public int playerId { get; set; }
+    //public int playerId { get; set; }
 
     /*Unity Mono*/
     #region Mono
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
         lookDirection = Vector3.right;
 
         anime = GetComponent<SpineManager>();
+        playerManager = transform.Find("PlayerManager").GetComponent<PlayerManager>();
 
         coolTimeConstant = findConstant("CoolTimeConstant");
         coolTimeCoefficient = findConstant("CoolTimeCoefficient");
@@ -145,71 +147,64 @@ public class Player : MonoBehaviour
     //체력
     public int ReturnHp()
     {
-        return playerData.hp + weight.hp;
+        return playerManager.playerData.hp + weight.hp;
     }
 
     //공격력
     public int ReturnAttack()
     {
-        return playerData.attack + weight.attack;
+        return playerManager.playerData.attack + weight.attack;
     }
 
     //크리티컬확률
     public int ReturnCriRatio()
     {
-        return playerData.criRatio + weight.criRatio;
+        return playerManager.playerData.criRatio + weight.criRatio;
     }
 
     //크리티컬데미지 증감함수
     public int ReturnCriDamage()
     {
-        return playerData.criDamage + weight.criDamage;
+        return playerManager.playerData.criDamage + weight.criDamage;
     }
 
     //재사용대기시간 = 기존재사용대기시간*(재사용대기시간감소^2/(재사용대기시간감소^2+재사용대기시간감소상수))*재사용대기시간감소최대치조절계수/10000
     public float ReturnCoolDown()
     {
-        return playerData.coolDown * ((float)Math.Pow(weight.coolDown, 2) / ((float)Math.Pow(weight.coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient / PER;
+        return playerManager.playerData.coolDown * ((float)Math.Pow(weight.coolDown, 2) / ((float)Math.Pow(weight.coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient / PER;
     }
 
     //체젠량
     public int ReturnHpRegen()
     {
-        return playerData.hpRegen + weight.hpRegen;
+        return playerManager.playerData.hpRegen + weight.hpRegen;
     }
 
     //쉴드 개수
     public int ReturnShield()
     {
-        return playerData.shield + weight.shield;
+        return playerManager.playerData.shield + weight.shield;
     }
 
     //투사체 증가 개수
     public int ReturnProjectileAdd()
     {
-        return playerData.projectileAdd + weight.projectileAdd;
+        return playerManager.playerData.projectileAdd + weight.projectileAdd;
     }
 
     //이동속도
-    private void ModifyMoveSpeed(int buff = 0, int deBuff = 0)
-    {
-        int increment = buff + deBuff;
-        moveSpeed *= 1 + (buff - deBuff);
-        anime.SetSpineSpeed(moveSpeed);
-    }
     public float ReturnMoveSpeed()
     {
-        return playerData.moveSpeed * (1 + weight.moveSpeed);
+        return playerManager.playerData.moveSpeed * (1 + weight.moveSpeed);
     }
 
     //아이템 획득 범위
     public int ReturnGetItemRange()
     {
-        return playerData.getItemRange + weight.getItemRange;
+        return playerManager.playerData.getItemRange + weight.getItemRange;
     }
 
     #endregion
-
 
     /*캐릭터 로직 관련*/
     #region Character Logic
@@ -268,7 +263,7 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(HP_REGEN_PER_SECOND);
 
             //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
-            if (ReturnHp() < playerData.hp && ReturnHp() >= 0)
+            if (ReturnHp() < playerManager.playerData.hp && ReturnHp() >= 0)
             {
                 weight.SetHp(weight.hp + ReturnHpRegen());
             }

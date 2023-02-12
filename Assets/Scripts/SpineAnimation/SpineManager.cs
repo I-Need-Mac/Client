@@ -27,37 +27,37 @@ public class SpineManager : MonoBehaviour
     private void Update()
     {
         skeletonAnimation.timeScale = spineSpeed;
-        SpineChange();
+        //SpineChange();
     }
 
-    private void SpineChange()
-    {
-        if (Input.GetKeyUp(KeyCode.Alpha1))
-        {
-            PlayerPoolManager.Instance.playerId = 101;
-            SpineSetting();
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha2))
-        {
-            PlayerPoolManager.Instance.playerId = 102;
-            SpineSetting();
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha3))
-        {
-            PlayerPoolManager.Instance.playerId = 103;
-            SpineSetting();
-        }
-        if (Input.GetKeyUp(KeyCode.Alpha4))
-        {
-            PlayerPoolManager.Instance.playerId = 104;
-            SpineSetting();
-        }
-    }
+    //private void SpineChange()
+    //{
+    //    if (Input.GetKeyUp(KeyCode.Alpha1))
+    //    {
+    //        PlayerPoolManager.Instance.playerId = 101;
+    //        SpineSetting();
+    //    }
+    //    if (Input.GetKeyUp(KeyCode.Alpha2))
+    //    {
+    //        PlayerPoolManager.Instance.playerId = 102;
+    //        SpineSetting();
+    //    }
+    //    if (Input.GetKeyUp(KeyCode.Alpha3))
+    //    {
+    //        PlayerPoolManager.Instance.playerId = 103;
+    //        SpineSetting();
+    //    }
+    //    if (Input.GetKeyUp(KeyCode.Alpha4))
+    //    {
+    //        PlayerPoolManager.Instance.playerId = 104;
+    //        SpineSetting();
+    //    }
+    //}
 
     private void SpineSetting()
     {
         animationState = AnimationConstant.IDLE;
-        path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(PlayerPoolManager.Instance.playerId), "CharacterSpinePath") + "/";
+        path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(GameManager.Instance.GetPlayerId()), "CharacterSpinePath") + "/";
         skeletonAnimation.timeScale = spineSpeed;
 
         SkeletonAnimation character = transform.Find("Character").GetComponent<SkeletonAnimation>();

@@ -7,7 +7,7 @@ public class PlayerPoolManager : SingletonBehaviour<PlayerPoolManager>
 {
     [SerializeField] private PlayerPool playerPool;
 
-    public int playerId { get; set; }
+    //public int playerId { get; set; }
 
     protected override void Awake()
     {
@@ -16,7 +16,7 @@ public class PlayerPoolManager : SingletonBehaviour<PlayerPoolManager>
     public Player SpawnPlayer(Transform transform)
     {
         Player player = playerPool.GetObject();
-        player.playerId = playerId;
+        //player.playerId = playerId;
         player.transform.SetParent(transform);
         player.gameObject.SetActive(true);
         return player;

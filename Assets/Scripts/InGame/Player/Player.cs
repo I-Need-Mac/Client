@@ -323,4 +323,8 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    /*콜라이더 관련*/
+    #region
+    #endregion
+
 }

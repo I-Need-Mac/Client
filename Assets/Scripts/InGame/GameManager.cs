@@ -72,6 +72,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void RecursiveChild(Transform trans, LayerConstant layer)
     {
+        if (trans.name.Equals("Character"))
+        {
+            trans.tag = "Player";
+        }
         trans.gameObject.layer = (int)layer;
         trans.localPosition = new Vector3(trans.localPosition.x, trans.localPosition.y, (int)layer);
 

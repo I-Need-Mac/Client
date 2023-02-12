@@ -22,7 +22,7 @@ public class MonsterSpawner : MonoBehaviour
 
         while (true)
         {
-            Monster monster = monsterPoolManager.SpawnMonster(transform, "temp1");
+            Monster monster = monsterPoolManager.SpawnMonster(transform, "MobName_101");
             yield return new WaitForSeconds(spawnTime);
         }
     }

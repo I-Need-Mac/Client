@@ -20,4 +20,13 @@ public class PlayerItem : MonoBehaviour
         itemCollider.radius = player.ReturnGetItemRange();
     }
 
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    GameObject obj = collision.gameObject;
+    //    if (obj.tag.Equals("Item"))
+    //    {
+    //        DebugManager.Instance.PrintDebug("item get!");
+    //    }
+    //}
+
 }

@@ -1,5 +1,5 @@
 MonsterID,MonsterName,HP,Attack,MoveSpeed,AtkSpeed,ViewDistance,AtkDistance,SkillID,GroupSource,GroupSourceRate,MonsterImage,AttackType
-몬스터 아이디,몬스터 이름(로컬 아이디,몬스터 체력,몬스터 공격력,몬스터 이동 속도,몬스터 공격 속도,몬스터 시야 범위,몬스터 공격 사거리,몬스터 스킬,그룹 소스,그룹 소스 확률,몬스터 이미지,선공 AI 판단
+몬스???�이??몬스???�름(로컬 ?�이??몬스??체력,몬스??공격??몬스???�동 ?�도,몬스??공격 ?�도,몬스???�야 범위,몬스??공격 ?�거�?몬스???�킬,그룹 ?�스,그룹 ?�스 ?�률,몬스???��?지,?�공 AI ?�단,,,,
 int ,String,int ,int ,int ,float,int,int,int ,String,int ,String,Enum
 101,MobName_101,500,300,128,1,99999,10,0,Wall,10000,Siwoo,Bold
 102,MobName_102,800,600,120,1,99999,10,0,Wall,10000,SeiMei,Bold

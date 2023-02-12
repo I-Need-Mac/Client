@@ -13,7 +13,7 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
     {
         pools = new Dictionary<string, MonsterPool>
         {
-            {"temp1", monster_1},
+            {"MobName_101", monster_1},
         };
     }
 
@@ -21,7 +21,7 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
     {
         Monster monster = pools[name].GetObject();
         monster.gameObject.layer = (int) LayerConstant.MONSTER;
-        monster.transform.localPosition = new Vector3(monster.transform.localPosition.x, monster.transform.localPosition.y, (int)LayerConstant.MONSTER);
+        monster.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, (int)LayerConstant.MONSTER);
         monster.gameObject.SetActive(true);
         return monster;
     }

@@ -1,20 +1,20 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Random = UnityEngine.Random;
 
 public class Monster : MonoBehaviour
 {
     private GameObject player;
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
-    private Ray2D ray;
-    private RaycastHit2D hitData;
 
     public MonsterData monsterData { get; private set; }
     public Vector3 lookDirection { get; private set; } //바라보는 방향
+
+    private Ray2D ray;
+    private RaycastHit2D hitData;
 
     private void Awake()
     {
@@ -31,27 +31,23 @@ public class Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Tracking();
         Move();
+        RayTest();
     }
 
     private void Move()
     {
-        //monsterRigidbody.velocity = Vector3.zero;
-        //monsterRigidbody.angularVelocity = 0f;
-        //float z = transform.position.z;
-        //Vector3 vector = Vector3.MoveTowards(transform.position, player.transform.position, Time.deltaTime * 2f);
-        //vector.z = z;
-        //transform.position = vector;
-
-        monsterRigidbody.velocity = (player.transform.position - transform.position).normalized * 3f;
+        monsterDirection = (player.transform.position - transform.position).normalized;
+        monsterRigidbody.velocity = monsterDirection * 5f;
     }
 
-    private void Tracking()
+    private void RayTest()
     {
-        monsterDirection = (player.transform.position - transform.position).normalized;
-        float distance = Vector2.Distance(transform.position, player.transform.position);
-        Debug.DrawRay(transform.position, monsterDirection * distance, Color.red);
+        Debug.DrawRay(transform.position, monsterDirection * 3f);
+        if (Physics2D.Raycast(transform.position, monsterDirection, 3f, 3))
+        {
+            DebugManager.Instance.PrintDebug("detect obstacle");
+        }
     }
 
     //public float 

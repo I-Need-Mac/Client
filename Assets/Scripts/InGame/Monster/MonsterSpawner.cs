@@ -5,6 +5,7 @@ using UnityEngine;
 public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField] private MonsterPoolManager monsterPoolManager;
+    [SerializeField] private float spawnTime = 1f;
 
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class MonsterSpawner : MonoBehaviour
         while (true)
         {
             Monster monster = monsterPoolManager.SpawnMonster(transform, "temp1");
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(spawnTime);
         }
     }
 }

@@ -17,6 +17,7 @@ public abstract class Projectile : MonoBehaviour
     //protected PROJECTILE_TYPE projectileType;
     protected Vector3 direction;
     protected SkillData skillData;
+    protected Collider2D projectileCollider;
 
     public float angle { get; set; }
 
@@ -29,6 +30,9 @@ public abstract class Projectile : MonoBehaviour
     {
         projectileRigidBody = GetComponent<Rigidbody2D>();
         direction = Vector3.right;
+        projectileCollider = GetComponent<Collider2D>();
+        projectileCollider.isTrigger = true;
+        gameObject.tag = "PlayerSkill";
     }
 
     private void FixedUpdate()

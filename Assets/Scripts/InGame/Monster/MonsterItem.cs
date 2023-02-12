@@ -13,6 +13,7 @@ public class MonsterItem : MonoBehaviour
     {
         itemCollider = GetComponent<CircleCollider2D>();
         itemCollider.isTrigger = true;
+        itemCollider.radius = 0.1f;
     }
 
     private void FixedUpdate()

@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     public PlayerData playerData { get; private set; } = new PlayerData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
     //public int playerId { get; set; }
+    public int exp { get; set; }
 
     /*Unity Mono*/
     #region Mono

@@ -26,6 +26,7 @@ public class Monster : MonoBehaviour
         monsterDirection = Vector3.zero;
         lookDirection = Vector3.right;
         dropItemField = GameObject.Find("DropItemsOnField").transform;
+        transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
         MonsterSetting(Convert.ToString(monsterId));
     }
 

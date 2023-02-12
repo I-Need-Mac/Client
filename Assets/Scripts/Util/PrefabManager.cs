@@ -30,7 +30,7 @@ public class PrefabManager : MonoBehaviour
 
     private Dictionary<string, Dictionary<string, object>> fieldStructureData = new Dictionary<string, Dictionary<string, object>>();
 
-    void Start()
+    void Awake()
     {
         structureID = this.gameObject.name;
 

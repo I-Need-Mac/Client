@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Monster
   - ItemCollider
+  - PlayerSkill
+  - MonsterSkill
   layers:
   - Default
   - TransparentFX

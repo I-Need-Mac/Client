@@ -17,7 +17,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     //private int playerId;
 
     private GameObject map;
-    private Player player;
+    public Player player { get; private set; }
 
     private float defaultScale;
 

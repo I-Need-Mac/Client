@@ -80,14 +80,15 @@ public class Monster : MonoBehaviour
 
     private void DropItem()
     {
-        Transform items = transform.Find("Item");
-        foreach (Transform item in items)
-        {
-            GameObject dropItem = Instantiate(item.gameObject, dropItemField);
-            dropItem.tag = "Item";
-            dropItem.transform.position = transform.localPosition;
-            dropItem.SetActive(true);
-        }
+        //Transform items = transform.Find("Item");
+        //foreach (Transform item in items)
+        //{
+        //    GameObject dropItem = Instantiate(item.gameObject, dropItemField);
+        //    dropItem.tag = "Item";
+        //    dropItem.transform.position = transform.localPosition;
+        //    dropItem.SetActive(true);
+        //}
+        ItemPoolManager.Instance.SpawnExpItem(1, 1, transform.position);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

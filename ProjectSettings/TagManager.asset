@@ -9,6 +9,7 @@ TagManager:
   - PlayerSkill
   - MonsterSkill
   - Item
+  - Exp
   layers:
   - Default
   - TransparentFX

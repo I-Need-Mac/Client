@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [SerializeField] private float itemSpeed = 1f;
+
     private Player player;
     private Transform target;
 
@@ -27,7 +29,7 @@ public class Item : MonoBehaviour
 
     protected virtual void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.fixedDeltaTime * 4f);
+        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.fixedDeltaTime * itemSpeed);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

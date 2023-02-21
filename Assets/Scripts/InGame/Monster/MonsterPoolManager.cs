@@ -17,11 +17,13 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
         };
     }
 
-    public Monster SpawnMonster(Transform transform, string name)
+    public Monster SpawnMonster(Vector2 pos, string name)
     {
         Monster monster = pools[name].GetObject();
         monster.gameObject.layer = (int) LayerConstant.MONSTER;
-        monster.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, (int)LayerConstant.MONSTER);
+        //monster.transform.localPosition = pos;
+        //monster.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, (int)LayerConstant.MONSTER);
+        monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
         monster.gameObject.SetActive(true);
         return monster;
     }

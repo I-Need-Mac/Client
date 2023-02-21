@@ -12,20 +12,15 @@ public class Monster : MonoBehaviour
     private GameObject player;
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
-    private Transform dropItemField;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
-
-    private Ray2D ray;
-    private RaycastHit2D hitData;
 
     private void Awake()
     {
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector3.zero;
         lookDirection = Vector3.right;
-        dropItemField = GameObject.Find("DropItemsOnField").transform;
         transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
         MonsterSetting(Convert.ToString(monsterId));
     }

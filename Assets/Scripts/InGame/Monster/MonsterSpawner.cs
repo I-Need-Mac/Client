@@ -22,7 +22,8 @@ public class MonsterSpawner : MonoBehaviour
 
         while (true)
         {
-            Monster monster = monsterPoolManager.SpawnMonster(transform, "MobName_101");
+            //Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), (int)LayerConstant.MONSTER));
+            Monster monster = monsterPoolManager.SpawnMonster(CameraManager.Instance.RandomPosInGrid("E"), "MobName_101");
             yield return new WaitForSeconds(spawnTime);
         }
     }

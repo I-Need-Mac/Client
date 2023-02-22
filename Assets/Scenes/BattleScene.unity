@@ -493,6 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterPoolManager: {fileID: 1699318969}
   spawnTime: 3
+  spawnPos: 7
 --- !u!4 &414780806
 Transform:
   m_ObjectHideFlags: 0

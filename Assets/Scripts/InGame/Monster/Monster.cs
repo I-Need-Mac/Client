@@ -13,11 +13,14 @@ public class Monster : MonoBehaviour
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
 
+    private SpineManager anime;
+
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
 
     private void Awake()
     {
+        anime = GetComponent<SpineManager>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector3.zero;
         lookDirection = Vector3.right;
@@ -30,10 +33,22 @@ public class Monster : MonoBehaviour
         player = GameObject.FindWithTag("Player");
     }
 
+    private void Update()
+    {
+        anime.SetCurrentAnimation();
+    }
+
     private void FixedUpdate()
     {
+        AnimationSetting();
         Move();
         //RayTest();
+    }
+
+    private void AnimationSetting()
+    {
+        anime.animationState = AnimationConstant.RUN;
+        anime.SetDirection(monsterDirection);
     }
 
     private void Move()

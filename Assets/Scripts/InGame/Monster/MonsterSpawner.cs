@@ -29,14 +29,6 @@ public class MonsterSpawner : MonoBehaviour
         time = new WaitForSeconds(spawnTime);
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            StopCoroutine(monsters["Nien"]);
-        }
-    }
-
     private void Start()
     {
         StartSpawn();

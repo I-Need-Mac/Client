@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4ecd13599d8314e8d1c74f19e59bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterId: 102
+  monsterId: 103
 --- !u!114 &7030658306294393936
 MonoBehaviour:
   m_ObjectHideFlags: 0

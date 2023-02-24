@@ -5,7 +5,9 @@ using BFM;
 
 public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
 {
-    [SerializeField] private MonsterPool monster_1;
+    [SerializeField] private MonsterPool nien;
+    [SerializeField] private MonsterPool nienM;
+    [SerializeField] private MonsterPool nienL;
 
     private Dictionary<string, MonsterPool> pools;
 
@@ -13,7 +15,9 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
     {
         pools = new Dictionary<string, MonsterPool>
         {
-            {"MobName_101", monster_1},
+            {"Nien", nien},
+            {"Nien_M", nienM},
+            {"Nien_L", nienL},
         };
     }
 
@@ -21,8 +25,6 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
     {
         Monster monster = pools[name].GetObject();
         monster.gameObject.layer = (int) LayerConstant.MONSTER;
-        //monster.transform.localPosition = pos;
-        //monster.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, (int)LayerConstant.MONSTER);
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
         monster.gameObject.SetActive(true);
         return monster;

@@ -1,9 +1,9 @@
 MonsterID,MonsterName,HP,Attack,MoveSpeed,AtkSpeed,ViewDistance,AtkDistance,SkillID,GroupSource,GroupSourceRate,MonsterImage,AttackType
 몬스???�이??몬스???�름(로컬 ?�이??몬스??체력,몬스??공격??몬스???�동 ?�도,몬스??공격 ?�도,몬스???�야 범위,몬스??공격 ?�거�?몬스???�킬,그룹 ?�스,그룹 ?�스 ?�률,몬스???��?지,?�공 AI ?�단,,,,
 int ,String,int ,int ,int ,float,int,int,int ,String,int ,String,Enum
-101,MobName_101,500,300,128,1,99999,10,0,Wall,10000,Arts/Monster/Nien,Bold
-102,MobName_102,800,600,120,1,99999,10,0,Wall,10000,Arts/Monster/Nien,Bold
-103,MobName_103,500,900,112,1,99999,10,0,Wall,10000,Arts/Monster/Nien,Bold
+101,Nien,500,300,128,1,99999,10,0,Wall,10000,Arts/Monster/Nien,Bold
+102,Nien_M,600,600,120,1,99999,10,0,Wall,10000,Arts/Monster/Nien_M,Bold
+103,Nien_L,700,900,112,1,99999,10,0,Wall,10000,Arts/Monster/Nien_L,Bold
 201,MobName_201,1500,1200,104,0,99999,10,0,Wall2,10000,Arts/Monster/Nien,Shy
 202,MobName_202,1000,1500,96,0.5,99999,10,0,Wall2,10000,Arts/Monster/Nien,Bold
 203,MobName_203,1200,1800,88,1.2,99999,10,0,Wall2,10000,Arts/Monster/Nien,Bold

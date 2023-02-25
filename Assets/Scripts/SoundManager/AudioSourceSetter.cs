@@ -6,12 +6,14 @@ using UnityEngine.Audio;
 
 [System.Serializable]
 public class AudioSourceSetter {
+   
     public enum EAudioType
     {
         BGM,
         EFFECT,
         VOICE
     }
+    public string speakerName = "Default";
     public AudioMixerGroup audioMixerGroup;
     public EAudioType _audioType;
     public bool isLoop = false;

@@ -114,9 +114,17 @@ public class SoundManager : SingleTon<SoundManager>
 
     }
 
+    public AudioSource GetAudioSource(string speakerName) { 
+        return audioSourceList[speakerName];
+    }
+
 
     public List<string> GetAudioSourceID()
     {
         return audioSourceList.Keys.ToList();
+    }
+
+    public float getSettingSound(string audioType) { 
+        return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
     }
 }

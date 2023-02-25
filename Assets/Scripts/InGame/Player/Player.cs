@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     //public int playerId { get; set; }
     public int exp { get; set; }
 
+    public int k = 5; //test
+
     /*Unity Mono*/
     #region Mono
     private void Awake()

@@ -1,3 +1,5 @@
+using BFM;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,17 +16,21 @@ public enum GRID
     H,
 }
 
-public class MonsterSpawner : MonoBehaviour
+public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 {
     [SerializeField] private MonsterPoolManager monsterPoolManager;
     [SerializeField] private float spawnTime = 1f;
+    [SerializeField] private int stageId = 10101;
 
+    private int spawnAmount;
+    private int spawnCount;
     private Dictionary<string, IEnumerator> monsters;
-
     private WaitForSeconds time;
 
-    private void Awake()
+    protected override void Awake()
     {
+        spawnAmount = Convert.ToInt32(CSVReader.Read("StageTable", stageId.ToString(), "LimitAmount"));
+        spawnCount = 0;
         monsters = new Dictionary<string, IEnumerator>();
         time = new WaitForSeconds(spawnTime);
     }
@@ -32,6 +38,11 @@ public class MonsterSpawner : MonoBehaviour
     private void Start()
     {
         StartSpawn();
+    }
+
+    private void Update()
+    {
+        DebugManager.Instance.PrintDebug(spawnCount);
     }
 
     private void StartSpawn()
@@ -52,9 +63,18 @@ public class MonsterSpawner : MonoBehaviour
 
         while (true)
         {
-            //Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), (int)LayerConstant.MONSTER));
-            Monster monster = monsterPoolManager.SpawnMonster(CameraManager.Instance.RandomPosInGrid(spawnPos.ToString()), mobName);
+            if (spawnCount < spawnAmount)
+            {
+                Monster monster = monsterPoolManager.SpawnMonster(CameraManager.Instance.RandomPosInGrid(spawnPos.ToString()), mobName);
+                ++spawnCount;
+            }
             yield return time;
         }
+    }
+
+    public void DeSpawnMonster(Monster monster)
+    {
+        MonsterPoolManager.Instance.DespawnMonster(monster);
+        --spawnCount;
     }
 }

@@ -106,7 +106,7 @@ public class Monster : MonoBehaviour
         if (collision.gameObject.tag.Equals("PlayerSkill"))
         {
             DropItem();
-            MonsterPoolManager.Instance.DespawnMonster(this);
+            MonsterSpawner.Instance.DeSpawnMonster(this);
         }
     }
 

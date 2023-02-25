@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private int fraction;             //분율
     private int coolTimeConstant;     //재사용대기시간감소상수
     private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
+    private int criticalRatio;
 
     private SpineManager anime;
     private PlayerManager playerManager;
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
         fraction = Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
         coolTimeConstant = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeOffset", "ConfigValue"));
         coolTimeCoefficient = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeMax", "ConfigValue"));
+        criticalRatio = Convert.ToInt32(CSVReader.Read("BattleConfig", "CriticalRatio", "ConfigValue"));
     }
 
     //playerData의 경우 Awake단계에서 PlayerManager로 인한 데이터 셋팅이 이루어지지 않으므로 Start에 배치
@@ -158,7 +160,7 @@ public class Player : MonoBehaviour
     //크리티컬데미지 증감함수
     public int ReturnCriDamage()
     {
-        return playerManager.playerData.criDamage + weight.criDamage;
+        return playerManager.playerData.criDamage + weight.criDamage * criticalRatio;
     }
 
     //재사용대기시간 = 기존재사용대기시간*(재사용대기시간감소^2/(재사용대기시간감소^2+재사용대기시간감소상수))*재사용대기시간감소최대치조절계수/10000

@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class SettingManager
 {
+    public const string TOTAL_SOUND = "TOTAL_SOUND";
+
+
     private Dictionary<string, int> _settings { get; set; }
     public Dictionary<string, int> settings
     {

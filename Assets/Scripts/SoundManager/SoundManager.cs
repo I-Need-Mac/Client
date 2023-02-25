@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SoundManager : SingleTon<SoundManager>
 {
-    Dictionary<string, AudioClip> audioClipsList = new Dictionary<string, AudioClip>();
     Dictionary<string, AudioSource> audioSourceList = null;
 
     private const float soundNomalizer = 10.0f;
@@ -41,20 +40,7 @@ public class SoundManager : SingleTon<SoundManager>
         }
     }
 
-    public bool AddAudioClip(string audioKey, AudioClip audioClip)
-    {
-        DebugManager.Instance.PrintDebug(audioClip != null, "Invalid AudioClip! AudioKey= " + audioKey.ToString());
 
-        if (audioClipsList.ContainsKey(audioKey) == true)
-        {
-            DebugManager.Instance.PrintDebug("Already Registed AudioClip! AudioKey= " + audioKey.ToString());
-            return false;
-        }
-        audioClipsList.Add(audioKey, audioClip);
-
-        return true;
-
-    }
 
     public bool AddAudioSource(string audioSourceKey, bool isLoop, AudioSourceSetter audioSetting)
     {
@@ -70,7 +56,7 @@ public class SoundManager : SingleTon<SoundManager>
 
             audioSourceList.Add(audioSourceKey, gameManager.AddComponent<AudioSource>());
             audioSourceList[audioSourceKey].loop = isLoop;
-            audioSourceList[audioSourceKey].volume = SettingManager.Instance.GetSettingValue(audioSetting.audioType) / soundNomalizer;
+            audioSourceList[audioSourceKey].volume = SettingManager.Instance.GetSettingValue(audioSetting.audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
 
             audioSourceList[audioSourceKey].bypassEffects = audioSetting.isBypassEffects;
             audioSourceList[audioSourceKey].priority = audioSetting.priority;
@@ -89,31 +75,26 @@ public class SoundManager : SingleTon<SoundManager>
 
     public void SetAudioSound(int soundVol, string audioSourceKey)
     {
-        if (audioClipsList.ContainsKey(audioSourceKey) == false)
+        if (audioSourceList.ContainsKey(audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist AudioSource! AudioSource= " + audioSourceKey);
             return;
         }
 
-        audioSourceList[audioSourceKey].volume = soundVol / soundNomalizer;
+        audioSourceList[audioSourceKey].volume = soundVol / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
     }
 
     public void SetAllAudioSound(int soundVol)
     {
         foreach (KeyValuePair<string, AudioSource> items in audioSourceList)
         {
-            audioSourceList[items.Key].volume = soundVol / soundNomalizer;
+            audioSourceList[items.Key].volume = soundVol / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
         }
     }
 
 
-    public void PlayAudioClip(string audioKey, string audioSourceKey)
+    public void PlayAudioClip(string audioSourceKey, AudioClip audioClip)
     {
-        if (audioClipsList.ContainsKey(audioKey) == false)
-        {
-            DebugManager.Instance.PrintDebug("Not exist AudioClip! AudioKey= " + audioKey);
-            return;
-        }
         if (audioSourceList.ContainsKey(audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist audioSourceKey! audioSourceKey= " + audioSourceKey);
@@ -122,11 +103,11 @@ public class SoundManager : SingleTon<SoundManager>
 
 
         DebugManager.Instance.PrintDebug("Shoot Sound with AudioSourceKey= " + audioSourceKey);
-        DebugManager.Instance.PrintDebug("Shoot Sound with AudioKey= " + audioKey);
+
 
 
         audioSourceList[audioSourceKey].Stop();
-        audioSourceList[audioSourceKey].clip = audioClipsList[audioKey];
+        audioSourceList[audioSourceKey].clip = audioClip;
         audioSourceList[audioSourceKey].Play();
 
 

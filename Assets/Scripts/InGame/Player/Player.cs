@@ -8,28 +8,29 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private const float HP_REGEN_PER_SECOND = 1f;
-    private const float PER = 10000f; //분율 수치 ex)100 -> 백분율, 1000 -> 천분율, 10000 -> 만분율
-    private const string CONFIG_VALUE = "ConfigValue";
 
     [SerializeField] private string skillId = "10101";
     [SerializeField] private int moveSpeed = 5;
 
     private Rigidbody2D playerRigidbody;
     private Vector3 playerDirection;
-    private float coolTimeConstant;     //재사용대기시간감소상수
-    private float coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
+
+    private int fraction;             //분율
+    private int coolTimeConstant;     //재사용대기시간감소상수
+    private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
 
     private SpineManager anime;
     private PlayerManager playerManager;
 
     private PlayerData weight = new PlayerData(); //증감치
 
+    private int needExp;
+
     public PlayerData playerData { get; private set; } = new PlayerData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
     //public int playerId { get; set; }
-    public int exp { get; set; }
-
-    public int k = 5; //test
+    public int exp { get; private set; }
+    public int level { get; private set; }
 
     /*Unity Mono*/
     #region Mono
@@ -42,10 +43,19 @@ public class Player : MonoBehaviour
         anime = GetComponent<SpineManager>();
         playerManager = transform.Find("PlayerManager").GetComponent<PlayerManager>();
 
-        coolTimeConstant = findConstant("CoolTimeConstant");
-        coolTimeCoefficient = findConstant("CoolTimeCoefficient");
+        ConfigSetting();
 
         gameObject.tag = "Player";
+
+        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+        level = 1;
+    }
+
+    private void ConfigSetting()
+    {
+        fraction = Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
+        coolTimeConstant = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeOffset", "ConfigValue"));
+        coolTimeCoefficient = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeMax", "ConfigValue"));
     }
 
     //playerData의 경우 Awake단계에서 PlayerManager로 인한 데이터 셋팅이 이루어지지 않으므로 Start에 배치
@@ -88,26 +98,6 @@ public class Player : MonoBehaviour
             DebugManager.Instance.PrintDebug("MoveSpeed: {0}", moveSpeed);
         }
     }
-    #endregion
-
-    /*유틸*/
-    #region Util
-    //상수값 읽어오는 함수
-    private int findConstant(string constantName)
-    {
-        Dictionary<string, Dictionary<string, object>> configTable = CSVReader.Read("Battleconfig");
-
-        try
-        {
-            return Convert.ToInt32(configTable[constantName][CONFIG_VALUE]);
-        }
-        catch (Exception e)
-        {
-            DebugManager.Instance.PrintDebug("[ERROR] 상수 이름을 다시 확인해 주세요");
-            return 0;
-        }
-    }
-
     #endregion
 
     /*키보드 입력 및 움직임 관련*/
@@ -174,7 +164,7 @@ public class Player : MonoBehaviour
     //재사용대기시간 = 기존재사용대기시간*(재사용대기시간감소^2/(재사용대기시간감소^2+재사용대기시간감소상수))*재사용대기시간감소최대치조절계수/10000
     public float ReturnCoolDown()
     {
-        return playerManager.playerData.coolDown * ((float)Math.Pow(weight.coolDown, 2) / ((float)Math.Pow(weight.coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient / PER;
+        return playerManager.playerData.coolDown * ((float)Math.Pow(weight.coolDown, 2) / ((float)Math.Pow(weight.coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient / fraction;
     }
 
     //체젠량
@@ -214,7 +204,7 @@ public class Player : MonoBehaviour
     //크리티컬 판별 함수
     private bool IsCritical()
     {
-        return UnityEngine.Random.Range(0f, 1f) <= (ReturnCriRatio() / PER);
+        return UnityEngine.Random.Range(0f, 1f) <= (ReturnCriRatio() / fraction);
     }
 
     //최종적으로 몬스터에게 가하는 데미지 계산 함수
@@ -237,7 +227,7 @@ public class Player : MonoBehaviour
         //크리티컬 체크
         if (IsCritical())
         {
-            return (int)(originalDamage * (1 + ReturnCriDamage() / PER)); //소수점 버림
+            return (int)(originalDamage * (1 + ReturnCriDamage() / fraction)); //소수점 버림
         }
         return originalDamage;
     }
@@ -291,6 +281,26 @@ public class Player : MonoBehaviour
     //    currentHp -= 10;
     //    DebugManager.Instance.PrintDebug("현재체력: {0}", currentHp);
     //}
+    #endregion
+
+    /*캐릭터 레벨 관련*/
+    #region
+    public void GetExp(int exp)
+    {
+        this.exp += exp;
+
+        if (this.exp >= needExp)
+        {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        ++level;
+        exp -= needExp;
+        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+    }
     #endregion
 
     /*스킬 관련*/

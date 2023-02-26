@@ -45,11 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8f6ac1cb4c0fff4396ca0842acaf706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSpeed: 10
-  types:
-  - {fileID: 21300000, guid: 4d609f9b0ee1ee144bfb6775f860fb16, type: 3}
-  - {fileID: 21300000, guid: 3f77805fffcb02044a4565bf449feb81, type: 3}
-  - {fileID: 21300000, guid: a2c145723f2844046b57bdf7e4ed42f7, type: 3}
+  itemId: 101
+  itemSpeed: 5
 --- !u!212 &8462205984165839752
 SpriteRenderer:
   m_ObjectHideFlags: 0

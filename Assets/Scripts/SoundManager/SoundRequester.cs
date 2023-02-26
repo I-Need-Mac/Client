@@ -9,15 +9,14 @@ public class SoundRequester : MonoBehaviour
     // Start is called before the first frame update
 
 
-    private const string ALONE = "ALONE";
-    private Dictionary<string,AudioSource> audioSources;
 
-    public Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem> shootingSounds;
+    private Dictionary<string,AudioSource> audioSources = new Dictionary<string, AudioSource>();
+
+    public Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem> shootingSounds = new Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem>();
     
     
     [ExecuteInEditMode]
   
-    public string soundSpeakerName = ALONE;
 
 
     public List<AudioSourceSetter> speakerSettings;
@@ -26,20 +25,8 @@ public class SoundRequester : MonoBehaviour
 
     void Start()
     {
-        makeSpeakers();
-        convertAudioClipData();
-
-        if (soundSpeakerName.Equals(ALONE)) {
-
-
-        }
-        else { 
-        
-        
-        
-        
-        }
-
+        MakeSpeakers();
+        ConvertAudioClipData();
 
     }
 
@@ -51,9 +38,10 @@ public class SoundRequester : MonoBehaviour
 
     }
 
-    private void convertAudioClipData() {
+    private void ConvertAudioClipData() {
         foreach (SoundPackItem items in soundPackItems)
         {
+            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource Data " + items.usingSpeaker);
             shootingSounds.Add(items.SOUNDSITUATION, items);
             if (!audioSources.ContainsKey(items.usingSpeaker))
             {
@@ -64,10 +52,12 @@ public class SoundRequester : MonoBehaviour
 
     }
 
-    private bool makeSpeakers() {
- 
+    private bool MakeSpeakers() {
+      
         foreach (AudioSourceSetter items in speakerSettings) {
-            audioSources.Add(items.speakerName, gameObject.AddComponent<AudioSource>());
+            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.speakerName);
+            SoundManager.Instance.AddAudioSource("SS",false, items);
+            audioSources.Add(items.speakerName, gameObject.AddComponent<AudioSource>()); 
             audioSources[items.speakerName].loop = items.isLoop;
             audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType);
 
@@ -84,8 +74,11 @@ public class SoundRequester : MonoBehaviour
         return true;
     }
 
-    public void ChangeSituation(int situation) { 
-        
+    public void ChangeSituation(SoundSituation.SOUNDSITUATION situation) {
+        DebugManager.Instance.PrintDebug("SoundRequester : SoundSource Call " + shootingSounds[situation].usingSpeaker);
+        audioSources[shootingSounds[situation].usingSpeaker].Stop();
+        audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
+        audioSources[shootingSounds[situation].usingSpeaker].Play();
     }
 
 

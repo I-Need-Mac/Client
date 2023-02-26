@@ -21,7 +21,11 @@ public class SoundSituation
         SPECAIL,
         EXPLORE,
         SHOOT,
-        DEMISE
+        DEMISE,
+        PRESS,
+        RELEASE,
+        HOVER,
+        CLICK
   
     
     }

@@ -9,7 +9,8 @@ public class SoundRequesterBtn : SoundRequester
 
     private void OnMouseDown()
     {
-        RequestShootSound();
+        DebugManager.Instance.PrintDebug("SoundRequest : Press");
+        this.ChangeSituation(SoundSituation.SOUNDSITUATION.PRESS); 
     }
 
 

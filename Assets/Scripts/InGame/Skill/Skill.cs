@@ -50,7 +50,7 @@ public class Skill
             Vector3 spawnPos = new Vector3(Mathf.Cos(projectile.angle * Mathf.Deg2Rad), Mathf.Sin(projectile.angle * Mathf.Deg2Rad), 0);
             projectile.Fire(shooter, spawnPos);
         }
-        yield return new WaitForSeconds(5); //지속시간인데 이거 물어봐야함 스킬데이터에없음
+        yield return coolTime; //지속시간인데 이거 물어봐야함 스킬데이터에없음
     }
 
     //Protect type skill activation
@@ -65,7 +65,7 @@ public class Skill
     {
         if (!skillData.isEffect)
         {
-            yield return new WaitForSeconds(skillData.coolTime);
+            yield return coolTime;
         }
         while (true)
         {
@@ -75,7 +75,7 @@ public class Skill
                 projectile.Fire(shooter, LookDirection());
                 yield return new WaitForSeconds(0.2f); //발사 간격
             }
-            yield return new WaitForSeconds(skillData.coolTime);
+            yield return coolTime;
         }
     }
 

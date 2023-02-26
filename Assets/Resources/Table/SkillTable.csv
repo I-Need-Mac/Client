@@ -3,7 +3,7 @@ SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistan
 int,String,String,String,String,Int,Bool,String,String,int,bool,bool,int,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType
 10100,Skill_TestName1,Skill_TestExplain1,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,1,5,5,TRUE,0,1,Stun,0,Melee,Straight
 10101,Skill_TestName1,Skill_TestExplain1,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,2,5,5,FALSE,0,1,Stun,0,Front,Straight
-10102,Skill_TestName1,Skill_TestExplain1,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,1,5,5,TRUE,0,1,Stun,0,Back,Straight
+10102,Skill_TestName1,Skill_TestExplain1,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,3,5,5,TRUE,0,1,Stun,0,Back,Straight
 10200,Skill_TestName2,Skill_TestExplain2,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,1,5,5,FALSE,0,1,Stun,2,Top,Protect
 10300,Skill_TestName3,Skill_TestExplain3,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,4,TRUE,FALSE,5,5,5,TRUE,0,1,Slow,30,Bottom,Satellite
 10400,Skill_TestName4,Skill_TestExplain4,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,3,5,5,FALSE,0,1,Nuckback,50,RandomDrop,Drop

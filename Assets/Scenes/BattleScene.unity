@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterPoolManager: {fileID: 1699318969}
-  spawnTime: 1
+  spawnTime: 1111
   stageId: 10101
 --- !u!4 &414780806
 Transform:

@@ -15,7 +15,6 @@ public class SoundRequester : MonoBehaviour
     public AudioClip shootingSound;
     public AudioSourceSetter sourceSetter;
 
-    public string soundClipName = "Have To Write";
     public string soundShooterName = "BASE";
     
 
@@ -27,24 +26,13 @@ public class SoundRequester : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
         
 
 
     }
 
 
-    public bool AddAudioClipToManager() {
-        if (soundClipName.Equals("Have To Write"))
-        {
-            DebugManager.Instance.PrintDebug("Have To AudioClipName");
-            return false;
-
-        }
- 
-
-        return SoundManager.Instance.AddAudioClip(soundClipName, shootingSound);
-    }
 
     public void RequestShootSound() {
         if (soundShooterName.Equals("BASE"))
@@ -54,8 +42,7 @@ public class SoundRequester : MonoBehaviour
    
         SoundManager.Instance.AddAudioSource(soundShooterName, sourceSetter.isLoop, sourceSetter);
 
-        AddAudioClipToManager();
-        SoundManager.Instance.PlayAudioClip(soundClipName, soundShooterName);
+        SoundManager.Instance.PlayAudioClip(soundShooterName,shootingSound);
     }
 
 }

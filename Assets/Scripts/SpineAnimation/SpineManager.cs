@@ -5,11 +5,18 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+public enum Subject
+{
+    PLAYER,
+    MONSTER,
+}
+
 public class SpineManager : MonoBehaviour
 {
     const string SPINE_HOME = "Arts/Spine/";
     const string SPINE_STATE = "ReferenceAssets/";
 
+    [SerializeField] private Subject subject = Subject.PLAYER;
     [SerializeField] private AnimationReferenceAsset[] animationClips;
     [SerializeField] private SkeletonAnimation skeletonAnimation;
     [SerializeField] private float spineSpeed = 1;
@@ -57,7 +64,18 @@ public class SpineManager : MonoBehaviour
     private void SpineSetting()
     {
         animationState = AnimationConstant.IDLE;
-        path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(GameManager.Instance.GetPlayerId()), "CharacterSpinePath") + "/";
+
+        switch (subject)
+        {
+            case Subject.PLAYER:
+                path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(GameManager.Instance.GetPlayerId()), "CharacterSpinePath") + "/";
+                break;
+            case Subject.MONSTER:
+                path = GetComponent<Monster>().monsterData.monsterImage + "/Animation/Spine/";
+                DebugManager.Instance.PrintDebug(">>>>" + path);
+                break;
+        }
+
         skeletonAnimation.timeScale = spineSpeed;
 
         SkeletonAnimation character = transform.Find("Character").GetComponent<SkeletonAnimation>();

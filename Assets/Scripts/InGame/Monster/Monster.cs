@@ -9,36 +9,46 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] private int monsterId;
 
-    private GameObject player;
+    private Player player;
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
-    private Transform dropItemField;
+
+    private SpineManager anime;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
 
-    private Ray2D ray;
-    private RaycastHit2D hitData;
-
     private void Awake()
     {
+        anime = GetComponent<SpineManager>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector3.zero;
         lookDirection = Vector3.right;
-        dropItemField = GameObject.Find("DropItemsOnField").transform;
         transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
         MonsterSetting(Convert.ToString(monsterId));
     }
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameManager.Instance.player;
+    }
+
+    private void Update()
+    {
+        anime.SetCurrentAnimation();
     }
 
     private void FixedUpdate()
     {
+        AnimationSetting();
         Move();
         //RayTest();
+    }
+
+    private void AnimationSetting()
+    {
+        anime.animationState = AnimationConstant.RUN;
+        anime.SetDirection(monsterDirection);
     }
 
     private void Move()
@@ -95,8 +105,13 @@ public class Monster : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("PlayerSkill"))
         {
-            DropItem();
-            MonsterPoolManager.Instance.DespawnMonster(this);
+            monsterData.SetHp(monsterData.hp - player.ReturnAttack());
+            DebugManager.Instance.PrintDebug(monsterData.hp);
+            if (monsterData.hp <= 0)
+            {
+                DropItem();
+                MonsterSpawner.Instance.DeSpawnMonster(this);
+            }
         }
     }
 

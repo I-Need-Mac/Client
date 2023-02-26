@@ -44,8 +44,8 @@ public class Item : MonoBehaviour
         {
             isCollision = false;
             gameObject.SetActive(false);
-            GameManager.Instance.player.exp += 10;
-            DebugManager.Instance.PrintDebug("get exp: 10\ntotal exp: " + GameManager.Instance.player.exp);
+            GameManager.Instance.player.GetExp(10);
+            //DebugManager.Instance.PrintDebug("get exp: 10\ntotal exp: " + GameManager.Instance.player.exp);
         }
     }
 }

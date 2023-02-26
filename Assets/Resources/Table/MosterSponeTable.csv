@@ -1,5 +1,5 @@
-﻿SponeTime,SponeMobID,SponeMobAmount
-몹 스폰 타이밍,스폰 몹 ID,스폰 몹 수
-Int,Int_Arr,Int_Arr
-3000,500,100
--1,100,210
+﻿SponeMobID,SponeTime,SponeMobAmount
+스폰 몹 ID,몹 스폰 타이밍,스폰 몹 수
+Int_Arr,Int,Int_Arr
+500,3000,100
+100,-1,210

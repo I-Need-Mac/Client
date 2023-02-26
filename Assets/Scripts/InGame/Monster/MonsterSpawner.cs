@@ -40,11 +40,6 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         StartSpawn();
     }
 
-    private void Update()
-    {
-        DebugManager.Instance.PrintDebug(spawnCount);
-    }
-
     private void StartSpawn()
     {
         monsters.Add("Nien", SpawnMonster("Nien", GRID.A));

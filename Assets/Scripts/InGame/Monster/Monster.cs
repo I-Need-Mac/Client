@@ -9,7 +9,7 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] private int monsterId;
 
-    private GameObject player;
+    private Player player;
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
 
@@ -30,7 +30,7 @@ public class Monster : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameManager.Instance.player;
     }
 
     private void Update()
@@ -105,8 +105,13 @@ public class Monster : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("PlayerSkill"))
         {
-            DropItem();
-            MonsterSpawner.Instance.DeSpawnMonster(this);
+            monsterData.SetHp(monsterData.hp - player.ReturnAttack());
+            DebugManager.Instance.PrintDebug(monsterData.hp);
+            if (monsterData.hp <= 0)
+            {
+                DropItem();
+                MonsterSpawner.Instance.DeSpawnMonster(this);
+            }
         }
     }
 

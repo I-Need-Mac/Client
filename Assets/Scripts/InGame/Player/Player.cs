@@ -214,7 +214,7 @@ public class Player : MonoBehaviour
     //오리지널데미지 = 공격력 + or * 스킬피해
     //크리티컬데미지 = 오리지널데미지 * 크리티컬데미지
     //일단 스킬피해 제외하고 구현
-    private int TotalDamage(int skillDamage, CALC_DAMAGE_TYPE type)
+    public int TotalDamage(int skillDamage, CALC_DAMAGE_TYPE type)
     {
         int originalDamage;
         if (type == CALC_DAMAGE_TYPE.PLUS)
@@ -229,7 +229,7 @@ public class Player : MonoBehaviour
         //크리티컬 체크
         if (IsCritical())
         {
-            return (int)(originalDamage * (1 + ReturnCriDamage() / fraction)); //소수점 버림
+            return ReturnCriDamage();
         }
         return originalDamage;
     }

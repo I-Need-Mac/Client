@@ -26,12 +26,14 @@ public class SoundRequester : MonoBehaviour
  
     private void Awake()
     {
-        soundRequester = new GameObject("SoundRequester");
-        soundRequester.transform.SetParent(this.transform);
+
+       
+
         
     }
     void Start()
     {
+       
 
         MakeSpeakers();
         ConvertAudioClipData();
@@ -49,7 +51,11 @@ public class SoundRequester : MonoBehaviour
 
 
     private bool MakeSpeakers() {
-      
+        soundRequester = new GameObject("SoundRequester");
+        soundRequester.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        soundRequester.transform.SetParent(this.transform);
+ 
+
         foreach (AudioSourceSetter items in speakerSettings) {
             DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.speakerName);
             
@@ -57,7 +63,9 @@ public class SoundRequester : MonoBehaviour
 
             if (items.loadSettingFrom.Equals(null)) {
                 GameObject speaker = new GameObject(items.speakerName);
+                speaker.transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);
                 speaker.transform.SetParent(soundRequester.transform);
+                
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
                 SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
@@ -84,6 +92,7 @@ public class SoundRequester : MonoBehaviour
                 GameObject speaker = Instantiate(items.loadSettingFrom);
                 
                 speaker.name = items.speakerName;
+                speaker.transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);
                 speaker.transform.SetParent(soundRequester.transform);
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());

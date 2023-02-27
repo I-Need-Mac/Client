@@ -42,7 +42,7 @@ public class SoundManager : SingleTon<SoundManager>
 
 
 
-    public bool AddAudioSource(string audioSourceKey, bool isLoop, AudioSourceSetter audioSetting)
+    public bool AddAudioSource(string audioSourceKey, AudioSource audioSource)
     {
         GameObject gameManager = GameObject.Find("SoundManager");
 
@@ -54,18 +54,8 @@ public class SoundManager : SingleTon<SoundManager>
         else
         {
 
-            audioSourceList.Add(audioSourceKey, gameManager.AddComponent<AudioSource>());
-            audioSourceList[audioSourceKey].loop = isLoop;
-            audioSourceList[audioSourceKey].volume = SettingManager.Instance.GetSettingValue(audioSetting.audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
+            audioSourceList.Add(audioSourceKey, audioSource);
 
-            audioSourceList[audioSourceKey].bypassEffects = audioSetting.isBypassEffects;
-            audioSourceList[audioSourceKey].priority = audioSetting.priority;
-            audioSourceList[audioSourceKey].pitch = audioSetting.pitch;
-            audioSourceList[audioSourceKey].panStereo = audioSetting.streoPan;
-            audioSourceList[audioSourceKey].outputAudioMixerGroup = audioSetting.audioMixerGroup;
-
-            audioSourceList[audioSourceKey].volume = audioSetting.volume;
-            audioSourceList[audioSourceKey].spatialBlend = audioSetting.spatialBlend;
 
             return true;
         }

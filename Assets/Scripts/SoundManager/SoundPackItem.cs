@@ -6,7 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class SoundPackItem
 {
-    public SoundSituation.SOUNDSITUATION SOUNDSITUATION;
-    public string usingSpeaker = "Default";
-    public AudioClip audioClip;
+    [SerializeField] public SoundSituation.SOUNDSITUATION SOUNDSITUATION;
+    [SerializeField] public string usingSpeaker = "Defualt";
+    [SerializeField] [Range (0,60)]public float delay = 0f;
+    [SerializeField] public AudioClip audioClip;
 }

@@ -25,7 +25,9 @@ public class SoundSituation
         PRESS,
         RELEASE,
         HOVER,
-        CLICK
+        CLICK,
+        OUT,
+        ENTER
   
     
     }

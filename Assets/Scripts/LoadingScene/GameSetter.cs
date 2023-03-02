@@ -8,16 +8,18 @@ using UnityEngine.Events;
 public class GameSetter : MonoBehaviour
 {
     // Start is called before the first frame update
-
+    [SerializeField] SoundRequesterBGM a;
     private void Awake()
     {
 
         SettingManager.Instance.ReadSettingFile();
         SoundManager.Instance.CreateSoundManager();
 
+
     }
     protected async void Start()  
-    {
+    {   
+      
 
         //WebRequestManager.Instance.ReceiveEventHandlerEvent += Instance_ReceiveEventHandlerEvent;
         //PostData_User();
@@ -35,5 +37,9 @@ public class GameSetter : MonoBehaviour
     void Update()
     {
 
+    }
+    private void OnMouseDown()
+    {
+        a.ChangeSituation(BGMSituation.BGMSITUATION.CHANGE_SCENE);
     }
 }

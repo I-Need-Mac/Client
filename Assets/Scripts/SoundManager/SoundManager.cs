@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class SoundManager : SingleTon<SoundManager>
 {
-    Dictionary<string, AudioSource> audioSourceList = null;
+ 
 
+    Dictionary<string, AudioSource> audioSourceList = null;
+    
+
+    GameObject soundManager;
+    SoundManagerUpdater soundManagerUpdater;
+    
     private const float soundNomalizer = 10.0f;
     private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
 
@@ -21,12 +27,14 @@ public class SoundManager : SingleTon<SoundManager>
 
 
 
-        GameObject gameManager = GameObject.Find("SoundManager");
+        soundManager = GameObject.Find("SoundManager");
         {
-            gameManager = new GameObject("SoundManager");
-            DebugManager.Instance.PrintDebug(gameManager != null, "Can not create new SoundManager GameeObject");
+            soundManager = new GameObject("SoundManager");
+            soundManager.AddComponent<SoundManagerUpdater>();
+            soundManagerUpdater = soundManager.GetComponent<SoundManagerUpdater>();
+            DebugManager.Instance.PrintDebug(soundManager != null, "Can not create new SoundManager GameeObject");
         }
-        GameObject.DontDestroyOnLoad(gameManager);
+        GameObject.DontDestroyOnLoad(soundManager);
 
         GameObject bgmRequester = GameObject.Find("BGMRequester");
         if (bgmRequester != null)
@@ -104,6 +112,10 @@ public class SoundManager : SingleTon<SoundManager>
 
     }
 
+    public void RequestSetCallBack(AudioSource targetSpeaker, SoundRequester soundRequester, PackItem packItem){
+        soundManagerUpdater.AddRequestSource(targetSpeaker,soundRequester,packItem);
+    }
+
     public AudioSource GetAudioSource(string speakerName) { 
         return audioSourceList[speakerName];
     }
@@ -117,4 +129,6 @@ public class SoundManager : SingleTon<SoundManager>
     public float getSettingSound(string audioType) { 
         return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
     }
+
+
 }

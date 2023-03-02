@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundRequesterBtn : SoundRequester
+public class SoundRequesterBtn : SoundRequesterSFX
 {
 
 

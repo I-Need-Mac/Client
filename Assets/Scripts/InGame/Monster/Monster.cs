@@ -7,8 +7,6 @@ using UnityEngine.PlayerLoop;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] private int monsterId;
-
     private GameObject player;
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
@@ -17,6 +15,7 @@ public class Monster : MonoBehaviour
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
+    public int monsterId { get; set; }
 
     private void Awake()
     {
@@ -25,11 +24,11 @@ public class Monster : MonoBehaviour
         monsterDirection = Vector3.zero;
         lookDirection = Vector3.right;
         transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
-        MonsterSetting(Convert.ToString(monsterId));
     }
 
     private void Start()
     {
+        //MonsterSetting(Convert.ToString(monsterId));
         player = GameObject.FindWithTag("Player");
     }
 
@@ -66,7 +65,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void MonsterSetting(string monsterId)
+    public void MonsterSetting(string monsterId)
     {
         //Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
         //if (monsterTable.ContainsKey(monsterId))

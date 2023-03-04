@@ -5,26 +5,36 @@ using BFM;
 
 public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
 {
-    [SerializeField] private MonsterPool nien;
-    [SerializeField] private MonsterPool nienM;
-    [SerializeField] private MonsterPool nienL;
-
-    private Dictionary<string, MonsterPool> pools;
+    //private Dictionary<int, MonsterPool> pools;
+    private MonsterPool pool;
 
     protected override void Awake()
     {
-        pools = new Dictionary<string, MonsterPool>
-        {
-            {"Nien", nien},
-            {"Nien_M", nienM},
-            {"Nien_L", nienL},
-        };
+        //pools = new Dictionary<string, MonsterPool>
+        //{
+        //    {"Nien", nien},
+        //    {"Nien_M", nienM},
+        //    {"Nien_L", nienL},
+        //};
+        //pools = new Dictionary<int, MonsterPool>();
+        pool = GetComponentInChildren<MonsterPool>();
     }
 
-    public Monster SpawnMonster(Vector2 pos, string name)
+    public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
-        Monster monster = pools[name].GetObject();
-        monster.gameObject.layer = (int) LayerConstant.MONSTER;
+        //if (!pools.ContainsKey(monsterId))
+        //{
+        //    pools.Add(monsterId, new MonsterPool());
+        //}
+        //Monster monster = pools[monsterId].GetObject();
+        //monster.gameObject.layer = (int) LayerConstant.MONSTER;
+        //monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
+        //monster.gameObject.SetActive(true);
+        //return monster;
+        Monster monster = pool.GetObject();
+        monster.monsterId = monsterId;
+        monster.MonsterSetting(monsterId.ToString());
+        monster.gameObject.layer = (int)LayerConstant.MONSTER;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
         monster.gameObject.SetActive(true);
         return monster;
@@ -32,6 +42,7 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
 
     public void DespawnMonster(Monster monster)
     {
-        pools[monster.monsterData.monsterName].ReleaseObject(monster);
+        //pools[monster.monsterId].ReleaseObject(monster);
+        pool.ReleaseObject(monster);
     }
 }

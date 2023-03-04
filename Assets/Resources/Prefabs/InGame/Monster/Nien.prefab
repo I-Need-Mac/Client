@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1699638082444328933}
   - component: {fileID: 4803922716238566342}
   - component: {fileID: 3493010296126981478}
-  - component: {fileID: 2081695399120109782}
+  - component: {fileID: 8234810604619190405}
+  - component: {fileID: 8867490490474512671}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -82,7 +83,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2081695399120109782
+--- !u!95 &8234810604619190405
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714877970592513221}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8867490490474512671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1714877970592513221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 0}
@@ -117,11 +137,12 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  translator:
+    autoReset: 1
+    useCustomMixMode: 1
+    layerMixModes: 
+    layerBlendModes: 
   updateTiming: 1
-  unscaledTime: 0
-  _animationName: 
-  loop: 1
-  timeScale: 1
 --- !u!1 &7134805949686260455
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4980690215867389772}
   - component: {fileID: 7316976300670100313}
-  - component: {fileID: 4272560095733769585}
+  - component: {fileID: -6227962503026112985}
   - component: {fileID: 7306540263261898952}
   - component: {fileID: 5307275750756691827}
   m_Layer: 0
@@ -169,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4ecd13599d8314e8d1c74f19e59bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4272560095733769585
+--- !u!114 &-6227962503026112985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,16 +199,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7134805949686260455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d9551ba00533514699483adb20ee67e, type: 3}
+  m_Script: {fileID: 11500000, guid: 335dc788efad8e6469b1994558ebc851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subject: 1
-  animationClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  skeletonAnimation: {fileID: 2081695399120109782}
-  spineSpeed: 1
 --- !u!50 &7306540263261898952
 Rigidbody2D:
   serializedVersion: 4

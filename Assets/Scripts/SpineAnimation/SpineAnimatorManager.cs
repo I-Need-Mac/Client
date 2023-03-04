@@ -19,7 +19,7 @@ public class SpineAnimatorManager : MonoBehaviour
 
     //public string animationState { get; set; }
 
-    private void Awake()
+    private void OnEnable()
     {
         Init();
     }

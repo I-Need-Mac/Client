@@ -8,11 +8,10 @@ using UnityEngine.PlayerLoop;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] private int monsterId;
-
     private Player player;
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
+    private bool isMovable = true;
 
     private SpineAnimatorManager spineAnimatorManager;
 
@@ -48,14 +47,28 @@ public class Monster : MonoBehaviour
     {
         spineAnimatorManager.SetDirection(transform, monsterDirection);
 
-        monsterDirection = (player.transform.position - transform.position).normalized;
-        monsterRigidbody.velocity = monsterDirection * 5f;
+        isMovable = !(((Vector2)player.transform.position - (Vector2)transform.position).sqrMagnitude <= monsterData.atkDistance);
+        if (isMovable)
+        {
+            monsterDirection = (player.transform.position - transform.position).normalized;
+            monsterRigidbody.velocity = monsterDirection * 5f;
+        }
+        else
+        {
+            monsterRigidbody.velocity = Vector3.zero;
+        }
+        
     }
 
     private void PlayAnimation()
     {
-        spineAnimatorManager.animator.SetBool("isAttack", ((Vector2)(player.transform.position - transform.position)).sqrMagnitude <= monsterData.atkDistance);
-        spineAnimatorManager.animator.SetBool("isMovable", monsterRigidbody.velocity != Vector2.zero);
+        //if (((Vector2)(player.transform.position - transform.position)).sqrMagnitude <= monsterData.atkDistance)
+        //{
+        //    spineAnimatorManager.animator.SetBool("isAttack", true);
+        //    spineAnimatorManager.animator.SetBool("isMovable", false);
+        //}
+        spineAnimatorManager.animator.SetBool("isAttack", !isMovable);
+        spineAnimatorManager.animator.SetBool("isMovable", isMovable);
     }
 
     public void MonsterSetting(string monsterId)

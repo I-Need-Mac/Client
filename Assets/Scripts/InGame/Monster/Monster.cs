@@ -1,4 +1,5 @@
 
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,14 +14,14 @@ public class Monster : MonoBehaviour
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
 
-    private SpineManager anime;
+    private SpineAnimatorManager spineAnimatorManager;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
 
     private void Awake()
     {
-        anime = GetComponent<SpineManager>();
+        spineAnimatorManager = GetComponent<SpineAnimatorManager>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector3.zero;
         lookDirection = Vector3.right;
@@ -35,35 +36,26 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        anime.SetCurrentAnimation();
+        PlayAnimation();
     }
 
     private void FixedUpdate()
     {
-        AnimationSetting();
         Move();
-        //RayTest();
-    }
-
-    private void AnimationSetting()
-    {
-        anime.animationState = AnimationConstant.RUN;
-        anime.SetDirection(monsterDirection);
     }
 
     private void Move()
     {
+        spineAnimatorManager.SetDirection(transform, monsterDirection);
+
         monsterDirection = (player.transform.position - transform.position).normalized;
         monsterRigidbody.velocity = monsterDirection * 5f;
     }
 
-    private void RayTest()
+    private void PlayAnimation()
     {
-        Debug.DrawRay(transform.position, monsterDirection * 3f);
-        if (Physics2D.Raycast(transform.position, monsterDirection, 3f, 3))
-        {
-            DebugManager.Instance.PrintDebug("detect obstacle");
-        }
+        spineAnimatorManager.animator.SetBool("isAttack", ((Vector2)(player.transform.position - transform.position)).sqrMagnitude <= monsterData.atkDistance);
+        spineAnimatorManager.animator.SetBool("isMovable", monsterRigidbody.velocity != Vector2.zero);
     }
 
     private void MonsterSetting(string monsterId)
@@ -124,25 +116,5 @@ public class Monster : MonoBehaviour
             }
         }
     }
-
-    //public float 
-
-    //// 이동
-    //if (sqrDistToPlayer < Mathf.Pow(viewDistance, 2))
-    //{
-    //    transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
-    //}
-
-    //// 자동공격
-    //if (Time.time > nextTimeAttack)
-    //{
-    //    sqrDistToPlayer = (player.transform.position - transform.position).sqrMagnitude;
-    //    if (sqrDistToPlayer < Mathf.Pow(atkDistance, 2))
-    //    {
-    //        nextTimeAttack = Time.time + atkSpeed;
-    //        Debug.Log(attack);
-    //        // 플레이어 체력 mosterData.attack 만큼 감소
-    //    }
-    //}
 
 }

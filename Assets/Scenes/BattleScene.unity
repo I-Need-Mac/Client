@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterPoolManager: {fileID: 1699318969}
-  spawnTime: 5
+  spawnTime: 3
   stageId: 10101
 --- !u!4 &414780806
 Transform:
@@ -1671,6 +1671,133 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expPool: {fileID: 572513377}
+--- !u!1001 &1939195452
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6167794479072710478, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_Name
+      value: AnimatorTestPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167794479072710478, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8324185995294554853, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5887308837382503794, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+--- !u!1 &1939195453 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2402666270762013036, guid: 4b755d364fd6e1f4da336490e3ad4444, type: 3}
+  m_PrefabInstance: {fileID: 1939195452}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1939195454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939195453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonDataAsset: {fileID: 0}
+  initialSkinName: 
+  fixPrefabOverrideViaMeshFilter: 2
+  initialFlipX: 0
+  initialFlipY: 0
+  updateWhenInvisible: 3
+  separatorSlotNames: []
+  zSpacing: 0
+  useClipping: 1
+  immutableTriangles: 0
+  pmaVertexColors: 1
+  clearStateOnDisable: 0
+  tintBlack: 0
+  singleSubmesh: 0
+  fixDrawOrder: 0
+  addNormals: 0
+  calculateTangents: 0
+  maskInteraction: 0
+  maskMaterials:
+    materialsMaskDisabled: []
+    materialsInsideMask: []
+    materialsOutsideMask: []
+  disableRenderingOnOverride: 1
+  translator:
+    autoReset: 1
+    useCustomMixMode: 1
+    layerMixModes: 
+    layerBlendModes: 
+  updateTiming: 1
+--- !u!95 &1939195455
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939195453}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2036105347
 GameObject:
   m_ObjectHideFlags: 0

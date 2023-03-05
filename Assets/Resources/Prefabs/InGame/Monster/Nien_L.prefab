@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2289011561423036013}
   - component: {fileID: 4562669318941141624}
-  - component: {fileID: 7030658306294393936}
+  - component: {fileID: -5312680883493213696}
   - component: {fileID: 4592773419862016489}
   - component: {fileID: 1404559665509852754}
   m_Layer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterId: 103
---- !u!114 &7030658306294393936
+--- !u!114 &-5312680883493213696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,16 +57,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4168407505360088006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d9551ba00533514699483adb20ee67e, type: 3}
+  m_Script: {fileID: 11500000, guid: 335dc788efad8e6469b1994558ebc851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subject: 1
-  animationClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  skeletonAnimation: {fileID: 5060196947469879799}
-  spineSpeed: 1
 --- !u!50 &4592773419862016489
 Rigidbody2D:
   serializedVersion: 4
@@ -115,7 +108,8 @@ GameObject:
   - component: {fileID: 5569993326422800068}
   - component: {fileID: 1760963520632953575}
   - component: {fileID: 7684107316517768263}
-  - component: {fileID: 5060196947469879799}
+  - component: {fileID: 6418056113142227879}
+  - component: {fileID: 8526174647396108515}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -186,7 +180,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5060196947469879799
+--- !u!95 &6418056113142227879
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554834801848284644}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8526174647396108515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,7 +208,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5554834801848284644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 0}
@@ -221,8 +234,9 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  translator:
+    autoReset: 1
+    useCustomMixMode: 1
+    layerMixModes: 
+    layerBlendModes: 
   updateTiming: 1
-  unscaledTime: 0
-  _animationName: 
-  loop: 1
-  timeScale: 1

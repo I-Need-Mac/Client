@@ -15,6 +15,7 @@ public class PlayerData
     public int projectileAdd { get; private set; }                  //투사체 증가 개수
     public int moveSpeed { get; private set; }                      //이동 속도
     public int getItemRange { get; private set; }                   //아이템 획득 범위
+    public string characterSpinePath { get; private set; }
     ////스킬들을 저장할 Dic (스킬이름, 스킬)
     //public Dictionary<string, Skill> skills { get; private set; } = new Dictionary<string, Skill>();
     public List<Skill> skills { get; private set; } = new List<Skill>();
@@ -31,6 +32,7 @@ public class PlayerData
     public void SetProjectileAdd(int projectileAdd) { this.projectileAdd = projectileAdd; }
     public void SetMoveSpeed(int moveSpeed) { this.moveSpeed = moveSpeed; }
     public void SetGetItemRange(int getItemRange) { this.getItemRange = getItemRange; }
+    public void SetCharacterSpinePath(string characterSpinePath) { this.characterSpinePath = characterSpinePath; }
     //public void SetSkill(Skill skill) { skills.Add(skill.skillData.name, skill); }
     public void SetSkill(Skill skill) { skills.Add(skill); }
 

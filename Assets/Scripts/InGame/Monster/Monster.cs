@@ -1,4 +1,5 @@
 
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,25 +8,24 @@ using UnityEngine.PlayerLoop;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] private int monsterId;
-
     private Player player;
     private Rigidbody2D monsterRigidbody;
     private Vector3 monsterDirection;
+    private bool isMovable = true;
 
-    private SpineManager anime;
+    private SpineAnimatorManager spineAnimatorManager;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector3 lookDirection { get; private set; } //바라보는 방향
+    public int monsterId { get; set; }
 
     private void Awake()
     {
-        anime = GetComponent<SpineManager>();
+        spineAnimatorManager = GetComponent<SpineAnimatorManager>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector3.zero;
         lookDirection = Vector3.right;
         transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
-        MonsterSetting(Convert.ToString(monsterId));
     }
 
     private void Start()
@@ -35,38 +35,43 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        anime.SetCurrentAnimation();
+        PlayAnimation();
     }
 
     private void FixedUpdate()
     {
-        AnimationSetting();
         Move();
-        //RayTest();
-    }
-
-    private void AnimationSetting()
-    {
-        anime.animationState = AnimationConstant.RUN;
-        anime.SetDirection(monsterDirection);
     }
 
     private void Move()
     {
-        monsterDirection = (player.transform.position - transform.position).normalized;
-        monsterRigidbody.velocity = monsterDirection * 5f;
-    }
+        spineAnimatorManager.SetDirection(transform, monsterDirection);
 
-    private void RayTest()
-    {
-        Debug.DrawRay(transform.position, monsterDirection * 3f);
-        if (Physics2D.Raycast(transform.position, monsterDirection, 3f, 3))
+        isMovable = !(((Vector2)player.transform.position - (Vector2)transform.position).sqrMagnitude <= monsterData.atkDistance);
+        if (isMovable)
         {
-            DebugManager.Instance.PrintDebug("detect obstacle");
+            monsterDirection = (player.transform.position - transform.position).normalized;
+            monsterRigidbody.velocity = monsterDirection * 5f;
         }
+        else
+        {
+            monsterRigidbody.velocity = Vector3.zero;
+        }
+        
     }
 
-    private void MonsterSetting(string monsterId)
+    private void PlayAnimation()
+    {
+        //if (((Vector2)(player.transform.position - transform.position)).sqrMagnitude <= monsterData.atkDistance)
+        //{
+        //    spineAnimatorManager.animator.SetBool("isAttack", true);
+        //    spineAnimatorManager.animator.SetBool("isMovable", false);
+        //}
+        spineAnimatorManager.animator.SetBool("isAttack", !isMovable);
+        spineAnimatorManager.animator.SetBool("isMovable", isMovable);
+    }
+
+    public void MonsterSetting(string monsterId)
     {
         Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
         if (monsterTable.ContainsKey(monsterId))
@@ -124,25 +129,5 @@ public class Monster : MonoBehaviour
             }
         }
     }
-
-    //public float 
-
-    //// 이동
-    //if (sqrDistToPlayer < Mathf.Pow(viewDistance, 2))
-    //{
-    //    transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
-    //}
-
-    //// 자동공격
-    //if (Time.time > nextTimeAttack)
-    //{
-    //    sqrDistToPlayer = (player.transform.position - transform.position).sqrMagnitude;
-    //    if (sqrDistToPlayer < Mathf.Pow(atkDistance, 2))
-    //    {
-    //        nextTimeAttack = Time.time + atkSpeed;
-    //        Debug.Log(attack);
-    //        // 플레이어 체력 mosterData.attack 만큼 감소
-    //    }
-    //}
 
 }

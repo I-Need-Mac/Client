@@ -18,20 +18,21 @@ public enum GRID
 
 public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 {
-    [SerializeField] private MonsterPoolManager monsterPoolManager;
     [SerializeField] private float spawnTime = 1f;
     [SerializeField] private int stageId = 10101;
 
+    private MonsterPoolManager monsterPoolManager;
     private int spawnAmount;
     private int spawnCount;
-    private Dictionary<string, IEnumerator> monsters;
+    private Dictionary<int, IEnumerator> monsters;
     private WaitForSeconds time;
 
     protected override void Awake()
     {
+        monsterPoolManager = GetComponentInChildren<MonsterPoolManager>();
         spawnAmount = Convert.ToInt32(CSVReader.Read("StageTable", stageId.ToString(), "LimitAmount"));
         spawnCount = 0;
-        monsters = new Dictionary<string, IEnumerator>();
+        monsters = new Dictionary<int, IEnumerator>();
         time = new WaitForSeconds(spawnTime);
     }
 
@@ -42,9 +43,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 
     private void StartSpawn()
     {
-        monsters.Add("Nien", SpawnMonster("Nien", GRID.A));
-        monsters.Add("Nien_M", SpawnMonster("Nien_M", GRID.C));
-        monsters.Add("Nien_L", SpawnMonster("Nien_L", GRID.H));
+        monsters.Add(101, SpawnMonsters(101, GRID.A));
 
         foreach (IEnumerator mob in monsters.Values)
         {
@@ -52,7 +51,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         }
     }
 
-    private IEnumerator SpawnMonster(string mobName, GRID spawnPos)
+    private IEnumerator SpawnMonsters(int monsterId, GRID spawnPos)
     {
         yield return new WaitForSeconds(1f);
 
@@ -60,7 +59,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         {
             if (spawnCount < spawnAmount)
             {
-                Monster monster = monsterPoolManager.SpawnMonster(CameraManager.Instance.RandomPosInGrid(spawnPos.ToString()), mobName);
+                Monster monster = monsterPoolManager.SpawnMonster(monsterId, CameraManager.Instance.RandomPosInGrid(spawnPos.ToString()));
                 ++spawnCount;
             }
             yield return time;

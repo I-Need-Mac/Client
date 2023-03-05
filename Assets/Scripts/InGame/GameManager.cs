@@ -24,6 +24,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     protected override void Awake()
     {
         defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        SoundManager.Instance.CreateSoundManager();
         //mapId = UIManager.Instance.selectStageID;
         //playerId = UIManager.Instance.selectCharacterID;
         //playerPoolManager.playerId = playerId;

@@ -40,7 +40,7 @@ public class SoundRequesterBGM : SoundRequester
 
 
 
-    protected override bool MakeSpeakers()
+    public override bool MakeSpeakers()
     {
         soundRequester = new GameObject("SoundRequester");
         soundRequester.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);

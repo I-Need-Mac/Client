@@ -10,7 +10,7 @@ public abstract class SoundRequester : MonoBehaviour
 {
     // Start is called before the first frame update
 
-
+    public int soundObjectID { get; set;}
 
     protected Dictionary<string,AudioSource> audioSources = new Dictionary<string, AudioSource>();
     protected GameObject soundRequester;
@@ -33,8 +33,6 @@ public abstract class SoundRequester : MonoBehaviour
     void Start()
     {
 
-        MakeSpeakers();
-        ConvertAudioClipData();
 
     }
 
@@ -48,7 +46,7 @@ public abstract class SoundRequester : MonoBehaviour
 
 
 
-    protected abstract bool MakeSpeakers();
+    public abstract bool MakeSpeakers();
 
     public abstract void ConvertAudioClipData();
 

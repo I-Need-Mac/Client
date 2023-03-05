@@ -10,7 +10,7 @@ public class SoundRequesterSFX : SoundRequester
     public List<AudioSourceSetter> speakerSettings = new List<AudioSourceSetter>();
     public List<SoundPackItem> soundPackItems = new List<SoundPackItem>();
 
-    protected override bool MakeSpeakers()
+    public override bool MakeSpeakers()
     {
         soundRequester = new GameObject("SoundRequester");
         soundRequester.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);

@@ -2,43 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundRequesterBGM : SoundRequester
+public class SoundRequesterSFX : SoundRequester
 {
-
-
-    public Dictionary<BGMSituation.BGMSITUATION, BGMPackItem> shootingSounds = new Dictionary<BGMSituation.BGMSITUATION, BGMPackItem>();
-
+    public Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem> shootingSounds = new Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem>();
 
     [ExecuteInEditMode]
     public List<AudioSourceSetter> speakerSettings = new List<AudioSourceSetter>();
-    public List<BGMPackItem> soundPackItems = new List<BGMPackItem>();
-
-
-
-    private void Awake()
-    {
-      
-
-
-
-    }
-    void Start()
-    {   
-        MakeSpeakers();
-        ConvertAudioClipData();
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-
-    }
-
-
+    public List<SoundPackItem> soundPackItems = new List<SoundPackItem>();
 
     protected override bool MakeSpeakers()
     {
@@ -97,25 +67,25 @@ public class SoundRequesterBGM : SoundRequester
         }
         return true;
     }
+
     public override void ConvertAudioClipData()
     {
-        foreach (BGMPackItem items in soundPackItems)
+        foreach (SoundPackItem items in soundPackItems)
         {
 
-            if (shootingSounds.ContainsKey(items.BGMSITUATION))
+            if (shootingSounds.ContainsKey(items.SOUNDSITUATION))
             {
                 DebugManager.Instance.PrintDebug("SoundPack : OverWrite SoundSource Data " + items.usingSpeaker);
-                shootingSounds[items.BGMSITUATION] = items;
+                shootingSounds[items.SOUNDSITUATION] = items;
             }
             else
             {
                 DebugManager.Instance.PrintDebug("SoundPack : SoundSource Data " + items.usingSpeaker);
-                shootingSounds.Add(items.BGMSITUATION, items);
+                shootingSounds.Add(items.SOUNDSITUATION, items);
             }
 
             if (!audioSources.ContainsKey(items.usingSpeaker))
             {
-                DebugManager.Instance.PrintDebug("SoundPack : SoundSource From SoundManager " + items.usingSpeaker);
                 audioSources.Add(items.usingSpeaker, SoundManager.Instance.GetAudioSource(items.usingSpeaker));
 
             }
@@ -123,7 +93,7 @@ public class SoundRequesterBGM : SoundRequester
 
     }
 
-    public override void ChangeSituation(BGMSituation.BGMSITUATION situation)
+    public override void ChangeSituation(SoundSituation.SOUNDSITUATION situation)
     {
 
 
@@ -132,13 +102,11 @@ public class SoundRequesterBGM : SoundRequester
             DebugManager.Instance.PrintDebug("SoundRequester : SoundSource Call " + situation + " With " + shootingSounds[situation].usingSpeaker);
             if (shootingSounds[situation].delay == 0)
             {
-                ShootSound(shootingSounds[situation].usingSpeaker, shootingSounds[situation].introBGMClip);
-                RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                ShootSound(situation);
             }
             else
             {
-                StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].introBGMClip, shootingSounds[situation].delay));
-                RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].delay));
             }
         }
         else
@@ -147,64 +115,52 @@ public class SoundRequesterBGM : SoundRequester
         }
     }
 
+    protected override void ShootSound(SoundSituation.SOUNDSITUATION situation)
+    {
+        audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
+        audioSources[shootingSounds[situation].usingSpeaker].Play();
 
+    }
     protected override void ShootSound(string speakName, AudioClip clip)
     {
         audioSources[speakName].clip = clip;
         audioSources[speakName].Play();
-
-     
-
     }
+
+
     public override void RequestShootSound() { 
     }
-    public override void RequestShootSound(AudioSource targetSpeaker, BGMPackItem targetItem)
-    {
-        SoundManager.Instance.RequestSetCallBack(targetSpeaker,this,targetItem);
 
+    protected override IEnumerator PlaySoundWithDelay(SoundSituation.SOUNDSITUATION situation, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ShootSound(situation);
     }
 
-    
-    public override void RequestCallBack(PackItem item) {
-        BGMPackItem covertItem = (BGMPackItem)item;
-        if (covertItem.delayWithIntro == 0) {
-            ShootSound(covertItem.usingSpeaker, covertItem.realBGMClip);
-        }
-        else {
+    public override void ChangeSituation(BGMSituation.BGMSITUATION situation)
+    {
+        throw new System.NotImplementedException();
+    }
 
-            StartCoroutine(PlaySoundWithDelay(covertItem.usingSpeaker, covertItem.realBGMClip, covertItem.delayWithIntro));
-        }
+    public override void RequestShootSound(AudioSource targetSpeaker, BGMPackItem targetItem)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void RequestCallBack(PackItem item)
+    {
+        throw new System.NotImplementedException();
     }
 
 
 
     protected override IEnumerator PlaySoundWithDelay(BGMSituation.BGMSITUATION situation, AudioClip clip, float delay)
     {
-        yield return new WaitForSeconds(delay);
-        ShootSound(shootingSounds[situation].usingSpeaker, clip);
+        throw new System.NotImplementedException();
     }
+
     protected override IEnumerator PlaySoundWithDelay(string speakerName, AudioClip clip, float delay)
     {
-        yield return new WaitForSeconds(delay);
-        ShootSound(speakerName, clip);
-    }
-
-
-
-    public override void ChangeSituation(SoundSituation.SOUNDSITUATION situation)
-    {
         throw new System.NotImplementedException();
     }
-
-    protected override void ShootSound(SoundSituation.SOUNDSITUATION situation)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override IEnumerator PlaySoundWithDelay(SoundSituation.SOUNDSITUATION situation, float delay)
-    {
-        throw new System.NotImplementedException();
-    }
-
-  
 }

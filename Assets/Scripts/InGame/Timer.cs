@@ -6,16 +6,18 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     private Text timeText;
-    private float time;
+    private int currentTime;
 
     private void Start()
     {
         timeText = GetComponent<Text>();
         timeText.color = Color.white;
+        timeText.fontSize = 50;
     }
 
     private void Update()
     {
-        timeText.text = ((int)Time.time).ToString();
+        currentTime = (int)(Time.time * 1000);
+        timeText.text = $"{currentTime/1000/60:00}:{currentTime/1000%60:00}";
     }
 }

@@ -8,6 +8,8 @@ using UnityEngine.PlayerLoop;
 
 public class Monster : MonoBehaviour
 {
+    [field: SerializeField] public int monsterId { get; private set; }
+
     private Player player;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
@@ -17,7 +19,6 @@ public class Monster : MonoBehaviour
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector2 lookDirection { get; private set; } //바라보는 방향
-    public int monsterId { get; set; }
 
     private void Awake()
     {
@@ -25,6 +26,8 @@ public class Monster : MonoBehaviour
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
+
+        MonsterSetting(monsterId.ToString());
     }
 
     private void Start()

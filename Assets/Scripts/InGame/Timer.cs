@@ -1,12 +1,14 @@
+using BFM;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+public class Timer : SingletonBehaviour<Timer>
 {
     private Text timeText;
-    private int currentTime;
+
+    public int currentTime { get; private set; } = 0;
 
     private void Start()
     {

@@ -15,7 +15,7 @@ public class SpineAnimatorManager : MonoBehaviour
 
     public Animator animator { get; private set; }
 
-    private string path;
+    //private string path;
 
     //public string animationState { get; set; }
 
@@ -34,23 +34,23 @@ public class SpineAnimatorManager : MonoBehaviour
 
     private void Init()
     {
-        path = PathFinding();
+        //path = PathFinding();
 
         skeletonMecanim = GetComponentInChildren<SkeletonMecanim>();
-        skeletonMecanim.skeletonDataAsset = ResourcesManager.Load<SkeletonDataAsset>(path + "SkeletonData");
+        //skeletonMecanim.skeletonDataAsset = ResourcesManager.Load<SkeletonDataAsset>(path + "SkeletonData");
 
         animator = GetComponentInChildren<Animator>();
-        animator.runtimeAnimatorController = ResourcesManager.Load<RuntimeAnimatorController>(path + "Controller");
+        //animator.runtimeAnimatorController = ResourcesManager.Load<RuntimeAnimatorController>(path + "Controller");
     }
 
-    private string PathFinding()
-    {
-        if (TryGetComponent(out Player obj))
-        {
-            return obj.playerData.characterSpinePath + IMAGE_PATH;
-        }
-        return GetComponent<Monster>().monsterData.monsterImage + IMAGE_PATH;
-    }
+    //private string PathFinding()
+    //{
+    //    if (TryGetComponent(out Player obj))
+    //    {
+    //        return obj.playerData.characterSpinePath + IMAGE_PATH;
+    //    }
+    //    return GetComponent<Monster>().monsterData.monsterImage + IMAGE_PATH;
+    //}
 
     public void SetDirection(Transform transform, Vector3 direction)
     {

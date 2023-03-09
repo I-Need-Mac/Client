@@ -71,7 +71,7 @@ public class SpineManager : MonoBehaviour
                 path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(GameManager.Instance.GetPlayerId()), "CharacterSpinePath") + "/";
                 break;
             case Subject.MONSTER:
-                path = GetComponent<Monster>().monsterData.monsterImage + "/Animation/Spine/";
+                //path = GetComponent<Monster>().monsterData.monsterImage + "/Animation/Spine/";
                 DebugManager.Instance.PrintDebug(">>>>" + path);
                 break;
         }

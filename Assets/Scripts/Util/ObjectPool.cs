@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [SerializeReference] private T prefab;
-    [SerializeField] [Range(1, 1000)] private int count = 1;
+    [SerializeReference] protected T prefab;
+    [SerializeField] [Range(1, 1000)] protected int count = 1;
 
     private Stack<T> pool;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         pool = new Stack<T>();
         AddObject();

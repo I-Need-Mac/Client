@@ -7,7 +7,7 @@ public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeReference] protected T prefab;
     [SerializeField] [Range(1, 1000)] protected int count = 1;
 
-    private Stack<T> pool;
+    protected Stack<T> pool;
 
     protected virtual void Awake()
     {

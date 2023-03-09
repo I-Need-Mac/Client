@@ -6,15 +6,38 @@ using UnityEngine;
 
 public class Skill
 {
+    private bool who; //true: player, false: monster
+    private Player player;
+    private Monster monster;
+    private Transform shooter;
+    private WaitForSeconds coolTime;
+
     public SkillData skillData { get; private set; }
 
-    private Player player;
-
-    public Skill(string skillId, Player player)
+    private Skill(string skillId)
     {
         skillData = new SkillData();
         SkillDataLoad(FindSkill(skillId));
+        coolTime = new WaitForSeconds(skillData.coolTime);
+    }
+
+    public Skill(string skillId, Player player) : this(skillId)
+    {
+        who = true;
         this.player = player;
+        shooter = this.player.transform;
+    }
+
+    public Skill(string skillId, Monster monster) : this(skillId)
+    {
+        who = false;
+        this.monster = monster;
+        shooter = this.monster.transform;
+    }
+
+    private Vector2 LookDirection()
+    {
+        return who ? player.lookDirection : monster.lookDirection;
     }
 
     //Satellite type skill activation
@@ -25,16 +48,16 @@ public class Skill
             Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
             projectile.angle = (360f / skillData.projectileCount) * (i + 1);
             Vector3 spawnPos = new Vector3(Mathf.Cos(projectile.angle * Mathf.Deg2Rad), Mathf.Sin(projectile.angle * Mathf.Deg2Rad), 0);
-            projectile.Fire(player.transform, spawnPos);
+            projectile.Fire(shooter, spawnPos);
         }
-        yield return new WaitForSeconds(5); //지속시간인데 이거 물어봐야함 스킬데이터에없음
+        yield return coolTime; //지속시간인데 이거 물어봐야함 스킬데이터에없음
     }
 
     //Protect type skill activation
     public void ProtectSkill()
     {
         Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
-        projectile.Fire(player.transform, Vector3.zero);
+        projectile.Fire(shooter, Vector3.zero);
     }
 
     //Shoot type skill activation
@@ -42,23 +65,23 @@ public class Skill
     {
         if (!skillData.isEffect)
         {
-            yield return new WaitForSeconds(skillData.coolTime);
+            yield return coolTime;
         }
         while (true)
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
                 Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
-                projectile.Fire(player.transform, player.lookDirection);
+                projectile.Fire(shooter, LookDirection());
                 yield return new WaitForSeconds(0.2f); //발사 간격
             }
-            yield return new WaitForSeconds(skillData.coolTime);
+            yield return coolTime;
         }
     }
 
     private void SkillLevelUp()
     {
-        SkillDataLoad(FindSkill(Convert.ToString(skillData.skillId + 1)));
+        SkillDataLoad(FindSkill((skillData.skillId + 1).ToString()));
     }
 
     #region Skill Load

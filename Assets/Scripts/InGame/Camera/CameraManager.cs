@@ -29,22 +29,6 @@ public class CameraManager : SingletonBehaviour<CameraManager>
         ConfinerSetting("Floor");
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            DebugManager.Instance.PrintDebug("MousePointConvert: " + (Vector2)cam.ScreenToWorldPoint(Input.mousePosition));
-            DebugManager.Instance.PrintDebug("A: " + RandomPosInGrid("A"));
-            //DebugManager.Instance.PrintDebug("B: " + RandomPosInGrid("B"));
-            //DebugManager.Instance.PrintDebug("C: " + RandomPosInGrid("C"));
-            //DebugManager.Instance.PrintDebug("D: " + RandomPosInGrid("D"));
-            //DebugManager.Instance.PrintDebug("E: " + RandomPosInGrid("E"));
-            //DebugManager.Instance.PrintDebug("F: " + RandomPosInGrid("F"));
-            //DebugManager.Instance.PrintDebug("G: " + RandomPosInGrid("G"));
-            //DebugManager.Instance.PrintDebug("H: " + RandomPosInGrid("H"));
-        }
-    }
-
     #region
     //카메라 범위에서 그리드 벡터값 가져오게 해줌 아마도
 

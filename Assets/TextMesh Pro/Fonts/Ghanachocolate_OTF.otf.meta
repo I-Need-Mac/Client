@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: ffa8eada0608b654493e62c68c66cff7
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Ghanachocolate
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e6b6f61dbc60ac44bba9c411f976a783, type: 3}
+  - {fileID: 12800000, guid: 4c82c416064608d40b3202dfd5b04e5c, type: 3}
+  - {fileID: 12800000, guid: fc04c9622edf90649943440c035d4cd9, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

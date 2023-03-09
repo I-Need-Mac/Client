@@ -1,0 +1,15 @@
+SponeID,SponeTime,SponeMobID,SponeMobAmount,SponeMobLocation,SponeMobObject
+스폰아이디,몬스터 스폰 타이밍,스폰 몬스터 ID,스폰 몬스터 수,스폰 몬스터 위치 Enum,스폰 몹 위치
+int,int,int,int,Enum,String
+1,1000,101,2,Top,
+2,2000,101,2,Bottom,
+3,3000,101,2,Left,
+4,4000,101,2,Right,
+5,5000,101,2,TopLeft,
+6,6000,101,2,TopRight,
+7,7000,101,2,BottomLeft,
+8,8000,101,2,BottomRight,
+9,9000,101,2,Round,
+10,10000,101,2,Face,
+11,11000,101,2,Back,
+12,12000,101,2,,AB

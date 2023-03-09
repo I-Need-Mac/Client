@@ -22,19 +22,9 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
 
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
-        //if (!pools.ContainsKey(monsterId))
-        //{
-        //    pools.Add(monsterId, new MonsterPool());
-        //}
-        //Monster monster = pools[monsterId].GetObject();
-        //monster.gameObject.layer = (int) LayerConstant.MONSTER;
-        //monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
-        //monster.gameObject.SetActive(true);
-        //return monster;
         Monster monster = pool.GetObject();
-        monster.monsterId = monsterId;
-        monster.MonsterSetting(monsterId.ToString());
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
+        monster.transform.localScale = Vector2.one * monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
         monster.gameObject.SetActive(true);
         return monster;
@@ -42,7 +32,6 @@ public class MonsterPoolManager : SingletonBehaviour<MonsterPoolManager>
 
     public void DespawnMonster(Monster monster)
     {
-        //pools[monster.monsterId].ReleaseObject(monster);
         pool.ReleaseObject(monster);
     }
 }

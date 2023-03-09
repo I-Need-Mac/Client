@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 6052151784603559265}
   - component: {fileID: 9168413493471183578}
   m_Layer: 0
-  m_Name: AnimatorTestPrefab
+  m_Name: MonsterSkeletonPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

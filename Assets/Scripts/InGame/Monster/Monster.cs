@@ -25,7 +25,6 @@ public class Monster : MonoBehaviour
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
-        transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
     }
 
     private void Start()
@@ -82,6 +81,7 @@ public class Monster : MonoBehaviour
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
             monsterData.SetHp(Convert.ToInt32(table["HP"]));
+            monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
             monsterData.SetAttack(Convert.ToInt32(table["Attack"]));
             monsterData.SetMoveSpeed(Convert.ToInt32(table["MoveSpeed"]));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
@@ -90,7 +90,7 @@ public class Monster : MonoBehaviour
             monsterData.SetSkillID(Convert.ToInt32(table["SkillID"]));
             monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
             monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));
-            monsterData.SetMonsterImage(Convert.ToString(table["MonsterImage"]));
+            monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
             monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
         }
         //monsterData.SetMonsterName(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "MonsterName")));

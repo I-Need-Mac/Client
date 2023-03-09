@@ -5,18 +5,23 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monster
+  - ItemCollider
+  - PlayerSkill
+  - MonsterSkill
+  - Item
+  - Exp
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - 3
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
   - 
   - 
   - 

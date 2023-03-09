@@ -8,11 +8,19 @@ using UnityEngine.Events;
 public class GameSetter : MonoBehaviour
 {
     // Start is called before the first frame update
-    protected async void Start()  
+    [SerializeField] SoundRequesterBGM a;
+    private void Awake()
     {
 
         SettingManager.Instance.ReadSettingFile();
         SoundManager.Instance.CreateSoundManager();
+
+
+    }
+    protected async void Start()  
+    {   
+      
+
         //WebRequestManager.Instance.ReceiveEventHandlerEvent += Instance_ReceiveEventHandlerEvent;
         //PostData_User();
        // Dictionary<string, string> data = new Dictionary<string, string>();
@@ -20,7 +28,7 @@ public class GameSetter : MonoBehaviour
        // RECIEVE_LOGIN t = await WebRequestManager.Instance.RequestLogin("");
        // t.ID = "";
       // Debug.Log(await WebRequestManager.Instance.RequestLogin(""));
-        Debug.Log(LocalizeManager.Instance.GetText("test"));
+      //  Debug.Log(LocalizeManager.Instance.GetText("test"));
 
 
     }
@@ -29,5 +37,9 @@ public class GameSetter : MonoBehaviour
     void Update()
     {
 
+    }
+    private void OnMouseDown()
+    {
+        a.ChangeSituation(BGMSituation.BGMSITUATION.CHANGE_SCENE);
     }
 }

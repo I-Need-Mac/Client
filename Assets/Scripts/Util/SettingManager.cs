@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class SettingManager
 {
+    public const string TOTAL_SOUND = "TOTAL_SOUND";
+
+
     private Dictionary<string, int> _settings { get; set; }
     public Dictionary<string, int> settings
     {
@@ -48,6 +51,7 @@ public class SettingManager
 
     public void ReadSettingFile() {
         settingFileR = new FileStream("./setting.txt", FileMode.Open);
+        //settingFileR = new FileStream("./Assets/Resources/setting.txt", FileMode.Open);
         StreamReader sr = new StreamReader(settingFileR);
 
         DebugManager.Instance.PrintDrawLine();

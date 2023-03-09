@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class SoundManager : SingleTon<SoundManager>
 {
-    Dictionary<string, AudioClip> audioClipsList = new Dictionary<string, AudioClip>();
-    Dictionary<string, AudioSource> audioSourceList = null;
+ 
 
+    Dictionary<string, AudioSource> audioSourceList = null;
+    
+
+    GameObject soundManager;
+    SoundManagerUpdater soundManagerUpdater;
+    
     private const float soundNomalizer = 10.0f;
     private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
 
@@ -22,41 +27,30 @@ public class SoundManager : SingleTon<SoundManager>
 
 
 
-        GameObject gameManager = GameObject.Find("SoundManager");
+        soundManager = GameObject.Find("SoundManager");
         {
-            gameManager = new GameObject("SoundManager");
-            DebugManager.Instance.PrintDebug(gameManager != null, "Can not create new SoundManager GameeObject");
+            soundManager = new GameObject("SoundManager");
+            soundManager.AddComponent<SoundManagerUpdater>();
+            soundManagerUpdater = soundManager.GetComponent<SoundManagerUpdater>();
+            DebugManager.Instance.PrintDebug(soundManager != null, "Can not create new SoundManager GameeObject");
         }
-        GameObject.DontDestroyOnLoad(gameManager);
+        GameObject.DontDestroyOnLoad(soundManager);
 
         GameObject bgmRequester = GameObject.Find("BGMRequester");
         if (bgmRequester != null)
         {
-            DebugManager.Instance.PrintDebug("√£¿Ω");
+            DebugManager.Instance.PrintDebug("Ï∞æÏùå");
             (bgmRequester.gameObject.GetComponent<SoundRequesterBGM>()).RequestShootSound();
         }
         else
         {
-            DebugManager.Instance.PrintDebug("¿¿ æ¯æÓ");
+            DebugManager.Instance.PrintDebug("Ïùë ÏóÜÏñ¥");
         }
     }
 
-    public bool AddAudioClip(string audioKey, AudioClip audioClip)
-    {
-        DebugManager.Instance.PrintDebug(audioClip != null, "Invalid AudioClip! AudioKey= " + audioKey.ToString());
 
-        if (audioClipsList.ContainsKey(audioKey) == true)
-        {
-            DebugManager.Instance.PrintDebug("Already Registed AudioClip! AudioKey= " + audioKey.ToString());
-            return false;
-        }
-        audioClipsList.Add(audioKey, audioClip);
 
-        return true;
-
-    }
-
-    public bool AddAudioSource(string audioSourceKey, bool isLoop, AudioSourceSetter audioSetting)
+    public bool AddAudioSource(string audioSourceKey, AudioSource audioSource)
     {
         GameObject gameManager = GameObject.Find("SoundManager");
 
@@ -68,15 +62,8 @@ public class SoundManager : SingleTon<SoundManager>
         else
         {
 
-            audioSourceList.Add(audioSourceKey, gameManager.AddComponent<AudioSource>());
-            audioSourceList[audioSourceKey].loop = isLoop;
-            audioSourceList[audioSourceKey].volume = SettingManager.Instance.GetSettingValue(audioSetting.audioType) / soundNomalizer;
+            audioSourceList.Add(audioSourceKey, audioSource);
 
-            audioSourceList[audioSourceKey].bypassEffects = audioSetting.isBypassEffects;
-            audioSourceList[audioSourceKey].priority = audioSetting.priority;
-            audioSourceList[audioSourceKey].pitch = audioSetting.pitch;
-            audioSourceList[audioSourceKey].panStereo = audioSetting.streoPan;
-            audioSourceList[audioSourceKey].outputAudioMixerGroup = audioSetting.audioMixerGroup;
 
             return true;
         }
@@ -86,31 +73,26 @@ public class SoundManager : SingleTon<SoundManager>
 
     public void SetAudioSound(int soundVol, string audioSourceKey)
     {
-        if (audioClipsList.ContainsKey(audioSourceKey) == false)
+        if (audioSourceList.ContainsKey(audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist AudioSource! AudioSource= " + audioSourceKey);
             return;
         }
 
-        audioSourceList[audioSourceKey].volume = soundVol / soundNomalizer;
+        audioSourceList[audioSourceKey].volume = soundVol / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
     }
 
     public void SetAllAudioSound(int soundVol)
     {
         foreach (KeyValuePair<string, AudioSource> items in audioSourceList)
         {
-            audioSourceList[items.Key].volume = soundVol / soundNomalizer;
+            audioSourceList[items.Key].volume = soundVol / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
         }
     }
 
 
-    public void PlayAudioClip(string audioKey, string audioSourceKey)
+    public void PlayAudioClip(string audioSourceKey, AudioClip audioClip)
     {
-        if (audioClipsList.ContainsKey(audioKey) == false)
-        {
-            DebugManager.Instance.PrintDebug("Not exist AudioClip! AudioKey= " + audioKey);
-            return;
-        }
         if (audioSourceList.ContainsKey(audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist audioSourceKey! audioSourceKey= " + audioSourceKey);
@@ -119,15 +101,23 @@ public class SoundManager : SingleTon<SoundManager>
 
 
         DebugManager.Instance.PrintDebug("Shoot Sound with AudioSourceKey= " + audioSourceKey);
-        DebugManager.Instance.PrintDebug("Shoot Sound with AudioKey= " + audioKey);
+
 
 
         audioSourceList[audioSourceKey].Stop();
-        audioSourceList[audioSourceKey].clip = audioClipsList[audioKey];
+        audioSourceList[audioSourceKey].clip = audioClip;
         audioSourceList[audioSourceKey].Play();
 
 
 
+    }
+
+    public void RequestSetCallBack(AudioSource targetSpeaker, SoundRequester soundRequester, PackItem packItem){
+        soundManagerUpdater.AddRequestSource(targetSpeaker,soundRequester,packItem);
+    }
+
+    public AudioSource GetAudioSource(string speakerName) { 
+        return audioSourceList[speakerName];
     }
 
 
@@ -135,4 +125,10 @@ public class SoundManager : SingleTon<SoundManager>
     {
         return audioSourceList.Keys.ToList();
     }
+
+    public float getSettingSound(string audioType) { 
+        return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
+    }
+
+
 }

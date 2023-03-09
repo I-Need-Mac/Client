@@ -26,36 +26,38 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
     private Queue<int> postQueue = new Queue<int>();
 
     /// <summary>
-    /// API Á¾·á ¿©ºÎ
+    /// API ì¢…ë£Œ ì—¬ë¶€
     /// </summary>
     private bool isAPIFinished = false;
 
     /// <summary>
-    /// API ¼ö½Å ¼º°ø ¿©ºÎ
+    /// API ìˆ˜ì‹  ì„±ê³µ ì—¬ë¶€
     /// </summary>
     private bool isSuccessApiReceived = false;
 
     /// <summary>
-    /// Å¸ÀÓ¾Æ¿ô
+    /// íƒ€ì„ì•„ì›ƒ
     /// </summary>
     const float TIMEOUT = 3.0f;
 
 
-    public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
-    //SingletonÀ» È°¿ëÇÏ¿© 1°³ÀÇ ÀÎ½ºÅÏ½º À¯Áö ¹× Á¢±Ù È¿À²¼º Áõ°¡
+    // public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
+    // public const string WEBSERVICE_HOST = "http://13.125.55.10:8080/api";
+    public const string WEBSERVICE_HOST = "http://13.209.13.32:8080/api";
+    //Singletonì„ í™œìš©í•˜ì—¬ 1ê°œì˜ ì¸ìŠ¤í„´ìŠ¤ ìœ ì§€ ë° ì ‘ê·¼ íš¨ìœ¨ì„± ì¦ê°€
 
     public bool IsConnectInternet()
     {
 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            DebugManager.Instance.PrintDebug("ÀÎÅÍ³İ ²÷Èû");
+            DebugManager.Instance.PrintDebug("ì¸í„°ë„· ëŠí˜");
             return false;
         }
         else return true;
     }
     /// <summary>
-    /// Byte[] ÇüÀ» String ÇüÀ¸·Î Ä³½ºÆÃ ÇÕ´Ï´Ù.
+    /// Byte[] í˜•ì„ String í˜•ìœ¼ë¡œ ìºìŠ¤íŒ… í•©ë‹ˆë‹¤.
     /// </summary>
     /// <param name="strByte"></param>
     /// <returns></returns>
@@ -65,7 +67,7 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
     }
 
     /// <summary>
-    /// Dictionary¸¦ WWWFormÀ¸·Î ¿Å°Ü WWWFormÀ» ¹İÈ¯ÇÕ´Ï´Ù.
+    /// Dictionaryë¥¼ WWWFormìœ¼ë¡œ ì˜®ê²¨ WWWFormì„ ë°˜í™˜í•©ë‹ˆë‹¤.
     /// </summary>
     /// <param name="forms">[Dictionary : Map]</param>
     /// <returns></returns>
@@ -83,6 +85,9 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
 
     private string GetStringForm(Dictionary<string, string> forms)
     {
+        if (forms == null)
+            return "";
+
         string form = "";
 
         foreach (KeyValuePair<string, string> value in forms)
@@ -100,7 +105,7 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
 
     public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
     {
-        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{url}?{GetStringForm(data)}"))
+        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{url}"))
         {
             float timeout = 0f;
             request.SendWebRequest();

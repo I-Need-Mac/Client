@@ -1,29 +1,74 @@
+using BFM;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterSpawner : MonoBehaviour
+public enum GRID
 {
-    private int limitAmount;
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H,
+}
 
-    #region Setter
-    //���� ���� ���� �� ����
-    public void SetLimitAmount(int _limitAmount)
+public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
+{
+    [SerializeField] private float spawnTime = 1f;
+    [SerializeField] private int stageId = 10101;
+
+    private MonsterPoolManager monsterPoolManager;
+    private int spawnAmount;
+    private int spawnCount;
+    private Dictionary<int, IEnumerator> monsters;
+    private WaitForSeconds time;
+
+    protected override void Awake()
     {
-        limitAmount = _limitAmount;
+        monsterPoolManager = GetComponentInChildren<MonsterPoolManager>();
+        spawnAmount = Convert.ToInt32(CSVReader.Read("StageTable", stageId.ToString(), "LimitAmount"));
+        spawnCount = 0;
+        monsters = new Dictionary<int, IEnumerator>();
+        time = new WaitForSeconds(spawnTime);
     }
-    #endregion
 
-    //tableID ���� ���� ���̺� �ε� �� �ҷ��� ���� ����
-    public void LoadMonsterSpawnTable(string tableID)
+    private void Start()
     {
-        if (string.IsNullOrEmpty(tableID))
-        {
-            Debug.LogError("[LoadMonsterSpawnTable] tableID is null or empty.");
-        }
-        else
-        {
+        StartSpawn();
+    }
 
+    private void StartSpawn()
+    {
+        monsters.Add(101, SpawnMonsters(101, GRID.A));
+
+        foreach (IEnumerator mob in monsters.Values)
+        {
+            StartCoroutine(mob);
         }
+    }
+
+    private IEnumerator SpawnMonsters(int monsterId, GRID spawnPos)
+    {
+        yield return new WaitForSeconds(1f);
+
+        while (true)
+        {
+            if (spawnCount < spawnAmount)
+            {
+                Monster monster = monsterPoolManager.SpawnMonster(monsterId, CameraManager.Instance.RandomPosInGrid(spawnPos.ToString()));
+                ++spawnCount;
+            }
+            yield return time;
+        }
+    }
+
+    public void DeSpawnMonster(Monster monster)
+    {
+        MonsterPoolManager.Instance.DespawnMonster(monster);
+        --spawnCount;
     }
 }

@@ -1,3 +1,12 @@
-﻿ItemID,IsVisible,MaxCount,ItemName,ItemType
-아이템 아이디,인벤에서 보여짐 여부,,아이템 이름(로컬),아이템 타입
-int,Bool,int,String,Enum
+ItemID,ItemName,ItemImage,ItemType,ItemTypeParam,ImagePath
+?�이???�이???�이???�름(로컬),?�이???��?지,?�이???�???�???�람,?��?지 경로,,
+int,String,String,Enum,Int,String
+101,Item_Soul_Low,None,EXP,100,Arts/Item/Main_Ingame_Item_Emptysoul1
+102,Item_Soul_Medium,None,EXP,100,Arts/Item/Main_Ingame_Item_Emptysoul2
+103,Item_Soul_High,None,EXP,100,Arts/Item/Main_Ingame_Item_Emptysoul3
+201,Item_SinKal_Kill,None,KillAll,0,
+301,Item_Bell,None,MoveStop,100,
+401,Item_HoilyBlood,None,Heal,100,
+501,Item_Lanturn,None,Magnet,10000,
+601,Item_Box,None,GetBox,1,
+701,Item_Key,None,GetKey,1,

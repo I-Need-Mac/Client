@@ -1,145 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public abstract class Projectile : MonoBehaviour
 {
-    private ProjectilePool projectilePool;
-    protected Rigidbody2D rb;
-    protected Image image;
+    private const float RELEASE_TIME = 5f; //íˆ¬ì‚¬ì²´ ì†Œë©¸ ì‹œê°„
 
-    protected ProjectileType projectileType;
+    protected Rigidbody2D projectileRigidBody;
+    //protected int coolTime;
+    //protected int attackDistance;
+    //protected int damage;
+    //protected int projectileCount;
+    //protected int speed;
+    //protected int splashRange;
+    //protected int projectileSizeMulti;
+    //protected bool isPenetrate;
+    //protected PROJECTILE_TYPE projectileType;
+    protected Vector3 direction;
+    protected SkillData skillData;
+    protected Collider2D projectileCollider;
 
-    protected int speed;
-    private int splashRange;
+    public float angle { get; set; }
 
-    protected float atkDis; //°ø°İ »ç°Å¸®
-
-    private bool isMyProjectile; //ÇÃ·¹ÀÌ¾î, Àû ÃÑ¾Ë ±¸ºĞ
-    private bool isPenetrate;   //°üÅë ¿©ºÎ
-
-    //Åõ»çÃ¼ È°¼ºÈ­ ¼¼ÆÃ
-    protected abstract void ActiveSetting(Transform caster, Vector2 endPos, SkillData skillData);
+    //ê° íˆ¬ì‚¬ì²´ íƒ€ì…ë³„ë¡œ ë”°ë¡œ êµ¬í˜„
+    //Fire -> ë°œì‚¬ / Move -> íˆ¬ì‚¬ì²´ì˜ ì›€ì§ì„
     protected abstract void Move();
-
-    #region Setter
-    public void SetIsMyProjectile(bool isMyProjectile)
-    {
-        this.isMyProjectile = isMyProjectile;
-    }
-    #endregion
-
-    #region MonoBehaviour Method
+    public abstract void Fire(Transform caster, Vector3 pos);
+    
     private void Awake()
     {
-        projectilePool = FindObjectOfType<ProjectilePool>(true);
-        rb = GetComponent<Rigidbody2D>();
-
-        Init();
+        projectileRigidBody = GetComponent<Rigidbody2D>();
+        direction = Vector3.right;
+        projectileCollider = GetComponent<Collider2D>();
+        projectileCollider.isTrigger = true;
+        gameObject.tag = "PlayerSkill";
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }
 
+    //ì¹´ë©”ë¼ì— ì•ˆì¡í ë•Œ
     private void OnBecameInvisible()
     {
-        Remove(); //Ä«¸Ş¶ó ¹ÛÀ¸·Î ³ª°¬À» ¶§ ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
+        Invoke("ReleaseProjectile", RELEASE_TIME);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    //ì¹´ë©”ë¼ì— ë‹¤ì‹œ ì¡íˆë©´ Release Cancel
+    private void OnBecameVisible()
     {
-        bool isCollision = (isMyProjectile && collision.CompareTag("Monster"))
-            || (!isMyProjectile && collision.CompareTag("Player"));
-
-        if (isCollision)
-        {
-            if (isMyProjectile)
-            {
-                var monster = collision.GetComponent<Monster>();
-
-                if (monster != null)
-                {
-                    //TODO :: ¸ó½ºÅÍ hp °¨¼Ò
-                }
-                else
-                {
-                    Debug.LogError("[Projectile.OnTriggerEnter2D] isMyProjectile : true\ncollision : " + collision);
-                }
-            }
-            else
-            {
-                var player = collision.GetComponent<Player>();
-
-                if (player != null)
-                {
-                    //TODO :: ÇÃ·¹ÀÌ¾î hp °¨¼Ò
-                }
-                else
-                {
-                    Debug.LogError("[Projectile.OnTriggerEnter2D] isMyProjectile : false\ncollision : " + collision);
-                }
-            }
-
-            if (projectileType == ProjectileType.Boom)
-            {
-                transform.localScale = Vector2.one * splashRange;
-                speed = 0;
-
-                Invoke("Remove", 1f); //Æø¹ß Áö¼Ó½Ã°£
-            }
-            //°üÅë x, ¿ÀºêÁ§Æ® ºñÈ°¼ºÈ­
-            else if (!isPenetrate)
-            {
-                Remove();
-            }
-        }
+        CancelInvoke("ReleaseProjectile");
     }
-    #endregion
 
-    protected void Remove()
+    private void ReleaseProjectile()
     {
-        if (projectilePool != null)
-        {
-            //¿ÀºêÁ§Æ® Ç®¿¡ ÇØ´ç Åõ»çÃ¼ ¿ÀºêÁ§Æ® ¹İÈ¯
-            projectilePool.ReturnProjectile(projectileType, gameObject);
-        }
-        else
-        {
-            gameObject.SetActive(false);
-            Debug.LogError("[Projectile.Remove] projectilePool is null");
-        }
+        ProjectilePoolManager.Instance.DeSpawnProjectile(this, skillData.projectileType);
     }
 
-    #region Public Method
-    public void Init()
+    //í’€ì—ì„œ êº¼ë‚´ ì“¸ ë•Œ ìŠ¤í‚¬ ì •ë³´ë¥¼ ì—…ë°ì´íŠ¸í•˜ëŠ” í•¨ìˆ˜
+    //ìŠ¤í‚¬ ë ˆë²¨ì—…ì‹œ ë°ì´í„° ë³€ë™ì„ ê³ ë ¤í•˜ê¸° ìœ„í•¨
+    //Init ì—­í• ë„ í•¨
+    public void SkillDataUpdate(SkillData skillData)
     {
-        projectileType = ProjectileType.Straight;
-        speed = 0;
-        atkDis = 0;
-        isPenetrate = false;
-
-        //rigid body ÀÌµ¿ ÃÊ±âÈ­
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = 0;
+        this.skillData = skillData;
     }
-
-    public void Fire(Transform caster, Vector2 endPos, SkillData skillData)
-    {
-        transform.position = caster.position; //½ÃÀüÀÚ À§Ä¡·Î ÃÊ±âÈ­
-
-        speed = skillData.speed;
-        atkDis = skillData.atkDis;
-        projectileType = skillData.projectileType;
-        splashRange = skillData.splashRange;
-        transform.localScale = Vector2.one * skillData.projectileSizeMulti; //Å©±â ¹èÀ²¸¸Å­ ¼³Á¤
-
-        ActiveSetting(caster, endPos, skillData); //Åõ»çÃ¼ È°¼ºÈ­ ¼¼ÆÃ
-
-        gameObject.SetActive(true);
-    }
-    #endregion
 }

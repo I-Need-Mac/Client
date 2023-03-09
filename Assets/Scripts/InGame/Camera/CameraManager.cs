@@ -46,22 +46,28 @@ public class CameraManager : SingletonBehaviour<CameraManager>
 
         switch (grid)
         {
-            case "A":
+            case "TOPLEFT":
                 return new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-            case "B":
+            case "TOP":
                 return new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-            case "C":
+            case "TOPRIGHT":
                 return new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-            case "D":
+            case "LEFT":
                 return new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
-            case "E":
+            case "RIGHT":
                 return new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
-            case "F":
+            case "BOTTOMLEFT":
                 return new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y, camPoint.y + weight.y));
-            case "G":
+            case "BOTTOM":
                 return new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y, camPoint.y + weight.y));
-            case "H":
+            case "BOTTOMRIGHT":
                 return new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y, camPoint.y + weight.y));
+            case "ROUND":
+                return Vector2.zero;
+            case "FACE":
+                return Vector2.zero;
+            case "BACK":
+                return Vector2.zero;
             default:
                 return Vector2.zero;
                 //case "A":

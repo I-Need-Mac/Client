@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int moveSpeed = 5;
 
     private Rigidbody2D playerRigidbody;
-    private Vector3 playerDirection;
+    private Vector2 playerDirection;
 
     private int fraction;             //분율
     private int coolTimeConstant;     //재사용대기시간감소상수
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     private int needExp;
 
     public PlayerData playerData { get; private set; } = new PlayerData();
-    public Vector3 lookDirection { get; private set; } //바라보는 방향
+    public Vector2 lookDirection { get; private set; } //바라보는 방향
     //public int playerId { get; set; }
     public int exp { get; private set; }
     public int level { get; private set; }
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
 
         anime.SetDirection(playerDirection);
 
-        if (playerDirection != Vector3.zero)
+        if (playerDirection != Vector2.zero)
         {
             lookDirection = playerDirection; //쳐다보는 방향 저장
             anime.animationState = AnimationConstant.RUN; //움직이는 중

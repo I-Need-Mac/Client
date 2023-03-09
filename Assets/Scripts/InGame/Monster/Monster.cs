@@ -10,21 +10,21 @@ public class Monster : MonoBehaviour
 {
     private Player player;
     private Rigidbody2D monsterRigidbody;
-    private Vector3 monsterDirection;
+    private Vector2 monsterDirection;
     private bool isMovable = true;
 
     private SpineAnimatorManager spineAnimatorManager;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
-    public Vector3 lookDirection { get; private set; } //바라보는 방향
+    public Vector2 lookDirection { get; private set; } //바라보는 방향
     public int monsterId { get; set; }
 
     private void Awake()
     {
         spineAnimatorManager = GetComponent<SpineAnimatorManager>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
-        monsterDirection = Vector3.zero;
-        lookDirection = Vector3.right;
+        monsterDirection = Vector2.zero;
+        lookDirection = Vector2.right;
         transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
     }
 
@@ -36,12 +36,13 @@ public class Monster : MonoBehaviour
     private void Update()
     {
         PlayAnimation();
-    }
-
-    private void FixedUpdate()
-    {
         Move();
     }
+
+    //private void FixedUpdate()
+    //{
+    //    Move();
+    //}
 
     private void Move()
     {
@@ -50,12 +51,14 @@ public class Monster : MonoBehaviour
         isMovable = !(((Vector2)player.transform.position - (Vector2)transform.position).sqrMagnitude <= monsterData.atkDistance);
         if (isMovable)
         {
-            monsterDirection = (player.transform.position - transform.position).normalized;
-            monsterRigidbody.velocity = monsterDirection * 5f;
+            monsterDirection = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;
+            //transform.position = Vector2.MoveTowards(transform.position, player.transform.position, monsterData.moveSpeed * Time.deltaTime);
+            monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
         }
         else
         {
-            monsterRigidbody.velocity = Vector3.zero;
+            monsterRigidbody.velocity = Vector2.zero;
+            //transform.position = Vector2.zero;
         }
         
     }

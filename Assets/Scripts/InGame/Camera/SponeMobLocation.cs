@@ -11,7 +11,7 @@ public enum SponeMobLocation
     TOPLEFT,
     TOPRIGHT,
     BOTTOMLEFT,
-    BOTTOMERIGHT,
+    BOTTOMRIGHT,
     ROUND,
     FACE,
     BACK,

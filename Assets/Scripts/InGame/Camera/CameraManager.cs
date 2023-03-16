@@ -131,7 +131,6 @@ public class CameraManager : SingletonBehaviour<CameraManager>
 
     private void ConfinerSetting(string mapName)
     {
-        DebugManager.Instance.PrintDebug("test: "+GameObject.Find(mapName));
         virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D =
             GameObject.Find(mapName).GetComponent<CompositeCollider2D>();
     }

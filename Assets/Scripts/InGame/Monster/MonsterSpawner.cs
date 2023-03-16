@@ -108,7 +108,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         {
             for (int i = 0; i < int.Parse(data["SponeMobAmount"].ToString()); i++)
             {
-                Monster monster = SpawnMonster(int.Parse(data["SponeMobID"].ToString()), CameraManager.Instance.RandomPosInGrid(data["SponeMobLocation"].ToString().ToUpper()));
+                SponeMobLocation location = (SponeMobLocation)Enum.Parse(typeof(SponeMobLocation), data["SponeMobLocation"].ToString().ToUpper());
+                Monster monster = SpawnMonster(int.Parse(data["SponeMobID"].ToString()), CameraManager.Instance.RandomPosInGrid(location));
             }
             ++spawnIndex;
         }

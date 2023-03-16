@@ -110,64 +110,73 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 
     private void Spawn(Dictionary<string, object> data)
     {
-        SponeMobLocation location = (SponeMobLocation)Enum.Parse(typeof(SponeMobLocation), data["SponeMobLocation"].ToString().ToUpper());
         int mobAmount = int.Parse(data["SponeMobAmount"].ToString());
         int mobId = int.Parse(data["SponeMobID"].ToString());
         Player player = GameManager.Instance.player;
+        //SponeMobLocation location = (SponeMobLocation)Enum.TryParse(typeof(SponeMobLocation), data["SponeMobLocation"].ToString().ToUpper());
 
-        for (int i = 0; i < mobAmount; i++)
+        if (Enum.TryParse(data["SponeMobLocation"].ToString(), true, out SponeMobLocation location))
         {
-            if (spawnCount < spawnAmount)
+            for (int i = 0; i < mobAmount; i++)
             {
-                Monster monster;
-
-                if (remainMonsters.Count > 0)
+                if (spawnCount < spawnAmount)
                 {
-                    RemainMonster remainMonster = remainMonsters.Dequeue();
-                    monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
+                    Monster monster;
+
+                    if (remainMonsters.Count > 0)
+                    {
+                        RemainMonster remainMonster = remainMonsters.Dequeue();
+                        monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
+                    }
+                    else
+                    {
+                        if (location == SponeMobLocation.ROUND)
+                        {
+                            location = (SponeMobLocation)UnityEngine.Random.Range(0, (int)location);
+                        }
+                        else if (location == SponeMobLocation.FACE)
+                        {
+                            if (player.lookDirection.x < 0)
+                            {
+                                location = SponeMobLocation.LEFT;
+                            }
+                            else
+                            {
+                                location = SponeMobLocation.RIGHT;
+                            }
+                        }
+                        else if (location == SponeMobLocation.BACK)
+                        {
+                            if (player.lookDirection.x < 0)
+                            {
+                                location = SponeMobLocation.RIGHT;
+                            }
+                            else
+                            {
+                                location = SponeMobLocation.LEFT;
+                            }
+                        }
+                        monster = SpawnMonster(mobId, CameraManager.Instance.RandomPosInGrid(location));
+                    }
+                    ++spawnCount;
                 }
                 else
                 {
-                    if (location == SponeMobLocation.ROUND)
-                    {
-                        location = (SponeMobLocation)UnityEngine.Random.Range(0, (int)location);
-                    }
-                    else if (location == SponeMobLocation.FACE)
-                    {
-                        if (player.lookDirection.x < 0)
-                        {
-                            location = SponeMobLocation.LEFT;
-                        }
-                        else
-                        {
-                            location = SponeMobLocation.RIGHT;
-                        }
-                    }
-                    else if (location == SponeMobLocation.BACK)
-                    {
-                        if (player.lookDirection.x < 0)
-                        {
-                            location = SponeMobLocation.RIGHT;
-                        }
-                        else
-                        {
-                            location = SponeMobLocation.LEFT;
-                        }
-                    }
-                    monster = SpawnMonster(mobId, CameraManager.Instance.RandomPosInGrid(location));
+                    remainMonsters.Enqueue(new RemainMonster(mobId, location));
                 }
-                ++spawnCount;
             }
-            else
+            if (sponeTable.ContainsKey((++spawnId).ToString()))
             {
-                remainMonsters.Enqueue(new RemainMonster(mobId, location));
+                sponeData = sponeTable[spawnId.ToString()];
+                currentSpawnTime = int.Parse(sponeData["SponeTime"].ToString());
             }
         }
-        if (sponeTable.ContainsKey((++spawnId).ToString()))
+        else 
         {
-            sponeData = sponeTable[spawnId.ToString()];
-            currentSpawnTime = int.Parse(sponeData["SponeTime"].ToString());
+            //특정 위치 소환
         }
+
+
     }
 
 }

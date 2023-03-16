@@ -112,10 +112,10 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     {
         int mobAmount = int.Parse(data["SponeMobAmount"].ToString());
         int mobId = int.Parse(data["SponeMobID"].ToString());
+        string sponeLocation = data["SponeMobLocation"].ToString();
         Player player = GameManager.Instance.player;
-        //SponeMobLocation location = (SponeMobLocation)Enum.TryParse(typeof(SponeMobLocation), data["SponeMobLocation"].ToString().ToUpper());
 
-        if (Enum.TryParse(data["SponeMobLocation"].ToString(), true, out SponeMobLocation location))
+        if (Enum.TryParse(sponeLocation, true, out SponeMobLocation location))
         {
             for (int i = 0; i < mobAmount; i++)
             {
@@ -174,6 +174,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         else 
         {
             //특정 위치 소환
+            Vector3 sponePos = GameManager.Instance.map.transform.Find("FieldStructure").transform.Find(sponeLocation).transform.position;
+            Monster monster = SpawnMonster(mobId, sponePos);
         }
 
 

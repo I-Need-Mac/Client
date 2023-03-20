@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using BFM;
+using UnityEngine.Tilemaps;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
@@ -16,8 +17,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     //private int mapId;
     //private int playerId;
 
-    private GameObject map;
     public Player player { get; private set; }
+    public GameObject map { get; private set; }
+    public Tilemap tileMap { get; private set; }
 
     private float defaultScale;
 
@@ -53,9 +55,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         string name = LoadMapManager.Instance.SceneNumberToMapName(mapId);
         GameObject mapPrefab = LoadMapManager.Instance.LoadMapNameToMapObject(name);
         map = Instantiate(mapPrefab, transform);
-        map.gameObject.transform.SetParent(transform.Find("MapGeneratePos").transform);
-        map.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
-        map.gameObject.SetActive(true);
+        tileMap = map.transform.Find("Map").transform.Find("Floor").GetComponent<Tilemap>();
+        map.transform.SetParent(transform.Find("MapGeneratePos").transform);
+        map.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+        map.SetActive(true);
     }
 
     private void PlayerLoad(int playerId)

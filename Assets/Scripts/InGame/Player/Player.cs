@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
-        lookDirection = Vector3.right;
+        lookDirection = Vector3.left;
 
         anime = GetComponent<SpineManager>();
         playerManager = transform.Find("PlayerManager").GetComponent<PlayerManager>();

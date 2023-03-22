@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: SkeletonData
+  m_Name: Main_Ingame_Monster_HwaGwangSu_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 2d5a8fde461f71c4c95dcc490738f1de, type: 2}
+  - {fileID: 11400000, guid: 24cd6ff03b16e0441839d67789a29c38, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: e83b6de2ee4219c4c938c5d1f800ead0, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: c21138e9dc879ea4a861b8ffaf626951, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0
@@ -28,4 +28,4 @@ MonoBehaviour:
   toAnimation: []
   duration: []
   defaultMix: 0.2
-  controller: {fileID: 9100000, guid: aac51f92bb837a44c927b817e7c1064d, type: 2}
+  controller: {fileID: 9100000, guid: 887a91c84174d45478e02b42e95f636a, type: 2}

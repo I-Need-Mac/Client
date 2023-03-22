@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2944827081024026314}
   - component: {fileID: 164341062027636226}
   - component: {fileID: 2896716320841604443}
-  - component: {fileID: 356352406006676192}
+  - component: {fileID: 3435793070156651190}
   m_Layer: 0
   m_Name: Nien
   m_TagString: Untagged
@@ -81,8 +81,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &356352406006676192
-CircleCollider2D:
+--- !u!70 &3435793070156651190
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,9 +94,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Offset: {x: 0.050358698, y: 0.32738742}
+  m_Size: {x: 1.1007282, y: 0.4967813}
+  m_Direction: 1
 --- !u!1 &6528328165340260694
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +190,7 @@ Animator:
   m_GameObject: {fileID: 6528328165340260694}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c990d543b4193d94d8b8b015281de23b, type: 2}
+  m_Controller: {fileID: 22100000, guid: bc7a47a071a2be04f917a55eb307d309, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

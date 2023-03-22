@@ -72,7 +72,7 @@ public class Monster : MonoBehaviour
         //    spineAnimatorManager.animator.SetBool("isAttack", true);
         //    spineAnimatorManager.animator.SetBool("isMovable", false);
         //}
-        spineAnimatorManager.animator.SetBool("isAttack", !isMovable);
+        spineAnimatorManager.animator.SetBool("isAttackable", !isMovable);
         spineAnimatorManager.animator.SetBool("isMovable", isMovable);
     }
 

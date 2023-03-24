@@ -1,15 +1,15 @@
 SponeID,SponeTime,SponeMobID,SponeMobAmount,SponeMobLocation,SponeMobObject
 ?¤í°?„ì´??ëª¬ìŠ¤???¤í° ?€?´ë°,?¤í° ëª¬ìŠ¤??ID,?¤í° ëª¬ìŠ¤?????¤í° ëª¬ìŠ¤???„ì¹˜ Enum,?¤í° ëª??„ì¹˜,,
 int,int,int,int,Enum,String
-1,1000,101,2,top,
-2,2000,102,2,bottom,
-3,3000,101,2,left,
-4,4000,102,2,right,
-5,5000,101,2,topleft,
-6,6000,102,2,topright,
-7,7000,101,2,bottomleft,
-8,8000,102,2,bottomright,
-9,9000,101,2,round,
-10,10000,102,2,face,
-11,11000,101,2,back,
-12,12000,102,2,back,AB
+1,1000,103,2,top,
+2,2000,103,2,bottom,
+3,3000,103,2,left,
+4,4000,103,2,right,
+5,5000,103,2,topleft,
+6,6000,103,2,topright,
+7,7000,103,2,bottomleft,
+8,8000,103,2,bottomright,
+9,9000,103,2,round,
+10,10000,103,2,face,
+11,11000,103,2,back,
+12,12000,103,2,back,AB

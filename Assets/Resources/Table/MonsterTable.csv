@@ -3,7 +3,7 @@ MonsterID,MonsterName,SizeMultiple,HP,Attack,MoveSpeed,AtkSpeed,ViewDistance,Atk
 int,String,Float,int,int,int,float,int,int,int,String,int,String,Enum
 101,Nien,0.5,500,300,5,1,99999,3,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
 102,HwaGwangSu,0.5,600,600,5,1,99999,3,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
-103,Nien_L,1,700,900,5,1,99999,3,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
+103,TeoLeogSon,0.5,700,900,5,1,99999,3,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
 201,MobName_201,1,1500,1200,104,0,99999,10,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Shy
 202,MobName_202,1,1000,1500,96,0.5,99999,10,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Bold
 203,MobName_203,1,1200,1800,88,1.2,99999,10,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Bold

@@ -110,7 +110,8 @@ GameObject:
   - component: {fileID: 1044205718512837734}
   - component: {fileID: 1044205718512837735}
   - component: {fileID: 1044205718512837728}
-  - component: {fileID: 1044205718512837729}
+  - component: {fileID: 8458186517628291673}
+  - component: {fileID: 5095976059809664889}
   - component: {fileID: 298541130048515240}
   m_Layer: 0
   m_Name: Character
@@ -160,7 +161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d58c81bd16893374c8dcf1ae505f4032, type: 2}
+  - {fileID: 2100000, guid: e5e1c9a22fe05d840a148d759e83fdb8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -182,7 +183,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1044205718512837729
+--- !u!95 &8458186517628291673
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044205718512837730}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 93b5c4ee865f5ea459ac6c4c91150a5b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5095976059809664889
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,10 +211,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1044205718512837730}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 0}
+  skeletonDataAsset: {fileID: 11400000, guid: 440a0b365423031418d747672da3c11b, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -217,11 +237,12 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  translator:
+    autoReset: 1
+    useCustomMixMode: 1
+    layerMixModes: 01000000
+    layerBlendModes: 00000000
   updateTiming: 1
-  unscaledTime: 0
-  _animationName: 
-  loop: 0
-  timeScale: 1
 --- !u!70 &298541130048515240
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -686,7 +707,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8356449094741141202}
   - component: {fileID: 8356449094741141203}
-  - component: {fileID: 8356449094741141204}
+  - component: {fileID: 4267911089936879038}
   - component: {fileID: 8356449094741141200}
   m_Layer: 0
   m_Name: PlayerCharacterPrefab
@@ -728,7 +749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillId: 10102
   moveSpeed: 10
---- !u!114 &8356449094741141204
+--- !u!114 &4267911089936879038
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -737,14 +758,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8356449094741141205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d9551ba00533514699483adb20ee67e, type: 3}
+  m_Script: {fileID: 11500000, guid: 335dc788efad8e6469b1994558ebc851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  skeletonAnimation: {fileID: 1044205718512837729}
-  spineSpeed: 1
 --- !u!50 &8356449094741141200
 Rigidbody2D:
   serializedVersion: 4

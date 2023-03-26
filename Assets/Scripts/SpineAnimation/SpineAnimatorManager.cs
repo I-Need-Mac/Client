@@ -54,22 +54,14 @@ public class SpineAnimatorManager : MonoBehaviour
 
     public void SetDirection(Transform transform, Vector3 direction)
     {
-        float x = transform.localScale.x;
         if (direction.x < 0)
         {
-            if (x < 0)
-            {
-                x *= -1;
-            }
+            transform.localEulerAngles = new Vector3(0f, 0f, 0f);
         }
         else if (direction.x > 0)
         {
-            if (x > 0)
-            {
-                x *= -1;
-            }
+            transform.localEulerAngles = new Vector3(0f, 180f, 0f);
         }
-        transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
     }
 
 }

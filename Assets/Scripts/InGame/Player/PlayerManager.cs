@@ -1,24 +1,41 @@
 using BFM;
+using SKILLCONSTANT;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 //싱글톤 사용
 public class PlayerManager : SingletonBehaviour<PlayerManager>
 {
-    //private Player player;
+    private const float HP_REGEN_PER_SECOND = 1f;
+
+    private int fraction;             //분율
+    private int coolTimeConstant;     //재사용대기시간감소상수
+    private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
+    private int criticalRatio;
 
     public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
+    public PlayerData weight { get; private set; } = new PlayerData();     //증감치
 
+    #region
     protected override void Awake()
     {
-        //player = transform.parent.GetComponent<Player>();
-        //DebugManager.Instance.PrintDebug(GameManager.Instance.GetPlayerId());
         PlayerSetting(FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
+        ConfigSetting();
     }
 
     private void Start()
     {
+        StartCoroutine(HpRegeneration());
+    }
+
+    private void ConfigSetting()
+    {
+        fraction = Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
+        coolTimeConstant = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeOffset", "ConfigValue"));
+        coolTimeCoefficient = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeMax", "ConfigValue"));
+        criticalRatio = Convert.ToInt32(CSVReader.Read("BattleConfig", "CriticalRatio", "ConfigValue"));
     }
 
     //캐릭터에 스탯 부여
@@ -42,19 +59,6 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(Convert.ToInt32(characterData["MoveSpeed"]));
         playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
-
-        //Debug.Log("캐릭터 이름: " + playerData.characterName);
-        //Debug.Log("캐릭터 체력: " + playerData.hp);
-        //Debug.Log("캐릭터 공격력: " + playerData.attack);
-        //Debug.Log("캐릭터 크리티컬 확률: " + playerData.criRatio);
-        //Debug.Log("캐릭터 크리티컬 데미지: " + playerData.criDamage);
-        //Debug.Log("캐릭터 쿨타임 감소량: " + playerData.coolDown);
-        //Debug.Log("캐릭터 체젠량: " + playerData.hpRegen);
-        //Debug.Log("캐릭터 쉴드개수: " + playerData.shield);
-        //Debug.Log("캐릭터 투사체증가량: " + playerData.projectileAdd);
-        //Debug.Log("캐릭터 이동속도: " + playerData.moveSpeed);
-        //Debug.Log("캐릭터 아이템획득범위: " + playerData.getItemRange);
-
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴
@@ -71,5 +75,138 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         //찾는 캐릭터가 없을 경우 null 리턴
         return null;
     }
+    #endregion
 
+    /*스탯 증감 관련*/
+    #region STATUS
+    //increment는 버프+디버프 값 이하 status에 모두 동일하게 적용
+    //버프, 디버프의 기본 수치는 0
+
+    //체력
+    public int ReturnHp()
+    {
+        return playerData.hp + weight.hp;
+    }
+
+    //공격력
+    public int ReturnAttack()
+    {
+        return playerData.attack + weight.attack;
+    }
+
+    //크리티컬확률
+    public int ReturnCriRatio()
+    {
+        return playerData.criRatio + weight.criRatio;
+    }
+
+    //크리티컬데미지 증감함수
+    public int ReturnCriDamage()
+    {
+        return playerData.criDamage + weight.criDamage * criticalRatio;
+    }
+
+    //재사용대기시간 = 기존재사용대기시간*(재사용대기시간감소^2/(재사용대기시간감소^2+재사용대기시간감소상수))*재사용대기시간감소최대치조절계수/10000
+    public float ReturnCoolDown()
+    {
+        return playerData.coolDown * ((float)Math.Pow(weight.coolDown, 2) / ((float)Math.Pow(weight.coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient / fraction;
+    }
+
+    //체젠량
+    public int ReturnHpRegen()
+    {
+        return playerData.hpRegen + weight.hpRegen;
+    }
+
+    //쉴드 개수
+    public int ReturnShield()
+    {
+        return playerData.shield + weight.shield;
+    }
+
+    //투사체 증가 개수
+    public int ReturnProjectileAdd()
+    {
+        return playerData.projectileAdd + weight.projectileAdd;
+    }
+
+    //이동속도
+    public float ReturnMoveSpeed()
+    {
+        return playerData.moveSpeed * (1 + weight.moveSpeed);
+    }
+
+    //아이템 획득 범위
+    public int ReturnGetItemRange()
+    {
+        return playerData.getItemRange + weight.getItemRange;
+    }
+
+    #endregion
+
+    /*캐릭터 로직 관련*/
+    #region Character Logic
+
+    //체젠 함수
+    //기본적으로 가지고 있는(get으로 가져올 수 있는) hp를 최대 체력이라 지정
+    //현재 체력은 currentHp로 따로 빼서 사용
+    private IEnumerator HpRegeneration()
+    {
+        while (true)
+        {
+            //정해진 초(HP_REGEN_PER_SECOND)마다 실행
+            yield return new WaitForSeconds(HP_REGEN_PER_SECOND);
+
+            //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
+            if (ReturnHp() < playerData.hp && ReturnHp() >= 0)
+            {
+                weight.SetHp(weight.hp + ReturnHpRegen());
+            }
+        }
+    }
+
+    //크리티컬 판별 함수
+    private bool IsCritical()
+    {
+        return UnityEngine.Random.Range(0f, 1f) <= (ReturnCriRatio() / fraction);
+    }
+
+    //최종적으로 몬스터에게 가하는 데미지 계산 함수
+    //스킬 데미지 계산 방식에 따라 따로 계산
+    //오리지널데미지 = 공격력 + or * 스킬피해
+    //크리티컬데미지 = 오리지널데미지 * 크리티컬데미지
+    //일단 스킬피해 제외하고 구현
+    public int TotalDamage(int skillDamage, CALC_DAMAGE_TYPE type)
+    {
+        int originalDamage;
+        if (type == CALC_DAMAGE_TYPE.PLUS)
+        {
+            originalDamage = ReturnAttack() + skillDamage;
+        }
+        else
+        {
+            originalDamage = ReturnAttack() * skillDamage;
+        }
+
+        //크리티컬 체크
+        if (IsCritical())
+        {
+            return ReturnCriDamage();
+        }
+        return originalDamage;
+    }
+
+    //쉴드 사용 함수
+    //쉴드가 존재할경우 1감소시키고 데미지를 1로 반환
+    //쉴드가 없을 경우 받은 데미지 그대로 리턴
+    public int IsShield(int monsterDamage)
+    {
+        if (ReturnShield() > 0)
+        {
+            weight.SetShield(weight.shield - 1);
+            return 1;
+        }
+        return monsterDamage;
+    }
+    #endregion
 }

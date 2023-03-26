@@ -37,14 +37,9 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        PlayAnimation();
+        PlayAnimations();
         Move();
     }
-
-    //private void FixedUpdate()
-    //{
-    //    Move();
-    //}
 
     private void Move()
     {
@@ -54,26 +49,19 @@ public class Monster : MonoBehaviour
         if (isMovable)
         {
             monsterDirection = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;
-            //transform.position = Vector2.MoveTowards(transform.position, player.transform.position, monsterData.moveSpeed * Time.deltaTime);
             monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
         }
         else
         {
             monsterRigidbody.velocity = Vector2.zero;
-            //transform.position = Vector2.zero;
         }
         
     }
 
-    private void PlayAnimation()
+    private void PlayAnimations()
     {
-        //if (((Vector2)(player.transform.position - transform.position)).sqrMagnitude <= monsterData.atkDistance)
-        //{
-        //    spineAnimatorManager.animator.SetBool("isAttack", true);
-        //    spineAnimatorManager.animator.SetBool("isMovable", false);
-        //}
-        spineAnimatorManager.animator.SetBool("isAttackable", !isMovable);
-        spineAnimatorManager.animator.SetBool("isMovable", isMovable);
+        spineAnimatorManager.PlayAnimation("isAttackable", !isMovable);
+        spineAnimatorManager.PlayAnimation("isMovable", isMovable);
     }
 
     public void MonsterSetting(string monsterId)
@@ -127,7 +115,7 @@ public class Monster : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("PlayerSkill"))
         {
-            monsterData.SetHp(monsterData.hp - player.ReturnAttack());
+            monsterData.SetHp(monsterData.hp - player.playerManager.ReturnAttack());
             if (monsterData.hp <= 0)
             {
                 DropItem();

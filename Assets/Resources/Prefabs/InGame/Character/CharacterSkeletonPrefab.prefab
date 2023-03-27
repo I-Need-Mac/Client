@@ -193,7 +193,7 @@ Animator:
   m_GameObject: {fileID: 1044205718512837730}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 93b5c4ee865f5ea459ac6c4c91150a5b, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 440a0b365423031418d747672da3c11b, type: 2}
+  skeletonDataAsset: {fileID: 0}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -256,8 +256,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0112808645, y: 0.8630532}
-  m_Size: {x: 0.548804, y: 1.7445221}
+  m_Offset: {x: -0.0033890158, y: 0.74988556}
+  m_Size: {x: 0.48593304, y: 1.5936317}
   m_Direction: 0
 --- !u!1 &7647809315510656089
 GameObject:
@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 4267911089936879038}
   - component: {fileID: 8356449094741141200}
   m_Layer: 0
-  m_Name: PlayerCharacterPrefab
+  m_Name: CharacterSkeletonPrefab
   m_TagString: ItemCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

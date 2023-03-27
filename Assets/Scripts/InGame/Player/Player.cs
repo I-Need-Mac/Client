@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
-        lookDirection = Vector3.right;
+        lookDirection = Vector3.left;
 
         character = transform.Find("Character");
         shadow = transform.Find("Shadow");

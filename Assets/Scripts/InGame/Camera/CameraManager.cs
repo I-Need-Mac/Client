@@ -1,18 +1,16 @@
 using UnityEngine;
 using Cinemachine;
 using BFM;
+using UnityEngine.Tilemaps;
 
 public class CameraManager : SingletonBehaviour<CameraManager>
 {
     private CinemachineVirtualCamera virtualCam;
     private Camera cam;
 
-    private float x;
-    private float y;
-
-    private float weightX;
-    private float weightY;
-
+    private Tilemap tileMap;
+    private float extra = 2.0f;
+    
     protected override void Awake()
     {
         virtualCam = transform.Find("Cinemachine").GetComponent<CinemachineVirtualCamera>();
@@ -21,12 +19,8 @@ public class CameraManager : SingletonBehaviour<CameraManager>
 
     private void Start()
     {
-        //Vector2 vector = cam.ScreenToWorldPoint();
-        //x = vector.x;
-        //y = vector.y;
-        //weightX = Mathf.Abs(x) * 2 / 3.0f;
-        //weightY = Mathf.Abs(y) * 2 / 3.0f;
         ConfinerSetting("Floor");
+        tileMap = GameManager.Instance.tileMap;
     }
 
     #region
@@ -39,50 +33,76 @@ public class CameraManager : SingletonBehaviour<CameraManager>
      * F G H
      */
 
-    public Vector2 RandomPosInGrid(string grid)
+    public Vector2 RandomPosInGrid(SponeMobLocation location)
     {
         Vector2 camPoint = cam.ScreenToWorldPoint(new Vector2(cam.orthographicSize * Screen.width / Screen.height, cam.orthographicSize));
         Vector2 weight = new Vector2((cam.orthographicSize * Screen.width / Screen.height * 2) / 3.0f, (cam.orthographicSize * 2) / 3.0f);
 
-        switch (grid)
+        Vector3 pos = Vector3.zero;
+        switch (location)
         {
-            case "A":
-                return new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-            case "B":
-                return new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-            case "C":
-                return new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-            case "D":
-                return new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
-            case "E":
-                return new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
-            case "F":
-                return new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y, camPoint.y + weight.y));
-            case "G":
-                return new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y, camPoint.y + weight.y));
-            case "H":
-                return new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y, camPoint.y + weight.y));
+            case SponeMobLocation.TOPLEFT:
+                pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(-camPoint.y, -camPoint.y + extra));
+                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
+                {
+                    pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
+                }
+                break;
+            case SponeMobLocation.TOP:
+                pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(-camPoint.y, -camPoint.y + extra));
+                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
+                {
+                    pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
+                }
+                break;
+            case SponeMobLocation.TOPRIGHT:
+                pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(-camPoint.y, -camPoint.y + extra));
+                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
+                {
+                    pos = new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
+                }
+                break;
+            case SponeMobLocation.LEFT:
+                pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
+                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
+                {
+                    pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
+                }
+                break;
+            case SponeMobLocation.RIGHT:
+                pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
+                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
+                {
+                    pos = new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
+                }
+                break;
+            case SponeMobLocation.BOTTOMLEFT:
+                pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(camPoint.y - extra, camPoint.y));
+                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
+                {
+                    pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y, camPoint.y + weight.y));
+                }
+                break;
+            case SponeMobLocation.BOTTOM:
+                pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y - extra, camPoint.y));
+                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
+                {
+                    pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y, camPoint.y + weight.y));
+                }
+                break;
+            case SponeMobLocation.BOTTOMRIGHT:
+                pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(camPoint.y - extra, camPoint.y));
+                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
+                {
+                    pos = new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y, camPoint.y + weight.y));
+                }
+                break;
             default:
-                return Vector2.zero;
-                //case "A":
-                //    return new Vector2(camPoint.x + weight.x, camPoint.y + weight.y * 2);
-                //case "B":
-                //    return new Vector2(camPoint.x + weight.x * 2, camPoint.y + weight.y * 2);
-                //case "C":
-                //    return new Vector2(-camPoint.x, camPoint.y + weight.y * 2);
-                //case "D":
-                //    return new Vector2(camPoint.x + weight.x, camPoint.y + weight.y);
-                //case "E":
-                //    return new Vector2(-camPoint.x, camPoint.y + weight.y);
-                //case "F":
-                //    return new Vector2(camPoint.x + weight.x, camPoint.y);
-                //case "G":
-                //    return new Vector2(camPoint.x + weight.x * 2, camPoint.y);
-                //case "H":
-                //    return new Vector2(-camPoint.x, camPoint.y);
-                //default:
-                //    return Vector2.zero;
+                pos = Vector2.zero;
+                break;
         }
+        pos.z = (int)LayerConstant.MONSTER;
+        return pos;
     }
 
     #endregion
@@ -100,7 +120,6 @@ public class CameraManager : SingletonBehaviour<CameraManager>
 
     private void ConfinerSetting(string mapName)
     {
-        DebugManager.Instance.PrintDebug("test: "+GameObject.Find(mapName));
         virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D =
             GameObject.Find(mapName).GetComponent<CompositeCollider2D>();
     }

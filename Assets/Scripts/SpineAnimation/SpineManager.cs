@@ -14,17 +14,17 @@ public enum Subject
 public class SpineManager : MonoBehaviour
 {
     const string SPINE_HOME = "Arts/Spine/";
-    const string SPINE_STATE = "ReferenceAssets/";
+    const string SPINE_STATE = "ReferenceAssets";
 
     [SerializeField] private Subject subject = Subject.PLAYER;
-    [SerializeField] private AnimationReferenceAsset[] animationClips;
     [SerializeField] private SkeletonAnimation skeletonAnimation;
     [SerializeField] private float spineSpeed = 1;
 
-    public AnimationConstant animationState { get; set; }
-
+    private AnimationReferenceAsset[] animationClips;
     private string currentAnimation;
     private string path;
+
+    public AnimationConstant animationState { get; set; }
 
     private void Awake()
     {
@@ -71,7 +71,7 @@ public class SpineManager : MonoBehaviour
                 path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(GameManager.Instance.GetPlayerId()), "CharacterSpinePath") + "/";
                 break;
             case Subject.MONSTER:
-                path = GetComponent<Monster>().monsterData.monsterImage + "/Animation/Spine/";
+                //path = GetComponent<Monster>().monsterData.monsterImage + "/Animation/Spine/";
                 DebugManager.Instance.PrintDebug(">>>>" + path);
                 break;
         }
@@ -79,7 +79,8 @@ public class SpineManager : MonoBehaviour
         skeletonAnimation.timeScale = spineSpeed;
 
         SkeletonAnimation character = transform.Find("Character").GetComponent<SkeletonAnimation>();
-        character.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(path + "SkeletonData");
+        //character.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(path + "SkeletonData");
+        character.skeletonDataAsset = ResourcesManager.Load<SkeletonDataAsset>(path + "SkeletonData");
         skeletonAnimation.skeletonDataAsset = character.skeletonDataAsset;
         skeletonAnimation.Initialize(true);
 
@@ -88,8 +89,9 @@ public class SpineManager : MonoBehaviour
 
     private void SpineClipSetting()
     {
-        AnimationReferenceAsset[] clips = Resources.LoadAll<AnimationReferenceAsset>(path + SPINE_STATE);
-
+        //AnimationReferenceAsset[] clips = Resources.LoadAll<AnimationReferenceAsset>(path + SPINE_STATE);
+        AnimationReferenceAsset[] clips = ResourcesManager.LoadAll<AnimationReferenceAsset>(path + SPINE_STATE);
+        animationClips = new AnimationReferenceAsset[clips.Length];
         for (int i = 0; i < clips.Length; i++)
         {
             int index = (int)(AnimationConstant)Enum.Parse(typeof(AnimationConstant), clips[i].name.ToUpper());

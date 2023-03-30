@@ -15,6 +15,7 @@ public class PlayerData
     public int projectileAdd { get; private set; }                  //투사체 증가 개수
     public int moveSpeed { get; private set; }                      //이동 속도
     public int getItemRange { get; private set; }                   //아이템 획득 범위
+    public string characterPrefabPath { get; private set; }
     ////스킬들을 저장할 Dic (스킬이름, 스킬)
     //public Dictionary<string, Skill> skills { get; private set; } = new Dictionary<string, Skill>();
     public List<Skill> skills { get; private set; } = new List<Skill>();

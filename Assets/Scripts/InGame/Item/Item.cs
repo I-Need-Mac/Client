@@ -59,7 +59,7 @@ public class Item : MonoBehaviour
 
     private void ImageSetting()
     {
-        Sprite sprite = ItemResourceLoader.Load(itemData.imagePath);
+        Sprite sprite = ResourcesManager.Load<Sprite>(itemData.imagePath);
         render.sprite = sprite;
     }
 

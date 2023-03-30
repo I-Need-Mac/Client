@@ -1,0 +1,83 @@
+Main_Sinwol_Ingame_Animation.png
+size:1015,126
+filter:Linear,Linear
+pma:true
+B_acc
+bounds:269,16,41,18
+offsets:1,60,67,78
+Face_hair
+bounds:818,4,27,89
+offsets:0,1,27,90
+rotate:90
+L_Red
+bounds:752,46,20,62
+offsets:0,0,20,63
+rotate:90
+L_arm
+bounds:499,53,71,129
+rotate:90
+L_back hair
+bounds:630,61,63,120
+offsets:0,0,63,121
+rotate:90
+L_foot
+bounds:985,85,39,28
+offsets:1,0,40,28
+rotate:90
+L_hair
+bounds:730,2,20,57
+offsets:1,0,21,60
+L_hand
+bounds:985,53,30,28
+offsets:0,0,32,28
+rotate:90
+L_leg
+bounds:819,33,35,159
+rotate:90
+R_Red
+bounds:135,15,19,72
+rotate:90
+R_arm
+bounds:499,2,49,127
+rotate:90
+R_foot
+bounds:980,16,35,31
+offsets:0,2,36,33
+rotate:90
+R_hair
+bounds:209,16,18,58
+offsets:2,0,20,58
+rotate:90
+R_hand
+bounds:909,8,36,23
+R_leg
+bounds:819,70,54,164
+rotate:90
+back skirt
+bounds:2,6,118,131
+rotate:90
+belt
+bounds:800,8,36,16
+rotate:90
+black skirt
+bounds:335,5,39,154
+rotate:90
+chest
+bounds:752,68,56,65
+rotate:90
+head
+bounds:135,36,105,88
+offsets:25,0,130,88
+low yellow
+bounds:630,12,47,98
+offsets:0,7,47,105
+rotate:90
+middle skirt
+bounds:242,36,88,91
+rotate:90
+up Yellow
+bounds:752,4,46,40
+white skirt
+bounds:335,46,78,162
+offsets:6,5,84,167
+rotate:90

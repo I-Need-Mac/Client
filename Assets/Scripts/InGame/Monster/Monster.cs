@@ -1,4 +1,5 @@
 
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,25 +8,34 @@ using UnityEngine.PlayerLoop;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] private int monsterId;
+    [field: SerializeField] public int monsterId { get; private set; }
 
     private Player player;
     private Rigidbody2D monsterRigidbody;
-    private Vector3 monsterDirection;
+    private Vector2 monsterDirection;
 
-    private SpineManager anime;
+    private bool isMovable;
+    private bool isAttackable;
+
+    private SpineAnimatorManager spineAnimatorManager;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
-    public Vector3 lookDirection { get; private set; } //바라보는 방향
+    public Vector2 lookDirection { get; private set; } //바라보는 방향
 
     private void Awake()
     {
-        anime = GetComponent<SpineManager>();
+        spineAnimatorManager = GetComponent<SpineAnimatorManager>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
-        monsterDirection = Vector3.zero;
-        lookDirection = Vector3.right;
-        transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
-        MonsterSetting(Convert.ToString(monsterId));
+        monsterDirection = Vector2.zero;
+        lookDirection = Vector2.right;
+
+        MonsterSetting(monsterId.ToString());
+    }
+
+    private void OnEnable()
+    {
+        isMovable = false;
+        isAttackable = false;
     }
 
     private void Start()
@@ -35,38 +45,58 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        anime.SetCurrentAnimation();
-    }
-
-    private void FixedUpdate()
-    {
-        AnimationSetting();
+        PlayAnimations();
         Move();
-        //RayTest();
-    }
-
-    private void AnimationSetting()
-    {
-        anime.animationState = AnimationConstant.RUN;
-        anime.SetDirection(monsterDirection);
     }
 
     private void Move()
     {
-        monsterDirection = (player.transform.position - transform.position).normalized;
-        monsterRigidbody.velocity = monsterDirection * 5f;
-    }
+        Vector2 diff = player.transform.position - transform.position;
+        float distance = diff.sqrMagnitude;
 
-    private void RayTest()
-    {
-        Debug.DrawRay(transform.position, monsterDirection * 3f);
-        if (Physics2D.Raycast(transform.position, monsterDirection, 3f, 3))
+        if (distance <= monsterData.viewDistance)
         {
-            DebugManager.Instance.PrintDebug("detect obstacle");
+            spineAnimatorManager.SetDirection(transform, monsterDirection);
+            if (isAttackable = distance <= monsterData.atkDistance)
+            {
+                monsterRigidbody.velocity = Vector2.zero;
+            }
+            else
+            {
+                monsterDirection = diff.normalized;
+                monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+            }
+            isMovable = !isAttackable;
         }
+        else
+        {
+            isAttackable = false;
+            isMovable = false;
+        }
+        
+
+        
+
+        //isMovable = !(distance <= monsterData.atkDistance * monsterData.atkDistance);
+        //if (isMovable)
+        //{
+        //    monsterDirection = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;
+        //    monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+        //}
+        //else
+        //{
+        //    monsterRigidbody.velocity = Vector2.zero;
+        //}
+        
     }
 
-    private void MonsterSetting(string monsterId)
+    private void PlayAnimations()
+    {
+        spineAnimatorManager.PlayAnimation("isAttackable", isAttackable);
+        spineAnimatorManager.PlayAnimation("isMovable", isMovable);
+    }
+
+    public void MonsterSetting(string monsterId)
     {
         Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
         if (monsterTable.ContainsKey(monsterId))
@@ -74,6 +104,7 @@ public class Monster : MonoBehaviour
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
             monsterData.SetHp(Convert.ToInt32(table["HP"]));
+            monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
             monsterData.SetAttack(Convert.ToInt32(table["Attack"]));
             monsterData.SetMoveSpeed(Convert.ToInt32(table["MoveSpeed"]));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
@@ -82,7 +113,7 @@ public class Monster : MonoBehaviour
             monsterData.SetSkillID(Convert.ToInt32(table["SkillID"]));
             monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
             monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));
-            monsterData.SetMonsterImage(Convert.ToString(table["MonsterImage"]));
+            monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
             monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
         }
         //monsterData.SetMonsterName(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "MonsterName")));
@@ -116,7 +147,7 @@ public class Monster : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("PlayerSkill"))
         {
-            monsterData.SetHp(monsterData.hp - player.ReturnAttack());
+            monsterData.SetHp(monsterData.hp - player.playerManager.ReturnAttack());
             if (monsterData.hp <= 0)
             {
                 DropItem();
@@ -124,25 +155,5 @@ public class Monster : MonoBehaviour
             }
         }
     }
-
-    //public float 
-
-    //// 이동
-    //if (sqrDistToPlayer < Mathf.Pow(viewDistance, 2))
-    //{
-    //    transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
-    //}
-
-    //// 자동공격
-    //if (Time.time > nextTimeAttack)
-    //{
-    //    sqrDistToPlayer = (player.transform.position - transform.position).sqrMagnitude;
-    //    if (sqrDistToPlayer < Mathf.Pow(atkDistance, 2))
-    //    {
-    //        nextTimeAttack = Time.time + atkSpeed;
-    //        Debug.Log(attack);
-    //        // 플레이어 체력 mosterData.attack 만큼 감소
-    //    }
-    //}
 
 }

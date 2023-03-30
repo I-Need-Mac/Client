@@ -133,7 +133,9 @@ GameObject:
   m_Component:
   - component: {fileID: 235493071}
   - component: {fileID: 235493070}
+  - component: {fileID: 235493072}
   - component: {fileID: 235493069}
+  - component: {fileID: 235493073}
   m_Layer: 0
   m_Name: Temp
   m_TagString: Untagged
@@ -150,9 +152,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 235493068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71bafed11ad3b4448affea89844e5665, type: 3}
+  m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Default
+    audioMixerGroup: {fileID: 0}
+    _audioType: 0
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 0
+    pitch: 0
+    streoPan: 0
+    volume: 0
+    spatialBlend: 0
+  soundPackItems:
+  - SOUNDSITUATION: 17
+    usingSpeaker: Default
+    audioClip: {fileID: 8300000, guid: e885484e1bc99fb47a0ac3f6bfa586b1, type: 3}
 --- !u!212 &235493070
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -218,6 +235,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &235493072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235493068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fadd3106fbe57941a6f97f0dfc7ef0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &235493073
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235493068}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &412482231
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +325,7 @@ SpriteRenderer:
   m_Size: {x: 7.28, y: 4.55}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &412482233
@@ -337,7 +379,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.3207547, g: 0.26174796, b: 0.26174796, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -396,8 +438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c513a0261db1d774aa1232375d7ae7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 235493071}
-  MapSize: {x: 0, y: 0}
 --- !u!1 &555328101 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8063105264625288734, guid: 68544516088639d479e61fed5ea2544f, type: 3}

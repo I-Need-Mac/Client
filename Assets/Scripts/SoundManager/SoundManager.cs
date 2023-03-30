@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class SoundManager : SingleTon<SoundManager>
 {
-    Dictionary<string, AudioSource> audioSourceList = null;
+ 
 
+    Dictionary<string, AudioSource> audioSourceList = null;
+    
+
+    GameObject soundManager;
+    SoundManagerUpdater soundManagerUpdater;
+    
     private const float soundNomalizer = 10.0f;
     private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
 
@@ -21,12 +27,14 @@ public class SoundManager : SingleTon<SoundManager>
 
 
 
-        GameObject gameManager = GameObject.Find("SoundManager");
+        soundManager = GameObject.Find("SoundManager");
         {
-            gameManager = new GameObject("SoundManager");
-            DebugManager.Instance.PrintDebug(gameManager != null, "Can not create new SoundManager GameeObject");
+            soundManager = new GameObject("SoundManager");
+            soundManager.AddComponent<SoundManagerUpdater>();
+            soundManagerUpdater = soundManager.GetComponent<SoundManagerUpdater>();
+            DebugManager.Instance.PrintDebug(soundManager != null, "Can not create new SoundManager GameeObject");
         }
-        GameObject.DontDestroyOnLoad(gameManager);
+        GameObject.DontDestroyOnLoad(soundManager);
 
         GameObject bgmRequester = GameObject.Find("BGMRequester");
         if (bgmRequester != null)
@@ -42,7 +50,7 @@ public class SoundManager : SingleTon<SoundManager>
 
 
 
-    public bool AddAudioSource(string audioSourceKey, bool isLoop, AudioSourceSetter audioSetting)
+    public bool AddAudioSource(string audioSourceKey, AudioSource audioSource)
     {
         GameObject gameManager = GameObject.Find("SoundManager");
 
@@ -54,18 +62,8 @@ public class SoundManager : SingleTon<SoundManager>
         else
         {
 
-            audioSourceList.Add(audioSourceKey, gameManager.AddComponent<AudioSource>());
-            audioSourceList[audioSourceKey].loop = isLoop;
-            audioSourceList[audioSourceKey].volume = SettingManager.Instance.GetSettingValue(audioSetting.audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
+            audioSourceList.Add(audioSourceKey, audioSource);
 
-            audioSourceList[audioSourceKey].bypassEffects = audioSetting.isBypassEffects;
-            audioSourceList[audioSourceKey].priority = audioSetting.priority;
-            audioSourceList[audioSourceKey].pitch = audioSetting.pitch;
-            audioSourceList[audioSourceKey].panStereo = audioSetting.streoPan;
-            audioSourceList[audioSourceKey].outputAudioMixerGroup = audioSetting.audioMixerGroup;
-
-            audioSourceList[audioSourceKey].volume = audioSetting.volume;
-            audioSourceList[audioSourceKey].spatialBlend = audioSetting.spatialBlend;
 
             return true;
         }
@@ -114,9 +112,23 @@ public class SoundManager : SingleTon<SoundManager>
 
     }
 
+    public void RequestSetCallBack(AudioSource targetSpeaker, SoundRequester soundRequester, PackItem packItem){
+        soundManagerUpdater.AddRequestSource(targetSpeaker,soundRequester,packItem);
+    }
+
+    public AudioSource GetAudioSource(string speakerName) { 
+        return audioSourceList[speakerName];
+    }
+
 
     public List<string> GetAudioSourceID()
     {
         return audioSourceList.Keys.ToList();
     }
+
+    public float getSettingSound(string audioType) { 
+        return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
+    }
+
+
 }

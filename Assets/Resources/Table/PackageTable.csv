@@ -1,17 +1,17 @@
-PackageID,PackageSource,IsMultiple,ItemID,ItemAmount,ItemProbabilitie
-패키지 ID,패키지 소스,그룹 내 독립 확률로 시행,아이템 ID,아이템 수량,아이템 드랍 확률(만분율)
-int,String,Bool,String,Int,int
-10001,WallPackage,TRUE,Item1,1,4000
-10002,WallPackage,TRUE,Item2,1,6000
-10003,WallPackage,TRUE,Item3,1,10000
-10004,WallPackage,TRUE,Item4,1,1000
-10101,WallPackage2,TRUE,Item1,1,4000
-10102,WallPackage2,TRUE,Item2,1,6000
-10103,WallPackage2,TRUE,Item3,1,9000
-10104,WallPackage2,TRUE,Item4,1,10000
-10105,WallPackage2,TRUE,Item5,1,10000
-10201,WallPackage3,FALSE,Item1,1,2000
-10202,WallPackage3,FALSE,Item2,1,2000
-10203,WallPackage3,FALSE,Item3,1,2000
-10204,WallPackage3,FALSE,Item4,1,2000
-10205,WallPackage3,FALSE,Item5,1,2000
+PackageID,PackageSource,IsMultiple,ItemID,ItemAmount,ItemProbability
+?�키지 ID,?�키지 ?�스,그룹 ???�립 ?�률�??�행,?�이??ID,?�이???�량,?�이???�랍 ?�률(만분??
+int,String,Bool,int,Int,int
+10001,WallPackage1,TRUE,101,1,4000
+10002,WallPackage1,TRUE,102,1,6000
+10003,WallPackage1,TRUE,103,1,10000
+10004,WallPackage1,TRUE,104,1,1000
+10101,WallPackage2,TRUE,105,1,4000
+10102,WallPackage2,TRUE,106,1,6000
+10103,WallPackage2,TRUE,107,1,9000
+10104,WallPackage2,TRUE,108,1,10000
+10105,WallPackage2,TRUE,109,1,10000
+10201,WallPackage3,FALSE,110,1,2000
+10202,WallPackage3,FALSE,111,1,2000
+10203,WallPackage3,FALSE,112,1,2000
+10204,WallPackage3,FALSE,113,1,2000
+10205,WallPackage3,FALSE,114,1,2000

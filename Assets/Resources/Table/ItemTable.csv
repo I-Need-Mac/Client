@@ -1,9 +1,9 @@
-ItemID,ItemName,ItemImage,ItemType,ItemTypeParam,ImagePath
+ItemID,ItemName,ItemImage,ItemType,ItemTypeParam,PrefabPath
 ?ÑÏù¥???ÑÏù¥???ÑÏù¥???¥Î¶Ñ(Î°úÏª¨),?ÑÏù¥???¥Î?ÏßÄ,?ÑÏù¥???Ä???Ä???åÎûå,?¥Î?ÏßÄ Í≤ΩÎ°ú,,
 int,String,String,Enum,Int,String
-101,Item_Soul_Low,None,EXP,100,Arts/Item/Main_Ingame_Item_Emptysoul1
-102,Item_Soul_Medium,None,EXP,100,Arts/Item/Main_Ingame_Item_Emptysoul2
-103,Item_Soul_High,None,EXP,100,Arts/Item/Main_Ingame_Item_Emptysoul3
+101,Item_Soul_Low,None,EXP,100,Prefabs/InGame/Item/Item_Soul_Low
+102,Item_Soul_Medium,None,EXP,100,Prefabs/InGame/Item/Item_Soul_Medium
+103,Item_Soul_High,None,EXP,100,Prefabs/InGame/Item/Item_Soul_High
 201,Item_SinKal_Kill,None,KillAll,0,
 301,Item_Bell,None,MoveStop,100,
 401,Item_HoilyBlood,None,Heal,100,

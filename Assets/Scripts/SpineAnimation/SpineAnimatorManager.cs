@@ -8,68 +8,67 @@ using UnityEngine;
 
 public class SpineAnimatorManager : MonoBehaviour
 {
-    private const string IMAGE_PATH = "/Animation/Spine/";
+    private Animator animator;
 
-    private SkeletonMecanim skeletonMecanim;
-    private Spine.AnimationState animationState;
-
-    public Animator animator { get; private set; }
-
-    //private string path;
-
-    //public string animationState { get; set; }
+    private float animationSpeed;
 
     private void OnEnable()
     {
         Init();
     }
 
-    private void PlayAnimation(Vector2 tracker, Vector2 target)
+    private void Update()
     {
-        if (tracker == Vector2.zero)
-        {
-
-        }
+        //animator.speed = animationSpeed;
     }
 
     private void Init()
     {
-        //path = PathFinding();
-
-        skeletonMecanim = GetComponentInChildren<SkeletonMecanim>();
-        //skeletonMecanim.skeletonDataAsset = ResourcesManager.Load<SkeletonDataAsset>(path + "SkeletonData");
-
         animator = GetComponentInChildren<Animator>();
-        //animator.runtimeAnimatorController = ResourcesManager.Load<RuntimeAnimatorController>(path + "Controller");
     }
-
-    //private string PathFinding()
-    //{
-    //    if (TryGetComponent(out Player obj))
-    //    {
-    //        return obj.playerData.characterSpinePath + IMAGE_PATH;
-    //    }
-    //    return GetComponent<Monster>().monsterData.monsterImage + IMAGE_PATH;
-    //}
 
     public void SetDirection(Transform transform, Vector3 direction)
     {
-        float x = transform.localScale.x;
         if (direction.x < 0)
         {
-            if (x < 0)
-            {
-                x *= -1;
-            }
+            transform.localEulerAngles = new Vector3(0f, 0f, 0f);
         }
         else if (direction.x > 0)
         {
-            if (x > 0)
-            {
-                x *= -1;
-            }
+            transform.localEulerAngles = new Vector3(0f, 180f, 0f);
         }
-        transform.localScale = new Vector3(x, transform.localScale.y, transform.localScale.z);
     }
 
+    public void SetSpineSpeed(float speed)
+    {
+        float weight = 0;
+        if (speed > 5)
+        {
+            weight = ((float)Math.Pow(speed - 5, 2.0f / 3.0f) + (float)Math.Sqrt(speed - 5) - 1.0f) / 10.0f;
+        }
+        else
+        {
+            weight = (0.5f - speed / 10.0f) * -1.0f;
+        }
+        animationSpeed = 1 + weight;
+        DebugManager.Instance.PrintDebug("SpineSpeed: {0}", animationSpeed);
+        DebugManager.Instance.PrintDebug("Weight: {0}", weight);
+    }
+
+    #region Animation Control
+    public void PlayAnimation(string parameter, bool value)
+    {
+        animator.SetBool(parameter, value);
+    }
+
+    public void PlayAnimation(string parameter, int value)
+    {
+        animator.SetInteger(parameter, value);
+    }
+
+    public void PlayAnimation(string parameter, float value)
+    {
+        animator.SetFloat(parameter, value);
+    }
+    #endregion
 }

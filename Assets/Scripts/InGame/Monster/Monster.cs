@@ -13,7 +13,9 @@ public class Monster : MonoBehaviour
     private Player player;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
-    private bool isMovable = true;
+
+    private bool isMovable;
+    private bool isAttackable;
 
     private SpineAnimatorManager spineAnimatorManager;
 
@@ -30,6 +32,12 @@ public class Monster : MonoBehaviour
         MonsterSetting(monsterId.ToString());
     }
 
+    private void OnEnable()
+    {
+        isMovable = false;
+        isAttackable = false;
+    }
+
     private void Start()
     {
         player = GameManager.Instance.player;
@@ -37,43 +45,55 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        PlayAnimation();
+        PlayAnimations();
         Move();
     }
 
-    //private void FixedUpdate()
-    //{
-    //    Move();
-    //}
-
     private void Move()
     {
-        spineAnimatorManager.SetDirection(transform, monsterDirection);
+        Vector2 diff = player.transform.position - transform.position;
+        float distance = diff.sqrMagnitude;
 
-        isMovable = !(((Vector2)player.transform.position - (Vector2)transform.position).sqrMagnitude <= monsterData.atkDistance);
-        if (isMovable)
+        if (distance <= monsterData.viewDistance)
         {
-            monsterDirection = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;
-            //transform.position = Vector2.MoveTowards(transform.position, player.transform.position, monsterData.moveSpeed * Time.deltaTime);
-            monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+            spineAnimatorManager.SetDirection(transform, monsterDirection);
+            if (isAttackable = distance <= monsterData.atkDistance)
+            {
+                monsterRigidbody.velocity = Vector2.zero;
+            }
+            else
+            {
+                monsterDirection = diff.normalized;
+                monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+            }
+            isMovable = !isAttackable;
         }
         else
         {
-            monsterRigidbody.velocity = Vector2.zero;
-            //transform.position = Vector2.zero;
+            isAttackable = false;
+            isMovable = false;
         }
+        
+
+        
+
+        //isMovable = !(distance <= monsterData.atkDistance * monsterData.atkDistance);
+        //if (isMovable)
+        //{
+        //    monsterDirection = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;
+        //    monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+        //}
+        //else
+        //{
+        //    monsterRigidbody.velocity = Vector2.zero;
+        //}
         
     }
 
-    private void PlayAnimation()
+    private void PlayAnimations()
     {
-        //if (((Vector2)(player.transform.position - transform.position)).sqrMagnitude <= monsterData.atkDistance)
-        //{
-        //    spineAnimatorManager.animator.SetBool("isAttack", true);
-        //    spineAnimatorManager.animator.SetBool("isMovable", false);
-        //}
-        spineAnimatorManager.animator.SetBool("isAttack", !isMovable);
-        spineAnimatorManager.animator.SetBool("isMovable", isMovable);
+        spineAnimatorManager.PlayAnimation("isAttackable", isAttackable);
+        spineAnimatorManager.PlayAnimation("isMovable", isMovable);
     }
 
     public void MonsterSetting(string monsterId)
@@ -127,7 +147,7 @@ public class Monster : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("PlayerSkill"))
         {
-            monsterData.SetHp(monsterData.hp - player.ReturnAttack());
+            monsterData.SetHp(monsterData.hp - player.playerManager.ReturnAttack());
             if (monsterData.hp <= 0)
             {
                 DropItem();

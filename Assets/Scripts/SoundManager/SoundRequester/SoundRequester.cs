@@ -32,6 +32,8 @@ public abstract class SoundRequester : MonoBehaviour
     }
     void Start()
     {
+        MakeSpeakers();
+        ConvertAudioClipData();
 
 
     }

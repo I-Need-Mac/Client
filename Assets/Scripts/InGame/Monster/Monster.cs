@@ -140,7 +140,7 @@ public class Monster : MonoBehaviour
         //    dropItem.transform.position = transform.localPosition;
         //    dropItem.SetActive(true);
         //}
-        ItemPoolManager.Instance.SpawnExpItem(transform.position);
+        //ItemManager.Instance.SpawnItem(103, transform.position);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

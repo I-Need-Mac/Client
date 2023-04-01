@@ -140,7 +140,10 @@ public class Monster : MonoBehaviour
         //    dropItem.transform.position = transform.localPosition;
         //    dropItem.SetActive(true);
         //}
-        ItemPoolManager.Instance.SpawnExpItem(transform.position);
+        if (UnityEngine.Random.Range(0, 10001) <= monsterData.groupSourceRate)
+        {
+            ItemManager.Instance.DropItems(monsterData.groupSource, transform);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

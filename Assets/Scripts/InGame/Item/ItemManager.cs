@@ -33,9 +33,15 @@ public class ItemManager : SingletonBehaviour<ItemManager>
         packageSource = new Dictionary<string, List<ItemPackage>>();
 
         Dictionary<string, Dictionary<string, object>> packageTable = CSVReader.Read("PackageTable");
+
         foreach (KeyValuePair<string, Dictionary<string, object>> data in packageTable)
         {
-            ItemPackage package = new ItemPackage(int.Parse(data.Key), Convert.ToBoolean(data.Value["IsMultiple"].ToString().ToLower()), (int)data.Value["ItemID"], (int)data.Value["ItemAmount"], (int)data.Value["ItemProbability"]);
+            if (data.Key.Equals(""))
+            {
+                continue;
+            }
+            DebugManager.Instance.PrintDebug("##: " + data.Key);
+            ItemPackage package = new ItemPackage(Convert.ToInt32(data.Key), Convert.ToBoolean(data.Value["IsMultiple"].ToString().ToLower()), Convert.ToInt32(data.Value["ItemID"]), Convert.ToInt32(data.Value["ItemAmount"]), Convert.ToInt32(data.Value["ItemProbability"]));
             string packageSourceName = data.Value["PackageSource"].ToString();
             if (!packageSource.ContainsKey(packageSourceName))
             {
@@ -47,7 +53,11 @@ public class ItemManager : SingletonBehaviour<ItemManager>
         Dictionary<string, Dictionary<string, object>> groupTable = CSVReader.Read("GroupTable");
         foreach (KeyValuePair<string, Dictionary<string, object>> data in groupTable)
         {
-            ItemGroup group = new ItemGroup(int.Parse(data.Key), Convert.ToBoolean(data.Value["IsMultiple"].ToString().ToLower()), data.Value["PackageID"].ToString(), (int)data.Value["PackageProbability"]);
+            if (data.Key.Equals(""))
+            {
+                continue;
+            }
+            ItemGroup group = new ItemGroup(Convert.ToInt32(data.Key), Convert.ToBoolean(data.Value["IsMultiple"].ToString().ToLower()), data.Value["PackageID"].ToString(), Convert.ToInt32(data.Value["PackageProbability"]));
             string groupSourceName = data.Value["GroupSource"].ToString();
             if (!groupSource.ContainsKey(groupSourceName))
             {
@@ -59,7 +69,7 @@ public class ItemManager : SingletonBehaviour<ItemManager>
     #endregion
 
     #region Item Spawn
-    private void DropItems(string groupSourceName, Transform spawner)
+    public void DropItems(string groupSourceName, Transform spawner)
     {
         List<int> items = SearchGroupSource(groupSourceName);
         

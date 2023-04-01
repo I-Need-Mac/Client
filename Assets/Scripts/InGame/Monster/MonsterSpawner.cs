@@ -8,12 +8,12 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     [SerializeField] private float spawnTime = 1f;
     [SerializeField] private int stageId = 10101;
 
-    private MonsterPoolManager monsterPoolManager;
     private int spawnAmount;
     private int spawnCount;
-    private Dictionary<int, MonsterPool> spawner;
+    private Dictionary<int, ObjectPool<Monster>> spawner;
     private Queue<RemainMonster> remainMonsters;
 
+    private Dictionary<string, Dictionary<string, object>> monsterTable;
     private Dictionary<string, Dictionary<string, object>> sponeTable;
     private Dictionary<string, object> sponeData;
     private int spawnId;
@@ -33,10 +33,11 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     
     protected override void Awake()
     {
-        monsterPoolManager = GetComponentInChildren<MonsterPoolManager>();
+        monsterTable = CSVReader.Read("MonsterTable");
+
         spawnAmount = Convert.ToInt32(CSVReader.Read("StageTable", stageId.ToString(), "LimitAmount"));
         spawnCount = 0;
-        spawner = new Dictionary<int, MonsterPool>();
+        spawner = new Dictionary<int, ObjectPool<Monster>>();
         remainMonsters = new Queue<RemainMonster>();
 
         sponeTable = CSVReader.Read(CSVReader.Read("StageTable", stageId.ToString(), "MonsterSponeID").ToString());
@@ -45,10 +46,10 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         currentSpawnTime = int.Parse(sponeData["SponeTime"].ToString());
     }
 
-    private void Start()
-    {
-        SpawnerInit();
-    }
+    //private void Start()
+    //{
+    //    SpawnerInit();
+    //}
 
     private void Update()
     {
@@ -58,41 +59,22 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         }
     }
 
-    private void SpawnerInit()
-    {
-        foreach (Transform child in transform)
-        {
-            spawner.Add(int.Parse(child.name), child.GetComponent<MonsterPool>());
-        }
-    }
-
-    //private void StartSpawn()
+    //private void SpawnerInit()
     //{
-    //    monsters.Add(101, SpawnMonsters(101, GRID.A));
-
-    //    foreach (IEnumerator mob in monsters.Values)
+    //    foreach (Transform child in transform)
     //    {
-    //        StartCoroutine(mob);
-    //    }
-    //}
-
-    //private IEnumerator SpawnMonsters(int monsterId, GRID spawnPos)
-    //{
-    //    yield return new WaitForSeconds(1f);
-
-    //    while (true)
-    //    {
-    //        if (spawnCount < spawnAmount)
-    //        {
-    //            Monster monster = SpawnMonster(monsterId, CameraManager.Instance.RandomPosInGrid(spawnPos.ToString()));
-    //            ++spawnCount;
-    //        }
-    //        yield return time;
+    //        spawner.Add(int.Parse(child.name), child.GetComponent<MonsterPool>());
     //    }
     //}
 
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
+
+        if (!spawner.ContainsKey(monsterId))
+        {
+            string prefabPath = CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString();
+            spawner.Add(monsterId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(prefabPath), transform));
+        }
         Monster monster = spawner[monsterId].GetObject();
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
         monster.transform.localScale = Vector2.one * monster.monsterData.sizeMultiple;

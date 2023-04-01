@@ -115,6 +115,7 @@ public class Skill
         skillData.SetProjectileSizeMulti(Convert.ToInt32(skillInfo["ProjectileSizeMulti"]));
         skillData.SetIsPenetrate(Convert.ToBoolean(skillInfo["IsPenetrate"]));
         skillData.SetProjectileType((PROJECTILE_TYPE)Enum.Parse(typeof(PROJECTILE_TYPE), Convert.ToString(skillInfo["ProjectileType"]).ToUpper()));
+        skillData.SetSkillPrefabPath(skillInfo["SkillPrefabPath"].ToString());
     }
 
     private Dictionary<string, object> FindSkill(string skillId)

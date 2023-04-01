@@ -18,6 +18,7 @@ public class SkillData
     public SKILL_EFFECT skillEffect { get; private set; }           //스킬 이펙트
     public SKILL_TARGET skillTarget { get; private set; }           //스킬 발동 대상
     public CALC_DAMAGE_TYPE calcDamageType { get; private set; }    //데미지 계산 방식
+    public string skillPrefabPath { get; private set; }
 
     //가독성을 위해 투사체 전용은 따로 정리
     public int projectileCount { get; private set; }                //투사체 개수
@@ -49,4 +50,5 @@ public class SkillData
     public void SetSkillTarget(SKILL_TARGET skillTarget) { this.skillTarget = skillTarget; }
     public void SetProjectileType(PROJECTILE_TYPE projectileType) { this.projectileType = projectileType; }
     public void SetCalcDamageType(CALC_DAMAGE_TYPE calcDamageType) { this.calcDamageType = calcDamageType; }
+    public void SetSkillPrefabPath(string skillPrefabPath) { this.skillPrefabPath = skillPrefabPath; }
 }

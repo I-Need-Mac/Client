@@ -18,6 +18,7 @@ public class Monster : MonoBehaviour
     private bool isAttackable;
 
     private SpineAnimatorManager spineAnimatorManager;
+    private SoundRequester soundRequester;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector2 lookDirection { get; private set; } //바라보는 방향
@@ -25,6 +26,7 @@ public class Monster : MonoBehaviour
     private void Awake()
     {
         spineAnimatorManager = GetComponent<SpineAnimatorManager>();
+        soundRequester = GetComponentInChildren<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
@@ -60,16 +62,19 @@ public class Monster : MonoBehaviour
             if (isAttackable = distance <= monsterData.atkDistance)
             {
                 monsterRigidbody.velocity = Vector2.zero;
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ATTACK);
             }
             else
             {
                 monsterDirection = diff.normalized;
                 monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
             }
             isMovable = !isAttackable;
         }
         else
         {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
             isAttackable = false;
             isMovable = false;
         }
@@ -153,10 +158,16 @@ public class Monster : MonoBehaviour
             monsterData.SetHp(monsterData.hp - player.playerManager.ReturnAttack());
             if (monsterData.hp <= 0)
             {
-                DropItem();
-                MonsterSpawner.Instance.DeSpawnMonster(this);
+                Die();
             }
         }
+    }
+
+    private void Die()
+    {
+        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        DropItem();
+        MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
 }

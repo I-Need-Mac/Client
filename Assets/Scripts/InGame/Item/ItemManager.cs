@@ -6,26 +6,28 @@ using UnityEngine;
 
 public class ItemManager : SingletonBehaviour<ItemManager>
 {
-    private Dictionary<int, ItemPool> itemPools;
+    private Dictionary<int, ObjectPool<Item>> itemPools;
 
+    private Dictionary<string, Dictionary<string, object>> itemTable;
     private Dictionary<string, List<ItemGroup>> groupSource;
     private Dictionary<string, List<ItemPackage>> packageSource;
 
     protected override void Awake()
     {
-        itemPools = new Dictionary<int, ItemPool>();
-        ItemPoolInit();
+        itemPools = new Dictionary<int, ObjectPool<Item>>();
+        //ItemPoolInit();
+        itemTable = CSVReader.Read("ItemTable");
         ItemSourceInit();
     }
 
     #region Init
-    private void ItemPoolInit()
-    {
-        foreach (Transform child in transform)
-        {
-            itemPools.Add(int.Parse(child.name), child.GetComponent<ItemPool>());
-        }
-    }
+    //private void ItemPoolInit()
+    //{
+    //    foreach (Transform child in transform)
+    //    {
+    //        itemPools.Add(int.Parse(child.name), child.GetComponent<ItemPool>());
+    //    }
+    //}
 
     private void ItemSourceInit()
     {
@@ -135,6 +137,11 @@ public class ItemManager : SingletonBehaviour<ItemManager>
 
     public Item SpawnItem(int itemId, Vector3 pos)
     {
+        if (!itemPools.ContainsKey(itemId))
+        {
+            string prefabPath = itemTable[itemId.ToString()]["PrefabPath"].ToString();
+            itemPools.Add(itemId, new ObjectPool<Item>(ResourcesManager.Load<Item>(prefabPath), transform));
+        }
         Item item = itemPools[itemId].GetObject();
         item.transform.position = pos;
         item.gameObject.SetActive(true);

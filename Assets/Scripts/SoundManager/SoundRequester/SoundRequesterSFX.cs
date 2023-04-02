@@ -120,7 +120,7 @@ public class SoundRequesterSFX : SoundRequester
         audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
         audioSources[shootingSounds[situation].usingSpeaker].Play();
         if (situation == SoundSituation.SOUNDSITUATION.DIE) {
-            MoveToSoundManager(FindChild(this.gameObject, shootingSounds[situation].usingSpeaker));
+            MoveToSoundManager( FindChild(FindChild(this.gameObject, "SoundRequester"), shootingSounds[situation].usingSpeaker));
         }
 
     }

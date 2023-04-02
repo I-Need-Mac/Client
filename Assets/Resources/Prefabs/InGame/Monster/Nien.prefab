@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2944827081024026314}
   - component: {fileID: 164341062027636226}
   - component: {fileID: 2896716320841604443}
-  - component: {fileID: 356352406006676192}
+  - component: {fileID: 3435793070156651190}
   m_Layer: 0
   m_Name: Nien
   m_TagString: Untagged
@@ -81,8 +81,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &356352406006676192
-CircleCollider2D:
+--- !u!70 &3435793070156651190
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -94,9 +94,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Offset: {x: 0.050358698, y: 0.32738742}
+  m_Size: {x: 1.1007282, y: 0.4967813}
+  m_Direction: 1
 --- !u!1 &6528328165340260694
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6540190216078387830}
+  - component: {fileID: 7075821991623329275}
   - component: {fileID: 1152861920589760085}
   - component: {fileID: 9019748902746312949}
   - component: {fileID: 5270312230833862509}
@@ -131,6 +132,52 @@ Transform:
   m_Father: {fileID: 597792179205538527}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7075821991623329275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6528328165340260694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Default
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Default
+    delay: 0
+    SOUNDSITUATION: 8
+    audioClip: {fileID: 8300000, guid: e885484e1bc99fb47a0ac3f6bfa586b1, type: 3}
+  - usingSpeaker: Default
+    delay: 0
+    SOUNDSITUATION: 9
+    audioClip: {fileID: 8300000, guid: 51f0c54706b53c14c9c24bbd63bb18a6, type: 3}
+  - usingSpeaker: Default
+    delay: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: 532e417ffa3f95747908419a00be3780, type: 3}
+  - usingSpeaker: Default
+    delay: 0
+    SOUNDSITUATION: 7
+    audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
 --- !u!33 &1152861920589760085
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -190,7 +237,7 @@ Animator:
   m_GameObject: {fileID: 6528328165340260694}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c990d543b4193d94d8b8b015281de23b, type: 2}
+  m_Controller: {fileID: 22100000, guid: bc7a47a071a2be04f917a55eb307d309, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

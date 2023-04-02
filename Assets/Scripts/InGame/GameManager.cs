@@ -10,8 +10,6 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    [SerializeField] private PlayerPoolManager playerPoolManager;
-
     [SerializeField] private int mapId;
     [SerializeField] private int playerId;
     //private int mapId;
@@ -63,9 +61,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void PlayerLoad(int playerId)
     {
-        //playerPoolManager.playerId = playerId;
-        player = playerPoolManager.SpawnPlayer(transform.Find("PlayerSpawnPos").transform);
-        player.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+        player = Instantiate(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", playerId.ToString(), "CharacterPrefabPath").ToString()), transform.Find("PlayerSpawnPos").transform);
+        player.transform.localScale = Vector3.one * defaultScale;
+        player.gameObject.SetActive(true);
     }
 
     private void AssignLayerAndZ()
@@ -103,82 +101,4 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
     }
 
-    //[field : Header("--- Object Pool ---")]
-    //[field : SerializeField] public ProjectilePool projectilePool { get; private set; }
-    //[field : SerializeField] public ObjectPool monsterPool { get; private set; }
-
-    //[Header("--- Text ---")]
-    //[SerializeField] private TMP_Text text_timer;
-
-    //private int curTime;
-    //private int limitTime;
-    //private Coroutine gameTimerCor;
-
-    //private void Awake()
-    //{
-    //    //monsterPool.AddObject();
-
-    //    Init();
-    //}
-
-    //#region Setter
-    ////�������� ���� �ð� ����
-    //public void SetLimitTime(int limitTime)
-    //{
-    //    this.limitTime = limitTime;
-    //}
-    //#endregion
-
-    //private void Init()
-    //{
-    //    text_timer.gameObject.SetActive(true);
-    //    text_timer.text = "";
-    //}
-
-    //private void TimeOver()
-    //{
-    //    text_timer.text = "";
-    //}
-
-    //#region Coroutine
-    //public void StartGameTimer()
-    //{
-    //    StopGameTimer();
-
-    //    if (gameTimerCor == null)
-    //    {
-    //        gameTimerCor = StartCoroutine(GameTimer());
-    //    }
-    //}
-
-    //public void StopGameTimer()
-    //{
-    //    if (gameTimerCor != null)
-    //    {
-    //        StopCoroutine(gameTimerCor);
-    //    }
-    //}
-
-    //private IEnumerator GameTimer()
-    //{
-    //    var waitTime = new WaitForSeconds(1f);
-    //    int m, s;
-
-    //    curTime = limitTime / 1000;
-
-    //    while (curTime > 0)
-    //    {
-    //        m = curTime / 60;
-    //        s = curTime - (m * 60);
-
-    //        text_timer.text = string.Format("{0:D2} : {1:D2}", m, s);
-
-    //        curTime--;
-
-    //        yield return waitTime;
-    //    }
-
-    //    TimeOver();
-    //}
-    //#endregion
 }

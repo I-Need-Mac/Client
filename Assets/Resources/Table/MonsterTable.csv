@@ -1,13 +1,13 @@
 MonsterID,MonsterName,SizeMultiple,HP,Attack,MoveSpeed,AtkSpeed,ViewDistance,AtkDistance,SkillID,GroupSource,GroupSourceRate,MonsterPrefabPath,AttackType
 몬스???�이??몬스???�름(로컬 ?�이??몬스???�이�?배율,몬스??체력,몬스??공격??몬스???�동 ?�도,몬스??공격 ?�도,몬스???�야 범위,몬스??공격 ?�거�?몬스???�킬,그룹 ?�스,그룹 ?�스 ?�률,몬스???��?지,?�공 AI ?�단,,,,
 int,String,Float,int,int,int,float,int,int,int,String,int,String,Enum
-101,Nien,0.5,500,300,5,1,99999,3,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
-102,Nien_M,0.7,600,600,5,1,99999,3,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
-103,Nien_L,1,700,900,5,1,99999,3,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
-201,MobName_201,1,1500,1200,104,0,99999,10,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Shy
-202,MobName_202,1,1000,1500,96,0.5,99999,10,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Bold
-203,MobName_203,1,1200,1800,88,1.2,99999,10,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Bold
-301,MobName_301,1,3000,2100,80,0.3,99999,10,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
-302,MobName_302,1,2500,2400,72,0.7,99999,10,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
-303,MobName_303,1,2000,2700,64,0.8,99999,256,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
-401,MobName_401,1,5000,3000,56,0.9,99999,10,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Bold
+101,Nien,1,500,300,5,1,99999,2,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
+102,HwaGwangSu,1,600,600,5,1,99999,2,0,Wall,10000,Prefabs/InGame/Monster/HwaGwangSu,Bold
+103,TeoLeogSon,1,700,900,5,1,99999,2,0,Wall,10000,Prefabs/InGame/Monster/TeoLeogSon,Bold
+104,Lesser_Demon,2,1500,1200,5,1,99999,2,0,Wall2,10000,Prefabs/InGame/Monster/Lesser_Demon,Shy
+202,MobName_202,0.5,1000,1500,5,1,99999,2,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Bold
+203,MobName_203,0.5,1200,1800,5,1,99999,2,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Bold
+301,MobName_301,0.5,3000,2100,5,1,99999,2,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
+302,MobName_302,0.5,2500,2400,5,1,99999,2,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
+303,MobName_303,0.5,2000,2700,5,1,99999,2,0,Wall,10000,Prefabs/InGame/Monster/Nien,Bold
+401,MobName_401,0.5,5000,3000,5,1,99999,2,0,Wall2,10000,Prefabs/InGame/Monster/Nien,Bold

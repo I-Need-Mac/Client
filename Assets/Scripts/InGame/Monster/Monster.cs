@@ -19,6 +19,7 @@ public class Monster : MonoBehaviour
 
     private SpineAnimatorManager spineAnimatorManager;
     private SoundRequester soundRequester;
+    private SoundSituation.SOUNDSITUATION situation;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector2 lookDirection { get; private set; } //바라보는 방향
@@ -36,6 +37,7 @@ public class Monster : MonoBehaviour
 
     private void OnEnable()
     {
+        situation = SoundSituation.SOUNDSITUATION.IDLE;
         isMovable = false;
         isAttackable = false;
     }
@@ -62,19 +64,28 @@ public class Monster : MonoBehaviour
             if (isAttackable = distance <= monsterData.atkDistance)
             {
                 monsterRigidbody.velocity = Vector2.zero;
-                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ATTACK);
+                if (situation != SoundSituation.SOUNDSITUATION.ATTACK)
+                {
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ATTACK);
+                }
             }
             else
             {
                 monsterDirection = diff.normalized;
                 monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
+                if (situation != SoundSituation.SOUNDSITUATION.RUN)
+                {
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
+                }
             }
             isMovable = !isAttackable;
         }
         else
         {
-            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
+            if (situation != SoundSituation.SOUNDSITUATION.IDLE)
+            {
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
+            }
             isAttackable = false;
             isMovable = false;
         }

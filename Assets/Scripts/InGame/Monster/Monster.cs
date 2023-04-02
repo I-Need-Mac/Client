@@ -158,10 +158,16 @@ public class Monster : MonoBehaviour
             monsterData.SetHp(monsterData.hp - player.playerManager.ReturnAttack());
             if (monsterData.hp <= 0)
             {
-                DropItem();
-                MonsterSpawner.Instance.DeSpawnMonster(this);
+                Die();
             }
         }
+    }
+
+    private void Die()
+    {
+        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        DropItem();
+        MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
 }

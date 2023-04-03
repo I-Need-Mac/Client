@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private string skillId = "10101";
     [SerializeField] private int moveSpeed = 5;
 
     private Rigidbody2D playerRigidbody;
@@ -61,6 +60,11 @@ public class Player : MonoBehaviour
         KeyDir();
         TestFunction();
         PlayAnimations();
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GetExp(50);
+        }
     }
 
     private void FixedUpdate()
@@ -125,21 +129,13 @@ public class Player : MonoBehaviour
         ++level;
         exp -= needExp;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+        GameManager.Instance.playerUi.SkillSelectWindowOpen();
     }
     #endregion
 
     #region Skill
-    private void TempSkillSet(string str)
-    {
-        //playerManager.playerData.SetSkill(new Skill(str, this));
-        //playerData.SetSkill(new Skill("10101", this)); //straight
-        //playerData.SetSkill(new Skill("10300", this)); //satellite
-        //playerData.SetSkill(new Skill("10500", this)); //boomerang
-    }
-
     private void Fire()
     {
-        TempSkillSet(skillId);
         for (int i = 0; i < playerManager.playerData.skills.Count; i++)
         {
             Skill skill = playerManager.playerData.skills[i];

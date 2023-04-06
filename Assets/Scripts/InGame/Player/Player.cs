@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
     private int needExp;
 
     public PlayerManager playerManager { get; private set; }
-
     public Vector2 lookDirection { get; private set; } //바라보는 방향
     public int exp { get; private set; }
     public int level { get; private set; }
@@ -43,11 +42,6 @@ public class Player : MonoBehaviour
 
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         level = 1;
-    }
-
-    private void Start()
-    {
-        Fire();
     }
 
     /*
@@ -101,7 +95,10 @@ public class Player : MonoBehaviour
         playerDirection.x = Input.GetAxisRaw("Horizontal");
         playerDirection.y = Input.GetAxisRaw("Vertical");
 
-        lookDirection = playerDirection; //쳐다보는 방향 저장
+        if (playerDirection != Vector2.zero)
+        {
+            lookDirection = playerDirection; //쳐다보는 방향 저장
+        }
     }
 
     private void Move()
@@ -133,25 +130,50 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    
     #region Skill
-    private void Fire()
+    public void Fire(int skillId)
     {
-        for (int i = 0; i < playerManager.playerData.skills.Count; i++)
+        if (playerManager.playerData.skills.ContainsKey(skillId))
         {
-            Skill skill = playerManager.playerData.skills[i];
+            playerManager.playerData.skills[skillId].skill.SkillLevelUp();
+        }
+        else
+        {
+            Skill skill = new Skill(skillId.ToString(), this);
+            SkillInfo skillInfo;
             switch (skill.skillData.projectileType)
             {
                 case PROJECTILE_TYPE.SATELLITE:
-                    StartCoroutine(skill.SatelliteSkill());
+                    skillInfo = new SkillInfo(skill, skill.SatelliteSkill());
                     break;
                 case PROJECTILE_TYPE.PROTECT:
-                    skill.ProtectSkill();
+                    skillInfo = new SkillInfo(skill, skill.ProtectSkill());
                     break;
                 default:
-                    StartCoroutine(skill.ShootSkill());
+                    skillInfo = new SkillInfo(skill, skill.ShootSkill());
                     break;
             }
+            playerManager.playerData.skills.Add(skillId, skillInfo);
+            StartCoroutine(skillInfo.type);
         }
+
+        //for (int i = 0; i < playerManager.playerData.skills.Count; i++)
+        //{
+        //    Skill skill = playerManager.playerData.skills[i];
+        //    switch (skill.skillData.projectileType)
+        //    {
+        //        case PROJECTILE_TYPE.SATELLITE:
+        //            StartCoroutine(skill.SatelliteSkill());
+        //            break;
+        //        case PROJECTILE_TYPE.PROTECT:
+        //            skill.ProtectSkill();
+        //            break;
+        //        default:
+        //            StartCoroutine(skill.ShootSkill());
+        //            break;
+        //    }
+        //}
     }
     #endregion
 

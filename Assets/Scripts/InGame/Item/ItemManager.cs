@@ -42,7 +42,6 @@ public class ItemManager : SingletonBehaviour<ItemManager>
             {
                 continue;
             }
-            DebugManager.Instance.PrintDebug("##: " + data.Key);
             ItemPackage package = new ItemPackage(Convert.ToInt32(data.Key), Convert.ToBoolean(data.Value["IsMultiple"].ToString().ToLower()), Convert.ToInt32(data.Value["ItemID"]), Convert.ToInt32(data.Value["ItemAmount"]), Convert.ToInt32(data.Value["ItemProbability"]));
             string packageSourceName = data.Value["PackageSource"].ToString();
             if (!packageSource.ContainsKey(packageSourceName))

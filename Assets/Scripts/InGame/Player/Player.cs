@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private string skillId = "10101";
     [SerializeField] private int moveSpeed = 5;
 
     private Rigidbody2D playerRigidbody;
@@ -21,7 +20,6 @@ public class Player : MonoBehaviour
     private int needExp;
 
     public PlayerManager playerManager { get; private set; }
-
     public Vector2 lookDirection { get; private set; } //바라보는 방향
     public int exp { get; private set; }
     public int level { get; private set; }
@@ -46,11 +44,6 @@ public class Player : MonoBehaviour
         level = 1;
     }
 
-    private void Start()
-    {
-        Fire();
-    }
-
     /*
      *키보드 입력이랑 움직이는 부분은 안정성을 위해 분리시킴
      *Update -> 키보드 input
@@ -61,6 +54,11 @@ public class Player : MonoBehaviour
         KeyDir();
         TestFunction();
         PlayAnimations();
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GetExp(50);
+        }
     }
 
     private void FixedUpdate()
@@ -97,7 +95,10 @@ public class Player : MonoBehaviour
         playerDirection.x = Input.GetAxisRaw("Horizontal");
         playerDirection.y = Input.GetAxisRaw("Vertical");
 
-        lookDirection = playerDirection; //쳐다보는 방향 저장
+        if (playerDirection != Vector2.zero)
+        {
+            lookDirection = playerDirection; //쳐다보는 방향 저장
+        }
     }
 
     private void Move()
@@ -125,37 +126,54 @@ public class Player : MonoBehaviour
         ++level;
         exp -= needExp;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+        GameManager.Instance.playerUi.SkillSelectWindowOpen();
     }
     #endregion
 
+    
     #region Skill
-    private void TempSkillSet(string str)
+    public void Fire(int skillId)
     {
-        //playerManager.playerData.SetSkill(new Skill(str, this));
-        //playerData.SetSkill(new Skill("10101", this)); //straight
-        //playerData.SetSkill(new Skill("10300", this)); //satellite
-        //playerData.SetSkill(new Skill("10500", this)); //boomerang
-    }
-
-    private void Fire()
-    {
-        TempSkillSet(skillId);
-        for (int i = 0; i < playerManager.playerData.skills.Count; i++)
+        if (playerManager.playerData.skills.ContainsKey(skillId))
         {
-            Skill skill = playerManager.playerData.skills[i];
+            playerManager.playerData.skills[skillId].skill.SkillLevelUp();
+        }
+        else
+        {
+            Skill skill = new Skill(skillId.ToString(), this);
+            SkillInfo skillInfo;
             switch (skill.skillData.projectileType)
             {
                 case PROJECTILE_TYPE.SATELLITE:
-                    StartCoroutine(skill.SatelliteSkill());
+                    skillInfo = new SkillInfo(skill, skill.SatelliteSkill());
                     break;
                 case PROJECTILE_TYPE.PROTECT:
-                    skill.ProtectSkill();
+                    skillInfo = new SkillInfo(skill, skill.ProtectSkill());
                     break;
                 default:
-                    StartCoroutine(skill.ShootSkill());
+                    skillInfo = new SkillInfo(skill, skill.ShootSkill());
                     break;
             }
+            playerManager.playerData.skills.Add(skillId, skillInfo);
+            StartCoroutine(skillInfo.type);
         }
+
+        //for (int i = 0; i < playerManager.playerData.skills.Count; i++)
+        //{
+        //    Skill skill = playerManager.playerData.skills[i];
+        //    switch (skill.skillData.projectileType)
+        //    {
+        //        case PROJECTILE_TYPE.SATELLITE:
+        //            StartCoroutine(skill.SatelliteSkill());
+        //            break;
+        //        case PROJECTILE_TYPE.PROTECT:
+        //            skill.ProtectSkill();
+        //            break;
+        //        default:
+        //            StartCoroutine(skill.ShootSkill());
+        //            break;
+        //    }
+        //}
     }
     #endregion
 

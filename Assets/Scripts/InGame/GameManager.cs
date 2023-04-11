@@ -15,6 +15,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     //private int mapId;
     //private int playerId;
 
+    public PlayerUI playerUi { get; private set; }
     public Player player { get; private set; }
     public GameObject map { get; private set; }
     public Tilemap tileMap { get; private set; }
@@ -24,6 +25,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     protected override void Awake()
     {
         defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        playerUi = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
         SoundManager.Instance.CreateSoundManager();
         //mapId = UIManager.Instance.selectStageID;
         //playerId = UIManager.Instance.selectCharacterID;
@@ -32,7 +34,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void Start()
     {
-
         Spawn();
     }
 
@@ -41,6 +42,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         return playerId;
     }
 
+    #region Player&MapCreate
     private void Spawn()
     {
         MapLoad(mapId);
@@ -100,5 +102,21 @@ public class GameManager : SingletonBehaviour<GameManager>
             }
         }
     }
+    #endregion
 
+    #region Time
+    private void Pause()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Time.timeScale = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            Time.timeScale = 1;
+        }
+    }
+
+
+    #endregion
 }

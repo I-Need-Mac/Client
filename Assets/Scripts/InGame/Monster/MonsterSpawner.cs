@@ -14,7 +14,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private Dictionary<int, ObjectPool<Monster>> spawner;
     private Queue<RemainMonster> remainMonsters;
 
-    private Dictionary<string, Dictionary<string, object>> sponeTable;
+    private Dictionary<string, Dictionary<string, object>> spawnTable;
     private Dictionary<string, object> spawnData;
     private int spawnId;
     private int currentSpawnTime;
@@ -38,9 +38,9 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         spawner = new Dictionary<int, ObjectPool<Monster>>();
         remainMonsters = new Queue<RemainMonster>();
 
-        sponeTable = CSVReader.Read(CSVReader.Read("StageTable", stageId.ToString(), "MonsterSponeID").ToString());
+        spawnTable = CSVReader.Read(CSVReader.Read("StageTable", stageId.ToString(), "MonsterSponeID").ToString());
         spawnId = 1;
-        spawnData = sponeTable[spawnId.ToString()];
+        spawnData = spawnTable[spawnId.ToString()];
         currentSpawnTime = Convert.ToInt32(spawnData["SponeTime"]);
     }
 
@@ -85,7 +85,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     {
         while (true)
         {
-            if (spawnData.Keys.Count - 3 <= spawnId)
+            if (spawnTable.Keys.Count - 3 <= spawnId)
             {
                 yield break;
             }
@@ -146,9 +146,9 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                             remainMonsters.Enqueue(new RemainMonster(mobId, location));
                         }
                     }
-                    if (sponeTable.ContainsKey((++spawnId).ToString()))
+                    if (spawnTable.ContainsKey((++spawnId).ToString()))
                     {
-                        spawnData = sponeTable[spawnId.ToString()];
+                        spawnData = spawnTable[spawnId.ToString()];
                         currentSpawnTime = Convert.ToInt32(spawnData["SponeTime"]);
                     }
                 }

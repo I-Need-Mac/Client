@@ -14,12 +14,12 @@ public class Timer : SingletonBehaviour<Timer>
     {
         timeText = GetComponent<Text>();
         timeText.color = Color.white;
-        timeText.fontSize = 50;
+        timeText.fontSize = 45;
     }
 
     private void Update()
     {
         currentTime = (int)(Time.time * 1000);
-        timeText.text = $"{currentTime/1000/60:00}:{currentTime/1000%60:00}";
+        timeText.text = $"{currentTime/1000/60:00}  {currentTime/1000%60:00}";
     }
 }

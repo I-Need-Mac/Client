@@ -17,12 +17,11 @@ public class Player : MonoBehaviour
     private SpineAnimatorManager spineAnimatorManager;
     private bool isMovable = true;
 
-    private int needExp;
-
     public PlayerManager playerManager { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
     public int exp { get; private set; }
     public int level { get; private set; }
+    public int needExp { get; private set; }
 
     #region Mono
     private void Awake()
@@ -40,8 +39,8 @@ public class Player : MonoBehaviour
 
         gameObject.tag = "Player";
 
-        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         level = 1;
+        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
     }
 
     /*
@@ -57,7 +56,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            GetExp(50);
+            GetExp(500);
         }
     }
 
@@ -123,10 +122,9 @@ public class Player : MonoBehaviour
 
     private void LevelUp()
     {
-        ++level;
         exp -= needExp;
-        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
-        GameManager.Instance.playerUi.SkillSelectWindowOpen();
+        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
+        //GameManager.Instance.playerUi.SkillSelectWindowOpen();
     }
     #endregion
 

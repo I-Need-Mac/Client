@@ -124,6 +124,7 @@ public class Player : MonoBehaviour
     {
         exp -= needExp;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
+        GameManager.Instance.playerUi.LevelTextChange(level);
         //GameManager.Instance.playerUi.SkillSelectWindowOpen();
     }
     #endregion

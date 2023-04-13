@@ -23,6 +23,11 @@ public class PlayerUI : MonoBehaviour
         skillUi.gameObject.SetActive(false);
     }
 
+    public void LevelTextChange(int level)
+    {
+        statusUi.levelText.text = $"Lv.{level}";
+    }
+
     public void test()
     {
         skillUi.gameObject.SetActive(true);

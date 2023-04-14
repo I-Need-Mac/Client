@@ -1382,7 +1382,7 @@ GameObject:
   - component: {fileID: 1733698275}
   - component: {fileID: 1733698276}
   m_Layer: 5
-  m_Name: SkillWindow
+  m_Name: SkillSelectBoxs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

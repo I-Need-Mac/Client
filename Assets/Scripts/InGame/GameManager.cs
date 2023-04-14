@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using BFM;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
@@ -26,6 +27,22 @@ public class GameManager : SingletonBehaviour<GameManager>
         //mapId = UIManager.Instance.selectStageID;
         //playerId = UIManager.Instance.selectCharacterID;
         //playerPoolManager.playerId = playerId;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            player.GetExp(500);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Pause();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            GameOver();
+        }
     }
 
     private void Start()
@@ -100,19 +117,23 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
     #endregion
 
-    #region Time
+    #region Game State
     private void Pause()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Time.timeScale == 1f)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
         }
-        else if (Input.GetKeyDown(KeyCode.O))
+        else
         {
-            Time.timeScale = 1;
+            Time.timeScale = 1f;
         }
     }
 
+    private void GameOver()
+    {
+        SceneManager.LoadScene("UI", LoadSceneMode.Single);
+    }
 
     #endregion
 }

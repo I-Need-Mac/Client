@@ -53,11 +53,6 @@ public class Player : MonoBehaviour
         KeyDir();
         TestFunction();
         PlayAnimations();
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            GetExp(500);
-        }
     }
 
     private void FixedUpdate()

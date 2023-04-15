@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ExpUI : MonoBehaviour
 {
     private Image expImage;
-    private Text expText;
+    private TextMeshProUGUI expText;
 
     private void Start()
     {
         expImage = GetComponent<Image>();
 
-        expText = GetComponentInChildren<Text>();
+        expText = GetComponentInChildren<TextMeshProUGUI>();
         expText.color = Color.white;
         expText.fontSize = 25;
     }

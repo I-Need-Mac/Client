@@ -1,18 +1,19 @@
 using BFM;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Timer : SingletonBehaviour<Timer>
 {
-    private Text timeText;
+    private TextMeshProUGUI timeText;
 
     public int currentTime { get; private set; } = 0;
 
     private void Start()
     {
-        timeText = GetComponent<Text>();
+        timeText = GetComponent<TextMeshProUGUI>();
         timeText.color = Color.white;
         timeText.fontSize = 45;
     }

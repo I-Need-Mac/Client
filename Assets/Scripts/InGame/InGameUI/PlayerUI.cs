@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     //private Canvas canvas;
-
+    private GameOverUI gameOverUi;
     private PlayerStatusUI statusUi;
     private PlayerSkillUI skillUi;
 
@@ -17,9 +17,11 @@ public class PlayerUI : MonoBehaviour
     {
         //canvas = GetComponent<Canvas>();
         //canvas.worldCamera = Camera.main;
-
+        gameOverUi = GetComponentInChildren<GameOverUI>();
         statusUi = GetComponentInChildren<PlayerStatusUI>();
         skillUi = GetComponentInChildren<PlayerSkillUI>();
+
+        gameOverUi.gameObject.SetActive(false);
         skillUi.gameObject.SetActive(false);
     }
 
@@ -31,6 +33,12 @@ public class PlayerUI : MonoBehaviour
     public void test()
     {
         skillUi.gameObject.SetActive(true);
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0f;
+        gameOverUi.gameObject.SetActive(true);
     }
     
 }

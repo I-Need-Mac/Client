@@ -41,7 +41,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
-            GameOver();
+            playerUi.GameOver();
         }
     }
 
@@ -128,11 +128,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             Time.timeScale = 1f;
         }
-    }
-
-    private void GameOver()
-    {
-        SceneManager.LoadScene("UI", LoadSceneMode.Single);
     }
 
     #endregion

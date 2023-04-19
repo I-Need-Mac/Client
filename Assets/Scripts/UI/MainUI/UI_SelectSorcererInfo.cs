@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -22,27 +23,27 @@ public class UI_SelectSorcererInfo : UI_Popup
     }
 
     [SerializeField]
-    Text titleText;
+    TextMeshProUGUI titleText;
     [SerializeField]
-    Text storyText;
+    TextMeshProUGUI storyText;
     [SerializeField]
-    Text statText;
+    TextMeshProUGUI statText;
     [SerializeField]
-    Text skillText;
+    TextMeshProUGUI skillText;
 
     [SerializeField]
-    Text sorcererName;
+    TextMeshProUGUI sorcererName;
     [SerializeField]
     Image selectImage;
 
     [SerializeField]
     GameObject StoryContents;
     [SerializeField]
-    Text storyTopText;
+    TextMeshProUGUI storyTopText;
     [SerializeField]
-    Text storyMiddleText;
+    TextMeshProUGUI storyMiddleText;
     [SerializeField]
-    Text storyBottomText;
+    TextMeshProUGUI storyBottomText;
 
     [SerializeField]
     GameObject StatContents;
@@ -52,15 +53,15 @@ public class UI_SelectSorcererInfo : UI_Popup
     [SerializeField]
     Image Skill_1_Image;
     [SerializeField]
-    Text Skill_1_Name;
+    TextMeshProUGUI Skill_1_Name;
     [SerializeField]
-    Text Skill_1_Context;
+    TextMeshProUGUI Skill_1_Context;
     [SerializeField]
     Image Skill_2_Image;
     [SerializeField]
-    Text Skill_2_Name;
+    TextMeshProUGUI Skill_2_Name;
     [SerializeField]
-    Text Skill_2_Context;
+    TextMeshProUGUI Skill_2_Context;
 
     int sorcererInfoID = 0;
     Dictionary<string, object> sorcererInfo = new Dictionary<string, object>();

@@ -14,16 +14,16 @@ public class UI_Agreement : UI_Popup
     }
 
     [SerializeField]
-    Text titleText;
+    TextMeshProUGUI titleText;
     [SerializeField]
-    Text checkTextTop;
+    TextMeshProUGUI checkTextTop;
     [SerializeField]
-    Text checkTextBottom;
+    TextMeshProUGUI checkTextBottom;
 
     [SerializeField]
-    Text contentTextTop;
+    TextMeshProUGUI contentTextTop;
     [SerializeField]
-    Text contentTextBottom;
+    TextMeshProUGUI contentTextBottom;
 
     Image agreeBtn;
 

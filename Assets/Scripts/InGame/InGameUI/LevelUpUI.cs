@@ -3,27 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerSkillUI : MonoBehaviour
+public class LevelUpUI : MonoBehaviour
 {
-    private Dictionary<string, Dictionary<string, object>> skillTable;
+    private SkillUI[] skillBtns;
 
-    private Button[] buttons;
+    public int skillCount { get; private set; }
+    public List<int> skills { get; private set; } = new List<int>();   //가진 스킬이 아니라 ui에 올라온 스킬 목록 (중복 방지)
 
     private void Awake()
     {
-        skillTable = CSVReader.Read("SkillTable");
-
-        buttons = GetComponentsInChildren<Button>();
-
-        foreach(Button btn in buttons)
+        skillCount = 0;
+        foreach (SkillUI skillBtn in GetComponentsInChildren<SkillUI>())
         {
-            btn.onClick.AddListener(test);
+            DebugManager.Instance.PrintDebug("##: " + skillBtn.name);
         }
+        skillBtns = GetComponentsInChildren<SkillUI>();
     }
 
-    private void test()
+    public void SkillBoxInit()
     {
-        gameObject.SetActive(false);
+        foreach (SkillUI skillBtn in skillBtns)
+        {
+            skillBtn.SkillDataInit();
+        }
     }
 }
 

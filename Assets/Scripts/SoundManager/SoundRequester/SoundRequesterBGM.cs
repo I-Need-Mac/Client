@@ -27,7 +27,13 @@ public class SoundRequesterBGM : SoundRequester
         MakeSpeakers();
         ConvertAudioClipData();
 
+        ChangeSituation(BGMSituation.BGMSITUATION.CHANGE_SCENE);
 
+    }
+
+    private void OnEnable()
+    {
+        ChangeSituation(BGMSituation.BGMSITUATION.CHANGE_SCENE);
     }
 
     // Update is called once per frame
@@ -168,10 +174,11 @@ public class SoundRequesterBGM : SoundRequester
     public override void RequestCallBack(PackItem item) {
         BGMPackItem covertItem = (BGMPackItem)item;
         if (covertItem.delayWithIntro == 0) {
+            audioSources[covertItem.usingSpeaker].loop = true;
             ShootSound(covertItem.usingSpeaker, covertItem.realBGMClip);
         }
         else {
-
+            audioSources[covertItem.usingSpeaker].loop = true;
             StartCoroutine(PlaySoundWithDelay(covertItem.usingSpeaker, covertItem.realBGMClip, covertItem.delayWithIntro));
         }
     }

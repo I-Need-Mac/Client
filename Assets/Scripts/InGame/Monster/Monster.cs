@@ -64,28 +64,19 @@ public class Monster : MonoBehaviour
             if (isAttackable = distance <= monsterData.atkDistance)
             {
                 monsterRigidbody.velocity = Vector2.zero;
-                if (situation != SoundSituation.SOUNDSITUATION.ATTACK)
-                {
-                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ATTACK);
-                }
+           
             }
             else
             {
                 monsterDirection = diff.normalized;
                 monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-                if (situation != SoundSituation.SOUNDSITUATION.RUN)
-                {
-                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
-                }
+          
             }
             isMovable = !isAttackable;
         }
         else
         {
-            if (situation != SoundSituation.SOUNDSITUATION.IDLE)
-            {
-                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
-            }
+  
             isAttackable = false;
             isMovable = false;
         }

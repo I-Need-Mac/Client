@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -22,13 +23,13 @@ public class UI_ESCPopup : UI_Popup
     }
 
     [SerializeField]
-    Text myInfoText;
+    TextMeshProUGUI myInfoText;
     [SerializeField]
-    Text rankingText;
+    TextMeshProUGUI rankingText;
     [SerializeField]
-    Text friendText;
+    TextMeshProUGUI friendText;
     [SerializeField]
-    Text settingText;
+    TextMeshProUGUI settingText; 
 
     void Start()
     {

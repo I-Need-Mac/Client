@@ -117,8 +117,8 @@ public class SoundRequesterSFX : SoundRequester
 
     protected override void ShootSound(SoundSituation.SOUNDSITUATION situation)
     {
-        audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
-        audioSources[shootingSounds[situation].usingSpeaker].Play();
+        //audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
+        audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
         if (situation == SoundSituation.SOUNDSITUATION.DIE) {
             MoveToSoundManager( FindChild(FindChild(this.gameObject, "SoundRequester"), shootingSounds[situation].usingSpeaker));
         }

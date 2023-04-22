@@ -49,6 +49,7 @@ public class SoundRequesterBGM : SoundRequester
     public override bool MakeSpeakers()
     {
         soundRequester = new GameObject("SoundRequester");
+        soundRequester.SetActive(true);
         soundRequester.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
         soundRequester.transform.SetParent(this.transform);
 
@@ -59,7 +60,7 @@ public class SoundRequesterBGM : SoundRequester
 
 
 
-            if (items.loadSettingFrom.Equals(null))
+            if (items.loadSettingFrom == null)
             {
                 GameObject speaker = new GameObject(items.speakerName);
                 speaker.transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);

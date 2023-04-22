@@ -10,7 +10,7 @@ public class SpineAnimatorManager : MonoBehaviour
 {
     private Animator animator;
 
-    private float animationSpeed;
+    private float animationSpeed = 1f;
 
     private void OnEnable()
     {
@@ -19,7 +19,7 @@ public class SpineAnimatorManager : MonoBehaviour
 
     private void Update()
     {
-        //animator.speed = animationSpeed;
+        animator.speed = animationSpeed;
     }
 
     private void Init()

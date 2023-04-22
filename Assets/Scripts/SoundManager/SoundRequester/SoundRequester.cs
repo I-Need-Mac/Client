@@ -32,6 +32,7 @@ public abstract class SoundRequester : MonoBehaviour
     }
     void Start()
     {
+        DebugManager.Instance.PrintDebug("[SoundRequester] init");
         MakeSpeakers();
         ConvertAudioClipData();
 

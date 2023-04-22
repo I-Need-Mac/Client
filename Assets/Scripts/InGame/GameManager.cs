@@ -17,6 +17,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public GameObject map { get; private set; }
     public Tilemap tileMap { get; private set; }
 
+    private bool gameOver = true;
     private float defaultScale;
 
     protected override void Awake()
@@ -31,6 +32,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void Update()
     {
+        DebugManager.Instance.PrintDebug("$$: " + Time.timeScale);
         if (Input.GetKeyDown(KeyCode.K))
         {
             player.GetExp(500);
@@ -45,8 +47,9 @@ public class GameManager : SingletonBehaviour<GameManager>
             player.playerManager.weight.SetHp(hp);
         }
 
-        if (player.playerManager.ReturnHp() <= 0)
+        if (player.playerManager.ReturnHp() <= 0 && gameOver)
         {
+            gameOver = false;
             playerUi.GameOver();
         }
     }

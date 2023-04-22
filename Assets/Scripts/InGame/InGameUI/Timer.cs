@@ -20,7 +20,7 @@ public class Timer : SingletonBehaviour<Timer>
 
     private void Update()
     {
-        currentTime = (int)(Time.time * 1000);
+        currentTime += (int)(Time.deltaTime * 1000);
         timeText.text = $"{currentTime/1000/60:00}  {currentTime/1000%60:00}";
     }
 }

@@ -39,7 +39,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             Pause();
         }
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            int hp = player.playerManager.weight.hp - 10;
+            player.playerManager.weight.SetHp(hp);
+        }
+
+        if (player.playerManager.ReturnHp() <= 0)
         {
             playerUi.GameOver();
         }

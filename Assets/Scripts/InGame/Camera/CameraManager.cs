@@ -6,11 +6,12 @@ using UnityEngine.Tilemaps;
 public class CameraManager : SingletonBehaviour<CameraManager>
 {
     private CinemachineVirtualCamera virtualCam;
-    private Camera cam;
 
     private Tilemap tileMap;
     private float extra = 2.0f;
-    
+
+    public Camera cam { get; private set; }
+
     protected override void Awake()
     {
         virtualCam = transform.Find("Cinemachine").GetComponent<CinemachineVirtualCamera>();

@@ -25,10 +25,10 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         ConfigSetting();
     }
 
-    private void Start()
-    {
-        StartCoroutine(HpRegeneration());
-    }
+    //private void Start()
+    //{
+    //    StartCoroutine(HpRegeneration());
+    //}
 
     private void ConfigSetting()
     {

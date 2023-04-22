@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ExpUI : MonoBehaviour
+public class ExpBar : MonoBehaviour
 {
     private Image expImage;
     private TextMeshProUGUI expText;

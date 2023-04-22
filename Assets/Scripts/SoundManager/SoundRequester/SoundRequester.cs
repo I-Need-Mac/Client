@@ -32,6 +32,8 @@ public abstract class SoundRequester : MonoBehaviour
     }
     void Start()
     {
+        MakeSpeakers();
+        ConvertAudioClipData();
 
 
     }
@@ -66,4 +68,34 @@ public abstract class SoundRequester : MonoBehaviour
     protected abstract IEnumerator PlaySoundWithDelay(SoundSituation.SOUNDSITUATION situation, float delay);
     protected abstract IEnumerator PlaySoundWithDelay(BGMSituation.BGMSITUATION situation, AudioClip clip, float delay);
     protected abstract IEnumerator PlaySoundWithDelay(string speakerName, AudioClip clip, float delay);
+
+    protected void MoveToSoundManager(GameObject target) {
+        GameObject soundManager = GameObject.Find("SoundManager");
+        target.transform.position = new Vector3(soundManager.transform.position.x, soundManager.transform.position.y, soundManager.transform.position.z);
+        target.transform.SetParent(soundManager.transform);
+        
+        AudioSource audioSource = target.GetComponent<AudioSource>();
+        StartCoroutine(DestroyAudioAfterPlaying(audioSource, audioSource.clip.length));
+    }
+
+
+    protected IEnumerator DestroyAudioAfterPlaying(AudioSource target, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Destroy(target);
+    }
+
+    protected GameObject FindChild(GameObject parent, string childName)
+    {
+        Transform parentTransform = parent.transform;
+        Transform childTransform = parentTransform.Find(childName);
+
+        if (childTransform == null)
+        {
+            Debug.LogWarning("Child with name " + childName + " not found in parent GameObject " + parent.name);
+            return null;
+        }
+
+        return childTransform.gameObject;
+    }
 }

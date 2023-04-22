@@ -18,6 +18,8 @@ public class Monster : MonoBehaviour
     private bool isAttackable;
 
     private SpineAnimatorManager spineAnimatorManager;
+    private SoundRequester soundRequester;
+    private SoundSituation.SOUNDSITUATION situation;
 
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector2 lookDirection { get; private set; } //바라보는 방향
@@ -25,6 +27,7 @@ public class Monster : MonoBehaviour
     private void Awake()
     {
         spineAnimatorManager = GetComponent<SpineAnimatorManager>();
+        soundRequester = GetComponentInChildren<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
@@ -34,6 +37,7 @@ public class Monster : MonoBehaviour
 
     private void OnEnable()
     {
+        situation = SoundSituation.SOUNDSITUATION.IDLE;
         isMovable = false;
         isAttackable = false;
     }
@@ -60,16 +64,28 @@ public class Monster : MonoBehaviour
             if (isAttackable = distance <= monsterData.atkDistance)
             {
                 monsterRigidbody.velocity = Vector2.zero;
+                if (situation != SoundSituation.SOUNDSITUATION.ATTACK)
+                {
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ATTACK);
+                }
             }
             else
             {
                 monsterDirection = diff.normalized;
                 monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+                if (situation != SoundSituation.SOUNDSITUATION.RUN)
+                {
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
+                }
             }
             isMovable = !isAttackable;
         }
         else
         {
+            if (situation != SoundSituation.SOUNDSITUATION.IDLE)
+            {
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
+            }
             isAttackable = false;
             isMovable = false;
         }
@@ -140,7 +156,10 @@ public class Monster : MonoBehaviour
         //    dropItem.transform.position = transform.localPosition;
         //    dropItem.SetActive(true);
         //}
-        ItemPoolManager.Instance.SpawnExpItem(transform.position);
+        if (UnityEngine.Random.Range(0, 10001) <= monsterData.groupSourceRate)
+        {
+            ItemManager.Instance.DropItems(monsterData.groupSource, transform);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -150,10 +169,16 @@ public class Monster : MonoBehaviour
             monsterData.SetHp(monsterData.hp - player.playerManager.ReturnAttack());
             if (monsterData.hp <= 0)
             {
-                DropItem();
-                MonsterSpawner.Instance.DeSpawnMonster(this);
+                Die();
             }
         }
+    }
+
+    private void Die()
+    {
+        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        DropItem();
+        MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
 }

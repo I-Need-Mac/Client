@@ -1,22 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-using TMPro;
 using System;
 using BFM;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    [SerializeField] private PlayerPoolManager playerPoolManager;
-
     [SerializeField] private int mapId;
     [SerializeField] private int playerId;
     //private int mapId;
     //private int playerId;
 
+    public PlayerUI playerUi { get; private set; }
     public Player player { get; private set; }
     public GameObject map { get; private set; }
     public Tilemap tileMap { get; private set; }
@@ -26,15 +22,37 @@ public class GameManager : SingletonBehaviour<GameManager>
     protected override void Awake()
     {
         defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        playerUi = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
         SoundManager.Instance.CreateSoundManager();
         //mapId = UIManager.Instance.selectStageID;
         //playerId = UIManager.Instance.selectCharacterID;
         //playerPoolManager.playerId = playerId;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            player.GetExp(500);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Pause();
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            int hp = player.playerManager.weight.hp - 10;
+            player.playerManager.weight.SetHp(hp);
+        }
+
+        if (player.playerManager.ReturnHp() <= 0)
+        {
+            playerUi.GameOver();
+        }
+    }
+
     private void Start()
     {
-
         Spawn();
     }
 
@@ -43,6 +61,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         return playerId;
     }
 
+    #region Player&MapCreate
     private void Spawn()
     {
         MapLoad(mapId);
@@ -63,9 +82,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void PlayerLoad(int playerId)
     {
-        //playerPoolManager.playerId = playerId;
-        player = playerPoolManager.SpawnPlayer(transform.Find("PlayerSpawnPos").transform);
-        player.gameObject.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
+        player = Instantiate(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", playerId.ToString(), "CharacterPrefabPath").ToString()), transform.Find("PlayerSpawnPos").transform);
+        player.transform.localScale = Vector3.one * defaultScale;
+        player.gameObject.SetActive(true);
     }
 
     private void AssignLayerAndZ()
@@ -102,83 +121,20 @@ public class GameManager : SingletonBehaviour<GameManager>
             }
         }
     }
+    #endregion
 
-    //[field : Header("--- Object Pool ---")]
-    //[field : SerializeField] public ProjectilePool projectilePool { get; private set; }
-    //[field : SerializeField] public ObjectPool monsterPool { get; private set; }
+    #region Game State
+    private void Pause()
+    {
+        if (Time.timeScale == 1f)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
 
-    //[Header("--- Text ---")]
-    //[SerializeField] private TMP_Text text_timer;
-
-    //private int curTime;
-    //private int limitTime;
-    //private Coroutine gameTimerCor;
-
-    //private void Awake()
-    //{
-    //    //monsterPool.AddObject();
-
-    //    Init();
-    //}
-
-    //#region Setter
-    ////�������� ���� �ð� ����
-    //public void SetLimitTime(int limitTime)
-    //{
-    //    this.limitTime = limitTime;
-    //}
-    //#endregion
-
-    //private void Init()
-    //{
-    //    text_timer.gameObject.SetActive(true);
-    //    text_timer.text = "";
-    //}
-
-    //private void TimeOver()
-    //{
-    //    text_timer.text = "";
-    //}
-
-    //#region Coroutine
-    //public void StartGameTimer()
-    //{
-    //    StopGameTimer();
-
-    //    if (gameTimerCor == null)
-    //    {
-    //        gameTimerCor = StartCoroutine(GameTimer());
-    //    }
-    //}
-
-    //public void StopGameTimer()
-    //{
-    //    if (gameTimerCor != null)
-    //    {
-    //        StopCoroutine(gameTimerCor);
-    //    }
-    //}
-
-    //private IEnumerator GameTimer()
-    //{
-    //    var waitTime = new WaitForSeconds(1f);
-    //    int m, s;
-
-    //    curTime = limitTime / 1000;
-
-    //    while (curTime > 0)
-    //    {
-    //        m = curTime / 60;
-    //        s = curTime - (m * 60);
-
-    //        text_timer.text = string.Format("{0:D2} : {1:D2}", m, s);
-
-    //        curTime--;
-
-    //        yield return waitTime;
-    //    }
-
-    //    TimeOver();
-    //}
-    //#endregion
+    #endregion
 }

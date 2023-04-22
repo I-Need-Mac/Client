@@ -47,8 +47,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speakerSettings: []
-  soundPackItems: []
+  speakerSettings:
+  - speakerName: Default
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Default
+    delay: 0
+    SOUNDSITUATION: 8
+    audioClip: {fileID: 8300000, guid: e885484e1bc99fb47a0ac3f6bfa586b1, type: 3}
+  - usingSpeaker: Default
+    delay: 0
+    SOUNDSITUATION: 9
+    audioClip: {fileID: 8300000, guid: 51f0c54706b53c14c9c24bbd63bb18a6, type: 3}
+  - usingSpeaker: Default
+    delay: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: 532e417ffa3f95747908419a00be3780, type: 3}
+  - usingSpeaker: Default
+    delay: 0
+    SOUNDSITUATION: 7
+    audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
 --- !u!33 &6563513159061557397
 MeshFilter:
   m_ObjectHideFlags: 0

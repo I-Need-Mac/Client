@@ -25,10 +25,10 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         ConfigSetting();
     }
 
-    private void Start()
-    {
-        StartCoroutine(HpRegeneration());
-    }
+    //private void Start()
+    //{
+    //    StartCoroutine(HpRegeneration());
+    //}
 
     private void ConfigSetting()
     {
@@ -59,6 +59,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(Convert.ToInt32(characterData["MoveSpeed"]));
         playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
+        playerData.SetSkills();
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴

@@ -54,10 +54,11 @@ public class Skill
     }
 
     //Protect type skill activation
-    public void ProtectSkill()
+    public IEnumerator ProtectSkill()
     {
         Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
         projectile.Fire(shooter, Vector3.zero);
+        yield return null;
     }
 
     //Shoot type skill activation
@@ -69,17 +70,18 @@ public class Skill
         }
         while (true)
         {
+            Vector2 direction = LookDirection();
             for (int i = 0; i < skillData.projectileCount; i++)
             {
                 Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
-                projectile.Fire(shooter, LookDirection());
+                projectile.Fire(shooter, direction);
                 yield return new WaitForSeconds(0.2f); //발사 간격
             }
             yield return coolTime;
         }
     }
 
-    private void SkillLevelUp()
+    public void SkillLevelUp()
     {
         SkillDataLoad(FindSkill((skillData.skillId + 1).ToString()));
     }
@@ -115,6 +117,7 @@ public class Skill
         skillData.SetProjectileSizeMulti(Convert.ToInt32(skillInfo["ProjectileSizeMulti"]));
         skillData.SetIsPenetrate(Convert.ToBoolean(skillInfo["IsPenetrate"]));
         skillData.SetProjectileType((PROJECTILE_TYPE)Enum.Parse(typeof(PROJECTILE_TYPE), Convert.ToString(skillInfo["ProjectileType"]).ToUpper()));
+        skillData.SetSkillPrefabPath(skillInfo["SkillPrefabPath"].ToString());
     }
 
     private Dictionary<string, object> FindSkill(string skillId)

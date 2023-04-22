@@ -1,12 +1,12 @@
-SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType
-?¤í‚¬?„ì´???¤í‚¬?´ë¦„,?¤í‚¬ ?¤ëª…,?¤í‚¬?¤ëª… ê¸°íš???„ì´ì½?ì¿¨í????¤í‚¬ì»·ì”¬ ? ë¬´,?¤í‚¬ ì»·ì”¬ ê²½ë¡œ,?¤í‚¬ ?´ë?ì§€,?¬ê±°ë¦??¤í‚¬ ë°”ë¡œ ?œì „?¬ë?,ê¶ê·¹ê¸??¬ë?,?¬ì‚¬ì²?ê°œìˆ˜,?¼í•´,?¬ì‚¬ì²??¤í”¼??ê´€?µì—¬ë¶€,??°œ ë°˜ì?ë¦??¬ì‚¬ì²??¬ì´ì¦?ë°°ìœ¨,?¤í‚¬ ?¨ê³¼,?¤í‚¬ ?¨ê³¼ ?ŒëŒ,?¤í‚¬ ë°œì‚¬ ?€ê²??¤í‚¬ ? ì•„ê°€???•íƒœ,,,,,,,,
-int,String,String,String,String,Int,Bool,String,String,int,bool,bool,int,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType
-10100,Skill_TestName1,Skill_TestExplain1,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,1,5,5,TRUE,0,1,Stun,0,Melee,Straight
-10101,Skill_TestName1,Skill_TestExplain1,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,2,5,5,FALSE,0,1,Stun,0,Front,Straight
-10102,Skill_TestName1,Skill_TestExplain1,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,3,5,5,TRUE,0,1,Stun,0,Back,Straight
-10200,Skill_TestName2,Skill_TestExplain2,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,1,5,5,FALSE,0,1,Stun,2,Top,Protect
-10300,Skill_TestName3,Skill_TestExplain3,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,4,TRUE,FALSE,5,5,5,TRUE,0,1,Slow,30,Bottom,Satellite
-10400,Skill_TestName4,Skill_TestExplain4,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,3,5,5,FALSE,0,1,Nuckback,50,RandomDrop,Drop
-10500,Skill_TestName5,Skill_TestExplain5,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,3,5,10,TRUE,0,1,Boom,100,Random,Boomerang
-10600,Skill_TestName6,Skill_TestExplain6,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,1,5,5,FALSE,0,1,Nuckback,100,Near,Range
-10700,Skill_TestName7,Skill_TestExplain7,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,1,5,5,TRUE,5,1,Stun,0,Melee,Boom
+SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType,SkillPrefabPath
+?¤í‚¬?„ì´???¤í‚¬?´ë¦„,?¤í‚¬ ?¤ëª…,?¤í‚¬?¤ëª… ê¸°íš???„ì´ì½?ì¿¨í????¤í‚¬ì»·ì”¬ ? ë¬´,?¤í‚¬ ì»·ì”¬ ê²½ë¡œ,?¤í‚¬ ?´ë?ì§€,?¬ê±°ë¦??¤í‚¬ ë°”ë¡œ ?œì „?¬ë?,ê¶ê·¹ê¸??¬ë?,?¬ì‚¬ì²?ê°œìˆ˜,?¼í•´,?¬ì‚¬ì²??¤í”¼??ê´€?µì—¬ë¶€,??°œ ë°˜ì?ë¦??¬ì‚¬ì²??¬ì´ì¦?ë°°ìœ¨,?¤í‚¬ ?¨ê³¼,?¤í‚¬ ?¨ê³¼ ?ŒëŒ,?¤í‚¬ ë°œì‚¬ ?€ê²??¤í‚¬ ? ì•„ê°€???•íƒœ,,,,,,,,,
+int,String,String,String,String,Int,Bool,String,String,int,bool,bool,int,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType,String
+10101,10101,10101,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,1,5,5,TRUE,0,1,Stun,0,Melee,Straight,Prefabs/InGame/Skill/StraightSample
+10102,10102,10102,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,2,5,5,FALSE,0,1,Stun,0,Front,Straight,Prefabs/InGame/Skill/StraightSample
+10201,10201,10201,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,3,5,5,TRUE,0,1,Stun,0,Back,Straight,Prefabs/InGame/Skill/StraightSample
+10202,10202,10202,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,1,5,5,FALSE,0,1,Stun,2,Top,Straight,Prefabs/InGame/Skill/StraightSample
+10301,10301,10301,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,4,TRUE,FALSE,5,5,5,TRUE,0,1,Slow,30,Bottom,Straight,Prefabs/InGame/Skill/StraightSample
+10302,10302,10302,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,3,5,5,FALSE,0,1,Nuckback,50,RandomDrop,Straight,Prefabs/InGame/Skill/StraightSample
+10401,10401,10401,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,3,5,10,TRUE,0,1,Boom,100,Random,Straight,Prefabs/InGame/Skill/StraightSample
+10402,10402,10402,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,1,5,5,FALSE,0,1,Nuckback,100,Near,Straight,Prefabs/InGame/Skill/StraightSample
+10501,10501,10501,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,1,5,5,TRUE,5,1,Stun,0,Melee,Straight,Prefabs/InGame/Skill/StraightSample

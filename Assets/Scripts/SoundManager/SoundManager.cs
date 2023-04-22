@@ -32,7 +32,7 @@ public class SoundManager : SingleTon<SoundManager>
             soundManager = new GameObject("SoundManager");
             soundManager.AddComponent<SoundManagerUpdater>();
             soundManagerUpdater = soundManager.GetComponent<SoundManagerUpdater>();
-            DebugManager.Instance.PrintDebug(soundManager != null, "Can not create new SoundManager GameeObject");
+            DebugManager.Instance.PrintDebug(soundManager != null, "create new SoundManager GameeObject");
         }
         GameObject.DontDestroyOnLoad(soundManager);
 

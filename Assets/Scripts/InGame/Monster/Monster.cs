@@ -108,6 +108,7 @@ public class Monster : MonoBehaviour
 
     private void PlayAnimations()
     {
+        spineAnimatorManager.SetSpineSpeed(monsterData.moveSpeed);
         spineAnimatorManager.PlayAnimation("isAttackable", isAttackable);
         spineAnimatorManager.PlayAnimation("isMovable", isMovable);
     }

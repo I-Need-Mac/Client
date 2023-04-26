@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ public class UI_StartMain : UI_Base
     Image pressKeyImage;
 
     [SerializeField]
-    Text version;
+    TextMeshProUGUI version;
 
     void Start()
     {
@@ -56,14 +57,17 @@ public class UI_StartMain : UI_Base
 
     public void Update()
     {
-        Color color = pressKeyImage.color;
-        if (color.a >= 1f)
-            time = Time.deltaTime * -1;
-        else if (color.a <= 0f)
-            time = Time.deltaTime;
+        if(pressKeyImage)
+        {
+            Color color = pressKeyImage.color;
+            if (color.a >= 1f)
+                time = Time.deltaTime * -1;
+            else if (color.a <= 0f)
+                time = Time.deltaTime;
 
-        color.a += time;
-        pressKeyImage.color = color;
+            color.a += time;
+            pressKeyImage.color = color;
+        }
 
         OnPressKeyDown();
     }

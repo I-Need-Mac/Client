@@ -53,6 +53,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void Init()
     {
+        SoundManager.Instance.CreateSoundManager();
+
         // UI관련 테이블을 읽습니다.
         UIData.ReadData();
 

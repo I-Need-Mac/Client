@@ -24,16 +24,17 @@ public abstract class SoundRequester : MonoBehaviour
  
     private void Awake()
     {
+        DebugManager.Instance.PrintDebug("[SoundRequester] init");
+        MakeSpeakers();
+        ConvertAudioClipData();
 
 
-      
 
 
     }
     void Start()
     {
-        MakeSpeakers();
-        ConvertAudioClipData();
+
 
 
     }

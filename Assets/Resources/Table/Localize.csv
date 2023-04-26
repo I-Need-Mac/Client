@@ -4,7 +4,7 @@ String,String,String,String
 CharName_GwiTae,귀태,GwiTae,ギュテ
 CharName_HoJin,호진,HoJin,ホジン
 CharName_JinSiWoo,진시우,JinSiWoo,ジン・シウ
-CharName_LeeYaeJi,키노하나 세이메이,LeeYaeJi,リ・イェジ
+CharName_KinohanaSeiMei,키노하나 세이메이,LeeYaeJi,リ・イェジ
 CharName_Macia,마키아,Macia,マキア・スメルティ
 CharName_Macia Smerti,마키아 스메르티,Macia Smerti,マキア・スメルティ
 CharName_Mago,마고,Mago,マコ
@@ -12,9 +12,9 @@ CharName_Sinwol,신월,Sinwol,新月
 CharName_SiWoo,시우,SiWoo,シウ
 CharName_Ulises,율리세스,Ulises,ルイズ・オブセシア
 CharName_Ulises Obsessia,율리세스 오브세시아,Ulises Obsessia,ルイズ・オブセシア
-CharName_YaeJi,세이메이,YaeJi,イェジ
+CharName_SeiMei,세이메이,YaeJi,イェジ
 CharName_YunHoJin,윤호진,YunHoJin,ユン・ホジン
-CharDesc_YaeJi,Test,YaeJi,
+CharDesc_SeiMei,Test,YaeJi,
 CharDesc_HoJin,Test,HoJin,
 CharDesc_Ulises,Test,Ulises,
 CharDesc_Macia,Test,Macia,
@@ -93,7 +93,15 @@ Not_Ues6,어머니를 잃은 자식들은 힘을 잃었으며,,母を失いし�
 Not_Ues7,혼돈 속에서 그 생명을 잃어갔으니,,混沌の中でその生命を失っていき
 Not_Ues8,거짓 된 자들이 흩어진 어머니의 생명을 취해,,偽物達が母の生命を得て
 Not_Ues9,그 힘에 미쳐 파괴와 고통을 낳았으며,,その力で狂気と破壊を生み
-Prolog_Line1,형제들이여 어머니를 잃은 그날을 기억하는가.,,
+Prolog_Line01,형제들이여 어머니를 잃은 그날을 기억하는가.,,
+Prolog_Line02,"우리들의 어머니를 빼앗긴, ",,
+Prolog_Line03,혼돈과 죽음이 가득했던 경계의 저편에서 우리들의 아버지와 함께 숨 죽여 울던 그날을.,,
+Prolog_Line04,"형제들이여,",,
+Prolog_Line05,곧 어머니의 살점과 생명을 취하던 배신자들을 단죄할 자가 나타나리라.,,
+Prolog_Line06,"9번째 푸른달의 그림자가 경계를 덮은 날,",,
+Prolog_Line07,그 누구보다 어두운 곳에서 태어난 우리들의 영웅이 첫 숨결을 내뱉으리..,,
+Prolog_Line08,그는 우리들로부터 빼앗아간 그들과는 다른 힘을 가지고 태어날 것이다.,,
+Prolog_Line09,어머니의 첫번째 배신자인 영원한 권태에 빠진자로부터,,
 Prolog_Line10,어머니의 생명을 처음으로 취한 번뇌에 빠진자로부터,,
 Prolog_Line11,어머니의 살점을 처음으로 취한 탐욕에 빠진자로부터,,
 Prolog_Line12,어머니의 살점과 생명을 되찾아올것이다.,,
@@ -101,14 +109,6 @@ Prolog_Line13,가장 큰 어둠으로 경계의 저편을 무너트리고,,
 Prolog_Line14,가장 큰 빛으로 어머니를 부활시키리.,,
 Prolog_Line15,혼돈과 빛은 하나가 되어,,
 Prolog_Line16,새로운 세상을 어머니로 가득 채우리라.,,
-Prolog_Line2,"우리들의 어머니를 빼앗긴, ",,
-Prolog_Line3,혼돈과 죽음이 가득했던 경계의 저편에서 우리들의 아버지와 함께 숨 죽여 울던 그날을.,,
-Prolog_Line4,"형제들이여,",,
-Prolog_Line5,곧 어머니의 살점과 생명을 취하던 배신자들을 단죄할 자가 나타나리라.,,
-Prolog_Line6,"9번째 푸른달의 그림자가 경계를 덮은 날,",,
-Prolog_Line7,그 누구보다 어두운 곳에서 태어난 우리들의 영웅이 첫 숨결을 내뱉으리..,,
-Prolog_Line8,그는 우리들로부터 빼앗아간 그들과는 다른 힘을 가지고 태어날 것이다.,,
-Prolog_Line9,어머니의 첫번째 배신자인 영원한 권태에 빠진자로부터,,
 Skill_TestExplain1,테스트 스킬 설명,,テストスキル説明
 Skill_TestExplain10,테스트 스킬 설명,,テストスキル説明
 Skill_TestExplain2,테스트 스킬 설명,,テストスキル説明
@@ -193,3 +193,52 @@ UI_ScreenType_Full,전체 화면,,
 UI_ScreenType_FullWindow,테두리 없는 창,,
 UI_Shake,흔들림,,
 UI_Save,저장,,
+Skill_Name_Johon,주혼참회도,,㣙昏懺意刀
+Skill_Name_Bujung,부정추술,,錇正追術
+Skill_Name_GangSin,강신,,降神
+Skill_Name_,dei misericordia,,
+,현신천호령,,顯身天狐灵
+,Furia de hierro,,
+,귀기발파 ,,鬼氣發破
+,주형염,,呪形染
+,명계예사령,,冥界隸死灵
+,CREPITUS est ars,,
+,"急急如律令.
+歯を明らかにする",,
+,aliento del segador,,
+,폭,,暴
+,제령,,除令
+,박승,,縛縄
+,인,,引
+,척,,斥
+,분계격,,分界隔 - 보류
+,선양단,,旋兩專
+,호린,,護燐
+,적화,,跡火
+,대염,,大焰
+,금절뢰,,金切雷
+,추령주흔,,芻霊呪痕
+,적정불괴,,赤停不壞
+,회풍살,,風回殺
+,세례성사,,
+,감염,,
+,부공난격,,符攻亂擊
+,일도화파,,一刀火波
+,주옥,,術玉
+,주사지박,,蛛絲遲縛
+,부공척간,,符空拓干
+,원흡성,,圓吸星
+,적혈산격,,赤血山擊
+,명상,,冥想
+,혈폭화,,血暴化
+,인,,引
+,대흡격,,代吸擊
+,위신제어 - 가속,,圍身制御 - 加速
+,위신제어 - 흡,,圍身制御 - 吸
+,위신제어 - 재생,,圍身制御 - 再生
+,주주확산,,祝殶擴散
+,주주확호,,祝殶擴怃
+,주주가속,,祝殶加速
+,주주증폭,,祝殶增幅
+,광화,,狂化
+,창애,,蒼崖

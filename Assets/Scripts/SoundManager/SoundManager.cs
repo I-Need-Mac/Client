@@ -6,7 +6,7 @@ using UnityEngine;
 public class SoundManager : SingleTon<SoundManager>
 {
  
-
+    [SerializeField]
     Dictionary<string, AudioSource> audioSourceList = null;
     
 
@@ -32,7 +32,7 @@ public class SoundManager : SingleTon<SoundManager>
             soundManager = new GameObject("SoundManager");
             soundManager.AddComponent<SoundManagerUpdater>();
             soundManagerUpdater = soundManager.GetComponent<SoundManagerUpdater>();
-            DebugManager.Instance.PrintDebug(soundManager != null, "Can not create new SoundManager GameeObject");
+            DebugManager.Instance.PrintDebug(soundManager != null, "create new SoundManager GameeObject");
         }
         GameObject.DontDestroyOnLoad(soundManager);
 
@@ -130,5 +130,21 @@ public class SoundManager : SingleTon<SoundManager>
         return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
     }
 
+    public void PauseAll() { 
+        foreach (string key in audioSourceList.Keys) { 
+            audioSourceList[key].Pause();
 
+            DebugManager.Instance.PrintDebug("SoundManager : Pause "+ key);
+
+        }
+
+    }
+    public void PlayAll()
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+            audioSourceList[key].Play();
+        }
+
+    }
 }

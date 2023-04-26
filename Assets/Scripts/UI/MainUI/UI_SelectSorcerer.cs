@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_SelectSorcerer : UI_Popup
 {
@@ -15,7 +16,7 @@ public class UI_SelectSorcerer : UI_Popup
     }
 
     [SerializeField]
-    Text titleText;
+    TextMeshProUGUI titleText;
     [SerializeField]
     GameObject sorcererObject;
     [SerializeField]

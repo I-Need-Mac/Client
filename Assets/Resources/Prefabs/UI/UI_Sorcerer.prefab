@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectImage: {fileID: 8269118354234350466}
-  sorcererName: {fileID: 0}
+  sorcererName: {fileID: 6100744143760277024}
   ultiImage: {fileID: 5315950602720509418}
 --- !u!1 &3720060855267139540
 GameObject:

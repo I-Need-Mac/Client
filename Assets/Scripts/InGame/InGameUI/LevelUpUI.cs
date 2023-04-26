@@ -20,7 +20,7 @@ public class LevelUpUI : MonoBehaviour
 
     public void SkillBoxInit(int num)
     {
-        float height = 56 + 104 + 120 * num; //-471-104, 56
+        float height = 175 + 120 * num;
         bodyRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
         for (int i = 0; i < num; i++)
         {

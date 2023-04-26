@@ -20,23 +20,30 @@ public class SkillUI : MonoBehaviour
     private void Awake()
     {
         skillTable = CSVReader.Read("SkillTable");
-        levelUpUi = transform.parent.GetComponent<LevelUpUI>();
         btn = GetComponent<Button>();
         btn.onClick.AddListener(CloseBox);
 
-        skillName = transform.Find("Name").GetComponent<TextMeshProUGUI>();
-        skillInfo = transform.Find("Info").GetComponent<TextMeshProUGUI>();
+        skillName = transform.Find("SkillName").GetComponent<TextMeshProUGUI>();
+        skillInfo = transform.Find("SkillInfo").GetComponent<TextMeshProUGUI>();
     }
 
     private void CloseBox()
     {
+        levelUpUi = transform.GetComponentInParent<LevelUpUI>();
         GameManager.Instance.player.playerManager.playerData.skills.Add(skillId, new SkillInfo(null, null));
         Time.timeScale = 1f;
+
+        foreach (SkillUI ui in levelUpUi.skillUis)
+        {
+            UIPoolManager.Instance.DeSpawnButton(ui);
+        }
+
         levelUpUi.gameObject.SetActive(false);
     }
 
     public void SkillDataInit()
     {
+        levelUpUi = transform.GetComponentInParent<LevelUpUI>();
         do
         {
             if (levelUpUi.skillCount < 8)   //아직 스킬 8개가 다 안채워졌을때

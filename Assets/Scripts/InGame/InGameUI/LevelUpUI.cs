@@ -5,26 +5,27 @@ using UnityEngine.UI;
 
 public class LevelUpUI : MonoBehaviour
 {
-    private SkillUI[] skillBtns;
+    private Transform body;
+    private RectTransform bodyRect;
 
-    public int skillCount { get; private set; }
+    public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
+    public int skillCount { get; private set; } = 0;
     public List<int> skills { get; private set; } = new List<int>();   //가진 스킬이 아니라 ui에 올라온 스킬 목록 (중복 방지)
 
     private void Awake()
     {
-        skillCount = 0;
-        foreach (SkillUI skillBtn in GetComponentsInChildren<SkillUI>())
-        {
-            DebugManager.Instance.PrintDebug("##: " + skillBtn.name);
-        }
-        skillBtns = GetComponentsInChildren<SkillUI>();
+        body = transform.Find("Body");
+        bodyRect = body.GetComponent<RectTransform>();
     }
 
-    public void SkillBoxInit()
+    public void SkillBoxInit(int num)
     {
-        foreach (SkillUI skillBtn in skillBtns)
+        float height = 56 + 104 + 120 * num; //-471-104, 56
+        bodyRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
+        for (int i = 0; i < num; i++)
         {
-            skillBtn.SkillDataInit();
+            Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * i);
+            skillUis.Add(UIPoolManager.Instance.SpawnButton(body.transform, pos));
         }
     }
 }

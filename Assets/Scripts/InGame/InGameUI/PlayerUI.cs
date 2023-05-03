@@ -32,10 +32,10 @@ public class PlayerUI : MonoBehaviour
 
     public void SkillSelectWindowOpen()
     {
+        levelUi.gameObject.SetActive(true);
         Time.timeScale = 0f;
         levelUi.skills.Clear();
-        levelUi.SkillBoxInit();
-        levelUi.gameObject.SetActive(true);
+        levelUi.SkillBoxInit(2);
     }
 
     public void GameOver()

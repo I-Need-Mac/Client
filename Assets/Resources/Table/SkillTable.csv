@@ -1,5 +1,5 @@
 SkillID,Name,Skill_TestExplain1,!Desc,Dummy,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType,SkillPrefabPath
-스킬아이디,스킬이름,Skill_TestExplain1,스킬설명 기획용,Dummy,쿨타임,스킬컷씬 유무,스킬 컷씬 경로,스킬 이미지,사거리,스킬 바로 시전여부,궁극기 여부,투사체 개수,피해,투사체 스피드,관통여부,폭발 반지름,투사체 사이즈 배율,스킬 효과,스킬 효과 파람,스킬 발사 타겟,스킬 날아가는 형태,
+?�킬?�이???�킬?�름,Skill_TestExplain1,?�킬?�명 기획??Dummy,쿨�????�킬컷씬 ?�무,?�킬 컷씬 경로,?�킬 ?��?지,?�거�??�킬 바로 ?�전?��?,궁극�??��?,?�사�?개수,?�해,?�사�??�피??관?�여부,??�� 반�?�??�사�??�이�?배율,?�킬 ?�과,?�킬 ?�과 ?�람,?�킬 발사 ?��??�킬 ?�아가???�태,,,,,,,,
 int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,int,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType,
 10101,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,10,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
 10102,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
@@ -25,3 +25,4 @@ int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,
 10306,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,2,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
 10307,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,2,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
 10308,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,3,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
+99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999

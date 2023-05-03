@@ -1,4 +1,4 @@
-SkillID,Name,Skill_TestExplain1,!Desc,Dummy,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType,SkillPrefabPath
+SkillID,Name,Desc,!Desc,Dummy,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType,SkillPrefabPath
 ?¤í‚¬?„ì´???¤í‚¬?´ë¦„,Skill_TestExplain1,?¤í‚¬?¤ëª… ê¸°íš??Dummy,ì¿¨í????¤í‚¬ì»·ì”¬ ? ë¬´,?¤í‚¬ ì»·ì”¬ ê²½ë¡œ,?¤í‚¬ ?´ë?ì§€,?¬ê±°ë¦??¤í‚¬ ë°”ë¡œ ?œì „?¬ë?,ê¶ê·¹ê¸??¬ë?,?¬ì‚¬ì²?ê°œìˆ˜,?¼í•´,?¬ì‚¬ì²??¤í”¼??ê´€?µì—¬ë¶€,??°œ ë°˜ì?ë¦??¬ì‚¬ì²??¬ì´ì¦?ë°°ìœ¨,?¤í‚¬ ?¨ê³¼,?¤í‚¬ ?¨ê³¼ ?ŒëŒ,?¤í‚¬ ë°œì‚¬ ?€ê²??¤í‚¬ ? ì•„ê°€???•íƒœ,,,,,,,,
 int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,int,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType,
 10101,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,10,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample

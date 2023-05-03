@@ -27,7 +27,7 @@ public class SkillUI : MonoBehaviour
     {
         skillIcon.sprite = ResourcesManager.Load<Sprite>(skillData["SkillImage"].ToString());
         skillName.text = skillData["Name"].ToString();
-        skillInfo.text = skillData["Skill_TestExplain1"].ToString();
+        skillInfo.text = skillData["Desc"].ToString();
     }
 
 }

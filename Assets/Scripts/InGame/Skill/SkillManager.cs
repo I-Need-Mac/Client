@@ -3,25 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region Structure
+public struct SkillInfo
+{
+    public Skill skill;
+    public IEnumerator activation;
+
+    public SkillInfo(Skill skill, IEnumerator activation)
+    {
+        this.skill = skill;
+        this.activation = activation;
+    }
+}
+#endregion
+
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
-    #region Structure
-    public struct SkillInfo
-    {
-        public Skill skill;
-        public IEnumerator activation;
-
-        public SkillInfo(Skill skill, IEnumerator activation)
-        {
-            this.skill = skill;
-            this.activation = activation;
-        }
-    }
-    #endregion
-
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
-    private Dictionary<int, SkillInfo> skillList = new Dictionary<int, SkillInfo>();
+
+    public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
 
     protected override void Awake()
     {

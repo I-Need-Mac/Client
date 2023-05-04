@@ -17,7 +17,7 @@ public class PlayerData
     public int moveSpeed { get; private set; }                      //이동 속도
     public int getItemRange { get; private set; }                   //아이템 획득 범위
     public string characterPrefabPath { get; private set; }
-    public Dictionary<int, SkillInfo> skills { get; private set; }
+    //public Dictionary<int, SkillInfo> skills { get; private set; }
 
     //Property setter를 사용할 경우 get이 같이 참조되어 setter를 따로 생성
     public void SetCharacterName(string characterName) { this.characterName = characterName; }
@@ -31,17 +31,17 @@ public class PlayerData
     public void SetProjectileAdd(int projectileAdd) { this.projectileAdd = projectileAdd; }
     public void SetMoveSpeed(int moveSpeed) { this.moveSpeed = moveSpeed; }
     public void SetGetItemRange(int getItemRange) { this.getItemRange = getItemRange; }
-    public void SetSkills() { skills = new Dictionary<int, SkillInfo>(); }
+    //public void SetSkills() { skills = new Dictionary<int, SkillInfo>(); }
 }
 
-public struct SkillInfo
-{
-    public Skill skill { get; private set; }
-    public IEnumerator type { get; private set; }
+//public struct SkillInfo
+//{
+//    public Skill skill { get; private set; }
+//    public IEnumerator type { get; private set; }
 
-    public SkillInfo(Skill skill, IEnumerator type)
-    {
-        this.skill = skill;
-        this.type = type;
-    }
-}
+//    public SkillInfo(Skill skill, IEnumerator type)
+//    {
+//        this.skill = skill;
+//        this.type = type;
+//    }
+//}

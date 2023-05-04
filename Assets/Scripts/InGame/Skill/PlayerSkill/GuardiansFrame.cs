@@ -11,6 +11,7 @@ public class GuardiansFrame : Skill
         for (int i = 0; i < skillData.projectileCount; i++)
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+            projectile.transform.localScale = Vector2.zero;
             Vector3 rotate = Vector3.forward * 360 * i / skillData.projectileCount;
             projectile.transform.Rotate(rotate);
             projectile.transform.localPosition = projectile.transform.up * skillData.attackDistance;
@@ -26,18 +27,31 @@ public class GuardiansFrame : Skill
             yield return coolTime;
         }
 
+        float weight = 0.004f;
         float time = 0.0f;
+        float size = 0.0f;
+
         while (true)
         {
-            if (time >= skillData.duration)
+            if (time >= skillData.duration && size <= 0.0f)
             {
-                yield return coolTime;
                 time = 0.0f;
+                yield return coolTime;
             }
 
+            if (time >= skillData.duration)
+            {
+                size -= weight;
+            }
+            else if (size < skillData.projectileSizeMulti)
+            {
+                size += weight;
+            }
+            DebugManager.Instance.PrintDebug("Size: " + time);
             foreach (Projectile projectile in projectiles)
             {
                 projectile.transform.RotateAround(shooter.position, Vector3.back, skillData.speed * Time.deltaTime);
+                projectile.transform.localScale = Vector2.one * size;
             }
             time += Time.deltaTime;
             yield return null;

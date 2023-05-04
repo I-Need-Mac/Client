@@ -27,7 +27,7 @@ public class LevelUpUI : MonoBehaviour
 
     private void CloseBox(int skillId)
     {
-        GameManager.Instance.player.playerManager.playerData.skills.Add(skillId, new SkillInfo(null, null));
+        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform);
 
         foreach (SkillUI ui in skillUis)
         {
@@ -56,7 +56,7 @@ public class LevelUpUI : MonoBehaviour
 
     private int RandomSkillId()
     {
-        Dictionary<int, SkillInfo> skillData = GameManager.Instance.player.playerManager.playerData.skills;
+        Dictionary<int, SkillInfo> skillData = SkillManager.Instance.skillList;
         int skillId = 0;
 
         if (skillCount < 8) //스킬칸이 남은 경우
@@ -75,7 +75,7 @@ public class LevelUpUI : MonoBehaviour
                 }
 
                 int count = skillData.Count;
-                
+
                 if (count == 0)
                 {
                     return skillId;

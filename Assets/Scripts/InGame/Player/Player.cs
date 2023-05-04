@@ -128,29 +128,29 @@ public class Player : MonoBehaviour
     #region Skill
     public void Fire(int skillId)
     {
-        if (playerManager.playerData.skills.ContainsKey(skillId))
-        {
-            playerManager.playerData.skills[skillId].skill.SkillLevelUp();
-        }
-        else
-        {
-            Skill skill = new Skill(skillId.ToString(), this);
-            SkillInfo skillInfo;
-            switch (skill.skillData.projectileType)
-            {
-                case PROJECTILE_TYPE.SATELLITE:
-                    skillInfo = new SkillInfo(skill, skill.SatelliteSkill());
-                    break;
-                case PROJECTILE_TYPE.PROTECT:
-                    skillInfo = new SkillInfo(skill, skill.ProtectSkill());
-                    break;
-                default:
-                    skillInfo = new SkillInfo(skill, skill.ShootSkill());
-                    break;
-            }
-            playerManager.playerData.skills.Add(skillId, skillInfo);
-            StartCoroutine(skillInfo.type);
-        }
+        //if (playerManager.playerData.skills.ContainsKey(skillId))
+        //{
+        //    playerManager.playerData.skills[skillId].skill.SkillLevelUp();
+        //}
+        //else
+        //{
+        //    Skill skill = new Skill(skillId.ToString(), this);
+        //    SkillInfo skillInfo;
+        //    switch (skill.skillData.projectileType)
+        //    {
+        //        case PROJECTILE_TYPE.SATELLITE:
+        //            skillInfo = new SkillInfo(skill, skill.SatelliteSkill());
+        //            break;
+        //        case PROJECTILE_TYPE.PROTECT:
+        //            skillInfo = new SkillInfo(skill, skill.ProtectSkill());
+        //            break;
+        //        default:
+        //            skillInfo = new SkillInfo(skill, skill.ShootSkill());
+        //            break;
+        //    }
+        //    playerManager.playerData.skills.Add(skillId, skillInfo);
+        //    StartCoroutine(skillInfo.type);
+        //}
 
         //for (int i = 0; i < playerManager.playerData.skills.Count; i++)
         //{

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3235258815646943833}
   - component: {fileID: 6490402504510107846}
   m_Layer: 0
-  m_Name: Guardian's Frame
+  m_Name: GuardiansFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

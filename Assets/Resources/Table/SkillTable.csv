@@ -1,9 +1,9 @@
-SkillID,Name,Desc,!Desc,Dummy,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,IntervalTime,Duration,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType,SkillPrefabPath
+SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,IntervalTime,Duration,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType,SkillPrefabPath
 ?§ÌÇ¨?ÑÏù¥???§ÌÇ¨?¥Î¶Ñ,Skill_TestExplain1,?§ÌÇ¨?§Î™Ö Í∏∞Ìöç??Dummy,Ïø®Ì????§ÌÇ¨Ïª∑Ïî¨ ?†Î¨¥,?§ÌÇ¨ Ïª∑Ïî¨ Í≤ΩÎ°ú,?§ÌÇ¨ ?¥Î?ÏßÄ,?¨Í±∞Î¶??§ÌÇ¨ Î∞îÎ°ú ?úÏ†Ñ?¨Î?,Í∂ÅÍ∑πÍ∏??¨Î?,?¨ÏÇ¨Ï≤?Í∞úÏàò,?ºÌï¥,?¨ÏÇ¨Ï≤??§Ìîº??Í¥Ä?µÏó¨Î∂Ä,??∞ú Î∞òÏ?Î¶??¨ÏÇ¨Ï≤??¨Ïù¥Ï¶?Î∞∞Ïú®,?§ÌÇ¨ ?®Í≥º,,,?§ÌÇ¨ ?®Í≥º ?åÎûå,?§ÌÇ¨ Î∞úÏÇ¨ ?ÄÍ≤??§ÌÇ¨ ?†ÏïÑÍ∞Ä???ïÌÉú,,,,,,,,
 int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float,float,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType,
-10101,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.2,5,10,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
-10102,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
-10103,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
+10101,Skill_Name_Johon,Skill_TestExplain1,,Arts/Skill/Icon/Skill_Icon_Juhon_00,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.2,5,10,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
+10102,Skill_Name_Johon,Skill_TestExplain1,,Arts/Skill/Icon/Skill_Icon_Juhon_00,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
+10103,Skill_Name_Johon,Skill_TestExplain1,,Arts/Skill/Icon/Skill_Icon_Juhon_00,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
 10104,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,6,TRUE,FALSE,2,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
 10105,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,6,TRUE,FALSE,2,0.2,5,15,300,TRUE,0,1,MoveUp,10,Front,Whip,Prefabs/InGame/Skill/StraightSample
 10106,Skill_Name_Johon,Skill_TestExplain1,,Dummy,1500,FALSE,Null,Dummy,6,TRUE,FALSE,2,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
@@ -26,5 +26,4 @@ int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,
 10307,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,2,0.2,5,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
 10308,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,3,0.2,5,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
 99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,0.2,5,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999
-12001,Guardian's Frame,Guardian's Frame,Guardian's Frame,Dummy,30000,FALSE,Null,Dummy,4,TRUE,FALSE,3,0.2,5,0,100,TRUE,0,1,1,1,Random,,Prefabs/InGame/Skill/GuardiansFrame
-12002,Guardian's Frame,Guardian's Frame,Guardian's Frame,Dummy,30000,FALSE,Null,Dummy,4,TRUE,FALSE,4,0.2,5,0,100,TRUE,0,1,1,1,Random,,Prefabs/InGame/Skill/GuardiansFrame
+12001,Horin,Guardian's Frame,Guardian's Frame,Arts/Skill/Icon/Skill_Icon_Juhon_00,30000,FALSE,Null,Dummy,4,TRUE,FALSE,3,0.2,5,0,100,TRUE,0,1,1,1,Random,,Prefabs/InGame/Skill/GuardiansFrame

@@ -7,3 +7,4 @@ CriticalRatio,Coefficient,1500
 CriticalDamageRatio,Coefficient,5
 ImageMultiple,Coefficient,0.5
 Fraction,Coefficient,10000
+SkillBenList,,

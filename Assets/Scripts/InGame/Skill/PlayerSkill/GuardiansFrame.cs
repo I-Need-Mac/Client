@@ -13,6 +13,7 @@ public class GuardiansFrame : Skill
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
             projectile.transform.localScale = Vector2.zero;
             Vector3 rotate = Vector3.forward * 360 * i / skillData.projectileCount;
+            projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
             projectile.transform.Rotate(rotate);
             projectile.transform.localPosition = projectile.transform.up * skillData.attackDistance;
             projectiles.Add(projectile);
@@ -47,7 +48,6 @@ public class GuardiansFrame : Skill
             {
                 size += weight;
             }
-            DebugManager.Instance.PrintDebug("Size: " + time);
             foreach (Projectile projectile in projectiles)
             {
                 projectile.transform.RotateAround(shooter.position, Vector3.back, skillData.speed * Time.deltaTime);

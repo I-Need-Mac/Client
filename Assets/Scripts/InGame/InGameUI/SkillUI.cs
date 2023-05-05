@@ -25,7 +25,7 @@ public class SkillUI : MonoBehaviour
 
     public void SkillBtnInit(Dictionary<string, object> skillData)
     {
-        skillIcon.sprite = ResourcesManager.Load<Sprite>(skillData["SkillImage"].ToString());
+        skillIcon.sprite = ResourcesManager.Load<Sprite>(skillData["Icon"].ToString());
         skillName.text = skillData["Name"].ToString();
         skillInfo.text = skillData["Desc"].ToString();
     }

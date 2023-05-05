@@ -23,12 +23,17 @@ public abstract class Skill
         this.skillData = new SkillData();
         this.shooter = shooter;
         SetSkillData(skillId);
-        intervalTime = new WaitForSeconds(0.2f);
     }
 
     public void SkillLevelUp()
     {
+        foreach (Projectile projectile in projectiles)
+        {
+            SkillManager.Instance.DeSpawnProjectile(projectile);
+        }
+        projectiles.Clear();
         SetSkillData(skillData.skillId + 1);
+        Init();
     }
 
     public void SetSkillData(int skillId)
@@ -45,7 +50,7 @@ public abstract class Skill
         skillData.SetIsUltimate(Convert.ToBoolean(Convert.ToString(data["IsUltimate"]).ToLower()));
         skillData.SetName(Convert.ToString(data["Name"]));
         skillData.SetDesc(Convert.ToString(data["Desc"]));
-        //skillData.SetIcon(Convert.ToString(data["Icon"]));
+        skillData.SetIcon(Convert.ToString(data["Icon"]));
         skillData.SetCutDire(Convert.ToString(data["Cut_dire"]));
         skillData.SetSkillImage(Convert.ToString(data["SkillImage"]));
         skillData.SetSkillEffect((SKILL_EFFECT)Enum.Parse(typeof(SKILL_EFFECT), Convert.ToString(data["SkillEffect"]).ToUpper()));
@@ -54,6 +59,7 @@ public abstract class Skill
 
         skillData.SetProjectileCount(Convert.ToInt32(data["ProjectileCount"]));
         skillData.SetIntervalTime((float)Convert.ToDouble(data["IntervalTime"]));
+        intervalTime = new WaitForSeconds(skillData.intervalTime);
         skillData.SetDuration((float)Convert.ToDouble(data["Duration"]));
         skillData.SetSpeed(Convert.ToInt32(data["Speed"]));
         skillData.SetSplashRange(Convert.ToInt32(data["SplashRange"]));

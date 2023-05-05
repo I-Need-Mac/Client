@@ -49,15 +49,6 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         StartCoroutine(Spawn());
     }
 
-    private void Update()
-    {
-        //if (Timer.Instance.currentTime >= currentSpawnTime)
-        //{
-        //    Spawn(sponeData);
-        //    DebugManager.Instance.PrintDebug("####");
-        //}
-    }
-
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
 

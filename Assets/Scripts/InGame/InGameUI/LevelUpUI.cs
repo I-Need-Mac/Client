@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +11,7 @@ public class LevelUpUI : MonoBehaviour
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Transform body;
     private RectTransform bodyRect;
+    private List<int> skillBenList;
 
     public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
     public int skillCount { get; private set; } = 0;
@@ -20,6 +19,15 @@ public class LevelUpUI : MonoBehaviour
 
     private void Awake()
     {
+        try
+        {
+            skillBenList = (CSVReader.Read("BattleConfig", "SkillBenList", "ConfigValue") as List<string>).Select(int.Parse).ToList();
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[ERROR]: 잘못된 캐스팅 입니다");
+        }
+
         skillTable = CSVReader.Read("SkillTable");
         body = transform.Find("Body");
         bodyRect = body.GetComponent<RectTransform>();
@@ -64,6 +72,10 @@ public class LevelUpUI : MonoBehaviour
             while (true)
             {
                 skillId = UnityEngine.Random.Range(101, 200);
+                if (skillBenList.Contains(skillId))
+                {
+                    continue;
+                }
                 if (skills.Contains(skillId))
                 {
                     continue;

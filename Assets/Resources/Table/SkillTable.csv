@@ -26,4 +26,5 @@ int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,
 10307,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,2,0.2,5,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
 10308,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,3,0.2,5,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
 99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999,0.2,5,99999,99999,99999,99999,99999,99999,99999,99999,99999,99999
-12001,Horin,Guardian's Frame,Guardian's Frame,Dummy,30000,FALSE,Null,Dummy,4,TRUE,FALSE,3,0.2,5,0,100,TRUE,0,1,1,1,Random,,Prefabs/InGame/Skill/GuardiansFrame
+12001,Guardian's Frame,Guardian's Frame,Guardian's Frame,Dummy,30000,FALSE,Null,Dummy,4,TRUE,FALSE,3,0.2,5,0,100,TRUE,0,1,1,1,Random,,Prefabs/InGame/Skill/GuardiansFrame
+12002,Guardian's Frame,Guardian's Frame,Guardian's Frame,Dummy,30000,FALSE,Null,Dummy,4,TRUE,FALSE,4,0.2,5,0,100,TRUE,0,1,1,1,Random,,Prefabs/InGame/Skill/GuardiansFrame

@@ -23,12 +23,17 @@ public abstract class Skill
         this.skillData = new SkillData();
         this.shooter = shooter;
         SetSkillData(skillId);
-        intervalTime = new WaitForSeconds(0.2f);
     }
 
     public void SkillLevelUp()
     {
+        foreach (Projectile projectile in projectiles)
+        {
+            SkillManager.Instance.DeSpawnProjectile(projectile);
+        }
+        projectiles.Clear();
         SetSkillData(skillData.skillId + 1);
+        Init();
     }
 
     public void SetSkillData(int skillId)
@@ -54,6 +59,7 @@ public abstract class Skill
 
         skillData.SetProjectileCount(Convert.ToInt32(data["ProjectileCount"]));
         skillData.SetIntervalTime((float)Convert.ToDouble(data["IntervalTime"]));
+        intervalTime = new WaitForSeconds(skillData.intervalTime);
         skillData.SetDuration((float)Convert.ToDouble(data["Duration"]));
         skillData.SetSpeed(Convert.ToInt32(data["Speed"]));
         skillData.SetSplashRange(Convert.ToInt32(data["SplashRange"]));

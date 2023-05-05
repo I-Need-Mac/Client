@@ -36,6 +36,11 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         {
             SkillAdd(12001, GameManager.Instance.player.transform);
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            SkillLevelUp(skillList[12001]);
+        }
     }
 
     public Projectile SpawnProjectile(SkillData skillData, Transform shooter)
@@ -78,5 +83,13 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         StartCoroutine(activation);
         SkillInfo skillInfo = new SkillInfo(skill, activation);
         skillList.Add(skillId, skillInfo);
+    }
+
+    public void SkillLevelUp(SkillInfo skillInfo)
+    {
+        StopCoroutine(skillInfo.activation);
+        skillInfo.skill.SkillLevelUp();
+        IEnumerator activation = skillInfo.skill.Activation();
+        StartCoroutine(activation);
     }
 }

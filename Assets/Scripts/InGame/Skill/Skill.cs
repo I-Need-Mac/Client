@@ -50,7 +50,7 @@ public abstract class Skill
         skillData.SetIsUltimate(Convert.ToBoolean(Convert.ToString(data["IsUltimate"]).ToLower()));
         skillData.SetName(Convert.ToString(data["Name"]));
         skillData.SetDesc(Convert.ToString(data["Desc"]));
-        //skillData.SetIcon(Convert.ToString(data["Icon"]));
+        skillData.SetIcon(Convert.ToString(data["Icon"]));
         skillData.SetCutDire(Convert.ToString(data["Cut_dire"]));
         skillData.SetSkillImage(Convert.ToString(data["SkillImage"]));
         skillData.SetSkillEffect((SKILL_EFFECT)Enum.Parse(typeof(SKILL_EFFECT), Convert.ToString(data["SkillEffect"]).ToUpper()));

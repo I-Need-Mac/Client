@@ -1318,6 +1318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTime: 5
   stageId: 10101
+  monsters: []
 --- !u!4 &414780806
 Transform:
   m_ObjectHideFlags: 0

@@ -36,13 +36,13 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SkillAdd(12001, GameManager.Instance.player.transform);
+            SkillAdd(10101, GameManager.Instance.player.transform);
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            SkillLevelUp(skillList[12001]);
-        }
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    SkillLevelUp(skillList[12001]);
+        //}
     }
 
     public Projectile SpawnProjectile(SkillData skillData, Transform shooter)
@@ -72,6 +72,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         Skill skill;
         switch(skillId / 100)
         {
+            case 101:
+                skill = new ObscuredTwilightRemorseBlade(skillId, shooter);
+                break;
             case 120:
                 skill = new GuardiansFrame(skillId, shooter);
                 break;

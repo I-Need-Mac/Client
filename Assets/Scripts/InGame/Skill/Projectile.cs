@@ -17,6 +17,10 @@ public class Projectile : MonoBehaviour
     private void Awake()
     {
         circleCollider = GetComponent<Collider2D>();
+        if (circleCollider == null)
+        {
+            circleCollider = GetComponentInChildren<Collider2D>();
+        }
     }
 
     public void SetProjectile(int skillId, int damage, bool penetrate, SKILL_EFFECT skillEffect, CALC_DAMAGE_TYPE calcDamageType)

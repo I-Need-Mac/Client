@@ -22,6 +22,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
 
+    private RaycastHit2D[] targets;
+
     public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
 
     protected override void Awake()
@@ -91,5 +93,45 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillInfo.skill.SkillLevelUp();
         IEnumerator activation = skillInfo.skill.Activation();
         StartCoroutine(activation);
+    }
+
+    public Transform GetTarget()
+    {
+
+        return null;
+    }
+
+    public Transform MeleeTarget(Transform shooter, float attackDistance)
+    {
+        Vector2 shooterPos = shooter.position;
+        Physics2D.CircleCastNonAlloc(shooterPos, attackDistance, Vector2.zero, targets, 0, (int)LayerConstant.MONSTER);
+        
+        Transform resultTarget = null;
+        float distance = float.MaxValue;
+        foreach (RaycastHit2D target in targets)
+        {
+            float diff = (shooterPos - (Vector2)target.transform.position).sqrMagnitude;
+            if (diff < distance)
+            {
+                distance = diff;
+                resultTarget = target.transform;
+            }
+        }
+
+        return resultTarget;
+    }
+
+    public Transform BossTarget()
+    {
+        Transform resultTarget = null;
+        foreach (Monster monster in MonsterSpawner.Instance.monsters)
+        {
+            if (monster.monsterId / 100 == 4)
+            {
+                resultTarget = monster.transform;
+            }
+        }
+
+        return resultTarget;
     }
 }

@@ -19,6 +19,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private int spawnId;
     private int currentSpawnTime;
 
+    public List<Monster> monsters = new List<Monster>();
+
     private struct RemainMonster
     {
         public int id;
@@ -51,7 +53,6 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
-
         if (!spawner.ContainsKey(monsterId))
         {
             string prefabPath = CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString();
@@ -62,6 +63,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         monster.transform.localScale = Vector2.one * monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
         monster.gameObject.SetActive(true);
+        monsters.Add(monster);
         ++spawnCount;
         return monster;
     }
@@ -69,11 +71,13 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     public void DeSpawnMonster(Monster monster)
     {
         spawner[monster.monsterId].ReleaseObject(monster);
+        monsters.Remove(monster);
         --spawnCount;
     }
 
     private IEnumerator Spawn()
     {
+        monsters.Clear();
         while (true)
         {
             if (spawnTable.Keys.Count - 3 <= spawnId)

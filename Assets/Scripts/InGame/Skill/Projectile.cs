@@ -34,6 +34,11 @@ public class Projectile : MonoBehaviour
         circleCollider.isTrigger = this.penetrate;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DebugManager.Instance.PrintDebug("Collision!");
+    }
+
     //private bool who; //true: player, false: monster
     //private Player player;
     //private Monster monster;

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private Collider2D projectileCollider;
 
     public int skillId { get; private set; }
@@ -16,11 +18,19 @@ public class Projectile : MonoBehaviour
 
     private void Awake()
     {
-        projectileCollider = GetComponent<Collider2D>();
-        if (projectileCollider == null)
+        if (TryGetComponent(out projectileCollider))
         {
             projectileCollider = GetComponentInChildren<Collider2D>();
         }
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+    }
+
+    public void SetAnimation(Sprite sprite, RuntimeAnimatorController controller)
+    {
+        spriteRenderer.sprite = sprite;
+        animator.runtimeAnimatorController = controller;
     }
 
     public void SetProjectile(int skillId, int damage, bool penetrate, SKILL_EFFECT skillEffect, CALC_DAMAGE_TYPE calcDamageType)
@@ -32,6 +42,11 @@ public class Projectile : MonoBehaviour
         this.calcDamageType = calcDamageType;
 
         projectileCollider.isTrigger = this.penetrate;
+    }
+
+    public void CollisionRadius(float radius)
+    {
+        ((CircleCollider2D)projectileCollider).radius = radius;
     }
 
     public void CollisionPower(bool flag)

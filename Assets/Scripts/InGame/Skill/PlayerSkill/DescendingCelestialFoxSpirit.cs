@@ -24,7 +24,6 @@ public class DescendingCelestialFoxSpirit : Skill
 
     public override IEnumerator Activation()
     {
-        WaitForSeconds coolTime = new WaitForSeconds(skillData.coolTime / 10000.0f);
         if (!skillData.isEffect)
         {
             yield return coolTime;
@@ -38,7 +37,7 @@ public class DescendingCelestialFoxSpirit : Skill
         animator.runtimeAnimatorController = ResourcesManager.Load<RuntimeAnimatorController>(ANIMATOR_PATH);
         mecanim.skeletonDataAsset = ResourcesManager.Load<SkeletonDataAsset>(SKELETONDATA_ASSET_PATH);
 
-        yield return new WaitForSeconds(skillData.duration);
+        yield return duration;
 
         player.playerManager.PlayerSetting(table[GameManager.Instance.GetPlayerId().ToString()]);
         animator.runtimeAnimatorController = originalController;

@@ -9,28 +9,29 @@ public class ObscuredTwilightRemorseBlade : Skill
     public override void Init()
     {
         Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-        projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+        projectile.transform.localScale = Vector2.zero;
 
         projectiles.Add(projectile);
     }
 
     public override IEnumerator Activation()
     {
-        WaitForSeconds coolTime = new WaitForSeconds(skillData.coolTime / 10000.0f);
         if (!skillData.isEffect)
         {
             yield return coolTime;
         }
 
-        WaitForSeconds intervalTime = new WaitForSeconds(skillData.intervalTime);
         while (true)
         {
+            projectiles[0].transform.localScale = Vector2.one * skillData.projectileSizeMulti;
             for (int i = 0; i < skillData.projectileCount; i++)
             {
                 projectiles[0].CollisionPower(true);
                 yield return intervalTime;
                 projectiles[0].CollisionPower(false);
+                
             }
+            projectiles[0].transform.localScale = Vector2.zero;
             yield return coolTime;
         }
 

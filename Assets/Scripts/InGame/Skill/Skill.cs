@@ -11,7 +11,10 @@ public abstract class Skill
     protected Transform shooter;
     protected List<Projectile> projectiles;
     protected SkillData skillData;
+
+    protected WaitForSeconds coolTime;
     protected WaitForSeconds intervalTime;
+    protected WaitForSeconds duration;
 
     public abstract void Init();
     public abstract IEnumerator Activation();
@@ -42,6 +45,7 @@ public abstract class Skill
 
         skillData.SetSkillId(skillId);
         skillData.SetCoolTime(Convert.ToInt32(data["Cooltime"]));
+        coolTime = new WaitForSeconds(skillData.coolTime / 10000.0f);
         skillData.SetAttackDistance(Convert.ToInt32(data["AttackDistance"]));
         skillData.SetDamage(Convert.ToInt32(data["Damage"]));
         skillData.SetSkillEffectParam(Convert.ToInt32(data["SkillEffectParam"]));
@@ -61,6 +65,7 @@ public abstract class Skill
         skillData.SetIntervalTime((float)Convert.ToDouble(data["IntervalTime"]));
         intervalTime = new WaitForSeconds(skillData.intervalTime);
         skillData.SetDuration((float)Convert.ToDouble(data["Duration"]));
+        duration = new WaitForSeconds(skillData.duration);
         skillData.SetSpeed(Convert.ToInt32(data["Speed"]));
         skillData.SetSplashRange(Convert.ToInt32(data["SplashRange"]));
         skillData.SetProjectileSizeMulti(Convert.ToInt32(data["ProjectileSizeMulti"]));

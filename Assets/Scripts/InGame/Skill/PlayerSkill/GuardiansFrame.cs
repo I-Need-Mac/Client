@@ -22,7 +22,6 @@ public class GuardiansFrame : Skill
 
     public override IEnumerator Activation()
     {
-        WaitForSeconds coolTime = new WaitForSeconds(skillData.coolTime / 10000.0f);
         if (!skillData.isEffect)
         {
             yield return coolTime;

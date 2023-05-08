@@ -39,7 +39,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     }
 
     //캐릭터에 스탯 부여
-    private void PlayerSetting(Dictionary<string, object> characterData)
+    public void PlayerSetting(Dictionary<string, object> characterData)
     {
         if (characterData == null)
         {

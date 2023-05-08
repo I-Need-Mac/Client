@@ -36,7 +36,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SkillAdd(10101, GameManager.Instance.player.transform);
+            SkillAdd(10301, GameManager.Instance.player.transform);
         }
 
         //if (Input.GetKeyDown(KeyCode.U))
@@ -76,6 +76,12 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 101:
                 skill = new ObscuredTwilightRemorseBlade(skillId, shooter);
                 break;
+            case 103:
+                skill = new DivineDescent(skillId, shooter);
+                break;
+            case 104:
+                skill = new DeiMisericordia(skillId, shooter);
+                break;
             case 120:
                 skill = new GuardiansFrame(skillId, shooter);
                 break;
@@ -108,8 +114,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     public Transform MeleeTarget(Transform shooter, float attackDistance)
     {
         Vector2 shooterPos = shooter.position;
-        Physics2D.CircleCastNonAlloc(shooterPos, attackDistance, Vector2.zero, targets, 0, (int)LayerConstant.MONSTER);
-        
+        targets = Physics2D.CircleCastAll(shooterPos, attackDistance, Vector2.zero, 0, 1 << (int)LayerConstant.MONSTER);
         Transform resultTarget = null;
         float distance = float.MaxValue;
         foreach (RaycastHit2D target in targets)
@@ -121,7 +126,6 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 resultTarget = target.transform;
             }
         }
-
         return resultTarget;
     }
 

@@ -62,6 +62,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
         monster.transform.localScale = Vector2.one * monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
+        monster.SetTarget(GameManager.Instance.player.transform, true);
         monster.gameObject.SetActive(true);
         monsters.Add(monster);
         ++spawnCount;

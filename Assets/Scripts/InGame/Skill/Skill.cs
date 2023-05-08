@@ -2,6 +2,7 @@ using SKILLCONSTANT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Skill
@@ -48,7 +49,14 @@ public abstract class Skill
         coolTime = new WaitForSeconds(skillData.coolTime / 10000.0f);
         skillData.SetAttackDistance(Convert.ToInt32(data["AttackDistance"]));
         skillData.SetDamage(Convert.ToInt32(data["Damage"]));
-        skillData.SetSkillEffectParam(Convert.ToInt32(data["SkillEffectParam"]));
+        try
+        {
+            skillData.SetSkillEffectParam(data["SkillEffectParam"] as List<string>);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[ERROR]: 잘못된 캐스팅 입니다");
+        }
         skillData.SetSkillCut(Convert.ToBoolean(Convert.ToString(data["Skill_Cut"]).ToLower()));
         skillData.SetIsEffect(Convert.ToBoolean(Convert.ToString(data["IsEffect"]).ToLower()));
         skillData.SetIsUltimate(Convert.ToBoolean(Convert.ToString(data["IsUltimate"]).ToLower()));

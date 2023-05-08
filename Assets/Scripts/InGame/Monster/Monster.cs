@@ -10,41 +10,33 @@ public class Monster : MonoBehaviour
 {
     [field: SerializeField] public int monsterId { get; private set; }
 
-    private Player player;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
     private bool isMovable;
     private bool isAttackable;
+    private bool isPlayer;
+    
 
     private SpineAnimatorManager spineAnimatorManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
 
+    public Transform target { get; private set; }
     public MonsterData monsterData { get; private set; } = new MonsterData();
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
-    private void Awake()
+    private void OnEnable()
     {
         spineAnimatorManager = GetComponent<SpineAnimatorManager>();
         soundRequester = GetComponentInChildren<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
-
-        MonsterSetting(monsterId.ToString());
-    }
-
-    private void OnEnable()
-    {
         situation = SoundSituation.SOUNDSITUATION.IDLE;
         isMovable = false;
         isAttackable = false;
-    }
-
-    private void Start()
-    {
-        player = GameManager.Instance.player;
+        MonsterSetting(monsterId.ToString());
     }
 
     private void Update()
@@ -55,45 +47,38 @@ public class Monster : MonoBehaviour
 
     private void Move()
     {
-        Vector2 diff = player.transform.position - transform.position;
-        float distance = diff.sqrMagnitude;
-
-        if (distance <= monsterData.viewDistance)
+        try
         {
-            spineAnimatorManager.SetDirection(transform, monsterDirection);
-            if (isAttackable = distance <= monsterData.atkDistance)
+            Vector2 diff = target.position - transform.position;
+            float distance = diff.sqrMagnitude;
+
+            if (distance <= monsterData.viewDistance)
             {
-                monsterRigidbody.velocity = Vector2.zero;
-           
+                spineAnimatorManager.SetDirection(transform, monsterDirection);
+                if (isAttackable = distance <= monsterData.atkDistance)
+                {
+                    monsterRigidbody.velocity = Vector2.zero;
+
+                }
+                else
+                {
+                    monsterDirection = diff.normalized;
+                    monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+
+                }
+                isMovable = !isAttackable;
             }
             else
             {
-                monsterDirection = diff.normalized;
-                monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-          
+
+                isAttackable = false;
+                isMovable = false;
             }
-            isMovable = !isAttackable;
         }
-        else
+        catch
         {
-  
-            isAttackable = false;
-            isMovable = false;
+            DebugManager.Instance.PrintDebug("[ERROR]: 타겟이 없습니다 ");
         }
-        
-
-        
-
-        //isMovable = !(distance <= monsterData.atkDistance * monsterData.atkDistance);
-        //if (isMovable)
-        //{
-        //    monsterDirection = ((Vector2)player.transform.position - (Vector2)transform.position).normalized;
-        //    monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-        //}
-        //else
-        //{
-        //    monsterRigidbody.velocity = Vector2.zero;
-        //}
         
     }
 
@@ -102,6 +87,12 @@ public class Monster : MonoBehaviour
         spineAnimatorManager.SetSpineSpeed(monsterData.moveSpeed);
         spineAnimatorManager.PlayAnimation("isAttackable", isAttackable);
         spineAnimatorManager.PlayAnimation("isMovable", isMovable);
+    }
+
+    public void SetTarget(Transform target, bool isPlayer)
+    {
+        this.target = target;
+        this.isPlayer = isPlayer;
     }
 
     public void MonsterSetting(string monsterId)
@@ -124,30 +115,10 @@ public class Monster : MonoBehaviour
             monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
             monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
         }
-        //monsterData.SetMonsterName(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "MonsterName")));
-        //monsterData.SetHp(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "HP")));
-        //monsterData.SetAttack(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "Attack")));
-        //monsterData.SetMoveSpeed(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "MoveSpeed")));
-        //monsterData.SetAtkSpeed(float.Parse(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "AtkSpeed"))));
-        //monsterData.SetViewDistance(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "ViewDistance")));
-        //monsterData.SetAtkDistance(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "AtkDistance")));
-        //monsterData.SetSkillID(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "SkillID")));
-        //monsterData.SetGroupSource(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "GroupSource")));
-        //monsterData.SetGroupSourceRate(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "GroupSourceRate")));
-        //monsterData.SetMonsterImage(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "MonsterImage")));
-        //monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "AttackType"))));
     }
 
     private void DropItem()
     {
-        //Transform items = transform.Find("Item");
-        //foreach (Transform item in items)
-        //{
-        //    GameObject dropItem = Instantiate(item.gameObject, dropItemField);
-        //    dropItem.tag = "Item";
-        //    dropItem.transform.position = transform.localPosition;
-        //    dropItem.SetActive(true);
-        //}
         if (UnityEngine.Random.Range(0, 10001) <= monsterData.groupSourceRate)
         {
             ItemManager.Instance.DropItems(monsterData.groupSource, transform);
@@ -156,9 +127,9 @@ public class Monster : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("PlayerSkill"))
+        if (collision.gameObject.tag.Equals("PlayerSkill") && isPlayer)
         {
-            monsterData.SetHp(monsterData.hp - player.playerManager.ReturnAttack());
+            monsterData.SetHp(monsterData.hp - GameManager.Instance.player.playerManager.ReturnAttack());
             if (monsterData.hp <= 0)
             {
                 Die();

@@ -17,7 +17,7 @@ int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,
 10206,Skill_Name_Bujung,Skill_TestExplain1,,Dummy,2500,FALSE,Null,Dummy,20,TRUE,FALSE,3,0.2,5,15,4,FALSE,0,1,Nuckback,2,Melee,Straight,Prefabs/InGame/Skill/StraightSample
 10207,Skill_Name_Bujung,Skill_TestExplain1,,Dummy,2500,FALSE,Null,Dummy,20,TRUE,FALSE,3,0.2,5,15,4,FALSE,0,1,Nuckback,3,Melee,Straight,Prefabs/InGame/Skill/StraightSample
 10208,Skill_Name_Bujung,Skill_TestExplain1,,Dummy,2500,FALSE,Null,Dummy,20,TRUE,FALSE,3,0.2,5,15,4,TRUE,0,1,Nuckback,3,Melee,Straight,Prefabs/InGame/Skill/StraightSample
-10301,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,1,0.2,5,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
+10301,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,120000,FALSE,Null,Dummy,10,TRUE,FALSE,1,0.2,20,0,0,TRUE,8,0,1,101|,Random,,0
 10302,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,1,0.2,5,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
 10303,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,1,0.2,5,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample
 10304,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,5000,FALSE,Null,Dummy,4,FALSE,TRUE,2,0.2,5,0,0,FALSE,0,1,SpawnMob,101,Random,None,Prefabs/InGame/Skill/StraightSample

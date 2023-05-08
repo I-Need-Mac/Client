@@ -9,10 +9,8 @@ public class ObscuredTwilightRemorseBlade : Skill
     public override void Init()
     {
         Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-        Transform collider = projectile.transform.Find("SkillCollider");
-        //projectile.transform.localScale = new Vector2(skillData.attackDistance, 0.025f * skillData.projectileSizeMulti);
-        collider.localPosition = projectile.transform.right * skillData.attackDistance * 0.5f;
-        collider.rotation = Quaternion.Euler(0, 0, 0);
+        projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+
         projectiles.Add(projectile);
     }
 
@@ -25,25 +23,19 @@ public class ObscuredTwilightRemorseBlade : Skill
         }
 
         WaitForSeconds intervalTime = new WaitForSeconds(skillData.intervalTime);
-        Projectile _projectile = null;
-        for (int i = 0; i < skillData.projectileCount; i++)
+        while (true)
         {
-            float angle = 1.0f;
-            while (angle < 360.0f)
+            for (int i = 0; i < skillData.projectileCount; i++)
             {
-                foreach (Projectile projectile in projectiles)
-                {
-                    projectile.transform.Find("SkillCollider").RotateAround(shooter.position, Vector3.back, skillData.speed * Time.deltaTime);
-                    angle += 1.0f;
-                    _projectile = projectile;
-                }
-                yield return null;
+                projectiles[0].CollisionPower(true);
+                yield return intervalTime;
+                projectiles[0].CollisionPower(false);
             }
-            yield return intervalTime;
+            yield return coolTime;
         }
 
-        SkillManager.Instance.DeSpawnProjectile(_projectile);
-        projectiles.Clear();
+        //SkillManager.Instance.DeSpawnProjectile(_projectile);
+        //projectiles.Clear();
     }
     
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private Collider2D circleCollider;
+    private Collider2D projectileCollider;
 
     public int skillId { get; private set; }
     public int damage { get; private set; }
@@ -16,10 +16,10 @@ public class Projectile : MonoBehaviour
 
     private void Awake()
     {
-        circleCollider = GetComponent<Collider2D>();
-        if (circleCollider == null)
+        projectileCollider = GetComponent<Collider2D>();
+        if (projectileCollider == null)
         {
-            circleCollider = GetComponentInChildren<Collider2D>();
+            projectileCollider = GetComponentInChildren<Collider2D>();
         }
     }
 
@@ -31,12 +31,17 @@ public class Projectile : MonoBehaviour
         this.skillEffect = skillEffect;
         this.calcDamageType = calcDamageType;
 
-        circleCollider.isTrigger = this.penetrate;
+        projectileCollider.isTrigger = this.penetrate;
+    }
+
+    public void CollisionPower(bool flag)
+    {
+        projectileCollider.enabled = flag;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        DebugManager.Instance.PrintDebug("Collision!");
+        DebugManager.Instance.PrintDebug("####" + collision.name);
     }
 
     //private bool who; //true: player, false: monster

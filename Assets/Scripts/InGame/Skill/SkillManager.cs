@@ -56,6 +56,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         }
         Projectile projectile = skillPools[poolId].GetObject();
         projectile.transform.parent = shooter;
+        projectile.transform.localPosition = Vector2.zero;
         projectile.SetProjectile(skillData.skillId, skillData.damage, skillData.isPenetrate, skillData.skillEffect, skillData.calcDamageType);
         projectile.gameObject.SetActive(true);
         return projectile;

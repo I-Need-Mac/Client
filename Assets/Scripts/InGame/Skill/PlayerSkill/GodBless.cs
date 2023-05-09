@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeiMisericordia : Skill
+public class GodBless : Skill
 {
-    public DeiMisericordia(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public GodBless(int skillId, Transform shooter) : base(skillId, shooter) { }
 
     public override void Init()
     {

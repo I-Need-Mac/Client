@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8784697601157008247}
   - component: {fileID: 5650054329401250797}
   m_Layer: 0
-  m_Name: ObscuredTwilightRemorseBlade
+  m_Name: Juhon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

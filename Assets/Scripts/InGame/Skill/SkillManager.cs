@@ -74,16 +74,19 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         switch(skillId / 100)
         {
             case 101:
-                skill = new ObscuredTwilightRemorseBlade(skillId, shooter);
+                skill = new Juhon(skillId, shooter);
                 break;
             case 103:
-                skill = new DivineDescent(skillId, shooter);
+                skill = new GangSin(skillId, shooter);
                 break;
             case 104:
-                skill = new DeiMisericordia(skillId, shooter);
+                skill = new GodBless(skillId, shooter);
+                break;
+            case 105:
+                skill = new Possession(skillId, shooter);
                 break;
             case 120:
-                skill = new GuardiansFrame(skillId, shooter);
+                skill = new Horin(skillId, shooter);
                 break;
             default:
                 skill = null;

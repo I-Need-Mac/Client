@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DescendingCelestialFoxSpirit : Skill
+public class Possession : Skill
 {
     private const int CHANGE_ID = 0;
     private const string ANIMATOR_PATH = "";
@@ -13,7 +13,7 @@ public class DescendingCelestialFoxSpirit : Skill
     private Animator animator;
     private SkeletonMecanim mecanim;
 
-    public DescendingCelestialFoxSpirit(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Possession(int skillId, Transform shooter) : base(skillId, shooter) { }
 
     public override void Init()
     {

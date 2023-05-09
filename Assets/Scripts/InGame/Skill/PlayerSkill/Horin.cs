@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardiansFrame : Skill
+public class Horin : Skill
 {
-    public GuardiansFrame(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Horin(int skillId, Transform shooter) : base(skillId, shooter) { }
 
     public override void Init()
     {

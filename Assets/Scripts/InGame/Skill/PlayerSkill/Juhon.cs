@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObscuredTwilightRemorseBlade : Skill
+public class Juhon : Skill
 {
-    public ObscuredTwilightRemorseBlade(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Juhon(int skillId, Transform shooter) : base(skillId, shooter) { }
 
     public override void Init()
     {

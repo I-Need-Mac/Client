@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class DivineDescent : Skill
+public class GangSin : Skill
 {
     private Monster prefab;
     private List<Monster> summoners = new List<Monster>();
 
-    public DivineDescent(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public GangSin(int skillId, Transform shooter) : base(skillId, shooter) { }
 
     public override void Init()
     {

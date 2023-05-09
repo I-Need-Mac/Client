@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardiansFrame : Skill
+public class Horin : Skill
 {
-    public GuardiansFrame(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Horin(int skillId, Transform shooter) : base(skillId, shooter) { }
 
     public override void Init()
     {
@@ -22,7 +22,6 @@ public class GuardiansFrame : Skill
 
     public override IEnumerator Activation()
     {
-        WaitForSeconds coolTime = new WaitForSeconds(skillData.coolTime / 10000.0f);
         if (!skillData.isEffect)
         {
             yield return coolTime;
@@ -37,7 +36,15 @@ public class GuardiansFrame : Skill
             if (time >= skillData.duration && size <= 0.0f)
             {
                 time = 0.0f;
+                foreach (Projectile projectile in projectiles)
+                {
+                    projectile.CollisionPower(false);
+                }
                 yield return coolTime;
+                foreach (Projectile projectile in projectiles)
+                {
+                    projectile.CollisionPower(true);
+                }
             }
 
             if (time >= skillData.duration)
@@ -52,6 +59,7 @@ public class GuardiansFrame : Skill
             {
                 projectile.transform.RotateAround(shooter.position, Vector3.back, skillData.speed * Time.deltaTime);
                 projectile.transform.localScale = Vector2.one * size;
+                projectile.gameObject.SetActive(projectile.transform.localScale.x > 0);
             }
             time += Time.deltaTime;
             yield return null;

@@ -1,4 +1,5 @@
 using SKILLCONSTANT;
+using System.Collections.Generic;
 
 public class SkillData
 {
@@ -6,7 +7,7 @@ public class SkillData
     public int coolTime { get; private set; }                       //스킬의 재사용 대기시간
     public int attackDistance { get; private set; }                 //스킬 사거리
     public int damage { get; private set; }                         //스킬 공격력
-    public int skillEffectParam { get; private set; }               //스킬 이펙트 파라미터
+    public List<string> skillEffectParam { get; private set; }               //스킬 이펙트 파라미터
     public bool skillCut { get; private set; }                      //필사기 연출 값
     public bool isEffect { get; private set; }                      //게임 시작 시 스킬 발동 여부
     public bool isUltimate { get; private set; }                    //스킬의 타입이 궁극기인지 여부
@@ -38,7 +39,7 @@ public class SkillData
     public void SetSpeed(int speed) { this.speed = speed; }
     public void SetSplashRange(int splashRange) { this.splashRange = splashRange; }
     public void SetProjectileSizeMulti(int projectileSizeMulti) { this.projectileSizeMulti = projectileSizeMulti; }
-    public void SetSkillEffectParam(int skillEffectParam) { this.skillEffectParam = skillEffectParam; }
+    public void SetSkillEffectParam(List<string> skillEffectParam) { this.skillEffectParam = skillEffectParam; }
     public void SetSkillCut(bool skillCut) { this.skillCut = skillCut; }
     public void SetIsEffect(bool isEffect) { this.isEffect = isEffect; }
     public void SetIsUltimate(bool isUltimate) { this.isUltimate = isUltimate; }

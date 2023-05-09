@@ -6,28 +6,58 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private Collider2D circleCollider;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+    private Collider2D projectileCollider;
 
-    public int skillId { get; private set; }
-    public int damage { get; private set; }
-    public bool penetrate { get; private set; }
-    public SKILL_EFFECT skillEffect { get; private set; }
-    public CALC_DAMAGE_TYPE calcDamageType { get; private set; }
+    public SkillData skillData { get; private set; }
 
     private void Awake()
     {
-        circleCollider = GetComponent<Collider2D>();
+        if (TryGetComponent(out projectileCollider))
+        {
+            projectileCollider = GetComponentInChildren<Collider2D>();
+        }
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
-    public void SetProjectile(int skillId, int damage, bool penetrate, SKILL_EFFECT skillEffect, CALC_DAMAGE_TYPE calcDamageType)
+    public void SetAnimation(Sprite sprite, RuntimeAnimatorController controller)
     {
-        this.skillId = skillId;
-        this.damage = damage;
-        this.penetrate = penetrate;
-        this.skillEffect = skillEffect;
-        this.calcDamageType = calcDamageType;
+        spriteRenderer.sprite = sprite;
+        animator.runtimeAnimatorController = controller;
+    }
 
-        circleCollider.isTrigger = this.penetrate;
+    public void SetProjectile(SkillData skillData)
+    {
+        this.skillData = skillData;
+        projectileCollider.isTrigger = this.skillData.isPenetrate;
+    }
+
+    public void CollisionRadius(float radius)
+    {
+        ((CircleCollider2D)projectileCollider).radius = radius;
+    }
+
+    public void CollisionPower(bool flag)
+    {
+        projectileCollider.enabled = flag;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DebugManager.Instance.PrintDebug("####" + collision.name);
+    }
+
+    private void OnBecameInvisible()
+    {
+        Invoke("Remove", skillData.duration);
+    }
+
+    private void Remove()
+    {
+        SkillManager.Instance.DeSpawnProjectile(this);
     }
 
     //private bool who; //true: player, false: monster

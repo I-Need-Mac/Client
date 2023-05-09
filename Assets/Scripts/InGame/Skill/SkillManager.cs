@@ -20,6 +20,8 @@ public struct SkillInfo
 
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
+    [SerializeField] private int skillNum = 10101;
+
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
 
@@ -37,7 +39,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SkillAdd(10201, GameManager.Instance.player.transform);
+            SkillAdd(skillNum, GameManager.Instance.player.transform);
         }
 
         //if (Input.GetKeyDown(KeyCode.U))
@@ -77,6 +79,15 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     public void SkillAdd(int skillId, Transform shooter)
     {
+        foreach (int id in skillList.Keys)
+        {
+            if (id / 100 == skillId / 100)
+            {
+                DebugManager.Instance.PrintDebug("[ERROR]: 이미 존재하는 스킬입니다");
+                return;
+            }
+        }
+
         Skill skill;
         switch(skillId / 100)
         {

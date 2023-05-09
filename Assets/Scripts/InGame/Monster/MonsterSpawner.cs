@@ -81,7 +81,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         monsters.Clear();
         while (true)
         {
-            if (spawnTable.Keys.Count - 3 <= spawnId)
+            DebugManager.Instance.PrintDebug("[ERROR]: " + spawnTable.Keys.Count);
+            if (spawnTable.Keys.Count <= spawnId)
             {
                 yield break;
             }

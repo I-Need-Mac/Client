@@ -10,11 +10,7 @@ public class Projectile : MonoBehaviour
     private Animator animator;
     private Collider2D projectileCollider;
 
-    public int skillId { get; private set; }
-    public int damage { get; private set; }
-    public bool penetrate { get; private set; }
-    public SKILL_EFFECT skillEffect { get; private set; }
-    public CALC_DAMAGE_TYPE calcDamageType { get; private set; }
+    public SkillData skillData { get; private set; }
 
     private void Awake()
     {
@@ -33,15 +29,10 @@ public class Projectile : MonoBehaviour
         animator.runtimeAnimatorController = controller;
     }
 
-    public void SetProjectile(int skillId, int damage, bool penetrate, SKILL_EFFECT skillEffect, CALC_DAMAGE_TYPE calcDamageType)
+    public void SetProjectile(SkillData skillData)
     {
-        this.skillId = skillId;
-        this.damage = damage;
-        this.penetrate = penetrate;
-        this.skillEffect = skillEffect;
-        this.calcDamageType = calcDamageType;
-
-        projectileCollider.isTrigger = this.penetrate;
+        this.skillData = skillData;
+        projectileCollider.isTrigger = this.skillData.isPenetrate;
     }
 
     public void CollisionRadius(float radius)
@@ -57,6 +48,16 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         DebugManager.Instance.PrintDebug("####" + collision.name);
+    }
+
+    private void OnBecameInvisible()
+    {
+        Invoke("Remove", skillData.duration);
+    }
+
+    private void Remove()
+    {
+        SkillManager.Instance.DeSpawnProjectile(this);
     }
 
     //private bool who; //true: player, false: monster

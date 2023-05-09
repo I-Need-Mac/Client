@@ -1,4 +1,5 @@
 using BFM;
+using SKILLCONSTANT;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,13 +37,18 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SkillAdd(10301, GameManager.Instance.player.transform);
+            SkillAdd(10201, GameManager.Instance.player.transform);
         }
 
         //if (Input.GetKeyDown(KeyCode.U))
         //{
         //    SkillLevelUp(skillList[12001]);
         //}
+    }
+
+    public Projectile SpawnProjectile(SkillData skillData)
+    {
+        return SpawnProjectile(skillData, transform);
     }
 
     public Projectile SpawnProjectile(SkillData skillData, Transform shooter)
@@ -55,16 +61,17 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             skillPools.Add(poolId, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(prefabPath), transform));
         }
         Projectile projectile = skillPools[poolId].GetObject();
+        projectile.gameObject.layer = (int)LayerConstant.SKILL;
         projectile.transform.parent = shooter;
         projectile.transform.localPosition = Vector2.zero;
-        projectile.SetProjectile(skillData.skillId, skillData.damage, skillData.isPenetrate, skillData.skillEffect, skillData.calcDamageType);
+        projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
         return projectile;
     }
 
     public void DeSpawnProjectile(Projectile projectile)
     {
-        skillPools[projectile.skillId / 100].ReleaseObject(projectile);
+        skillPools[projectile.skillData.skillId / 100].ReleaseObject(projectile);
         projectile.transform.parent = transform;
     }
 
@@ -75,6 +82,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         {
             case 101:
                 skill = new Juhon(skillId, shooter);
+                break;
+            case 102:
+                skill = new Bujung(skillId, shooter);
                 break;
             case 103:
                 skill = new GangSin(skillId, shooter);
@@ -106,12 +116,6 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillInfo.skill.SkillLevelUp();
         IEnumerator activation = skillInfo.skill.Activation();
         StartCoroutine(activation);
-    }
-
-    public Transform GetTarget()
-    {
-
-        return null;
     }
 
     public Transform MeleeTarget(Transform shooter, float attackDistance)

@@ -33,7 +33,10 @@ public abstract class Skill
     {
         foreach (Projectile projectile in projectiles)
         {
-            SkillManager.Instance.DeSpawnProjectile(projectile);
+            if (projectile.gameObject.activeInHierarchy)
+            {
+                SkillManager.Instance.DeSpawnProjectile(projectile);
+            }
         }
         projectiles.Clear();
         SetSkillData(skillData.skillId + 1);

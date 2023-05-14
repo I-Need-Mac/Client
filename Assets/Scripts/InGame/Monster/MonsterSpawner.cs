@@ -79,13 +79,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private IEnumerator Spawn()
     {
         monsters.Clear();
-        while (true)
+        while (spawnTable.Keys.Count > spawnId)
         {
-            if (spawnTable.Keys.Count <= spawnId)
-            {
-                yield break;
-            }
-
             if (Timer.Instance.currentTime >= currentSpawnTime)
             {
                 int mobAmount = Convert.ToInt32(spawnData["SponeMobAmount"]);

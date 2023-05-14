@@ -20,7 +20,7 @@ public struct SkillInfo
 
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
-    [SerializeField] private int skillNum = 10101;
+    [SerializeField] private int skillNum = 10801;
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
@@ -60,11 +60,10 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         if (!skillPools.ContainsKey(poolId))
         {
             string prefabPath = data["SkillPrefabPath"].ToString();
-            skillPools.Add(poolId, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(prefabPath), transform));
+            skillPools.Add(poolId, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(prefabPath), shooter));
         }
         Projectile projectile = skillPools[poolId].GetObject();
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
-        projectile.transform.parent = shooter;
         projectile.transform.localPosition = Vector2.zero;
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
@@ -106,6 +105,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 105:
                 skill = new Possession(skillId, shooter);
                 break;
+            case 108:
+                skill = new JuHyung(skillId, shooter);
+                break;
             case 120:
                 skill = new Horin(skillId, shooter);
                 break;
@@ -137,6 +139,11 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         float distance = float.MaxValue;
         foreach (RaycastHit2D target in targets)
         {
+            if (target.transform == shooter)
+            {
+                continue;
+            }
+
             float diff = (shooterPos - (Vector2)target.transform.position).sqrMagnitude;
             if (diff < distance)
             {

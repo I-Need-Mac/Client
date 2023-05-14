@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
         animator.runtimeAnimatorController = controller;
     }
 
-    public void SetProjectile(SkillData skillData)
+    public virtual void SetProjectile(SkillData skillData)
     {
         this.skillData = skillData;
         projectileCollider.isTrigger = this.skillData.isPenetrate;
@@ -45,7 +45,7 @@ public class Projectile : MonoBehaviour
         projectileCollider.enabled = flag;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         DebugManager.Instance.PrintDebug("####" + collision.name);
     }

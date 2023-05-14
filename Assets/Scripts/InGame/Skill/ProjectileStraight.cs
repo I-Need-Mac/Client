@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileAI : Projectile
+public class ProjectileStraight : Projectile
 {
     private void FixedUpdate()
     {

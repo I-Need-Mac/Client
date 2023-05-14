@@ -21,7 +21,7 @@ public class Bujung : Skill
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                ProjectileAI projectile = (ProjectileAI)SkillManager.Instance.SpawnProjectile(skillData);
+                ProjectileStraight projectile = (ProjectileStraight)SkillManager.Instance.SpawnProjectile(skillData);
                 projectile.transform.localPosition = shooter.position;
 
                 Transform target = SkillManager.Instance.MeleeTarget(shooter, skillData.attackDistance);

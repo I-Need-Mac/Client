@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Irons : Skill
+{
+    public Irons(int skillId, Transform shooter) : base(skillId, shooter) { }
+
+    public override void Init()
+    {
+    }
+
+    public override IEnumerator Activation()
+    {
+        if (!skillData.isEffect)
+        {
+            yield return coolTime;
+        }
+
+        while (true)
+        {
+            for (int i = 0; i < skillData.projectileCount; i++)
+            {
+                ProjectileStraight projectile = (ProjectileStraight)SkillManager.Instance.SpawnProjectile(skillData);
+                projectile.transform.localPosition = shooter.position;
+                projectile.transform.rotation = Quaternion.Euler(0, 0, UnityEngine.Random.Range(0.0f, 360.0f));
+                yield return intervalTime;
+            }
+
+            yield return coolTime;
+        }
+    }
+}

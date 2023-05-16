@@ -6,7 +6,7 @@ int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,
 10103,Skill_Name_Johon,Skill_TestExplain1,,Arts/Skill/Icon/Skill_Icon_Juhon_00,2000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
 10104,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,6,TRUE,FALSE,2,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
 10105,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,6,TRUE,FALSE,2,0.2,5,15,300,TRUE,0,1,MoveUp,10,Front,Whip,Prefabs/InGame/Skill/StraightSample
-10106,Skill_Name_Johon,Skill_TestExplain1,,Dummy,1500,FALSE,Null,Dummy,6,TRUE,FALSE,2,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
+10106,Skill_Name_Johon,Skill_TestExplain1,,Dummy,2000,FALSE,Null,Dummy,5,TRUE,FALSE,25,0.01,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/Irons
 10107,Skill_Name_Johon,Skill_TestExplain1,,Dummy,1500,FALSE,Null,Dummy,8,TRUE,FALSE,2,0.2,5,15,300,TRUE,0,1,,,Front,Whip,Prefabs/InGame/Skill/StraightSample
 10108,Skill_Name_Johon,Skill_TestExplain1,,Dummy,1500,FALSE,Null,Dummy,8,TRUE,FALSE,2,0.2,5,15,300,TRUE,0,1,Execute,10,Front,Whip,Prefabs/InGame/Skill/StraightSample
 10201,Skill_Name_Bujung,Skill_TestExplain1,,Dummy,10000,FALSE,Null,Dummy,4,TRUE,FALSE,5,0.1,3,15,5,FALSE,0,1,Nuckback,2,Melee,Straight,Prefabs/InGame/Skill/Bujung
@@ -29,3 +29,4 @@ int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,
 12001,Horin,Guardian's Frame,Guardian's Frame,Arts/Skill/Icon/Skill_Icon_Juhon_00,30000,FALSE,Null,Dummy,4,TRUE,FALSE,3,0.2,5,0,100,TRUE,0,1,1,1,Random,,Prefabs/InGame/Skill/Horin
 10401,s,Skill_TestExplain1,String,20000,20000,FALSE,Null,Dummy,0,FALSE,FALSE,1,0.2,2,0,0,TRUE,8,0,1,1,Random,,Prefabs/InGame/Skill/GodBless
 10801,Skill_Name_GangSin,Skill_TestExplain1,,Dummy,10000,FALSE,Null,Dummy,10,FALSE,TRUE,3,0.05,5,0,10,TRUE,0,1,1,101,Random,None,Prefabs/InGame/Skill/JuHyung
+10601,Skill_Name_Johon,Skill_TestExplain1,,Dummy,20000,FALSE,Null,Dummy,5,TRUE,FALSE,25,0.1,5,15,10,TRUE,0,1,1,1,Front,Whip,Prefabs/InGame/Skill/Irons

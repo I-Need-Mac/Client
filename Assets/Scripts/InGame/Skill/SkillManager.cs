@@ -105,6 +105,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 105:
                 skill = new Possession(skillId, shooter);
                 break;
+            case 106:
+                skill = new Irons(skillId, shooter);
+                break;
             case 108:
                 skill = new JuHyung(skillId, shooter);
                 break;

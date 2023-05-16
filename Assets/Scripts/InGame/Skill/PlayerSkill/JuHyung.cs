@@ -35,10 +35,8 @@ public class JuHyung : Skill
 
                 if (closestMonster != null && !prevMonsters.Contains(closestMonster))
                 {
-                    int num = closestMonster.GetComponent<Monster>().uniqueId;
                     projectile.transform.localPosition = closestMonster.position;
                     prevMonsters.Add(closestMonster);
-                    DebugManager.Instance.PrintDebug("[TEST]: FIRE " + num);
                     yield return intervalTime;
                 }
                 --count;

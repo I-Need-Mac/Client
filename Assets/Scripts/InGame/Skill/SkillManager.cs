@@ -131,7 +131,13 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         StartCoroutine(activation);
     }
 
+    #region ENEMY_SEARCH
     public Transform MeleeTarget(Transform shooter, float attackDistance)
+    {
+        return MeleeTarget(shooter, attackDistance, new List<Transform>());
+    }
+
+    public Transform MeleeTarget(Transform shooter, float attackDistance, List<Transform> exceptions)
     {
         Vector2 shooterPos = shooter.position;
         targets = Physics2D.CircleCastAll(shooterPos, attackDistance, Vector2.zero, 0, 1 << (int)LayerConstant.MONSTER);
@@ -139,7 +145,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         float distance = float.MaxValue;
         foreach (RaycastHit2D target in targets)
         {
-            if (target.transform == shooter)
+            if (target.transform == shooter || exceptions.Contains(target.transform))
             {
                 continue;
             }
@@ -167,4 +173,5 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
         return resultTarget;
     }
+    #endregion
 }

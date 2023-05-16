@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class JuHyung : Skill
 {
+    private float diff = 0.25f;
+
     public JuHyung(int skillId, Transform shooter) : base(skillId, shooter) { }
 
     public override void Init()
@@ -31,12 +33,12 @@ public class JuHyung : Skill
 
             while (count != 0)
             {
-                closestMonster = SkillManager.Instance.MeleeTarget(closestMonster, skillData.attackDistance);
-
+                closestMonster = SkillManager.Instance.MeleeTarget(closestMonster, skillData.attackDistance, prevMonsters);
                 if (closestMonster != null && !prevMonsters.Contains(closestMonster))
                 {
-                    projectile.transform.localPosition = closestMonster.position;
+                    //projectile.transform.localPosition = closestMonster.position;
                     prevMonsters.Add(closestMonster);
+                    yield return Move(projectile, closestMonster);
                     yield return intervalTime;
                 }
                 --count;
@@ -46,6 +48,16 @@ public class JuHyung : Skill
             prevMonsters.Clear();
             yield return coolTime;
         }
+    }
+
+    private IEnumerator Move(Projectile projectile, Transform target)
+    {
+        while (Vector2.Distance(projectile.transform.position, target.position) > diff)
+        {
+            projectile.transform.Translate((target.position - projectile.transform.position).normalized * skillData.speed * Time.deltaTime);
+            yield return null;
+        }
+        DebugManager.Instance.PrintDebug(">>>>");
     }
 
 }

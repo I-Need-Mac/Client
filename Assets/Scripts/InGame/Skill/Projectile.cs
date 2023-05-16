@@ -8,7 +8,8 @@ public class Projectile : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    private Collider2D projectileCollider;
+
+    protected Collider2D projectileCollider;
 
     public SkillData skillData { get; private set; }
 
@@ -21,6 +22,11 @@ public class Projectile : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+    }
+
+    protected virtual void OnEnable()
+    {
+        projectileCollider.enabled = true;
     }
 
     public void SetAnimation(Sprite sprite, RuntimeAnimatorController controller)
@@ -47,7 +53,6 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        DebugManager.Instance.PrintDebug("####" + collision.name);
     }
 
     private void OnBecameInvisible()
@@ -55,7 +60,7 @@ public class Projectile : MonoBehaviour
         Invoke("Remove", skillData.duration);
     }
 
-    private void Remove()
+    protected void Remove()
     {
         SkillManager.Instance.DeSpawnProjectile(this);
     }

@@ -127,13 +127,17 @@ public class Monster : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("PlayerSkill") && isPlayer)
+        //if (collision.gameObject.tag.Equals("PlayerSkill") && isPlayer)
+        //{
+        //    monsterData.SetHp(monsterData.hp - GameManager.Instance.player.playerManager.ReturnAttack());
+        //    if (monsterData.hp <= 0)
+        //    {
+        //        Die();
+        //    }
+        //}
+        if (collision.gameObject.layer == (int)LayerConstant.SKILL)
         {
-            monsterData.SetHp(monsterData.hp - GameManager.Instance.player.playerManager.ReturnAttack());
-            if (monsterData.hp <= 0)
-            {
-                Die();
-            }
+            DebugManager.Instance.PrintDebug("collision");
         }
     }
 

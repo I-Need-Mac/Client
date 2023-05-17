@@ -8,6 +8,8 @@ public class Horin : Skill
 
     public override void Init()
     {
+        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+
         for (int i = 0; i < skillData.projectileCount; i++)
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);

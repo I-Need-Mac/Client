@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Claims;
+using System.Linq;
 using UnityEngine;
 
 public class JuHyung : Skill
@@ -33,17 +33,18 @@ public class JuHyung : Skill
 
             while (count != 0)
             {
-                closestMonster = SkillManager.Instance.MeleeTarget(closestMonster, skillData.attackDistance, prevMonsters);
+                closestMonster = Scanner.GetTargetTransform(skillData.skillTarget, closestMonster, skillData.attackDistance);
+
                 if (closestMonster != null && !prevMonsters.Contains(closestMonster))
                 {
                     //projectile.transform.localPosition = closestMonster.position;
-                    prevMonsters.Add(closestMonster);
                     yield return Move(projectile, closestMonster);
+                    prevMonsters.Add(closestMonster);
                     yield return intervalTime;
                 }
                 --count;
             }
-            
+
             SkillManager.Instance.DeSpawnProjectile(projectile);
             prevMonsters.Clear();
             yield return coolTime;
@@ -54,7 +55,7 @@ public class JuHyung : Skill
     {
         while (Vector2.Distance(projectile.transform.position, target.position) > diff)
         {
-            projectile.transform.Translate((target.position - projectile.transform.position).normalized * skillData.speed * Time.deltaTime);
+            projectile.transform.Translate(((Vector2)target.position - (Vector2)projectile.transform.position).normalized * skillData.speed * Time.deltaTime);
             yield return null;
         }
         DebugManager.Instance.PrintDebug(">>>>");

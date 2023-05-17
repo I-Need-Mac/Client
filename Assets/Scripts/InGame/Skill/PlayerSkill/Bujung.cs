@@ -24,7 +24,7 @@ public class Bujung : Skill
                 ProjectileStraight projectile = (ProjectileStraight)SkillManager.Instance.SpawnProjectile(skillData);
                 projectile.transform.localPosition = shooter.position;
 
-                Transform target = SkillManager.Instance.MeleeTarget(shooter, skillData.attackDistance);
+                Transform target = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
                 Vector2 vec;
                 if (target == null)
                 {

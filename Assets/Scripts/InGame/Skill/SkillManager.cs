@@ -25,8 +25,6 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
 
-    private RaycastHit2D[] targets;
-
     public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
 
     protected override void Awake()
@@ -134,47 +132,4 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         StartCoroutine(activation);
     }
 
-    #region ENEMY_SEARCH
-    public Transform MeleeTarget(Transform shooter, float attackDistance)
-    {
-        return MeleeTarget(shooter, attackDistance, new List<Transform>());
-    }
-
-    public Transform MeleeTarget(Transform shooter, float attackDistance, List<Transform> exceptions)
-    {
-        Vector2 shooterPos = shooter.position;
-        targets = Physics2D.CircleCastAll(shooterPos, attackDistance, Vector2.zero, 0, 1 << (int)LayerConstant.MONSTER);
-        Transform resultTarget = null;
-        float distance = float.MaxValue;
-        foreach (RaycastHit2D target in targets)
-        {
-            if (target.transform == shooter || exceptions.Contains(target.transform))
-            {
-                continue;
-            }
-
-            float diff = (shooterPos - (Vector2)target.transform.position).sqrMagnitude;
-            if (diff < distance)
-            {
-                distance = diff;
-                resultTarget = target.transform;
-            }
-        }
-        return resultTarget;
-    }
-
-    public Transform BossTarget()
-    {
-        Transform resultTarget = null;
-        foreach (Monster monster in MonsterSpawner.Instance.monsters)
-        {
-            if (monster.monsterId / 100 == 4)
-            {
-                resultTarget = monster.transform;
-            }
-        }
-
-        return resultTarget;
-    }
-    #endregion
 }

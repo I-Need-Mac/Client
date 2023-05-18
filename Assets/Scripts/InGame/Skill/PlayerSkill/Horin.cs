@@ -13,6 +13,7 @@ public class Horin : Skill
         for (int i = 0; i < skillData.projectileCount; i++)
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+            originSize = projectile.transform.localScale;
             projectile.transform.localScale = Vector2.zero;
             Vector3 rotate = Vector3.forward * 360 * i / skillData.projectileCount;
             projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -53,14 +54,14 @@ public class Horin : Skill
             {
                 size -= weight;
             }
-            else if (size < skillData.projectileSizeMulti)
+            else if (size < 1)
             {
                 size += weight;
             }
             foreach (Projectile projectile in projectiles)
             {
                 projectile.transform.RotateAround(shooter.position, Vector3.back, skillData.speed * Time.deltaTime);
-                projectile.transform.localScale = Vector2.one * size;
+                projectile.transform.localScale = originSize * size;
                 projectile.gameObject.SetActive(projectile.transform.localScale.x > 0);
             }
             time += Time.deltaTime;

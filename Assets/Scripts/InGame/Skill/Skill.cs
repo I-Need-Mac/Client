@@ -12,6 +12,7 @@ public abstract class Skill
     protected Transform shooter;
     protected List<Projectile> projectiles;
     protected SkillData skillData;
+    protected Vector2 originSize;
 
     protected WaitForSeconds coolTime;
     protected WaitForSeconds intervalTime;
@@ -84,4 +85,5 @@ public abstract class Skill
         //skillData.SetProjectileType((PROJECTILE_TYPE)Enum.Parse(typeof(PROJECTILE_TYPE), Convert.ToString(data["ProjectileType"]).ToUpper()));
         //skillData.SetSkillPrefabPath(data["SkillPrefabPath"].ToString());
     }
+
 }

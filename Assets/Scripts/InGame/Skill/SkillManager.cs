@@ -135,4 +135,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         StartCoroutine(activation);
     }
 
+    public void CoroutineStarter(IEnumerator coroutine)
+    {
+        StartCoroutine(coroutine);
+    }
+
 }

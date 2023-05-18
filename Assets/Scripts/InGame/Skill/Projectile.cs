@@ -39,6 +39,14 @@ public class Projectile : MonoBehaviour
     {
         this.skillData = skillData;
         projectileCollider.isTrigger = this.skillData.isPenetrate;
+        transform.localScale *= this.skillData.projectileSizeMulti;
+    }
+
+    public void SetAlpha(float alpha)
+    {
+        Color color = spriteRenderer.color;
+        color.a = alpha;
+        spriteRenderer.color = color;
     }
 
     public void CollisionRadius(float radius)

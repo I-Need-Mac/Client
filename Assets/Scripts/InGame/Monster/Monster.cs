@@ -9,7 +9,8 @@ using UnityEngine.PlayerLoop;
 public class Monster : MonoBehaviour
 {
     [field: SerializeField] public int monsterId { get; private set; }
-
+    [field: SerializeField]
+    public MonsterData monsterData ;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
@@ -23,7 +24,7 @@ public class Monster : MonoBehaviour
     private SoundSituation.SOUNDSITUATION situation;
 
     public Transform target { get; private set; }
-    public MonsterData monsterData { get; private set; } = new MonsterData();
+   
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
     private void OnEnable()

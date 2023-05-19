@@ -29,14 +29,16 @@ public class SpineAnimatorManager : MonoBehaviour
 
     public void SetDirection(Transform transform, Vector3 direction)
     {
+        Vector3 angles = transform.localEulerAngles;
         if (direction.x < 0)
         {
-            transform.localEulerAngles = new Vector3(0f, 0f, 0f);
+            angles.y = 0.0f;
         }
         else if (direction.x > 0)
         {
-            transform.localEulerAngles = new Vector3(0f, 180f, 0f);
+            angles.y = 180.0f;
         }
+        transform.localEulerAngles = angles;
     }
 
     public void SetSpineSpeed(float speed)

@@ -8,6 +8,8 @@ public class GodBless : Skill
 
     public override void Init()
     {
+        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+
         Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
         projectile.transform.localScale = Vector2.zero;
         projectile.CollisionRadius(skillData.splashRange);

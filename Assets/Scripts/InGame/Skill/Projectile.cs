@@ -8,7 +8,8 @@ public class Projectile : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-    private Collider2D projectileCollider;
+
+    protected Collider2D projectileCollider;
 
     public SkillData skillData { get; private set; }
 
@@ -23,16 +24,29 @@ public class Projectile : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    protected virtual void OnEnable()
+    {
+        projectileCollider.enabled = true;
+    }
+
     public void SetAnimation(Sprite sprite, RuntimeAnimatorController controller)
     {
         spriteRenderer.sprite = sprite;
         animator.runtimeAnimatorController = controller;
     }
 
-    public void SetProjectile(SkillData skillData)
+    public virtual void SetProjectile(SkillData skillData)
     {
         this.skillData = skillData;
         projectileCollider.isTrigger = this.skillData.isPenetrate;
+        transform.localScale *= this.skillData.projectileSizeMulti;
+    }
+
+    public void SetAlpha(float alpha)
+    {
+        Color color = spriteRenderer.color;
+        color.a = alpha;
+        spriteRenderer.color = color;
     }
 
     public void CollisionRadius(float radius)
@@ -45,9 +59,8 @@ public class Projectile : MonoBehaviour
         projectileCollider.enabled = flag;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        DebugManager.Instance.PrintDebug("####" + collision.name);
     }
 
     private void OnBecameInvisible()
@@ -55,7 +68,7 @@ public class Projectile : MonoBehaviour
         Invoke("Remove", skillData.duration);
     }
 
-    private void Remove()
+    protected void Remove()
     {
         SkillManager.Instance.DeSpawnProjectile(this);
     }

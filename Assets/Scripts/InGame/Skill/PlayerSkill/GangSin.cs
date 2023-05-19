@@ -20,6 +20,7 @@ public class GangSin : Skill
                 prefab = ResourcesManager.Load<Monster>(path);
             }
             Monster summoner = Object.Instantiate(prefab, shooter);
+            summoner.gameObject.layer = (int)LayerConstant.SKILL;
             summoner.gameObject.SetActive(false);
             summoners.Add(summoner);
         }
@@ -41,7 +42,7 @@ public class GangSin : Skill
                 summoner.monsterData.SetAttack(skillData.damage);
                 summoner.monsterData.SetMoveSpeed(skillData.speed);
                 summoner.transform.localPosition = Vector2.one;
-                summoner.SetTarget(SkillManager.Instance.MeleeTarget(summoner.transform, skillData.attackDistance), false);
+                summoner.SetTarget(Scanner.GetTargetTransform(skillData.skillTarget, summoner.transform, skillData.attackDistance), false);
                 summoner.gameObject.SetActive(true);
                 yield return intervalTime;
             }
@@ -53,7 +54,7 @@ public class GangSin : Skill
                 {
                     if (summoner.target == null || !summoner.target.gameObject.activeInHierarchy)
                     {
-                        Transform target = SkillManager.Instance.MeleeTarget(summoner.transform, skillData.attackDistance);
+                        Transform target = Scanner.GetTargetTransform(skillData.skillTarget, summoner.transform, skillData.attackDistance);
                         summoner.SetTarget(target, false);
                     }
                 }

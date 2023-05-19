@@ -20,12 +20,10 @@ public struct SkillInfo
 
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
-    [SerializeField] private int skillNum = 10101;
+    [SerializeField] private int skillNum = 10801;
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
-
-    private RaycastHit2D[] targets;
 
     public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
 
@@ -60,11 +58,10 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         if (!skillPools.ContainsKey(poolId))
         {
             string prefabPath = data["SkillPrefabPath"].ToString();
-            skillPools.Add(poolId, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(prefabPath), transform));
+            skillPools.Add(poolId, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(prefabPath), shooter));
         }
         Projectile projectile = skillPools[poolId].GetObject();
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
-        projectile.transform.parent = shooter;
         projectile.transform.localPosition = Vector2.zero;
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
@@ -106,6 +103,15 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 105:
                 skill = new Possession(skillId, shooter);
                 break;
+            case 106:
+                skill = new Irons(skillId, shooter);
+                break;
+            case 107:
+                skill = new GwiGi(skillId, shooter);
+                break;
+            case 108:
+                skill = new JuHyung(skillId, shooter);
+                break;
             case 120:
                 skill = new Horin(skillId, shooter);
                 break;
@@ -129,35 +135,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         StartCoroutine(activation);
     }
 
-    public Transform MeleeTarget(Transform shooter, float attackDistance)
+    public void CoroutineStarter(IEnumerator coroutine)
     {
-        Vector2 shooterPos = shooter.position;
-        targets = Physics2D.CircleCastAll(shooterPos, attackDistance, Vector2.zero, 0, 1 << (int)LayerConstant.MONSTER);
-        Transform resultTarget = null;
-        float distance = float.MaxValue;
-        foreach (RaycastHit2D target in targets)
-        {
-            float diff = (shooterPos - (Vector2)target.transform.position).sqrMagnitude;
-            if (diff < distance)
-            {
-                distance = diff;
-                resultTarget = target.transform;
-            }
-        }
-        return resultTarget;
+        StartCoroutine(coroutine);
     }
 
-    public Transform BossTarget()
-    {
-        Transform resultTarget = null;
-        foreach (Monster monster in MonsterSpawner.Instance.monsters)
-        {
-            if (monster.monsterId / 100 == 4)
-            {
-                resultTarget = monster.transform;
-            }
-        }
-
-        return resultTarget;
-    }
 }

@@ -11,11 +11,14 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D playerRigidbody;
     private Vector2 playerDirection;
-
+    
     private Transform character;
     private Transform shadow;
     private SpineAnimatorManager spineAnimatorManager;
-    private bool isMovable = true;
+    private bool isMovable;
+    private bool isHit;
+    private WaitForSeconds invincibleTime;
+    private SkeletonMecanim skeletonMecanim;
 
     public PlayerManager playerManager { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
@@ -35,12 +38,20 @@ public class Player : MonoBehaviour
 
         spineAnimatorManager = GetComponent<SpineAnimatorManager>();
 
-        playerManager = transform.Find("PlayerManager").GetComponent<PlayerManager>();
+        playerManager = GetComponentInChildren<PlayerManager>();
 
         gameObject.tag = "Player";
 
+        invincibleTime = new WaitForSeconds(float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))));
+        skeletonMecanim = GetComponentInChildren<SkeletonMecanim>();
+    }
+
+    private void OnEnable()
+    {
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+        isMovable = true;
+        isHit = false;
     }
 
     /*
@@ -124,55 +135,54 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    
-    #region Skill
-    public void Fire(int skillId)
-    {
-        //if (playerManager.playerData.skills.ContainsKey(skillId))
-        //{
-        //    playerManager.playerData.skills[skillId].skill.SkillLevelUp();
-        //}
-        //else
-        //{
-        //    Skill skill = new Skill(skillId.ToString(), this);
-        //    SkillInfo skillInfo;
-        //    switch (skill.skillData.projectileType)
-        //    {
-        //        case PROJECTILE_TYPE.SATELLITE:
-        //            skillInfo = new SkillInfo(skill, skill.SatelliteSkill());
-        //            break;
-        //        case PROJECTILE_TYPE.PROTECT:
-        //            skillInfo = new SkillInfo(skill, skill.ProtectSkill());
-        //            break;
-        //        default:
-        //            skillInfo = new SkillInfo(skill, skill.ShootSkill());
-        //            break;
-        //    }
-        //    playerManager.playerData.skills.Add(skillId, skillInfo);
-        //    StartCoroutine(skillInfo.type);
-        //}
-
-        //for (int i = 0; i < playerManager.playerData.skills.Count; i++)
-        //{
-        //    Skill skill = playerManager.playerData.skills[i];
-        //    switch (skill.skillData.projectileType)
-        //    {
-        //        case PROJECTILE_TYPE.SATELLITE:
-        //            StartCoroutine(skill.SatelliteSkill());
-        //            break;
-        //        case PROJECTILE_TYPE.PROTECT:
-        //            skill.ProtectSkill();
-        //            break;
-        //        default:
-        //            StartCoroutine(skill.ShootSkill());
-        //            break;
-        //    }
-        //}
-    }
-    #endregion
-
     #region Collider
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == (int)LayerConstant.MONSTER && !isHit)
+        {
+            playerManager.weight.SetHp(playerManager.weight.hp - 10);
+            StartCoroutine(Invincible());
+        }
+    }
 
+    private IEnumerator Invincible()
+    {
+        RecursiveChild(transform, LayerConstant.INVINCIBLE);
+        isHit = true;
+        skeletonMecanim.skeleton.SetColor(Color.red);
+        yield return invincibleTime;
+        skeletonMecanim.skeleton.SetColor(Color.white);
+        RecursiveChild(transform, LayerConstant.SPAWNOBJECT);
+        isHit = false;
+    }
+
+    private void RecursiveChild(Transform trans, LayerConstant layer)
+    {
+        if (trans.name.Equals("Character"))
+        {
+            trans.tag = "Player";
+        }
+        trans.gameObject.layer = (int)layer;
+
+        foreach (Transform child in trans)
+        {
+            switch (child.name)
+            {
+                case "Camera":
+                    RecursiveChild(child, LayerConstant.POISONFOG);
+                    break;
+                case "FieldStructure":
+                    RecursiveChild(child, LayerConstant.OBSTACLE);
+                    break;
+                case "Top":
+                    RecursiveChild(child, LayerConstant.OBSTACLE - 2);
+                    break;
+                default:
+                    RecursiveChild(child, layer);
+                    break;
+            }
+        }
+    }
     #endregion
 
 }

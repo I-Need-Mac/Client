@@ -9,15 +9,14 @@ using UnityEngine.PlayerLoop;
 public class Monster : MonoBehaviour
 {
     [field: SerializeField] public int monsterId { get; private set; }
-    [field: SerializeField]
-    public MonsterData monsterData ;
+    [field: SerializeField] public MonsterData monsterData;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
     private bool isMovable;
     private bool isAttackable;
     private bool isPlayer;
-    private float currentHp;
+    [SerializeField] private float currentHp;
 
     private SpineAnimatorManager spineAnimatorManager;
     private SoundRequester soundRequester;

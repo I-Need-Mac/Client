@@ -16,7 +16,7 @@ public class Monster : MonoBehaviour
     private bool isMovable;
     private bool isAttackable;
     private bool isPlayer;
-    
+    private float currentHp;
 
     private SpineAnimatorManager spineAnimatorManager;
     private SoundRequester soundRequester;
@@ -37,6 +37,7 @@ public class Monster : MonoBehaviour
         isMovable = false;
         isAttackable = false;
         MonsterSetting(monsterId.ToString());
+        currentHp = monsterData.hp;
     }
 
     private void Update()
@@ -127,23 +128,22 @@ public class Monster : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.gameObject.tag.Equals("PlayerSkill") && isPlayer)
-        //{
-        //    monsterData.SetHp(monsterData.hp - GameManager.Instance.player.playerManager.ReturnAttack());
-        //    if (monsterData.hp <= 0)
-        //    {
-        //        Die();
-        //    }
-        //}
-        if (collision.gameObject.layer == (int)LayerConstant.SKILL)
+        if (collision.TryGetComponent(out Projectile projectile))
         {
-            DebugManager.Instance.PrintDebug("collision");
+            if (projectile.isHit)
+            {
+                currentHp -= projectile.skillData.damage;
+                if (currentHp <= 0)
+                {
+                    Die();
+                }
+            }
         }
     }
 
     private void Die()
     {
-        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         DropItem();
         MonsterSpawner.Instance.DeSpawnMonster(this);
     }

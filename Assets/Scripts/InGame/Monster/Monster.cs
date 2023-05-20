@@ -10,17 +10,21 @@ public class Monster : MonoBehaviour
 {
     [field: SerializeField] public int monsterId { get; private set; }
     [field: SerializeField] public MonsterData monsterData;
+    [SerializeField] private float currentHp;
+
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
-    private bool isMovable;
-    private bool isAttackable;
+    //private bool isMovable;
+    //private bool isAttackable;
     private bool isPlayer;
-    [SerializeField] private float currentHp;
+    private WaitForSeconds duration;
 
     private SpineAnimatorManager spineAnimatorManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
+
+    private Transform body;
 
     public Transform target { get; private set; }
    
@@ -34,61 +38,120 @@ public class Monster : MonoBehaviour
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
         situation = SoundSituation.SOUNDSITUATION.IDLE;
-        isMovable = false;
-        isAttackable = false;
+        body = transform.Find("Character");
+        //isMovable = false;
+        //isAttackable = false;
         MonsterSetting(monsterId.ToString());
         currentHp = monsterData.hp;
+        duration = new WaitForSeconds((1 / monsterData.atkSpeed) * 1.5f);
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Move());
     }
 
     private void Update()
     {
-        PlayAnimations();
-        Move();
+        //PlayAnimations();
+        //Move();
     }
 
-    private void Move()
-    {
-        try
-        {
-            Vector2 diff = target.position - transform.position;
-            float distance = diff.sqrMagnitude;
+    //private void Move()
+    //{
+    //    try
+    //    {
+    //        Vector2 diff = target.position - transform.position;
+    //        float distance = diff.sqrMagnitude;
 
+    //        if (distance <= monsterData.viewDistance)
+    //        {
+    //            spineAnimatorManager.SetDirection(transform, monsterDirection);
+    //            if (distance <= monsterData.atkDistance)
+    //            {
+    //                StartCoroutine(Attack());
+    //                DebugManager.Instance.PrintDebug("[MOBTEST]: ");
+    //            }
+    //            else
+    //            {
+    //                monsterDirection = diff.normalized;
+    //                monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+
+    //            }
+    //            isMovable = !isAttackable;
+    //        }
+    //        else
+    //        {
+    //            monsterRigidbody.velocity = Vector2.zero;
+    //            isAttackable = false;
+    //            isMovable = false;
+    //        }
+    //    }
+    //    catch
+    //    {
+    //        DebugManager.Instance.PrintDebug("[ERROR]: 타겟이 없습니다 ");
+    //    }
+    //}
+
+    private IEnumerator Move()
+    {
+        spineAnimatorManager.PlayAnimation("isMovable", false);
+        spineAnimatorManager.PlayAnimation("isAttackable", false);
+        monsterRigidbody.velocity = Vector2.zero;
+
+        while (true)
+        {
+            yield return null;
+
+            if (target == null)
+            {
+                continue;
+            }
+
+            Vector2 diff = target.position - transform.position;
+            float distance = diff.magnitude;
+            DebugManager.Instance.PrintDebug("[MOBTEST]: " + distance);
             if (distance <= monsterData.viewDistance)
             {
-                spineAnimatorManager.SetDirection(transform, monsterDirection);
-                if (isAttackable = distance <= monsterData.atkDistance)
+                monsterDirection = diff.normalized;
+                if (distance <= monsterData.atkDistance)
                 {
+                    DebugManager.Instance.PrintDebug("[MOBTEST]: attack");
+                    spineAnimatorManager.SetDirection(transform, monsterDirection, body);
                     monsterRigidbody.velocity = Vector2.zero;
-
+                    spineAnimatorManager.SetSpineSpeed(monsterData.atkSpeed);
+                    //spineAnimatorManager.PlayAnimation("attack");
+                    spineAnimatorManager.PlayAnimation("isMovable", false);
+                    spineAnimatorManager.PlayAnimation("isAttackable", true);
+                    yield return duration;
                 }
                 else
                 {
-                    monsterDirection = diff.normalized;
+                    DebugManager.Instance.PrintDebug("[MOBTEST]: move");
+                    spineAnimatorManager.SetDirection(transform, monsterDirection, body);
                     monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-
+                    spineAnimatorManager.SetSpineSpeed(monsterData.moveSpeed);
+                    spineAnimatorManager.PlayAnimation("isMovable", true);
+                    spineAnimatorManager.PlayAnimation("isAttackable", false);
                 }
-                isMovable = !isAttackable;
             }
             else
             {
-
-                isAttackable = false;
-                isMovable = false;
+                DebugManager.Instance.PrintDebug("[MOBTEST]: idle");
+                monsterRigidbody.velocity = Vector2.zero;
+                spineAnimatorManager.PlayAnimation("isMovable", false);
+                spineAnimatorManager.PlayAnimation("isAttackable", false);
             }
         }
-        catch
-        {
-            DebugManager.Instance.PrintDebug("[ERROR]: 타겟이 없습니다 ");
-        }
-        
     }
 
-    private void PlayAnimations()
-    {
-        spineAnimatorManager.SetSpineSpeed(monsterData.moveSpeed);
-        spineAnimatorManager.PlayAnimation("isAttackable", isAttackable);
-        spineAnimatorManager.PlayAnimation("isMovable", isMovable);
-    }
+    //private void PlayAnimations(float animationSpeed)
+    //{
+    //    spineAnimatorManager.SetDirection(transform, monsterDirection);
+    //    spineAnimatorManager.SetSpineSpeed(animationSpeed);
+    //    spineAnimatorManager.PlayAnimation("isAttackable", isAttackable);
+    //    spineAnimatorManager.PlayAnimation("isMovable", isMovable);
+    //}
 
     public void SetTarget(Transform target, bool isPlayer)
     {

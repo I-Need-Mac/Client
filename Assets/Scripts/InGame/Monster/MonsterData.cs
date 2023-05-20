@@ -1,31 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class MonsterData
 {
-    public string monsterName { get; private set; }
-    public float sizeMultiple { get; private set; }
-    public int hp { get; private set; }
-    public int attack { get; private set; }
-    public int moveSpeed { get; private set; }
-    public float atkSpeed { get; private set; }
-    public int viewDistance { get; private set; }
-    public int atkDistance { get; private set; }
-    public int skillID { get; private set; }
-    public string groupSource { get; private set; }
-    public int groupSourceRate { get; private set; }
-    public string monsterPrefabPath { get; private set; }
-    public AttackTypeConstant attackType { get; private set; }
+    
+    [SerializeField] public string monsterName ;
+    [SerializeField] public float sizeMultiple ;
+    [SerializeField] public int hp ;
+    [SerializeField] public int attack ;
+    [SerializeField] public float moveSpeed ;
+    [SerializeField] public float atkSpeed ;
+    [SerializeField] public float viewDistance ;
+    [SerializeField] public float atkDistance ;
+    [SerializeField] public int skillID ;
+    [SerializeField] public string groupSource ;
+    [SerializeField] public int groupSourceRate ;
+    [SerializeField] public string monsterPrefabPath ;
+    [SerializeField] public AttackTypeConstant attackType ;
 
     public void SetMonsterName(string monsterName) { this.monsterName = monsterName; }
     public void SetSizeMultiple(float sizeMultiple) { this.sizeMultiple = sizeMultiple; }
     public void SetHp(int hp) { this.hp = hp; }
     public void SetAttack(int attack) { this.attack = attack; }
-    public void SetMoveSpeed(int moveSpeed) { this.moveSpeed = moveSpeed; }
+    public void SetMoveSpeed(float moveSpeed) { this.moveSpeed = moveSpeed; }
     public void SetAtkSpeed(float atkSpeed) { this.atkSpeed = atkSpeed; }
-    public void SetViewDistance(int viewDistance) { this.viewDistance = viewDistance; }
-    public void SetAtkDistance(int atkDistance) { this.atkDistance = atkDistance; }
+    public void SetViewDistance(float viewDistance) { this.viewDistance = viewDistance; }
+    public void SetAtkDistance(float atkDistance) { this.atkDistance = atkDistance; }
     public void SetSkillID(int skillID) { this.skillID = skillID; }
     public void SetGroupSource(string groupSource) { this.groupSource = groupSource; }
     public void SetGroupSourceRate(int groupSourceRate) { this.groupSourceRate = groupSourceRate; }

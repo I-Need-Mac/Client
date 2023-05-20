@@ -9,21 +9,21 @@ using UnityEngine.PlayerLoop;
 public class Monster : MonoBehaviour
 {
     [field: SerializeField] public int monsterId { get; private set; }
-
+    [field: SerializeField] public MonsterData monsterData;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
     private bool isMovable;
     private bool isAttackable;
     private bool isPlayer;
-    private float currentHp;
+    [SerializeField] private float currentHp;
 
     private SpineAnimatorManager spineAnimatorManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
 
     public Transform target { get; private set; }
-    public MonsterData monsterData { get; private set; } = new MonsterData();
+   
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
     private void OnEnable()
@@ -106,10 +106,10 @@ public class Monster : MonoBehaviour
             monsterData.SetHp(Convert.ToInt32(table["HP"]));
             monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
             monsterData.SetAttack(Convert.ToInt32(table["Attack"]));
-            monsterData.SetMoveSpeed(Convert.ToInt32(table["MoveSpeed"]));
+            monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
-            monsterData.SetViewDistance(Convert.ToInt32(table["ViewDistance"]));
-            monsterData.SetAtkDistance(Convert.ToInt32(table["AtkDistance"]));
+            monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));
+            monsterData.SetAtkDistance(float.Parse(Convert.ToString(table["AtkDistance"])));
             monsterData.SetSkillID(Convert.ToInt32(table["SkillID"]));
             monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
             monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));

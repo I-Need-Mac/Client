@@ -45,12 +45,16 @@ public class SpineAnimatorManager : MonoBehaviour
     {
         Vector3 angles = transform.localEulerAngles;
         Vector3 childPos = child.localPosition;
+        Collider2D collider = transform.GetComponent<Collider2D>();
+        Vector2 colPos = collider.offset;
         if (direction.x < 0)
         {
             angles.y = 0.0f;
             if (childPos.x < 0)
             {
                 childPos.x *= -1;
+                colPos.x *= -1;
+                collider.offset = colPos;
             }
         }
         else if (direction.x > 0)
@@ -59,6 +63,8 @@ public class SpineAnimatorManager : MonoBehaviour
             if (childPos.x > 0)
             {
                 childPos.x *= -1;
+                colPos.x *= -1;
+                collider.offset = colPos;
             }
         }
         transform.localEulerAngles = angles;

@@ -9,4 +9,6 @@ public enum LayerConstant
     MAP = 5,
     MONSTER = 6,
     SKILL = 7,
+    ITEM = 8,
+    INVINCIBLE = 9,
 }

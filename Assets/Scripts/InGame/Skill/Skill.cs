@@ -59,7 +59,9 @@ public abstract class Skill
         }
         catch
         {
-            DebugManager.Instance.PrintDebug("[ERROR]: 잘못된 캐스팅 입니다");
+            List<string> list = new List<string>();
+            list.Add(data["SkillEffectParam"].ToString());
+            skillData.SetSkillEffectParam(list);
         }
         skillData.SetSkillCut(Convert.ToBoolean(Convert.ToString(data["Skill_Cut"]).ToLower()));
         skillData.SetIsEffect(Convert.ToBoolean(Convert.ToString(data["IsEffect"]).ToLower()));

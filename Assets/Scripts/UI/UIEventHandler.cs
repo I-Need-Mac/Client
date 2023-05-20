@@ -15,7 +15,9 @@ public class UIEventHandler : MonoBehaviour, IPointerClickHandler
         if (OnClickHandler != null)
         {
             OnClickHandler.Invoke(eventData);
-            GetComponent<SoundRequesterBtn>().ChangeSituation(SoundSituation.SOUNDSITUATION.CLICK);
+            if (GetComponent<SoundRequesterBtn>()!= null){
+                GetComponent<SoundRequesterBtn>().ChangeSituation(SoundSituation.SOUNDSITUATION.CLICK); 
+            }
         }
     }
 

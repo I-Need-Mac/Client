@@ -18,7 +18,8 @@ public class Monster : MonoBehaviour
     private WaitForSeconds tick = new WaitForSeconds(0.05f);
 
     private bool isPlayer;
-    
+
+    private float posWeight;
     private WaitForSeconds duration;
 
     private SpineManager spineManager;
@@ -31,7 +32,7 @@ public class Monster : MonoBehaviour
     private void OnEnable()
     {
         monsterCollider = GetComponent<Collider2D>();
-        monsterCollider.enabled = false;
+        monsterCollider.enabled = true;
         spineManager = GetComponent<SpineManager>();
         soundRequester = GetComponentInChildren<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
@@ -41,6 +42,7 @@ public class Monster : MonoBehaviour
         MonsterSetting(monsterId.ToString());
         currentHp = monsterData.hp;
         duration = new WaitForSeconds(1.0f / monsterData.atkSpeed);
+        posWeight = monsterCollider.offset.y * 0.5f;
     }
 
     private void Start()
@@ -70,16 +72,17 @@ public class Monster : MonoBehaviour
                 monsterDirection = diff.normalized;
                 spineManager.SetDirection(transform, monsterDirection);
 
-                if (distance <= monsterData.atkDistance)
+                if (distance <= monsterData.atkDistance &&
+                    (GameManager.Instance.player.transform.localPosition.y + posWeight <= transform.localPosition.y))
                 {
-                    monsterCollider.enabled = true;
                     monsterRigidbody.velocity = Vector2.zero;
                     spineManager.SetAnimation("Attack", false);
                     spineManager.AddAnimation("Idle", true);
-                    yield return tick;
+                    //yield return tick;
                     monsterCollider.enabled = false;
                     DebugManager.Instance.PrintDebug("[MOBTEST]: Attack");
                     yield return duration;
+                    monsterCollider.enabled = true;
                 }
                 else
                 {
@@ -138,6 +141,7 @@ public class Monster : MonoBehaviour
         {
             if (projectile.isHit)
             {
+                DebugManager.Instance.PrintDebug("[DamageTest]");
                 currentHp -= projectile.skillData.damage;
                 if (currentHp <= 0)
                 {

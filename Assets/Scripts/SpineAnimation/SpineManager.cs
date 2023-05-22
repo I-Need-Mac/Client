@@ -65,7 +65,6 @@ public class SpineManager : MonoBehaviour
 
     public void SetColor(Color color)
     {
-        skeletonAnimation.skeleton.SetColor(Color.red);
+        skeletonAnimation.skeleton.SetColor(color);
     }
-
 }

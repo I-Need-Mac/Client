@@ -115,6 +115,9 @@ public class GameManager : SingletonBehaviour<GameManager>
                 case "FieldStructure":
                     RecursiveChild(child, LayerConstant.OBSTACLE);
                     break;
+                case "ItemCollider":
+                    RecursiveChild(child, LayerConstant.ITEM);
+                    break;
                 case "Top":
                     RecursiveChild(child, LayerConstant.OBSTACLE - 2);
                     break;

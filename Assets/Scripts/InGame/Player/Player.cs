@@ -12,11 +12,12 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRigidbody;
     private Vector2 playerDirection;
     
-    private Transform character;
+    
     private Transform shadow;
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
 
+    public Transform character { get; private set; }
     public PlayerManager playerManager { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
     public int exp { get; private set; }
@@ -146,6 +147,9 @@ public class Player : MonoBehaviour
                     break;
                 case "FieldStructure":
                     RecursiveChild(child, LayerConstant.OBSTACLE);
+                    break;
+                case "ItemCollider":
+                    RecursiveChild(child, LayerConstant.ITEM);
                     break;
                 case "Top":
                     RecursiveChild(child, LayerConstant.OBSTACLE - 2);

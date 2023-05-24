@@ -112,6 +112,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 108:
                 skill = new JuHyung(skillId, shooter);
                 break;
+            case 109:
+                skill = new MyeongGyae(skillId, shooter);
+                break;
             case 120:
                 skill = new Horin(skillId, shooter);
                 break;

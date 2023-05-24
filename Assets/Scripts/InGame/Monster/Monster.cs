@@ -12,38 +12,37 @@ public class Monster : MonoBehaviour
     [field: SerializeField] public MonsterData monsterData;
     [SerializeField] private float currentHp;
 
+    private Collider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
+    private WaitForSeconds tick = new WaitForSeconds(0.05f);
 
-    //private bool isMovable;
-    //private bool isAttackable;
     private bool isPlayer;
+
+    private float posWeight;
     private WaitForSeconds duration;
 
-    private SpineAnimatorManager spineAnimatorManager;
+    private SpineManager spineManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
 
-    private Transform body;
-
     public Transform target { get; private set; }
-   
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
     private void OnEnable()
     {
-        spineAnimatorManager = GetComponent<SpineAnimatorManager>();
+        monsterCollider = GetComponent<Collider2D>();
+        monsterCollider.enabled = true;
+        spineManager = GetComponent<SpineManager>();
         soundRequester = GetComponentInChildren<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
         situation = SoundSituation.SOUNDSITUATION.IDLE;
-        body = transform.Find("Character");
-        //isMovable = false;
-        //isAttackable = false;
         MonsterSetting(monsterId.ToString());
         currentHp = monsterData.hp;
-        duration = new WaitForSeconds((1 / monsterData.atkSpeed) * 1.5f);
+        duration = new WaitForSeconds(1.0f / monsterData.atkSpeed);
+        posWeight = monsterCollider.offset.y * 0.5f;
     }
 
     private void Start()
@@ -51,52 +50,9 @@ public class Monster : MonoBehaviour
         StartCoroutine(Move());
     }
 
-    private void Update()
-    {
-        //PlayAnimations();
-        //Move();
-    }
-
-    //private void Move()
-    //{
-    //    try
-    //    {
-    //        Vector2 diff = target.position - transform.position;
-    //        float distance = diff.sqrMagnitude;
-
-    //        if (distance <= monsterData.viewDistance)
-    //        {
-    //            spineAnimatorManager.SetDirection(transform, monsterDirection);
-    //            if (distance <= monsterData.atkDistance)
-    //            {
-    //                StartCoroutine(Attack());
-    //                DebugManager.Instance.PrintDebug("[MOBTEST]: ");
-    //            }
-    //            else
-    //            {
-    //                monsterDirection = diff.normalized;
-    //                monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-
-    //            }
-    //            isMovable = !isAttackable;
-    //        }
-    //        else
-    //        {
-    //            monsterRigidbody.velocity = Vector2.zero;
-    //            isAttackable = false;
-    //            isMovable = false;
-    //        }
-    //    }
-    //    catch
-    //    {
-    //        DebugManager.Instance.PrintDebug("[ERROR]: 타겟이 없습니다 ");
-    //    }
-    //}
-
     private IEnumerator Move()
     {
-        spineAnimatorManager.PlayAnimation("isMovable", false);
-        spineAnimatorManager.PlayAnimation("isAttackable", false);
+        spineManager.SetAnimation("Idle", true);
         monsterRigidbody.velocity = Vector2.zero;
 
         while (true)
@@ -110,48 +66,38 @@ public class Monster : MonoBehaviour
 
             Vector2 diff = target.position - transform.position;
             float distance = diff.magnitude;
-            DebugManager.Instance.PrintDebug("[MOBTEST]: " + distance);
+
             if (distance <= monsterData.viewDistance)
             {
                 monsterDirection = diff.normalized;
-                if (distance <= monsterData.atkDistance)
+                spineManager.SetDirection(transform, monsterDirection);
+
+                if (distance <= monsterData.atkDistance &&
+                    (GameManager.Instance.player.transform.localPosition.y + posWeight <= transform.localPosition.y))
                 {
-                    DebugManager.Instance.PrintDebug("[MOBTEST]: attack");
-                    spineAnimatorManager.SetDirection(transform, monsterDirection, body);
                     monsterRigidbody.velocity = Vector2.zero;
-                    spineAnimatorManager.SetSpineSpeed(monsterData.atkSpeed);
-                    //spineAnimatorManager.PlayAnimation("attack");
-                    spineAnimatorManager.PlayAnimation("isMovable", false);
-                    spineAnimatorManager.PlayAnimation("isAttackable", true);
+                    spineManager.SetAnimation("Attack", false);
+                    spineManager.AddAnimation("Idle", true);
+                    //yield return tick;
+                    monsterCollider.enabled = false;
+                    DebugManager.Instance.PrintDebug("[MOBTEST]: Attack");
                     yield return duration;
+                    monsterCollider.enabled = true;
                 }
                 else
                 {
-                    DebugManager.Instance.PrintDebug("[MOBTEST]: move");
-                    spineAnimatorManager.SetDirection(transform, monsterDirection, body);
+                    spineManager.SetAnimation("Run", true, 0, monsterData.moveSpeed);
                     monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-                    spineAnimatorManager.SetSpineSpeed(monsterData.moveSpeed);
-                    spineAnimatorManager.PlayAnimation("isMovable", true);
-                    spineAnimatorManager.PlayAnimation("isAttackable", false);
                 }
             }
             else
             {
-                DebugManager.Instance.PrintDebug("[MOBTEST]: idle");
                 monsterRigidbody.velocity = Vector2.zero;
-                spineAnimatorManager.PlayAnimation("isMovable", false);
-                spineAnimatorManager.PlayAnimation("isAttackable", false);
+                spineManager.SetAnimation("Idle", true);
             }
         }
-    }
 
-    //private void PlayAnimations(float animationSpeed)
-    //{
-    //    spineAnimatorManager.SetDirection(transform, monsterDirection);
-    //    spineAnimatorManager.SetSpineSpeed(animationSpeed);
-    //    spineAnimatorManager.PlayAnimation("isAttackable", isAttackable);
-    //    spineAnimatorManager.PlayAnimation("isMovable", isMovable);
-    //}
+    }
 
     public void SetTarget(Transform target, bool isPlayer)
     {
@@ -195,6 +141,7 @@ public class Monster : MonoBehaviour
         {
             if (projectile.isHit)
             {
+                DebugManager.Instance.PrintDebug("[DamageTest]");
                 currentHp -= projectile.skillData.damage;
                 if (currentHp <= 0)
                 {

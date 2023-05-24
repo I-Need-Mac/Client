@@ -83,8 +83,6 @@ public class SpineAnimatorManager : MonoBehaviour
             weight = (0.5f - speed / 10.0f) * -1.0f;
         }
         animationSpeed = 1 + weight;
-        DebugManager.Instance.PrintDebug("SpineSpeed: {0}", animationSpeed);
-        DebugManager.Instance.PrintDebug("Weight: {0}", weight);
     }
 
     #region Animation Control

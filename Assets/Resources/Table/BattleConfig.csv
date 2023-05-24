@@ -9,4 +9,4 @@ ImageMultiple,Coefficient,0.5
 Fraction,Coefficient,10000
 SkillBenList,,999|998
 benben,,101|102|103|104|105|106|107|108|109|110|111|112
-InvincibleTime,,2
+InvincibleTime,,0.1

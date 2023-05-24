@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2402666270762013036
+--- !u!1 &4039913287030105507
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,12 +8,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2381796754213032524}
-  - component: {fileID: 5363284355546182012}
-  - component: {fileID: 8372598603709841007}
-  - component: {fileID: 496009522632222927}
-  - component: {fileID: 3669680333288247127}
-  - component: {fileID: 3043983797822681151}
+  - component: {fileID: 4056208363012335235}
+  - component: {fileID: 5992440833124009395}
+  - component: {fileID: 1935491357812471615}
+  - component: {fileID: 914567106422733745}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -21,27 +19,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2381796754213032524
+--- !u!4 &4056208363012335235
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2402666270762013036}
+  m_GameObject: {fileID: 4039913287030105507}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8324185995294554853}
+  m_Father: {fileID: 7692755693375999530}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5363284355546182012
+--- !u!114 &5992440833124009395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2402666270762013036}
+  m_GameObject: {fileID: 4039913287030105507}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
@@ -49,21 +47,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speakerSettings: []
   soundPackItems: []
---- !u!33 &8372598603709841007
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2402666270762013036}
-  m_Mesh: {fileID: 0}
---- !u!23 &496009522632222927
+--- !u!23 &1935491357812471615
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2402666270762013036}
+  m_GameObject: {fileID: 4039913287030105507}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -76,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f9bcfb8f6454a2642b48dfdcbe728ba5, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,35 +88,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!95 &3669680333288247127
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2402666270762013036}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3043983797822681151
+--- !u!114 &914567106422733745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2402666270762013036}
+  m_GameObject: {fileID: 4039913287030105507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9db98c60740638449864eb028fbe7ad, type: 3}
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 0}
@@ -152,13 +123,12 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  translator:
-    autoReset: 1
-    useCustomMixMode: 1
-    layerMixModes: 
-    layerBlendModes: 
   updateTiming: 1
---- !u!1 &6167794479072710478
+  unscaledTime: 0
+  _animationName: 
+  loop: 0
+  timeScale: 1
+--- !u!1 &5539203116184173441
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,11 +136,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8324185995294554853}
-  - component: {fileID: 5985454871581462256}
-  - component: {fileID: 8757637112174958136}
-  - component: {fileID: 6052151784603559265}
-  - component: {fileID: 9168413493471183578}
+  - component: {fileID: 7692755693375999530}
+  - component: {fileID: 5356962465746057791}
+  - component: {fileID: 3594077179634657150}
+  - component: {fileID: 5384849946976506286}
+  - component: {fileID: 7384747777913648661}
   m_Layer: 0
   m_Name: MonsterSkeletonPrefab
   m_TagString: Untagged
@@ -178,54 +148,72 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8324185995294554853
+--- !u!4 &7692755693375999530
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6167794479072710478}
+  m_GameObject: {fileID: 5539203116184173441}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2381796754213032524}
+  - {fileID: 4056208363012335235}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5985454871581462256
+--- !u!114 &5356962465746057791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6167794479072710478}
+  m_GameObject: {fileID: 5539203116184173441}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b4ecd13599d8314e8d1c74f19e59bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <monsterId>k__BackingField: 0
---- !u!114 &8757637112174958136
+  monsterData:
+    monsterName: 
+    sizeMultiple: 0
+    hp: 0
+    attack: 0
+    moveSpeed: 0
+    atkSpeed: 0
+    viewDistance: 0
+    atkDistance: 0
+    skillID: 0
+    groupSource: 
+    groupSourceRate: 0
+    monsterPrefabPath: 
+    attackType: 0
+  currentHp: 0
+--- !u!114 &3594077179634657150
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6167794479072710478}
+  m_GameObject: {fileID: 5539203116184173441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 335dc788efad8e6469b1994558ebc851, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d9551ba00533514699483adb20ee67e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!50 &6052151784603559265
+  subject: 0
+  skeletonAnimation: {fileID: 0}
+  spineSpeed: 1
+--- !u!50 &5384849946976506286
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6167794479072710478}
+  m_GameObject: {fileID: 5539203116184173441}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -239,13 +227,13 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &9168413493471183578
+--- !u!58 &7384747777913648661
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6167794479072710478}
+  m_GameObject: {fileID: 5539203116184173441}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}

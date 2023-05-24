@@ -12,14 +12,12 @@ public class Player : MonoBehaviour
     private Rigidbody2D playerRigidbody;
     private Vector2 playerDirection;
     
-    private Transform character;
+    
     private Transform shadow;
-    private SpineAnimatorManager spineAnimatorManager;
-    private bool isMovable;
-    private bool isHit;
+    private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
-    private SkeletonMecanim skeletonMecanim;
 
+    public Transform character { get; private set; }
     public PlayerManager playerManager { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
     public int exp { get; private set; }
@@ -32,26 +30,19 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
         lookDirection = Vector3.left;
-
         character = transform.Find("Character");
         shadow = transform.Find("Shadow");
-
-        spineAnimatorManager = GetComponent<SpineAnimatorManager>();
-
+        spineManager = GetComponent<SpineManager>();
         playerManager = GetComponentInChildren<PlayerManager>();
-
         gameObject.tag = "Player";
-
         invincibleTime = new WaitForSeconds(float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))));
-        skeletonMecanim = GetComponentInChildren<SkeletonMecanim>();
     }
 
     private void OnEnable()
     {
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
-        isMovable = true;
-        isHit = false;
+        //spineManager.SetAnimation("Idle", true);
     }
 
     /*
@@ -62,8 +53,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
-        TestFunction();
-        PlayAnimations();
     }
 
     private void FixedUpdate()
@@ -71,29 +60,9 @@ public class Player : MonoBehaviour
         Move();
     }
 
-    private void TestFunction()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            moveSpeed += 1;
-            spineAnimatorManager.SetSpineSpeed(moveSpeed);
-            DebugManager.Instance.PrintDebug("MoveSpeed: {0}", moveSpeed);
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            moveSpeed -= 1;
-            spineAnimatorManager.SetSpineSpeed(moveSpeed);
-            DebugManager.Instance.PrintDebug("MoveSpeed: {0}", moveSpeed);
-        }
-    }
     #endregion
 
     #region Movement, Animation
-    private void PlayAnimations()
-    {
-        spineAnimatorManager.PlayAnimation("isMovable", isMovable);
-    }
-
     //키보드 입력을 받아 방향을 결정하는 함수
     private void KeyDir()
     {
@@ -108,10 +77,17 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        spineAnimatorManager.SetDirection(character, playerDirection);
-        spineAnimatorManager.SetDirection(shadow, playerDirection);
+        spineManager.SetDirection(character, playerDirection);
+        spineManager.SetDirection(shadow, playerDirection);
         playerRigidbody.velocity = playerDirection.normalized * moveSpeed;
-        isMovable = playerRigidbody.velocity != Vector2.zero;
+        if (playerRigidbody.velocity == Vector2.zero)
+        {
+            spineManager.SetAnimation("Idle", true);
+        }
+        else
+        {
+            spineManager.SetAnimation("Run", true, 0, playerManager.playerData.moveSpeed);
+        }
     }
     #endregion
 
@@ -138,9 +114,9 @@ public class Player : MonoBehaviour
     #region Collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == (int)LayerConstant.MONSTER && !isHit)
+        if (collision.TryGetComponent(out Monster monster))
         {
-            playerManager.weight.SetHp(playerManager.weight.hp - 10);
+            playerManager.weight.SetHp(playerManager.weight.hp - monster.monsterData.attack);
             StartCoroutine(Invincible());
         }
     }
@@ -148,12 +124,10 @@ public class Player : MonoBehaviour
     private IEnumerator Invincible()
     {
         RecursiveChild(transform, LayerConstant.INVINCIBLE);
-        isHit = true;
-        skeletonMecanim.skeleton.SetColor(Color.red);
+        spineManager.SetColor(Color.red);
         yield return invincibleTime;
-        skeletonMecanim.skeleton.SetColor(Color.white);
+        spineManager.SetColor(Color.white);
         RecursiveChild(transform, LayerConstant.SPAWNOBJECT);
-        isHit = false;
     }
 
     private void RecursiveChild(Transform trans, LayerConstant layer)
@@ -173,6 +147,9 @@ public class Player : MonoBehaviour
                     break;
                 case "FieldStructure":
                     RecursiveChild(child, LayerConstant.OBSTACLE);
+                    break;
+                case "ItemCollider":
+                    RecursiveChild(child, LayerConstant.ITEM);
                     break;
                 case "Top":
                     RecursiveChild(child, LayerConstant.OBSTACLE - 2);

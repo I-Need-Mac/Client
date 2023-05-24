@@ -73,7 +73,7 @@ public class CSVReader
                     //_dataList.Add(h[j],val[j]);
                     if (val[j].Contains("|"))
                     {
-                        List<string> list = Regex.Split(val[j], "[|]").ToList();
+                        List<string> list = Regex.Split(val[j], "[|]").Where(s => !string.IsNullOrEmpty(s)).ToList();
                         _dataList.Add(h[j], list);
                     }
                     else

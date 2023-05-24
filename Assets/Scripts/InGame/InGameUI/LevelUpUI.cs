@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +14,7 @@ public class LevelUpUI : MonoBehaviour
     private Transform body;
     private RectTransform bodyRect;
     private List<int> skillBenList;
+    private List<int> skillNums = new List<int>();
 
     public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
     public int skillCount { get; private set; } = 0;
@@ -25,10 +28,12 @@ public class LevelUpUI : MonoBehaviour
         }
         catch
         {
-            DebugManager.Instance.PrintDebug("[ERROR]: 잘못된 캐스팅 입니다");
+            skillBenList = new List<int>();
+            skillBenList.Add(Convert.ToInt32(CSVReader.Read("BattleConfig", "SkillBenList", "ConfigValue")));
         }
 
         skillTable = CSVReader.Read("SkillTable");
+        SkillNumRead();
         body = transform.Find("Body");
         bodyRect = body.GetComponent<RectTransform>();
     }
@@ -52,9 +57,13 @@ public class LevelUpUI : MonoBehaviour
         bodyRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
         for (int i = 0; i < num; i++)
         {
+            int skillId = RandomSkillId();
+            if (skillId == 99999)
+            {
+                continue;
+            }
             Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * i);
             SkillUI skillUi = UIPoolManager.Instance.SpawnButton(body.transform, pos);
-            int skillId = RandomSkillId();
             skillUi.SkillBtnInit(skillTable[skillId.ToString()]);
             skillUi.btn.onClick.RemoveAllListeners();
             skillUi.btn.onClick.AddListener(() => CloseBox(skillId));
@@ -66,12 +75,13 @@ public class LevelUpUI : MonoBehaviour
     {
         Dictionary<int, SkillInfo> skillData = SkillManager.Instance.skillList;
         int skillId = 0;
-
+        int c = 100;
         if (skillCount < 8) //스킬칸이 남은 경우
         {
-            while (true)
+            while (c-- != 0)
             {
-                skillId = UnityEngine.Random.Range(101, 200);
+                skillId = skillNums[UnityEngine.Random.Range(0, skillNums.Count)];
+                DebugManager.Instance.PrintDebug("[TESTTEST]: " + skillId);
                 if (skillBenList.Contains(skillId))
                 {
                     continue;
@@ -81,15 +91,13 @@ public class LevelUpUI : MonoBehaviour
                     continue;
                 }
                 skillId = skillId * 100 + 1;
-                if (!skillTable.ContainsKey(skillId.ToString()))    //스킬 존재여부
+                if (!skillNums.Contains(skillId / 100))
                 {
                     continue;
                 }
-
-                int count = skillData.Count;
-
-                if (count == 0)
+                if (skillData.Count == 0)
                 {
+                    skills.Add(skillId / 100);
                     return skillId;
                 }
 
@@ -104,7 +112,11 @@ public class LevelUpUI : MonoBehaviour
                             return skillId;
                         }
                     }
-                    if (--count == 0) //새로운 스킬일 때
+                    //if (--count == 0) //새로운 스킬일 때
+                    //{
+                    //    return skillId;
+                    //}
+                    else
                     {
                         return skillId;
                     }
@@ -126,5 +138,29 @@ public class LevelUpUI : MonoBehaviour
         }
 
         return 99999;
+    }
+
+    private void SkillNumRead()
+    {
+        foreach (string id in skillTable.Keys)
+        {
+            try
+            {
+                int i = Convert.ToInt32(id) / 100;
+                if (!skillNums.Contains(i))
+                {
+                    skillNums.Add(i);
+                }
+            }
+            catch
+            {
+                continue;
+            }
+        }
+
+        //foreach (int i in skillNums)
+        //{
+        //    DebugManager.Instance.PrintDebug("[TESTTEST]: " + i);
+        //}
     }
 }

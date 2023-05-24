@@ -35,7 +35,7 @@ public class PlayerUI : MonoBehaviour
         levelUi.gameObject.SetActive(true);
         Time.timeScale = 0f;
         levelUi.skills.Clear();
-        levelUi.SkillBoxInit(2);
+        levelUi.SkillBoxInit(3);
     }
 
     public void GameOver()

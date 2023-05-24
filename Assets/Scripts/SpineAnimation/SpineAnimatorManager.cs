@@ -41,6 +41,36 @@ public class SpineAnimatorManager : MonoBehaviour
         transform.localEulerAngles = angles;
     }
 
+    public void SetDirection(Transform transform, Vector3 direction, Transform child)
+    {
+        Vector3 angles = transform.localEulerAngles;
+        Vector3 childPos = child.localPosition;
+        Collider2D collider = transform.GetComponent<Collider2D>();
+        Vector2 colPos = collider.offset;
+        if (direction.x < 0)
+        {
+            angles.y = 0.0f;
+            if (childPos.x < 0)
+            {
+                childPos.x *= -1;
+                colPos.x *= -1;
+                collider.offset = colPos;
+            }
+        }
+        else if (direction.x > 0)
+        {
+            angles.y = 180.0f;
+            if (childPos.x > 0)
+            {
+                childPos.x *= -1;
+                colPos.x *= -1;
+                collider.offset = colPos;
+            }
+        }
+        transform.localEulerAngles = angles;
+        child.localPosition = childPos;
+    }
+
     public void SetSpineSpeed(float speed)
     {
         float weight = 0;
@@ -53,8 +83,6 @@ public class SpineAnimatorManager : MonoBehaviour
             weight = (0.5f - speed / 10.0f) * -1.0f;
         }
         animationSpeed = 1 + weight;
-        DebugManager.Instance.PrintDebug("SpineSpeed: {0}", animationSpeed);
-        DebugManager.Instance.PrintDebug("Weight: {0}", weight);
     }
 
     #region Animation Control
@@ -71,6 +99,11 @@ public class SpineAnimatorManager : MonoBehaviour
     public void PlayAnimation(string parameter, float value)
     {
         animator.SetFloat(parameter, value);
+    }
+
+    public void PlayAnimation(string parameter)
+    {
+        animator.SetTrigger(parameter);
     }
     #endregion
 }

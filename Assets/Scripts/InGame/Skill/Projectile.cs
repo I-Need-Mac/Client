@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
 
     private void Awake()
     {
-        if (TryGetComponent(out projectileCollider))
+        if (!TryGetComponent(out projectileCollider))
         {
             projectileCollider = GetComponentInChildren<Collider2D>();
         }

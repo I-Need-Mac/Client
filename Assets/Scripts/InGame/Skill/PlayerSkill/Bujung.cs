@@ -24,17 +24,8 @@ public class Bujung : Skill
                 ProjectileStraight projectile = (ProjectileStraight)SkillManager.Instance.SpawnProjectile(skillData);
                 projectile.transform.localPosition = shooter.position;
 
-                Transform target = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
-                Vector2 vec;
-                if (target == null)
-                {
-                    vec = (GameManager.Instance.player.lookDirection - (Vector2)shooter.position).normalized;
-                }
-                else
-                {
-                    vec = ((Vector2)target.position - (Vector2)shooter.position).normalized;
-                }
-
+                Vector2 targetPos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
+                Vector2 vec = (targetPos - (Vector2)shooter.position).normalized;
                 projectile.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(vec.y, vec.x) * Mathf.Rad2Deg - 90.0f);
                 yield return intervalTime;
             }

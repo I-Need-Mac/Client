@@ -84,7 +84,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 return;
             }
         }
-
+        
         Skill skill;
         switch(skillId / 100)
         {
@@ -114,6 +114,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 break;
             case 109:
                 skill = new MyeongGyae(skillId, shooter);
+                break;
+            case 110:
+                skill = new GyuGyu(skillId, shooter);
                 break;
             case 120:
                 skill = new Horin(skillId, shooter);

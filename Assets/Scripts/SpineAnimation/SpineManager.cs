@@ -67,4 +67,9 @@ public class SpineManager : MonoBehaviour
     {
         skeletonAnimation.skeleton.SetColor(color);
     }
+
+    public string GetAnimationName()
+    {
+        return skeletonAnimation.AnimationName;
+    }
 }

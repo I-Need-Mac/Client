@@ -10,5 +10,5 @@ public enum LayerConstant
     MONSTER = 6,
     SKILL = 7,
     ITEM = 8,
-    INVINCIBLE = 9,
+    PLAYER = 9,
 }

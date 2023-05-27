@@ -15,6 +15,12 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
     private int criticalRatio;
 
+    private RaycastHit2D raycast;
+    private Vector2 pos;
+
+    private Player player;
+    private Collider2D playerCollider;
+
     public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
     public PlayerData weight { get; private set; } = new PlayerData();     //증감치
 
@@ -23,11 +29,19 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     {
         PlayerSetting(FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
         ConfigSetting();
+        player = GetComponentInParent<Player>();
+        playerCollider = GetComponent<Collider2D>();
+        pos = new Vector2(0, 2);
     }
 
     //private void Start()
     //{
     //    StartCoroutine(HpRegeneration());
+    //}
+
+    //private void Update()
+    //{
+    //    raycast = Physics2D.CapsuleCast((Vector2)transform.position - pos, (Vector2)transform.position + pos, CapsuleDirection2D.Vertical, 30.0f, Vector2.zero, 0.0f, (int)LayerConstant.MONSTER);
     //}
 
     private void ConfigSetting()
@@ -210,4 +224,17 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         return monsterDamage;
     }
     #endregion
+
+    /*몬스터 충돌*/
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out Monster monster) && monster.isAttack)
+        {
+            DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
+            StartCoroutine(player.Invincible(playerCollider));
+        }
+    }
+
+
 }

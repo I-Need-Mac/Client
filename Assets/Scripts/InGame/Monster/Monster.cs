@@ -47,6 +47,7 @@ public class Monster : MonoBehaviour
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
         posWeight = monsterCollider.offset.y;
         isAttack = false;
+        isHit = false;
     }
 
     private void Start()
@@ -261,6 +262,7 @@ public class Monster : MonoBehaviour
             {
                 DebugManager.Instance.PrintDebug("[DamageTest]");
                 currentHp -= projectile.skillData.damage;
+                isHit = true;
                 if (currentHp <= 0)
                 {
                     Die();

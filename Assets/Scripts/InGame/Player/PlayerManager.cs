@@ -232,6 +232,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         if (collision.TryGetComponent(out Monster monster) && monster.isAttack)
         {
             DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
+            weight.SetHp(weight.hp - monster.monsterData.attack);
             StartCoroutine(player.Invincible(playerCollider));
         }
     }

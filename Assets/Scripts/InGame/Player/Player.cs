@@ -3,6 +3,7 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -114,51 +115,24 @@ public class Player : MonoBehaviour
     #region Collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //if (collision.TryGetComponent(out Monster monster) && monster.isAttack)
+        //{
+        //    playerManager.weight.SetHp(playerManager.weight.hp - monster.monsterData.attack);
+        //    StartCoroutine(Invincible());
+        //}
         if (collision.TryGetComponent(out Monster monster))
         {
-            playerManager.weight.SetHp(playerManager.weight.hp - monster.monsterData.attack);
-            StartCoroutine(Invincible());
+            DebugManager.Instance.PrintDebug("[COLtest]: ");
         }
     }
 
-    private IEnumerator Invincible()
+    public IEnumerator Invincible(Collider2D playerCollider)
     {
-        RecursiveChild(transform, LayerConstant.INVINCIBLE);
         spineManager.SetColor(Color.red);
+        playerCollider.enabled = false;
         yield return invincibleTime;
         spineManager.SetColor(Color.white);
-        RecursiveChild(transform, LayerConstant.SPAWNOBJECT);
-    }
-
-    private void RecursiveChild(Transform trans, LayerConstant layer)
-    {
-        if (trans.name.Equals("Character"))
-        {
-            trans.tag = "Player";
-        }
-        trans.gameObject.layer = (int)layer;
-
-        foreach (Transform child in trans)
-        {
-            switch (child.name)
-            {
-                case "Camera":
-                    RecursiveChild(child, LayerConstant.POISONFOG);
-                    break;
-                case "FieldStructure":
-                    RecursiveChild(child, LayerConstant.OBSTACLE);
-                    break;
-                case "ItemCollider":
-                    RecursiveChild(child, LayerConstant.ITEM);
-                    break;
-                case "Top":
-                    RecursiveChild(child, LayerConstant.OBSTACLE - 2);
-                    break;
-                default:
-                    RecursiveChild(child, layer);
-                    break;
-            }
-        }
+        playerCollider.enabled = true;
     }
     #endregion
 

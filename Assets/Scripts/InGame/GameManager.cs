@@ -121,6 +121,9 @@ public class GameManager : SingletonBehaviour<GameManager>
                 case "Top":
                     RecursiveChild(child, LayerConstant.OBSTACLE - 2);
                     break;
+                case "PlayerManager":
+                    RecursiveChild(child, LayerConstant.PLAYER);
+                    break;
                 default:
                     RecursiveChild(child, layer);
                     break;

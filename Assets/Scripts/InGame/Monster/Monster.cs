@@ -18,14 +18,17 @@ public class Monster : MonoBehaviour
     private WaitForSeconds tick = new WaitForSeconds(0.05f);
 
     private bool isPlayer;
+    private bool isHit;
+    private BehaviorTreeManager btManager;
 
     private float posWeight;
-    private WaitForSeconds duration;
+    private WaitForSeconds delay;
 
     private SpineManager spineManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
 
+    public bool isAttack { get; private set; }
     public Transform target { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
@@ -41,63 +44,179 @@ public class Monster : MonoBehaviour
         situation = SoundSituation.SOUNDSITUATION.IDLE;
         MonsterSetting(monsterId.ToString());
         currentHp = monsterData.hp;
-        duration = new WaitForSeconds(1.0f / monsterData.atkSpeed);
-        posWeight = monsterCollider.offset.y * 0.5f;
+        delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
+        posWeight = monsterCollider.offset.y;
+        isAttack = false;
+        isHit = false;
     }
 
     private void Start()
     {
-        StartCoroutine(Move());
+        //StartCoroutine(Move());
+        btManager = new BehaviorTreeManager(SetAI(monsterData.attackType));
+        spineManager.SetAnimation("Idle", true);
     }
 
-    private IEnumerator Move()
+    private void Update()
     {
-        spineManager.SetAnimation("Idle", true);
-        monsterRigidbody.velocity = Vector2.zero;
+        btManager.Active();
+    }
 
-        while (true)
+    #region AI
+    private Node SetAI(AttackTypeConstant attackType)
+    {
+        switch (attackType)
         {
-            yield return null;
+            case AttackTypeConstant.Bold:
+                return BoldAI();
+            case AttackTypeConstant.Shy:
+                return ShyAI();
+            default:
+                return null;
+        }
+    }
 
-            if (target == null)
-            {
-                continue;
-            }
-
-            Vector2 diff = target.position - transform.position;
-            float distance = diff.magnitude;
-
-            if (distance <= monsterData.viewDistance)
-            {
-                monsterDirection = diff.normalized;
-                spineManager.SetDirection(transform, monsterDirection);
-
-                if (distance <= monsterData.atkDistance &&
-                    (GameManager.Instance.player.transform.localPosition.y + posWeight <= transform.localPosition.y))
+    private Node BoldAI()
+    {
+        return new SelectorNode
+                (new List<Node>()
                 {
-                    monsterRigidbody.velocity = Vector2.zero;
-                    spineManager.SetAnimation("Attack", false);
-                    spineManager.AddAnimation("Idle", true);
-                    //yield return tick;
-                    monsterCollider.enabled = false;
-                    DebugManager.Instance.PrintDebug("[MOBTEST]: Attack");
-                    yield return duration;
-                    monsterCollider.enabled = true;
-                }
-                else
+                    new SequenceNode
+                    (new List<Node>()
+                    {
+                        new ActionNode(IsAttack),
+                        new ActionNode(IsAttackable),
+                        new ActionNode(Attack)
+                    }),
+                    new SequenceNode
+                    (new List<Node>()
+                    {
+                        new ActionNode(IsVisible),
+                        new ActionNode(Run)
+                    }),
+                    new ActionNode(Idle)
+                });
+    }
+
+    private Node ShyAI()
+    {
+        return new SelectorNode
+                (new List<Node>()
                 {
-                    spineManager.SetAnimation("Run", true, 0, monsterData.moveSpeed);
-                    monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-                }
-            }
-            else
-            {
-                monsterRigidbody.velocity = Vector2.zero;
-                spineManager.SetAnimation("Idle", true);
-            }
+                    new SequenceNode
+                    (new List<Node>()
+                    {
+                        new ActionNode(IsHit),
+                        new SelectorNode
+                        (new List<Node>()
+                        {
+                            new SequenceNode
+                            (new List<Node>()
+                            {
+                                new ActionNode(IsAttack),
+                                new ActionNode(IsAttackable),
+                                new ActionNode(Attack)
+                            }),
+                            new ActionNode(Run)
+                        })
+                    }),
+                    new ActionNode(Idle),
+                });
+    }
+    #endregion
+
+    #region Logic
+    private NodeConstant IsAttack()
+    {
+        DebugManager.Instance.PrintDebug("[BTtest]: IsAttack");
+        return spineManager.GetAnimationName().Equals("Attack") ? NodeConstant.RUNNING : NodeConstant.SUCCESS;
+    }
+
+    private NodeConstant IsAttackable()
+    {
+        Vector2 diff = target.position - transform.position;
+        float distance = diff.magnitude;
+        DebugManager.Instance.PrintDebug("[BTtest]: IsAttackable > " + distance);
+        if (distance < monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(posWeight))))
+        {
+            DebugManager.Instance.PrintDebug("[테스트]");
+            return NodeConstant.SUCCESS;
+        }
+        return NodeConstant.FAILURE;
+    }
+
+    private NodeConstant Attack()
+    {
+        DebugManager.Instance.PrintDebug("[BTtest]: Attack");
+        monsterRigidbody.velocity = Vector2.zero;
+        if (!isAttack)
+        {
+            spineManager.SetAnimation("Attack", false);
+            spineManager.AddAnimation("Idle", true);
+            StartCoroutine("AttackDelay");
+        }
+        return NodeConstant.SUCCESS;
+    }
+
+    private NodeConstant IsVisible()
+    {
+        DebugManager.Instance.PrintDebug("[BTtest]: IsVisible");
+        return (target.position - transform.position).magnitude <= monsterData.viewDistance ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
+    }
+
+    private NodeConstant Run()
+    {
+        if (isAttack)
+        {
+            isAttack = false;
+            StopCoroutine("AttackDelay");
         }
 
+        Vector2 diff = target.position - transform.position;
+        float distance = diff.magnitude;
+        DebugManager.Instance.PrintDebug("[BTtest]: Run - " + distance);
+
+        if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(posWeight))))
+        {
+            return NodeConstant.SUCCESS;
+        }
+
+        spineManager.SetAnimation("Run", true, 0, monsterData.moveSpeed);
+        monsterDirection = diff.normalized;
+        spineManager.SetDirection(transform, monsterDirection);
+        monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+        return NodeConstant.RUNNING;
     }
+
+    private NodeConstant Idle()
+    {
+        if (isAttack)
+        {
+            isAttack = false;
+            StopCoroutine("AttackDelay");
+        }
+
+        DebugManager.Instance.PrintDebug("[BTtest]: Idle");
+        isAttack = false;
+        monsterRigidbody.velocity = Vector2.zero;
+        spineManager.SetAnimation("Idle", true);
+        return NodeConstant.SUCCESS;
+    }
+
+    private NodeConstant IsHit()
+    {
+        DebugManager.Instance.PrintDebug("[BTtest]: IsHit");
+        return isHit ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
+    }
+
+    private IEnumerator AttackDelay()
+    {
+        //yield return delay;
+        isAttack = true;
+        yield return delay;
+        isAttack = false;
+    }
+    #endregion
 
     public void SetTarget(Transform target, bool isPlayer)
     {
@@ -143,6 +262,7 @@ public class Monster : MonoBehaviour
             {
                 DebugManager.Instance.PrintDebug("[DamageTest]");
                 currentHp -= projectile.skillData.damage;
+                isHit = true;
                 if (currentHp <= 0)
                 {
                     Die();

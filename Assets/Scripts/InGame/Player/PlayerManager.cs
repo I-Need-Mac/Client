@@ -31,6 +31,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
         ConfigSetting();
         player = GetComponentInParent<Player>();
         playerCollider = GetComponent<Collider2D>();
+        playerCollider.isTrigger = true;
         pos = new Vector2(0, 2);
     }
 
@@ -227,13 +228,25 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
 
     /*몬스터 충돌*/
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Monster monster) && monster.isAttack)
+        //if (collision.TryGetComponent(out Monster monster) && monster.isAttack)
+        //{
+        //    DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
+        //    weight.SetHp(weight.hp - monster.monsterData.attack);
+        //    StartCoroutine(player.Invincible(playerCollider));
+        //}
+
+        try
         {
+            Monster monster = collision.GetComponentInParent<Monster>();
+            StartCoroutine(player.Invincible());
             DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
             weight.SetHp(weight.hp - monster.monsterData.attack);
-            StartCoroutine(player.Invincible(playerCollider));
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[충돌테스트]: 윽아님");
         }
     }
 

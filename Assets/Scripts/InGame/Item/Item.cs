@@ -5,62 +5,32 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private string itemId = "101";
+    [field: SerializeField] public int itemId { get; private set; }
     [SerializeField] private float itemSpeed = 1f;
 
-    private Player player;
-    private Transform target;
-
-    private ItemData itemData;
-
+    protected Player player;
+    protected Transform target;
+    protected ItemData itemData;
     protected Collider2D itemCollider;
-    protected SpriteRenderer render;
-
-    public bool isCollision { get; set; } = false;
 
     private void Awake()
     {
         gameObject.tag = "Item";
-        render = GetComponent<SpriteRenderer>();
         itemData = new ItemData();
-        ItemSetting(itemId);
-        ImageSetting();
     }
 
-    private void FixedUpdate()
+    private void OnEnable()
     {
-        if (isCollision)
+        ItemSetting(itemId.ToString());
+    }
+
+    protected virtual IEnumerator Move()
+    {
+        while (true)
         {
-            Move();
+            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * itemSpeed);
+            yield return null;
         }
-    }
-
-    protected virtual void Move()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, target.position, Time.fixedDeltaTime * itemSpeed);
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag.Equals("ItemCollider"))
-        {
-            isCollision = true;
-            target = collision.gameObject.transform.parent.Find("Character").transform;
-        }
-
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            isCollision = false;
-            gameObject.SetActive(false);
-            GameManager.Instance.player.GetExp(10);
-            //DebugManager.Instance.PrintDebug("get exp: 10\ntotal exp: " + GameManager.Instance.player.exp);
-        }
-    }
-
-    private void ImageSetting()
-    {
-        Sprite sprite = ResourcesManager.Load<Sprite>(itemData.imagePath);
-        render.sprite = sprite;
     }
 
     private void ItemSetting(string itemId)
@@ -71,9 +41,10 @@ public class Item : MonoBehaviour
             Dictionary<string, object> table = itemTable[itemId];
             itemData.SetItemName(Convert.ToString(table["ItemName"]));
             itemData.SetItemImage(Convert.ToString(table["ItemImage"]));
-            itemData.SetItemType((ItemConstant)Enum.Parse(typeof(ItemConstant), Convert.ToString(table["ItemType"])));
+            //itemData.SetItemType((ItemConstant)Enum.Parse(typeof(ItemConstant), Convert.ToString(table["ItemType"])));
+            //Enum.TryParse(table["ItemType"].ToString(), true, out ItemConstant result);
             itemData.SetItemTypeParam(Convert.ToInt32(table["ItemTypeParam"]));
-            itemData.SetImagePath(Convert.ToString(table["ImagePath"]));
+            //itemData.SetImagePath(Convert.ToString(table["ImagePath"]));
         }
     }
 }

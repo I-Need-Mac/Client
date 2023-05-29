@@ -8,67 +8,233 @@ using UnityEngine.PlayerLoop;
 
 public class Monster : MonoBehaviour
 {
-    private Player player;
+    [field: SerializeField] public int monsterId { get; private set; }
+    [field: SerializeField] public MonsterData monsterData;
+    [SerializeField] private float currentHp;
+
+    private Collider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
-    private Vector3 monsterDirection;
-    private bool isMovable = true;
+    private Vector2 monsterDirection;
 
-    private SpineAnimatorManager spineAnimatorManager;
+    private bool isPlayer;
+    private bool isHit;
+    private BehaviorTreeManager btManager;
 
-    public MonsterData monsterData { get; private set; } = new MonsterData();
-    public Vector3 lookDirection { get; private set; } //바라보는 방향
-    public int monsterId { get; set; }
+    private float posWeight;
+    private WaitForSeconds delay;
+    private WaitForSeconds tick;
+
+    private MonsterCollider attackCollider;
+    private SpineManager spineManager;
+    private SoundRequester soundRequester;
+    private SoundSituation.SOUNDSITUATION situation;
+
+    public bool isAttack { get; private set; }
+    public Transform target { get; private set; }
+    public Vector2 lookDirection { get; private set; } //바라보는 방향
 
     private void Awake()
     {
-        spineAnimatorManager = GetComponent<SpineAnimatorManager>();
+        attackCollider = GetComponentInChildren<MonsterCollider>();
+        monsterCollider = GetComponent<Collider2D>();
+        spineManager = GetComponent<SpineManager>();
+        soundRequester = GetComponentInChildren<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
-        monsterDirection = Vector3.zero;
-        lookDirection = Vector3.right;
-        transform.localScale = Vector3.one * float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        tick = new WaitForSeconds(1f);
+    }
+
+    private void OnEnable()
+    {
+        monsterCollider.enabled = true;
+        monsterDirection = Vector2.zero;
+        lookDirection = Vector2.right;
+        situation = SoundSituation.SOUNDSITUATION.IDLE;
+        MonsterSetting(monsterId.ToString());
+        currentHp = monsterData.hp;
+        delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
+        posWeight = monsterCollider.offset.y;
+        isAttack = false;
+        isHit = false;
     }
 
     private void Start()
     {
-        player = GameManager.Instance.player;
-    }
-
-    private void Update()
-    {
-        PlayAnimation();
+        //StartCoroutine(Move());
+        btManager = new BehaviorTreeManager(SetAI(monsterData.attackType));
+        spineManager.SetAnimation("Idle", true);
+        attackCollider.SetAttackDistance(monsterData.atkDistance);
     }
 
     private void FixedUpdate()
     {
-        Move();
+        btManager.Active();
     }
 
-    private void Move()
+    #region AI
+    private Node SetAI(AttackTypeConstant attackType)
     {
-        spineAnimatorManager.SetDirection(transform, monsterDirection);
-
-        isMovable = !(((Vector2)player.transform.position - (Vector2)transform.position).sqrMagnitude <= monsterData.atkDistance);
-        if (isMovable)
+        switch (attackType)
         {
-            monsterDirection = (player.transform.position - transform.position).normalized;
-            monsterRigidbody.velocity = monsterDirection * 5f;
+            case AttackTypeConstant.Bold:
+                return BoldAI();
+            case AttackTypeConstant.Shy:
+                return ShyAI();
+            default:
+                return null;
         }
-        else
-        {
-            monsterRigidbody.velocity = Vector3.zero;
-        }
-        
     }
 
-    private void PlayAnimation()
+    private Node BoldAI()
     {
-        //if (((Vector2)(player.transform.position - transform.position)).sqrMagnitude <= monsterData.atkDistance)
-        //{
-        //    spineAnimatorManager.animator.SetBool("isAttack", true);
-        //    spineAnimatorManager.animator.SetBool("isMovable", false);
-        //}
-        spineAnimatorManager.animator.SetBool("isAttack", !isMovable);
-        spineAnimatorManager.animator.SetBool("isMovable", isMovable);
+        return new SelectorNode
+                (new List<Node>()
+                {
+                    new SequenceNode
+                    (new List<Node>()
+                    {
+                        new ActionNode(IsAttack),
+                        new ActionNode(IsAttackable),
+                        new ActionNode(Attack)
+                    }),
+                    new SequenceNode
+                    (new List<Node>()
+                    {
+                        new ActionNode(IsVisible),
+                        new ActionNode(Run)
+                    }),
+                    new ActionNode(Idle)
+                });
+    }
+
+    private Node ShyAI()
+    {
+        return new SelectorNode
+                (new List<Node>()
+                {
+                    new SequenceNode
+                    (new List<Node>()
+                    {
+                        new ActionNode(IsHit),
+                        new SelectorNode
+                        (new List<Node>()
+                        {
+                            new SequenceNode
+                            (new List<Node>()
+                            {
+                                new ActionNode(IsAttack),
+                                new ActionNode(IsAttackable),
+                                new ActionNode(Attack)
+                            }),
+                            new ActionNode(Run)
+                        })
+                    }),
+                    new ActionNode(Idle),
+                });
+    }
+    #endregion
+
+    #region Logic
+    private NodeConstant IsAttack()
+    {
+        DebugManager.Instance.PrintDebug("[BTtest]: IsAttack");
+        return spineManager.GetAnimationName().Equals("Attack") ? NodeConstant.RUNNING : NodeConstant.SUCCESS;
+    }
+
+    private NodeConstant IsAttackable()
+    {
+        Vector2 diff = target.position - transform.position;
+        float distance = diff.magnitude;
+        DebugManager.Instance.PrintDebug("[BTtest]: IsAttackable > " + distance);
+        if (distance < monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(posWeight))))
+        {
+            DebugManager.Instance.PrintDebug("[테스트]");
+            return NodeConstant.SUCCESS;
+        }
+        return NodeConstant.FAILURE;
+    }
+
+    private NodeConstant Attack()
+    {
+        DebugManager.Instance.PrintDebug("[BTtest]: Attack");
+        monsterRigidbody.velocity = Vector3.zero;
+        if (!isAttack)
+        {
+            spineManager.SetAnimation("Attack", false);
+            spineManager.AddAnimation("Idle", true);
+            StartCoroutine("AttackDelay");
+        }
+        return NodeConstant.SUCCESS;
+    }
+
+    private NodeConstant IsVisible()
+    {
+        DebugManager.Instance.PrintDebug("[BTtest]: IsVisible");
+        return (target.position - transform.position).magnitude <= monsterData.viewDistance ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
+    }
+
+    private NodeConstant Run()
+    {
+        if (isAttack)
+        {
+            isAttack = false;
+            StopCoroutine("AttackDelay");
+        }
+
+        Vector2 diff = target.position - transform.position;
+        float distance = diff.magnitude;
+        DebugManager.Instance.PrintDebug("[BTtest]: Run - " + distance);
+
+        if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(posWeight))))
+        {
+            return NodeConstant.SUCCESS;
+        }
+
+        spineManager.SetAnimation("Run", true, 0, monsterData.moveSpeed);
+        monsterDirection = diff.normalized;
+        spineManager.SetDirection(transform, monsterDirection);
+        //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+        monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
+        monsterRigidbody.velocity = Vector3.zero;
+        return NodeConstant.RUNNING;
+    }
+
+    private NodeConstant Idle()
+    {
+        if (isAttack)
+        {
+            isAttack = false;
+            StopCoroutine("AttackDelay");
+        }
+
+        DebugManager.Instance.PrintDebug("[BTtest]: Idle");
+        isAttack = false;
+        monsterRigidbody.velocity = Vector3.zero;
+        spineManager.SetAnimation("Idle", true);
+        return NodeConstant.SUCCESS;
+    }
+
+    private NodeConstant IsHit()
+    {
+        DebugManager.Instance.PrintDebug("[BTtest]: IsHit");
+        return isHit ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
+    }
+
+    private IEnumerator AttackDelay()
+    {
+        //yield return delay;
+        //isAttack = true;
+        attackCollider.AttackColliderSwitch(true);
+        yield return tick;
+        attackCollider.AttackColliderSwitch(false);
+        yield return delay;
+        //isAttack = false;
+    }
+    #endregion
+
+    public void SetTarget(Transform target, bool isPlayer)
+    {
+        this.target = target;
+        this.isPlayer = isPlayer;
     }
 
     public void MonsterSetting(string monsterId)
@@ -79,55 +245,50 @@ public class Monster : MonoBehaviour
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
             monsterData.SetHp(Convert.ToInt32(table["HP"]));
+            monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
             monsterData.SetAttack(Convert.ToInt32(table["Attack"]));
-            monsterData.SetMoveSpeed(Convert.ToInt32(table["MoveSpeed"]));
+            monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
-            monsterData.SetViewDistance(Convert.ToInt32(table["ViewDistance"]));
-            monsterData.SetAtkDistance(Convert.ToInt32(table["AtkDistance"]));
+            monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));
+            monsterData.SetAtkDistance(float.Parse(Convert.ToString(table["AtkDistance"])));
             monsterData.SetSkillID(Convert.ToInt32(table["SkillID"]));
             monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
             monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));
-            monsterData.SetMonsterImage(Convert.ToString(table["MonsterImage"]));
+            monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
             monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
         }
-        //monsterData.SetMonsterName(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "MonsterName")));
-        //monsterData.SetHp(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "HP")));
-        //monsterData.SetAttack(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "Attack")));
-        //monsterData.SetMoveSpeed(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "MoveSpeed")));
-        //monsterData.SetAtkSpeed(float.Parse(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "AtkSpeed"))));
-        //monsterData.SetViewDistance(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "ViewDistance")));
-        //monsterData.SetAtkDistance(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "AtkDistance")));
-        //monsterData.SetSkillID(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "SkillID")));
-        //monsterData.SetGroupSource(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "GroupSource")));
-        //monsterData.SetGroupSourceRate(Convert.ToInt32(CSVReader.Read("MonsterTable", monsterId, "GroupSourceRate")));
-        //monsterData.SetMonsterImage(Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "MonsterImage")));
-        //monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(CSVReader.Read("MonsterTable", monsterId, "AttackType"))));
     }
 
     private void DropItem()
     {
-        //Transform items = transform.Find("Item");
-        //foreach (Transform item in items)
-        //{
-        //    GameObject dropItem = Instantiate(item.gameObject, dropItemField);
-        //    dropItem.tag = "Item";
-        //    dropItem.transform.position = transform.localPosition;
-        //    dropItem.SetActive(true);
-        //}
-        ItemPoolManager.Instance.SpawnExpItem(transform.position);
+        if (UnityEngine.Random.Range(0, 10001) <= monsterData.groupSourceRate)
+        {
+            ItemManager.Instance.DropItems(monsterData.groupSource, transform);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("PlayerSkill"))
+        if (collision.TryGetComponent(out Projectile projectile))
         {
-            monsterData.SetHp(monsterData.hp - player.ReturnAttack());
-            if (monsterData.hp <= 0)
+            if (projectile.isHit)
             {
-                DropItem();
-                MonsterSpawner.Instance.DeSpawnMonster(this);
+                DebugManager.Instance.PrintDebug("[DamageTest]");
+                currentHp -= projectile.skillData.damage;
+                isHit = true;
+                if (currentHp <= 0)
+                {
+                    Die();
+                }
             }
         }
+    }
+
+    private void Die()
+    {
+        //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        DropItem();
+        MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
 }

@@ -2,151 +2,74 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-
-public enum Subject
-{
-    PLAYER,
-    MONSTER,
-}
 
 public class SpineManager : MonoBehaviour
 {
-    const string SPINE_HOME = "Arts/Spine/";
-    const string SPINE_STATE = "ReferenceAssets";
+    private const int DEFAULT_TRACK = 0;
+    private const float DEFAULT_DELAY = 0.0f;
+    private const float DEFAULT_SPEED = 1.0f;
 
-    [SerializeField] private Subject subject = Subject.PLAYER;
-    [SerializeField] private SkeletonAnimation skeletonAnimation;
-    [SerializeField] private float spineSpeed = 1;
+    //[SpineAnimation][SerializeField] private string[] clipNames;
 
-    private AnimationReferenceAsset[] animationClips;
-    private string currentAnimation;
-    private string path;
-
-    public AnimationConstant animationState { get; set; }
+    private SkeletonAnimation skeletonAnimation;
 
     private void Awake()
     {
-        SpineSetting();
+        skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
     }
 
-    private void Update()
+    public void SetAnimation(string clipName, bool loop, int track = DEFAULT_TRACK, float speed = DEFAULT_SPEED)
     {
-        skeletonAnimation.timeScale = spineSpeed;
-        //SpineChange();
-    }
-
-    //private void SpineChange()
-    //{
-    //    if (Input.GetKeyUp(KeyCode.Alpha1))
-    //    {
-    //        PlayerPoolManager.Instance.playerId = 101;
-    //        SpineSetting();
-    //    }
-    //    if (Input.GetKeyUp(KeyCode.Alpha2))
-    //    {
-    //        PlayerPoolManager.Instance.playerId = 102;
-    //        SpineSetting();
-    //    }
-    //    if (Input.GetKeyUp(KeyCode.Alpha3))
-    //    {
-    //        PlayerPoolManager.Instance.playerId = 103;
-    //        SpineSetting();
-    //    }
-    //    if (Input.GetKeyUp(KeyCode.Alpha4))
-    //    {
-    //        PlayerPoolManager.Instance.playerId = 104;
-    //        SpineSetting();
-    //    }
-    //}
-
-    private void SpineSetting()
-    {
-        animationState = AnimationConstant.IDLE;
-
-        switch (subject)
+        if (skeletonAnimation.AnimationName != clipName)
         {
-            case Subject.PLAYER:
-                path = SPINE_HOME + (string)CSVReader.Read("CharacterTable", Convert.ToString(GameManager.Instance.GetPlayerId()), "CharacterSpinePath") + "/";
-                break;
-            case Subject.MONSTER:
-                path = GetComponent<Monster>().monsterData.monsterImage + "/Animation/Spine/";
-                DebugManager.Instance.PrintDebug(">>>>" + path);
-                break;
-        }
-
-        skeletonAnimation.timeScale = spineSpeed;
-
-        SkeletonAnimation character = transform.Find("Character").GetComponent<SkeletonAnimation>();
-        //character.skeletonDataAsset = Resources.Load<SkeletonDataAsset>(path + "SkeletonData");
-        character.skeletonDataAsset = ResourcesManager.Load<SkeletonDataAsset>(path + "SkeletonData");
-        skeletonAnimation.skeletonDataAsset = character.skeletonDataAsset;
-        skeletonAnimation.Initialize(true);
-
-        SpineClipSetting();
-    }
-
-    private void SpineClipSetting()
-    {
-        //AnimationReferenceAsset[] clips = Resources.LoadAll<AnimationReferenceAsset>(path + SPINE_STATE);
-        AnimationReferenceAsset[] clips = ResourcesManager.LoadAll<AnimationReferenceAsset>(path + SPINE_STATE);
-        animationClips = new AnimationReferenceAsset[clips.Length];
-        for (int i = 0; i < clips.Length; i++)
-        {
-            int index = (int)(AnimationConstant)Enum.Parse(typeof(AnimationConstant), clips[i].name.ToUpper());
-            animationClips[index] = clips[i];
+            skeletonAnimation.AnimationState.SetAnimation(track, clipName, loop).TimeScale = SetSpineSpeed(speed);
         }
     }
 
-    private void PlayAnimation(AnimationReferenceAsset clip, bool loop, float timeScale)
+    public void AddAnimation(string clipName, bool loop, int track = DEFAULT_TRACK, float delay = DEFAULT_DELAY, float speed = DEFAULT_SPEED)
     {
-        if (clip.name.Equals(currentAnimation))
+        if (skeletonAnimation.AnimationName != clipName)
         {
-            return;
+            skeletonAnimation.AnimationState.AddAnimation(track, clipName, loop, delay).TimeScale = SetSpineSpeed(speed);
         }
-        skeletonAnimation.state.SetAnimation(0, clip, loop).TimeScale = timeScale;
-        currentAnimation = clip.name;
     }
 
-    public void SetSpineSpeed(float speed)
+    public void SetDirection(Transform transform, Vector3 direction)
     {
-        float weight = 0;
-        if (speed > 5)
-        {
-            weight = ((float)Math.Pow(speed - 5, 2.0f / 3.0f) + (float)Math.Sqrt(speed - 5) - 1.0f) / 10.0f;
-        }
-        else
-        {
-            weight = (0.5f - speed / 10.0f) * -1.0f;
-        }
-        spineSpeed = 1 + weight;
-        DebugManager.Instance.PrintDebug("SpineSpeed: {0}", spineSpeed);
-        DebugManager.Instance.PrintDebug("Weight: {0}", weight);
-    }
-
-    public void SetCurrentAnimation()
-    {
-        PlayAnimation(animationClips[(int)animationState], true, 1f);
-    }
-
-    public void SetDirection(Vector3 direction)
-    {
-        float x = skeletonAnimation.transform.localScale.x;
+        Vector3 angles = transform.localEulerAngles;
         if (direction.x < 0)
         {
-            if (x < 0)
-            {
-                x *= -1;
-            }
+            angles.y = 0.0f;
         }
         else if (direction.x > 0)
         {
-            if (x > 0)
-            {
-                x *= -1;
-            }
+            angles.y = 180.0f;
         }
-        skeletonAnimation.transform.localScale = new Vector3(x, skeletonAnimation.transform.localScale.y, skeletonAnimation.transform.localScale.z);
+        transform.localEulerAngles = angles;
+    }
+
+    public float SetSpineSpeed(float speed)
+    {
+        float weight = 1;
+        if (speed > 5)
+        {
+            weight += ((float)Math.Pow(speed - 5, 2.0f / 3.0f) + (float)Math.Sqrt(speed - 5) - 1.0f) / 10.0f;
+        }
+        else
+        {
+            weight += (0.5f - speed / 10.0f) * -1.0f;
+        }
+        return weight;
+    }
+
+    public void SetColor(Color color)
+    {
+        skeletonAnimation.skeleton.SetColor(color);
+    }
+
+    public string GetAnimationName()
+    {
+        return skeletonAnimation.AnimationName;
     }
 }

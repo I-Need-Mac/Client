@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,13 +17,13 @@ public class UI_GameMain : UI_Popup
     }
 
     [SerializeField]
-    Text storyModeText;
+    TextMeshProUGUI storyModeText;
     [SerializeField]
-    Text selectSorcererText;
+    TextMeshProUGUI selectSorcererText;
     [SerializeField]
-    Text soulText;
+    TextMeshProUGUI soulText;
     [SerializeField]
-    Text sorcereText;
+    TextMeshProUGUI sorcereText;
 
     void Start()
     {

@@ -27,7 +27,13 @@ public class SoundRequesterBGM : SoundRequester
         MakeSpeakers();
         ConvertAudioClipData();
 
+        ChangeSituation(BGMSituation.BGMSITUATION.CHANGE_SCENE);
 
+    }
+
+    private void OnEnable()
+    {
+        ChangeSituation(BGMSituation.BGMSITUATION.CHANGE_SCENE);
     }
 
     // Update is called once per frame
@@ -43,6 +49,7 @@ public class SoundRequesterBGM : SoundRequester
     public override bool MakeSpeakers()
     {
         soundRequester = new GameObject("SoundRequester");
+        soundRequester.SetActive(true);
         soundRequester.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
         soundRequester.transform.SetParent(this.transform);
 
@@ -53,7 +60,7 @@ public class SoundRequesterBGM : SoundRequester
 
 
 
-            if (items.loadSettingFrom.Equals(null))
+            if (items.loadSettingFrom == null)
             {
                 GameObject speaker = new GameObject(items.speakerName);
                 speaker.transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);
@@ -168,10 +175,11 @@ public class SoundRequesterBGM : SoundRequester
     public override void RequestCallBack(PackItem item) {
         BGMPackItem covertItem = (BGMPackItem)item;
         if (covertItem.delayWithIntro == 0) {
+            audioSources[covertItem.usingSpeaker].loop = true;
             ShootSound(covertItem.usingSpeaker, covertItem.realBGMClip);
         }
         else {
-
+            audioSources[covertItem.usingSpeaker].loop = true;
             StartCoroutine(PlaySoundWithDelay(covertItem.usingSpeaker, covertItem.realBGMClip, covertItem.delayWithIntro));
         }
     }

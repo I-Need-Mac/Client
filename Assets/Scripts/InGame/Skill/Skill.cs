@@ -2,132 +2,90 @@ using SKILLCONSTANT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Skill
+public abstract class Skill
 {
-    private bool who; //true: player, false: monster
-    private Player player;
-    private Monster monster;
-    private Transform shooter;
-    private WaitForSeconds coolTime;
+    private Dictionary<string, Dictionary<string, object>> skillTable;
 
-    public SkillData skillData { get; private set; }
+    protected Transform shooter;
+    protected List<Projectile> projectiles;
+    protected SkillData skillData;
+    protected Vector2 originSize;
 
-    private Skill(string skillId)
+    protected WaitForSeconds coolTime;
+    protected WaitForSeconds intervalTime;
+    protected WaitForSeconds duration;
+
+    public abstract void Init();
+    public abstract IEnumerator Activation();
+
+    public Skill(int skillId, Transform shooter)
     {
-        skillData = new SkillData();
-        SkillDataLoad(FindSkill(skillId));
-        coolTime = new WaitForSeconds(skillData.coolTime);
+        skillTable = CSVReader.Read("SkillTable");
+        this.projectiles = new List<Projectile>();
+        this.skillData = new SkillData();
+        this.shooter = shooter;
+        SetSkillData(skillId);
     }
 
-    public Skill(string skillId, Player player) : this(skillId)
+    public void SkillLevelUp()
     {
-        who = true;
-        this.player = player;
-        shooter = this.player.transform;
-    }
-
-    public Skill(string skillId, Monster monster) : this(skillId)
-    {
-        who = false;
-        this.monster = monster;
-        shooter = this.monster.transform;
-    }
-
-    private Vector2 LookDirection()
-    {
-        return who ? player.lookDirection : monster.lookDirection;
-    }
-
-    //Satellite type skill activation
-    public IEnumerator SatelliteSkill()
-    {
-        for (int i = 0; i < skillData.projectileCount; i++)
+        foreach (Projectile projectile in projectiles)
         {
-            Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
-            projectile.angle = (360f / skillData.projectileCount) * (i + 1);
-            Vector3 spawnPos = new Vector3(Mathf.Cos(projectile.angle * Mathf.Deg2Rad), Mathf.Sin(projectile.angle * Mathf.Deg2Rad), 0);
-            projectile.Fire(shooter, spawnPos);
-        }
-        yield return coolTime; //지속시간인데 이거 물어봐야함 스킬데이터에없음
-    }
-
-    //Protect type skill activation
-    public void ProtectSkill()
-    {
-        Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
-        projectile.Fire(shooter, Vector3.zero);
-    }
-
-    //Shoot type skill activation
-    public IEnumerator ShootSkill()
-    {
-        if (!skillData.isEffect)
-        {
-            yield return coolTime;
-        }
-        while (true)
-        {
-            for (int i = 0; i < skillData.projectileCount; i++)
+            if (projectile.gameObject.activeInHierarchy)
             {
-                Projectile projectile = ProjectilePoolManager.Instance.SpawnProjectile(skillData);
-                projectile.Fire(shooter, LookDirection());
-                yield return new WaitForSeconds(0.2f); //발사 간격
+                SkillManager.Instance.DeSpawnProjectile(projectile);
             }
-            yield return coolTime;
         }
+        projectiles.Clear();
+        SetSkillData(skillData.skillId + 1);
+        Init();
     }
 
-    private void SkillLevelUp()
+    public void SetSkillData(int skillId)
     {
-        SkillDataLoad(FindSkill((skillData.skillId + 1).ToString()));
-    }
+        Dictionary<string, object> data = skillTable[skillId.ToString()];
 
-    #region Skill Load
-
-    private void SkillDataLoad(Dictionary<string, object> skillInfo)
-    {
-        if (skillInfo == null)
+        skillData.SetSkillId(skillId);
+        skillData.SetCoolTime(Convert.ToInt32(data["Cooltime"]));
+        coolTime = new WaitForSeconds(skillData.coolTime / 10000.0f);
+        skillData.SetAttackDistance(Convert.ToInt32(data["AttackDistance"]));
+        skillData.SetDamage(Convert.ToInt32(data["Damage"]));
+        try
         {
-            DebugManager.Instance.PrintDebug("존재하지 않는 스킬입니다");
-            return;
+            skillData.SetSkillEffectParam(data["SkillEffectParam"] as List<string>);
         }
-        skillData.SetCoolTime(Convert.ToInt32(skillInfo["Cooltime"]));
-        skillData.SetAttackDistance(Convert.ToInt32(skillInfo["AttackDistance"]));
-        skillData.SetDamage(Convert.ToInt32(skillInfo["Damage"]));
-        skillData.SetSkillEffectParam(Convert.ToInt32(skillInfo["SkillEffectParam"]));
-        skillData.SetSkillCut(Convert.ToBoolean(Convert.ToString(skillInfo["Skill_Cut"]).ToLower()));
-        skillData.SetIsEffect(Convert.ToBoolean(Convert.ToString(skillInfo["IsEffect"]).ToLower()));
-        skillData.SetIsUltimate(Convert.ToBoolean(Convert.ToString(skillInfo["IsUltimate"]).ToLower()));
-        skillData.SetName(Convert.ToString(skillInfo["Name"]));
-        skillData.SetDesc(Convert.ToString(skillInfo["Desc"]));
-        skillData.SetIcon(Convert.ToString(skillInfo["Icon"]));
-        skillData.SetCutDire(Convert.ToString(skillInfo["Cut_dire"]));
-        skillData.SetSkillImage(Convert.ToString(skillInfo["SkillImage"]));
-        skillData.SetSkillEffect((SKILL_EFFECT)Enum.Parse(typeof(SKILL_EFFECT), Convert.ToString(skillInfo["SkillEffect"]).ToUpper()));
-        skillData.SetSkillTarget((SKILL_TARGET)Enum.Parse(typeof(SKILL_TARGET), Convert.ToString(skillInfo["SkillTarget"]).ToUpper()));
-        //skillData.SetCalcDamageType((CALC_DAMAGE_TYPE)Enum.Parse(typeof(CALC_DAMAGE_TYPE), Convert.ToString(skillInfo["SkillCalcType"]).ToUpper()));
-
-        skillData.SetProjectileCount(Convert.ToInt32(skillInfo["ProjectileCount"]));
-        skillData.SetSpeed(Convert.ToInt32(skillInfo["Speed"]));
-        skillData.SetSplashRange(Convert.ToInt32(skillInfo["SplashRange"]));
-        skillData.SetProjectileSizeMulti(Convert.ToInt32(skillInfo["ProjectileSizeMulti"]));
-        skillData.SetIsPenetrate(Convert.ToBoolean(skillInfo["IsPenetrate"]));
-        skillData.SetProjectileType((PROJECTILE_TYPE)Enum.Parse(typeof(PROJECTILE_TYPE), Convert.ToString(skillInfo["ProjectileType"]).ToUpper()));
-    }
-
-    private Dictionary<string, object> FindSkill(string skillId)
-    {
-        Dictionary<string, Dictionary<string, object>> skillTable = CSVReader.Read("SkillTable");
-
-        if (skillTable.ContainsKey(skillId))
+        catch
         {
-            skillData.SetSkillId(Convert.ToInt32(skillId));
-            return skillTable[skillId];
+            List<string> list = new List<string>();
+            list.Add(data["SkillEffectParam"].ToString());
+            skillData.SetSkillEffectParam(list);
         }
-        //찾는 스킬이 없을 경우 null
-        return null;
+        skillData.SetSkillCut(Convert.ToBoolean(Convert.ToString(data["Skill_Cut"]).ToLower()));
+        skillData.SetIsEffect(Convert.ToBoolean(Convert.ToString(data["IsEffect"]).ToLower()));
+        skillData.SetIsUltimate(Convert.ToBoolean(Convert.ToString(data["IsUltimate"]).ToLower()));
+        skillData.SetName(Convert.ToString(data["Name"]));
+        skillData.SetDesc(Convert.ToString(data["Desc"]));
+        skillData.SetIcon(Convert.ToString(data["Icon"]));
+        skillData.SetCutDire(Convert.ToString(data["Cut_dire"]));
+        skillData.SetSkillImage(Convert.ToString(data["SkillImage"]));
+        skillData.SetSkillEffect((SKILL_EFFECT)Enum.Parse(typeof(SKILL_EFFECT), Convert.ToString(data["SkillEffect"]).ToUpper()));
+        skillData.SetSkillTarget((SKILL_TARGET)Enum.Parse(typeof(SKILL_TARGET), Convert.ToString(data["SkillTarget"]).ToUpper()));
+        //skillData.SetCalcDamageType((CALC_DAMAGE_TYPE)Enum.Parse(typeof(CALC_DAMAGE_TYPE), Convert.ToString(data["SkillCalcType"]).ToUpper()));
+
+        skillData.SetProjectileCount(Convert.ToInt32(data["ProjectileCount"]));
+        skillData.SetIntervalTime((float)Convert.ToDouble(data["IntervalTime"]));
+        intervalTime = new WaitForSeconds(skillData.intervalTime);
+        skillData.SetDuration((float)Convert.ToDouble(data["Duration"]));
+        duration = new WaitForSeconds(skillData.duration);
+        skillData.SetSpeed(Convert.ToInt32(data["Speed"]));
+        skillData.SetSplashRange(Convert.ToInt32(data["SplashRange"]));
+        skillData.SetProjectileSizeMulti(Convert.ToInt32(data["ProjectileSizeMulti"]));
+        skillData.SetIsPenetrate(Convert.ToBoolean(data["IsPenetrate"]));
+        //skillData.SetProjectileType((PROJECTILE_TYPE)Enum.Parse(typeof(PROJECTILE_TYPE), Convert.ToString(data["ProjectileType"]).ToUpper()));
+        //skillData.SetSkillPrefabPath(data["SkillPrefabPath"].ToString());
     }
-    #endregion
+
 }

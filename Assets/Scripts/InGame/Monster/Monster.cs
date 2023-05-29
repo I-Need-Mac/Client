@@ -15,7 +15,6 @@ public class Monster : MonoBehaviour
     private Collider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
-    private WaitForSeconds tick = new WaitForSeconds(0.05f);
 
     private bool isPlayer;
     private bool isHit;
@@ -23,7 +22,9 @@ public class Monster : MonoBehaviour
 
     private float posWeight;
     private WaitForSeconds delay;
+    private WaitForSeconds tick;
 
+    private MonsterCollider attackCollider;
     private SpineManager spineManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
@@ -32,13 +33,19 @@ public class Monster : MonoBehaviour
     public Transform target { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
-    private void OnEnable()
+    private void Awake()
     {
+        attackCollider = GetComponentInChildren<MonsterCollider>();
         monsterCollider = GetComponent<Collider2D>();
-        monsterCollider.enabled = true;
         spineManager = GetComponent<SpineManager>();
         soundRequester = GetComponentInChildren<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
+        tick = new WaitForSeconds(1f);
+    }
+
+    private void OnEnable()
+    {
+        monsterCollider.enabled = true;
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
         situation = SoundSituation.SOUNDSITUATION.IDLE;
@@ -55,9 +62,10 @@ public class Monster : MonoBehaviour
         //StartCoroutine(Move());
         btManager = new BehaviorTreeManager(SetAI(monsterData.attackType));
         spineManager.SetAnimation("Idle", true);
+        attackCollider.SetAttackDistance(monsterData.atkDistance);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         btManager.Active();
     }
@@ -148,7 +156,7 @@ public class Monster : MonoBehaviour
     private NodeConstant Attack()
     {
         DebugManager.Instance.PrintDebug("[BTtest]: Attack");
-        monsterRigidbody.velocity = Vector2.zero;
+        monsterRigidbody.velocity = Vector3.zero;
         if (!isAttack)
         {
             spineManager.SetAnimation("Attack", false);
@@ -184,7 +192,9 @@ public class Monster : MonoBehaviour
         spineManager.SetAnimation("Run", true, 0, monsterData.moveSpeed);
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
-        monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+        //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
+        monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
+        monsterRigidbody.velocity = Vector3.zero;
         return NodeConstant.RUNNING;
     }
 
@@ -198,7 +208,7 @@ public class Monster : MonoBehaviour
 
         DebugManager.Instance.PrintDebug("[BTtest]: Idle");
         isAttack = false;
-        monsterRigidbody.velocity = Vector2.zero;
+        monsterRigidbody.velocity = Vector3.zero;
         spineManager.SetAnimation("Idle", true);
         return NodeConstant.SUCCESS;
     }
@@ -212,9 +222,12 @@ public class Monster : MonoBehaviour
     private IEnumerator AttackDelay()
     {
         //yield return delay;
-        isAttack = true;
+        //isAttack = true;
+        attackCollider.AttackColliderSwitch(true);
+        yield return tick;
+        attackCollider.AttackColliderSwitch(false);
         yield return delay;
-        isAttack = false;
+        //isAttack = false;
     }
     #endregion
 

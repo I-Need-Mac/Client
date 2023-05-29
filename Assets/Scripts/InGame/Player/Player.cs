@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
+        DebugManager.Instance.PrintDebug("RootMotionTest: " + transform.localPosition.ToString("N10"));
     }
 
     private void FixedUpdate()
@@ -81,8 +82,12 @@ public class Player : MonoBehaviour
         spineManager.SetDirection(character, playerDirection);
         spineManager.SetDirection(shadow, playerDirection);
         playerRigidbody.velocity = playerDirection.normalized * moveSpeed;
+
         if (playerRigidbody.velocity == Vector2.zero)
         {
+            Vector3 pos = transform.localPosition;
+            pos.y += 0.0000001f;
+            transform.localPosition = pos;
             spineManager.SetAnimation("Idle", true);
         }
         else
@@ -126,13 +131,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public IEnumerator Invincible(Collider2D playerCollider)
+    public IEnumerator Invincible()
     {
         spineManager.SetColor(Color.red);
-        playerCollider.enabled = false;
         yield return invincibleTime;
         spineManager.SetColor(Color.white);
-        playerCollider.enabled = true;
     }
     #endregion
 

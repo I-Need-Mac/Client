@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5992440833124009395}
   - component: {fileID: 1935491357812471615}
   - component: {fileID: 914567106422733745}
+  - component: {fileID: 4426412192838052374}
+  - component: {fileID: 911406264473463361}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -128,6 +130,34 @@ MonoBehaviour:
   _animationName: 
   loop: 0
   timeScale: 1
+--- !u!70 &4426412192838052374
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4039913287030105507}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 1
+--- !u!114 &911406264473463361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4039913287030105507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737a7a42cceb6a3449a7823d1ee83451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5539203116184173441
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,7 +170,7 @@ GameObject:
   - component: {fileID: 5356962465746057791}
   - component: {fileID: 3594077179634657150}
   - component: {fileID: 5384849946976506286}
-  - component: {fileID: 7384747777913648661}
+  - component: {fileID: -6487524491093930541}
   m_Layer: 0
   m_Name: MonsterSkeletonPrefab
   m_TagString: Untagged
@@ -203,9 +233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9551ba00533514699483adb20ee67e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subject: 0
-  skeletonAnimation: {fileID: 0}
-  spineSpeed: 1
 --- !u!50 &5384849946976506286
 Rigidbody2D:
   serializedVersion: 4
@@ -227,8 +254,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &7384747777913648661
-CircleCollider2D:
+--- !u!70 &-6487524491093930541
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -241,5 +268,5 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0

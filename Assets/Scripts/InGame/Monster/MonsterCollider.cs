@@ -15,6 +15,11 @@ public class MonsterCollider : MonoBehaviour
         gameObject.layer = (int)LayerConstant.HIT;
     }
 
+    private void OnEnable()
+    {
+        attackCollider.enabled = false;
+    }
+
     public void SetAttackDistance(float atkDistance)
     {
         Vector2 size = attackCollider.size;
@@ -24,8 +29,6 @@ public class MonsterCollider : MonoBehaviour
         Vector2 offSet = attackCollider.offset;
         offSet.x = -atkDistance * 0.5f;
         attackCollider.offset = offSet;
-
-        attackCollider.enabled = false;
     }
 
     public void AttackColliderSwitch(bool flag)

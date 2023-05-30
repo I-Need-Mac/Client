@@ -4,7 +4,7 @@ String,String,String,String
 CharName_GwiTae,귀태,GwiTae,ギュテ
 CharName_HoJin,호진,HoJin,ホジン
 CharName_JinSiWoo,진시우,JinSiWoo,ジン・シウ
-CharName_LeeYaeJi,키노하나 세이메이,LeeYaeJi,リ・イェジ
+CharName_KinohanaSeiMei,키노하나 세이메이,LeeYaeJi,リ・イェジ
 CharName_Macia,마키아,Macia,マキア・スメルティ
 CharName_Macia Smerti,마키아 스메르티,Macia Smerti,マキア・スメルティ
 CharName_Mago,마고,Mago,マコ
@@ -12,9 +12,9 @@ CharName_Sinwol,신월,Sinwol,新月
 CharName_SiWoo,시우,SiWoo,シウ
 CharName_Ulises,율리세스,Ulises,ルイズ・オブセシア
 CharName_Ulises Obsessia,율리세스 오브세시아,Ulises Obsessia,ルイズ・オブセシア
-CharName_YaeJi,세이메이,YaeJi,イェジ
+CharName_SeiMei,세이메이,YaeJi,イェジ
 CharName_YunHoJin,윤호진,YunHoJin,ユン・ホジン
-CharDesc_YaeJi,Test,YaeJi,
+CharDesc_SeiMei,Test,YaeJi,
 CharDesc_HoJin,Test,HoJin,
 CharDesc_Ulises,Test,Ulises,
 CharDesc_Macia,Test,Macia,
@@ -70,45 +70,6 @@ Nickname_Less,닉네임의 글자 수가 적습니다.,,ニックネームの文
 Nickname_LimitWord,사용할 수 없는 단어가 포함되었습니다.,,使用できない文字が含まれています
 Nickname_SameName,중복된 닉네임입니다.,,この名前は既に使用されています
 Nickname_Lot,글자가 너무 많습니다.,,
-Not_Ues1,빛을 잃은 생명들에게 고한다.,,光を失いし生命達に告ぐ
-Not_Ues10,승자 없는 싸움과 절망을 반복했다.,,勝者なき戦いと絶望を繰り返した
-Not_Ues11,빛을 잃어버린 자들이여,,光を失いし者達よ
-Not_Ues12,믿음을 잃고 죽지 못해 사는 자들이여,,進行を失い死ぬこともできず生きる者たちよ
-Not_Ues13,혼을 가지지 못한 자,,魂を持たぬ者
-Not_Ues14,믿음이 없는 자,,信仰がない者
-Not_Ues15,끝없는 배신과 함께하는 자,,終わりのない裏切りと共に在る者
-Not_Ues16,증오하는 자,,憎しみを持つ者
-Not_Ues17,그들로부터 어머니의 생명을 되찾아,,その者達から母の生命を取り戻す
-Not_Ues18,잃어버린 빛과 축복을 되찾으면,,失われし光と祝福をもたらすなら
-Not_Ues19,어머니께서 돌아오리.,,母が戻ってくるだろう
-Not_Ues2,위대한 어머니의 생명은 흩어졌다.,,偉大なる母の生命が散らばった
-Not_Ues20,가장 빛이 없는 자가,,最も光がない者が
-Not_Ues21,가장 큰 빛을 가지고,,最も大きな光をもって
-Not_Ues22,"그들의 근원, 혼돈의 땅에서",,その者達の源、混沌の地に
-Not_Ues23,어머니의 피를 취해 세상을 가득 채우리라,,母の血を取り世界を満たしつくそう
-Not_Ues3,경계의 저편 그들의 근원인 혼돈의 땅에서,,境界の彼方、それらの根源である混沌の地に
-Not_Ues4,생명의 대리자들은 믿음을 저버렸고,,生命の代理者たちは信仰を捨て
-Not_Ues5,혼돈과 죽음이 가득했던 날 우리들의 어머니께선 자취를 감추셨다.,,混沌と死が満ちていた日我らの母は姿を隠された
-Not_Ues6,어머니를 잃은 자식들은 힘을 잃었으며,,母を失いし子らは力を失い
-Not_Ues7,혼돈 속에서 그 생명을 잃어갔으니,,混沌の中でその生命を失っていき
-Not_Ues8,거짓 된 자들이 흩어진 어머니의 생명을 취해,,偽物達が母の生命を得て
-Not_Ues9,그 힘에 미쳐 파괴와 고통을 낳았으며,,その力で狂気と破壊を生み
-Prolog_Line1,형제들이여 어머니를 잃은 그날을 기억하는가.,,
-Prolog_Line10,어머니의 생명을 처음으로 취한 번뇌에 빠진자로부터,,
-Prolog_Line11,어머니의 살점을 처음으로 취한 탐욕에 빠진자로부터,,
-Prolog_Line12,어머니의 살점과 생명을 되찾아올것이다.,,
-Prolog_Line13,가장 큰 어둠으로 경계의 저편을 무너트리고,,
-Prolog_Line14,가장 큰 빛으로 어머니를 부활시키리.,,
-Prolog_Line15,혼돈과 빛은 하나가 되어,,
-Prolog_Line16,새로운 세상을 어머니로 가득 채우리라.,,
-Prolog_Line2,"우리들의 어머니를 빼앗긴, ",,
-Prolog_Line3,혼돈과 죽음이 가득했던 경계의 저편에서 우리들의 아버지와 함께 숨 죽여 울던 그날을.,,
-Prolog_Line4,"형제들이여,",,
-Prolog_Line5,곧 어머니의 살점과 생명을 취하던 배신자들을 단죄할 자가 나타나리라.,,
-Prolog_Line6,"9번째 푸른달의 그림자가 경계를 덮은 날,",,
-Prolog_Line7,그 누구보다 어두운 곳에서 태어난 우리들의 영웅이 첫 숨결을 내뱉으리..,,
-Prolog_Line8,그는 우리들로부터 빼앗아간 그들과는 다른 힘을 가지고 태어날 것이다.,,
-Prolog_Line9,어머니의 첫번째 배신자인 영원한 권태에 빠진자로부터,,
 Skill_TestExplain1,테스트 스킬 설명,,テストスキル説明
 Skill_TestExplain10,테스트 스킬 설명,,テストスキル説明
 Skill_TestExplain2,테스트 스킬 설명,,テストスキル説明
@@ -193,3 +154,106 @@ UI_ScreenType_Full,전체 화면,,
 UI_ScreenType_FullWindow,테두리 없는 창,,
 UI_Shake,흔들림,,
 UI_Save,저장,,
+Skill_Name_Juhon,주혼참회도,,㣙昏懺意刀
+Skill_Name_Bujung,부정추술,,錇正追術
+Skill_Name_GangSin,강신,,降神
+Skill_Name_GodBless,dei misericordia,,
+Skill_Name_Possession,현신천호령,,顯身天狐灵
+Skill_Name_Irons,Furia de hierro,,
+Skill_Name_GwiGi,귀기발파 ,,鬼氣發破
+Skill_Name_JuHyung,주형염,,呪形染
+Skill_Name_MyeongGyae,명계예사령,,冥界隸死灵
+Skill_Name_CREPITUS,CREPITUS est ars,,
+Skill_Name_GyuGyu,"急急如律令.
+歯を明らかにする",,
+Skill_Name_aliento,aliento del segador,,
+Skill_Name_Pok,폭,,暴
+Skill_Name_JeRyeung,제령,,除令
+Skill_Name_ParkSung,박승,,縛縄
+Skill_Name_Inn,인,,引
+Skill_Name_Churk,척,,斥
+Skill_Name_BunGye,분계격,,分界隔 - 보류
+Skill_Name_SunYang,선양단,,旋兩專
+Skill_Name_Horin,호린,,護燐
+Skill_Name_JuckHwa,적화,,跡火
+Skill_Name_KumJul,금절뢰,,金切雷
+Skill_Name_ChyuRyung,추령주흔,,芻霊呪痕
+Skill_Name_JuckJung,적정불괴,,赤停不壞
+Skill_Name_HwiPung,회풍살,,風回殺
+Skill_Name_SeRae,세례성사,,
+Skill_Name_GamYum,감염,,
+Skill_Name_Ildo,일도화파,,一刀火波
+Skill_Name_JuOrk,주옥,,術玉
+Skill_Name_BuGong,부공척간,,符空拓干
+Skill_Name_MyungSang,명상,,冥想
+Skill_Name_HyulPok,혈폭화,,血暴化
+Skill_Name_InnPassive,인,,引
+Skill_Name_DaeHum,대흡격,,代吸擊
+Skill_Name_GaSok,위신제어 - 가속,,圍身制御 - 加速
+Skill_Name_Hyum,위신제어 - 흡,,圍身制御 - 吸
+Skill_Name_JaeSaeng,위신제어 - 재생,,圍身制御 - 再生
+Skill_Name_HwakSan,주주확산,,祝殶擴散
+Skill_Name_HwakHo,주주확호,,祝殶擴怃
+Skill_Name_JuJuGaSork,주주가속,,祝殶加速
+Skill_Name_JuJuJyungPok,주주증폭,,祝殶增幅
+Skill_Name_GwangHwa,광화,,狂化
+Skill_Name_ChangAe,창애,,蒼崖
+Prolog_Line01,죄를 짓고도 참회하지 않는 어리석은 자들이여.,,
+Prolog_Line02,들어라.,,
+Prolog_Line03,"불타는 대지, 그 아래 숨 죽여 울던.",,
+Prolog_Line04,혼돈과 죽음이 가득했던 경계의 저편에서,,
+Prolog_Line05,"우리들의 어머니를 빼앗긴, 혼돈과 죽음이 가득했던 경계의 저편에서 우리들의 아버지와 함께 숨",,
+Prolog_Line06,죽여 울던 그날을.,,
+Prolog_Line07,"곧, 진노하신 우리들의 아버지께서 무지한 그대들을 벌 하리라",,
+Prolog_Line08,"9번째 푸른 달의 그림자가 경계를 덮은 날, 그 누구보다 어두운 곳에서 태어난 우리들의 자식이 첫",,
+Prolog_Line09,숨결을 내뱉으리.,,
+Prolog_Line10,아버지의 부름에 응하여 우리들이 빼앗긴 찬란한 생명의 이름을 되찾아 올 것이다.,,
+Prolog_Line11,"어머니의 숨결에서 태어난, 첫 번째 배신자인 권태에 빠진 혼으로부터.",,
+Prolog_Line12,"어머니의 눈물에서 태어난, 첫 번째 생명을 취한 죽음에 취한 혼으로부터.",,
+Prolog_Line13,그들의 혼을 어둠과 재로 뒤덮어 그 대가를 치르게 하리라.,,
+Prolog_Line14,가장 큰 빛을 향해 경계를 무너뜨리고 가장 큰 어둠으로 어머니를 마주할 것이다.,,
+Prolog_Line15,빛과 어둠이 하나가 되어 새로운 혼돈이 탄생할 것이다.,,
+Prolog_Line16,그 곳에는 새로운 희망이 싹틀 것이니.,,
+Skill_Desc_Juhon,Team.theblackgames,,
+Skill_Desc_Bujung,Team.theblackgames,,
+Skill_Desc_GangSin,Team.theblackgames,,
+Skill_Desc_GodBless,Team.theblackgames,,
+Skill_Desc_Possession,Team.theblackgames,,
+Skill_Desc_Irons,Team.theblackgames,,
+Skill_Desc_GwiGi,Team.theblackgames,,
+Skill_Desc_JuHyung,Team.theblackgames,,
+Skill_Desc_MyeongGyae,Team.theblackgames,,
+Skill_Desc_CREPITUS,Team.theblackgames,,
+Skill_Desc_GyuGyu,Team.theblackgames,,
+Skill_Desc_aliento,Team.theblackgames,,
+Skill_Desc_Pok,Team.theblackgames,,
+Skill_Desc_JeRyeung,Team.theblackgames,,
+Skill_Desc_ParkSung,Team.theblackgames,,
+Skill_Desc_Inn,Team.theblackgames,,
+Skill_Desc_Churk,Team.theblackgames,,
+Skill_Desc_BunGye,Team.theblackgames,,
+Skill_Desc_SunYang,Team.theblackgames,,
+Skill_Desc_Horin,Team.theblackgames,,
+Skill_Desc_JuckHwa,Team.theblackgames,,
+Skill_Desc_KumJul,Team.theblackgames,,
+Skill_Desc_ChyuRyung,Team.theblackgames,,
+Skill_Desc_JuckJung,Team.theblackgames,,
+Skill_Desc_HwiPung,Team.theblackgames,,
+Skill_Desc_SeRae,Team.theblackgames,,
+Skill_Desc_GamYum,Team.theblackgames,,
+Skill_Desc_Ildo,Team.theblackgames,,
+Skill_Desc_JuOrk,Team.theblackgames,,
+Skill_Desc_BuGong,Team.theblackgames,,
+Skill_Desc_MyungSang,Team.theblackgames,,
+Skill_Desc_HyulPok,Team.theblackgames,,
+Skill_Desc_InnPassive,Team.theblackgames,,
+Skill_Desc_DaeHum,Team.theblackgames,,
+Skill_Desc_GaSok,Team.theblackgames,,
+Skill_Desc_Hyum,Team.theblackgames,,
+Skill_Desc_JaeSaeng,Team.theblackgames,,
+Skill_Desc_HwakSan,Team.theblackgames,,
+Skill_Desc_HwakHo,Team.theblackgames,,
+Skill_Desc_JuJuGaSork,Team.theblackgames,,
+Skill_Desc_JuJuJyungPok,Team.theblackgames,,
+Skill_Desc_GwangHwa,Team.theblackgames,,
+Skill_Desc_ChangAe,Team.theblackgames,,

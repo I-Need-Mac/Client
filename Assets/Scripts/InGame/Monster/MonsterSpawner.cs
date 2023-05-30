@@ -19,6 +19,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private int spawnId;
     private int currentSpawnTime;
 
+    public List<Monster> monsters = new List<Monster>();
+
     private struct RemainMonster
     {
         public int id;
@@ -49,18 +51,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         StartCoroutine(Spawn());
     }
 
-    private void Update()
-    {
-        //if (Timer.Instance.currentTime >= currentSpawnTime)
-        //{
-        //    Spawn(sponeData);
-        //    DebugManager.Instance.PrintDebug("####");
-        //}
-    }
-
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
-
         if (!spawner.ContainsKey(monsterId))
         {
             string prefabPath = CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString();
@@ -68,9 +60,11 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         }
         Monster monster = spawner[monsterId].GetObject();
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
-        monster.transform.localScale = Vector2.one * monster.monsterData.sizeMultiple;
+        monster.transform.localScale *= monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
+        monster.SetTarget(GameManager.Instance.player.transform, true);
         monster.gameObject.SetActive(true);
+        monsters.Add(monster);
         ++spawnCount;
         return monster;
     }
@@ -78,18 +72,15 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     public void DeSpawnMonster(Monster monster)
     {
         spawner[monster.monsterId].ReleaseObject(monster);
+        monsters.Remove(monster);
         --spawnCount;
     }
 
     private IEnumerator Spawn()
     {
-        while (true)
+        monsters.Clear();
+        while (spawnTable.Keys.Count > spawnId)
         {
-            if (spawnTable.Keys.Count - 3 <= spawnId)
-            {
-                yield break;
-            }
-
             if (Timer.Instance.currentTime >= currentSpawnTime)
             {
                 int mobAmount = Convert.ToInt32(spawnData["SponeMobAmount"]);

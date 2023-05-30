@@ -1,12 +1,12 @@
-SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType,SkillPrefabPath
-?¤í‚¬?„ì´???¤í‚¬?´ë¦„,?¤í‚¬ ?¤ëª…,?¤í‚¬?¤ëª… ê¸°íš???„ì´ì½?ì¿¨í????¤í‚¬ì»·ì”¬ ? ë¬´,?¤í‚¬ ì»·ì”¬ ê²½ë¡œ,?¤í‚¬ ?´ë?ì§€,?¬ê±°ë¦??¤í‚¬ ë°”ë¡œ ?œì „?¬ë?,ê¶ê·¹ê¸??¬ë?,?¬ì‚¬ì²?ê°œìˆ˜,?¼í•´,?¬ì‚¬ì²??¤í”¼??ê´€?µì—¬ë¶€,??°œ ë°˜ì?ë¦??¬ì‚¬ì²??¬ì´ì¦?ë°°ìœ¨,?¤í‚¬ ?¨ê³¼,?¤í‚¬ ?¨ê³¼ ?ŒëŒ,?¤í‚¬ ë°œì‚¬ ?€ê²??¤í‚¬ ? ì•„ê°€???•íƒœ,,,,,,,,,
-int,String,String,String,String,Int,Bool,String,String,int,bool,bool,int,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType,String
-10101,10101,10101,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,1,5,5,TRUE,0,1,Stun,0,Melee,Straight,Prefabs/InGame/Skill/StraightSample
-10102,10102,10102,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,2,5,5,FALSE,0,1,Stun,0,Front,Straight,Prefabs/InGame/Skill/StraightSample
-10201,10201,10201,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,3,5,5,TRUE,0,1,Stun,0,Back,Straight,Prefabs/InGame/Skill/StraightSample
-10202,10202,10202,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,1,5,5,FALSE,0,1,Stun,2,Top,Straight,Prefabs/InGame/Skill/StraightSample
-10301,10301,10301,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,4,TRUE,FALSE,5,5,5,TRUE,0,1,Slow,30,Bottom,Straight,Prefabs/InGame/Skill/StraightSample
-10302,10302,10302,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,3,5,5,FALSE,0,1,Nuckback,50,RandomDrop,Straight,Prefabs/InGame/Skill/StraightSample
-10401,10401,10401,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,3,5,10,TRUE,0,1,Boom,100,Random,Straight,Prefabs/InGame/Skill/StraightSample
-10402,10402,10402,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,5,TRUE,FALSE,1,5,5,FALSE,0,1,Nuckback,100,Near,Straight,Prefabs/InGame/Skill/StraightSample
-10501,10501,10501,?ŒìŠ¤???¤í‚¬ ?¤ëª…,Dummy,2,FALSE,Null,Dummy,6,TRUE,FALSE,1,5,5,TRUE,5,1,Stun,0,Melee,Straight,Prefabs/InGame/Skill/StraightSample
+SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,IntervalTime,Duration,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,ProjectileType,SkillPrefabPath
+?¤í‚¬?„ì´???¤í‚¬?´ë¦„,Skill_TestExplain1,?¤í‚¬?¤ëª… ê¸°íš??Dummy,ì¿¨í????¤í‚¬ì»·ì”¬ ? ë¬´,?¤í‚¬ ì»·ì”¬ ê²½ë¡œ,?¤í‚¬ ?´ë?ì§€,?¬ê±°ë¦??¤í‚¬ ë°”ë¡œ ?œì „?¬ë?,ê¶ê·¹ê¸??¬ë?,?¬ì‚¬ì²?ê°œìˆ˜,?¼í•´,?¬ì‚¬ì²??¤í”¼??ê´€?µì—¬ë¶€,??°œ ë°˜ì?ë¦??¬ì‚¬ì²??¬ì´ì¦?ë°°ìœ¨,?¤í‚¬ ?¨ê³¼,,,?¤í‚¬ ?¨ê³¼ ?ŒëŒ,?¤í‚¬ ë°œì‚¬ ?€ê²??¤í‚¬ ? ì•„ê°€???•íƒœ,,,,,,,,
+int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float,float,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType,
+10101,10101,10101,10101,Arts/Skill/Icon/Skill_Icon_Juhon_00,20000,FALSE,Null,Dummy,3,TRUE,FALSE,3,0.2,5,5,300,TRUE,0,3,1,1,Player,Whip,Prefabs/InGame/Skill/Juhon
+10201,10201,10201,10201,Dummy,10000,FALSE,Null,Dummy,4,TRUE,FALSE,5,0.1,3,5,5,FALSE,0,1,Nuckback,2,Melee,Straight,Prefabs/InGame/Skill/Bujung
+10301,10301,10301,10301,Dummy,120000,FALSE,Null,Dummy,10,TRUE,FALSE,1,0.2,20,5,0,TRUE,8,0,1,101|,Random,,0
+12001,12001,12001,12001,Arts/Skill/Icon/Skill_Icon_Juhon_00,30000,FALSE,Null,Dummy,4,TRUE,FALSE,3,0.2,5,5,100,TRUE,0,1,1,1,Player,,Prefabs/InGame/Skill/Horin
+10401,10401,10401,10401,20000,20000,FALSE,Null,Dummy,0,FALSE,FALSE,1,0.2,2,5,0,TRUE,8,0,1,1,Player,,Prefabs/InGame/Skill/GodBless
+10801,10801,10801,10801,Dummy,10000,FALSE,Null,Dummy,10,FALSE,TRUE,3,0.05,5,5,10,TRUE,0,1,1,101,Melee,None,Prefabs/InGame/Skill/JuHyung
+10601,10601,10601,10601,Dummy,20000,FALSE,Null,Dummy,5,TRUE,FALSE,25,0.1,5,5,10,TRUE,0,1,1,1,Random,Whip,Prefabs/InGame/Skill/Irons
+10701,10701,10701,10701,Dummy,20000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.5,5,5,5,TRUE,1,1,1,1,Player,Whip,Prefabs/InGame/Skill/GwiGi
+11001,11001,11001,11001,Dummy,20000,FALSE,Null,Dummy,100,TRUE,FALSE,1,0.5,5,5,5,FALSE,1,1,1,2|100,Melee,,Prefabs/InGame/Skill/GyuGyu

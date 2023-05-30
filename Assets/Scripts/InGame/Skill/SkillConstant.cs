@@ -16,10 +16,11 @@ namespace SKILLCONSTANT
         BACK,
         TOP,
         BOTTOM,
-        RANDOMDROP,
         RANDOM,
-        NEAR,
         BOSS,
+        PLAYER,
+        //ALL,
+        LOWEST,
     }
 
     public enum CALC_DAMAGE_TYPE

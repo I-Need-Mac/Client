@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,11 +15,11 @@ public class UI_Login : UI_Popup
     }
 
     [SerializeField]
-    Text titleText;
+    TextMeshProUGUI titleText;
     [SerializeField]
-    Text loginText;
+    TextMeshProUGUI loginText;
     [SerializeField]
-    Text autoLoginText;
+    TextMeshProUGUI autoLoginText;
 
     Toggle autoLogin;
 
@@ -55,6 +56,8 @@ public class UI_Login : UI_Popup
                 // WebLoginFromPost();
                 this.CloseUI<UI_Login>();
                 UIManager.Instance.OpenUI<UI_NickName>();
+                if (!SteamManager.Initialized) { return; }
+
                 break;
             default:
                 break;

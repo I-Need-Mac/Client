@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,12 +15,12 @@ public class UI_StoryMain : UI_Popup
     }
 
     [SerializeField]
-    Text title;
+    TextMeshProUGUI title;
 
     [SerializeField]
-    Text stageTitle;
+    TextMeshProUGUI stageTitle;
     [SerializeField]
-    Text stageSub;
+    TextMeshProUGUI stageSub;
 
     [SerializeField]
     GameObject chapterList;

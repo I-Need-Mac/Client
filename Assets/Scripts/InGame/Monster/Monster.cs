@@ -12,7 +12,7 @@ public class Monster : MonoBehaviour
     [field: SerializeField] public MonsterData monsterData;
     [SerializeField] private float currentHp;
 
-    private Collider2D monsterCollider;
+    private CapsuleCollider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
@@ -20,7 +20,7 @@ public class Monster : MonoBehaviour
     private bool isHit;
     private BehaviorTreeManager btManager;
 
-    private float posWeight;
+    private float weightY;
     private WaitForSeconds delay;
     private WaitForSeconds tick;
 
@@ -36,11 +36,11 @@ public class Monster : MonoBehaviour
     private void Awake()
     {
         attackCollider = GetComponentInChildren<MonsterCollider>();
-        monsterCollider = GetComponent<Collider2D>();
+        monsterCollider = GetComponent<CapsuleCollider2D>();
         spineManager = GetComponent<SpineManager>();
         soundRequester = GetComponentInChildren<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
-        tick = new WaitForSeconds(1f);
+        tick = new WaitForSeconds(0.4f);
     }
 
     private void OnEnable()
@@ -52,7 +52,7 @@ public class Monster : MonoBehaviour
         MonsterSetting(monsterId.ToString());
         currentHp = monsterData.hp;
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
-        posWeight = monsterCollider.offset.y;
+        weightY = monsterCollider.size.y;
         isAttack = false;
         isHit = false;
     }
@@ -68,6 +68,7 @@ public class Monster : MonoBehaviour
     private void FixedUpdate()
     {
         btManager.Active();
+        monsterRigidbody.velocity = Vector3.zero;
     }
 
     #region AI
@@ -136,7 +137,6 @@ public class Monster : MonoBehaviour
     #region Logic
     private NodeConstant IsAttack()
     {
-        DebugManager.Instance.PrintDebug("[BTtest]: IsAttack");
         return spineManager.GetAnimationName().Equals("Attack") ? NodeConstant.RUNNING : NodeConstant.SUCCESS;
     }
 
@@ -144,10 +144,8 @@ public class Monster : MonoBehaviour
     {
         Vector2 diff = target.position - transform.position;
         float distance = diff.magnitude;
-        DebugManager.Instance.PrintDebug("[BTtest]: IsAttackable > " + distance);
-        if (distance < monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(posWeight))))
+        if (distance < monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
         {
-            DebugManager.Instance.PrintDebug("[테스트]");
             return NodeConstant.SUCCESS;
         }
         return NodeConstant.FAILURE;
@@ -155,7 +153,6 @@ public class Monster : MonoBehaviour
 
     private NodeConstant Attack()
     {
-        DebugManager.Instance.PrintDebug("[BTtest]: Attack");
         monsterRigidbody.velocity = Vector3.zero;
         if (!isAttack)
         {
@@ -168,7 +165,6 @@ public class Monster : MonoBehaviour
 
     private NodeConstant IsVisible()
     {
-        DebugManager.Instance.PrintDebug("[BTtest]: IsVisible");
         return (target.position - transform.position).magnitude <= monsterData.viewDistance ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
     }
 
@@ -182,9 +178,8 @@ public class Monster : MonoBehaviour
 
         Vector2 diff = target.position - transform.position;
         float distance = diff.magnitude;
-        DebugManager.Instance.PrintDebug("[BTtest]: Run - " + distance);
 
-        if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(posWeight))))
+        if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
         {
             return NodeConstant.SUCCESS;
         }
@@ -206,7 +201,6 @@ public class Monster : MonoBehaviour
             StopCoroutine("AttackDelay");
         }
 
-        DebugManager.Instance.PrintDebug("[BTtest]: Idle");
         isAttack = false;
         monsterRigidbody.velocity = Vector3.zero;
         spineManager.SetAnimation("Idle", true);
@@ -215,19 +209,18 @@ public class Monster : MonoBehaviour
 
     private NodeConstant IsHit()
     {
-        DebugManager.Instance.PrintDebug("[BTtest]: IsHit");
         return isHit ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
     }
 
     private IEnumerator AttackDelay()
     {
-        //yield return delay;
-        //isAttack = true;
-        attackCollider.AttackColliderSwitch(true);
         yield return tick;
-        attackCollider.AttackColliderSwitch(false);
+        isAttack = true;
+        attackCollider.AttackColliderSwitch(true);
+        //yield return tick;
         yield return delay;
-        //isAttack = false;
+        attackCollider.AttackColliderSwitch(false);
+        isAttack = false;
     }
     #endregion
 

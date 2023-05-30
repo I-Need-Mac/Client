@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3499546422887944870}
   - component: {fileID: 845910972930622087}
   m_Layer: 0
-  m_Name: Lesser_Demon
+  m_Name: Devil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 333ea42fda9a08e49ae2f12b4fc05bda, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: cb962f861e6ac4a449349d1f93237831, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0

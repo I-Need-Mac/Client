@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3499546422887944870}
   - component: {fileID: 845910972930622087}
   m_Layer: 0
-  m_Name: Devil
+  m_Name: Lesser_Demon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4ecd13599d8314e8d1c74f19e59bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <monsterId>k__BackingField: 0
+  <monsterId>k__BackingField: 104
   monsterData:
     monsterName: 
     sizeMultiple: 0
@@ -181,7 +181,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2e53eabdc1038b94bad48deca3fcb04f, type: 2}
+  - {fileID: 2100000, guid: e361dfd453035134a8e295a98e04a0e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 7278982717867400741}
   - component: {fileID: 2188268311321995509}
   - component: {fileID: 5193571254382800259}
+  - component: {fileID: 2805149198975250497}
   m_Layer: 0
   m_Name: Nien
   m_TagString: Untagged
@@ -264,3 +265,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0.28947547, y: -0.06388456}
   m_Size: {x: 0.8899044, y: 0.37583652}
   m_Direction: 1
+--- !u!114 &2805149198975250497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746180537932006106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Nien
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Nien
+    delay: 1
+    SOUNDSITUATION: 5
+    audioClip: {fileID: 8300000, guid: e885484e1bc99fb47a0ac3f6bfa586b1, type: 3}

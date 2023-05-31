@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 754799291108385775}
-  - component: {fileID: 6997033369264308447}
   - component: {fileID: 2949618979689919059}
   - component: {fileID: 4504206588910747357}
   - component: {fileID: 1107568406015192954}
@@ -36,20 +35,6 @@ Transform:
   m_Father: {fileID: 6408958156539464518}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6997033369264308447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730636806238085327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakerSettings: []
-  soundPackItems: []
 --- !u!23 &2949618979689919059
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -69,7 +54,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: f94da322c595f384d96ff8d821bad122, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -177,6 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6408958156539464518}
   - component: {fileID: 8675297435814084435}
+  - component: {fileID: 7751576797987361664}
   - component: {fileID: 275744116487021074}
   - component: {fileID: 8685699340648977602}
   - component: {fileID: 1712695167441029311}
@@ -230,6 +216,20 @@ MonoBehaviour:
     monsterPrefabPath: 
     attackType: 0
   currentHp: 0
+--- !u!114 &7751576797987361664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9145731216950836973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems: []
 --- !u!114 &275744116487021074
 MonoBehaviour:
   m_ObjectHideFlags: 0

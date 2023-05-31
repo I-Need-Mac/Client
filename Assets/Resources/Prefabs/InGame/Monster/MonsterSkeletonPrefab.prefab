@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4056208363012335235}
-  - component: {fileID: 5992440833124009395}
   - component: {fileID: 1935491357812471615}
   - component: {fileID: 914567106422733745}
   - component: {fileID: 4426412192838052374}
@@ -35,20 +34,6 @@ Transform:
   m_Father: {fileID: 7692755693375999530}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5992440833124009395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4039913287030105507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakerSettings: []
-  soundPackItems: []
 --- !u!23 &1935491357812471615
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -168,6 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7692755693375999530}
   - component: {fileID: 5356962465746057791}
+  - component: {fileID: 4414987989502554695}
   - component: {fileID: 3594077179634657150}
   - component: {fileID: 5384849946976506286}
   - component: {fileID: -6487524491093930541}
@@ -221,6 +207,20 @@ MonoBehaviour:
     monsterPrefabPath: 
     attackType: 0
   currentHp: 0
+--- !u!114 &4414987989502554695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539203116184173441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems: []
 --- !u!114 &3594077179634657150
 MonoBehaviour:
   m_ObjectHideFlags: 0

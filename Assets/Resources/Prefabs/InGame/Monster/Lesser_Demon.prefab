@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1218256798618946850}
   - component: {fileID: 3494219829300017463}
+  - component: {fileID: 1925695355295134593}
   - component: {fileID: 5461332211756131446}
   - component: {fileID: 3499546422887944870}
   - component: {fileID: 845910972930622087}
@@ -63,6 +64,20 @@ MonoBehaviour:
     monsterPrefabPath: 
     attackType: 0
   currentHp: 0
+--- !u!114 &1925695355295134593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3960077442572204169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems: []
 --- !u!114 &5461332211756131446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +136,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4783027944609605003}
-  - component: {fileID: 2955306528515442363}
   - component: {fileID: 6986782539019547703}
   - component: {fileID: 8546432831276726457}
   - component: {fileID: 2701631568401022466}
@@ -148,20 +162,6 @@ Transform:
   m_Father: {fileID: 1218256798618946850}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2955306528515442363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4772286373009172139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakerSettings: []
-  soundPackItems: []
 --- !u!23 &6986782539019547703
 MeshRenderer:
   m_ObjectHideFlags: 0

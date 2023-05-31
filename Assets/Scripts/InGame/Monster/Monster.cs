@@ -38,7 +38,7 @@ public class Monster : MonoBehaviour
         attackCollider = GetComponentInChildren<MonsterCollider>();
         monsterCollider = GetComponent<CapsuleCollider2D>();
         spineManager = GetComponent<SpineManager>();
-        soundRequester = GetComponentInChildren<SoundRequester>();
+        soundRequester = GetComponent<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         tick = new WaitForSeconds(0.4f);
     }

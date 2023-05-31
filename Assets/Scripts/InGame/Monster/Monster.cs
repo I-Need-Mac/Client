@@ -10,7 +10,6 @@ public class Monster : MonoBehaviour
 {
     [field: SerializeField] public int monsterId { get; private set; }
     [field: SerializeField] public MonsterData monsterData;
-    [SerializeField] private float currentHp;
 
     private CapsuleCollider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
@@ -50,7 +49,6 @@ public class Monster : MonoBehaviour
         lookDirection = Vector2.right;
         situation = SoundSituation.SOUNDSITUATION.IDLE;
         MonsterSetting(monsterId.ToString());
-        currentHp = monsterData.hp;
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
         weightY = monsterCollider.size.y;
         isAttack = false;
@@ -238,6 +236,7 @@ public class Monster : MonoBehaviour
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
             monsterData.SetHp(Convert.ToInt32(table["HP"]));
+            monsterData.SetCurrentHp(monsterData.hp);
             monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
             monsterData.SetAttack(Convert.ToInt32(table["Attack"]));
             monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
@@ -266,10 +265,9 @@ public class Monster : MonoBehaviour
         {
             if (projectile.isHit)
             {
-                DebugManager.Instance.PrintDebug("[DamageTest]");
-                currentHp -= projectile.skillData.damage;
+                monsterData.SetCurrentHp(monsterData.currentHp - (int)GameManager.Instance.player.playerManager.TotalDamage(projectile.skillData.damage));
                 isHit = true;
-                if (currentHp <= 0)
+                if (monsterData.currentHp <= 0)
                 {
                     Die();
                 }

@@ -6,48 +6,41 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //싱글톤 사용
-public class PlayerManager : SingletonBehaviour<PlayerManager>
+public class PlayerManager : MonoBehaviour
 {
     private const float HP_REGEN_PER_SECOND = 1f;
 
-    private int fraction;             //분율
+    private float fraction;             //분율
     private int coolTimeConstant;     //재사용대기시간감소상수
     private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
     private int criticalRatio;
 
-    private RaycastHit2D raycast;
-    private Vector2 pos;
+    
 
     private Player player;
     private Collider2D playerCollider;
 
     public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
-    public PlayerData weight { get; private set; } = new PlayerData();     //증감치
+    //public PlayerData weight { get; private set; } = new PlayerData();     //증감치
 
     #region
-    protected override void Awake()
+    private void Awake()
     {
-        PlayerSetting(FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
         ConfigSetting();
         player = GetComponentInParent<Player>();
         playerCollider = GetComponent<Collider2D>();
         playerCollider.isTrigger = true;
-        pos = new Vector2(0, 2);
     }
 
-    //private void Start()
-    //{
-    //    StartCoroutine(HpRegeneration());
-    //}
-
-    //private void Update()
-    //{
-    //    raycast = Physics2D.CapsuleCast((Vector2)transform.position - pos, (Vector2)transform.position + pos, CapsuleDirection2D.Vertical, 30.0f, Vector2.zero, 0.0f, (int)LayerConstant.MONSTER);
-    //}
+    private void OnEnable()
+    {
+        PlayerSetting(FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
+        StartCoroutine(HpRegeneration());
+    }
 
     private void ConfigSetting()
     {
-        fraction = Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
+        fraction = 1 / Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
         coolTimeConstant = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeOffset", "ConfigValue"));
         coolTimeCoefficient = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeMax", "ConfigValue"));
         criticalRatio = Convert.ToInt32(CSVReader.Read("BattleConfig", "CriticalRatio", "ConfigValue"));
@@ -65,16 +58,16 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
 
         playerData.SetCharacterName(Convert.ToString(characterData["CharacterName"]));
         playerData.SetHp(Convert.ToInt32(characterData["HP"]));
+        playerData.SetCurrentHp(playerData.hp);
         playerData.SetAttack(Convert.ToInt32(characterData["Attack"]));
         playerData.SetCriRatio(Convert.ToInt32(characterData["CriRatio"]));
-        playerData.SetCriDamage(Convert.ToInt32(characterData["CriDamage"]));
+        playerData.SetCriDamage(float.Parse(Convert.ToString(characterData["CriDamage"])));
         playerData.SetCoolDown(Convert.ToInt32(characterData["CoolDown"]));
         playerData.SetHpRegen(Convert.ToInt32(characterData["HPRegen"]));
         playerData.SetShield(Convert.ToInt32(characterData["Shield"]));
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(Convert.ToInt32(characterData["MoveSpeed"]));
         playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
-        //playerData.SetSkills();
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴
@@ -93,75 +86,13 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     }
     #endregion
 
-    /*스탯 증감 관련*/
-    #region STATUS
-    //increment는 버프+디버프 값 이하 status에 모두 동일하게 적용
-    //버프, 디버프의 기본 수치는 0
-
-    //체력
-    public int ReturnHp()
-    {
-        return playerData.hp + weight.hp;
-    }
-
-    //공격력
-    public int ReturnAttack()
-    {
-        return playerData.attack + weight.attack;
-    }
-
-    //크리티컬확률
-    public int ReturnCriRatio()
-    {
-        return playerData.criRatio + weight.criRatio;
-    }
-
-    //크리티컬데미지 증감함수
-    public int ReturnCriDamage()
-    {
-        return playerData.criDamage + weight.criDamage * criticalRatio;
-    }
-
-    //재사용대기시간 = 기존재사용대기시간*(재사용대기시간감소^2/(재사용대기시간감소^2+재사용대기시간감소상수))*재사용대기시간감소최대치조절계수/10000
-    public float ReturnCoolDown()
-    {
-        return playerData.coolDown * ((float)Math.Pow(weight.coolDown, 2) / ((float)Math.Pow(weight.coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient / fraction;
-    }
-
-    //체젠량
-    public int ReturnHpRegen()
-    {
-        return playerData.hpRegen + weight.hpRegen;
-    }
-
-    //쉴드 개수
-    public int ReturnShield()
-    {
-        return playerData.shield + weight.shield;
-    }
-
-    //투사체 증가 개수
-    public int ReturnProjectileAdd()
-    {
-        return playerData.projectileAdd + weight.projectileAdd;
-    }
-
-    //이동속도
-    public float ReturnMoveSpeed()
-    {
-        return playerData.moveSpeed * (1 + weight.moveSpeed);
-    }
-
-    //아이템 획득 범위
-    public int ReturnGetItemRange()
-    {
-        return playerData.getItemRange + weight.getItemRange;
-    }
-
-    #endregion
 
     /*캐릭터 로직 관련*/
     #region Character Logic
+    public float GetCoolDown(float coolDown)
+    {
+        return playerData.coolDown * ((float)Math.Pow(coolDown, 2) / ((float)Math.Pow(coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient * fraction;
+    }
 
     //체젠 함수
     //기본적으로 가지고 있는(get으로 가져올 수 있는) hp를 최대 체력이라 지정
@@ -174,9 +105,9 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
             yield return new WaitForSeconds(HP_REGEN_PER_SECOND);
 
             //최대 체력보다 현재 체력이 낮을 때 체젠량만큼 회복
-            if (ReturnHp() < playerData.hp && ReturnHp() >= 0)
+            if (playerData.currentHp < playerData.hp && playerData.currentHp >= 0)
             {
-                weight.SetHp(weight.hp + ReturnHpRegen());
+                playerData.HpRegen();
             }
         }
     }
@@ -184,7 +115,7 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     //크리티컬 판별 함수
     private bool IsCritical()
     {
-        return UnityEngine.Random.Range(0f, 1f) <= (ReturnCriRatio() / fraction);
+        return UnityEngine.Random.Range(0.0f, 1.0f) <= (playerData.criRatio * fraction);
     }
 
     //최종적으로 몬스터에게 가하는 데미지 계산 함수
@@ -192,24 +123,13 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     //오리지널데미지 = 공격력 + or * 스킬피해
     //크리티컬데미지 = 오리지널데미지 * 크리티컬데미지
     //일단 스킬피해 제외하고 구현
-    public int TotalDamage(int skillDamage, CALC_DAMAGE_TYPE type)
+    public float TotalDamage(int skillDamage)
     {
-        int originalDamage;
-        if (type == CALC_DAMAGE_TYPE.PLUS)
-        {
-            originalDamage = ReturnAttack() + skillDamage;
-        }
-        else
-        {
-            originalDamage = ReturnAttack() * skillDamage;
-        }
-
-        //크리티컬 체크
         if (IsCritical())
         {
-            return ReturnCriDamage();
+            return playerData.criDamage * skillDamage;
         }
-        return originalDamage;
+        return playerData.attack * skillDamage;
     }
 
     //쉴드 사용 함수
@@ -217,9 +137,9 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
     //쉴드가 없을 경우 받은 데미지 그대로 리턴
     public int IsShield(int monsterDamage)
     {
-        if (ReturnShield() > 0)
+        if (playerData.shield > 0)
         {
-            weight.SetShield(weight.shield - 1);
+            playerData.SetShield(playerData.shield - 1);
             return 1;
         }
         return monsterDamage;
@@ -230,19 +150,12 @@ public class PlayerManager : SingletonBehaviour<PlayerManager>
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.TryGetComponent(out Monster monster) && monster.isAttack)
-        //{
-        //    DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
-        //    weight.SetHp(weight.hp - monster.monsterData.attack);
-        //    StartCoroutine(player.Invincible(playerCollider));
-        //}
-
         try
         {
             Monster monster = collision.GetComponentInParent<Monster>();
             StartCoroutine(player.Invincible());
             DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
-            weight.SetHp(weight.hp - monster.monsterData.attack);
+            playerData.SetCurrentHp(playerData.currentHp - monster.monsterData.attack);
         }
         catch
         {

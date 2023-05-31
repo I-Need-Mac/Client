@@ -118,19 +118,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Collider
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //if (collision.TryGetComponent(out Monster monster) && monster.isAttack)
-        //{
-        //    playerManager.weight.SetHp(playerManager.weight.hp - monster.monsterData.attack);
-        //    StartCoroutine(Invincible());
-        //}
-        if (collision.TryGetComponent(out Monster monster))
-        {
-            DebugManager.Instance.PrintDebug("[COLtest]: ");
-        }
-    }
-
     public IEnumerator Invincible()
     {
         spineManager.SetColor(Color.red);

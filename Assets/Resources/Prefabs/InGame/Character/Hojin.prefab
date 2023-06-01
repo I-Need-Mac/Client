@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3355484374763685676}
   - component: {fileID: 5148834709927645585}
-  - component: {fileID: 989832431159377581}
+  - component: {fileID: 7989252249752249762}
   m_Layer: 0
   m_Name: ItemCollider
   m_TagString: Untagged
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ca2d5c00a9eb044d9d72b5b619e4cbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!58 &989832431159377581
+--- !u!58 &7989252249752249762
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -405,6 +405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1395123205215770046}
   - component: {fileID: 1395123205215770047}
+  - component: {fileID: 5900061079711364694}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -438,6 +439,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a15fda36c3a83254190d95c9ee60c628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!70 &5900061079711364694
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395123205215770044}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0034735352, y: -0.23272586}
+  m_Size: {x: 0.97, y: 1.53}
+  m_Direction: 0
 --- !u!1 &1395123205686457706
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +652,7 @@ GameObject:
   - component: {fileID: 7987600772476303327}
   - component: {fileID: 4272735461300449434}
   - component: {fileID: 7242010954460102423}
+  - component: {fileID: 2157769747084001065}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -754,7 +772,7 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  updateTiming: 1
+  updateTiming: 2
   unscaledTime: 0
   _animationName: 
   loop: 1
@@ -775,3 +793,19 @@ CapsuleCollider2D:
   m_Offset: {x: -0.0033890158, y: 0.74988556}
   m_Size: {x: 0.48593304, y: 1.5936317}
   m_Direction: 0
+--- !u!114 &2157769747084001065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7987600772476303325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f726fb798ad621458c431cb9966d91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boneRoot: {fileID: 0}
+  flipBy180DegreeRotation: 0
+  skeletonRenderer: {fileID: 4272735461300449434}
+  skeletonGraphic: {fileID: 0}

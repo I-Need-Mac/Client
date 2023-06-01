@@ -3,6 +3,7 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
+        DebugManager.Instance.PrintDebug("RootMotionTest: " + transform.localPosition.ToString("N10"));
     }
 
     private void FixedUpdate()
@@ -80,8 +82,12 @@ public class Player : MonoBehaviour
         spineManager.SetDirection(character, playerDirection);
         spineManager.SetDirection(shadow, playerDirection);
         playerRigidbody.velocity = playerDirection.normalized * moveSpeed;
+
         if (playerRigidbody.velocity == Vector2.zero)
         {
+            Vector3 pos = transform.localPosition;
+            pos.y += 0.0000001f;
+            transform.localPosition = pos;
             spineManager.SetAnimation("Idle", true);
         }
         else
@@ -112,53 +118,11 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Collider
-    private void OnTriggerEnter2D(Collider2D collision)
+    public IEnumerator Invincible()
     {
-        if (collision.TryGetComponent(out Monster monster))
-        {
-            playerManager.weight.SetHp(playerManager.weight.hp - monster.monsterData.attack);
-            StartCoroutine(Invincible());
-        }
-    }
-
-    private IEnumerator Invincible()
-    {
-        RecursiveChild(transform, LayerConstant.INVINCIBLE);
         spineManager.SetColor(Color.red);
         yield return invincibleTime;
         spineManager.SetColor(Color.white);
-        RecursiveChild(transform, LayerConstant.SPAWNOBJECT);
-    }
-
-    private void RecursiveChild(Transform trans, LayerConstant layer)
-    {
-        if (trans.name.Equals("Character"))
-        {
-            trans.tag = "Player";
-        }
-        trans.gameObject.layer = (int)layer;
-
-        foreach (Transform child in trans)
-        {
-            switch (child.name)
-            {
-                case "Camera":
-                    RecursiveChild(child, LayerConstant.POISONFOG);
-                    break;
-                case "FieldStructure":
-                    RecursiveChild(child, LayerConstant.OBSTACLE);
-                    break;
-                case "ItemCollider":
-                    RecursiveChild(child, LayerConstant.ITEM);
-                    break;
-                case "Top":
-                    RecursiveChild(child, LayerConstant.OBSTACLE - 2);
-                    break;
-                default:
-                    RecursiveChild(child, layer);
-                    break;
-            }
-        }
     }
     #endregion
 

@@ -41,15 +41,12 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             Pause();
         }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            int hp = player.playerManager.weight.hp - 10;
-            player.playerManager.weight.SetHp(hp);
-        }
+        
 
-        if (player.playerManager.ReturnHp() <= 0 && gameOver)
+        if (player.playerManager.playerData.currentHp <= 0 && gameOver)
         {
             gameOver = false;
+            StopAllCoroutines();
             playerUi.GameOver();
         }
     }
@@ -120,6 +117,9 @@ public class GameManager : SingletonBehaviour<GameManager>
                     break;
                 case "Top":
                     RecursiveChild(child, LayerConstant.OBSTACLE - 2);
+                    break;
+                case "PlayerManager":
+                    RecursiveChild(child, LayerConstant.HIT);
                     break;
                 default:
                     RecursiveChild(child, layer);

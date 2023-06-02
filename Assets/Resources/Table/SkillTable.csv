@@ -10,3 +10,4 @@ int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,
 10601,10601,10601,10601,Dummy,20000,FALSE,Null,Dummy,5,TRUE,FALSE,25,0.1,5,5,10,TRUE,0,1,1,1,Random,Whip,Prefabs/InGame/Skill/Irons
 10701,10701,10701,10701,Dummy,20000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.5,5,5,5,TRUE,1,1,1,1,Player,Whip,Prefabs/InGame/Skill/GwiGi
 11001,11001,11001,11001,Dummy,20000,FALSE,Null,Dummy,100,TRUE,FALSE,1,0.5,5,5,5,FALSE,1,1,1,2|100,Melee,,Prefabs/InGame/Skill/GyuGyu
+11201,11201,11201,11201,Dummy,3200,FALSE,Null,Dummy,2,FALSE,FALSE,5,0.1,0,5,3,FALSE,0,1,1,1,Melee,,Prefabs/InGame/Skill/Aliento

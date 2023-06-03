@@ -1,7 +1,7 @@
 StageID,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID,MapID,NextStageID,ChapterCategory,ClearType,ClearValue
 ?¤í…Œ?´ì? ?„ì´??ëª??¤í° ?Œì´ë¸?ID,?œí•œ ?œê°„ ,ëª??œí•œ ??ë³´ìƒ ?„ì´??ë³´ìƒ ê°œìˆ˜,?¸íŠ¸ë¡œID,?„ì›ƒ?¸ë¡œID,ë§?ID,?¤ìŒ ?¤í…Œ?´ì? ID,?¤í…Œ?´ì?ê°€ ?¬í•¨??ì±•í„° êµ¬ë¶„,?´ë¦¬??ë°©ì‹,?´ë¦¬??ê°?,,,
 Int,String,Int,Int,Int_Arr,Int_Arr,StoryID,StoryID,String,int,ChapterID,Enum,int
-10101,TEST,30000,30,1,1,1101,2101,MapTestPrefab,10102,101,KillBoss,101
+10101,TEST,30000,30,1,1,1101,2101,Map_Stage1,10102,101,KillBoss,101
 10102,TEST,30000,30,1,1,1102,2102,Map2,10103,101,KillBoss,101
 10103,TEST,30000,30,1,1,1103,2103,Map3,10104,101,KillBoss,101
 10104,TEST,30000,40,1,1,1104,2104,Map4,10105,101,KillBoss,101

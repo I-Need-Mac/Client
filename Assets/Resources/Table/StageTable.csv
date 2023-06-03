@@ -2,10 +2,10 @@ StageID,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroI
 ?¤í…Œ?´ì? ?„ì´??ëª??¤í° ?Œì´ë¸?ID,?œí•œ ?œê°„ ,ëª??œí•œ ??ë³´ìƒ ?„ì´??ë³´ìƒ ê°œìˆ˜,?¸íŠ¸ë¡œID,?„ì›ƒ?¸ë¡œID,ë§?ID,?¤ìŒ ?¤í…Œ?´ì? ID,?¤í…Œ?´ì?ê°€ ?¬í•¨??ì±•í„° êµ¬ë¶„,?´ë¦¬??ë°©ì‹,?´ë¦¬??ê°?,,,
 Int,String,Int,Int,Int_Arr,Int_Arr,StoryID,StoryID,String,int,ChapterID,Enum,int
 10101,TEST,30000,30,1,1,1101,2101,Map_Stage1,10102,101,KillBoss,101
-10102,TEST,30000,30,1,1,1102,2102,Map2,10103,101,KillBoss,101
-10103,TEST,30000,30,1,1,1103,2103,Map3,10104,101,KillBoss,101
-10104,TEST,30000,40,1,1,1104,2104,Map4,10105,101,KillBoss,101
-10105,TEST,30000,40,1,1,1105,2105,Map5,10106,101,KillBoss,101
-10106,TEST,30000,40,1,1,1106,2106,Map6,10107,101,KillBoss,101
-10107,TEST,30000,50,1,1,1107,2107,Map7,10108,101,KillBoss,101
-10108,TEST,30000,50,1,1,1108,2108,Map8,10201,101,KillBoss,101
+10102,TEST,30000,30,1,1,1102,2102,Map_Stage2,10103,101,KillBoss,101
+10103,TEST,30000,30,1,1,1103,2103,Map_Stage3,10104,101,KillBoss,101
+10104,TEST,30000,40,1,1,1104,2104,Map_Stage4,10105,101,KillBoss,101
+10105,TEST,30000,40,1,1,1105,2105,Map_Stage5,10106,101,KillBoss,101
+10106,TEST,30000,40,1,1,1106,2106,Map_Stage6,10107,101,KillBoss,101
+10107,TEST,30000,50,1,1,1107,2107,Map_Stage7,10108,101,KillBoss,101
+10108,TEST,30000,50,1,1,1108,2108,Map_Stage8,10201,101,KillBoss,101

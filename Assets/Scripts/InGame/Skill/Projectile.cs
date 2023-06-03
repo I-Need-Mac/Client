@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
 
     protected Collider2D projectileCollider;
 
+    public float totalDamage { get; private set; }
     public bool isHit { get; private set; }
     public SkillData skillData { get; private set; }
 
@@ -42,6 +43,8 @@ public class Projectile : MonoBehaviour
         this.skillData = skillData;
         projectileCollider.isTrigger = this.skillData.isPenetrate;
         transform.localScale *= this.skillData.projectileSizeMulti;
+
+        totalDamage = GameManager.Instance.player.playerManager.TotalDamage(skillData.damage);
     }
 
     public void SetAlpha(float alpha)

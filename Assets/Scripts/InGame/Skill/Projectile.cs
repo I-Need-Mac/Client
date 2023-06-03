@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    private const string BOUNCE_PATH = "Prefabs/InGame/Skill/Bounce";
+
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
@@ -41,10 +43,16 @@ public class Projectile : MonoBehaviour
     public virtual void SetProjectile(SkillData skillData)
     {
         this.skillData = skillData;
-        projectileCollider.isTrigger = this.skillData.isPenetrate;
+        //projectileCollider.isTrigger = this.skillData.isPenetrate;
+        projectileCollider.isTrigger = true;
         transform.localScale *= this.skillData.projectileSizeMulti;
 
         totalDamage = GameManager.Instance.player.playerManager.TotalDamage(skillData.damage);
+
+        if (skillData.skillEffect[0] == SKILL_EFFECT.BOUNCE)
+        {
+            projectileCollider.sharedMaterial = ResourcesManager.Load<PhysicsMaterial2D>(BOUNCE_PATH);
+        }
     }
 
     public void SetAlpha(float alpha)
@@ -66,9 +74,10 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == (int)LayerConstant.MONSTER)
+        if (collision.TryGetComponent(out Monster monster))
         {
             isHit = true;
+            SkillEffect(monster);
             DebugManager.Instance.PrintDebug("[TEST]: Hit");
         }
     }
@@ -90,6 +99,60 @@ public class Projectile : MonoBehaviour
     protected void Remove()
     {
         SkillManager.Instance.DeSpawnProjectile(this);
+    }
+
+    protected void SkillEffect(Monster target)
+    {
+        int count = skillData.skillEffect.Count;
+        for (int i = 0; i < count; i++)
+        {
+            float param = float.Parse(skillData.skillEffectParam[i]);
+            switch (skillData.skillEffect[i])
+            {
+                case SKILL_EFFECT.STUN:
+                    StartCoroutine(target.Stun(param));
+                    break;
+                case SKILL_EFFECT.SLOW:
+                    target.Slow(param);
+                    break;
+                case SKILL_EFFECT.NUCKBACK:
+                    target.NuckBack(param);
+                    break;
+                case SKILL_EFFECT.EXPLORE:
+                    break;
+                case SKILL_EFFECT.MOVEUP:
+                    MoveUp(param);
+                    break;
+                case SKILL_EFFECT.EXECUTE:
+                    target.Execute(param);
+                    break;
+                case SKILL_EFFECT.DRAIN:
+                    Drain(param);
+                    break;
+                case SKILL_EFFECT.RESTRAINT:
+                    break;
+                case SKILL_EFFECT.PULL:
+                    target.Pull(param);
+                    break;
+                default:
+                    continue;
+            }
+        }
+    }
+
+    private IEnumerator MoveUp(float n)
+    {
+        int originSpeed = GameManager.Instance.player.playerManager.playerData.moveSpeed;
+        GameManager.Instance.player.playerManager.playerData.SetMoveSpeed((int)(originSpeed * n * 0.01f));
+        yield return new WaitForSeconds(skillData.duration);
+        GameManager.Instance.player.playerManager.playerData.SetMoveSpeed(originSpeed);
+    }
+
+    private void Drain(float n)
+    {
+        float hp = GameManager.Instance.player.playerManager.playerData.currentHp + (totalDamage * n * 0.01f);
+        DebugManager.Instance.PrintDebug("HPTest2: " + hp);
+        GameManager.Instance.player.playerManager.playerData.SetCurrentHp((int)hp);
     }
 
 }

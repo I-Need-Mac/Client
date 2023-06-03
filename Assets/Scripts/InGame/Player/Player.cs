@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
-        DebugManager.Instance.PrintDebug("RootMotionTest: " + transform.localPosition.ToString("N10"));
+        DebugManager.Instance.PrintDebug("HPTest: " + playerManager.playerData.currentHp);
     }
 
     private void FixedUpdate()

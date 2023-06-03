@@ -16,7 +16,7 @@ public class SkillData
     public string icon { get; private set; }                        //스킬 아이콘 데이터 연결값
     public string cutDire { get; private set; }                     //필살기 컷씬 연출 값
     public string skillImage { get; private set; }                  //스킬 발동 시 사용할 애니메이션 파일 이름
-    public SKILL_EFFECT skillEffect { get; private set; }           //스킬 이펙트
+    public List<SKILL_EFFECT> skillEffect { get; private set; }           //스킬 이펙트
     public SKILL_TARGET skillTarget { get; private set; }           //스킬 발동 대상
     public CALC_DAMAGE_TYPE calcDamageType { get; private set; }    //데미지 계산 방식
     public string skillPrefabPath { get; private set; }
@@ -49,7 +49,7 @@ public class SkillData
     public void SetIcon(string icon) { this.icon = icon; }
     public void SetCutDire(string cutDire) { this.cutDire = cutDire; }
     public void SetSkillImage(string skillImage) { this.skillImage = skillImage; }
-    public void SetSkillEffect(SKILL_EFFECT skillEffect) { this.skillEffect = skillEffect; }
+    public void SetSkillEffect(List<SKILL_EFFECT> skillEffect) { this.skillEffect = skillEffect; }
     public void SetSkillTarget(SKILL_TARGET skillTarget) { this.skillTarget = skillTarget; }
     //public void SetProjectileType(PROJECTILE_TYPE projectileType) { this.projectileType = projectileType; }
     public void SetCalcDamageType(CALC_DAMAGE_TYPE calcDamageType) { this.calcDamageType = calcDamageType; }

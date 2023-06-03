@@ -4,17 +4,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class Monster : MonoBehaviour
 {
     [field: SerializeField] public int monsterId { get; private set; }
-    [field: SerializeField] public MonsterData monsterData;
+    [field: SerializeField] public MonsterData monsterData { get; private set; }
 
     private CapsuleCollider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
+    private bool spineSwitch;
     private bool isPlayer;
     private bool isHit;
     private BehaviorTreeManager btManager;
@@ -53,6 +53,7 @@ public class Monster : MonoBehaviour
         weightY = monsterCollider.size.y;
         isAttack = false;
         isHit = false;
+        spineSwitch = true;
     }
 
     private void Start()
@@ -65,7 +66,10 @@ public class Monster : MonoBehaviour
 
     private void FixedUpdate()
     {
-        btManager.Active();
+        if (spineSwitch)
+        {
+            btManager.Active();
+        }
         monsterRigidbody.velocity = Vector3.zero;
     }
 
@@ -282,4 +286,50 @@ public class Monster : MonoBehaviour
         MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
+    #region SKILL_EFFECT
+    public IEnumerator Stun(float n)
+    {
+        spineSwitch = false;
+        float originSpeed = monsterData.moveSpeed;
+        monsterData.SetMoveSpeed(0.0f);
+        spineManager.SetAnimation("Idle", true);
+        yield return new WaitForSeconds(n);
+        monsterData.SetMoveSpeed(originSpeed);
+        spineSwitch = true;
+    }
+
+    public void Slow(float n)
+    {
+        monsterData.SetMoveSpeed(monsterData.moveSpeed * n * 0.01f);
+    }
+
+    public void NuckBack(float n)
+    {
+        Vector2 vec = transform.position - target.position;
+        monsterRigidbody.AddForce(vec.normalized * n * Time.fixedDeltaTime, ForceMode2D.Force);
+    }
+
+    public void Execute(float n)
+    {
+        if (UnityEngine.Random.Range(0.0f, 1.0f) < n)
+        {
+            Die();
+        }
+    }
+
+    public IEnumerator Restraint(float n)
+    {
+        float originSpeed = monsterData.moveSpeed;
+        monsterData.SetMoveSpeed(0.0f);
+        yield return new WaitForSeconds(n);
+        monsterData.SetMoveSpeed(originSpeed);
+    }
+
+    public void Pull(float n)
+    {
+        Vector2 vec = target.position - transform.position;
+        monsterRigidbody.AddForce(vec.normalized * n * Time.fixedDeltaTime, ForceMode2D.Force);
+    }
+
+    #endregion
 }

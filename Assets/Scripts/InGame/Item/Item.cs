@@ -28,7 +28,7 @@ public class Item : MonoBehaviour
     {
         while (true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.position, Time.deltaTime * itemSpeed);
+            transform.Translate((target.position - transform.position).normalized * Time.deltaTime * itemSpeed);
             yield return null;
         }
     }

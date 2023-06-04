@@ -78,6 +78,11 @@ public class Projectile : MonoBehaviour
         {
             isHit = true;
             SkillEffect(monster);
+
+            if (!skillData.isPenetrate)
+            {
+                Remove();
+            }
             DebugManager.Instance.PrintDebug("[TEST]: Hit");
         }
     }
@@ -91,10 +96,10 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnBecameInvisible()
-    {
-        Invoke("Remove", skillData.duration * 2);
-    }
+    //private void OnBecameInvisible()
+    //{
+    //    Invoke("Remove", skillData.duration * 2);
+    //}
 
     protected void Remove()
     {
@@ -109,33 +114,25 @@ public class Projectile : MonoBehaviour
             float param = float.Parse(skillData.skillEffectParam[i]);
             switch (skillData.skillEffect[i])
             {
-                case SKILL_EFFECT.STUN:
-                    StartCoroutine(target.Stun(param));
-                    break;
-                case SKILL_EFFECT.SLOW:
-                    target.Slow(param);
-                    break;
-                case SKILL_EFFECT.NUCKBACK:
-                    target.NuckBack(param);
-                    break;
                 case SKILL_EFFECT.EXPLORE:
                     break;
                 case SKILL_EFFECT.MOVEUP:
                     MoveUp(param);
                     break;
-                case SKILL_EFFECT.EXECUTE:
-                    target.Execute(param);
-                    break;
                 case SKILL_EFFECT.DRAIN:
                     Drain(param);
                     break;
+                case SKILL_EFFECT.STUN:
+                case SKILL_EFFECT.SLOW:
+                case SKILL_EFFECT.KNOCKBACK:
+                case SKILL_EFFECT.EXECUTE:
                 case SKILL_EFFECT.RESTRAINT:
-                    break;
                 case SKILL_EFFECT.PULL:
-                    target.Pull(param);
+                    target.SkillEffectActivation(skillData.skillEffect[i], param);
                     break;
                 default:
-                    continue;
+                    DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
+                    break;
             }
         }
     }

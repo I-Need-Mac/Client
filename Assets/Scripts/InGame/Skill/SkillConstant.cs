@@ -5,7 +5,7 @@ namespace SKILLCONSTANT
     {
         STUN,
         SLOW,
-        NUCKBACK,
+        KNOCKBACK,
         EXPLORE,
         MOVEUP,
         EXECUTE,

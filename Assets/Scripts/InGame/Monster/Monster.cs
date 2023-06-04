@@ -1,4 +1,5 @@
 
+using SKILLCONSTANT;
 using Spine.Unity;
 using System;
 using System.Collections;
@@ -14,6 +15,7 @@ public class Monster : MonoBehaviour
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
+    private bool isSlow;
     private bool spineSwitch;
     private bool isPlayer;
     private bool isHit;
@@ -54,6 +56,7 @@ public class Monster : MonoBehaviour
         isAttack = false;
         isHit = false;
         spineSwitch = true;
+        isSlow = false;
     }
 
     private void Start()
@@ -69,8 +72,8 @@ public class Monster : MonoBehaviour
         if (spineSwitch)
         {
             btManager.Active();
+            monsterRigidbody.velocity = Vector3.zero;
         }
-        monsterRigidbody.velocity = Vector3.zero;
     }
 
     #region AI
@@ -189,9 +192,7 @@ public class Monster : MonoBehaviour
         spineManager.SetAnimation("Run", true, 0, monsterData.moveSpeed);
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
-        //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
-        monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
-        monsterRigidbody.velocity = Vector3.zero;
+        monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.deltaTime));
         return NodeConstant.RUNNING;
     }
 
@@ -204,7 +205,6 @@ public class Monster : MonoBehaviour
         }
 
         isAttack = false;
-        monsterRigidbody.velocity = Vector3.zero;
         spineManager.SetAnimation("Idle", true);
         return NodeConstant.SUCCESS;
     }
@@ -287,29 +287,74 @@ public class Monster : MonoBehaviour
     }
 
     #region SKILL_EFFECT
-    public IEnumerator Stun(float n)
+    public void SkillEffectActivation(SKILL_EFFECT effect, float param)
     {
-        spineSwitch = false;
-        float originSpeed = monsterData.moveSpeed;
-        monsterData.SetMoveSpeed(0.0f);
-        spineManager.SetAnimation("Idle", true);
-        yield return new WaitForSeconds(n);
-        monsterData.SetMoveSpeed(originSpeed);
-        spineSwitch = true;
+        switch (effect)
+        {
+            case SKILL_EFFECT.STUN:
+                StartCoroutine(Stun(param));
+                break;
+            case SKILL_EFFECT.SLOW:
+                StartCoroutine(Slow(param));
+                break;
+            case SKILL_EFFECT.KNOCKBACK:
+                StartCoroutine(KnockBack(param));
+                break;
+            case SKILL_EFFECT.EXECUTE:
+                Execute(param);
+                break;
+            case SKILL_EFFECT.RESTRAINT:
+                StartCoroutine(Restraint(param));
+                break;
+            case SKILL_EFFECT.PULL:
+                StartCoroutine(Pull(param));
+                break;
+            default:
+                DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
+                break;
+        }
     }
 
-    public void Slow(float n)
+    private IEnumerator Stun(float n)
     {
-        monsterData.SetMoveSpeed(monsterData.moveSpeed * n * 0.01f);
+        if (spineSwitch)
+        {
+            spineSwitch = false;
+            float originSpeed = monsterData.moveSpeed;
+            monsterData.SetMoveSpeed(0.0f);
+            spineManager.SetAnimation("Idle", true);
+            yield return new WaitForSeconds(n);
+            monsterData.SetMoveSpeed(originSpeed);
+            spineSwitch = true;
+        }
     }
 
-    public void NuckBack(float n)
+    private IEnumerator Slow(float n)
     {
-        Vector2 vec = transform.position - target.position;
-        monsterRigidbody.AddForce(vec.normalized * n * Time.fixedDeltaTime, ForceMode2D.Force);
+        if (!isSlow)
+        {
+            isSlow = true;
+            float originSpeed = monsterData.moveSpeed;
+            monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
+            yield return new WaitForSeconds(1.0f);
+            monsterData.SetMoveSpeed(originSpeed);
+            isSlow = false;
+        }
     }
 
-    public void Execute(float n)
+    private IEnumerator KnockBack(float n)
+    {
+        if (spineSwitch)
+        {
+            spineSwitch = false;
+            Vector2 diff = transform.position - target.position;
+            monsterRigidbody.AddRelativeForce(diff.normalized * n * 0.0002f, ForceMode2D.Impulse);
+            yield return tick;
+            spineSwitch = true;
+        }
+    }
+
+    private void Execute(float n)
     {
         if (UnityEngine.Random.Range(0.0f, 1.0f) < n)
         {
@@ -317,7 +362,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public IEnumerator Restraint(float n)
+    private IEnumerator Restraint(float n)
     {
         float originSpeed = monsterData.moveSpeed;
         monsterData.SetMoveSpeed(0.0f);
@@ -325,10 +370,16 @@ public class Monster : MonoBehaviour
         monsterData.SetMoveSpeed(originSpeed);
     }
 
-    public void Pull(float n)
+    private IEnumerator Pull(float n)
     {
-        Vector2 vec = target.position - transform.position;
-        monsterRigidbody.AddForce(vec.normalized * n * Time.fixedDeltaTime, ForceMode2D.Force);
+        if (spineSwitch)
+        {
+            spineSwitch = false;
+            Vector2 diff = target.position - transform.position;
+            monsterRigidbody.AddRelativeForce(diff.normalized * n * 0.0002f, ForceMode2D.Impulse);
+            yield return tick;
+            spineSwitch = true;
+        }
     }
 
     #endregion

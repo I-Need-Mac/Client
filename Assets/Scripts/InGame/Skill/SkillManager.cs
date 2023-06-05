@@ -108,6 +108,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 112:
                 skill = new Aliento(skillId, shooter);
                 break;
+            case 113:
+                skill = new Pok(skillId, shooter);
+                break;
             case 120:
                 skill = new Horin(skillId, shooter);
                 break;

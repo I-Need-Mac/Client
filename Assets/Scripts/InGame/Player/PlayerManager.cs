@@ -15,8 +15,6 @@ public class PlayerManager : MonoBehaviour
     private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
     private int criticalRatio;
 
-    
-
     private Player player;
     private Collider2D playerCollider;
 

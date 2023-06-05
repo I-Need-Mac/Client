@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GwiGi : Skill
+public class Pok : Skill
 {
-    public GwiGi(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Pok(int skillId, Transform shooter) : base(skillId, shooter) { }
 
     public override void Init()
     {
@@ -44,7 +44,7 @@ public class GwiGi : Skill
         Vector3 rotate = GameManager.Instance.player.lookDirection.x >= 0 ? Vector3.back : Vector3.forward;
         float angle = 0.0f;
         float weight = skillData.speed * Time.deltaTime;
-        while (angle < 95.0f)
+        while (angle < 180.0f)
         {
             weight += 0.001f;
             angle += weight;
@@ -54,5 +54,4 @@ public class GwiGi : Skill
         projectile.CollisionPower(false);
         projectile.SetAlpha(0.0f);
     }
-
 }

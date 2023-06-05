@@ -32,7 +32,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void Update()
     {
-        DebugManager.Instance.PrintDebug("$$: " + Time.timeScale);
         if (Input.GetKeyDown(KeyCode.K))
         {
             player.GetExp(500);

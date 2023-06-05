@@ -33,19 +33,6 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SkillAdd(skillNum, GameManager.Instance.player.transform);
-        }
-
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
-        //    SkillLevelUp(skillList[12001]);
-        //}
-    }
-
     public Projectile SpawnProjectile(SkillData skillData)
     {
         return SpawnProjectile(skillData, transform);

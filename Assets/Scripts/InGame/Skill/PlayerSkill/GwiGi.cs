@@ -13,6 +13,7 @@ public class GwiGi : Skill
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
             projectile.SetAlpha(0.0f);
+            projectile.CollisionPower(false);
             projectiles.Add(projectile);
         }
     }
@@ -39,6 +40,7 @@ public class GwiGi : Skill
 
     private IEnumerator Move(Projectile projectile)
     {
+        projectile.CollisionPower(true);
         Vector3 rotate = GameManager.Instance.player.lookDirection.x >= 0 ? Vector3.back : Vector3.forward;
         float angle = 0.0f;
         float weight = skillData.speed * Time.deltaTime;
@@ -49,6 +51,7 @@ public class GwiGi : Skill
             projectile.transform.RotateAround(shooter.position, rotate, weight);
             yield return null;
         }
+        projectile.CollisionPower(false);
         projectile.SetAlpha(0.0f);
     }
 

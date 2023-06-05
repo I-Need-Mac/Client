@@ -175,6 +175,22 @@ public struct Scanner
         return resultTarget;
     }
 
+    private static List<Transform> RangeTarget(Transform shooter, float attackDistance, params int[] layers)
+    {
+        List<Transform> resultTargets = new List<Transform>();
+        foreach (int layer in layers)
+        {
+            targets = Physics2D.CircleCastAll(shooter.position, attackDistance, Vector2.zero, 0, 1 << layer);
+
+            foreach (RaycastHit2D target in targets)
+            {
+                resultTargets.Add(target.transform);
+            }
+        }
+
+        return resultTargets;
+    }
+
     //public static Vector2 RandomTargetPos(Transform shooter, float attackDistance, float angle)
     //{
     //    Vector2 pos = shooter.position;

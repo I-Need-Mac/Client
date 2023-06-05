@@ -21,6 +21,7 @@ public class Monster : MonoBehaviour
     private bool isHit;
     private BehaviorTreeManager btManager;
 
+    private float weightX;
     private float weightY;
     private WaitForSeconds delay;
     private WaitForSeconds tick;
@@ -52,7 +53,8 @@ public class Monster : MonoBehaviour
         situation = SoundSituation.SOUNDSITUATION.IDLE;
         MonsterSetting(monsterId.ToString());
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
-        weightY = monsterCollider.size.y;
+        weightX = monsterCollider.size.x * 0.8f;
+        weightY = monsterCollider.size.y * 0.7f;
         isAttack = false;
         isHit = false;
         spineSwitch = true;
@@ -149,7 +151,11 @@ public class Monster : MonoBehaviour
     {
         Vector2 diff = target.position - transform.position;
         float distance = diff.magnitude;
-        if (distance < monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
+        //if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
+        //{
+        //    return NodeConstant.SUCCESS;
+        //}
+        if (((Mathf.Abs(diff.x) <= Mathf.Abs(weightX))) && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
         {
             return NodeConstant.SUCCESS;
         }
@@ -184,7 +190,7 @@ public class Monster : MonoBehaviour
         Vector2 diff = target.position - transform.position;
         float distance = diff.magnitude;
 
-        if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
+        if (distance <= monsterData.atkDistance)
         {
             return NodeConstant.SUCCESS;
         }

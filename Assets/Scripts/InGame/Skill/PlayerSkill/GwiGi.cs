@@ -26,14 +26,6 @@ public class GwiGi : Skill
 
         while (true)
         {
-            for (int i = 0; i < skillData.projectileCount; i++)
-            {
-                Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-                projectile.transform.localPosition = Vector2.up * skillData.attackDistance;
-                projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                SkillManager.Instance.CoroutineStarter(Move(projectile));
-                yield return intervalTime;
-            }
             foreach (Projectile projectile in projectiles)
             {
                 projectile.transform.localPosition = Vector2.up * skillData.attackDistance;

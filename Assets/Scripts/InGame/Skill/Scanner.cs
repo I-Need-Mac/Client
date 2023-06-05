@@ -175,7 +175,7 @@ public struct Scanner
         return resultTarget;
     }
 
-    private static List<Transform> RangeTarget(Transform shooter, float attackDistance, params int[] layers)
+    public static List<Transform> RangeTarget(Transform shooter, float attackDistance, params int[] layers)
     {
         List<Transform> resultTargets = new List<Transform>();
         foreach (int layer in layers)

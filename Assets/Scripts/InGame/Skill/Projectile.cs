@@ -30,7 +30,10 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        projectileCollider.enabled = true;
+        if (projectileCollider != null)
+        {
+            projectileCollider.enabled = true;
+        }
         isHit = false;
     }
 
@@ -43,16 +46,13 @@ public class Projectile : MonoBehaviour
     public virtual void SetProjectile(SkillData skillData)
     {
         this.skillData = skillData;
-        //projectileCollider.isTrigger = this.skillData.isPenetrate;
-        projectileCollider.isTrigger = true;
+        if (projectileCollider != null)
+        {
+            projectileCollider.isTrigger = true;
+        }
         transform.localScale *= this.skillData.projectileSizeMulti;
 
         totalDamage = GameManager.Instance.player.playerManager.TotalDamage(skillData.damage);
-
-        if (skillData.skillEffect[0] == SKILL_EFFECT.BOUNCE)
-        {
-            projectileCollider.sharedMaterial = ResourcesManager.Load<PhysicsMaterial2D>(BOUNCE_PATH);
-        }
     }
 
     public void SetAlpha(float alpha)
@@ -151,5 +151,7 @@ public class Projectile : MonoBehaviour
         DebugManager.Instance.PrintDebug("HPTest2: " + hp);
         GameManager.Instance.player.playerManager.playerData.SetCurrentHp((int)hp);
     }
+
+
 
 }

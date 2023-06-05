@@ -50,6 +50,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         Projectile projectile = skillPools[poolId].GetObject();
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
         projectile.transform.localPosition = Vector2.zero;
+        projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
         return projectile;
@@ -111,12 +112,14 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 113:
                 skill = new Pok(skillId, shooter);
                 break;
+            case 114:
+                skill = new JeRyeung(skillId, shooter);
+                break;
             case 120:
                 skill = new Horin(skillId, shooter);
                 break;
             default:
-                skill = null;
-                break;
+                throw new System.NotImplementedException();
         }
 
         skill.Init();

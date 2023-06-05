@@ -279,7 +279,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         DropItem();

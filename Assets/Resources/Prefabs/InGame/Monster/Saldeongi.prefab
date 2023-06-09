@@ -129,9 +129,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
-  m_Direction: 1
+  m_Offset: {x: -0.9808645, y: 3.7615433}
+  m_Size: {x: 4.4473333, y: 5.2091675}
+  m_Direction: 0
 --- !u!114 &4510054705575718701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,10 +201,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <monsterId>k__BackingField: 108
-  monsterData:
+  <monsterData>k__BackingField:
     monsterName: 
     sizeMultiple: 0
     hp: 0
+    currentHp: 0
     attack: 0
     moveSpeed: 0
     atkSpeed: 0
@@ -215,7 +216,6 @@ MonoBehaviour:
     groupSourceRate: 0
     monsterPrefabPath: 
     attackType: 0
-  currentHp: 0
 --- !u!114 &7751576797987361664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +276,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3.11, y: 4.71}
+  m_Offset: {x: 0.038091898, y: -0.12379813}
+  m_Size: {x: 3.3004584, y: 4.881413}
   m_Direction: 0

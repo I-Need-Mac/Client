@@ -40,7 +40,7 @@ public class JeRyeung : Skill
                 {
                     monster.Die();
                 }
-                if (target.TryGetComponent(out Item item))
+                else if (target.TryGetComponent(out Item item))
                 {
                     ItemManager.Instance.DeSpawnItem(item);
                 }

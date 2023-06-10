@@ -1,4 +1,4 @@
-CharacterId,CharacterName,HP,Attack,CriRatio,CriDamage,CoolDown,HPRegen,Shield,ProjectileAdd,MoveSpeed,GetItemRange,SkillID_01,SkillID_02,CharacterSpinePath,MainShowImagePath,MainSelectImagePath,MainSpinePath,IntroduceTextPath,IconImage
+CharacterId,CharacterName,HP,Attack,CriRatio,CriDamage,CoolDown,HPRegen,Shield,ProjectileAdd,MoveSpeed,GetItemRange,SkillID_01,SkillID_02,CharacterPrefabPath,MainShowImagePath,MainSelectImagePath,MainSpinePath,IntroduceTextPath,IconImage
 스탯 아이디,캐릭터 이름,체력,공격,치명타 확률,치명타 대미지,재사용 대기시간 감소,초당 체력 회복,실드,투사체 증가,이동 속도,아이템 획득 범위,기본 궁극기 아이디,기본 스킬 아이디,캐릭터 일러 경로,메인 캐릭터 이미지 경로,메인 캐릭터 이미지 경로,메인 캐릭터 Spine 경로,메인 캐릭터 스토리 텍스트,캐릭터 아이콘 이미지
 Int,String,Int,Int,Int,Int,Int,Int,Int,Int,Float,Int,Int,Int,String,String,String,String,String,String
 101,CharName_YunHoJin,200,120,1500,15000,0,0,0,0,3,2,10101,10701,Prefabs/InGame/Character/Hojin,Character\Sinwol\MainIllustrator\Main_Sinwol_Main_01,Character\Sinwol\MainIllustrator\Main_Sinwol_Main_01,Sinwol,CharDesc_Sinwol,Character\Sinwol\MainIllustrator\Main_Sinwol_Main_01

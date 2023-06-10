@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class MonsterCollider : MonoBehaviour
 {
-    private CapsuleCollider2D attackCollider;
     private float sizeX;
+
+    public CapsuleCollider2D attackCollider { get; private set; }
 
     private void Awake()
     {

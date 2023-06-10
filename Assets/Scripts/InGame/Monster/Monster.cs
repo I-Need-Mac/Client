@@ -54,16 +54,6 @@ public class Monster : MonoBehaviour
         MonsterSetting(monsterId.ToString());
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
 
-        if (monsterData.atkDistance <= 1.0f)    //근거리
-        {
-            weightX = monsterCollider.size.x * 0.5f;
-            weightY = monsterCollider.size.y * 0.6f;
-        }
-        else    //원거리
-        {
-            weightX = monsterData.atkDistance;
-            weightY = monsterData.atkDistance;
-        }
         isAttack = false;
         isHit = false;
         spineSwitch = true;
@@ -72,10 +62,23 @@ public class Monster : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(Move());
         btManager = new BehaviorTreeManager(SetAI(monsterData.attackType));
         spineManager.SetAnimation("Idle", true);
         attackCollider.SetAttackDistance(monsterData.atkDistance);
+
+        if (monsterData.atkDistance <= 1.0f)    //근거리
+        {
+            weightX = attackCollider.attackCollider.size.x * 0.2f;
+            weightY = monsterCollider.size.y * 0.1f;
+        }
+        else    //원거리
+        {
+            weightX = monsterData.atkDistance;
+            weightY = monsterData.atkDistance;
+        }
+
+        DebugManager.Instance.PrintDebug("#@! x: " + weightX);
+        DebugManager.Instance.PrintDebug("#@! y: " + weightY);
     }
 
     private void FixedUpdate()

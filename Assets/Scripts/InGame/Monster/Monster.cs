@@ -53,8 +53,17 @@ public class Monster : MonoBehaviour
         situation = SoundSituation.SOUNDSITUATION.IDLE;
         MonsterSetting(monsterId.ToString());
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
-        weightX = monsterCollider.size.x * 0.8f;
-        weightY = monsterCollider.size.y * 0.7f;
+
+        if (monsterData.atkDistance <= 1.0f)    //근거리
+        {
+            weightX = monsterCollider.size.x * 0.5f;
+            weightY = monsterCollider.size.y * 0.6f;
+        }
+        else    //원거리
+        {
+            weightX = monsterData.atkDistance;
+            weightY = monsterData.atkDistance;
+        }
         isAttack = false;
         isHit = false;
         spineSwitch = true;

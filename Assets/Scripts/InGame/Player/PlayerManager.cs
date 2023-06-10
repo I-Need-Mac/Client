@@ -41,7 +41,6 @@ public class PlayerManager : MonoBehaviour
         fraction = 1 / Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
         coolTimeConstant = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeOffset", "ConfigValue"));
         coolTimeCoefficient = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeMax", "ConfigValue"));
-        criticalRatio = Convert.ToInt32(CSVReader.Read("BattleConfig", "CriticalRatio", "ConfigValue"));
     }
 
     //캐릭터에 스탯 부여

@@ -53,8 +53,7 @@ public class Monster : MonoBehaviour
         situation = SoundSituation.SOUNDSITUATION.IDLE;
         MonsterSetting(monsterId.ToString());
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
-        weightX = monsterCollider.size.x * 0.8f;
-        weightY = monsterCollider.size.y * 0.7f;
+
         isAttack = false;
         isHit = false;
         spineSwitch = true;
@@ -63,10 +62,23 @@ public class Monster : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(Move());
         btManager = new BehaviorTreeManager(SetAI(monsterData.attackType));
         spineManager.SetAnimation("Idle", true);
         attackCollider.SetAttackDistance(monsterData.atkDistance);
+
+        if (monsterData.atkDistance <= 1.0f)    //근거리
+        {
+            weightX = attackCollider.attackCollider.size.x * 0.2f;
+            weightY = monsterCollider.size.y * 0.1f;
+        }
+        else    //원거리
+        {
+            weightX = monsterData.atkDistance;
+            weightY = monsterData.atkDistance;
+        }
+
+        DebugManager.Instance.PrintDebug("#@! x: " + weightX);
+        DebugManager.Instance.PrintDebug("#@! y: " + weightY);
     }
 
     private void FixedUpdate()
@@ -295,6 +307,7 @@ public class Monster : MonoBehaviour
     #region SKILL_EFFECT
     public void SkillEffectActivation(SKILL_EFFECT effect, float param)
     {
+        isHit = true;
         switch (effect)
         {
             case SKILL_EFFECT.STUN:

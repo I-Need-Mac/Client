@@ -64,12 +64,18 @@ public class Projectile : MonoBehaviour
 
     public void CollisionRadius(float radius)
     {
-        ((CircleCollider2D)projectileCollider).radius = radius;
+        if (projectileCollider != null)
+        {
+            ((CircleCollider2D)projectileCollider).radius = radius;
+        }
     }
 
     public void CollisionPower(bool flag)
     {
-        projectileCollider.enabled = flag;
+        if (projectileCollider != null)
+        {
+            projectileCollider.enabled = flag;
+        }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -115,9 +121,10 @@ public class Projectile : MonoBehaviour
             switch (skillData.skillEffect[i])
             {
                 case SKILL_EFFECT.EXPLORE:
+                    Explore(param);
                     break;
                 case SKILL_EFFECT.MOVEUP:
-                    MoveUp(param);
+                    StartCoroutine(MoveUp(param));
                     break;
                 case SKILL_EFFECT.DRAIN:
                     Drain(param);
@@ -133,6 +140,21 @@ public class Projectile : MonoBehaviour
                 default:
                     DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
                     break;
+            }
+        }
+    }
+
+    private void Explore(float n)
+    {
+        if (UnityEngine.Random.Range(0, 100) < n)
+        {
+            List<Transform> targets = Scanner.RangeTarget(transform, skillData.splashRange, (int)LayerConstant.MONSTER);
+            foreach (Transform target in targets)
+            {
+                if (target.TryGetComponent(out Monster monster))
+                {
+                    monster.monsterData.SetCurrentHp(monster.monsterData.currentHp - (int)totalDamage);
+                }
             }
         }
     }

@@ -64,12 +64,18 @@ public class Projectile : MonoBehaviour
 
     public void CollisionRadius(float radius)
     {
-        ((CircleCollider2D)projectileCollider).radius = radius;
+        if (projectileCollider != null)
+        {
+            ((CircleCollider2D)projectileCollider).radius = radius;
+        }
     }
 
     public void CollisionPower(bool flag)
     {
-        projectileCollider.enabled = flag;
+        if (projectileCollider != null)
+        {
+            projectileCollider.enabled = flag;
+        }
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)

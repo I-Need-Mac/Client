@@ -4,7 +4,7 @@ BC_Index,BC_Type,BC_Value
 CoolTimeOffset,Constant,3000
 CoolTimeMax,Coefficient,1000
 ImageMultiple,Coefficient,0.5
-CharImageMultiple,Coefficient,0.4
+CharImageMultiple,Coefficient,0.45
 Fraction,Coefficient,10000
 SkillBenList,,999|998
 benben,,101|102|103|104|105|106|107|108|109|110|111|112

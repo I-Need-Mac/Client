@@ -19,10 +19,12 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private bool gameOver = true;
     private float defaultScale;
+    private float defaultCharScale;
 
     protected override void Awake()
     {
         defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        defaultCharScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "CharImageMultiple", "ConfigValue")));
         playerUi = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
         SoundManager.Instance.CreateSoundManager();
         //mapId = UIManager.Instance.selectStageID;
@@ -82,7 +84,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void PlayerLoad(int playerId)
     {
         player = Instantiate(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", playerId.ToString(), "CharacterPrefabPath").ToString()), transform.Find("PlayerSpawnPos").transform);
-        player.transform.localScale = Vector3.one * defaultScale;
+        player.transform.localScale = Vector3.one * defaultCharScale;
         player.gameObject.SetActive(true);
     }
 

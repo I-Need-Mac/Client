@@ -295,6 +295,7 @@ public class Monster : MonoBehaviour
     #region SKILL_EFFECT
     public void SkillEffectActivation(SKILL_EFFECT effect, float param)
     {
+        isHit = true;
         switch (effect)
         {
             case SKILL_EFFECT.STUN:

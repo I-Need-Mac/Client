@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
 
 
         gameObject.tag = "Player";
-        invincibleTime = new WaitForSeconds(float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))));
+        invincibleTime = new WaitForSeconds(Convert.ToInt32(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))) / 1000.0f);
     }
 
     private void OnEnable()

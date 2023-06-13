@@ -4,15 +4,15 @@ using UnityEngine;
 
 public enum SpawnMobLocation
 {
-    TOP,
-    BOTTOM,
-    LEFT,
-    RIGHT,
     TOPLEFT,
+    TOP,
     TOPRIGHT,
-    BOTTOMLEFT,
+    RIGHT,
     BOTTOMRIGHT,
-    ROUND,
+    BOTTOM,
+    BOTTOMLEFT,
+    LEFT,
     FACE,
     BACK,
+    ROUND,
 }

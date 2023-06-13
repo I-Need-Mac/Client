@@ -46,11 +46,6 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         currentSpawnTime = Convert.ToInt32(spawnData["SponeTime"]);
     }
 
-    private void Start()
-    {
-        StartCoroutine(Spawn());
-    }
-
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
         if (!spawner.ContainsKey(monsterId))
@@ -76,7 +71,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         --spawnCount;
     }
 
-    private IEnumerator Spawn()
+    public IEnumerator Spawn()
     {
         monsters.Clear();
         while (spawnTable.Keys.Count > spawnId)
@@ -86,10 +81,10 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                 int mobAmount = Convert.ToInt32(spawnData["SponeMobAmount"]);
                 int mobId = Convert.ToInt32(spawnData["SponeMobID"]);
                 string sponeLocation = spawnData["SponeMobLocation"].ToString();
-                Player player = GameManager.Instance.player;
                 
-                if (Enum.TryParse(sponeLocation, true, out SpawnMobLocation location))
+                if (Enum.TryParse(sponeLocation, true, out SpawnMobLocation spawnLocation))
                 {
+                    SpawnMobLocation location = spawnLocation;
                     for (int i = 0; i < mobAmount; i++)
                     {
                         if (spawnCount < spawnAmount)
@@ -103,13 +98,15 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                             }
                             else
                             {
-                                if (location == SpawnMobLocation.ROUND)
+                                if (spawnLocation == SpawnMobLocation.ROUND)
                                 {
-                                    location = (SpawnMobLocation)UnityEngine.Random.Range(0, (int)location);
+                                    location = (SpawnMobLocation)(i % (System.Enum.GetValues(typeof(SpawnMobLocation)).Length - 1));
+                                    DebugManager.Instance.PrintDebug("SpawnTest: " + location);
                                 }
-                                else if (location == SpawnMobLocation.FACE)
+                                
+                                if (location == SpawnMobLocation.FACE)
                                 {
-                                    if (player.lookDirection.x < 0)
+                                    if (GameManager.Instance.player.lookDirection.x < 0)
                                     {
                                         location = SpawnMobLocation.LEFT;
                                     }
@@ -120,7 +117,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                                 }
                                 else if (location == SpawnMobLocation.BACK)
                                 {
-                                    if (player.lookDirection.x < 0)
+                                    if (GameManager.Instance.player.lookDirection.x < 0)
                                     {
                                         location = SpawnMobLocation.RIGHT;
                                     }
@@ -136,6 +133,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                         {
                             remainMonsters.Enqueue(new RemainMonster(mobId, location));
                         }
+                        yield return null;
                     }
                     if (spawnTable.ContainsKey((++spawnId).ToString()))
                     {
@@ -146,7 +144,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                 else
                 {
                     //특정 위치 소환
-                    Vector3 sponePos = GameManager.Instance.map.transform.Find("FieldStructure").transform.Find(sponeLocation).transform.position;
+                    Vector3 sponePos = GameManager.Instance.map.transform.Find("SpawnPoint").Find(sponeLocation).position;
                     Monster monster = SpawnMonster(mobId, sponePos);
                 }
             }

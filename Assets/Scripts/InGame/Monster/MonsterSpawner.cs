@@ -24,9 +24,9 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private struct RemainMonster
     {
         public int id;
-        public SponeMobLocation location;
+        public SpawnMobLocation location;
 
-        public RemainMonster(int id, SponeMobLocation location)
+        public RemainMonster(int id, SpawnMobLocation location)
         {
             this.id = id;
             this.location = location;
@@ -88,7 +88,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                 string sponeLocation = spawnData["SponeMobLocation"].ToString();
                 Player player = GameManager.Instance.player;
                 
-                if (Enum.TryParse(sponeLocation, true, out SponeMobLocation location))
+                if (Enum.TryParse(sponeLocation, true, out SpawnMobLocation location))
                 {
                     for (int i = 0; i < mobAmount; i++)
                     {
@@ -103,30 +103,30 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                             }
                             else
                             {
-                                if (location == SponeMobLocation.ROUND)
+                                if (location == SpawnMobLocation.ROUND)
                                 {
-                                    location = (SponeMobLocation)UnityEngine.Random.Range(0, (int)location);
+                                    location = (SpawnMobLocation)UnityEngine.Random.Range(0, (int)location);
                                 }
-                                else if (location == SponeMobLocation.FACE)
+                                else if (location == SpawnMobLocation.FACE)
                                 {
                                     if (player.lookDirection.x < 0)
                                     {
-                                        location = SponeMobLocation.LEFT;
+                                        location = SpawnMobLocation.LEFT;
                                     }
                                     else
                                     {
-                                        location = SponeMobLocation.RIGHT;
+                                        location = SpawnMobLocation.RIGHT;
                                     }
                                 }
-                                else if (location == SponeMobLocation.BACK)
+                                else if (location == SpawnMobLocation.BACK)
                                 {
                                     if (player.lookDirection.x < 0)
                                     {
-                                        location = SponeMobLocation.RIGHT;
+                                        location = SpawnMobLocation.RIGHT;
                                     }
                                     else
                                     {
-                                        location = SponeMobLocation.LEFT;
+                                        location = SpawnMobLocation.LEFT;
                                     }
                                 }
                                 monster = SpawnMonster(mobId, CameraManager.Instance.RandomPosInGrid(location));

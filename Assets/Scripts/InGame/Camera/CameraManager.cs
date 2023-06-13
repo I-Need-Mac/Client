@@ -34,7 +34,7 @@ public class CameraManager : SingletonBehaviour<CameraManager>
      * F G H
      */
 
-    public Vector2 RandomPosInGrid(SponeMobLocation location)
+    public Vector2 RandomPosInGrid(SpawnMobLocation location)
     {
         Vector2 camPoint = cam.ScreenToWorldPoint(new Vector2(cam.orthographicSize * Screen.width / Screen.height, cam.orthographicSize));
         Vector2 weight = new Vector2((cam.orthographicSize * Screen.width / Screen.height * 2) / 3.0f, (cam.orthographicSize * 2) / 3.0f);
@@ -42,56 +42,56 @@ public class CameraManager : SingletonBehaviour<CameraManager>
         Vector3 pos = Vector3.zero;
         switch (location)
         {
-            case SponeMobLocation.TOPLEFT:
+            case SpawnMobLocation.TOPLEFT:
                 pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(-camPoint.y, -camPoint.y + extra));
                 if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
                 {
                     pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
                 }
                 break;
-            case SponeMobLocation.TOP:
+            case SpawnMobLocation.TOP:
                 pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(-camPoint.y, -camPoint.y + extra));
                 if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
                 {
                     pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
                 }
                 break;
-            case SponeMobLocation.TOPRIGHT:
+            case SpawnMobLocation.TOPRIGHT:
                 pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(-camPoint.y, -camPoint.y + extra));
                 if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
                 {
                     pos = new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
                 }
                 break;
-            case SponeMobLocation.LEFT:
+            case SpawnMobLocation.LEFT:
                 pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
                 if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
                 {
                     pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
                 }
                 break;
-            case SponeMobLocation.RIGHT:
+            case SpawnMobLocation.RIGHT:
                 pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
                 if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
                 {
                     pos = new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
                 }
                 break;
-            case SponeMobLocation.BOTTOMLEFT:
+            case SpawnMobLocation.BOTTOMLEFT:
                 pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(camPoint.y - extra, camPoint.y));
                 if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
                 {
                     pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y, camPoint.y + weight.y));
                 }
                 break;
-            case SponeMobLocation.BOTTOM:
+            case SpawnMobLocation.BOTTOM:
                 pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y - extra, camPoint.y));
                 if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
                 {
                     pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y, camPoint.y + weight.y));
                 }
                 break;
-            case SponeMobLocation.BOTTOMRIGHT:
+            case SpawnMobLocation.BOTTOMRIGHT:
                 pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(camPoint.y - extra, camPoint.y));
                 if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
                 {

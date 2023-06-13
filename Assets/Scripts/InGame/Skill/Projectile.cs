@@ -14,7 +14,6 @@ public class Projectile : MonoBehaviour
     protected Collider2D projectileCollider;
 
     public float totalDamage { get; private set; }
-    public bool isHit { get; private set; }
     public SkillData skillData { get; private set; }
 
     private void Awake()
@@ -34,7 +33,6 @@ public class Projectile : MonoBehaviour
         {
             projectileCollider.enabled = true;
         }
-        isHit = false;
     }
 
     public void SetAnimation(Sprite sprite, RuntimeAnimatorController controller)
@@ -82,7 +80,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.TryGetComponent(out Monster monster))
         {
-            isHit = true;
+            monster.Hit(totalDamage);
             SkillEffect(monster);
 
             if (!skillData.isPenetrate)
@@ -90,15 +88,6 @@ public class Projectile : MonoBehaviour
                 Remove();
             }
             DebugManager.Instance.PrintDebug("[TEST]: Hit");
-        }
-    }
-
-    protected virtual void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == (int)LayerConstant.MONSTER)
-        {
-            isHit = false;
-            DebugManager.Instance.PrintDebug("[TEST]: Out");
         }
     }
 

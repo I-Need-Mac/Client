@@ -24,9 +24,9 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private struct RemainMonster
     {
         public int id;
-        public SponeMobLocation location;
+        public SpawnMobLocation location;
 
-        public RemainMonster(int id, SponeMobLocation location)
+        public RemainMonster(int id, SpawnMobLocation location)
         {
             this.id = id;
             this.location = location;
@@ -44,11 +44,6 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         spawnId = 1;
         spawnData = spawnTable[spawnId.ToString()];
         currentSpawnTime = Convert.ToInt32(spawnData["SponeTime"]);
-    }
-
-    private void Start()
-    {
-        StartCoroutine(Spawn());
     }
 
     public Monster SpawnMonster(int monsterId, Vector2 pos)
@@ -76,7 +71,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         --spawnCount;
     }
 
-    private IEnumerator Spawn()
+    public IEnumerator Spawn()
     {
         monsters.Clear();
         while (spawnTable.Keys.Count > spawnId)
@@ -86,10 +81,10 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                 int mobAmount = Convert.ToInt32(spawnData["SponeMobAmount"]);
                 int mobId = Convert.ToInt32(spawnData["SponeMobID"]);
                 string sponeLocation = spawnData["SponeMobLocation"].ToString();
-                Player player = GameManager.Instance.player;
                 
-                if (Enum.TryParse(sponeLocation, true, out SponeMobLocation location))
+                if (Enum.TryParse(sponeLocation, true, out SpawnMobLocation spawnLocation))
                 {
+                    SpawnMobLocation location = spawnLocation;
                     for (int i = 0; i < mobAmount; i++)
                     {
                         if (spawnCount < spawnAmount)
@@ -103,30 +98,32 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                             }
                             else
                             {
-                                if (location == SponeMobLocation.ROUND)
+                                if (spawnLocation == SpawnMobLocation.ROUND)
                                 {
-                                    location = (SponeMobLocation)UnityEngine.Random.Range(0, (int)location);
+                                    location = (SpawnMobLocation)(i % (System.Enum.GetValues(typeof(SpawnMobLocation)).Length - 1));
+                                    DebugManager.Instance.PrintDebug("SpawnTest: " + location);
                                 }
-                                else if (location == SponeMobLocation.FACE)
+                                
+                                if (location == SpawnMobLocation.FACE)
                                 {
-                                    if (player.lookDirection.x < 0)
+                                    if (GameManager.Instance.player.lookDirection.x < 0)
                                     {
-                                        location = SponeMobLocation.LEFT;
+                                        location = SpawnMobLocation.LEFT;
                                     }
                                     else
                                     {
-                                        location = SponeMobLocation.RIGHT;
+                                        location = SpawnMobLocation.RIGHT;
                                     }
                                 }
-                                else if (location == SponeMobLocation.BACK)
+                                else if (location == SpawnMobLocation.BACK)
                                 {
-                                    if (player.lookDirection.x < 0)
+                                    if (GameManager.Instance.player.lookDirection.x < 0)
                                     {
-                                        location = SponeMobLocation.RIGHT;
+                                        location = SpawnMobLocation.RIGHT;
                                     }
                                     else
                                     {
-                                        location = SponeMobLocation.LEFT;
+                                        location = SpawnMobLocation.LEFT;
                                     }
                                 }
                                 monster = SpawnMonster(mobId, CameraManager.Instance.RandomPosInGrid(location));
@@ -136,6 +133,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                         {
                             remainMonsters.Enqueue(new RemainMonster(mobId, location));
                         }
+                        yield return null;
                     }
                     if (spawnTable.ContainsKey((++spawnId).ToString()))
                     {
@@ -146,7 +144,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                 else
                 {
                     //특정 위치 소환
-                    Vector3 sponePos = GameManager.Instance.map.transform.Find("FieldStructure").transform.Find(sponeLocation).transform.position;
+                    Vector3 sponePos = GameManager.Instance.map.transform.Find("SpawnPoint").Find(sponeLocation).position;
                     Monster monster = SpawnMonster(mobId, sponePos);
                 }
             }

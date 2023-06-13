@@ -15,7 +15,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public PlayerUI playerUi { get; private set; }
     public Player player { get; private set; }
     public GameObject map { get; private set; }
-    public Tilemap tileMap { get; private set; }
 
     private bool gameOver = true;
     private float defaultScale;
@@ -30,6 +29,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         //mapId = UIManager.Instance.selectStageID;
         //playerId = UIManager.Instance.selectCharacterID;
         //playerPoolManager.playerId = playerId;
+    }
+
+    private void Start()
+    {
+        Spawn();
+        StartCoroutine(MonsterSpawner.Instance.Spawn());
+        Timer.Instance.TimerSwitch(true);
     }
 
     private void Update()
@@ -52,11 +58,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
     }
 
-    private void Start()
-    {
-        Spawn();
-    }
-
     public int GetPlayerId()
     {
         return playerId;
@@ -72,19 +73,18 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void MapLoad(int mapId)
     {
-        string name = LoadMapManager.Instance.SceneNumberToMapName(mapId);
-        GameObject mapPrefab = LoadMapManager.Instance.LoadMapNameToMapObject(name);
-        map = Instantiate(mapPrefab, transform);
-        tileMap = map.transform.Find("Map").transform.Find("Floor").GetComponent<Tilemap>();
-        map.transform.SetParent(transform.Find("MapGeneratePos").transform);
-        map.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
-        map.SetActive(true);
+        string mapName = CSVReader.Read("StageTable", mapId.ToString(), "MapID").ToString();
+        GameObject map = ResourcesManager.Load<GameObject>("Maps/" + mapName);
+        this.map = Instantiate(map, transform);
+        this.map.transform.localScale = Vector3.one * defaultScale;
+        this.map.SetActive(true);
     }
 
     private void PlayerLoad(int playerId)
     {
-        player = Instantiate(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", playerId.ToString(), "CharacterPrefabPath").ToString()), transform.Find("PlayerSpawnPos").transform);
+        player = Instantiate(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", playerId.ToString(), "CharacterPrefabPath").ToString()), transform);
         player.transform.localScale = Vector3.one * defaultCharScale;
+        player.transform.localPosition = this.map.transform.Find("SpawnPoint").Find("PlayerPoint").localPosition;
         player.gameObject.SetActive(true);
     }
 

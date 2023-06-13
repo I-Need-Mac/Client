@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum SponeMobLocation
+public enum SpawnMobLocation
 {
-    TOP,
-    BOTTOM,
-    LEFT,
-    RIGHT,
     TOPLEFT,
+    TOP,
     TOPRIGHT,
-    BOTTOMLEFT,
+    RIGHT,
     BOTTOMRIGHT,
-    ROUND,
+    BOTTOM,
+    BOTTOMLEFT,
+    LEFT,
     FACE,
     BACK,
+    ROUND,
 }

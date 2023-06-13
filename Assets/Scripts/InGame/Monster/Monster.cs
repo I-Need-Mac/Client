@@ -281,19 +281,12 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Hit(float totalDamage)
     {
-        if (collision.TryGetComponent(out Projectile projectile))
+        monsterData.SetCurrentHp(monsterData.currentHp - (int)totalDamage);
+        if (monsterData.currentHp <= 0)
         {
-            if (projectile.isHit)
-            {
-                monsterData.SetCurrentHp(monsterData.currentHp - (int)projectile.totalDamage);
-                isHit = true;
-                if (monsterData.currentHp <= 0)
-                {
-                    Die();
-                }
-            }
+            Die();
         }
     }
 
@@ -308,29 +301,32 @@ public class Monster : MonoBehaviour
     public void SkillEffectActivation(SKILL_EFFECT effect, float param)
     {
         isHit = true;
-        switch (effect)
+        if (gameObject.activeInHierarchy)
         {
-            case SKILL_EFFECT.STUN:
-                StartCoroutine(Stun(param));
-                break;
-            case SKILL_EFFECT.SLOW:
-                StartCoroutine(Slow(param));
-                break;
-            case SKILL_EFFECT.KNOCKBACK:
-                StartCoroutine(KnockBack(param));
-                break;
-            case SKILL_EFFECT.EXECUTE:
-                Execute(param);
-                break;
-            case SKILL_EFFECT.RESTRAINT:
-                StartCoroutine(Restraint(param));
-                break;
-            case SKILL_EFFECT.PULL:
-                StartCoroutine(Pull(param));
-                break;
-            default:
-                DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
-                break;
+            switch (effect)
+            {
+                case SKILL_EFFECT.STUN:
+                    StartCoroutine(Stun(param));
+                    break;
+                case SKILL_EFFECT.SLOW:
+                    StartCoroutine(Slow(param));
+                    break;
+                case SKILL_EFFECT.KNOCKBACK:
+                    StartCoroutine(KnockBack(param));
+                    break;
+                case SKILL_EFFECT.EXECUTE:
+                    Execute(param);
+                    break;
+                case SKILL_EFFECT.RESTRAINT:
+                    StartCoroutine(Restraint(param));
+                    break;
+                case SKILL_EFFECT.PULL:
+                    StartCoroutine(Pull(param));
+                    break;
+                default:
+                    DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
+                    break;
+            }
         }
     }
 

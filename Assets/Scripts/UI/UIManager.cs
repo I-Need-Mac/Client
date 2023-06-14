@@ -25,6 +25,8 @@ public class UIManager : MonoSingleton<UIManager>
         UI_StoryBook,
         UI_SelectSorcerer,
         UI_SelectSorcererInfo,
+
+        UI_Settings
     }
 
     public int selectCharacterID;

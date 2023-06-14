@@ -77,6 +77,8 @@ public class UI_StoryMain : UI_Popup
     {
         Dictionary<string, Dictionary<string, object>> stageData = UIData.StageData;
 
+        // 스토리 모드 리스트 생성
+        
         foreach (KeyValuePair<string, Dictionary<string, object>> data in stageData)
         {
             foreach (KeyValuePair<string, object> val in data.Value)

@@ -9,6 +9,7 @@ public class UIData
     {
         StoryTable,
         StageTable,
+        ChapterTable,
         CharacterTable,
         SkillTable
     }
@@ -31,19 +32,33 @@ public class UIData
 
     public enum StageTableCol
     {
-        StageName,
+        StageID,
+        IntroID,
+        OutroID,
+        ChapterCategory,
+    }
+
+    public enum ChapterTableCol
+    {
+        ChapterID,
+        ChapterName,
+        ChapterImage,
     }
 
     // 스토리 데이터
     static Dictionary<string, Dictionary<string, object>> storyTableData = new Dictionary<string, Dictionary<string, object>>();
     public static Dictionary<string, Dictionary<string, object>> StoryData { get { return storyTableData; } }
-
+    // 스토리북용 데이터 셋팅 데이터    
     static Dictionary<int, Dictionary<int, List<object>>> pageTableData = new Dictionary<int, Dictionary<int, List<object>>>();
     public static Dictionary<int, Dictionary<int, List<object>>> PageTableData { get { return pageTableData; } }
 
     // 스테이지 데이터
     static Dictionary<string, Dictionary<string, object>> stageTableData = new Dictionary<string, Dictionary<string, object>>();
     public static Dictionary<string, Dictionary<string, object>> StageData { get { return stageTableData; } }
+
+    // 챕터 데이터
+    static Dictionary<string, Dictionary<string, object>> chapterTableData = new Dictionary<string, Dictionary<string, object>>();
+    public static Dictionary<string, Dictionary<string, object>> ChapterData { get { return chapterTableData; } }
 
     // 캐릭터 데이터
     static Dictionary<string, Dictionary<string, object>> characterTableData = new Dictionary<string, Dictionary<string, object>>();
@@ -102,6 +117,7 @@ public class UIData
                 addList.Add(int.Parse(pagePair.Key), createList);
             }
 
+            // 스토리북으로 쓸 셋팅데이터 add
             pageTableData.Add(int.Parse(pair.Key), addList);
         }
     }
@@ -110,11 +126,19 @@ public class UIData
     {
         // 스테이지 테이블을 읽습니다.
         stageTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.StageTable));
+
+        // 스테이지 id를 임의로 넣어둡니다 (원래는 서버에 저장된 마지막 플레이 스테이지 값을 넣어야 합니다)
         foreach(string val in stageTableData.Keys)
         {
             UIManager.Instance.selectStageID = int.Parse(val);
             break;
         }
+    }
+
+    static void ReadChapterData()
+    {
+        // 챕터 테이블을 읽습니다.
+        chapterTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.ChapterTable));
     }
 
     static void ReadCharacterData()

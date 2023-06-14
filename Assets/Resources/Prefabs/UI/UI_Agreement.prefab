@@ -204,6 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbdcfaf81677ce240810634f99446b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundImage: {fileID: 8414210188217609528}
   titleText: {fileID: 6706690059709609740}
   checkTextTop: {fileID: 9097081823774966009}
   checkTextBottom: {fileID: 8154868903576797467}
@@ -552,9 +553,9 @@ RectTransform:
   m_Children:
   - {fileID: 5550307764049551881}
   - {fileID: 4991592246779588780}
-  - {fileID: 3519402184931220438}
   - {fileID: 7481483476626881652}
   - {fileID: 431519759512022192}
+  - {fileID: 3519402184931220438}
   m_Father: {fileID: 6232933752542367378}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -783,7 +784,7 @@ RectTransform:
   m_Children:
   - {fileID: 1757424306972267828}
   m_Father: {fileID: 5052324854613074318}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1068,7 +1069,7 @@ RectTransform:
   - {fileID: 3717188047311295727}
   - {fileID: 6990917735176272706}
   m_Father: {fileID: 5052324854613074318}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1141,7 +1142,7 @@ RectTransform:
   - {fileID: 6076820876561643267}
   - {fileID: 4686673076347823079}
   m_Father: {fileID: 5052324854613074318}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

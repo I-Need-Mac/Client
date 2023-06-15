@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 {
@@ -13,6 +14,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private int spawnCount;
     private Dictionary<int, ObjectPool<Monster>> spawner;
     private Queue<RemainMonster> remainMonsters;
+    private WaitForSeconds tick = new WaitForSeconds(0.05f);
 
     private Dictionary<string, Dictionary<string, object>> spawnTable;
     private Dictionary<string, object> spawnData;
@@ -133,19 +135,46 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                         {
                             remainMonsters.Enqueue(new RemainMonster(mobId, location));
                         }
-                        yield return null;
+                        yield return tick;
                     }
-                    if (spawnTable.ContainsKey((++spawnId).ToString()))
-                    {
-                        spawnData = spawnTable[spawnId.ToString()];
-                        currentSpawnTime = Convert.ToInt32(spawnData["SponeTime"]);
-                    }
+                    //if (spawnTable.ContainsKey((++spawnId).ToString()))
+                    //{
+                    //    spawnData = spawnTable[spawnId.ToString()];
+                    //    currentSpawnTime = Convert.ToInt32(spawnData["SponeTime"]);
+                    //}
                 }
                 else
                 {
                     //특정 위치 소환
-                    Vector3 sponePos = GameManager.Instance.map.transform.Find("SpawnPoint").Find(sponeLocation).position;
-                    Monster monster = SpawnMonster(mobId, sponePos);
+                    Vector2 sponePos = GameManager.Instance.map.transform.Find("SpawnPoint").Find(sponeLocation).position;
+                    for (int i = 0; i < mobAmount; i++)
+                    {
+                        if (spawnCount < spawnAmount)
+                        {
+                            Monster monster;
+
+                            if (remainMonsters.Count > 0)
+                            {
+                                RemainMonster remainMonster = remainMonsters.Dequeue();
+                                monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
+                            }
+                            else
+                            {
+                                monster = SpawnMonster(mobId, sponePos);
+                            }
+                        }
+                        else
+                        {
+                            remainMonsters.Enqueue(new RemainMonster(mobId, SpawnMobLocation.FACE));
+                        }
+                        yield return tick;
+                    }
+                }
+
+                if (spawnTable.ContainsKey((++spawnId).ToString()))
+                {
+                    spawnData = spawnTable[spawnId.ToString()];
+                    currentSpawnTime = Convert.ToInt32(spawnData["SponeTime"]);
                 }
             }
             yield return null;

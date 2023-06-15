@@ -62,23 +62,22 @@ public class Monster : MonoBehaviour
 
     private void Start()
     {
+        Physics2D.IgnoreCollision(monsterCollider, transform.Find("Collision").GetComponent<CapsuleCollider2D>());
+        
         btManager = new BehaviorTreeManager(SetAI(monsterData.attackType));
         spineManager.SetAnimation("Idle", true);
         attackCollider.SetAttackDistance(monsterData.atkDistance);
 
         if (monsterData.atkDistance <= 1.0f)    //근거리
         {
-            weightX = attackCollider.attackCollider.size.x * 0.2f;
-            weightY = monsterCollider.size.y * 0.1f;
+            weightX = attackCollider.attackCollider.size.x * 0.3f;
+            weightY = monsterCollider.size.y * 0.3f;
         }
         else    //원거리
         {
             weightX = monsterData.atkDistance;
             weightY = monsterData.atkDistance;
         }
-
-        DebugManager.Instance.PrintDebug("#@! x: " + weightX);
-        DebugManager.Instance.PrintDebug("#@! y: " + weightY);
     }
 
     private void FixedUpdate()
@@ -86,8 +85,10 @@ public class Monster : MonoBehaviour
         if (spineSwitch)
         {
             btManager.Active();
-            monsterRigidbody.velocity = Vector3.zero;
+            //monsterRigidbody.velocity = Vector3.zero;
         }
+
+        //DebugManager.Instance.PrintDebug("[COLTest]: " + monsterData.monsterName + monsterRigidbody.velocity);
     }
 
     #region AI
@@ -153,7 +154,7 @@ public class Monster : MonoBehaviour
     }
     #endregion
 
-    #region Logic
+    #region AI_Logic
     private NodeConstant IsAttack()
     {
         return spineManager.GetAnimationName().Equals("Attack") ? NodeConstant.RUNNING : NodeConstant.SUCCESS;
@@ -162,7 +163,7 @@ public class Monster : MonoBehaviour
     private NodeConstant IsAttackable()
     {
         Vector2 diff = target.position - transform.position;
-        float distance = diff.magnitude;
+        //float distance = diff.magnitude;
         //if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
         //{
         //    return NodeConstant.SUCCESS;
@@ -211,6 +212,7 @@ public class Monster : MonoBehaviour
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
         monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.deltaTime));
+        //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
         return NodeConstant.RUNNING;
     }
 

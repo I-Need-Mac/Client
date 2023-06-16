@@ -37,7 +37,6 @@ public class Timer : SingletonBehaviour<Timer>
             yield return new WaitForSeconds(1.0f);
             currentTime += 1000;
             timeText.text = $"{currentTime / 1000 / 60:00}  {currentTime / 1000 % 60:00}";
-            DebugManager.Instance.PrintDebug("TimerTest: " + currentTime);
         }
     }
 }

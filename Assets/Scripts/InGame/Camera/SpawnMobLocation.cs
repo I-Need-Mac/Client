@@ -15,4 +15,5 @@ public enum SpawnMobLocation
     FACE,
     BACK,
     ROUND,
+    RANDOMROUND,
 }

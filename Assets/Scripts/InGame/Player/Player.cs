@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int moveSpeed = 5;
+
 
     private Rigidbody2D playerRigidbody;
     private Vector2 playerDirection;
@@ -35,8 +35,10 @@ public class Player : MonoBehaviour
         shadow = transform.Find("Shadow");
         spineManager = GetComponent<SpineManager>();
         playerManager = GetComponentInChildren<PlayerManager>();
+
+
         gameObject.tag = "Player";
-        invincibleTime = new WaitForSeconds(float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))));
+        invincibleTime = new WaitForSeconds(Convert.ToInt32(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))) / 1000.0f);
     }
 
     private void OnEnable()
@@ -80,7 +82,7 @@ public class Player : MonoBehaviour
     {
         spineManager.SetDirection(character, playerDirection);
         spineManager.SetDirection(shadow, playerDirection);
-        playerRigidbody.velocity = playerDirection.normalized * moveSpeed;
+        playerRigidbody.velocity = playerDirection.normalized * playerManager.playerData.moveSpeed;
 
         if (playerRigidbody.velocity == Vector2.zero)
         {

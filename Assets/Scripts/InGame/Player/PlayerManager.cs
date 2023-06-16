@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour
     private Player player;
     private Collider2D playerCollider;
 
-    public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
+    [field: SerializeField]  public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
     //public PlayerData weight { get; private set; } = new PlayerData();     //증감치
 
     #region

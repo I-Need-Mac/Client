@@ -50,7 +50,7 @@ public abstract class Skill
 
         skillData.SetSkillId(skillId);
         skillData.SetCoolTime(Convert.ToInt32(data["Cooltime"]));
-        coolTime = new WaitForSeconds(skillData.coolTime / 10000.0f);
+        coolTime = new WaitForSeconds(skillData.coolTime / 1000.0f);
         skillData.SetAttackDistance(Convert.ToInt32(data["AttackDistance"]));
         skillData.SetDamage(Convert.ToInt32(data["Damage"]));
 
@@ -95,10 +95,10 @@ public abstract class Skill
         }
         skillData.SetSkillTarget((SKILL_TARGET)Enum.Parse(typeof(SKILL_TARGET), Convert.ToString(data["SkillTarget"]).ToUpper()));
         skillData.SetProjectileCount(Convert.ToInt32(data["ProjectileCount"]));
-        skillData.SetIntervalTime((float)Convert.ToDouble(data["IntervalTime"]));
-        intervalTime = new WaitForSeconds(skillData.intervalTime);
-        skillData.SetDuration((float)Convert.ToDouble(data["Duration"]));
-        duration = new WaitForSeconds(skillData.duration);
+        skillData.SetIntervalTime(Convert.ToInt32(data["IntervalTime"]));
+        intervalTime = new WaitForSeconds(skillData.intervalTime / 1000.0f);
+        skillData.SetDuration(Convert.ToInt32(data["Duration"]));
+        duration = new WaitForSeconds(skillData.duration / 1000.0f);
         skillData.SetSpeed(Convert.ToInt32(data["Speed"]));
         skillData.SetSplashRange(Convert.ToInt32(data["SplashRange"]));
         skillData.SetProjectileSizeMulti(Convert.ToInt32(data["ProjectileSizeMulti"]));

@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
         if (playerRigidbody.velocity == Vector2.zero)
         {
             Vector3 pos = transform.localPosition;
-            pos.y += 0.0000001f;
+            pos.y += 0.00005f;
             transform.localPosition = pos;
             spineManager.SetAnimation("Idle", true);
         }

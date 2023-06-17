@@ -11,7 +11,10 @@ public class Projectile : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
+    protected Rigidbody2D rigid;
     protected Collider2D projectileCollider;
+    protected int bounceCount;
+    protected bool isMetastasis = false;
 
     public float totalDamage { get; private set; }
     public SkillData skillData { get; private set; }
@@ -48,8 +51,27 @@ public class Projectile : MonoBehaviour
         {
             projectileCollider.isTrigger = true;
         }
-        transform.localScale *= this.skillData.projectileSizeMulti;
+        
+        for (int i = 0; i < this.skillData.skillEffect.Count; i++)
+        {
+            if (this.skillData.skillEffect[i] == SKILLCONSTANT.SKILL_EFFECT.BOUNCE)
+            {
+                rigid = GetComponent<Rigidbody2D>();
+                projectileCollider.sharedMaterial = ResourcesManager.Load<PhysicsMaterial2D>(BOUNCE_PATH);
+                bounceCount = Convert.ToInt32(this.skillData.skillEffectParam[i]);
+                projectileCollider.isTrigger = false;
+            }
 
+            if (this.skillData.skillEffect[i] == SKILLCONSTANT.SKILL_EFFECT.METASTASIS)
+            {
+                rigid = GetComponent<Rigidbody2D>();
+                bounceCount = Convert.ToInt32(this.skillData.skillEffectParam[i]);
+                isMetastasis = true;
+                projectileCollider.isTrigger = false;
+            }
+        }
+
+        transform.localScale *= this.skillData.projectileSizeMulti;
         totalDamage = GameManager.Instance.player.playerManager.TotalDamage(skillData.damage);
     }
 
@@ -80,6 +102,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.TryGetComponent(out Monster monster))
         {
+            monster.isHit = true;
             monster.Hit(totalDamage);
             SkillEffect(monster);
 
@@ -126,6 +149,12 @@ public class Projectile : MonoBehaviour
                 case SKILL_EFFECT.PULL:
                     target.SkillEffectActivation(skillData.skillEffect[i], param);
                     break;
+                case SKILL_EFFECT.SPAWNMOB:
+                    if (!target.gameObject.activeInHierarchy)
+                    {
+                        SkillManager.Instance.CoroutineStarter(SpawnMob(param));
+                    }
+                    break;
                 default:
                     DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
                     break;
@@ -163,6 +192,34 @@ public class Projectile : MonoBehaviour
         GameManager.Instance.player.playerManager.playerData.SetCurrentHp((int)hp);
     }
 
+    private IEnumerator SpawnMob(float n)
+    {
+        float x = UnityEngine.Random.Range(-skillData.attackDistance, skillData.attackDistance);
+        float y = UnityEngine.Random.Range(-skillData.attackDistance, skillData.attackDistance);
+        Vector2 spawnPos = new Vector2(x, y);
 
+        string path = CSVReader.Read("MonsterTable", n.ToString(), "MonsterPrefabPath").ToString();
+        Monster summoner = Instantiate(ResourcesManager.Load<Monster>(path), GameManager.Instance.player.transform);
+        summoner.gameObject.layer = (int)LayerConstant.SKILL;
+        summoner.transform.localPosition = spawnPos;
+        summoner.gameObject.SetActive(true);
+
+        float duration = skillData.duration / 1000.0f;
+        float time = 0.1f;
+        DebugManager.Instance.PrintDebug("[SpawnMob]: " + duration);
+        WaitForSeconds tick = new WaitForSeconds(time);
+        while (duration > 0)
+        {
+            if (summoner.target == null || !summoner.target.gameObject.activeInHierarchy)
+            {
+                Transform target = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, summoner.transform, skillData.attackDistance);
+                summoner.SetTarget(target, false);
+            }
+            yield return tick;
+            duration -= time;
+        }
+
+        summoner.gameObject.SetActive(false);
+    }
 
 }

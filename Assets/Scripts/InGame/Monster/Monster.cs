@@ -18,7 +18,6 @@ public class Monster : MonoBehaviour
     private bool isSlow;
     private bool spineSwitch;
     private bool isPlayer;
-    private bool isHit;
     private BehaviorTreeManager btManager;
 
     private float weightX;
@@ -31,6 +30,7 @@ public class Monster : MonoBehaviour
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
 
+    public bool isHit { get; set; }
     public bool isAttack { get; private set; }
     public Transform target { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향

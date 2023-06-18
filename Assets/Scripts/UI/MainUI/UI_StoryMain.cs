@@ -18,9 +18,12 @@ public class UI_StoryMain : UI_Popup
     TextMeshProUGUI title;
 
     [SerializeField]
-    TextMeshProUGUI stageTitle;
+    TextMeshProUGUI chapterStageTitle;
     [SerializeField]
-    TextMeshProUGUI stageSub;
+    TextMeshProUGUI chapterNameSub;
+
+    [SerializeField]
+    TextMeshProUGUI chapterName;
 
     [SerializeField]
     GameObject chapterList;
@@ -40,8 +43,8 @@ public class UI_StoryMain : UI_Popup
 
         title.text = LocalizeManager.Instance.GetText("UI_StoryMode");
 
-        string stageTitleText = LocalizeManager.Instance.GetText("UI_CurrentStage");
-        stageTitle.text = String.Format(stageTitleText, 1, 1);
+        // string stageTitleText = LocalizeManager.Instance.GetText("UI_CurrentStage");
+        // stageTitle.text = String.Format(stageTitleText, 1, 1);
 
         string eleText = LocalizeManager.Instance.GetText("UI_StageList");
 
@@ -75,20 +78,53 @@ public class UI_StoryMain : UI_Popup
 
     void SetData()
     {
-        Dictionary<string, Dictionary<string, object>> stageData = UIData.StageData;
+        Dictionary<string, Dictionary<string, object>> chapterList = UIData.ChapterData;
+        if(chapterList.Count == 0 || chapterList == null)
+        {
+            Debug.LogError("챕터 테이블 데이터가 없습니다");
+        }
+
+        Dictionary<string, Dictionary<string, object>> stageList = UIData.StageData;
+        if (stageList.Count == 0 || stageList == null)
+        {
+            Debug.LogError("스테이지 테이블 데이터가 없습니다");
+        }
 
         // 스토리 모드 리스트 생성
-        
-        foreach (KeyValuePair<string, Dictionary<string, object>> data in stageData)
+        foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterList)
         {
-            foreach (KeyValuePair<string, object> val in data.Value)
+            int chapterID = int.Parse(chapterData.Key);
+            string chapterImage = "";
+            
+            foreach(KeyValuePair<string, object> chapterVal in chapterData.Value)
             {
-                if (val.Key == UIData.StageTableCol.StageName.ToString())
+                if(chapterVal.Key == UIData.ChapterTableCol.ChapterName.ToString())
                 {
-                    stageSub.text = val.Value.ToString();
+                    chapterNameSub.text = chapterVal.Value.ToString();
+                    chapterName.text = chapterVal.Value.ToString();
+                }
+                else if(chapterVal.Key == UIData.ChapterTableCol.ChapterImage.ToString())
+                {
+                    chapterImage = chapterVal.Value.ToString();
                 }
             }
+
+            foreach(KeyValuePair<string, Dictionary<string, object>> stageData in stageList)
+            {
+
+            }
         }
+
+        //foreach (KeyValuePair<string, Dictionary<string, object>> data in stageData)
+        //{
+        //    foreach (KeyValuePair<string, object> val in data.Value)
+        //    {
+        //        if (val.Key == UIData.StageTableCol.StageName.ToString())
+        //        {
+        //            stageSub.text = val.Value.ToString();
+        //        }
+        //    }
+        //}
     }
 
     public void OnClickImage(PointerEventData data)

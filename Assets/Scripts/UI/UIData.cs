@@ -72,6 +72,7 @@ public class UIData
     public static void ReadData()
     {
         ReadStoryData();
+        ReadChapterData();
         ReadStageData();
         ReadCharacterData();
         ReadSkillData();

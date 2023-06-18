@@ -1316,7 +1316,7 @@ GameObject:
   - component: {fileID: 8475085571120180284}
   - component: {fileID: 7582560044687676110}
   m_Layer: 5
-  m_Name: StageTextSub
+  m_Name: ChapterNameSub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1369,7 +1369,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "< \uC2A4\uD14C\uC774\uC9C0 NN-NN >"
+  m_text: ChapterName
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
   m_sharedMaterial: {fileID: -3305390525445643378, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
@@ -2143,7 +2143,7 @@ GameObject:
   - component: {fileID: 8475085571898658644}
   - component: {fileID: 3296855162066972064}
   m_Layer: 5
-  m_Name: StageText
+  m_Name: ChapterStageTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2156,7 +2156,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8475085571898658667}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2196,7 +2196,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC2A4\uD14C\uC774\uC9C0 00-00"
+  m_text: Chapter Stage
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
   m_sharedMaterial: {fileID: -3305390525445643378, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
@@ -2826,8 +2826,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   title: {fileID: 8046629936404213279}
-  stageTitle: {fileID: 3296855162066972064}
-  stageSub: {fileID: 7582560044687676110}
+  chapterStageTitle: {fileID: 3296855162066972064}
+  chapterNameSub: {fileID: 7582560044687676110}
+  chapterName: {fileID: 7375828011497529238}
   chapterList: {fileID: 8475085572667746230}
   stageList: {fileID: 8475085572429234299}
   chapterInfo: {fileID: 8475085571649151445}
@@ -3179,7 +3180,7 @@ GameObject:
   - component: {fileID: 8475085572643435931}
   - component: {fileID: 8475085572643435928}
   m_Layer: 5
-  m_Name: StageTitle
+  m_Name: ChapterName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4042,7 +4043,7 @@ GameObject:
   - component: {fileID: 8475085573002819175}
   - component: {fileID: 7375828011497529238}
   m_Layer: 5
-  m_Name: Text
+  m_Name: ChapterNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4095,7 +4096,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC545\uC744 \uBBF8\uC6CC\uD558\uACE0\n\uC120\uC5D0 \uC18D\uD558\uB77C"
+  m_text: ChapterName
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
   m_sharedMaterial: {fileID: -3305390525445643378, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}

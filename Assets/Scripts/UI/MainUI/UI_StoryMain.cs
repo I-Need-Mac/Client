@@ -29,8 +29,10 @@ public class UI_StoryMain : UI_Popup
     GameObject chapterList;
     [SerializeField]
     GameObject stageList;
+    
     [SerializeField]
-    GameObject chapterInfo;
+    GameObject chapterSprite;
+
 
     void Start()
     {
@@ -94,7 +96,6 @@ public class UI_StoryMain : UI_Popup
         foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterList)
         {
             int chapterID = int.Parse(chapterData.Key);
-            string chapterImage = "";
             
             foreach(KeyValuePair<string, object> chapterVal in chapterData.Value)
             {
@@ -105,7 +106,8 @@ public class UI_StoryMain : UI_Popup
                 }
                 else if(chapterVal.Key == UIData.ChapterTableCol.ChapterImage.ToString())
                 {
-                    chapterImage = chapterVal.Value.ToString();
+                    chapterSprite = Resources.Load<GameObject>($"{chapterVal.Value.ToString()}");
+                    Sprite sprite = Resources.Load<Sprite>($"{chapterVal.Value.ToString()}" + ".png");
                 }
             }
 

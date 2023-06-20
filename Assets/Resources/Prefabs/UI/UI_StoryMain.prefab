@@ -2531,7 +2531,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4a8d721fd5d1f6744bb943d20cc53d68, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2831,7 +2831,7 @@ MonoBehaviour:
   chapterName: {fileID: 7375828011497529238}
   chapterList: {fileID: 8475085572667746230}
   stageList: {fileID: 8475085572429234299}
-  chapterSprite: {fileID: 8475085572038819222}
+  chapterImage: {fileID: 8475085572038819222}
 --- !u!1 &8475085572533243642
 GameObject:
   m_ObjectHideFlags: 0

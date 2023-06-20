@@ -31,7 +31,7 @@ public class UI_StoryMain : UI_Popup
     GameObject stageList;
     
     [SerializeField]
-    GameObject chapterSprite;
+    GameObject chapterImage;
 
 
     void Start()
@@ -106,8 +106,7 @@ public class UI_StoryMain : UI_Popup
                 }
                 else if(chapterVal.Key == UIData.ChapterTableCol.ChapterImage.ToString())
                 {
-                    chapterSprite = Resources.Load<GameObject>($"{chapterVal.Value.ToString()}");
-                    Sprite sprite = Resources.Load<Sprite>($"{chapterVal.Value.ToString()}" + ".png");
+                    chapterImage.GetComponent<Image>().sprite = Resources.Load<Sprite>($"{chapterVal.Value.ToString()}");
                 }
             }
 

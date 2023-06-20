@@ -81,40 +81,99 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         {
             if (Timer.Instance.currentTime >= currentSpawnTime)
             {
-                int mobAmount = Convert.ToInt32(spawnData["SponeMobAmount"]);
-                int mobId = Convert.ToInt32(spawnData["SponeMobID"]);
-                string sponeLocation = spawnData["SponeMobLocation"].ToString();
-                
-                if (Enum.TryParse(sponeLocation, true, out SpawnMobLocation spawnLocation))
+                if (currentSpawnTime != -1)
                 {
-                    if (spawnLocation == SpawnMobLocation.ROUND)
+                    int mobAmount = Convert.ToInt32(spawnData["SponeMobAmount"]);
+                    int mobId = Convert.ToInt32(spawnData["SponeMobID"]);
+                    string sponeLocation = spawnData["SponeMobLocation"].ToString();
+
+                    if (Enum.TryParse(sponeLocation, true, out SpawnMobLocation spawnLocation))
                     {
-                        Vector2[] spawnPoses = CameraManager.Instance.Round(mobAmount);
-                        Monster monster;
-                        if (spawnCount < spawnAmount)
+                        if (spawnLocation == SpawnMobLocation.ROUND)
                         {
-                            if (remainMonsters.Count > 0)
+                            Vector2[] spawnPoses = CameraManager.Instance.Round(mobAmount);
+                            Monster monster;
+                            if (spawnCount < spawnAmount)
                             {
-                                RemainMonster remainMonster = remainMonsters.Dequeue();
-                                monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
+                                if (remainMonsters.Count > 0)
+                                {
+                                    RemainMonster remainMonster = remainMonsters.Dequeue();
+                                    monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
+                                }
+                                else
+                                {
+                                    foreach (Vector2 pos in spawnPoses)
+                                    {
+                                        monster = SpawnMonster(mobId, pos);
+                                        yield return null;
+                                    }
+                                }
                             }
                             else
                             {
-                                foreach (Vector2 pos in spawnPoses)
-                                {
-                                    monster = SpawnMonster(mobId, pos);
-                                    yield return null;
-                                }
+                                remainMonsters.Enqueue(new RemainMonster(mobId, SpawnMobLocation.FACE));
                             }
                         }
                         else
                         {
-                            remainMonsters.Enqueue(new RemainMonster(mobId, SpawnMobLocation.FACE));
+                            SpawnMobLocation location = spawnLocation;
+                            for (int i = 0; i < mobAmount; i++)
+                            {
+                                if (spawnCount < spawnAmount)
+                                {
+                                    Monster monster;
+
+                                    if (remainMonsters.Count > 0)
+                                    {
+                                        RemainMonster remainMonster = remainMonsters.Dequeue();
+                                        monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
+                                    }
+                                    else
+                                    {
+                                        if (spawnLocation == SpawnMobLocation.RANDOMROUND)
+                                        {
+                                            location = (SpawnMobLocation)(i % (System.Enum.GetValues(typeof(SpawnMobLocation)).Length - 1));
+                                            DebugManager.Instance.PrintDebug("SpawnTest: " + location);
+                                        }
+
+                                        if (location == SpawnMobLocation.FACE)
+                                        {
+                                            if (GameManager.Instance.player.lookDirection.x < 0)
+                                            {
+                                                location = SpawnMobLocation.LEFT;
+                                            }
+                                            else
+                                            {
+                                                location = SpawnMobLocation.RIGHT;
+                                            }
+                                        }
+                                        else if (location == SpawnMobLocation.BACK)
+                                        {
+                                            if (GameManager.Instance.player.lookDirection.x < 0)
+                                            {
+                                                location = SpawnMobLocation.RIGHT;
+                                            }
+                                            else
+                                            {
+                                                location = SpawnMobLocation.LEFT;
+                                            }
+                                        }
+                                        monster = SpawnMonster(mobId, CameraManager.Instance.RandomPosInGrid(location));
+                                    }
+                                }
+                                else
+                                {
+                                    remainMonsters.Enqueue(new RemainMonster(mobId, location));
+                                }
+                                yield return tick;
+                            }
                         }
+
                     }
                     else
                     {
-                        SpawnMobLocation location = spawnLocation;
+                        //특정 위치 소환
+                        Vector2 sponePos = GameManager.Instance.map.transform.Find("SpawnPoint").Find(sponeLocation).position;
                         for (int i = 0; i < mobAmount; i++)
                         {
                             if (spawnCount < spawnAmount)
@@ -128,71 +187,15 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                                 }
                                 else
                                 {
-                                    if (spawnLocation == SpawnMobLocation.RANDOMROUND)
-                                    {
-                                        location = (SpawnMobLocation)(i % (System.Enum.GetValues(typeof(SpawnMobLocation)).Length - 1));
-                                        DebugManager.Instance.PrintDebug("SpawnTest: " + location);
-                                    }
-
-                                    if (location == SpawnMobLocation.FACE)
-                                    {
-                                        if (GameManager.Instance.player.lookDirection.x < 0)
-                                        {
-                                            location = SpawnMobLocation.LEFT;
-                                        }
-                                        else
-                                        {
-                                            location = SpawnMobLocation.RIGHT;
-                                        }
-                                    }
-                                    else if (location == SpawnMobLocation.BACK)
-                                    {
-                                        if (GameManager.Instance.player.lookDirection.x < 0)
-                                        {
-                                            location = SpawnMobLocation.RIGHT;
-                                        }
-                                        else
-                                        {
-                                            location = SpawnMobLocation.LEFT;
-                                        }
-                                    }
-                                    monster = SpawnMonster(mobId, CameraManager.Instance.RandomPosInGrid(location));
+                                    monster = SpawnMonster(mobId, sponePos);
                                 }
                             }
                             else
                             {
-                                remainMonsters.Enqueue(new RemainMonster(mobId, location));
+                                remainMonsters.Enqueue(new RemainMonster(mobId, SpawnMobLocation.FACE));
                             }
                             yield return tick;
                         }
-                    }
-                    
-                }
-                else
-                {
-                    //특정 위치 소환
-                    Vector2 sponePos = GameManager.Instance.map.transform.Find("SpawnPoint").Find(sponeLocation).position;
-                    for (int i = 0; i < mobAmount; i++)
-                    {
-                        if (spawnCount < spawnAmount)
-                        {
-                            Monster monster;
-
-                            if (remainMonsters.Count > 0)
-                            {
-                                RemainMonster remainMonster = remainMonsters.Dequeue();
-                                monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
-                            }
-                            else
-                            {
-                                monster = SpawnMonster(mobId, sponePos);
-                            }
-                        }
-                        else
-                        {
-                            remainMonsters.Enqueue(new RemainMonster(mobId, SpawnMobLocation.FACE));
-                        }
-                        yield return tick;
                     }
                 }
 

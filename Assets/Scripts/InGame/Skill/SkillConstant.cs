@@ -5,8 +5,18 @@ namespace SKILLCONSTANT
     {
         STUN,
         SLOW,
-        NUCKBACK,
-        BOOM,
+        KNOCKBACK,
+        EXPLORE,
+        MOVEUP,
+        EXECUTE,
+        SPAWNMOB,
+        CHANGEFORM,
+        BOUNCE,
+        DRAIN,
+        DELETE,
+        RESTRAINT,
+        PULL,
+        METASTASIS,
     }
 
     public enum SKILL_TARGET

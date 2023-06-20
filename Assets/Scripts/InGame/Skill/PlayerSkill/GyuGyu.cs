@@ -21,10 +21,12 @@ public class GyuGyu : Skill
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                ProjectileBounce projectile = (ProjectileBounce)SkillManager.Instance.SpawnProjectile(skillData);
+                ProjectileStraight projectile = (ProjectileStraight)SkillManager.Instance.SpawnProjectile(skillData);
                 projectile.transform.localPosition = shooter.position;
-                Vector2 direction = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
-                projectile.Fire(direction);
+
+                Vector2 targetPos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
+                Vector2 vec = (targetPos - (Vector2)shooter.position).normalized;
+                projectile.SetFireDirection(vec);
                 yield return intervalTime;
             }
 

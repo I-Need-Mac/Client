@@ -15,12 +15,10 @@ public class PlayerManager : MonoBehaviour
     private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
     private int criticalRatio;
 
-    
-
     private Player player;
     private Collider2D playerCollider;
 
-    public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
+    [field: SerializeField]  public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
     //public PlayerData weight { get; private set; } = new PlayerData();     //증감치
 
     #region
@@ -38,12 +36,32 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(HpRegeneration());
     }
 
+    private void Start()
+    {
+        try
+        {
+            SkillManager.Instance.SkillAdd(playerData.skillId01, player.transform);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[Error]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_01)");
+        }
+
+        try
+        {
+            SkillManager.Instance.SkillAdd(playerData.skillId02, player.transform);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[Error]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_02)");
+        }
+    }
+
     private void ConfigSetting()
     {
         fraction = 1 / Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
         coolTimeConstant = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeOffset", "ConfigValue"));
         coolTimeCoefficient = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeMax", "ConfigValue"));
-        criticalRatio = Convert.ToInt32(CSVReader.Read("BattleConfig", "CriticalRatio", "ConfigValue"));
     }
 
     //캐릭터에 스탯 부여
@@ -68,6 +86,8 @@ public class PlayerManager : MonoBehaviour
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(Convert.ToInt32(characterData["MoveSpeed"]));
         playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
+        playerData.SetSkillId01(Convert.ToInt32(characterData["SkillID_01"]));
+        playerData.SetSkillId02(Convert.ToInt32(characterData["SkillID_02"]));
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴

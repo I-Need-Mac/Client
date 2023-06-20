@@ -2,11 +2,14 @@ SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistan
 ?§ÌÇ¨?ÑÏù¥???§ÌÇ¨?¥Î¶Ñ,Skill_TestExplain1,?§ÌÇ¨?§Î™Ö Í∏∞Ìöç??Dummy,Ïø®Ì????§ÌÇ¨Ïª∑Ïî¨ ?†Î¨¥,?§ÌÇ¨ Ïª∑Ïî¨ Í≤ΩÎ°ú,?§ÌÇ¨ ?¥Î?ÏßÄ,?¨Í±∞Î¶??§ÌÇ¨ Î∞îÎ°ú ?úÏ†Ñ?¨Î?,Í∂ÅÍ∑πÍ∏??¨Î?,?¨ÏÇ¨Ï≤?Í∞úÏàò,?ºÌï¥,?¨ÏÇ¨Ï≤??§Ìîº??Í¥Ä?µÏó¨Î∂Ä,??∞ú Î∞òÏ?Î¶??¨ÏÇ¨Ï≤??¨Ïù¥Ï¶?Î∞∞Ïú®,?§ÌÇ¨ ?®Í≥º,,,?§ÌÇ¨ ?®Í≥º ?åÎûå,?§ÌÇ¨ Î∞úÏÇ¨ ?ÄÍ≤??§ÌÇ¨ ?†ÏïÑÍ∞Ä???ïÌÉú,,,,,,,,
 int,String,Skill_TestExplain1,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float,float,int,int,bool,int,int,EffectEnum,int,TargetEnum,ProjectileType,
 10101,10101,10101,10101,Arts/Skill/Icon/Skill_Icon_Juhon_00,20000,FALSE,Null,Dummy,3,TRUE,FALSE,3,0.2,5,5,300,TRUE,0,3,1,1,Player,Whip,Prefabs/InGame/Skill/Juhon
-10201,10201,10201,10201,Dummy,10000,FALSE,Null,Dummy,4,TRUE,FALSE,5,0.1,3,5,5,FALSE,0,1,Nuckback,2,Melee,Straight,Prefabs/InGame/Skill/Bujung
+10201,10201,10201,10201,Dummy,10000,FALSE,Null,Dummy,7,TRUE,FALSE,1,0.1,3,5,5,FALSE,0,1,pull,2,Melee,Straight,Prefabs/InGame/Skill/Bujung
 10301,10301,10301,10301,Dummy,120000,FALSE,Null,Dummy,10,TRUE,FALSE,1,0.2,20,5,0,TRUE,8,0,1,101|,Random,,0
 12001,12001,12001,12001,Arts/Skill/Icon/Skill_Icon_Juhon_00,30000,FALSE,Null,Dummy,4,TRUE,FALSE,3,0.2,5,5,100,TRUE,0,1,1,1,Player,,Prefabs/InGame/Skill/Horin
 10401,10401,10401,10401,20000,20000,FALSE,Null,Dummy,0,FALSE,FALSE,1,0.2,2,5,0,TRUE,8,0,1,1,Player,,Prefabs/InGame/Skill/GodBless
 10801,10801,10801,10801,Dummy,10000,FALSE,Null,Dummy,10,FALSE,TRUE,3,0.05,5,5,10,TRUE,0,1,1,101,Melee,None,Prefabs/InGame/Skill/JuHyung
 10601,10601,10601,10601,Dummy,20000,FALSE,Null,Dummy,5,TRUE,FALSE,25,0.1,5,5,10,TRUE,0,1,1,1,Random,Whip,Prefabs/InGame/Skill/Irons
 10701,10701,10701,10701,Dummy,20000,FALSE,Null,Dummy,5,TRUE,FALSE,1,0.5,5,5,5,TRUE,1,1,1,1,Player,Whip,Prefabs/InGame/Skill/GwiGi
-11001,11001,11001,11001,Dummy,20000,FALSE,Null,Dummy,100,TRUE,FALSE,1,0.5,5,5,5,FALSE,1,1,1,2|100,Melee,,Prefabs/InGame/Skill/GyuGyu
+11001,11001,11001,11001,Dummy,20000,FALSE,Null,Dummy,100,TRUE,FALSE,1,0.5,5,5,5,FALSE,1,1,1,2|100,Melee,,Prefabs/InGame/Skill/Crepitus
+11201,11201,11201,11201,Dummy,3200,FALSE,Null,Dummy,2,FALSE,FALSE,5,0.1,0,5,3,FALSE,0,1,1,1,Melee,,Prefabs/InGame/Skill/Aliento
+11301,11301,11301,11301,Dummy,10000,FALSE,Null,Dummy,3,TRUE,FALSE,1,0.5,0,5,2,TRUE,0,1,1,1,Player,,Prefabs/InGame/Skill/Pok
+11401,11401,11401,11401,Dummy,10000,FALSE,Null,Dummy,10,TRUE,FALSE,0,0,0,0,0,TRUE,0,1,1,1,Player,,Prefabs/InGame/Skill/JeRyeung

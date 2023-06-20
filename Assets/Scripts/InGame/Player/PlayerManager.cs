@@ -36,6 +36,27 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(HpRegeneration());
     }
 
+    private void Start()
+    {
+        try
+        {
+            SkillManager.Instance.SkillAdd(playerData.skillId01, player.transform);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[Error]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_01)");
+        }
+
+        try
+        {
+            SkillManager.Instance.SkillAdd(playerData.skillId02, player.transform);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[Error]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_02)");
+        }
+    }
+
     private void ConfigSetting()
     {
         fraction = 1 / Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
@@ -65,6 +86,8 @@ public class PlayerManager : MonoBehaviour
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(Convert.ToInt32(characterData["MoveSpeed"]));
         playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
+        playerData.SetSkillId01(Convert.ToInt32(characterData["SkillID_01"]));
+        playerData.SetSkillId02(Convert.ToInt32(characterData["SkillID_02"]));
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴

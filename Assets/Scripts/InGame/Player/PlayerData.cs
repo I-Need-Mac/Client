@@ -21,6 +21,8 @@ public class PlayerData
     [field: SerializeField] public int getItemRange { private set; get; }                  //아이템 획득 범위
     [field: SerializeField] public string characterPrefabPath { private set; get; }
     //public Dictionary<int, SkillInfo> skills { get; private set; }
+    [field: SerializeField] public int skillId01 { get; private set; }
+    [field: SerializeField] public int skillId02 { get; private set; }
 
     //Property setter를 사용할 경우 get이 같이 참조되어 setter를 따로 생성
     public void SetCharacterName(string characterName) { this.characterName = characterName; }
@@ -35,7 +37,9 @@ public class PlayerData
     public void SetProjectileAdd(int projectileAdd) { this.projectileAdd = projectileAdd; }
     public void SetMoveSpeed(int moveSpeed) { this.moveSpeed = moveSpeed; }
     public void SetGetItemRange(int getItemRange) { this.getItemRange = getItemRange; }
-    
+    public void SetSkillId01(int skillId01) { this.skillId01 = skillId01; }
+    public void SetSkillId02(int skillId02) { this.skillId02 = skillId02; }
+
     public void HpRegen()
     {
         this.currentHp += this.hpRegen;

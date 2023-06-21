@@ -52,6 +52,7 @@ public class UI_StoryMain : UI_Popup
 
         SetData();
 
+        // stage list create
         GameObject go = Util.FindChild(stageList.gameObject, "Content", true);
         UI_StageElement ele = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
         ele.text.text = String.Format(eleText, "첫");
@@ -78,56 +79,6 @@ public class UI_StoryMain : UI_Popup
         rect3.localScale = new Vector3(1, 1, 1);
     }
 
-    void SetData()
-    {
-        Dictionary<string, Dictionary<string, object>> chapterList = UIData.ChapterData;
-        if(chapterList.Count == 0 || chapterList == null)
-        {
-            Debug.LogError("챕터 테이블 데이터가 없습니다");
-        }
-
-        Dictionary<string, Dictionary<string, object>> stageList = UIData.StageData;
-        if (stageList.Count == 0 || stageList == null)
-        {
-            Debug.LogError("스테이지 테이블 데이터가 없습니다");
-        }
-
-        // 스토리 모드 리스트 생성
-        foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterList)
-        {
-            int chapterID = int.Parse(chapterData.Key);
-            
-            foreach(KeyValuePair<string, object> chapterVal in chapterData.Value)
-            {
-                if(chapterVal.Key == UIData.ChapterTableCol.ChapterName.ToString())
-                {
-                    chapterNameSub.text = chapterVal.Value.ToString();
-                    chapterName.text = chapterVal.Value.ToString();
-                }
-                else if(chapterVal.Key == UIData.ChapterTableCol.ChapterImage.ToString())
-                {
-                    chapterImage.GetComponent<Image>().sprite = Resources.Load<Sprite>($"{chapterVal.Value.ToString()}");
-                }
-            }
-
-            foreach(KeyValuePair<string, Dictionary<string, object>> stageData in stageList)
-            {
-
-            }
-        }
-
-        //foreach (KeyValuePair<string, Dictionary<string, object>> data in stageData)
-        //{
-        //    foreach (KeyValuePair<string, object> val in data.Value)
-        //    {
-        //        if (val.Key == UIData.StageTableCol.StageName.ToString())
-        //        {
-        //            stageSub.text = val.Value.ToString();
-        //        }
-        //    }
-        //}
-    }
-
     public void OnClickImage(PointerEventData data)
     {
         Images imageValue = (Images)FindEnumValue<Images>(data.pointerClick.name);
@@ -149,4 +100,69 @@ public class UI_StoryMain : UI_Popup
                 break;
         }
     }
+
+    void SetData()
+    {
+        Dictionary<string, Dictionary<string, object>> chapterDataList = UIData.ChapterData;
+        if(chapterDataList.Count == 0 || chapterDataList == null)
+        {
+            Debug.LogError("챕터 테이블 데이터가 없습니다");
+        }
+
+        Dictionary<string, Dictionary<string, object>> stageList = UIData.StageData;
+        if (stageList.Count == 0 || stageList == null)
+        {
+            Debug.LogError("스테이지 테이블 데이터가 없습니다");
+        }
+
+        // 스토리 모드 리스트 생성
+        // 챕터 리스트 생
+        foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterDataList)
+        {
+            string eleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
+
+            // chapter list create test
+            GameObject chapterGo = Util.FindChild(chapterList.gameObject, "Content", true);
+            UI_ChapterElement chapterEle = Util.UILoad<UI_ChapterElement>($"{Define.UiPrefabsPath}/UI_ChapterElement");
+            chapterEle.text.text = String.Format(eleText, chapterData.Key);
+            GameObject chapterInstance = Instantiate(chapterEle.gameObject) as GameObject;
+
+            chapterInstance.transform.SetParent(chapterGo.transform);
+            RectTransform chapterRect = chapterInstance.GetComponent<RectTransform>();
+            chapterRect.localScale = new Vector3(1, 1, 1);
+            chapterRect.anchoredPosition3D = new Vector3(chapterRect.anchoredPosition3D.x, chapterRect.anchoredPosition3D.y, 0);
+
+
+            foreach (KeyValuePair<string, object> chapterVal in chapterData.Value)
+            {
+                if(chapterVal.Key == UIData.ChapterTableCol.ChapterName.ToString())
+                {
+                    chapterNameSub.text = "<" + chapterVal.Value.ToString() + ">";
+                    chapterName.text = chapterVal.Value.ToString();
+                }
+                else if(chapterVal.Key == UIData.ChapterTableCol.ChapterImage.ToString())
+                {
+                    chapterImage.GetComponent<Image>().sprite = Resources.Load<Sprite>($"{chapterVal.Value.ToString()}");
+                }
+            }
+
+            foreach(KeyValuePair<string, Dictionary<string, object>> stageData in stageList)
+            {
+                
+            }
+        }
+
+        //foreach (KeyValuePair<string, Dictionary<string, object>> data in stageData)
+        //{
+        //    foreach (KeyValuePair<string, object> val in data.Value)
+        //    {
+        //        if (val.Key == UIData.StageTableCol.StageName.ToString())
+        //        {
+        //            stageSub.text = val.Value.ToString();
+        //        }
+        //    }
+        //}
+    }
+
+    
 }

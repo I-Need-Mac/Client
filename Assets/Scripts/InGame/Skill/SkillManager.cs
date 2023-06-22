@@ -121,6 +121,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 120:
                 skill = new Horin(skillId, shooter);
                 break;
+            case 132:
+                skill = new HyulPok(skillId, shooter);
+                break;
             default:
                 throw new System.NotImplementedException();
         }

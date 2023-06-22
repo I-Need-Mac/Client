@@ -1,33 +1,84 @@
 
-using UnityEngine;
 
 public class PlayerData
 {
-    [field: SerializeField] public string characterName { private set; get; }            //캐릭터 이름
-    [field: SerializeField] public int hp { private set; get; }                                 //체력
-    [field: SerializeField] public int currentHp { private set; get; }
-    [field: SerializeField] public float attack { private set; get; }                         //공격력
-    [field: SerializeField] public int criRatio { private set; get; }                       //크리티컬 확률
-    [field: SerializeField] public float criDamage { private set; get; }                      //크리티컬 데미지
-    [field: SerializeField] public int coolDown { private set; get; }                       //쿨타임 감소량
-    [field: SerializeField] public int hpRegen { private set; get; }                        //체젠량
-    [field: SerializeField] public int shield { private set; get; }                         //쉴드 개수
-    [field: SerializeField] public int projectileAdd { private set; get; }                 //투사체 증가 개수
-    [field: SerializeField] public int moveSpeed { private set; get; }                      //이동 속도
-    [field: SerializeField] public int getItemRange { private set; get; }                  //아이템 획득 범위
-    [field: SerializeField] public string characterPrefabPath { private set; get; }
+    public string characterName { get; private set; }
+
+    public int hp
+    {
+        get { return originHp + modifyHp; }
+        private set { }
+    }
+
+    public int currentHp { get; private set; }
+
+    public float attack
+    {
+        get { return originAttack + modifyAttack; }
+        private set { }
+    }
+
+    public int criRatio
+    {
+        get { return originCriRatio + modifyCriRatio; }
+        private set { }
+    }
+
+    public float criDamage
+    {
+        get { return originCriDamage + modifyCriDamage; }
+        private set { }
+    }
+
+    public int coolDown
+    {
+        get { return originCoolDown + modifyCoolDown; }
+        private set { }
+    }
+
+    public int hpRegen
+    {
+        get { return originHpRegen + modifyHpRegen; }
+        private set { }
+    }
+
+    public int shield { get; private set; }
+
+    public int projectileAdd { get; private set; }
+
+    public float moveSpeed
+    {
+        get { return originMoveSpeed + modifyMoveSpeed; }
+        private set { }
+    }
+
+    public int getItemRange
+    {
+        get { return originGetItemRange + modifyGetItemRange; }
+        private set { }
+    }
+
+    public string characterPrefabPath { get; private set; }
 
     private int originHp;
+    private int modifyHp;
     private float originAttack;
+    private float modifyAttack;
     private int originCriRatio;
+    private int modifyCriRatio;
     private float originCriDamage;
+    private float modifyCriDamage;
     private int originCoolDown;
+    private int modifyCoolDown;
     private int originHpRegen;
-    private int originMoveSpeed;
+    private int modifyHpRegen;
+    private float originMoveSpeed;
+    private float modifyMoveSpeed;
     private int originGetItemRange;
+    private int modifyGetItemRange;
 
+    //Setter - Origin Data
     #region Setter
-    //Property setter를 사용할 경우 get이 같이 참조되어 setter를 따로 생성
     public void SetCharacterName(string characterName)
     {
         this.characterName = characterName;
@@ -36,7 +87,7 @@ public class PlayerData
     public void SetHp(int hp)
     {
         this.originHp = hp;
-        this.hp = this.originHp;
+        this.modifyHp = 0;
     }
 
     public void SetCurrentHp(int currentHp)
@@ -44,34 +95,34 @@ public class PlayerData
         this.currentHp = currentHp;
     }
 
-    public void SetAttack(int attack)
+    public void SetAttack(float attack)
     {
-        this.originAttack = attack * 0.01f;
-        this.attack = this.originAttack;
+        this.originAttack = attack;
+        this.modifyAttack = 0.0f;
     }
 
     public void SetCriRatio(int criRatio)
     {
         this.originCriRatio = criRatio;
-        this.criRatio = this.originCriRatio;
+        this.modifyCriRatio = 0;
     }
 
     public void SetCriDamage(float criDamage)
     {
         this.originCriDamage = criDamage;
-        this.criDamage = this.originCriDamage;
+        this.modifyCriDamage = 0.0f;
     }
 
     public void SetCoolDown(int coolDown)
     {
         this.originCoolDown = coolDown;
-        this.coolDown = this.originCoolDown;
+        this.modifyCoolDown = 0;
     }
 
     public void SetHpRegen(int hpRegen)
     {
         this.originHpRegen = hpRegen;
-        this.hpRegen = this.originHpRegen;
+        this.modifyHpRegen = 0;
     }
 
     public void SetShield(int shield)
@@ -84,23 +135,28 @@ public class PlayerData
         this.projectileAdd = projectileAdd;
     }
 
-    public void SetMoveSpeed(int moveSpeed)
+    public void SetMoveSpeed(float moveSpeed)
     {
         this.originMoveSpeed = moveSpeed;
-        this.moveSpeed = this.originMoveSpeed;
+        this.modifyMoveSpeed = 0;
     }
 
     public void SetGetItemRange(int getItemRange)
     {
         this.originGetItemRange = getItemRange;
-        this.getItemRange = this.originGetItemRange;
+        this.modifyGetItemRange = 0;
     }
     #endregion
 
+    //Modifier - Modify Data
     #region Modifier
     public void HpModifier(int hp)
     {
-        this.hp += hp;
+        this.modifyHp += hp;
+        if (this.currentHp > this.hp)
+        {
+            this.currentHp = this.hp;
+        }
     }
 
     public void CurrentHpModifier(int currentHp)
@@ -108,29 +164,29 @@ public class PlayerData
         this.currentHp += currentHp;
     }
 
-    public void AttackModifier(int attack)
+    public void AttackModifier(float attack)
     {
-        this.attack += attack;
+        this.modifyAttack += attack;
     }
 
     public void CriRatioModifier(int criRatio)
     {
-        this.criRatio += criRatio;
+        this.modifyCriRatio += criRatio;
     }
 
     public void CriDamageModifier(float criDamage)
     {
-        this.criDamage += criDamage;
+        this.modifyCriDamage += criDamage;
     }
 
     public void CoolDownModifier(int coolDown)
     {
-        this.coolDown += coolDown;
+        this.modifyCoolDown += coolDown;
     }
 
     public void HpRegenModifier(int hpRegen)
     {
-        this.hpRegen += hpRegen;
+        this.modifyHpRegen += hpRegen;
     }
 
     public void ShieldModifier(int shield)
@@ -143,14 +199,14 @@ public class PlayerData
         this.projectileAdd += projectileAdd;
     }
 
-    public void MoveSpeedModifier(int moveSpeed)
+    public void MoveSpeedModifier(float moveSpeed)
     {
-        this.moveSpeed += moveSpeed;
+        this.modifyMoveSpeed += moveSpeed;
     }
 
     public void GetItemRangeModifier(int getItemRange)
     {
-        this.getItemRange += getItemRange;
+        this.modifyGetItemRange += getItemRange;
     }
     #endregion
 
@@ -162,4 +218,161 @@ public class PlayerData
             this.currentHp = this.hp;
         }
     }
+
+    //[field: SerializeField] public string characterName { private set; get; }            //캐릭터 이름
+    //[field: SerializeField] public int hp { private set; get; }                                 //체력
+    //[field: SerializeField] public int currentHp { private set; get; }
+    //[field: SerializeField] public float attack { private set; get; }                         //공격력
+    //[field: SerializeField] public int criRatio { private set; get; }                       //크리티컬 확률
+    //[field: SerializeField] public float criDamage { private set; get; }                      //크리티컬 데미지
+    //[field: SerializeField] public int coolDown { private set; get; }                       //쿨타임 감소량
+    //[field: SerializeField] public int hpRegen { private set; get; }                        //체젠량
+    //[field: SerializeField] public int shield { private set; get; }                         //쉴드 개수
+    //[field: SerializeField] public int projectileAdd { private set; get; }                 //투사체 증가 개수
+    //[field: SerializeField] public int moveSpeed { private set; get; }                      //이동 속도
+    //[field: SerializeField] public int getItemRange { private set; get; }                  //아이템 획득 범위
+    //[field: SerializeField] public string characterPrefabPath { private set; get; }
+
+    //private int originHp;
+    //private float originAttack;
+    //private int originCriRatio;
+    //private float originCriDamage;
+    //private int originCoolDown;
+    //private int originHpRegen;
+    //private int originMoveSpeed;
+    //private int originGetItemRange;
+
+    //#region Setter
+    ////Property setter를 사용할 경우 get이 같이 참조되어 setter를 따로 생성
+    //public void SetCharacterName(string characterName)
+    //{
+    //    this.characterName = characterName;
+    //}
+
+    //public void SetHp(int hp)
+    //{
+    //    this.originHp = hp;
+    //    this.hp = this.originHp;
+    //}
+
+    //public void SetCurrentHp(int currentHp)
+    //{
+    //    this.currentHp = currentHp;
+    //}
+
+    //public void SetAttack(int attack)
+    //{
+    //    this.originAttack = attack * 0.01f;
+    //    this.attack = this.originAttack;
+    //}
+
+    //public void SetCriRatio(int criRatio)
+    //{
+    //    this.originCriRatio = criRatio;
+    //    this.criRatio = this.originCriRatio;
+    //}
+
+    //public void SetCriDamage(float criDamage)
+    //{
+    //    this.originCriDamage = criDamage;
+    //    this.criDamage = this.originCriDamage;
+    //}
+
+    //public void SetCoolDown(int coolDown)
+    //{
+    //    this.originCoolDown = coolDown;
+    //    this.coolDown = this.originCoolDown;
+    //}
+
+    //public void SetHpRegen(int hpRegen)
+    //{
+    //    this.originHpRegen = hpRegen;
+    //    this.hpRegen = this.originHpRegen;
+    //}
+
+    //public void SetShield(int shield)
+    //{
+    //    this.shield = shield;
+    //}
+
+    //public void SetProjectileAdd(int projectileAdd)
+    //{
+    //    this.projectileAdd = projectileAdd;
+    //}
+
+    //public void SetMoveSpeed(int moveSpeed)
+    //{
+    //    this.originMoveSpeed = moveSpeed;
+    //    this.moveSpeed = this.originMoveSpeed;
+    //}
+
+    //public void SetGetItemRange(int getItemRange)
+    //{
+    //    this.originGetItemRange = getItemRange;
+    //    this.getItemRange = this.originGetItemRange;
+    //}
+    //#endregion
+
+    //#region Modifier
+    //public void HpModifier(int hp)
+    //{
+    //    this.hp += hp;
+    //    if (this.currentHp > this.hp)
+    //    {
+    //        this.currentHp = this.hp;
+    //    }
+    //}
+
+    //public void CurrentHpModifier(int currentHp)
+    //{
+    //    this.currentHp += currentHp;
+    //}
+
+    //public void AttackModifier(float attack)
+    //{
+    //    this.attack += attack;
+    //}
+
+    //public void CriRatioModifier(int criRatio)
+    //{
+    //    this.criRatio += criRatio;
+    //}
+
+    //public void CriDamageModifier(float criDamage)
+    //{
+    //    this.criDamage += criDamage;
+    //}
+
+    //public void CoolDownModifier(int coolDown)
+    //{
+    //    this.coolDown += coolDown;
+    //}
+
+    //public void HpRegenModifier(int hpRegen)
+    //{
+    //    this.hpRegen += hpRegen;
+    //}
+
+    //public void ShieldModifier(int shield)
+    //{
+    //    this.shield += shield;
+    //}
+
+    //public void ProjectileAddModifier(int projectileAdd)
+    //{
+    //    this.projectileAdd += projectileAdd;
+    //}
+
+    //public void MoveSpeedModifier(int moveSpeed)
+    //{
+    //    this.moveSpeed = this.originMoveSpeed;
+    //    this.moveSpeed += moveSpeed;
+    //}
+
+    //public void GetItemRangeModifier(int getItemRange)
+    //{
+    //    this.getItemRange += getItemRange;
+    //}
+    //#endregion
+
 }

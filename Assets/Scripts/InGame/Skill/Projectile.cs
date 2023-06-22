@@ -179,17 +179,15 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator MoveUp(float n)
     {
-        int originSpeed = GameManager.Instance.player.playerManager.playerData.moveSpeed;
-        GameManager.Instance.player.playerManager.playerData.SetMoveSpeed((int)(originSpeed * n * 0.01f));
+        GameManager.Instance.player.playerManager.playerData.MoveSpeedModifier(n * 0.01f);
         yield return new WaitForSeconds(skillData.duration);
-        GameManager.Instance.player.playerManager.playerData.SetMoveSpeed(originSpeed);
+        GameManager.Instance.player.playerManager.playerData.MoveSpeedModifier(-n * 0.01f);
     }
 
     private void Drain(float n)
     {
-        float hp = GameManager.Instance.player.playerManager.playerData.currentHp + (totalDamage * n * 0.01f);
-        DebugManager.Instance.PrintDebug("HPTest2: " + hp);
-        GameManager.Instance.player.playerManager.playerData.SetCurrentHp((int)hp);
+        float hp = totalDamage * n * 0.01f;
+        GameManager.Instance.player.playerManager.playerData.CurrentHpModifier((int)hp);
     }
 
     private IEnumerator SpawnMob(float n)

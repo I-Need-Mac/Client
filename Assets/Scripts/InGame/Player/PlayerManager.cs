@@ -136,7 +136,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (playerData.shield > 0)
         {
-            playerData.SetShield(playerData.shield - 1);
+            playerData.ShieldModifier(-1);
             return 1;
         }
         return monsterDamage;

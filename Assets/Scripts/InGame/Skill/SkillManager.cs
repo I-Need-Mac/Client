@@ -124,6 +124,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 132:
                 skill = new HyulPok(skillId, shooter);
                 break;
+            case 135:
+                skill = new GaSok(skillId, shooter);
+                break;
             default:
                 throw new System.NotImplementedException();
         }

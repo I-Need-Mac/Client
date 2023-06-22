@@ -152,7 +152,7 @@ public class PlayerManager : MonoBehaviour
             Monster monster = collision.GetComponentInParent<Monster>();
             StartCoroutine(player.Invincible());
             DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
-            playerData.SetCurrentHp(playerData.currentHp - monster.monsterData.attack);
+            playerData.CurrentHpModifier(-IsShield(monster.monsterData.attack));
         }
         catch
         {

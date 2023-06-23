@@ -35,6 +35,33 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(HpRegeneration());
     }
 
+    private void Start()
+    {
+        Dictionary<string, object> characterData = FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId()));
+
+        try
+        {
+            int skillId = Convert.ToInt32(characterData["SkillID_01"]);
+            SkillManager.Instance.SkillAdd(skillId, player.transform);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[ERROR]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_01)");
+        }
+
+        try
+        {
+            int skillId = Convert.ToInt32(characterData["SkillID_02"]);
+            SkillManager.Instance.SkillAdd(skillId, player.transform);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[ERROR]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_02)");
+        }
+        int skillId2 = Convert.ToInt32(characterData["SkillID_02"]);
+        SkillManager.Instance.SkillAdd(skillId2, player.transform);
+    }
+
     private void ConfigSetting()
     {
         fraction = 1 / Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));

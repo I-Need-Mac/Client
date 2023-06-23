@@ -20,4 +20,9 @@ public class PlayerItem : MonoBehaviour
         itemCollider.radius = player.playerManager.playerData.getItemRange;
     }
 
+    public void UpdateItemRange()
+    {
+        itemCollider.radius = player.playerManager.playerData.getItemRange;
+    }
+
 }

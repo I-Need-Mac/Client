@@ -8,12 +8,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-
     private Rigidbody2D playerRigidbody;
     private Vector2 playerDirection;
-    
-    
+    private PlayerItem playerItem;
     private Transform shadow;
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
@@ -36,7 +33,7 @@ public class Player : MonoBehaviour
         spineManager = GetComponent<SpineManager>();
         playerManager = GetComponentInChildren<PlayerManager>();
 
-
+        playerItem = GetComponentInChildren<PlayerItem>();
         gameObject.tag = "Player";
         invincibleTime = new WaitForSeconds(Convert.ToInt32(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))) / 1000.0f);
     }
@@ -101,12 +98,17 @@ public class Player : MonoBehaviour
     #region Level
     public void GetExp(int exp)
     {
-        this.exp += exp;
+        this.exp += playerManager.playerData.ExpBuff(exp);
 
         if (this.exp >= needExp)
         {
             LevelUp();
         }
+    }
+
+    public void UpdateGetItemRange()
+    {
+        playerItem.UpdateItemRange();
     }
 
     private void LevelUp()

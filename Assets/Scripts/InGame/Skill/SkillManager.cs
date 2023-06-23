@@ -121,6 +121,15 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 120:
                 skill = new Horin(skillId, shooter);
                 break;
+            case 132:
+                skill = new HyulPok(skillId, shooter);
+                break;
+            case 135:
+                skill = new GaSok(skillId, shooter);
+                break;
+            case 136:
+                skill = new Hyum(skillId, shooter);
+                break;
             default:
                 throw new System.NotImplementedException();
         }
@@ -143,6 +152,14 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     public void CoroutineStarter(IEnumerator coroutine)
     {
         StartCoroutine(coroutine);
+    }
+
+    public void SkillUpdate()
+    {
+        foreach (SkillInfo info in skillList.Values)
+        {
+            info.skill.SkillUpdate();
+        }
     }
 
 }

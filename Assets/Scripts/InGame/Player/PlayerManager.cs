@@ -13,7 +13,6 @@ public class PlayerManager : MonoBehaviour
     private float fraction;             //분율
     private int coolTimeConstant;     //재사용대기시간감소상수
     private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
-    private int criticalRatio;
 
     private Player player;
     private Collider2D playerCollider;
@@ -34,27 +33,6 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerSetting(FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
         StartCoroutine(HpRegeneration());
-    }
-
-    private void Start()
-    {
-        try
-        {
-            SkillManager.Instance.SkillAdd(playerData.skillId01, player.transform);
-        }
-        catch
-        {
-            DebugManager.Instance.PrintDebug("[Error]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_01)");
-        }
-
-        try
-        {
-            SkillManager.Instance.SkillAdd(playerData.skillId02, player.transform);
-        }
-        catch
-        {
-            DebugManager.Instance.PrintDebug("[Error]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_02)");
-        }
     }
 
     private void ConfigSetting()
@@ -86,8 +64,9 @@ public class PlayerManager : MonoBehaviour
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(Convert.ToInt32(characterData["MoveSpeed"]));
         playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
-        playerData.SetSkillId01(Convert.ToInt32(characterData["SkillID_01"]));
-        playerData.SetSkillId02(Convert.ToInt32(characterData["SkillID_02"]));
+
+        playerData.SetExpBuff(0);
+        playerData.SetArmor(0);
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴
@@ -159,7 +138,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (playerData.shield > 0)
         {
-            playerData.SetShield(playerData.shield - 1);
+            playerData.ShieldModifier(-1);
             return 1;
         }
         return monsterDamage;
@@ -175,7 +154,7 @@ public class PlayerManager : MonoBehaviour
             Monster monster = collision.GetComponentInParent<Monster>();
             StartCoroutine(player.Invincible());
             DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
-            playerData.SetCurrentHp(playerData.currentHp - monster.monsterData.attack);
+            playerData.CurrentHpModifier(-IsShield(monster.monsterData.attack));
         }
         catch
         {

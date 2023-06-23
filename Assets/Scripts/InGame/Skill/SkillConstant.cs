@@ -17,6 +17,20 @@ namespace SKILLCONSTANT
         RESTRAINT,
         PULL,
         METASTASIS,
+        //아래는 패시브
+        MAGNET,
+        SHIELD,
+        MOVESPEED,
+        EXP,
+        PROJECTILESIZE,
+        PROJECTILECOUNT,
+        PROJECTILESPLASH,
+        PROJECTILESPEED,
+        HP,
+        HPREGEN,
+        ATTACK,
+        ATTACKSPEED,
+        ARMOR,
     }
 
     public enum SKILL_TARGET
@@ -33,7 +47,7 @@ namespace SKILLCONSTANT
         LOWEST,
     }
 
-    public enum CALC_DAMAGE_TYPE
+    public enum CALC_MODE
     {
         PLUS,
         MULTI,

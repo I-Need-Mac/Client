@@ -18,16 +18,14 @@ public class SkillData
     public string skillImage { get; private set; }                  //스킬 발동 시 사용할 애니메이션 파일 이름
     public List<SKILL_EFFECT> skillEffect { get; private set; }           //스킬 이펙트
     public SKILL_TARGET skillTarget { get; private set; }           //스킬 발동 대상
-    public CALC_DAMAGE_TYPE calcDamageType { get; private set; }    //데미지 계산 방식
     public string skillPrefabPath { get; private set; }
     public int projectileCount { get; private set; }                //투사체 개수
     public int intervalTime { get; private set; }                 //투사체간 발사 간격
     public int duration { get; private set; }                     //스킬 지속 시간
-    public int speed { get; private set; }                          //투사체 속도
-    public int splashRange { get; private set; }                    //스플레쉬 범위 (원의 반지름)
-    public int projectileSizeMulti { get; private set; }            //투사체 크기 배율
+    public float speed { get; private set; }                          //투사체 속도
+    public float splashRange { get; private set; }                    //스플레쉬 범위 (원의 반지름)
+    public float projectileSizeMulti { get; private set; }            //투사체 크기 배율
     public bool isPenetrate { get; private set; }                   //스킬의 관통 여부
-    //public PROJECTILE_TYPE projectileType { get; private set; }     //투사체 타입
 
     public void SetSkillId(int skillId) { this.skillId = skillId; }
     public void SetCoolTime(int coolTime) { this.coolTime = coolTime; }
@@ -36,9 +34,9 @@ public class SkillData
     public void SetIntervalTime(int intervalTime) { this.intervalTime = intervalTime; }
     public void SetDuration(int duration) { this.duration = duration; }
     public void SetDamage(int damage) { this.damage = damage; }
-    public void SetSpeed(int speed) { this.speed = speed; }
-    public void SetSplashRange(int splashRange) { this.splashRange = splashRange; }
-    public void SetProjectileSizeMulti(int projectileSizeMulti) { this.projectileSizeMulti = projectileSizeMulti; }
+    public void SetSpeed(float speed) { this.speed = speed; }
+    public void SetSplashRange(float splashRange) { this.splashRange = splashRange; }
+    public void SetProjectileSizeMulti(float projectileSizeMulti) { this.projectileSizeMulti = projectileSizeMulti; }
     public void SetSkillEffectParam(List<string> skillEffectParam) { this.skillEffectParam = skillEffectParam; }
     public void SetSkillCut(bool skillCut) { this.skillCut = skillCut; }
     public void SetIsEffect(bool isEffect) { this.isEffect = isEffect; }
@@ -51,7 +49,5 @@ public class SkillData
     public void SetSkillImage(string skillImage) { this.skillImage = skillImage; }
     public void SetSkillEffect(List<SKILL_EFFECT> skillEffect) { this.skillEffect = skillEffect; }
     public void SetSkillTarget(SKILL_TARGET skillTarget) { this.skillTarget = skillTarget; }
-    //public void SetProjectileType(PROJECTILE_TYPE projectileType) { this.projectileType = projectileType; }
-    public void SetCalcDamageType(CALC_DAMAGE_TYPE calcDamageType) { this.calcDamageType = calcDamageType; }
     public void SetSkillPrefabPath(string skillPrefabPath) { this.skillPrefabPath = skillPrefabPath; }
 }

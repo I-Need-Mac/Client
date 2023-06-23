@@ -2,11 +2,12 @@ using SKILLCONSTANT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class HyulPok : Skill
+public class Hyum : Skill
 {
-    public HyulPok(int skillId, Transform shooter) : base(skillId, shooter)
+    public Hyum(int skillId, Transform shooter) : base(skillId, shooter)
     {
     }
 

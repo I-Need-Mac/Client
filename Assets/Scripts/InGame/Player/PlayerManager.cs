@@ -13,7 +13,6 @@ public class PlayerManager : MonoBehaviour
     private float fraction;             //분율
     private int coolTimeConstant;     //재사용대기시간감소상수
     private int coolTimeCoefficient;  //재사용대기시간감소최대치조절계수
-    private int criticalRatio;
 
     private Player player;
     private Collider2D playerCollider;
@@ -65,6 +64,9 @@ public class PlayerManager : MonoBehaviour
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(Convert.ToInt32(characterData["MoveSpeed"]));
         playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
+
+        playerData.SetExpBuff(0);
+        playerData.SetArmor(0);
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴

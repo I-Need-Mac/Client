@@ -21,6 +21,22 @@ public abstract class Skill
     public abstract void Init();
     public abstract IEnumerator Activation();
 
+    public virtual void DeActivation()
+    {
+        try
+        {
+            for (int i = 0; i < skillData.skillEffect.Count; i++)
+            {
+                CALC_MODE mode = (CALC_MODE)Enum.Parse(typeof(CALC_MODE), skillData.skillEffectParam[i * 2], true);
+                PassiveEffect.PassiveEffectActivation(-float.Parse(skillData.skillEffectParam[i * 2 + 1]), skillData.skillEffect[i], mode);
+            }
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[SYSTEM]: 해제할 효과가 없습니다");
+        }
+    }
+
     public Skill(int skillId, Transform shooter)
     {
         skillTable = CSVReader.Read("SkillTable");
@@ -30,8 +46,26 @@ public abstract class Skill
         SetSkillData(skillId);
     }
 
+    public void SkillUpdate()
+    {
+        DeActivation();
+
+        foreach (Projectile projectile in projectiles)
+        {
+            if (projectile.gameObject.activeInHierarchy)
+            {
+                SkillManager.Instance.DeSpawnProjectile(projectile);
+            }
+        }
+        projectiles.Clear();
+        SetSkillData(skillData.skillId);
+        Init();
+    }
+
     public void SkillLevelUp()
     {
+        DeActivation();
+
         foreach (Projectile projectile in projectiles)
         {
             if (projectile.gameObject.activeInHierarchy)
@@ -99,10 +133,16 @@ public abstract class Skill
         intervalTime = new WaitForSeconds(skillData.intervalTime / 1000.0f);
         skillData.SetDuration(Convert.ToInt32(data["Duration"]));
         duration = new WaitForSeconds(skillData.duration / 1000.0f);
-        skillData.SetSpeed(Convert.ToInt32(data["Speed"]));
-        skillData.SetSplashRange(Convert.ToInt32(data["SplashRange"]));
-        skillData.SetProjectileSizeMulti(Convert.ToInt32(data["ProjectileSizeMulti"]));
+        skillData.SetSpeed(float.Parse(Convert.ToString(data["Speed"])));
+        skillData.SetSplashRange(float.Parse(Convert.ToString(data["SplashRange"])));
+        skillData.SetProjectileSizeMulti(float.Parse(Convert.ToString(data["ProjectileSizeMulti"])));
         skillData.SetIsPenetrate(Convert.ToBoolean(data["IsPenetrate"]));
+
+        PlayerData playerData = GameManager.Instance.player.playerManager.playerData;
+        skillData.SetProjectileSizeMulti(skillData.projectileSizeMulti + playerData.projectileSize);
+        skillData.SetProjectileCount(skillData.projectileCount + playerData.projectileAdd);
+        skillData.SetSplashRange(skillData.splashRange + playerData.projectileSplash);
+        skillData.SetSpeed(skillData.speed + playerData.projectileSpeed);
     }
 
 }

@@ -1,5 +1,7 @@
 
 
+using SKILLCONSTANT;
+
 public class PlayerData
 {
     public string characterName { get; private set; }
@@ -59,6 +61,16 @@ public class PlayerData
     }
 
     public string characterPrefabPath { get; private set; }
+
+    public int expBuff { get; private set; }
+
+    public int armor { get; private set; }
+
+    public float projectileSize { get; private set; }
+
+    public float projectileSplash { get; private set; }
+
+    public float projectileSpeed { get; private set; }
 
     private int originHp;
     private int modifyHp;
@@ -146,6 +158,31 @@ public class PlayerData
         this.originGetItemRange = getItemRange;
         this.modifyGetItemRange = 0;
     }
+
+    public void SetExpBuff(int expBuff)
+    {
+        this.expBuff = expBuff;
+    }
+
+    public void SetArmor(int armor)
+    {
+        this.armor = armor;
+    }
+
+    public void SetProjectileSize(float projectileSize)
+    {
+        this.projectileSize = projectileSize;
+    }
+
+    public void SetProjectileSplash(float projectileSplash)
+    {
+        this.projectileSplash = projectileSplash;
+    }
+
+    public void SetProjectileSpeed(float projectileSpeed)
+    {
+        this.projectileSpeed = projectileSpeed;
+    }
     #endregion
 
     //Modifier - Modify Data
@@ -208,6 +245,31 @@ public class PlayerData
     {
         this.modifyGetItemRange += getItemRange;
     }
+
+    public void ExpBuffModifier(int expBuff)
+    {
+        this.expBuff += expBuff;
+    }
+
+    public void ArmorModifier(int armor)
+    {
+        this.armor += armor;
+    }
+
+    public void ProjectileSizeModifier(float projectileSize)
+    {
+        this.projectileSize += projectileSize;
+    }
+
+    public void ProjectileSplashModifier(float projectileSplash)
+    {
+        this.projectileSize += projectileSplash;
+    }
+
+    public void ProjectileSpeedModifier(float projectileSpeed)
+    {
+        this.projectileSpeed += projectileSpeed;
+    }
     #endregion
 
     public void HpRegen()
@@ -217,6 +279,16 @@ public class PlayerData
         {
             this.currentHp = this.hp;
         }
+    }
+
+    public int ExpBuff(int exp)
+    {
+        return (int)(exp * this.expBuff * 0.01f) + exp;
+    }
+
+    public int Armor(int damage)
+    {
+        return damage - (int)(damage * this.armor * 0.01f);
     }
 
     //[field: SerializeField] public string characterName { private set; get; }            //캐릭터 이름

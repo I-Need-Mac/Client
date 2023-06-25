@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
     protected bool isMetastasis = false;
 
     public float totalDamage { get; private set; }
-    public SkillData skillData { get; private set; }
+    public ActiveData skillData { get; private set; }
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
         animator.runtimeAnimatorController = controller;
     }
 
-    public virtual void SetProjectile(SkillData skillData)
+    public virtual void SetProjectile(ActiveData skillData)
     {
         this.skillData = skillData;
         if (projectileCollider != null)

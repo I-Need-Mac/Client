@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bujung : Skill
+public class Bujung : ActiveSkill
 {
     public Bujung(int skillId, Transform shooter) : base(skillId, shooter) { }
 

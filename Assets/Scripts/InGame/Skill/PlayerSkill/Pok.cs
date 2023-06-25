@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pok : Skill
+public class Pok : ActiveSkill
 {
     public Pok(int skillId, Transform shooter) : base(skillId, shooter) { }
 

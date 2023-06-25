@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GwiGi : Skill
+public class GwiGi : ActiveSkill
 {
     public GwiGi(int skillId, Transform shooter) : base(skillId, shooter) { }
 

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HyulPok : Skill
+public class HyulPok : PassiveSkill
 {
     public HyulPok(int skillId, Transform shooter) : base(skillId, shooter)
     {
@@ -18,8 +18,8 @@ public class HyulPok : Skill
     {
         for (int i = 0; i < skillData.skillEffect.Count; i++)
         {
-            CALC_MODE mode = (CALC_MODE)Enum.Parse(typeof(CALC_MODE), skillData.skillEffectParam[i * 2], true);
-            PassiveEffect.PassiveEffectActivation(float.Parse(skillData.skillEffectParam[i * 2 + 1]), skillData.skillEffect[i], mode);
+            CALC_MODE mode = (CALC_MODE)Enum.Parse(typeof(CALC_MODE), skillData.skillEffectParam[i], true);
+            PassiveEffect.PassiveEffectActivation(float.Parse(skillData.skillEffectParam[i]), skillData.skillEffect[i], mode);
         }
         yield return null;
     }

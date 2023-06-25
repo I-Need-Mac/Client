@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Horin : Skill
+public class Horin : ActiveSkill
 {
     public Horin(int skillId, Transform shooter) : base(skillId, shooter) { }
 

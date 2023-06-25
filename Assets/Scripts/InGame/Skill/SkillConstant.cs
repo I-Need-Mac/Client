@@ -1,4 +1,6 @@
 
+using JetBrains.Annotations;
+
 namespace SKILLCONSTANT
 {
     public enum SKILL_EFFECT
@@ -17,7 +19,10 @@ namespace SKILLCONSTANT
         RESTRAINT,
         PULL,
         METASTASIS,
-        //아래는 패시브
+    }
+
+    public enum SKILL_PASSIVE
+    {
         MAGNET,
         SHIELD,
         MOVESPEED,

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Juhon : Skill
+public class Juhon : ActiveSkill
 {
     public Juhon(int skillId, Transform shooter) : base(skillId, shooter) { }
 

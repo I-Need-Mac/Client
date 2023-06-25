@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crepitus : Skill
+public class Crepitus : ActiveSkill
 {
     private WaitForSeconds tick;
     private float size;

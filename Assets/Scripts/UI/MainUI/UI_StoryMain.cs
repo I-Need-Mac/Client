@@ -45,38 +45,7 @@ public class UI_StoryMain : UI_Popup
 
         title.text = LocalizeManager.Instance.GetText("UI_StoryMode");
 
-        // string stageTitleText = LocalizeManager.Instance.GetText("UI_CurrentStage");
-        // stageTitle.text = String.Format(stageTitleText, 1, 1);
-
-        string eleText = LocalizeManager.Instance.GetText("UI_StageList");
-
         SetData();
-
-        // stage list create
-        GameObject go = Util.FindChild(stageList.gameObject, "Content", true);
-        UI_StageElement ele = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
-        ele.text.text = String.Format(eleText, "첫");
-        GameObject instance = Instantiate(ele.gameObject) as GameObject;
-
-        instance.transform.SetParent(go.transform);
-        RectTransform rect = instance.GetComponent<RectTransform>();
-        rect.localScale = new Vector3(1, 1, 1);
-
-        UI_StageElement ele2 = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
-        ele2.text.text = String.Format(eleText, 2);
-        GameObject instance2 = Instantiate(ele2.gameObject) as GameObject;
-
-        instance2.transform.SetParent(go.transform);
-        RectTransform rect2 = instance2.GetComponent<RectTransform>();
-        rect2.localScale = new Vector3(1, 1, 1);
-
-        UI_StageElement ele3 = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
-        ele3.text.text = String.Format(eleText, 3);
-        GameObject instance3 = Instantiate(ele3.gameObject) as GameObject;
-
-        instance3.transform.SetParent(go.transform);
-        RectTransform rect3 = instance3.GetComponent<RectTransform>();
-        rect3.localScale = new Vector3(1, 1, 1);
     }
 
     public void OnClickImage(PointerEventData data)
@@ -109,22 +78,21 @@ public class UI_StoryMain : UI_Popup
             Debug.LogError("챕터 테이블 데이터가 없습니다");
         }
 
-        Dictionary<string, Dictionary<string, object>> stageList = UIData.StageData;
-        if (stageList.Count == 0 || stageList == null)
+        Dictionary<string, Dictionary<string, object>> stageDataList = UIData.StageData;
+        if (stageDataList.Count == 0 || stageDataList == null)
         {
             Debug.LogError("스테이지 테이블 데이터가 없습니다");
         }
 
-        // 스토리 모드 리스트 생성
         // 챕터 리스트 생
         foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterDataList)
         {
-            string eleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
+            string chapterEleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
 
             // chapter list create test
             GameObject chapterGo = Util.FindChild(chapterList.gameObject, "Content", true);
             UI_ChapterElement chapterEle = Util.UILoad<UI_ChapterElement>($"{Define.UiPrefabsPath}/UI_ChapterElement");
-            chapterEle.text.text = String.Format(eleText, chapterData.Key);
+            chapterEle.text.text = String.Format(chapterEleText, chapterData.Key);
             GameObject chapterInstance = Instantiate(chapterEle.gameObject) as GameObject;
 
             chapterInstance.transform.SetParent(chapterGo.transform);
@@ -133,36 +101,78 @@ public class UI_StoryMain : UI_Popup
             chapterRect.anchoredPosition3D = new Vector3(chapterRect.anchoredPosition3D.x, chapterRect.anchoredPosition3D.y, 0);
 
 
-            foreach (KeyValuePair<string, object> chapterVal in chapterData.Value)
-            {
-                if(chapterVal.Key == UIData.ChapterTableCol.ChapterName.ToString())
-                {
-                    chapterNameSub.text = "<" + chapterVal.Value.ToString() + ">";
-                    chapterName.text = chapterVal.Value.ToString();
-                }
-                else if(chapterVal.Key == UIData.ChapterTableCol.ChapterImage.ToString())
-                {
-                    chapterImage.GetComponent<Image>().sprite = Resources.Load<Sprite>($"{chapterVal.Value.ToString()}");
-                }
-            }
+            //foreach (KeyValuePair<string, object> chapterVal in chapterData.Value)
+            //{
+            //    if(chapterVal.Key == UIData.ChapterTableCol.ChapterName.ToString())
+            //    {
+            //        chapterNameSub.text = "<" + chapterVal.Value.ToString() + ">";
+            //        chapterName.text = chapterVal.Value.ToString();
+            //    }
+            //    else if(chapterVal.Key == UIData.ChapterTableCol.ChapterImage.ToString())
+            //    {
+            //        chapterImage.GetComponent<Image>().sprite = Resources.Load<Sprite>($"{chapterVal.Value.ToString()}");
+            //    }
+            //}
 
-            foreach(KeyValuePair<string, Dictionary<string, object>> stageData in stageList)
+            //foreach(KeyValuePair<string, Dictionary<string, object>> stageData in stageDataList)
+            //{
+            //    string stageEleText = LocalizeManager.Instance.GetText("UI_StageList");
+
+            //    // stage list create
+            //    GameObject stageGo = Util.FindChild(stageList.gameObject, "Content", true);
+            //    UI_StageElement stageEle = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
+            //    stageEle.text.text = String.Format(stageEleText, stageData.Key);
+            //    GameObject stageInstance = Instantiate(stageEle.gameObject) as GameObject;
+
+            //    stageInstance.transform.SetParent(stageGo.transform);
+            //    RectTransform stageRect = stageInstance.GetComponent<RectTransform>();
+            //    stageRect.localScale = new Vector3(1, 1, 1);
+            //    stageRect.anchoredPosition3D = new Vector3(stageRect.anchoredPosition3D.x, stageRect.anchoredPosition3D.y, 0);
+            //}
+        }
+
+        int currentChapterID = GetChapterID(UIManager.Instance.selectStageID);
+
+        // 서버에서 받은 스테이지가 속한 챕터 선택하기 
+        SelectChapter(currentChapterID);
+
+    }
+
+    void SelectChapter(int chapterID)
+    {
+
+    }
+
+    int GetChapterID(int stageId)
+    {
+        Dictionary<string, Dictionary<string, object>> stageDataList = UIData.StageData;
+        if (stageDataList.Count == 0 || stageDataList == null)
+        {
+            Debug.LogError("스테이지 테이블 데이터가 없습니다");
+        }
+
+        int findChapterID = 0;
+        foreach (KeyValuePair<string, Dictionary<string, object>> stageData in stageDataList)
+        {
+            if( stageData.Key == "" || stageData.Key == null )
             {
-                
+                continue;
+            }
+            
+            if(int.Parse(stageData.Key) == stageId)
+            {
+                foreach (KeyValuePair<string, object> val in stageData.Value)
+                {
+                    if (val.Key == UIData.StageTableCol.ChapterCategory.ToString())
+                    {
+                        findChapterID = int.Parse(val.Value.ToString());
+                        break;
+                    }
+                }
             }
         }
 
-        //foreach (KeyValuePair<string, Dictionary<string, object>> data in stageData)
-        //{
-        //    foreach (KeyValuePair<string, object> val in data.Value)
-        //    {
-        //        if (val.Key == UIData.StageTableCol.StageName.ToString())
-        //        {
-        //            stageSub.text = val.Value.ToString();
-        //        }
-        //    }
-        //}
+        return findChapterID;
     }
-
     
 }

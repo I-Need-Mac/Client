@@ -128,12 +128,8 @@ public class UIData
         // 스테이지 테이블을 읽습니다.
         stageTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.StageTable));
 
-        // 스테이지 id를 임의로 넣어둡니다 (원래는 서버에 저장된 마지막 플레이 스테이지 값을 넣어야 합니다)
-        foreach(string val in stageTableData.Keys)
-        {
-            UIManager.Instance.selectStageID = int.Parse(val);
-            break;
-        }
+        // 스테이지 id를 임의로 넣어둡니다 (추후 초기 셋팅은 게임 시작 시 서버에서 가져온 스테이지 값을 넣도록 합니다)
+        UIManager.Instance.selectStageID = 10101;
     }
 
     static void ReadChapterData()

@@ -1,12 +1,41 @@
 
+using JetBrains.Annotations;
+
 namespace SKILLCONSTANT
 {
     public enum SKILL_EFFECT
     {
         STUN,
         SLOW,
-        NUCKBACK,
-        BOOM,
+        KNOCKBACK,
+        EXPLORE,
+        MOVEUP,
+        EXECUTE,
+        SPAWNMOB,
+        CHANGEFORM,
+        BOUNCE,
+        DRAIN,
+        DELETE,
+        RESTRAINT,
+        PULL,
+        METASTASIS,
+    }
+
+    public enum SKILL_PASSIVE
+    {
+        MAGNET,
+        SHIELD,
+        MOVESPEED,
+        EXP,
+        PROJECTILESIZE,
+        PROJECTILECOUNT,
+        PROJECTILESPLASH,
+        PROJECTILESPEED,
+        HP,
+        HPREGEN,
+        ATTACK,
+        ATTACKSPEED,
+        ARMOR,
     }
 
     public enum SKILL_TARGET
@@ -23,7 +52,7 @@ namespace SKILLCONSTANT
         LOWEST,
     }
 
-    public enum CALC_DAMAGE_TYPE
+    public enum CALC_MODE
     {
         PLUS,
         MULTI,

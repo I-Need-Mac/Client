@@ -8,12 +8,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int moveSpeed = 5;
-
     private Rigidbody2D playerRigidbody;
     private Vector2 playerDirection;
-    
-    
+    private PlayerItem playerItem;
     private Transform shadow;
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
@@ -35,8 +32,10 @@ public class Player : MonoBehaviour
         shadow = transform.Find("Shadow");
         spineManager = GetComponent<SpineManager>();
         playerManager = GetComponentInChildren<PlayerManager>();
+
+        playerItem = GetComponentInChildren<PlayerItem>();
         gameObject.tag = "Player";
-        invincibleTime = new WaitForSeconds(float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))));
+        invincibleTime = new WaitForSeconds(Convert.ToInt32(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))) / 1000.0f);
     }
 
     private void OnEnable()
@@ -54,7 +53,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
-        DebugManager.Instance.PrintDebug("RootMotionTest: " + transform.localPosition.ToString("N10"));
     }
 
     private void FixedUpdate()
@@ -81,12 +79,12 @@ public class Player : MonoBehaviour
     {
         spineManager.SetDirection(character, playerDirection);
         spineManager.SetDirection(shadow, playerDirection);
-        playerRigidbody.velocity = playerDirection.normalized * moveSpeed;
+        playerRigidbody.velocity = playerDirection.normalized * playerManager.playerData.moveSpeed;
 
         if (playerRigidbody.velocity == Vector2.zero)
         {
             Vector3 pos = transform.localPosition;
-            pos.y += 0.0000001f;
+            pos.y += 0.00005f;
             transform.localPosition = pos;
             spineManager.SetAnimation("Idle", true);
         }
@@ -100,12 +98,17 @@ public class Player : MonoBehaviour
     #region Level
     public void GetExp(int exp)
     {
-        this.exp += exp;
+        this.exp += playerManager.playerData.ExpBuff(exp);
 
         if (this.exp >= needExp)
         {
             LevelUp();
         }
+    }
+
+    public void UpdateGetItemRange()
+    {
+        playerItem.UpdateItemRange();
     }
 
     private void LevelUp()
@@ -118,19 +121,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Collider
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //if (collision.TryGetComponent(out Monster monster) && monster.isAttack)
-        //{
-        //    playerManager.weight.SetHp(playerManager.weight.hp - monster.monsterData.attack);
-        //    StartCoroutine(Invincible());
-        //}
-        if (collision.TryGetComponent(out Monster monster))
-        {
-            DebugManager.Instance.PrintDebug("[COLtest]: ");
-        }
-    }
-
     public IEnumerator Invincible()
     {
         spineManager.SetColor(Color.red);

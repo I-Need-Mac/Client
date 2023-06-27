@@ -3,10 +3,9 @@ BC_Index,BC_Type,BC_Value
 !String,Enum,!Int
 CoolTimeOffset,Constant,3000
 CoolTimeMax,Coefficient,1000
-CriticalRatio,Coefficient,1500
-CriticalDamageRatio,Coefficient,5
 ImageMultiple,Coefficient,0.5
+CharImageMultiple,Coefficient,0.45
 Fraction,Coefficient,10000
 SkillBenList,,999|998
 benben,,101|102|103|104|105|106|107|108|109|110|111|112
-InvincibleTime,,0.1
+InvincibleTime,,100

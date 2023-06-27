@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GwiGi : Skill
+public class GwiGi : ActiveSkill
 {
     public GwiGi(int skillId, Transform shooter) : base(skillId, shooter) { }
 
@@ -13,6 +13,7 @@ public class GwiGi : Skill
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
             projectile.SetAlpha(0.0f);
+            projectile.CollisionPower(false);
             projectiles.Add(projectile);
         }
     }
@@ -26,14 +27,6 @@ public class GwiGi : Skill
 
         while (true)
         {
-            for (int i = 0; i < skillData.projectileCount; i++)
-            {
-                Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-                projectile.transform.localPosition = Vector2.up * skillData.attackDistance;
-                projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                SkillManager.Instance.CoroutineStarter(Move(projectile));
-                yield return intervalTime;
-            }
             foreach (Projectile projectile in projectiles)
             {
                 projectile.transform.localPosition = Vector2.up * skillData.attackDistance;
@@ -47,6 +40,7 @@ public class GwiGi : Skill
 
     private IEnumerator Move(Projectile projectile)
     {
+        projectile.CollisionPower(true);
         Vector3 rotate = GameManager.Instance.player.lookDirection.x >= 0 ? Vector3.back : Vector3.forward;
         float angle = 0.0f;
         float weight = skillData.speed * Time.deltaTime;
@@ -57,6 +51,7 @@ public class GwiGi : Skill
             projectile.transform.RotateAround(shooter.position, rotate, weight);
             yield return null;
         }
+        projectile.CollisionPower(false);
         projectile.SetAlpha(0.0f);
     }
 

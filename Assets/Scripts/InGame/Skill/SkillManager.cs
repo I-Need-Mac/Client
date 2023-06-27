@@ -33,25 +33,12 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SkillAdd(skillNum, GameManager.Instance.player.transform);
-        }
-
-        //if (Input.GetKeyDown(KeyCode.U))
-        //{
-        //    SkillLevelUp(skillList[12001]);
-        //}
-    }
-
-    public Projectile SpawnProjectile(SkillData skillData)
+    public Projectile SpawnProjectile(ActiveData skillData)
     {
         return SpawnProjectile(skillData, transform);
     }
 
-    public Projectile SpawnProjectile(SkillData skillData, Transform shooter)
+    public Projectile SpawnProjectile(ActiveData skillData, Transform shooter)
     {
         int poolId = skillData.skillId / 100;
         Dictionary<string, object> data = skillTable[skillData.skillId.ToString()];
@@ -63,6 +50,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         Projectile projectile = skillPools[poolId].GetObject();
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
         projectile.transform.localPosition = Vector2.zero;
+        projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
         return projectile;
@@ -116,14 +104,34 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 skill = new MyeongGyae(skillId, shooter);
                 break;
             case 110:
+                skill = new Crepitus(skillId, shooter);
+                break;
+            case 111:
                 skill = new GyuGyu(skillId, shooter);
+                break;
+            case 112:
+                skill = new Aliento(skillId, shooter);
+                break;
+            case 113:
+                skill = new Pok(skillId, shooter);
+                break;
+            case 114:
+                skill = new JeRyeung(skillId, shooter);
                 break;
             case 120:
                 skill = new Horin(skillId, shooter);
                 break;
-            default:
-                skill = null;
+            case 132:
+                skill = new HyulPok(skillId, shooter);
                 break;
+            case 135:
+                skill = new GaSok(skillId, shooter);
+                break;
+            case 136:
+                skill = new Hyum(skillId, shooter);
+                break;
+            default:
+                throw new System.NotImplementedException();
         }
 
         skill.Init();
@@ -139,11 +147,26 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillInfo.skill.SkillLevelUp();
         IEnumerator activation = skillInfo.skill.Activation();
         StartCoroutine(activation);
+        skillInfo.activation = activation;
     }
 
     public void CoroutineStarter(IEnumerator coroutine)
     {
         StartCoroutine(coroutine);
+    }
+
+    public void SkillUpdate()
+    {
+        foreach (int id in skillList.Keys)
+        {
+            SkillInfo skillInfo = skillList[id];
+            StopCoroutine(skillInfo.activation);
+            skillInfo.skill.SkillUpdate();
+            IEnumerator activation = skillInfo.skill.Activation();
+            StartCoroutine(activation);
+            skillInfo.activation = activation;
+            skillList[id] = skillInfo;
+        }
     }
 
 }

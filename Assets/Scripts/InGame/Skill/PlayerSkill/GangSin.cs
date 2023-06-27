@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class GangSin : Skill
+public class GangSin : ActiveSkill
 {
     private Monster prefab;
     private List<Monster> summoners = new List<Monster>();

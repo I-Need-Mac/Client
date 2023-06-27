@@ -244,6 +244,7 @@ public class Monster : MonoBehaviour
         attackCollider.AttackColliderSwitch(false);
         isAttack = false;
     }
+
     #endregion
 
     public void SetTarget(Transform target, bool isPlayer)
@@ -295,7 +296,22 @@ public class Monster : MonoBehaviour
     public void Die()
     {
         //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        StartCoroutine(DieAnimation());
         DropItem();
+    }
+
+    private IEnumerator DieAnimation()
+    {
+        spineSwitch = false;
+        try
+        {
+            spineManager.SetAnimation("Death2", false);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[ERROR]: 스파인에 죽는 애니메이션이 없는 몬스터입니다");
+        }
+        yield return new WaitForSeconds(1.0f);
         MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 

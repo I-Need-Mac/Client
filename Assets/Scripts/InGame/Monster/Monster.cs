@@ -4,12 +4,20 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+
+public enum AnimationName
+{
+    DEATH1,
+    DEATH2,
+}
 
 public class Monster : MonoBehaviour
 {
     [field: SerializeField] public int monsterId { get; private set; }
     [field: SerializeField] public MonsterData monsterData { get; private set; }
+    [SerializeField] private AnimationName aniName = AnimationName.DEATH1;
 
     private CapsuleCollider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
@@ -305,7 +313,14 @@ public class Monster : MonoBehaviour
         spineSwitch = false;
         try
         {
-            spineManager.SetAnimation("Death2", false);
+            if (aniName == AnimationName.DEATH1)
+            {
+                spineManager.SetAnimation("Death", false);
+            }
+            else if(aniName == AnimationName.DEATH2)
+            {
+                spineManager.SetAnimation("Death2", false);
+            }
         }
         catch
         {

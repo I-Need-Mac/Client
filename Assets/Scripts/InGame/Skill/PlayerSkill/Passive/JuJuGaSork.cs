@@ -2,12 +2,11 @@ using SKILLCONSTANT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Hyum : PassiveSkill
+public class JuJuGaSork : PassiveSkill
 {
-    public Hyum(int skillId, Transform shooter) : base(skillId, shooter)
+    public JuJuGaSork(int skillId, Transform shooter) : base(skillId, shooter)
     {
     }
 

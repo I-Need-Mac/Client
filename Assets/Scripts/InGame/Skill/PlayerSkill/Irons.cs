@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Irons : Skill
+public class Irons : ActiveSkill
 {
     private int weight;
 

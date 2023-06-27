@@ -5,62 +5,62 @@ using UnityEngine;
 
 public struct PassiveEffect
 {
-    public static void PassiveEffectActivation(float param, SKILL_EFFECT type, CALC_MODE mode)
+    public static void PassiveEffectActivation(float param, SKILL_PASSIVE type, CALC_MODE mode)
     {
         PlayerData playerData = GameManager.Instance.player.playerManager.playerData;
         float data;
         switch (type)
         {
-            case SKILL_EFFECT.MAGNET:
+            case SKILL_PASSIVE.MAGNET:
                 data = CalcData(playerData.getItemRange, param, mode);
                 GameManager.Instance.player.UpdateGetItemRange();
                 playerData.GetItemRangeModifier((int)data);
                 break;
-            case SKILL_EFFECT.SHIELD:
+            case SKILL_PASSIVE.SHIELD:
                 data = CalcData(playerData.shield, param, mode);
                 playerData.ShieldModifier((int)data);
                 break;
-            case SKILL_EFFECT.MOVESPEED:
+            case SKILL_PASSIVE.MOVESPEED:
                 data = CalcData(playerData.moveSpeed, param, mode);
                 playerData.MoveSpeedModifier(data);
                 break;
-            case SKILL_EFFECT.EXP:
+            case SKILL_PASSIVE.EXP:
                 data = CalcData(playerData.expBuff, param, mode);
                 playerData.ExpBuffModifier((int)data);
                 break;
-            case SKILL_EFFECT.PROJECTILESIZE:
+            case SKILL_PASSIVE.PROJECTILESIZE:
                 data = CalcData(playerData.projectileSize, param, mode);
                 playerData.ProjectileSizeModifier(data);
                 break;
-            case SKILL_EFFECT.PROJECTILECOUNT:
+            case SKILL_PASSIVE.PROJECTILECOUNT:
                 data = CalcData(playerData.projectileAdd, param, mode);
                 playerData.ProjectileAddModifier((int)data);
                 break;
-            case SKILL_EFFECT.PROJECTILESPLASH:
+            case SKILL_PASSIVE.PROJECTILESPLASH:
                 data = CalcData(playerData.projectileSplash, param, mode);
                 playerData.ProjectileSplashModifier(data);
                 break;
-            case SKILL_EFFECT.PROJECTILESPEED:
+            case SKILL_PASSIVE.PROJECTILESPEED:
                 data = CalcData(playerData.projectileSpeed, param, mode);
                 playerData.ProjectileSpeedModifier(data);
                 break;
-            case SKILL_EFFECT.HP:
+            case SKILL_PASSIVE.HP:
                 data = CalcData(playerData.hp, param, mode);
                 playerData.HpModifier((int)data);
                 break;
-            case SKILL_EFFECT.HPREGEN:
+            case SKILL_PASSIVE.HPREGEN:
                 data = CalcData(playerData.hpRegen, param, mode);
                 playerData.HpRegenModifier((int)data);
                 break;
-            case SKILL_EFFECT.ATTACK:
+            case SKILL_PASSIVE.ATTACK:
                 data = CalcData(playerData.attack, param, mode);
                 playerData.AttackModifier(data);
                 break;
-            case SKILL_EFFECT.ATTACKSPEED:
+            case SKILL_PASSIVE.ATTACKSPEED:
                 data = CalcData(playerData.coolDown, param, mode);
                 playerData.CoolDownModifier((int)data);
                 break;
-            case SKILL_EFFECT.ARMOR:
+            case SKILL_PASSIVE.ARMOR:
                 data = CalcData(playerData.armor, param, mode);
                 playerData.ArmorModifier((int)data);
                 break;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Aliento : Skill
+public class Aliento : ActiveSkill
 {
     public Aliento(int skillId, Transform shooter) : base(skillId, shooter) { }
 

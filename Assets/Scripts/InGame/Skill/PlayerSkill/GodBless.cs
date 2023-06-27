@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GodBless : Skill
+public class GodBless : ActiveSkill
 {
     public GodBless(int skillId, Transform shooter) : base(skillId, shooter) { }
 

@@ -33,12 +33,12 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
     }
 
-    public Projectile SpawnProjectile(SkillData skillData)
+    public Projectile SpawnProjectile(ActiveData skillData)
     {
         return SpawnProjectile(skillData, transform);
     }
 
-    public Projectile SpawnProjectile(SkillData skillData, Transform shooter)
+    public Projectile SpawnProjectile(ActiveData skillData, Transform shooter)
     {
         int poolId = skillData.skillId / 100;
         Dictionary<string, object> data = skillTable[skillData.skillId.ToString()];
@@ -147,6 +147,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillInfo.skill.SkillLevelUp();
         IEnumerator activation = skillInfo.skill.Activation();
         StartCoroutine(activation);
+        skillInfo.activation = activation;
     }
 
     public void CoroutineStarter(IEnumerator coroutine)
@@ -156,9 +157,15 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     public void SkillUpdate()
     {
-        foreach (SkillInfo info in skillList.Values)
+        foreach (int id in skillList.Keys)
         {
-            info.skill.SkillUpdate();
+            SkillInfo skillInfo = skillList[id];
+            StopCoroutine(skillInfo.activation);
+            skillInfo.skill.SkillUpdate();
+            IEnumerator activation = skillInfo.skill.Activation();
+            StartCoroutine(activation);
+            skillInfo.activation = activation;
+            skillList[id] = skillInfo;
         }
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GyuGyu : Skill
+public class GyuGyu : ActiveSkill
 {
     public GyuGyu(int skillId, Transform shooter) : base(skillId, shooter) { }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JeRyeung : Skill
+public class JeRyeung : ActiveSkill
 {
     public JeRyeung(int skillId, Transform shooter) : base(skillId, shooter) { }
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Possession : Skill
+public class Possession : ActiveSkill
 {
     private const int CHANGE_ID = 0;
     private const string ANIMATOR_PATH = "";

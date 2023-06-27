@@ -1,7 +1,7 @@
 using SKILLCONSTANT;
 using System.Collections.Generic;
 
-public class SkillData
+public class ActiveData
 {
     public int skillId { get; private set; }                        //스킬 id값
     public int coolTime { get; private set; }                       //스킬의 재사용 대기시간

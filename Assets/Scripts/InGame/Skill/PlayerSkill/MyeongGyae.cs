@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyeongGyae : Skill
+public class MyeongGyae : ActiveSkill
 {
     private Monster prefab;
     private List<Monster> summoners = new List<Monster>();

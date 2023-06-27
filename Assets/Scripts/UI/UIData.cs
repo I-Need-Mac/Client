@@ -129,7 +129,7 @@ public class UIData
         stageTableData = CSVReader.Read(Enum.GetName(typeof(UITable), UITable.StageTable));
 
         // 스테이지 id를 임의로 넣어둡니다 (추후 초기 셋팅은 게임 시작 시 서버에서 가져온 스테이지 값을 넣도록 합니다)
-        UIManager.Instance.selectStageID = 10101;
+        UIManager.Instance.selectStageID = 10102;
     }
 
     static void ReadChapterData()

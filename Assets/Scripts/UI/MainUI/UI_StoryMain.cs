@@ -33,6 +33,12 @@ public class UI_StoryMain : UI_Popup
     [SerializeField]
     GameObject chapterImage;
 
+    // 챕터 단위
+    enum TableUnit
+    {
+        CHAPTER_ID_UNIT = 100,
+        STAGE_ID_UNIT = 10100,
+    }
 
     void Start()
     {
@@ -78,15 +84,17 @@ public class UI_StoryMain : UI_Popup
             Debug.LogError("챕터 테이블 데이터가 없습니다");
         }
 
+        string chapterEleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
+
         // 챕터 리스트 생
         foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterDataList)
         {
-            string chapterEleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
 
             // chapter list create test
             GameObject chapterGo = Util.FindChild(chapterList.gameObject, "Content", true);
             UI_ChapterElement chapterEle = Util.UILoad<UI_ChapterElement>($"{Define.UiPrefabsPath}/UI_ChapterElement");
-            chapterEle.text.text = String.Format(chapterEleText, chapterData.Key);
+            string chapterNumberToString = ChangeChapterNumberToString(int.Parse(chapterData.Key) - ((int)TableUnit.CHAPTER_ID_UNIT));
+            chapterEle.text.text = String.Format(chapterEleText, chapterNumberToString);
             GameObject chapterInstance = Instantiate(chapterEle.gameObject) as GameObject;
 
             chapterInstance.transform.SetParent(chapterGo.transform);
@@ -95,21 +103,28 @@ public class UI_StoryMain : UI_Popup
             chapterRect.anchoredPosition3D = new Vector3(chapterRect.anchoredPosition3D.x, chapterRect.anchoredPosition3D.y, 0);
         }
 
-        // 서버에서 받은 스테이지가 속한 챕터 선택하기 
-        // int currentChapterID = GetChapterID(UIManager.Instance.selectStageID);
-        
-        SelectChapter(101);
+        // 서버에서 받은 스테이지가 속한 챕터 아이디 get
+        int currentChapterID = GetChapterID(UIManager.Instance.selectStageID);
+        // 챕터 선택
+        SelectChapter(currentChapterID);
 
+        // 현재 선택된 장과 이야기 선택 텍스트 셋팅
+        string stageEleText = LocalizeManager.Instance.GetText("UI_StageList");
+        string chapterString = ChangeChapterNumberToString(currentChapterID - ((int)TableUnit.CHAPTER_ID_UNIT));
+        string stageString = ChangeStageNumberToString(UIManager.Instance.selectStageID - ((int)TableUnit.STAGE_ID_UNIT));
+        chapterStageTitle.text = String.Format(chapterEleText, chapterString) + String.Format(stageEleText, stageString);
     }
 
     void SelectChapter(int chapterID)
     {
+        // 챕터 리스트 가져오기
         Dictionary<string, Dictionary<string, object>> chapterDataList = UIData.ChapterData;
         if (chapterDataList.Count == 0 || chapterDataList == null)
         {
             Debug.LogError("챕터 테이블 데이터가 없습니다");
         }
 
+        // 해당 챕터 내용 가져오기
         Dictionary<string, object> chapterInfo = chapterDataList[chapterID.ToString()];
         if( chapterInfo == null || chapterInfo.Count == 0 )
         {
@@ -130,17 +145,20 @@ public class UI_StoryMain : UI_Popup
             }
         }
 
-        // 스테이지 리스트 셋팅
+        // 해당 챕터를 구성하는 스테이지 셋팅
         SetStageList(chapterID);
     }
 
     void SetStageList(int chapterID)
     {
+        // 스테이지 리스트 가져오기
         Dictionary<string, Dictionary<string, object>> stageDataList = UIData.StageData;
         if (stageDataList.Count == 0 || stageDataList == null)
         {
             Debug.LogError("스테이지 테이블 데이터가 없습니다");
         }
+
+        string stageEleText = LocalizeManager.Instance.GetText("UI_StageList");
 
         foreach (KeyValuePair<string, Dictionary<string, object>> stageData in stageDataList)
         {
@@ -150,12 +168,11 @@ public class UI_StoryMain : UI_Popup
                 {
                     if(stageVal.Value.ToString() == chapterID.ToString())
                     {
-                        string stageEleText = LocalizeManager.Instance.GetText("UI_StageList");
-
                         // stage list create
                         GameObject stageGo = Util.FindChild(stageList.gameObject, "Content", true);
                         UI_StageElement stageEle = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
-                        stageEle.text.text = String.Format(stageEleText, stageData.Key);
+                        string stageNumberToString = ChangeStageNumberToString(int.Parse(stageData.Key) - ((int)TableUnit.STAGE_ID_UNIT));
+                        stageEle.text.text = String.Format(stageEleText, stageNumberToString);
                         GameObject stageInstance = Instantiate(stageEle.gameObject) as GameObject;
 
                         stageInstance.transform.SetParent(stageGo.transform);
@@ -199,5 +216,70 @@ public class UI_StoryMain : UI_Popup
 
         return findChapterID;
     }
-    
+
+    public string ChangeChapterNumberToString(int number)
+    {
+        string changeString = "";
+
+        switch (number)
+        {
+            case 1:
+                if (LocalizeManager.Instance.GetLangType() == 0)
+                    changeString = "첫";
+                else if (LocalizeManager.Instance.GetLangType() == 1)
+                    changeString = "첫";
+                else if (LocalizeManager.Instance.GetLangType() == 2)
+                    changeString = "첫";
+                else
+                    changeString = "첫";
+
+                break;
+            case 2:
+                if (LocalizeManager.Instance.GetLangType() == 0)
+                    changeString = "둘";
+                else if (LocalizeManager.Instance.GetLangType() == 1)
+                    changeString = "둘";
+                else if (LocalizeManager.Instance.GetLangType() == 2)
+                    changeString = "둘";
+                else
+                    changeString = "둘";
+
+                break;
+        }
+
+        return changeString;
+    }
+
+    public string ChangeStageNumberToString(int number)
+    {
+        string changeString = "";
+
+        switch (number)
+        {
+            case 1:
+                if (LocalizeManager.Instance.GetLangType() == 0)
+                    changeString = "첫";
+                else if (LocalizeManager.Instance.GetLangType() == 1)
+                    changeString = "첫";
+                else if (LocalizeManager.Instance.GetLangType() == 2)
+                    changeString = "첫";
+                else
+                    changeString = "첫";
+
+                break;
+            case 2:
+                if (LocalizeManager.Instance.GetLangType() == 0)
+                    changeString = "두";
+                else if (LocalizeManager.Instance.GetLangType() == 1)
+                    changeString = "두";
+                else if (LocalizeManager.Instance.GetLangType() == 2)
+                    changeString = "두";
+                else
+                    changeString = "두";
+
+                break;
+        }
+
+        return changeString;
+    }
 }

@@ -41,6 +41,7 @@ public class UIData
     public enum ChapterTableCol
     {
         ChapterID,
+        ChapterHeader,
         ChapterName,
         ChapterImage,
     }

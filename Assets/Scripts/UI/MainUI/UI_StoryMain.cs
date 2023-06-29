@@ -145,10 +145,10 @@ public class UI_StoryMain : UI_Popup
         chapterImage.GetComponent<Image>().sprite = Resources.Load<Sprite>($"{imageText}");
 
         // 해당 챕터를 구성하는 스테이지 셋팅
-        // SetStageList(chapterID);
+        SetStageList(chapterID);
     }
 
-    void SetStageList(int chapterID)
+    void SetStageList(string chapterID)
     {
         // 스테이지 리스트 가져오기
         Dictionary<string, Dictionary<string, object>> stageDataList = UIData.StageData;
@@ -161,24 +161,27 @@ public class UI_StoryMain : UI_Popup
 
         foreach (KeyValuePair<string, Dictionary<string, object>> stageData in stageDataList)
         {
-            foreach (KeyValuePair<string, object> stageVal in stageData.Value)
+            if(stageData.Value.Count == 0)
             {
-                if (stageVal.Key == UIData.StageTableCol.ChapterCategory.ToString())
-                {
-                    if(stageVal.Value.ToString() == chapterID.ToString())
-                    {
-                        // stage list create
-                        GameObject stageGo = Util.FindChild(stageList.gameObject, "Content", true);
-                        UI_StageElement stageEle = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
-                        stageEle.text.text = String.Format(stageEleText, int.Parse(stageData.Key) - ((int)TableUnit.STAGE_ID_UNIT));
-                        GameObject stageInstance = Instantiate(stageEle.gameObject) as GameObject;
+                continue;
+            }
 
-                        stageInstance.transform.SetParent(stageGo.transform);
-                        RectTransform stageRect = stageInstance.GetComponent<RectTransform>();
-                        stageRect.localScale = new Vector3(1, 1, 1);
-                        stageRect.anchoredPosition3D = new Vector3(stageRect.anchoredPosition3D.x, stageRect.anchoredPosition3D.y, 0);
-                    }
-                }
+            if ( stageData.Value[UIData.StageTableCol.ChapterCategory.ToString()].ToString() == chapterID )
+            {
+                // stage list create
+                GameObject stageGo = Util.FindChild(stageList.gameObject, "Content", true);
+                UI_StageElement stageEle = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
+
+                
+                string stageHeader = stageData.Value[UIData.StageTableCol.StageHeader.ToString()].ToString();
+                string stageHeaderLocalText = LocalizeManager.Instance.GetText(stageHeader);
+                stageEle.text.text = String.Format(stageEleText, stageHeaderLocalText);
+                GameObject stageInstance = Instantiate(stageEle.gameObject) as GameObject;
+
+                stageInstance.transform.SetParent(stageGo.transform);
+                RectTransform stageRect = stageInstance.GetComponent<RectTransform>();
+                stageRect.localScale = new Vector3(1, 1, 1);
+                stageRect.anchoredPosition3D = new Vector3(stageRect.anchoredPosition3D.x, stageRect.anchoredPosition3D.y, 0);
             }
         }
     }

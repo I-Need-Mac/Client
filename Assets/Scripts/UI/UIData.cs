@@ -33,6 +33,7 @@ public class UIData
     public enum StageTableCol
     {
         StageID,
+        StageHeader,
         IntroID,
         OutroID,
         ChapterCategory,

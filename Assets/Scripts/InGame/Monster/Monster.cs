@@ -53,25 +53,8 @@ public class Monster : MonoBehaviour
         tick = new WaitForSeconds(0.4f);
     }
 
-    private void OnEnable()
-    {
-        monsterCollider.enabled = true;
-        monsterDirection = Vector2.zero;
-        lookDirection = Vector2.right;
-        situation = SoundSituation.SOUNDSITUATION.IDLE;
-        MonsterSetting(monsterId.ToString());
-        delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
-
-        isAttack = false;
-        isHit = false;
-        spineSwitch = true;
-        isSlow = false;
-    }
-
     private void Start()
     {
-        Physics2D.IgnoreCollision(monsterCollider, transform.Find("Collision").GetComponent<CapsuleCollider2D>());
-        
         btManager = new BehaviorTreeManager(SetAI(monsterData.attackType));
         spineManager.SetAnimation("Idle", true);
         attackCollider.SetAttackDistance(monsterData.atkDistance);
@@ -93,10 +76,26 @@ public class Monster : MonoBehaviour
         if (spineSwitch)
         {
             btManager.Active();
-            //monsterRigidbody.velocity = Vector3.zero;
         }
 
-        //DebugManager.Instance.PrintDebug("[COLTest]: " + monsterData.monsterName + monsterRigidbody.velocity);
+        monsterRigidbody.velocity = Vector2.zero;
+    }
+
+    public void SpawnSet()
+    {
+        Physics2D.IgnoreCollision(monsterCollider, transform.Find("Collision").GetComponent<CapsuleCollider2D>());
+        
+        monsterCollider.enabled = true;
+        monsterDirection = Vector2.zero;
+        lookDirection = Vector2.right;
+        situation = SoundSituation.SOUNDSITUATION.IDLE;
+        MonsterDataSetting(monsterId.ToString());
+        delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
+
+        isAttack = false;
+        isHit = false;
+        spineSwitch = true;
+        isSlow = false;
     }
 
     #region AI
@@ -219,7 +218,7 @@ public class Monster : MonoBehaviour
         spineManager.SetAnimation("Run", true, 0, monsterData.moveSpeed);
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
-        monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.deltaTime));
+        monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
         //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
         return NodeConstant.RUNNING;
     }
@@ -261,7 +260,7 @@ public class Monster : MonoBehaviour
         this.isPlayer = isPlayer;
     }
 
-    public void MonsterSetting(string monsterId)
+    public void MonsterDataSetting(string monsterId)
     {
         Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
         if (monsterTable.ContainsKey(monsterId))

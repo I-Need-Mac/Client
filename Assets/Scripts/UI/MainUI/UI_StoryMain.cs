@@ -33,13 +33,6 @@ public class UI_StoryMain : UI_Popup
     [SerializeField]
     GameObject chapterImage;
 
-    // 챕터 단위
-    enum TableUnit
-    {
-        CHAPTER_ID_UNIT = 100,
-        STAGE_ID_UNIT = 10100,
-    }
-
     void Start()
     {
         Bind<Image>(typeof(Images));
@@ -86,6 +79,9 @@ public class UI_StoryMain : UI_Popup
 
         string chapterEleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
 
+        // 서버에서 받은 스테이지가 속한 챕터 아이디 get
+        string currentChapterID = GetChapterID(UIManager.Instance.selectStageID.ToString());
+
         // create chapter list
         foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterDataList)
         {
@@ -105,11 +101,46 @@ public class UI_StoryMain : UI_Popup
             chapterRect.localScale = new Vector3(1, 1, 1);
             chapterRect.anchoredPosition3D = new Vector3(chapterRect.anchoredPosition3D.x, chapterRect.anchoredPosition3D.y, 0);
         }
-
-        // 서버에서 받은 스테이지가 속한 챕터 아이디 get
-        string currentChapterID = GetChapterID(UIManager.Instance.selectStageID.ToString());
+        
         // 챕터 선택
         SelectChapter(currentChapterID);
+    }
+
+    void DrawStoryModeList()
+    {
+        // story mode info
+        // 서버에서 받은 스테이지가 속한 챕터 아이디 get
+        string currentChapterID = GetChapterID(UIManager.Instance.selectStageID.ToString());
+
+        Dictionary<string, Dictionary<string, object>> chapterDataList = UIData.ChapterData;
+        if (chapterDataList.Count == 0 || chapterDataList == null)
+        {
+            Debug.LogError("챕터 테이블 데이터가 없습니다");
+        }
+
+        string chapterEleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
+
+        // draw chapter
+        foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterDataList)
+        {
+            // get chapter number text
+            chapterData.Value.TryGetValue(UIData.ChapterTableCol.ChapterHeader.ToString(), out object chapterHeaderLocalStr);
+            string chapterHeader = LocalizeManager.Instance.GetText(chapterHeaderLocalStr.ToString());
+
+            // create chapter element
+            UI_ChapterElement chapterEle = Util.UILoad<UI_ChapterElement>($"{Define.UiPrefabsPath}/UI_ChapterElement");
+            chapterEle.text.text = String.Format(chapterEleText, chapterHeader);
+            GameObject chapterInstance = Instantiate(chapterEle.gameObject) as GameObject;
+
+            // setting chapter element
+            GameObject chapterGo = Util.FindChild(chapterList.gameObject, "Content", true);
+            chapterInstance.transform.SetParent(chapterGo.transform);
+            RectTransform chapterRect = chapterInstance.GetComponent<RectTransform>();
+            chapterRect.localScale = new Vector3(1, 1, 1);
+            chapterRect.anchoredPosition3D = new Vector3(chapterRect.anchoredPosition3D.x, chapterRect.anchoredPosition3D.y, 0);
+        }
+
+        // draw stage
     }
 
     void SelectChapter(string chapterID)
@@ -132,7 +163,14 @@ public class UI_StoryMain : UI_Popup
         string headerText = chapterInfo[UIData.ChapterTableCol.ChapterHeader.ToString()].ToString();
         string headerLocalText = LocalizeManager.Instance.GetText(headerText);
         string chapterEleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
-        chapterStageTitle.text = String.Format(chapterEleText, headerLocalText);
+
+        Dictionary<string, object> selectStageData = UIData.StageData[UIManager.Instance.selectStageID.ToString()];
+        string stageHeaderText = selectStageData[UIData.StageTableCol.StageHeader.ToString()].ToString();
+        string stageHeaderLocalText = LocalizeManager.Instance.GetText(stageHeaderText);
+
+        string stageEleText = LocalizeManager.Instance.GetText("UI_StageList");
+        chapterStageTitle.text = String.Format(chapterEleText, headerLocalText)
+            + " " + String.Format(stageEleText, stageHeaderLocalText);
 
         // set chapter name
         string nameText = chapterInfo[UIData.ChapterTableCol.ChapterName.ToString()].ToString();
@@ -171,7 +209,6 @@ public class UI_StoryMain : UI_Popup
                 // stage list create
                 GameObject stageGo = Util.FindChild(stageList.gameObject, "Content", true);
                 UI_StageElement stageEle = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
-
                 
                 string stageHeader = stageData.Value[UIData.StageTableCol.StageHeader.ToString()].ToString();
                 string stageHeaderLocalText = LocalizeManager.Instance.GetText(stageHeader);

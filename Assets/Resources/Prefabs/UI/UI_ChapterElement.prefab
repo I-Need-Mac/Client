@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 18180512066544450}
   - component: {fileID: 3246153180465485587}
   m_Layer: 5
-  m_Name: Text
+  m_Name: ChapterText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,3 +336,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3246153180465485587}
+  unlockImg: {fileID: 1720419624725787269}
+  lockImg: {fileID: 7095639988767110425}

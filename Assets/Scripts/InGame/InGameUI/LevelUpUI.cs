@@ -70,7 +70,14 @@ public class LevelUpUI : MonoBehaviour
             }
             Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * i);
             SkillUI skillUi = UIPoolManager.Instance.SpawnButton(body.transform, pos);
-            skillUi.SkillBtnInit(skillTable[skillId.ToString()]);
+            if (skillId / 10000 == 1)
+            {
+                skillUi.SkillBtnInit(skillTable[skillId.ToString()]);
+            }
+            else if (skillId / 10000 == 2)
+            {
+                skillUi.SkillBtnInit(passiveTable[skillId.ToString()]);
+            }
             skillUi.btn.onClick.RemoveAllListeners();
             skillUi.btn.onClick.AddListener(() => CloseBox(skillId));
             skillUis.Add(skillUi);

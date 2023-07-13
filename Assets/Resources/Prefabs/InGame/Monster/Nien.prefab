@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 440435516958426042}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.263, y: -0.343, z: 0}
+  m_LocalPosition: {x: 1.17, y: -1.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3325716945005113073}
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 0ac52bd7ec1a1924b81927d40a23407e, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 951680ceceed3824faedbcf1e645b846, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -137,8 +137,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.22020628, y: 0.3001724}
-  m_Size: {x: 0.98871785, y: 0.52493316}
+  m_Offset: {x: -1.0247096, y: 1.675491}
+  m_Size: {x: 4.1874337, y: 2.5860317}
   m_Direction: 1
 --- !u!114 &66798839601353641
 MonoBehaviour:
@@ -217,6 +217,7 @@ MonoBehaviour:
     groupSourceRate: 0
     monsterPrefabPath: 
     attackType: 0
+  aniName: 0
 --- !u!114 &8432360679213270949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,8 +264,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2824172, y: -0.059649657}
-  m_Size: {x: 0.8532047, y: 0.4012468}
+  m_Offset: {x: 1.1022465, y: -0.05581941}
+  m_Size: {x: 3.1365025, y: 1.9719856}
   m_Direction: 1
 --- !u!114 &3957541740129233345
 MonoBehaviour:
@@ -351,7 +352,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &4866273064484520063
 CapsuleCollider2D:
@@ -366,6 +367,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2824172, y: -0.059649657}
-  m_Size: {x: 0.8532047, y: 0.4012468}
+  m_Offset: {x: 1.1022465, y: -0.05581941}
+  m_Size: {x: 3.1365025, y: 1.9719856}
   m_Direction: 1

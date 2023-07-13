@@ -1,17 +1,9 @@
 PackageID,PackageSource,IsMultiple,ItemID,ItemAmount,ItemProbability
 ?®ÌÇ§ÏßÄ ID,?®ÌÇ§ÏßÄ ?åÏä§,Í∑∏Î£π ???ÖÎ¶Ω ?ïÎ•†Î°??úÌñâ,?ÑÏù¥??ID,?ÑÏù¥???òÎüâ,?ÑÏù¥???úÎûç ?ïÎ•†(ÎßåÎ∂Ñ??
 int,String,Bool,int,Int,int
-10001,WallPackage1,TRUE,101,1,4000
-10002,WallPackage1,TRUE,101,1,6000
-10003,WallPackage1,TRUE,101,1,10000
-10004,WallPackage1,TRUE,101,1,1000
-10101,WallPackage2,TRUE,101,1,4000
-10102,WallPackage2,TRUE,102,1,6000
-10103,WallPackage2,TRUE,102,1,9000
-10104,WallPackage2,TRUE,102,1,10000
-10105,WallPackage2,TRUE,102,1,10000
-10201,WallPackage3,FALSE,102,1,2000
-10202,WallPackage3,FALSE,103,1,2000
-10203,WallPackage3,FALSE,103,1,2000
-10204,WallPackage3,FALSE,103,1,2000
-10205,WallPackage3,FALSE,103,1,2000
+101011,BaseSmallEXP,FALSE,101,1,10000
+101012,AdditionalSmall,FALSE,101,1,10000
+102011,BaseMiddleEXP,FALSE,102,1,10000
+102012,AdditionalMiddle,FALSE,102,1,10000
+103011,BaseBigEXP,FALSE,103,1,10000
+103012,AdditionalBig,FALSE,103,1,10000

@@ -11,6 +11,8 @@ public class LevelUpUI : MonoBehaviour
     private const int SKILL_MAX_LEVEL = 8;
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
+    private Dictionary<string, Dictionary<string, object>> passiveTable;
+
     private Transform body;
     private RectTransform bodyRect;
     private List<int> skillBenList;
@@ -28,11 +30,15 @@ public class LevelUpUI : MonoBehaviour
         }
         catch
         {
-            skillBenList = new List<int>();
-            skillBenList.Add(Convert.ToInt32(CSVReader.Read("BattleConfig", "SkillBenList", "ConfigValue")));
+            skillBenList = new List<int>
+            {
+                Convert.ToInt32(CSVReader.Read("BattleConfig", "SkillBenList", "ConfigValue"))
+            };
         }
 
         skillTable = CSVReader.Read("SkillTable");
+        passiveTable = CSVReader.Read("PassiveTable");
+
         SkillNumRead();
         body = transform.Find("Body");
         bodyRect = body.GetComponent<RectTransform>();
@@ -64,7 +70,14 @@ public class LevelUpUI : MonoBehaviour
             }
             Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * i);
             SkillUI skillUi = UIPoolManager.Instance.SpawnButton(body.transform, pos);
-            skillUi.SkillBtnInit(skillTable[skillId.ToString()]);
+            if (skillId / 10000 == 1)
+            {
+                skillUi.SkillBtnInit(skillTable[skillId.ToString()]);
+            }
+            else if (skillId / 10000 == 2)
+            {
+                skillUi.SkillBtnInit(passiveTable[skillId.ToString()]);
+            }
             skillUi.btn.onClick.RemoveAllListeners();
             skillUi.btn.onClick.AddListener(() => CloseBox(skillId));
             skillUis.Add(skillUi);
@@ -75,13 +88,12 @@ public class LevelUpUI : MonoBehaviour
     {
         Dictionary<int, SkillInfo> skillData = SkillManager.Instance.skillList;
         int skillId = 0;
-        int c = 100;
+        int c = skillNums.Count;
         if (skillCount < 8) //스킬칸이 남은 경우
         {
             while (c-- != 0)
             {
                 skillId = skillNums[UnityEngine.Random.Range(0, skillNums.Count)];
-                DebugManager.Instance.PrintDebug("[TESTTEST]: " + skillId);
                 if (skillBenList.Contains(skillId))
                 {
                     continue;
@@ -91,10 +103,10 @@ public class LevelUpUI : MonoBehaviour
                     continue;
                 }
                 skillId = skillId * 100 + 1;
-                if (!skillNums.Contains(skillId / 100))
-                {
-                    continue;
-                }
+                //if (!skillNums.Contains(skillId / 100))
+                //{
+                //    continue;
+                //}
                 if (skillData.Count == 0)
                 {
                     skills.Add(skillId / 100);
@@ -143,6 +155,22 @@ public class LevelUpUI : MonoBehaviour
     private void SkillNumRead()
     {
         foreach (string id in skillTable.Keys)
+        {
+            try
+            {
+                int i = Convert.ToInt32(id) / 100;
+                if (!skillNums.Contains(i))
+                {
+                    skillNums.Add(i);
+                }
+            }
+            catch
+            {
+                continue;
+            }
+        }
+
+        foreach (string id in passiveTable.Keys)
         {
             try
             {

@@ -80,6 +80,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         playerData.SetCharacterName(Convert.ToString(characterData["CharacterName"]));
+        playerData.SetIconImage(Convert.ToString(characterData["IconImage"]));
         playerData.SetHp(Convert.ToInt32(characterData["HP"]));
         playerData.SetCurrentHp(playerData.hp);
         playerData.SetAttack(Convert.ToInt32(characterData["Attack"]));

@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class PlayerStatusUI : MonoBehaviour
 {
     public TextMeshProUGUI levelText { get; private set; }
+    public Image iconImage { get; private set; }
+    private Transform nameBox;
 
     private void Start()
     {
-        levelText = transform.Find("NameBox").GetComponentInChildren<TextMeshProUGUI>();
-        levelText.text = $"Lv.{1}";
+        nameBox = transform.Find("NameBox");
+        levelText = nameBox.GetComponentInChildren<TextMeshProUGUI>();
+        iconImage = nameBox.Find("CharacterIcon").GetComponent<Image>();
     }
-
 }

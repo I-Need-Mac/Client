@@ -36,6 +36,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         Spawn();
         StartCoroutine(MonsterSpawner.Instance.Spawn());
         Timer.Instance.TimerSwitch(true);
+        playerUi.NameBoxSetting(player.playerManager.playerData.iconImage);
     }
 
     private void Update()

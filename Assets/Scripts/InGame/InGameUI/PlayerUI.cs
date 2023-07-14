@@ -25,6 +25,12 @@ public class PlayerUI : MonoBehaviour
         levelUi.gameObject.SetActive(false);
     }
 
+    public void NameBoxSetting(string path)
+    {
+        statusUi.levelText.text = $"Lv.{1}";
+        statusUi.iconImage.sprite = ResourcesManager.Load<Sprite>(path);
+    }
+
     public void LevelTextChange(int level)
     {
         statusUi.levelText.text = $"Lv.{level}";

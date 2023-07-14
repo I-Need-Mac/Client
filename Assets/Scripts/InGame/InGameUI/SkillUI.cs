@@ -26,8 +26,8 @@ public class SkillUI : MonoBehaviour
     public void SkillBtnInit(Dictionary<string, object> skillData)
     {
         skillIcon.sprite = ResourcesManager.Load<Sprite>(skillData["Icon"].ToString());
-        skillName.text = skillData["Name"].ToString();
-        skillInfo.text = skillData["Desc"].ToString();
+        skillName.text = LocalizeManager.Instance.GetText(skillData["Name"].ToString());
+        skillInfo.text = LocalizeManager.Instance.GetText(skillData["Desc"].ToString());
     }
 
 }

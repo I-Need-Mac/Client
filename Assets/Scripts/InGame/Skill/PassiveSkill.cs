@@ -8,6 +8,7 @@ public abstract class PassiveSkill : Skill
 {
     private Dictionary<string, Dictionary<string, object>> passiveTable;
 
+    protected int skillNum;
     protected Transform shooter;
     protected PassiveData skillData;
     protected WaitForSeconds coolTime;
@@ -15,11 +16,12 @@ public abstract class PassiveSkill : Skill
     public abstract void Init();
     public abstract IEnumerator Activation();
 
-    public PassiveSkill(int skillId, Transform shooter)
+    public PassiveSkill(int skillId, Transform shooter, int skillNum)
     {
         passiveTable = CSVReader.Read("PassiveTable");
         this.shooter = shooter;
         SetSkillData(skillId);
+        this.skillNum = skillNum;
     }
 
     public void DeActivation()

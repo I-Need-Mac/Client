@@ -8,6 +8,7 @@ public abstract class ActiveSkill : Skill
 {
     private Dictionary<string, Dictionary<string, object>> skillTable;
 
+    protected int skillNum;
     protected Transform shooter;
     protected List<Projectile> projectiles;
     protected ActiveData skillData;
@@ -20,13 +21,14 @@ public abstract class ActiveSkill : Skill
     public abstract void Init();
     public abstract IEnumerator Activation();
 
-    public ActiveSkill(int skillId, Transform shooter)
+    public ActiveSkill(int skillId, Transform shooter, int skillNum)
     {
         skillTable = CSVReader.Read("SkillTable");
         this.projectiles = new List<Projectile>();
         this.skillData = new ActiveData();
         this.shooter = shooter;
         SetSkillData(skillId);
+        this.skillNum = skillNum;
     }
 
     public void DeActivation()

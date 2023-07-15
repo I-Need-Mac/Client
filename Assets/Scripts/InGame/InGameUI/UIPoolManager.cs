@@ -5,29 +5,60 @@ using UnityEngine;
 
 public class UIPoolManager : SingletonBehaviour<UIPoolManager>
 {
-    private const string skillBtnPath = "Prefabs/UI/SkillButton";
+    private const string SKILL_BUTTON_PATH = "Prefabs/UI/SkillButton";
+    private const string SKILL_BOX_ICON_PATH = "Prefabs/UI/SkillIcon";
 
-    private ObjectPool<SkillUI> skillUIPool;
+    private Dictionary<string, ObjectPool<InGameUI>> pools;
+    //private ObjectPool<SkillBoxIcon> skillBoxIconPool;
+    //private ObjectPool<SkillUI> skillUIPool;
 
     protected override void Awake()
     {
-        skillUIPool = new ObjectPool<SkillUI>(ResourcesManager.Load<SkillUI>(skillBtnPath), transform);
+        pools = new Dictionary<string, ObjectPool<InGameUI>>
+        {
+            { "SkillUI", new ObjectPool<InGameUI>(ResourcesManager.Load<SkillUI>(SKILL_BUTTON_PATH), transform) },
+            { "SkillBoxIcon", new ObjectPool<InGameUI>(ResourcesManager.Load<SkillBoxIcon>(SKILL_BOX_ICON_PATH), transform) }
+        };
+        //skillBoxIconPool = new ObjectPool<SkillBoxIcon>(ResourcesManager.Load<SkillBoxIcon>(SKILL_BOX_ICON_PATH), transform);
+        //skillUIPool = new ObjectPool<SkillUI>(ResourcesManager.Load<SkillUI>(SKILL_BUTTON_PATH), transform);
     }
 
-    public SkillUI SpawnButton(Transform transform, Vector2 pos)
+    public InGameUI SpawnUI(string type, Transform transform, Vector2 pos)
     {
-        SkillUI skillUi = skillUIPool.GetObject();
-        skillUi.transform.SetParent(transform);
-        skillUi.transform.localPosition = pos;
-        skillUi.transform.localScale = Vector3.one;
-        //skillUi.SkillDataInit();
-        skillUi.gameObject.SetActive(true);
-        return skillUi;
+        InGameUI ui = pools[type].GetObject();
+        ui.transform.SetParent(transform);
+        ui.transform.localPosition = pos;
+        ui.transform.localScale = Vector3.one;
+        ui.gameObject.SetActive(true);
+        return ui;
     }
 
-    public void DeSpawnButton(SkillUI skillUi)
+    public InGameUI SpawnUI(string type, Transform transform)
     {
-        skillUIPool.ReleaseObject(skillUi);
-        skillUi.transform.SetParent(transform);
+        return SpawnUI(type, transform, Vector2.zero);
     }
+
+    public void DeSpawnUI(string type, InGameUI ui)
+    {
+        pools[type].ReleaseObject(ui);
+        ui.transform.SetParent(transform);
+    }
+
+    //public SkillUI SpawnButton(Transform transform, Vector2 pos)
+    //{
+    //    SkillUI skillUi = skillUIPool.GetObject();
+    //    skillUi.transform.SetParent(transform);
+    //    skillUi.transform.localPosition = pos;
+    //    skillUi.transform.localScale = Vector3.one;
+    //    //skillUi.SkillDataInit();
+    //    skillUi.gameObject.SetActive(true);
+    //    return skillUi;
+    //}
+
+    //public void DeSpawnButton(SkillUI skillUi)
+    //{
+    //    skillUIPool.ReleaseObject(skillUi);
+    //    skillUi.transform.SetParent(transform);
+    //}
+
 }

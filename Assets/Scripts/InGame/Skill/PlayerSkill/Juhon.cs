@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Juhon : ActiveSkill
 {
-    public Juhon(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Juhon(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -19,7 +19,7 @@ public class Juhon : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         while (true)
@@ -33,7 +33,7 @@ public class Juhon : ActiveSkill
                 
             }
             projectiles[0].transform.localScale = Vector2.zero;
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         //SkillManager.Instance.DeSpawnProjectile(_projectile);

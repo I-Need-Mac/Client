@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillUI : MonoBehaviour
+public class SkillUI : InGameUI
 {
     private Image skillIcon;
     private TextMeshProUGUI skillName;
@@ -23,7 +23,7 @@ public class SkillUI : MonoBehaviour
         skillInfo = transform.Find("SkillInfo").GetComponent<TextMeshProUGUI>();
     }
 
-    public void SkillBtnInit(Dictionary<string, object> skillData)
+    public void UISetting(Dictionary<string, object> skillData)
     {
         skillIcon.sprite = ResourcesManager.Load<Sprite>(skillData["Icon"].ToString());
         skillName.text = LocalizeManager.Instance.GetText(skillData["Name"].ToString());

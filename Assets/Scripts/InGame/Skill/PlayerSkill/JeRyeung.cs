@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class JeRyeung : ActiveSkill
 {
-    public JeRyeung(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public JeRyeung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -19,7 +19,7 @@ public class JeRyeung : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         while (true)
@@ -45,7 +45,7 @@ public class JeRyeung : ActiveSkill
                     ItemManager.Instance.DeSpawnItem(item);
                 }
             }
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
     }
 }

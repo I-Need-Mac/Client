@@ -6,7 +6,7 @@ public class Irons : ActiveSkill
 {
     private int weight;
 
-    public Irons(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Irons(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -17,7 +17,7 @@ public class Irons : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         while (true)
@@ -52,7 +52,8 @@ public class Irons : ActiveSkill
                 yield return intervalTime;
             }
 
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            //yield return coolTime;
         }
     }
 }

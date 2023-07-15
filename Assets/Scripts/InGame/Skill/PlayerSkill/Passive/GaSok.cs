@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GaSok : PassiveSkill
 {
-    public GaSok(int skillId, Transform shooter) : base(skillId, shooter)
+    public GaSok(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
     {
     }
 
@@ -23,7 +23,7 @@ public class GaSok : PassiveSkill
                 CALC_MODE mode = (CALC_MODE)Enum.Parse(typeof(CALC_MODE), skillData.skillEffectParam[i], true);
                 PassiveEffect.PassiveEffectActivation(float.Parse(skillData.skillEffectParam[i]), skillData.skillEffect[i], mode);
             }
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         } while (skillData.coolTime > 0);
     }
 }

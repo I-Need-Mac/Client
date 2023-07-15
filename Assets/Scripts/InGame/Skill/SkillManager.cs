@@ -62,7 +62,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         projectile.transform.parent = transform;
     }
 
-    public void SkillAdd(int skillId, Transform shooter)
+    public void SkillAdd(int skillId, Transform shooter, int skillNum)
     {
         foreach (int id in skillList.Keys)
         {
@@ -77,61 +77,74 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         switch(skillId / 100)
         {
             case 101:
-                skill = new Juhon(skillId, shooter);
+                skill = new Juhon(skillId, shooter, skillNum);
                 break;
             case 102:
-                skill = new Bujung(skillId, shooter);
+                skill = new Bujung(skillId, shooter, skillNum);
                 break;
             case 103:
-                skill = new GangSin(skillId, shooter);
+                skill = new GangSin(skillId, shooter, skillNum);
                 break;
             case 104:
-                skill = new GodBless(skillId, shooter);
+                skill = new GodBless(skillId, shooter, skillNum);
                 break;
             case 105:
-                skill = new Possession(skillId, shooter);
+                skill = new Possession(skillId, shooter, skillNum);
                 break;
             case 106:
-                skill = new Irons(skillId, shooter);
+                skill = new Irons(skillId, shooter, skillNum);
                 break;
             case 107:
-                skill = new GwiGi(skillId, shooter);
+                skill = new GwiGi(skillId, shooter, skillNum);
                 break;
             case 108:
-                skill = new JuHyung(skillId, shooter);
+                skill = new JuHyung(skillId, shooter, skillNum);
                 break;
             case 109:
-                skill = new MyeongGyae(skillId, shooter);
+                skill = new MyeongGyae(skillId, shooter, skillNum);
                 break;
             case 110:
-                skill = new Crepitus(skillId, shooter);
+                skill = new Crepitus(skillId, shooter, skillNum);
                 break;
             case 111:
-                skill = new GyuGyu(skillId, shooter);
+                skill = new GyuGyu(skillId, shooter, skillNum);
                 break;
             case 112:
-                skill = new Aliento(skillId, shooter);
+                skill = new Aliento(skillId, shooter, skillNum);
                 break;
             case 113:
-                skill = new Pok(skillId, shooter);
+                skill = new Pok(skillId, shooter, skillNum);
                 break;
             case 114:
-                skill = new JeRyeung(skillId, shooter);
+                skill = new JeRyeung(skillId, shooter, skillNum);
                 break;
             case 120:
-                skill = new Horin(skillId, shooter);
+                skill = new Horin(skillId, shooter, skillNum);
                 break;
             case 132:
-                skill = new HyulPok(skillId, shooter);
+                skill = new HyulPok(skillId, shooter, skillNum);
                 break;
             case 135:
-                skill = new GaSok(skillId, shooter);
+                skill = new GaSok(skillId, shooter, skillNum);
                 break;
             case 136:
-                skill = new Hyum(skillId, shooter);
+                skill = new Hyum(skillId, shooter, skillNum);
                 break;
             default:
                 throw new System.NotImplementedException();
+        }
+
+        if (skillId / 10000 == 1)
+        {
+            Dictionary<string, Dictionary<string, object>> skillTable = CSVReader.Read("SkillTable");
+            PlayerStatusUI.Instance.SkillIconInit(skillTable[skillId.ToString()]["Icon"].ToString(), skillNum);
+            PlayerUI.Instance.skillCount++;
+        }
+        else if (skillId / 10000 == 2)
+        {
+            Dictionary<string, Dictionary<string, object>> passiveTable = CSVReader.Read("PassiveTable");
+            PlayerStatusUI.Instance.SkillIconInit(passiveTable[skillId.ToString()]["Icon"].ToString(), skillNum);
+            PlayerUI.Instance.skillCount++;
         }
 
         skill.Init();

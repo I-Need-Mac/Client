@@ -19,7 +19,7 @@ public class LevelUpUI : MonoBehaviour
     private List<int> skillNums = new List<int>();
 
     public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
-    public int skillCount { get; private set; } = 0;
+    //public int skillCount { get; private set; } = 0;
     public List<int> skills { get; private set; } = new List<int>();   //가진 스킬이 아니라 ui에 올라온 스킬 목록 (중복 방지)
 
     private void Awake()
@@ -46,11 +46,11 @@ public class LevelUpUI : MonoBehaviour
 
     private void CloseBox(int skillId)
     {
-        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform);
+        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, PlayerUI.Instance.skillCount);
 
         foreach (SkillUI ui in skillUis)
         {
-            UIPoolManager.Instance.DeSpawnButton(ui);
+            UIPoolManager.Instance.DeSpawnUI("SkillUI", ui);
         }
 
         Time.timeScale = 1f;
@@ -69,14 +69,14 @@ public class LevelUpUI : MonoBehaviour
                 continue;
             }
             Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * i);
-            SkillUI skillUi = UIPoolManager.Instance.SpawnButton(body.transform, pos);
+            SkillUI skillUi = (SkillUI)UIPoolManager.Instance.SpawnUI("SkillUI", body.transform, pos);
             if (skillId / 10000 == 1)
             {
-                skillUi.SkillBtnInit(skillTable[skillId.ToString()]);
+                skillUi.UISetting(skillTable[skillId.ToString()]);
             }
             else if (skillId / 10000 == 2)
             {
-                skillUi.SkillBtnInit(passiveTable[skillId.ToString()]);
+                skillUi.UISetting(passiveTable[skillId.ToString()]);
             }
             skillUi.btn.onClick.RemoveAllListeners();
             skillUi.btn.onClick.AddListener(() => CloseBox(skillId));
@@ -89,7 +89,7 @@ public class LevelUpUI : MonoBehaviour
         Dictionary<int, SkillInfo> skillData = SkillManager.Instance.skillList;
         int skillId = 0;
         int c = skillNums.Count;
-        if (skillCount < 8) //스킬칸이 남은 경우
+        if (PlayerUI.Instance.skillCount < 8) //스킬칸이 남은 경우
         {
             while (c-- != 0)
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Horin : ActiveSkill
 {
-    public Horin(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Horin(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -27,7 +27,7 @@ public class Horin : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         float weight = 0.004f;
@@ -43,7 +43,7 @@ public class Horin : ActiveSkill
                 {
                     projectile.CollisionPower(false);
                 }
-                yield return coolTime;
+                yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
                 foreach (Projectile projectile in projectiles)
                 {
                     projectile.CollisionPower(true);

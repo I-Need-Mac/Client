@@ -8,7 +8,7 @@ public class JuHyung : ActiveSkill
 {
     private float diff = 0.25f;
 
-    public JuHyung(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public JuHyung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -18,7 +18,7 @@ public class JuHyung : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         List<Transform> prevMonsters = new List<Transform>();
@@ -47,7 +47,7 @@ public class JuHyung : ActiveSkill
 
             SkillManager.Instance.DeSpawnProjectile(projectile);
             prevMonsters.Clear();
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
     }
 

@@ -26,6 +26,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         defaultCharScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "CharImageMultiple", "ConfigValue")));
         playerUi = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
         SoundManager.Instance.CreateSoundManager();
+        LocalizeManager.Instance.SetLocalizeManager();
         //mapId = UIManager.Instance.selectStageID;
         //playerId = UIManager.Instance.selectCharacterID;
         //playerPoolManager.playerId = playerId;

@@ -115,7 +115,7 @@ public class PlayerData
 
     public void SetAttack(float attack)
     {
-        this.originAttack = attack;
+        this.originAttack = attack/100;
         this.modifyAttack = 0.0f;
     }
 

@@ -22,7 +22,7 @@ public class HpBar : InGameUI
 
     public void HpBarSetting(Vector3 pos, float currentHp, float maxHp)
     {
-        transform.position = CameraManager.Instance.cam.WorldToScreenPoint(pos + hpBarPos);
+        transform.position = CameraManager.Instance.cam.WorldToScreenPoint(pos);
         hpBar.fillAmount = currentHp / maxHp;
     }
 

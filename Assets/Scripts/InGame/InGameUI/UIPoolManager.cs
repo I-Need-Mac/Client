@@ -7,6 +7,7 @@ public class UIPoolManager : SingletonBehaviour<UIPoolManager>
 {
     private const string SKILL_BUTTON_PATH = "Prefabs/UI/SkillButton";
     private const string SKILL_BOX_ICON_PATH = "Prefabs/UI/SkillIcon";
+    private const string HP_BAR_PATH = "Prefabs/UI/HpBar";
 
     private Dictionary<string, ObjectPool<InGameUI>> pools;
     //private ObjectPool<SkillBoxIcon> skillBoxIconPool;
@@ -17,10 +18,9 @@ public class UIPoolManager : SingletonBehaviour<UIPoolManager>
         pools = new Dictionary<string, ObjectPool<InGameUI>>
         {
             { "SkillUI", new ObjectPool<InGameUI>(ResourcesManager.Load<SkillUI>(SKILL_BUTTON_PATH), transform) },
-            { "SkillBoxIcon", new ObjectPool<InGameUI>(ResourcesManager.Load<SkillBoxIcon>(SKILL_BOX_ICON_PATH), transform) }
+            { "SkillBoxIcon", new ObjectPool<InGameUI>(ResourcesManager.Load<SkillBoxIcon>(SKILL_BOX_ICON_PATH), transform) },
+            { "HpBar", new ObjectPool<InGameUI>(ResourcesManager.Load<HpBar>(HP_BAR_PATH), transform) },
         };
-        //skillBoxIconPool = new ObjectPool<SkillBoxIcon>(ResourcesManager.Load<SkillBoxIcon>(SKILL_BOX_ICON_PATH), transform);
-        //skillUIPool = new ObjectPool<SkillUI>(ResourcesManager.Load<SkillUI>(SKILL_BUTTON_PATH), transform);
     }
 
     public InGameUI SpawnUI(string type, Transform transform, Vector2 pos)

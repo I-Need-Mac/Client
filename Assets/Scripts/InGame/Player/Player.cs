@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     private Transform shadow;
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
+    
+    private HpBar hpBar;
 
     public Transform character { get; private set; }
     public PlayerManager playerManager { get; private set; }
@@ -38,11 +40,11 @@ public class Player : MonoBehaviour
         invincibleTime = new WaitForSeconds(Convert.ToInt32(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))) / 1000.0f);
     }
 
-    private void OnEnable()
+    private void Start()
     {
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
-        //spineManager.SetAnimation("Idle", true);
+        hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
     }
 
     /*
@@ -53,6 +55,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
+        hpBar.HpBarSetting(transform.position, playerManager.playerData.currentHp, playerManager.playerData.hp);
     }
 
     private void FixedUpdate()

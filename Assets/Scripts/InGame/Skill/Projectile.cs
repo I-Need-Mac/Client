@@ -102,7 +102,6 @@ public class Projectile : MonoBehaviour
     {
         if (collision.TryGetComponent(out Monster monster))
         {
-            monster.isHit = true;
             monster.Hit(totalDamage);
             SkillEffect(monster);
 

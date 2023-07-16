@@ -33,6 +33,9 @@ public class Monster : MonoBehaviour
     private WaitForSeconds delay;
     private WaitForSeconds tick;
 
+    private HpBar hpBar;
+    private WaitForSeconds hpBarVisibleTime;
+
     private MonsterCollider attackCollider;
     private SpineManager spineManager;
     private SoundRequester soundRequester;
@@ -51,6 +54,7 @@ public class Monster : MonoBehaviour
         soundRequester = GetComponent<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         tick = new WaitForSeconds(0.4f);
+        hpBarVisibleTime = new WaitForSeconds(Convert.ToInt32(CSVReader.Read("BattleConfig", "HpBarVisibleTime", "ConfigValue")) / 1000.0f);
     }
 
     private void Start()
@@ -76,6 +80,16 @@ public class Monster : MonoBehaviour
         if (spineSwitch)
         {
             btManager.Active();
+        }
+
+        if (hpBar != null)
+        {
+            hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+        }
+        else
+        {
+            
+            hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
         }
 
         monsterRigidbody.velocity = Vector2.zero;
@@ -293,6 +307,10 @@ public class Monster : MonoBehaviour
 
     public void Hit(float totalDamage)
     {
+        StopCoroutine(HpBarControl());
+        StartCoroutine(HpBarControl());
+
+        isHit = true;
         monsterData.SetCurrentHp(monsterData.currentHp - (int)totalDamage);
         if (monsterData.currentHp <= 0)
         {
@@ -300,11 +318,20 @@ public class Monster : MonoBehaviour
         }
     }
 
+    private IEnumerator HpBarControl()
+    {
+        hpBar.HpBarSwitch(true);
+        yield return hpBarVisibleTime;
+        hpBar.HpBarSwitch(false);
+    }
+
     public void Die()
     {
         //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         StartCoroutine(DieAnimation());
         DropItem();
+        UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+        hpBar = null;
     }
 
     private IEnumerator DieAnimation()

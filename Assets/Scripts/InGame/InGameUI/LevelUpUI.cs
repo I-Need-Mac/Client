@@ -84,6 +84,11 @@ public class LevelUpUI : MonoBehaviour
         }
     }
 
+    /*
+     * 1. 벤 리스트 체크
+     * 2. 이미 스킬 선택창에 올라간 스킬인가 체크
+     * 3. 이미 가지고 있는 스킬인가 -> 스킬 레벨업
+     */
     private int RandomSkillId()
     {
         Dictionary<int, SkillInfo> skillData = SkillManager.Instance.skillList;
@@ -124,12 +129,9 @@ public class LevelUpUI : MonoBehaviour
                             return skillId;
                         }
                     }
-                    //if (--count == 0) //새로운 스킬일 때
-                    //{
-                    //    return skillId;
-                    //}
                     else
                     {
+                        skills.Add(skillId / 100);
                         return skillId;
                     }
                 }

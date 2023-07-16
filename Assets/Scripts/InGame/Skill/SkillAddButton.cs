@@ -20,6 +20,7 @@ public class SkillAddButton : MonoBehaviour
 
     private void test()
     {
-        SkillManager.Instance.SkillAdd(int.Parse(inputField.text), GameManager.Instance.player.transform);
+        int skillId = int.Parse(inputField.text);
+        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, PlayerUI.Instance.skillCount);
     }
 }

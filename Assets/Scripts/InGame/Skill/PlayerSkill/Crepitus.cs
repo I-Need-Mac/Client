@@ -7,7 +7,7 @@ public class Crepitus : ActiveSkill
     private WaitForSeconds tick;
     private float size;
 
-    public Crepitus(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Crepitus(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -27,7 +27,7 @@ public class Crepitus : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         while (true)
@@ -38,7 +38,7 @@ public class Crepitus : ActiveSkill
                 yield return intervalTime;
             }
 
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
     }
 

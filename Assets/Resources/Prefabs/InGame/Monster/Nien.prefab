@@ -217,7 +217,7 @@ MonoBehaviour:
     groupSourceRate: 0
     monsterPrefabPath: 
     attackType: 0
-  aniName: 0
+  aniName: 1
 --- !u!114 &8432360679213270949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,5 +368,5 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 1.1022465, y: -0.05581941}
-  m_Size: {x: 3.1365025, y: 1.9719856}
+  m_Size: {x: 3.1365025, y: 1.36}
   m_Direction: 1

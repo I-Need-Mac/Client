@@ -14,8 +14,8 @@ public class Timer : SingletonBehaviour<Timer>
     protected override void Awake()
     {
         timeText = GetComponent<TextMeshProUGUI>();
-        timeText.color = Color.white;
-        timeText.fontSize = 45;
+        //timeText.color = Color.white;
+        //timeText.fontSize = 45;
     }
 
     public void TimerSwitch(bool btn)

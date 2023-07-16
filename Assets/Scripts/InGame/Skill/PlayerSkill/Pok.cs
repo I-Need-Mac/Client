@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pok : ActiveSkill
 {
-    public Pok(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Pok(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -22,7 +22,7 @@ public class Pok : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         while (true)
@@ -34,7 +34,7 @@ public class Pok : ActiveSkill
                 projectile.SetAlpha(1.0f);
                 SkillManager.Instance.CoroutineStarter(Move(projectile));
             }
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
     }
 

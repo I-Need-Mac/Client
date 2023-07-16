@@ -1,3 +1,4 @@
+using BFM;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,13 +7,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PlayerUI : MonoBehaviour
+public class PlayerUI : SingletonBehaviour<PlayerUI>
 {
     private GameOverUI gameOverUi;
     private PlayerStatusUI statusUi;
     private LevelUpUI levelUi;
 
-    private void Awake()
+    [SerializeField] private Color color = new Color(0, 0, 0, 0.75f);
+
+    public int skillCount { get; set; } = 0;
+
+    protected override void Awake()
     {
         gameOverUi = GetComponentInChildren<GameOverUI>();
         statusUi = GetComponentInChildren<PlayerStatusUI>();
@@ -23,6 +28,17 @@ public class PlayerUI : MonoBehaviour
     {
         gameOverUi.gameObject.SetActive(false);
         levelUi.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        PlayerStatusUI.Instance.DimmedColorChange(color);
+    }
+
+    public void NameBoxSetting(string path)
+    {
+        statusUi.levelText.text = $"Lv.{1}";
+        statusUi.iconImage.sprite = ResourcesManager.Load<Sprite>(path);
     }
 
     public void LevelTextChange(int level)

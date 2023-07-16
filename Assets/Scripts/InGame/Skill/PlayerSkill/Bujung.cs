@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bujung : ActiveSkill
 {
-    public Bujung(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Bujung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -14,7 +14,7 @@ public class Bujung : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         while (true)
@@ -30,7 +30,8 @@ public class Bujung : ActiveSkill
                 yield return intervalTime;
             }
 
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            //yield return coolTime;
         }
     }
 }

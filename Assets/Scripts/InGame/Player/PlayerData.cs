@@ -5,6 +5,7 @@ using SKILLCONSTANT;
 public class PlayerData
 {
     public string characterName { get; private set; }
+    public string iconImage { get; private set; }
 
     public int hp
     {
@@ -96,6 +97,11 @@ public class PlayerData
         this.characterName = characterName;
     }
 
+    public void SetIconImage(string iconImage)
+    {
+        this.iconImage = iconImage;
+    }
+
     public void SetHp(int hp)
     {
         this.originHp = hp;
@@ -109,7 +115,7 @@ public class PlayerData
 
     public void SetAttack(float attack)
     {
-        this.originAttack = attack;
+        this.originAttack = attack/100;
         this.modifyAttack = 0.0f;
     }
 

@@ -26,6 +26,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         defaultCharScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "CharImageMultiple", "ConfigValue")));
         playerUi = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
         SoundManager.Instance.CreateSoundManager();
+        LocalizeManager.Instance.SetLocalizeManager();
         //mapId = UIManager.Instance.selectStageID;
         //playerId = UIManager.Instance.selectCharacterID;
         //playerPoolManager.playerId = playerId;
@@ -36,6 +37,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         Spawn();
         StartCoroutine(MonsterSpawner.Instance.Spawn());
         Timer.Instance.TimerSwitch(true);
+        playerUi.NameBoxSetting(player.playerManager.playerData.iconImage);
     }
 
     private void Update()

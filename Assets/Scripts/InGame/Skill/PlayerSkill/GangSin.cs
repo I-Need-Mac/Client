@@ -8,7 +8,7 @@ public class GangSin : ActiveSkill
     private Monster prefab;
     private List<Monster> summoners = new List<Monster>();
 
-    public GangSin(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public GangSin(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -30,7 +30,7 @@ public class GangSin : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
 
         float timeVariable = 1.0f;
@@ -67,7 +67,7 @@ public class GangSin : ActiveSkill
                 summoner.gameObject.SetActive(false);
             }
 
-            yield return coolTime;
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
         }
     }
 }

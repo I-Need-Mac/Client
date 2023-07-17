@@ -19,6 +19,7 @@ public abstract class PassiveSkill : Skill
     public PassiveSkill(int skillId, Transform shooter, int skillNum)
     {
         passiveTable = CSVReader.Read("PassiveTable");
+        this.skillData = new PassiveData();
         this.shooter = shooter;
         SetSkillData(skillId);
         this.skillNum = skillNum;
@@ -60,7 +61,7 @@ public abstract class PassiveSkill : Skill
 
         skillData.SetSkillId(skillId);
         skillData.SetName(Convert.ToString(data["Name"]));
-        skillData.SetExplain(Convert.ToString(data["Passive_TextExplain"]));
+        skillData.SetExplain(Convert.ToString(data["Desc"]));
         skillData.SetIconPath(Convert.ToString(data["Icon"]));
         skillData.SetImagePath(Convert.ToString(data["PassiveImage"]));
         
@@ -78,25 +79,49 @@ public abstract class PassiveSkill : Skill
         }
         catch
         {
-            try
+            //try
+            //{
+            //    if (Enum.TryParse(Convert.ToString(data["PassiveEffect"]), true, out SKILL_PASSIVE effect))
+            //    {
+            //        List<SKILL_PASSIVE> list = new List<SKILL_PASSIVE>()
+            //        {
+            //            effect,
+            //        };
+            //        skillData.SetEffect(list);
+            //    }
+            //}
+            //catch
+            //{
+            //    skillData.SetEffect(new List<SKILL_PASSIVE>());
+            //}
+            if (Enum.TryParse(Convert.ToString(data["PassiveEffect"]), true, out SKILL_PASSIVE effect))
             {
-                if (Enum.TryParse(Convert.ToString(data["PassiveEffect"]), true, out SKILL_PASSIVE effect))
-                {
-                    List<SKILL_PASSIVE> list = new List<SKILL_PASSIVE>()
+                List<SKILL_PASSIVE> list = new List<SKILL_PASSIVE>()
                     {
                         effect,
                     };
-                    skillData.SetEffect(list);
-                }
+                skillData.SetEffect(list);
             }
-            catch
+            else
             {
                 skillData.SetEffect(new List<SKILL_PASSIVE>());
             }
         }
 
-        skillData.SetCoolTime(Convert.ToInt32(data["PassiveCoolTime"]));
-        coolTime = new WaitForSeconds(skillData.coolTime * 0.001f);
+        //skillData.SetCoolTime(Convert.ToInt32(data["PassiveCoolTime"]));
+        //coolTime = new WaitForSeconds(skillData.coolTime * 0.001f);
+        try
+        {
+            skillData.SetCoolTime(Convert.ToInt32(data["PassiveCoolTime"]));
+        }
+        catch
+        {
+            skillData.SetCoolTime(0);
+        }
+        finally
+        {
+            coolTime = new WaitForSeconds(skillData.coolTime * 0.001f);
+        }
 
         try
         {

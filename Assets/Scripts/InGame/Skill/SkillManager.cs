@@ -121,14 +121,32 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 120:
                 skill = new Horin(skillId, shooter, skillNum);
                 break;
-            case 132:
+            case 202:
+                skill = new InnPassive(skillId, shooter, skillNum);
+                break;
+            case 203:
                 skill = new HyulPok(skillId, shooter, skillNum);
                 break;
-            case 135:
+            case 205:
                 skill = new GaSok(skillId, shooter, skillNum);
                 break;
-            case 136:
+            case 206:
                 skill = new Hyum(skillId, shooter, skillNum);
+                break;
+            case 207:
+                skill = new JaeSaeng(skillId, shooter, skillNum);
+                break;
+            case 208:
+                skill = new HwakSan(skillId, shooter, skillNum);
+                break;
+            case 209:
+                skill = new HwakHo(skillId, shooter, skillNum);
+                break;
+            case 210:
+                skill = new JuJuGaSork(skillId, shooter, skillNum);
+                break;
+            case 211:
+                skill = new JuJuJyungPok(skillId, shooter, skillNum);
                 break;
             default:
                 DebugManager.Instance.PrintDebug("[ERROR]: 아직 미구현된 스킬입니다 (SkillID: " + skillId + ")");

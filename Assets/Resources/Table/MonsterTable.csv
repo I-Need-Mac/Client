@@ -2,7 +2,7 @@ MonsterID,MonsterName,SizeMultiple,HP,Attack,MoveSpeed,AtkSpeed,ViewDistance,Atk
 몬스???�이??몬스???�름(로컬 ?�이??몬스???�이�?배율,몬스??체력,몬스??공격??몬스???�동 ?�도,몬스??공격 ?�도,몬스???�야 범위,몬스??공격 ?�거�?몬스???�킬,그룹 ?�스,그룹 ?�스 ?�률,몬스???��?지,?�공 AI ?�단,,,,
 int,String,Float,int,int,int,float,int,int,int,String,int,String,Enum
 101,Nien,0.35,100,15,2,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/Nien,Bold
-102,HwaGwangSu,0.3,150,10,5,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/HwaGwangSu,Bold
+102,HwaGwangSu,0.3,40,10,5,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/HwaGwangSu,Bold
 103,TeoLeogSon,0.3,200,55,0.8,0.5,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/TeoLeogSon,Bold
 104,Lesser_Demon,0.4,600,15,5,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/Lesser_Demon,Shy
 105,Basago,0.5,100,90,2,1,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/Basago,Bold

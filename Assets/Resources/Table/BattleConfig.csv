@@ -11,4 +11,4 @@ benben,Constant,101|102|103|104|105|106|107|108|109|110|111|112
 InvincibleTime,Constant,100
 StatIncreaseInterval,Constant,10000
 StatIncreaseValue,Coefficient,0.001
-HpBarVisibleTime,Constant,2000
+HpBarVisibleTime,Constant,1000

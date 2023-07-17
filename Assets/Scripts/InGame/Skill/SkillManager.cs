@@ -131,7 +131,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 skill = new Hyum(skillId, shooter, skillNum);
                 break;
             default:
-                throw new System.NotImplementedException();
+                DebugManager.Instance.PrintDebug("[ERROR]: 아직 미구현된 스킬입니다 (SkillID: " + skillId + ")");
+                return;
         }
 
         if (skillId / 10000 == 1)

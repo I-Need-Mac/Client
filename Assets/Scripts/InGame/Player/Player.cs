@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private WaitForSeconds invincibleTime;
     
     private HpBar hpBar;
+    private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
 
     public Transform character { get; private set; }
     public PlayerManager playerManager { get; private set; }
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        hpBar.HpBarSwitch(true);
     }
 
     /*
@@ -55,7 +57,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
-        hpBar.HpBarSetting(transform.position, playerManager.playerData.currentHp, playerManager.playerData.hp);
+        hpBar.HpBarSetting(transform.position + hpBarPos, playerManager.playerData.currentHp, playerManager.playerData.hp);
     }
 
     private void FixedUpdate()

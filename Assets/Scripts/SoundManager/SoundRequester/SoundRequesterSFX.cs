@@ -20,7 +20,7 @@ public class SoundRequesterSFX : SoundRequester
 
         foreach (AudioSourceSetter items in speakerSettings)
         {
-            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.speakerName);
+            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + soundObjectID + "!" + items.speakerName);
 
 
 
@@ -32,7 +32,7 @@ public class SoundRequesterSFX : SoundRequester
 
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(soundObjectID+ "!" + items.speakerName, audioSources[items.speakerName]);
 
                 audioSources[items.speakerName].loop = items.isLoop;
                 audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType) * items.volume;

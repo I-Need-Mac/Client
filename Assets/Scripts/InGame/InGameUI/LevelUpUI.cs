@@ -105,16 +105,6 @@ public class LevelUpUI : MonoBehaviour
                     continue;
                 }
 
-                if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == 5)
-                {
-                    continue;
-                }
-
-                if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == 4)
-                {
-                    continue;
-                }
-
                 if (skills.Contains(skillId))
                 {
                     continue;
@@ -143,6 +133,15 @@ public class LevelUpUI : MonoBehaviour
                     }
                     else
                     {
+                        if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == 5)
+                        {
+                            break;
+                        }
+
+                        if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == 4)
+                        {
+                            break;
+                        }
                         skills.Add(skillId / 100);
                         return skillId;
                     }

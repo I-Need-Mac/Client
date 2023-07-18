@@ -92,7 +92,7 @@ public class LevelUpUI : MonoBehaviour
      */
     private int RandomSkillId()
     {
-        Dictionary<int, SkillInfo> skillData = SkillManager.Instance.skillList;
+        Dictionary<int, SkillInfo> skillList = SkillManager.Instance.skillList;
         int skillId = 0;
         int c = skillNums.Count;
         if (PlayerUI.Instance.skillCount < 8) //스킬칸이 남은 경우
@@ -109,18 +109,10 @@ public class LevelUpUI : MonoBehaviour
                 {
                     continue;
                 }
-                skillId = skillId * 100 + 1;
-                //if (!skillNums.Contains(skillId / 100))
-                //{
-                //    continue;
-                //}
-                if (skillData.Count == 0)
-                {
-                    skills.Add(skillId / 100);
-                    return skillId;
-                }
 
-                foreach (int id in skillData.Keys)
+                skillId = skillId * 100 + 1;
+
+                foreach (int id in skillList.Keys)
                 {
                     if (id / 100 == skillId / 100) //가지고 있는 스킬일 때
                     {
@@ -131,21 +123,19 @@ public class LevelUpUI : MonoBehaviour
                             return skillId;
                         }
                     }
-                    else
-                    {
-                        if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == 5)
-                        {
-                            break;
-                        }
-
-                        if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == 4)
-                        {
-                            break;
-                        }
-                        skills.Add(skillId / 100);
-                        return skillId;
-                    }
                 }
+
+                if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == 5)
+                {
+                    continue;
+                }
+
+                if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == 4)
+                {
+                    continue;
+                }
+                skills.Add(skillId / 100);
+                return skillId;
             }
         }
         else
@@ -153,7 +143,11 @@ public class LevelUpUI : MonoBehaviour
             int index = UnityEngine.Random.Range(0, 8);
             for (int i = 0; i < 8; i++)
             {
-                skillId = skillData.Keys.ElementAt((i + index) % 8);
+                skillId = skillList.Keys.ElementAt((i + index) % 8);
+                if (skills.Contains(skillId / 100))
+                {
+                    continue;
+                }
                 if (skillId % 100 != SKILL_MAX_LEVEL)
                 {
                     skills.Add(skillId / 100);

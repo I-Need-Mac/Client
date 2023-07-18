@@ -21,6 +21,7 @@ public class SkillAddButton : MonoBehaviour
     private void test()
     {
         int skillId = int.Parse(inputField.text);
-        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, PlayerUI.Instance.skillCount);
+        int skillNum = skillId / 10000 == 1 ? PlayerUI.Instance.activeSkillCount : PlayerUI.Instance.passiveSkillCount;
+        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, skillNum);
     }
 }

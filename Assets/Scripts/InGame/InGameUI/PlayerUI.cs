@@ -15,7 +15,13 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
 
     [SerializeField] private Color color = new Color(0, 0, 0, 0.75f);
 
-    public int skillCount { get; set; } = 0;
+    public int skillCount
+    {
+        get { return activeSkillCount + passiveSkillCount; }
+        private set { }
+    }
+    public int activeSkillCount { get; set; } = 0;
+    public int passiveSkillCount { get; set; } = 0;
 
     protected override void Awake()
     {

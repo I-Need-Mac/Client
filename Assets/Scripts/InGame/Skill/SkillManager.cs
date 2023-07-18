@@ -157,13 +157,13 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         {
             Dictionary<string, Dictionary<string, object>> skillTable = CSVReader.Read("SkillTable");
             PlayerStatusUI.Instance.SkillIconInit(skillTable[skillId.ToString()]["Icon"].ToString(), skillNum);
-            PlayerUI.Instance.skillCount++;
+            PlayerUI.Instance.activeSkillCount++;
         }
         else if (skillId / 10000 == 2)
         {
             Dictionary<string, Dictionary<string, object>> passiveTable = CSVReader.Read("PassiveTable");
-            PlayerStatusUI.Instance.SkillIconInit(passiveTable[skillId.ToString()]["Icon"].ToString(), skillNum);
-            PlayerUI.Instance.skillCount++;
+            PlayerStatusUI.Instance.SkillIconInit(passiveTable[skillId.ToString()]["Icon"].ToString(), skillNum + 5);
+            PlayerUI.Instance.passiveSkillCount++;
         }
 
         skill.Init();

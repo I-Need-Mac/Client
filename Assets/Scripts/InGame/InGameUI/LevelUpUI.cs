@@ -46,7 +46,8 @@ public class LevelUpUI : MonoBehaviour
 
     private void CloseBox(int skillId)
     {
-        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, PlayerUI.Instance.skillCount);
+        int skillNum = skillId / 10000 == 1 ? PlayerUI.Instance.activeSkillCount : PlayerUI.Instance.passiveSkillCount;
+        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, skillNum);
 
         foreach (SkillUI ui in skillUis)
         {
@@ -103,6 +104,17 @@ public class LevelUpUI : MonoBehaviour
                 {
                     continue;
                 }
+
+                if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == 5)
+                {
+                    continue;
+                }
+
+                if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == 4)
+                {
+                    continue;
+                }
+
                 if (skills.Contains(skillId))
                 {
                     continue;

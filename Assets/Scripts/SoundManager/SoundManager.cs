@@ -133,7 +133,7 @@ public class SoundManager : SingleTon<SoundManager>
     public void PauseAll() { 
         foreach (string key in audioSourceList.Keys) { 
             audioSourceList[key].Pause();
-
+            audioSourceList[key].UnPause();
             DebugManager.Instance.PrintDebug("SoundManager : Pause "+ key);
 
         }
@@ -144,6 +144,18 @@ public class SoundManager : SingleTon<SoundManager>
         foreach (string key in audioSourceList.Keys)
         {
             audioSourceList[key].Play();
+            DebugManager.Instance.PrintDebug("SoundManager : Play " + key);
+        }
+
+    }
+
+    public void UnPauseAll()
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+            audioSourceList[key].UnPause();
+            DebugManager.Instance.PrintDebug("SoundManager : UnPause " + key);
+
         }
 
     }

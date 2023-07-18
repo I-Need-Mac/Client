@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SkillBoxIcon : InGameUI
 {
     RectTransform rect;
-    private WaitForSeconds dimmedTime;
+    private WaitForFixedUpdate dimmedTime;
 
     private Image icon;
     private Image dimmed;
@@ -16,7 +16,7 @@ public class SkillBoxIcon : InGameUI
         rect = GetComponent<RectTransform>();
         icon = GetComponent<Image>();
         dimmed = transform.Find("Dimmed").GetComponent<Image>();
-        dimmedTime = new WaitForSeconds(Time.fixedDeltaTime);
+        dimmedTime = new WaitForFixedUpdate();
     }
 
     public void UiSetting(string path)
@@ -40,13 +40,12 @@ public class SkillBoxIcon : InGameUI
 
     public IEnumerator Dimmed(float time)
     {
-        float coolTime = 0.0f;
-        float amount = 1.0f;
-        while (coolTime < time)
+        float cool = time;
+        dimmed.fillAmount = 1.0f;
+        while (cool > 0.0f)
         {
-            coolTime += Time.fixedDeltaTime;
-            amount -= Time.fixedDeltaTime;
-            dimmed.fillAmount = amount;
+            cool -= Time.fixedDeltaTime;
+            dimmed.fillAmount -= Time.fixedDeltaTime / time;
             yield return dimmedTime;
         }
     }

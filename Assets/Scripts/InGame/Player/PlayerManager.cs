@@ -90,7 +90,7 @@ public class PlayerManager : MonoBehaviour
         playerData.SetHpRegen(Convert.ToInt32(characterData["HPRegen"]));
         playerData.SetShield(Convert.ToInt32(characterData["Shield"]));
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
-        playerData.SetMoveSpeed(Convert.ToInt32(characterData["MoveSpeed"]));
+        playerData.SetMoveSpeed(float.Parse(Convert.ToString(characterData["MoveSpeed"])));
         playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
 
         playerData.SetExpBuff(0);

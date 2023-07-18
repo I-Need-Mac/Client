@@ -321,6 +321,7 @@ public class Monster : MonoBehaviour
     public void Die()
     {
         //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        monsterCollider.enabled = false;
         StartCoroutine(DieAnimation());
         DropItem();
         UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);

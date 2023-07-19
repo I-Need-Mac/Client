@@ -43,15 +43,26 @@ public class GwiGi : ActiveSkill
     private IEnumerator Move(Projectile projectile)
     {
         projectile.CollisionPower(true);
-        Vector3 rotate = CameraManager.Instance.GetMousePoint().x >= 0 ? Vector3.back : Vector3.forward;
         float angle = 0.0f;
-        float weight = skillData.speed;
-        while (angle < 95.0f)
+        if (Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance).x >= 0)
         {
-            weight += 0.1f;
-            angle += weight;
-            projectile.transform.RotateAround(shooter.position, rotate, weight);
-            yield return waitForFixedUpdate;
+            do
+            {
+                angle -= Time.fixedDeltaTime * skillData.speed;
+                projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
+                yield return waitForFixedUpdate;
+                DebugManager.Instance.PrintDebug("[GwiGi]: " + projectile.transform.localEulerAngles.z);
+            } while (projectile.transform.localEulerAngles.z > 240.0f);
+        }
+        else
+        {
+            while (projectile.transform.localEulerAngles.z < 100.0f)
+            {
+                angle += Time.fixedDeltaTime * skillData.speed;
+                projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
+                yield return waitForFixedUpdate;
+                DebugManager.Instance.PrintDebug("[GwiGi]: " + projectile.transform.localEulerAngles.z);
+            }
         }
         projectile.CollisionPower(false);
         projectile.SetAlpha(0.0f);

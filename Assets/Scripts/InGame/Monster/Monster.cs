@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour
     [field: SerializeField] public int monsterId { get; private set; }
     [field: SerializeField] public MonsterData monsterData { get; private set; }
 
+    private CapsuleCollider2D monsterCollider2;
     private CapsuleCollider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
@@ -42,6 +43,7 @@ public class Monster : MonoBehaviour
     private void Awake()
     {
         attackCollider = GetComponentInChildren<MonsterCollider>();
+        monsterCollider2 = transform.Find("Collision").GetComponent<CapsuleCollider2D>();
         monsterCollider = GetComponent<CapsuleCollider2D>();
         spineManager = GetComponent<SpineManager>();
         soundRequester = GetComponent<SoundRequester>();
@@ -90,8 +92,9 @@ public class Monster : MonoBehaviour
 
     public void SpawnSet()
     {
-        Physics2D.IgnoreCollision(monsterCollider, transform.Find("Collision").GetComponent<CapsuleCollider2D>());
+        Physics2D.IgnoreCollision(monsterCollider, monsterCollider2);
         
+        monsterCollider.enabled = true;
         monsterCollider.enabled = true;
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
@@ -322,6 +325,7 @@ public class Monster : MonoBehaviour
     {
         //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         monsterCollider.enabled = false;
+        monsterCollider2.enabled = false;
         StartCoroutine(DieAnimation());
         DropItem();
         UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);

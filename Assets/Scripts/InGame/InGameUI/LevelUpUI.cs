@@ -54,7 +54,8 @@ public class LevelUpUI : MonoBehaviour
             UIPoolManager.Instance.DeSpawnUI("SkillUI", ui);
         }
 
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
+        GameManager.Instance.Pause();
         gameObject.SetActive(false);
     }
 

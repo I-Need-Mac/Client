@@ -22,7 +22,7 @@ public class Pok : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
@@ -34,7 +34,7 @@ public class Pok : ActiveSkill
                 projectile.SetAlpha(1.0f);
                 SkillManager.Instance.CoroutineStarter(Move(projectile));
             }
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 

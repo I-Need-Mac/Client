@@ -14,7 +14,7 @@ public class GyuGyu : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
@@ -30,7 +30,7 @@ public class GyuGyu : ActiveSkill
                 yield return intervalTime;
             }
 
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 }

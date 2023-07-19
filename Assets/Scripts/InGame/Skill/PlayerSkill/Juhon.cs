@@ -19,7 +19,7 @@ public class Juhon : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
@@ -33,7 +33,7 @@ public class Juhon : ActiveSkill
                 
             }
             projectiles[0].transform.localScale = Vector2.zero;
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         //SkillManager.Instance.DeSpawnProjectile(_projectile);

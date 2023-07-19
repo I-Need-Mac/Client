@@ -18,7 +18,7 @@ public class JuHyung : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         List<Transform> prevMonsters = new List<Transform>();
@@ -47,7 +47,7 @@ public class JuHyung : ActiveSkill
 
             SkillManager.Instance.DeSpawnProjectile(projectile);
             prevMonsters.Clear();
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 

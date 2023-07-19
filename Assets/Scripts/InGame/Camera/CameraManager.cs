@@ -26,6 +26,11 @@ public class CameraManager : SingletonBehaviour<CameraManager>
         ConfinerSetting("Floor");
     }
 
+    public Vector2 GetMousePoint()
+    {
+        return cam.ScreenToWorldPoint(Input.mousePosition);
+    }
+
     #region
     public Vector2[] Round(int amount)
     {

@@ -133,14 +133,18 @@ public class GameManager : SingletonBehaviour<GameManager>
     #endregion
 
     #region Game State
-    private void Pause()
+    public void Pause()
     {
         if (Time.timeScale == 1f)
         {
+            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.EFFECT);
+            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.VOICE);
             Time.timeScale = 0f;
         }
         else
         {
+            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
+            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
             Time.timeScale = 1f;
         }
     }

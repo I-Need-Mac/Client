@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GwiGi : ActiveSkill
 {
+    private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
     public GwiGi(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
@@ -43,13 +45,13 @@ public class GwiGi : ActiveSkill
         projectile.CollisionPower(true);
         Vector3 rotate = GameManager.Instance.player.lookDirection.x >= 0 ? Vector3.back : Vector3.forward;
         float angle = 0.0f;
-        float weight = skillData.speed * Time.deltaTime;
+        float weight = skillData.speed;
         while (angle < 95.0f)
         {
-            weight += 0.001f;
+            weight += 0.1f;
             angle += weight;
             projectile.transform.RotateAround(shooter.position, rotate, weight);
-            yield return null;
+            yield return waitForFixedUpdate;
         }
         projectile.CollisionPower(false);
         projectile.SetAlpha(0.0f);

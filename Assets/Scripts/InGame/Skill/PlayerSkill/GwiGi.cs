@@ -43,7 +43,7 @@ public class GwiGi : ActiveSkill
     private IEnumerator Move(Projectile projectile)
     {
         projectile.CollisionPower(true);
-        Vector3 rotate = GameManager.Instance.player.lookDirection.x >= 0 ? Vector3.back : Vector3.forward;
+        Vector3 rotate = CameraManager.Instance.GetMousePoint().x >= 0 ? Vector3.back : Vector3.forward;
         float angle = 0.0f;
         float weight = skillData.speed;
         while (angle < 95.0f)

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     [field: SerializeField] public int itemId { get; private set; }
-    [SerializeField] private float itemSpeed = 1f;
+    private float itemSpeed;
 
     protected Player player;
     protected Transform target;
@@ -15,6 +15,7 @@ public class Item : MonoBehaviour
 
     private void Awake()
     {
+        itemSpeed = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ItemFollowSpeed", "ConfigValue")));
         gameObject.tag = "Item";
         itemData = new ItemData();
     }

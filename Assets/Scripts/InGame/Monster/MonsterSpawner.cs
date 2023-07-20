@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.FilePathAttribute;
 
 public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 {
@@ -16,6 +16,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private Dictionary<int, ObjectPool<Monster>> spawner;
     private Queue<RemainMonster> remainMonsters;
     private WaitForSeconds tick = new WaitForSeconds(0.05f);
+    private int spawnDictID=0;
 
     private Dictionary<string, Dictionary<string, object>> spawnTable;
     private Dictionary<string, object> spawnData;
@@ -23,7 +24,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private int currentSpawnTime;
 
     public List<Monster> monsters = new List<Monster>();
-
+    
     private struct RemainMonster
     {
         public int id;
@@ -51,12 +52,15 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
-        if (!spawner.ContainsKey(monsterId))
-        {
+        
+        if (!spawner.ContainsKey(spawnDictID))
+        {   
+            
             string prefabPath = CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString();
-            spawner.Add(monsterId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(prefabPath), transform));
+            spawner.Add(spawnDictID, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(prefabPath), transform));
         }
-        Monster monster = spawner[monsterId].GetObject();
+        Monster monster = spawner[spawnDictID].GetObject();
+        monster.spawnDictId = spawnDictID++;
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
         monster.SpawnSet();
         monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;
@@ -70,7 +74,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 
     public void DeSpawnMonster(Monster monster)
     {
-        spawner[monster.monsterId].ReleaseObject(monster);
+        spawner[monster.spawnDictId].ReleaseObject(monster);
         monsters.Remove(monster);
         --spawnCount;
     }

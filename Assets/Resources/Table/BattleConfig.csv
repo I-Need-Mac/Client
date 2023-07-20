@@ -12,4 +12,4 @@ InvincibleTime,Constant,100
 StatIncreaseInterval,Constant,10000
 StatIncreaseValue,Coefficient,0.001
 HpBarVisibleTime,Constant,1000
-ItemFollowSpeed,Constant,5
+ItemFollowSpeed,Constant,10

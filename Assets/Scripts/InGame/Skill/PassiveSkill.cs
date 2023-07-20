@@ -112,7 +112,7 @@ public abstract class PassiveSkill : Skill
         //coolTime = new WaitForSeconds(skillData.coolTime * 0.001f);
         try
         {
-            skillData.SetCoolTime(Convert.ToInt32(data["PassiveCoolTime"]));
+            skillData.SetCoolTime(Convert.ToInt32(data["PassiveCoolTime"]) / 1000.0f);
         }
         catch
         {
@@ -120,7 +120,7 @@ public abstract class PassiveSkill : Skill
         }
         finally
         {
-            coolTime = new WaitForSeconds(skillData.coolTime * 0.001f);
+            coolTime = new WaitForSeconds(skillData.coolTime);
         }
 
         try

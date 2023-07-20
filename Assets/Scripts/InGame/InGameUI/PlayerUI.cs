@@ -12,6 +12,8 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
     private GameOverUI gameOverUi;
     private PlayerStatusUI statusUi;
     private LevelUpUI levelUi;
+    
+    public SkillBoxUI skillBoxUi { get; private set; }
 
     [SerializeField] private Color color = new Color(0, 0, 0, 0.75f);
 
@@ -28,6 +30,7 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
         gameOverUi = GetComponentInChildren<GameOverUI>();
         statusUi = GetComponentInChildren<PlayerStatusUI>();
         levelUi = GetComponentInChildren<LevelUpUI>();
+        skillBoxUi = GetComponentInChildren<SkillBoxUI>();
     }
 
     private void Start()
@@ -38,7 +41,8 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
 
     private void Update()
     {
-        PlayerStatusUI.Instance.DimmedColorChange(color);
+        //PlayerStatusUI.Instance.DimmedColorChange(color);
+        skillBoxUi.DimmedColorChange(color);
     }
 
     public void NameBoxSetting(string path)

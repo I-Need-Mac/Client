@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class ActiveData
 {
     public int skillId { get; private set; }                        //스킬 id값
-    public int coolTime { get; private set; }                       //스킬의 재사용 대기시간
+    public float coolTime { get; private set; }                       //스킬의 재사용 대기시간
     public int attackDistance { get; private set; }                 //스킬 사거리
     public int damage { get; private set; }                         //스킬 공격력
     public List<string> skillEffectParam { get; private set; }               //스킬 이펙트 파라미터
@@ -20,19 +20,19 @@ public class ActiveData
     public SKILL_TARGET skillTarget { get; private set; }           //스킬 발동 대상
     public string skillPrefabPath { get; private set; }
     public int projectileCount { get; private set; }                //투사체 개수
-    public int intervalTime { get; private set; }                 //투사체간 발사 간격
-    public int duration { get; private set; }                     //스킬 지속 시간
+    public float intervalTime { get; private set; }                 //투사체간 발사 간격
+    public float duration { get; private set; }                     //스킬 지속 시간
     public float speed { get; private set; }                          //투사체 속도
     public float splashRange { get; private set; }                    //스플레쉬 범위 (원의 반지름)
     public float projectileSizeMulti { get; private set; }            //투사체 크기 배율
     public bool isPenetrate { get; private set; }                   //스킬의 관통 여부
 
     public void SetSkillId(int skillId) { this.skillId = skillId; }
-    public void SetCoolTime(int coolTime) { this.coolTime = coolTime; }
+    public void SetCoolTime(float coolTime) { this.coolTime = coolTime; }
     public void SetAttackDistance(int attackDistance) { this.attackDistance = attackDistance; }
     public void SetProjectileCount(int projectileCount) { this.projectileCount = projectileCount; }
-    public void SetIntervalTime(int intervalTime) { this.intervalTime = intervalTime; }
-    public void SetDuration(int duration) { this.duration = duration; }
+    public void SetIntervalTime(float intervalTime) { this.intervalTime = intervalTime; }
+    public void SetDuration(float duration) { this.duration = duration; }
     public void SetDamage(int damage) { this.damage = damage; }
     public void SetSpeed(float speed) { this.speed = speed; }
     public void SetSplashRange(float splashRange) { this.splashRange = splashRange; }

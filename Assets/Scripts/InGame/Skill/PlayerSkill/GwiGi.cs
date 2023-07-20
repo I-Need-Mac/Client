@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GwiGi : ActiveSkill
 {
+    private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
     public GwiGi(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
@@ -22,7 +24,7 @@ public class GwiGi : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
@@ -34,22 +36,33 @@ public class GwiGi : ActiveSkill
                 projectile.SetAlpha(1.0f);
                 SkillManager.Instance.CoroutineStarter(Move(projectile));
             }
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 
     private IEnumerator Move(Projectile projectile)
     {
         projectile.CollisionPower(true);
-        Vector3 rotate = GameManager.Instance.player.lookDirection.x >= 0 ? Vector3.back : Vector3.forward;
         float angle = 0.0f;
-        float weight = skillData.speed * Time.deltaTime;
-        while (angle < 95.0f)
+        if (Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance).x >= 0)
         {
-            weight += 0.001f;
-            angle += weight;
-            projectile.transform.RotateAround(shooter.position, rotate, weight);
-            yield return null;
+            do
+            {
+                angle -= Time.fixedDeltaTime * skillData.speed;
+                projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
+                yield return waitForFixedUpdate;
+                DebugManager.Instance.PrintDebug("[GwiGi]: " + projectile.transform.localEulerAngles.z);
+            } while (projectile.transform.localEulerAngles.z > 240.0f);
+        }
+        else
+        {
+            while (projectile.transform.localEulerAngles.z < 100.0f)
+            {
+                angle += Time.fixedDeltaTime * skillData.speed;
+                projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
+                yield return waitForFixedUpdate;
+                DebugManager.Instance.PrintDebug("[GwiGi]: " + projectile.transform.localEulerAngles.z);
+            }
         }
         projectile.CollisionPower(false);
         projectile.SetAlpha(0.0f);

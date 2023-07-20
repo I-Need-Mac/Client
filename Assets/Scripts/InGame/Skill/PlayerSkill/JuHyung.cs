@@ -18,7 +18,7 @@ public class JuHyung : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         List<Transform> prevMonsters = new List<Transform>();
@@ -31,10 +31,10 @@ public class JuHyung : ActiveSkill
             Transform closestMonster = shooter;
             int count = skillData.projectileCount;
 
+            closestMonster = Scanner.GetTargetTransform(skillData.skillTarget, closestMonster, skillData.attackDistance);
+
             while (count != 0)
             {
-                closestMonster = Scanner.GetTargetTransform(skillData.skillTarget, closestMonster, skillData.attackDistance);
-
                 if (closestMonster != null && !prevMonsters.Contains(closestMonster))
                 {
                     //projectile.transform.localPosition = closestMonster.position;
@@ -43,11 +43,12 @@ public class JuHyung : ActiveSkill
                     yield return intervalTime;
                 }
                 --count;
+                closestMonster = Scanner.GetTargetTransform(SKILLCONSTANT.SKILL_TARGET.MELEE, closestMonster, skillData.attackDistance);
             }
 
             SkillManager.Instance.DeSpawnProjectile(projectile);
             prevMonsters.Clear();
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 

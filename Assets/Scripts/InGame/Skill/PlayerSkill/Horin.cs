@@ -27,7 +27,7 @@ public class Horin : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         float weight = 0.004f;
@@ -43,7 +43,7 @@ public class Horin : ActiveSkill
                 {
                     projectile.CollisionPower(false);
                 }
-                yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+                yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
                 foreach (Projectile projectile in projectiles)
                 {
                     projectile.CollisionPower(true);

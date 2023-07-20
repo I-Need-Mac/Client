@@ -50,6 +50,7 @@ namespace SKILLCONSTANT
         PLAYER,
         //ALL,
         LOWEST,
+        MOUSE,
     }
 
     public enum CALC_MODE

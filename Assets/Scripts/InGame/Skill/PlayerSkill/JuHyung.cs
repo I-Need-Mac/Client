@@ -31,10 +31,10 @@ public class JuHyung : ActiveSkill
             Transform closestMonster = shooter;
             int count = skillData.projectileCount;
 
+            closestMonster = Scanner.GetTargetTransform(skillData.skillTarget, closestMonster, skillData.attackDistance);
+
             while (count != 0)
             {
-                closestMonster = Scanner.GetTargetTransform(skillData.skillTarget, closestMonster, skillData.attackDistance);
-
                 if (closestMonster != null && !prevMonsters.Contains(closestMonster))
                 {
                     //projectile.transform.localPosition = closestMonster.position;
@@ -43,6 +43,7 @@ public class JuHyung : ActiveSkill
                     yield return intervalTime;
                 }
                 --count;
+                closestMonster = Scanner.GetTargetTransform(SKILLCONSTANT.SKILL_TARGET.MELEE, closestMonster, skillData.attackDistance);
             }
 
             SkillManager.Instance.DeSpawnProjectile(projectile);

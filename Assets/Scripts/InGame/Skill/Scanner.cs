@@ -34,6 +34,8 @@ public struct Scanner
                     return BossTarget().position;
                 case SKILLCONSTANT.SKILL_TARGET.LOWEST:
                     return LowestTarget(shooter, attackDistance).position;
+                case SKILLCONSTANT.SKILL_TARGET.MOUSE:
+                    return CameraManager.Instance.cam.ScreenToWorldPoint(Input.mousePosition);
                 default:
                     return RandomTarget(shooter, attackDistance).position;
             }

@@ -26,7 +26,7 @@ public class Possession : ActiveSkill
     {
         if (!skillData.isEffect)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         Dictionary<string, Dictionary<string, object>> table = CSVReader.Read("CharacterTable");

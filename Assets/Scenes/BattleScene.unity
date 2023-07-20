@@ -1007,6 +1007,7 @@ GameObject:
   - component: {fileID: 147834737}
   - component: {fileID: 147834739}
   - component: {fileID: 147834738}
+  - component: {fileID: 147834740}
   m_Layer: 5
   m_Name: SkillBox
   m_TagString: Untagged
@@ -1034,12 +1035,12 @@ RectTransform:
   - {fileID: 1167377214}
   - {fileID: 1544411894}
   - {fileID: 2050886358}
-  m_Father: {fileID: 458769068}
-  m_RootOrder: 3
+  m_Father: {fileID: 1692962284}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 790, y: -454.9125}
+  m_AnchoredPosition: {x: 788.94995, y: -454.9125}
   m_SizeDelta: {x: 282.4926, y: 170.175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &147834738
@@ -1080,6 +1081,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147834736}
   m_CullTransparentMesh: 1
+--- !u!114 &147834740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147834736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6ebc3c893aaff4eb35d2a43e4a401a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &152314544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,7 +1869,6 @@ RectTransform:
   - {fileID: 913383000}
   - {fileID: 1765820610}
   - {fileID: 364169565}
-  - {fileID: 147834737}
   m_Father: {fileID: 820418220}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2723,7 +2735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b38bb6c1d2ed40f4e9a9529250c84898, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.5188679, g: 0, b: 0, a: 0.6039216}
+  color: {r: 0, g: 0, b: 0, a: 0.6901961}
 --- !u!224 &694022406
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5306,6 +5318,7 @@ RectTransform:
   - {fileID: 1927309418}
   - {fileID: 1865371687}
   - {fileID: 1733698275}
+  - {fileID: 147834737}
   - {fileID: 1964992619}
   m_Father: {fileID: 694022406}
   m_RootOrder: 3
@@ -6366,7 +6379,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1692962284}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}

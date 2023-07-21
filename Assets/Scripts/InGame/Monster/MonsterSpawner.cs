@@ -57,6 +57,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         //    spawner.Add(monsterId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(prefabPath), transform));
         //}
         Monster monster = spawner[monsterId].GetObject();
+        monster.monsterId = monsterId;
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
         monster.SpawnSet();
         monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;

@@ -9,7 +9,6 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    [field: SerializeField] public int monsterId { get; private set; }
     [field: SerializeField] public MonsterData monsterData { get; private set; }
 
     private CapsuleCollider2D monsterCollider2;
@@ -20,7 +19,6 @@ public class Monster : MonoBehaviour
     private bool isSlow;
     private bool spineSwitch;
     private bool isPlayer;
-    private int _spawnDictID;
     private BehaviorTreeManager btManager;
 
     private float weightX;
@@ -36,11 +34,11 @@ public class Monster : MonoBehaviour
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
 
+    public int monsterId { get; set; }
     public bool isHit { get; set; }
     public bool isAttack { get; private set; }
     public Transform target { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
-    public int spawnDictId { get {return _spawnDictID;}  set { _spawnDictID= value;} }
 
 
     private void Awake()

@@ -114,7 +114,21 @@ public class UIData
                 List<object> createList = new List<object>();
                 foreach (KeyValuePair<string, object> valuePair in pagePair.Value)
                 {
-                    createList.Add(valuePair.Value);
+                    if(valuePair.Key == "PageType")
+                    {
+                        createList.Add(valuePair.Value);
+                        continue;
+                    }
+                    
+                    if(valuePair.Value.ToString() == "None" || valuePair.Value.ToString() == "")
+                    {
+                        createList.Add(valuePair.Value);
+                        continue;
+                    }
+                    
+                    string localizeText = LocalizeManager.Instance.GetText(valuePair.Value.ToString());
+                    createList.Add(localizeText);
+                    //createList.Add(valuePair.Value);
                 }
 
                 addList.Add(int.Parse(pagePair.Key), createList);

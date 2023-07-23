@@ -74,7 +74,9 @@ public class UI_Page : UI_Popup
     PageType type = PageType.Text;
     public PageType TYPE { get { return type; } }
 
-    Queue<string> textTypeScript = new Queue<string>();
+    Queue<string> textTypeScriptTop = new Queue<string>();
+    Queue<string> textTypeScriptMiddle = new Queue<string>();
+    Queue<string> textTypeScriptBottom = new Queue<string>();
 
     public void SetData(int id, List<object> data)
     {
@@ -102,9 +104,11 @@ public class UI_Page : UI_Popup
         {   // 텍스트 타입
             type = PageType.Text;
 
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox2].ToString());
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox3].ToString());
+            textTypeScriptTop.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
+            textTypeScriptMiddle.Enqueue(data[(int)PageTableInfo.TextBox2].ToString());
+            textTypeScriptBottom.Enqueue(data[(int)PageTableInfo.TextBox3].ToString());
+            // textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox2].ToString());
+            // textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox3].ToString());
 
             text.topText.text = null;
             text.middleText.text = null;
@@ -120,7 +124,7 @@ public class UI_Page : UI_Popup
         {   // 텍스트-이미지 타입
             type = PageType.PictureTextTop;
 
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
+            textTypeScriptTop.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
             //pictureTextTop.text.text = data[(int)PageTableInfo.TextBox1].ToString();
             
             string path = $"{Define.UiCharacterPath}/" + data[(int)PageTableInfo.ImagePath].ToString();
@@ -130,7 +134,7 @@ public class UI_Page : UI_Popup
         {   // 이미지-텍스트 타입
             type = PageType.PictureTextBottom;
 
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
+            textTypeScriptBottom.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
             //pictureTextBottom.text.text = data[(int)PageTableInfo.TextBox1].ToString();
 
             string path = $"{Define.UiCharacterPath}/" + data[(int)PageTableInfo.ImagePath].ToString();
@@ -159,17 +163,17 @@ public class UI_Page : UI_Popup
         switch (type)
         {
             case PageType.Text:
-                text.topText.TypeText(textTypeScript.Peek(), onComplete:
-                    () => text.middleText.TypeText(textTypeScript.Peek(), onComplete:
-                    () => text.bottomText.TypeText(textTypeScript.Peek(), onComplete: () => Debug.Log("Text Complete"))));
+                text.topText.TypeText(textTypeScriptTop.Peek(), onComplete:
+                    () => text.middleText.TypeText(textTypeScriptMiddle.Peek(), onComplete:
+                    () => text.bottomText.TypeText(textTypeScriptBottom.Peek(), onComplete: () => Debug.Log("Text Complete"))));
                 break;
             case PageType.Picture:
                 break;
             case PageType.PictureTextTop:
-                pictureTextTop.text.TypeText(textTypeScript.Peek(), onComplete: () => Debug.Log("PictureTextTop Text Complete"));
+                pictureTextTop.text.TypeText(textTypeScriptTop.Peek(), onComplete: () => Debug.Log("PictureTextTop Text Complete"));
                 break;
             case PageType.PictureTextBottom:
-                pictureTextBottom.text.TypeText(textTypeScript.Peek(), onComplete: () => Debug.Log("PictureTextBottom Text Complete"));
+                pictureTextBottom.text.TypeText(textTypeScriptBottom.Peek(), onComplete: () => Debug.Log("PictureTextBottom Text Complete"));
                 break;
             default:
                 break;

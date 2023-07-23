@@ -153,7 +153,8 @@ public class UI_StoryBook : UI_Popup
         else
         {
             pageList[page].ActivePage();
-            pageList[page + 1].ClearPage();
+            pageList[page + 1].ActivePage();
+            //pageList[page + 1].ClearPage();
             skipPage = page;
         }
 

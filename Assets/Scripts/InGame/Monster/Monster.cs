@@ -311,7 +311,7 @@ public class Monster : MonoBehaviour
         monsterData.SetCurrentHp(monsterData.currentHp - (int)totalDamage);
         if (monsterData.currentHp <= 0)
         {
-            Die();
+            Die(true);
         }
     }
 
@@ -322,13 +322,16 @@ public class Monster : MonoBehaviour
         hpBar.HpBarSwitch(false);
     }
 
-    public void Die()
+    public void Die(bool isDrop)
     {
         //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         monsterCollider.enabled = false;
         monsterCollider2.enabled = false;
         StartCoroutine(DieAnimation());
-        DropItem();
+        if (isDrop)
+        {
+            DropItem();
+        }
         UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
         hpBar = null;
     }
@@ -424,7 +427,7 @@ public class Monster : MonoBehaviour
     {
         if (UnityEngine.Random.Range(0.0f, 1.0f) < n)
         {
-            Die();
+            Die(true);
         }
     }
 

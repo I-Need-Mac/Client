@@ -1,6 +1,6 @@
-SponeID,SponeTime,SponeMobID,SponeMobAmount,SponeMobLocation,SponeMobObject
+SpawnID,SpawnTime,SpawnMobID,SpawnMobAmount,SpawnMobLocation,
 ?¤í°?„ì´??ëª¬ìŠ¤???¤í° ???´ë°,?¤í° ëª¬ìŠ¤??ID,?¤í° ëª¬ìŠ¤?????¤í° ëª¬ìŠ¤???„ì¹˜ Enum,?¤í° ëª??„ì¹˜,,
-int,int,int,int,Enum,String
+int,int,int,int,Enum,
 1,1000,101,1,top,
 2,2000,101,1,bottom,
 3,3000,101,0,topleft,

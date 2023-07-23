@@ -20,6 +20,7 @@ public class ExpItem : Item
 
         if (collision.gameObject.CompareTag("Player"))
         {
+            StopCoroutine(Move());
             gameObject.SetActive(false);
             GameManager.Instance.player.GetExp(itemData.itemTypeParam);
         }

@@ -91,7 +91,7 @@ public class PlayerManager : MonoBehaviour
         playerData.SetShield(Convert.ToInt32(characterData["Shield"]));
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(float.Parse(Convert.ToString(characterData["MoveSpeed"])));
-        playerData.SetGetItemRange(Convert.ToInt32(characterData["GetItemRange"]));
+        playerData.SetGetItemRange(float.Parse(Convert.ToString(characterData["GetItemRange"])));
 
         playerData.SetExpBuff(0);
         playerData.SetArmor(0);

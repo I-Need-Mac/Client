@@ -6,9 +6,6 @@ public class GyuGyu : ActiveSkill
 {
     public GyuGyu(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
-    {
-    }
 
     public override IEnumerator Activation()
     {
@@ -17,7 +14,7 @@ public class GyuGyu : ActiveSkill
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
@@ -31,6 +28,6 @@ public class GyuGyu : ActiveSkill
             }
 
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        }
+        } while (skillData.coolTime > 0.0f);
     }
 }

@@ -10,10 +10,6 @@ public class JuHyung : ActiveSkill
 
     public JuHyung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
-    {
-    }
-
     public override IEnumerator Activation()
     {
         if (!skillData.isEffect)
@@ -23,7 +19,7 @@ public class JuHyung : ActiveSkill
 
         List<Transform> prevMonsters = new List<Transform>();
 
-        while (true)
+        do
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData);
             projectile.transform.localPosition = shooter.position;
@@ -49,7 +45,7 @@ public class JuHyung : ActiveSkill
             SkillManager.Instance.DeSpawnProjectile(projectile);
             prevMonsters.Clear();
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        }
+        } while (skillData.coolTime > 0.0f);
     }
 
     private IEnumerator Move(Projectile projectile, Transform target)
@@ -59,7 +55,6 @@ public class JuHyung : ActiveSkill
             projectile.transform.Translate(((Vector2)target.position - (Vector2)projectile.transform.position).normalized * skillData.speed * Time.deltaTime);
             yield return null;
         }
-        DebugManager.Instance.PrintDebug(">>>>");
     }
 
 }

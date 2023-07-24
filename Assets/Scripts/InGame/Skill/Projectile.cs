@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     protected int bounceCount;
     protected bool isMetastasis = false;
 
-    public float totalDamage { get; private set; }
+    //public float totalDamage { get; private set; }
     public ActiveData skillData { get; private set; }
 
     private void Awake()
@@ -72,7 +72,7 @@ public class Projectile : MonoBehaviour
         }
 
         transform.localScale *= this.skillData.projectileSizeMulti;
-        totalDamage = GameManager.Instance.player.playerManager.TotalDamage(skillData.damage);
+        //this.totalDamage = skillData.damage;
     }
 
     public void SetAlpha(float alpha)
@@ -102,7 +102,7 @@ public class Projectile : MonoBehaviour
     {
         if (collision.TryGetComponent(out Monster monster))
         {
-            monster.Hit(totalDamage);
+            monster.Hit(skillData.damage);
             SkillEffect(monster);
 
             if (!skillData.isPenetrate)
@@ -170,7 +170,7 @@ public class Projectile : MonoBehaviour
             {
                 if (target.TryGetComponent(out Monster monster))
                 {
-                    monster.monsterData.SetCurrentHp(monster.monsterData.currentHp - (int)totalDamage);
+                    monster.monsterData.SetCurrentHp(monster.monsterData.currentHp - (int)skillData.damage);
                 }
             }
         }
@@ -185,7 +185,7 @@ public class Projectile : MonoBehaviour
 
     private void Drain(float n)
     {
-        float hp = totalDamage * n * 0.01f;
+        float hp = skillData.damage * n * 0.01f;
         GameManager.Instance.player.playerManager.playerData.CurrentHpModifier((int)hp);
     }
 

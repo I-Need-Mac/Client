@@ -6,38 +6,30 @@ public class Juhon : ActiveSkill
 {
     public Juhon(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
+    public override IEnumerator Activation()
     {
         shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
 
-        Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-        projectile.transform.localScale = Vector2.zero;
-        projectiles.Add(projectile);
-    }
-
-    public override IEnumerator Activation()
-    {
         if (!skillData.isEffect)
         {
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
-            projectiles[0].transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+            Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                projectiles[0].CollisionPower(true);
+                projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+                projectile.CollisionPower(true);
                 yield return intervalTime;
-                projectiles[0].CollisionPower(false);
-                
-            }
-            projectiles[0].transform.localScale = Vector2.zero;
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        }
+                projectile.CollisionPower(false);
 
-        //SkillManager.Instance.DeSpawnProjectile(_projectile);
-        //projectiles.Clear();
+            }
+            projectile.transform.localScale = Vector2.zero;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        } while (skillData.coolTime > 0.0f);
+
     }
     
 }

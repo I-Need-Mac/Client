@@ -6,9 +6,9 @@ public class Aliento : ActiveSkill
 {
     public Aliento(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
-    {
-    }
+    //public override void Init()
+    //{
+    //}
 
     public override IEnumerator Activation()
     {
@@ -17,7 +17,7 @@ public class Aliento : ActiveSkill
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
@@ -30,7 +30,6 @@ public class Aliento : ActiveSkill
             }
 
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-            //yield return coolTime;
-        }
+        } while (skillData.coolTime > 0.0f);
     }
 }

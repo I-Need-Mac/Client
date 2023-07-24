@@ -1,7 +1,9 @@
 using BFM;
 using SKILLCONSTANT;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 #region Structure
@@ -31,6 +33,19 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         skillTable = CSVReader.Read("SkillTable");
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
+
+        foreach (string skillId in skillTable.Keys)
+        {
+            if (int.TryParse(skillId, out int id))
+            {
+                id /= 100;
+                if (!skillPools.ContainsKey(id))
+                {
+                    string prefabPath = skillTable[skillId]["SkillPrefabPath"].ToString();
+                    skillPools.Add(id, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(prefabPath), transform));
+                }
+            }
+        }
     }
 
     public Projectile SpawnProjectile(ActiveData skillData)
@@ -41,13 +56,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     public Projectile SpawnProjectile(ActiveData skillData, Transform shooter)
     {
         int poolId = skillData.skillId / 100;
-        Dictionary<string, object> data = skillTable[skillData.skillId.ToString()];
-        if (!skillPools.ContainsKey(poolId))
-        {
-            string prefabPath = data["SkillPrefabPath"].ToString();
-            skillPools.Add(poolId, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(prefabPath), shooter));
-        }
         Projectile projectile = skillPools[poolId].GetObject();
+        projectile.transform.parent = shooter;
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
         projectile.transform.localPosition = Vector2.zero;
         projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
@@ -166,11 +176,12 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             PlayerUI.Instance.passiveSkillCount++;
         }
 
-        skill.Init();
+        //skill.Init();
         IEnumerator activation = skill.Activation();
         StartCoroutine(activation);
         SkillInfo skillInfo = new SkillInfo(skill, activation);
         skillList.Add(skillId, skillInfo);
+        SkillDataUpdate();
     }
 
     public void SkillLevelUp(SkillInfo skillInfo)
@@ -187,17 +198,11 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         StartCoroutine(coroutine);
     }
 
-    public void SkillUpdate()
+    private void SkillDataUpdate()
     {
-        foreach (int id in skillList.Keys)
+        foreach (SkillInfo info in skillList.Values)
         {
-            SkillInfo skillInfo = skillList[id];
-            StopCoroutine(skillInfo.activation);
-            skillInfo.skill.SkillUpdate();
-            IEnumerator activation = skillInfo.skill.Activation();
-            StartCoroutine(activation);
-            skillInfo.activation = activation;
-            skillList[id] = skillInfo;
+            info.skill.SkillDataUpdate();
         }
     }
 

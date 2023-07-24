@@ -9,38 +9,26 @@ public class Possession : ActiveSkill
     private const string ANIMATOR_PATH = "";
     private const string SKELETONDATA_ASSET_PATH = "";
 
-    private Player player;
-    private Animator animator;
-    private SkeletonMecanim mecanim;
-
     public Possession(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
-
-    public override void Init()
-    {
-        player = shooter.GetComponent<Player>();
-        animator = shooter.GetComponentInChildren<Animator>();
-        mecanim = shooter.GetComponentInChildren<SkeletonMecanim>();
-    }
 
     public override IEnumerator Activation()
     {
+        Player player = shooter.GetComponent<Player>();
+        Dictionary<string, Dictionary<string, object>> table = CSVReader.Read("CharacterTable");
+
         if (!skillData.isEffect)
         {
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        Dictionary<string, Dictionary<string, object>> table = CSVReader.Read("CharacterTable");
-        RuntimeAnimatorController originalController = animator.runtimeAnimatorController;
-        SkeletonDataAsset originalDataAsset = mecanim.skeletonDataAsset;
+        do
+        {
+            //변신
+            yield return duration;
+            //원래대로
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        } while (skillData.coolTime > 0.0f);
 
-        player.playerManager.PlayerSetting(table[CHANGE_ID.ToString()]);
-        animator.runtimeAnimatorController = ResourcesManager.Load<RuntimeAnimatorController>(ANIMATOR_PATH);
-        mecanim.skeletonDataAsset = ResourcesManager.Load<SkeletonDataAsset>(SKELETONDATA_ASSET_PATH);
-
-        yield return duration;
-
-        player.playerManager.PlayerSetting(table[GameManager.Instance.GetPlayerId().ToString()]);
-        animator.runtimeAnimatorController = originalController;
-        mecanim.skeletonDataAsset = originalDataAsset;
+        
     }
 }

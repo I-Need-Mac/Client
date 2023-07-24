@@ -64,7 +64,7 @@ public class PlayerManager : MonoBehaviour
 
     private void ConfigSetting()
     {
-        fraction = 1 / Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
+        fraction = 1.0f / Convert.ToInt32(CSVReader.Read("BattleConfig", "Fraction", "ConfigValue"));
         coolTimeConstant = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeOffset", "ConfigValue"));
         coolTimeCoefficient = Convert.ToInt32(CSVReader.Read("BattleConfig", "CoolTimeMax", "ConfigValue"));
     }
@@ -116,9 +116,9 @@ public class PlayerManager : MonoBehaviour
 
     /*캐릭터 로직 관련*/
     #region Character Logic
-    public float GetCoolDown(float coolDown)
+    public float GetCoolDown(float coolTime)
     {
-        return playerData.coolDown * ((float)Math.Pow(coolDown, 2) / ((float)Math.Pow(coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient * fraction;
+        return coolTime * ((float)Math.Pow(playerData.coolDown, 2) / ((float)Math.Pow(playerData.coolDown, 2) + coolTimeConstant)) * coolTimeCoefficient * fraction;
     }
 
     //체젠 함수
@@ -150,7 +150,7 @@ public class PlayerManager : MonoBehaviour
     //오리지널데미지 = 공격력 + or * 스킬피해
     //크리티컬데미지 = 오리지널데미지 * 크리티컬데미지
     //일단 스킬피해 제외하고 구현
-    public float TotalDamage(int skillDamage)
+    public float TotalDamage(float skillDamage)
     {
         if (IsCritical())
         {
@@ -162,7 +162,7 @@ public class PlayerManager : MonoBehaviour
     //쉴드 사용 함수
     //쉴드가 존재할경우 1감소시키고 데미지를 1로 반환
     //쉴드가 없을 경우 받은 데미지 그대로 리턴
-    public int IsShield(int monsterDamage)
+    public float IsShield(float monsterDamage)
     {
         if (playerData.shield > 0)
         {
@@ -189,7 +189,7 @@ public class PlayerManager : MonoBehaviour
                 Monster monster = collision.GetComponentInParent<Monster>();
                 StartCoroutine(player.Invincible());
                 DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
-                playerData.CurrentHpModifier(-IsShield(monster.monsterData.attack));
+                playerData.CurrentHpModifier((int)-IsShield(monster.monsterData.attack));
             }
             catch
             {

@@ -445,7 +445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9158019123545299572
 RectTransform:
   m_ObjectHideFlags: 0
@@ -544,7 +544,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b4e8251993b2946a46235cff0368f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundRequesterBGM: {fileID: 30769795868590743}
   storyModeText: {fileID: 3676476768117347137}
   selectSorcererText: {fileID: 8724832410368987591}
   soulText: {fileID: 3974157757928276747}

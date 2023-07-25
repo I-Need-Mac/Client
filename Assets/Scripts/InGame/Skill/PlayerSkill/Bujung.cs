@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bujung : Skill
+public class Bujung : ActiveSkill
 {
-    public Bujung(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Bujung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -14,7 +14,7 @@ public class Bujung : Skill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
@@ -30,7 +30,8 @@ public class Bujung : Skill
                 yield return intervalTime;
             }
 
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            //yield return coolTime;
         }
     }
 }

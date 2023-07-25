@@ -14,6 +14,9 @@ public class UI_Agreement : UI_Popup
     }
 
     [SerializeField]
+    Image backgroundImage;
+
+    [SerializeField]
     TextMeshProUGUI titleText;
     [SerializeField]
     TextMeshProUGUI checkTextTop;
@@ -47,6 +50,8 @@ public class UI_Agreement : UI_Popup
 
         agreeBtn = GetImage((int)Images.AgreementBtn);
         agreeBtn.color = Color.gray;
+        BindUIEvent(agreeBtn.gameObject, (PointerEventData data) => { OnEnterImage(data); }, Define.UIEvent.Enter);
+        BindUIEvent(agreeBtn.gameObject, (PointerEventData data) => { OnExitImage(data); }, Define.UIEvent.Exit);
 
         titleText.text = LocalizeManager.Instance.GetText("UI_Agreement");
         checkTextTop.text = LocalizeManager.Instance.GetText("UI_AgreeCheck");
@@ -83,6 +88,16 @@ public class UI_Agreement : UI_Popup
             default:
                 break;
         }
+    }
+
+    public void OnEnterImage(PointerEventData data)
+    {
+        Debug.Log("OnEnterImage");
+    }
+
+    public void OnExitImage(PointerEventData data)
+    {
+        Debug.Log("OnExitImage");
     }
 
     void CheckToggle(bool toggle)

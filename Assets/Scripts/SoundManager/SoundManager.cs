@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static AudioSourceSetter;
 
 public class SoundManager : SingleTon<SoundManager>
 {
@@ -131,9 +132,9 @@ public class SoundManager : SingleTon<SoundManager>
     }
 
     public void PauseAll() { 
-        foreach (string key in audioSourceList.Keys) { 
+        foreach (string key in audioSourceList.Keys) {
+    
             audioSourceList[key].Pause();
-
             DebugManager.Instance.PrintDebug("SoundManager : Pause "+ key);
 
         }
@@ -144,6 +145,96 @@ public class SoundManager : SingleTon<SoundManager>
         foreach (string key in audioSourceList.Keys)
         {
             audioSourceList[key].Play();
+            DebugManager.Instance.PrintDebug("SoundManager : Play " + key);
+        }
+
+    }
+
+    public void UnPauseAll()
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+            audioSourceList[key].UnPause();
+            DebugManager.Instance.PrintDebug("SoundManager : UnPause " + key);
+
+        }
+
+    }
+    public void PauseType(EAudioType audioType)
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+           if (key.Split('@')[0] == audioTypeList[(int)audioType])
+            {
+                audioSourceList[key].Pause();
+            }
+            DebugManager.Instance.PrintDebug("SoundManager : Pause " + key);
+
+        }
+
+    }
+    public void PauseType(string audioType)
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+            if (key.Split('@')[0].Equals(audioType))
+            {
+                audioSourceList[key].Pause();
+            }
+            DebugManager.Instance.PrintDebug("SoundManager : Pause " + key);
+
+        }
+
+    }
+
+    public void PlayType(EAudioType audioType)
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+            if (key.Split('@')[0] == audioTypeList[(int)audioType])
+            {
+                audioSourceList[key].Play();
+            }
+            DebugManager.Instance.PrintDebug("SoundManager : Play " + key);
+        }
+
+    }
+    public void PlayType(string audioType)
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+            if (key.Split('@')[0].Equals(audioType))
+            {
+                audioSourceList[key].Play();
+            }
+            DebugManager.Instance.PrintDebug("SoundManager : Play " + key);
+        }
+
+    }
+
+    public void UnPauseType(EAudioType audioType)
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+            if (key.Split('@')[0] == audioTypeList[(int)audioType])
+            {
+                audioSourceList[key].UnPause();
+            }
+            DebugManager.Instance.PrintDebug("SoundManager : UnPause " + key);
+
+        }
+
+    }
+    public void UnPauseType(string audioType)
+    {
+        foreach (string key in audioSourceList.Keys)
+        {
+            if (key.Split('@')[0].Equals(audioType))
+            {
+                audioSourceList[key].UnPause();
+            }
+            DebugManager.Instance.PrintDebug("SoundManager : UnPause " + key);
+
         }
 
     }

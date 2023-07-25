@@ -15,24 +15,33 @@ public class GameManager : SingletonBehaviour<GameManager>
     public PlayerUI playerUi { get; private set; }
     public Player player { get; private set; }
     public GameObject map { get; private set; }
-    public Tilemap tileMap { get; private set; }
 
     private bool gameOver = true;
     private float defaultScale;
+    private float defaultCharScale;
 
     protected override void Awake()
     {
         defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));
+        defaultCharScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "CharImageMultiple", "ConfigValue")));
         playerUi = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
         SoundManager.Instance.CreateSoundManager();
+        LocalizeManager.Instance.SetLocalizeManager();
         //mapId = UIManager.Instance.selectStageID;
         //playerId = UIManager.Instance.selectCharacterID;
         //playerPoolManager.playerId = playerId;
     }
 
+    private void Start()
+    {
+        Spawn();
+        StartCoroutine(MonsterSpawner.Instance.Spawn());
+        Timer.Instance.TimerSwitch(true);
+        playerUi.NameBoxSetting(player.playerManager.playerData.iconImage);
+    }
+
     private void Update()
     {
-        DebugManager.Instance.PrintDebug("$$: " + Time.timeScale);
         if (Input.GetKeyDown(KeyCode.K))
         {
             player.GetExp(500);
@@ -41,22 +50,14 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             Pause();
         }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            int hp = player.playerManager.weight.hp - 10;
-            player.playerManager.weight.SetHp(hp);
-        }
+        
 
-        if (player.playerManager.ReturnHp() <= 0 && gameOver)
+        if (player.playerManager.playerData.currentHp <= 0 && gameOver)
         {
             gameOver = false;
+            StopAllCoroutines();
             playerUi.GameOver();
         }
-    }
-
-    private void Start()
-    {
-        Spawn();
     }
 
     public int GetPlayerId()
@@ -74,19 +75,18 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void MapLoad(int mapId)
     {
-        string name = LoadMapManager.Instance.SceneNumberToMapName(mapId);
-        GameObject mapPrefab = LoadMapManager.Instance.LoadMapNameToMapObject(name);
-        map = Instantiate(mapPrefab, transform);
-        tileMap = map.transform.Find("Map").transform.Find("Floor").GetComponent<Tilemap>();
-        map.transform.SetParent(transform.Find("MapGeneratePos").transform);
-        map.transform.localScale = new Vector3(defaultScale, defaultScale, defaultScale);
-        map.SetActive(true);
+        string mapName = CSVReader.Read("StageTable", mapId.ToString(), "MapID").ToString();
+        GameObject map = ResourcesManager.Load<GameObject>("Maps/" + mapName);
+        this.map = Instantiate(map, transform);
+        this.map.transform.localScale = Vector3.one * defaultScale;
+        this.map.SetActive(true);
     }
 
     private void PlayerLoad(int playerId)
     {
-        player = Instantiate(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", playerId.ToString(), "CharacterPrefabPath").ToString()), transform.Find("PlayerSpawnPos").transform);
-        player.transform.localScale = Vector3.one * defaultScale;
+        player = Instantiate(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", playerId.ToString(), "CharacterPrefabPath").ToString()), transform);
+        player.transform.localScale = Vector3.one * defaultCharScale;
+        player.transform.localPosition = this.map.transform.Find("SpawnPoint").Find("PlayerPoint").localPosition;
         player.gameObject.SetActive(true);
     }
 
@@ -133,14 +133,18 @@ public class GameManager : SingletonBehaviour<GameManager>
     #endregion
 
     #region Game State
-    private void Pause()
+    public void Pause()
     {
         if (Time.timeScale == 1f)
         {
+            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.EFFECT);
+            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.VOICE);
             Time.timeScale = 0f;
         }
         else
         {
+            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
+            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
             Time.timeScale = 1f;
         }
     }

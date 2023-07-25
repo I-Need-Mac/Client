@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Juhon : Skill
+public class Juhon : ActiveSkill
 {
-    public Juhon(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Juhon(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -19,7 +19,7 @@ public class Juhon : Skill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
@@ -33,7 +33,7 @@ public class Juhon : Skill
                 
             }
             projectiles[0].transform.localScale = Vector2.zero;
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         //SkillManager.Instance.DeSpawnProjectile(_projectile);

@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GwiGi : Skill
+public class GwiGi : ActiveSkill
 {
-    public GwiGi(int skillId, Transform shooter) : base(skillId, shooter) { }
+    private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
+    public GwiGi(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -13,6 +15,7 @@ public class GwiGi : Skill
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
             projectile.SetAlpha(0.0f);
+            projectile.CollisionPower(false);
             projectiles.Add(projectile);
         }
     }
@@ -21,19 +24,11 @@ public class GwiGi : Skill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
         {
-            for (int i = 0; i < skillData.projectileCount; i++)
-            {
-                Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-                projectile.transform.localPosition = Vector2.up * skillData.attackDistance;
-                projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                SkillManager.Instance.CoroutineStarter(Move(projectile));
-                yield return intervalTime;
-            }
             foreach (Projectile projectile in projectiles)
             {
                 projectile.transform.localPosition = Vector2.up * skillData.attackDistance;
@@ -41,22 +36,35 @@ public class GwiGi : Skill
                 projectile.SetAlpha(1.0f);
                 SkillManager.Instance.CoroutineStarter(Move(projectile));
             }
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 
     private IEnumerator Move(Projectile projectile)
     {
-        Vector3 rotate = GameManager.Instance.player.lookDirection.x >= 0 ? Vector3.back : Vector3.forward;
+        projectile.CollisionPower(true);
         float angle = 0.0f;
-        float weight = skillData.speed * Time.deltaTime;
-        while (angle < 95.0f)
+        if (Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance).x >= 0)
         {
-            weight += 0.001f;
-            angle += weight;
-            projectile.transform.RotateAround(shooter.position, rotate, weight);
-            yield return null;
+            do
+            {
+                angle -= Time.fixedDeltaTime * skillData.speed;
+                projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
+                yield return waitForFixedUpdate;
+                DebugManager.Instance.PrintDebug("[GwiGi]: " + projectile.transform.localEulerAngles.z);
+            } while (projectile.transform.localEulerAngles.z > 240.0f);
         }
+        else
+        {
+            while (projectile.transform.localEulerAngles.z < 100.0f)
+            {
+                angle += Time.fixedDeltaTime * skillData.speed;
+                projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
+                yield return waitForFixedUpdate;
+                DebugManager.Instance.PrintDebug("[GwiGi]: " + projectile.transform.localEulerAngles.z);
+            }
+        }
+        projectile.CollisionPower(false);
         projectile.SetAlpha(0.0f);
     }
 

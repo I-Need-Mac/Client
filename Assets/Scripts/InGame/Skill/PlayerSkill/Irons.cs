@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Irons : Skill
+public class Irons : ActiveSkill
 {
     private int weight;
 
-    public Irons(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Irons(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -17,7 +17,7 @@ public class Irons : Skill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
@@ -52,7 +52,8 @@ public class Irons : Skill
                 yield return intervalTime;
             }
 
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            //yield return coolTime;
         }
     }
 }

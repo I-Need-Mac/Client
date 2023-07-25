@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Possession : Skill
+public class Possession : ActiveSkill
 {
     private const int CHANGE_ID = 0;
     private const string ANIMATOR_PATH = "";
@@ -13,7 +13,7 @@ public class Possession : Skill
     private Animator animator;
     private SkeletonMecanim mecanim;
 
-    public Possession(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Possession(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -26,7 +26,7 @@ public class Possession : Skill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         Dictionary<string, Dictionary<string, object>> table = CSVReader.Read("CharacterTable");

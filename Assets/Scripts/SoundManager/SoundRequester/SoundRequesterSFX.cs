@@ -12,15 +12,16 @@ public class SoundRequesterSFX : SoundRequester
 
     public override bool MakeSpeakers()
     {
+
         soundRequester = new GameObject("SoundRequester");
         soundRequester.SetActive(true);
         soundRequester.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
         soundRequester.transform.SetParent(this.transform);
-
+   
 
         foreach (AudioSourceSetter items in speakerSettings)
         {
-            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.speakerName);
+            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.audioType + "@" + soundObjectID + "!" + items.speakerName);
 
 
 
@@ -32,7 +33,7 @@ public class SoundRequesterSFX : SoundRequester
 
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(items.audioType + "@" + soundObjectID + "!" + items.speakerName, audioSources[items.speakerName]);
 
                 audioSources[items.speakerName].loop = items.isLoop;
                 audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType) * items.volume;

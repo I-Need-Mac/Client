@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MyeongGyae : Skill
+public class MyeongGyae : ActiveSkill
 {
     private Monster prefab;
     private List<Monster> summoners = new List<Monster>();
 
-    public MyeongGyae(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public MyeongGyae(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -29,7 +29,7 @@ public class MyeongGyae : Skill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         float timeVariable = 1.0f;
@@ -66,7 +66,7 @@ public class MyeongGyae : Skill
                 summoner.gameObject.SetActive(false);
             }
 
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 }

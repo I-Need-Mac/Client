@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GodBless : Skill
+public class GodBless : ActiveSkill
 {
-    public GodBless(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public GodBless(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -21,7 +21,7 @@ public class GodBless : Skill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         while (true)
@@ -44,8 +44,8 @@ public class GodBless : Skill
                     //데미지 처리
                 }
             }
-            
-            yield return coolTime;
+
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 }

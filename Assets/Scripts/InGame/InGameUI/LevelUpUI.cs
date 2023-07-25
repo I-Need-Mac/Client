@@ -11,13 +11,15 @@ public class LevelUpUI : MonoBehaviour
     private const int SKILL_MAX_LEVEL = 8;
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
+    private Dictionary<string, Dictionary<string, object>> passiveTable;
+
     private Transform body;
     private RectTransform bodyRect;
     private List<int> skillBenList;
     private List<int> skillNums = new List<int>();
 
     public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
-    public int skillCount { get; private set; } = 0;
+    //public int skillCount { get; private set; } = 0;
     public List<int> skills { get; private set; } = new List<int>();   //가진 스킬이 아니라 ui에 올라온 스킬 목록 (중복 방지)
 
     private void Awake()
@@ -28,11 +30,15 @@ public class LevelUpUI : MonoBehaviour
         }
         catch
         {
-            skillBenList = new List<int>();
-            skillBenList.Add(Convert.ToInt32(CSVReader.Read("BattleConfig", "SkillBenList", "ConfigValue")));
+            skillBenList = new List<int>
+            {
+                Convert.ToInt32(CSVReader.Read("BattleConfig", "SkillBenList", "ConfigValue"))
+            };
         }
 
         skillTable = CSVReader.Read("SkillTable");
+        passiveTable = CSVReader.Read("PassiveTable");
+
         SkillNumRead();
         body = transform.Find("Body");
         bodyRect = body.GetComponent<RectTransform>();
@@ -40,14 +46,16 @@ public class LevelUpUI : MonoBehaviour
 
     private void CloseBox(int skillId)
     {
-        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform);
+        int skillNum = skillId / 10000 == 1 ? PlayerUI.Instance.activeSkillCount : PlayerUI.Instance.passiveSkillCount;
+        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, skillNum);
 
         foreach (SkillUI ui in skillUis)
         {
-            UIPoolManager.Instance.DeSpawnButton(ui);
+            UIPoolManager.Instance.DeSpawnUI("SkillUI", ui);
         }
 
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
+        GameManager.Instance.Pause();
         gameObject.SetActive(false);
     }
 
@@ -63,45 +71,49 @@ public class LevelUpUI : MonoBehaviour
                 continue;
             }
             Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * i);
-            SkillUI skillUi = UIPoolManager.Instance.SpawnButton(body.transform, pos);
-            skillUi.SkillBtnInit(skillTable[skillId.ToString()]);
+            SkillUI skillUi = (SkillUI)UIPoolManager.Instance.SpawnUI("SkillUI", body.transform, pos);
+            if (skillId / 10000 == 1)
+            {
+                skillUi.UISetting(skillTable[skillId.ToString()]);
+            }
+            else if (skillId / 10000 == 2)
+            {
+                skillUi.UISetting(passiveTable[skillId.ToString()]);
+            }
             skillUi.btn.onClick.RemoveAllListeners();
             skillUi.btn.onClick.AddListener(() => CloseBox(skillId));
             skillUis.Add(skillUi);
         }
     }
 
+    /*
+     * 1. 벤 리스트 체크
+     * 2. 이미 스킬 선택창에 올라간 스킬인가 체크
+     * 3. 이미 가지고 있는 스킬인가 -> 스킬 레벨업
+     */
     private int RandomSkillId()
     {
-        Dictionary<int, SkillInfo> skillData = SkillManager.Instance.skillList;
+        Dictionary<int, SkillInfo> skillList = SkillManager.Instance.skillList;
         int skillId = 0;
-        int c = 100;
-        if (skillCount < 8) //스킬칸이 남은 경우
+        int c = skillNums.Count;
+        if (PlayerUI.Instance.skillCount < 8) //스킬칸이 남은 경우
         {
             while (c-- != 0)
             {
                 skillId = skillNums[UnityEngine.Random.Range(0, skillNums.Count)];
-                DebugManager.Instance.PrintDebug("[TESTTEST]: " + skillId);
                 if (skillBenList.Contains(skillId))
                 {
                     continue;
                 }
+
                 if (skills.Contains(skillId))
                 {
                     continue;
                 }
-                skillId = skillId * 100 + 1;
-                if (!skillNums.Contains(skillId / 100))
-                {
-                    continue;
-                }
-                if (skillData.Count == 0)
-                {
-                    skills.Add(skillId / 100);
-                    return skillId;
-                }
 
-                foreach (int id in skillData.Keys)
+                skillId = skillId * 100 + 1;
+
+                foreach (int id in skillList.Keys)
                 {
                     if (id / 100 == skillId / 100) //가지고 있는 스킬일 때
                     {
@@ -112,15 +124,19 @@ public class LevelUpUI : MonoBehaviour
                             return skillId;
                         }
                     }
-                    //if (--count == 0) //새로운 스킬일 때
-                    //{
-                    //    return skillId;
-                    //}
-                    else
-                    {
-                        return skillId;
-                    }
                 }
+
+                if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == 5)
+                {
+                    continue;
+                }
+
+                if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == 4)
+                {
+                    continue;
+                }
+                skills.Add(skillId / 100);
+                return skillId;
             }
         }
         else
@@ -128,7 +144,11 @@ public class LevelUpUI : MonoBehaviour
             int index = UnityEngine.Random.Range(0, 8);
             for (int i = 0; i < 8; i++)
             {
-                skillId = skillData.Keys.ElementAt((i + index) % 8);
+                skillId = skillList.Keys.ElementAt((i + index) % 8);
+                if (skills.Contains(skillId / 100))
+                {
+                    continue;
+                }
                 if (skillId % 100 != SKILL_MAX_LEVEL)
                 {
                     skills.Add(skillId / 100);
@@ -143,6 +163,22 @@ public class LevelUpUI : MonoBehaviour
     private void SkillNumRead()
     {
         foreach (string id in skillTable.Keys)
+        {
+            try
+            {
+                int i = Convert.ToInt32(id) / 100;
+                if (!skillNums.Contains(i))
+                {
+                    skillNums.Add(i);
+                }
+            }
+            catch
+            {
+                continue;
+            }
+        }
+
+        foreach (string id in passiveTable.Keys)
         {
             try
             {

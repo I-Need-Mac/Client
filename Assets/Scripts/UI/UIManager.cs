@@ -25,6 +25,8 @@ public class UIManager : MonoSingleton<UIManager>
         UI_StoryBook,
         UI_SelectSorcerer,
         UI_SelectSorcererInfo,
+
+        UI_Settings
     }
 
     public int selectCharacterID;
@@ -53,8 +55,6 @@ public class UIManager : MonoSingleton<UIManager>
 
     public void Init()
     {
-        SoundManager.Instance.CreateSoundManager();
-
         // UI관련 테이블을 읽습니다.
         UIData.ReadData();
 

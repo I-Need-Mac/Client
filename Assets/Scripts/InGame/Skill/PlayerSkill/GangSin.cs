@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class GangSin : Skill
+public class GangSin : ActiveSkill
 {
     private Monster prefab;
     private List<Monster> summoners = new List<Monster>();
 
-    public GangSin(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public GangSin(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
     {
@@ -30,7 +30,7 @@ public class GangSin : Skill
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
         float timeVariable = 1.0f;
@@ -67,7 +67,7 @@ public class GangSin : Skill
                 summoner.gameObject.SetActive(false);
             }
 
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 }

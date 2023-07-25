@@ -33,6 +33,10 @@ public class SettingManager
         }
     }
 
+    public SettingManager() { 
+        ReadSettingFile();
+    }
+
     public void WriteSettingFile() {
         settingFileW = new FileStream("./setting.txt", FileMode.Create);
         StreamWriter sw = new StreamWriter(settingFileW);

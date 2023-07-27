@@ -10,6 +10,8 @@ public class SoundRequesterSFX : SoundRequester
     public List<AudioSourceSetter> speakerSettings = new List<AudioSourceSetter>();
     public List<SoundPackItem> soundPackItems = new List<SoundPackItem>();
 
+    private SoundSituation.SOUNDSITUATION lastSituation;
+
     public override bool MakeSpeakers()
     {
 
@@ -17,7 +19,7 @@ public class SoundRequesterSFX : SoundRequester
         soundRequester.SetActive(true);
         soundRequester.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
         soundRequester.transform.SetParent(this.transform);
-   
+
 
         foreach (AudioSourceSetter items in speakerSettings)
         {
@@ -101,14 +103,21 @@ public class SoundRequesterSFX : SoundRequester
 
         if (shootingSounds.ContainsKey(situation))
         {
-            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource Call " + situation + " With " + shootingSounds[situation].usingSpeaker);
-            if (shootingSounds[situation].delay == 0)
+            if (lastSituation == SoundSituation.SOUNDSITUATION.NONE)
             {
-                ShootSound(situation);
+                lastSituation = situation;
             }
-            else
+            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource Call " + situation + " With " + shootingSounds[situation].usingSpeaker);
+            if (shootingSounds[lastSituation].priority <= shootingSounds[situation].priority)
             {
-                StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].delay));
+                if (shootingSounds[situation].delay == 0)
+                {
+                    ShootSound(situation);
+                }
+                else
+                {
+                    StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].delay));
+                }
             }
         }
         else
@@ -121,8 +130,9 @@ public class SoundRequesterSFX : SoundRequester
     {
         //audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
         audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
-        if (situation == SoundSituation.SOUNDSITUATION.DIE) {
-            MoveToSoundManager( FindChild(FindChild(this.gameObject, "SoundRequester"), shootingSounds[situation].usingSpeaker));
+        if (situation == SoundSituation.SOUNDSITUATION.DIE)
+        {
+            MoveToSoundManager(FindChild(FindChild(this.gameObject, "SoundRequester"), shootingSounds[situation].usingSpeaker));
         }
 
     }
@@ -133,7 +143,8 @@ public class SoundRequesterSFX : SoundRequester
     }
 
 
-    public override void RequestShootSound() { 
+    public override void RequestShootSound()
+    {
     }
 
     protected override IEnumerator PlaySoundWithDelay(SoundSituation.SOUNDSITUATION situation, float delay)

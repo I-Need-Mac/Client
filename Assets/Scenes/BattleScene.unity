@@ -1040,8 +1040,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 788.94995, y: -454.9125}
-  m_SizeDelta: {x: 282.4926, y: 170.175}
+  m_AnchoredPosition: {x: 798.96967, y: -460.95}
+  m_SizeDelta: {x: 262.4536, y: 158.1033}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &147834738
 MonoBehaviour:
@@ -1467,8 +1467,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -790, y: -454.91}
-  m_SizeDelta: {x: 281.6323, y: 170.18}
+  m_AnchoredPosition: {x: -799.4803, y: -460.6386}
+  m_SizeDelta: {x: 262.6717, y: 158.7228}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &364169566
 MonoBehaviour:
@@ -2318,7 +2318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -95.9447, y: -0.0000020415}
+  m_AnchoredPosition: {x: -92.052, y: -0.0000020415}
   m_SizeDelta: {x: 78.568, y: 78.568}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &594486197
@@ -3287,8 +3287,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -20.75}
-  m_SizeDelta: {x: 1920, y: 41.5}
+  m_AnchoredPosition: {x: 0, y: -16.520874}
+  m_SizeDelta: {x: 1920, y: 33.0419}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &913383001
 MonoBehaviour:
@@ -5099,7 +5099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 93.65966, y: -0.2804}
+  m_AnchoredPosition: {x: 86, y: -0.0000025928}
   m_SizeDelta: {x: 83.6433, y: 83.2698}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1660464122
@@ -5325,7 +5325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.4, y: 0}
+  m_AnchoredPosition: {x: -0.000024438, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1692962285
@@ -5626,8 +5626,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 2.2557, y: -66.8647}
-  m_SizeDelta: {x: 178.0323, y: 58.0467}
+  m_AnchoredPosition: {x: -0.000036716, y: -60.892}
+  m_SizeDelta: {x: 170.8348, y: 55.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1765820611
 MonoBehaviour:
@@ -5751,8 +5751,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5787,7 +5787,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0.00000018848459}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6295,8 +6295,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -19.25}
-  m_SizeDelta: {x: 1920, y: 38}
+  m_AnchoredPosition: {x: 0, y: -15.061218}
+  m_SizeDelta: {x: 1920, y: 29.6223}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1927309419
 MonoBehaviour:
@@ -6383,8 +6383,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -69.3}
-  m_SizeDelta: {x: 146.7687, y: 52.72}
+  m_AnchoredPosition: {x: -3.2, y: -63.2}
+  m_SizeDelta: {x: 147.3538, y: 50.9646}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1964992620
 MonoBehaviour:
@@ -6433,8 +6433,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

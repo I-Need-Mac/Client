@@ -14,6 +14,7 @@ public abstract class ActiveSkill : Skill
     protected ActiveData skillData;
     protected Vector2 originSize;
 
+    protected WaitForFixedUpdate frame;
     protected WaitForSeconds coolTime;
     protected WaitForSeconds intervalTime;
     protected WaitForSeconds duration;
@@ -29,6 +30,7 @@ public abstract class ActiveSkill : Skill
         this.shooter = shooter;
         SetSkillData(skillId);
         this.skillNum = skillNum;
+        frame = new WaitForFixedUpdate();
     }
 
     public void DeActivation()

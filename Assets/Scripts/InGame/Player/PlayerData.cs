@@ -55,7 +55,7 @@ public class PlayerData
         private set { }
     }
 
-    public int getItemRange
+    public float getItemRange
     {
         get { return originGetItemRange + modifyGetItemRange; }
         private set { }
@@ -87,8 +87,8 @@ public class PlayerData
     private int modifyHpRegen;
     private float originMoveSpeed;
     private float modifyMoveSpeed;
-    private int originGetItemRange;
-    private int modifyGetItemRange;
+    private float originGetItemRange;
+    private float modifyGetItemRange;
 
     //Setter - Origin Data
     #region Setter
@@ -159,7 +159,7 @@ public class PlayerData
         this.modifyMoveSpeed = 0;
     }
 
-    public void SetGetItemRange(int getItemRange)
+    public void SetGetItemRange(float getItemRange)
     {
         this.originGetItemRange = getItemRange;
         this.modifyGetItemRange = 0;

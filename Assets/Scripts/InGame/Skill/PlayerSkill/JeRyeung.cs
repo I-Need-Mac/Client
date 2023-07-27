@@ -24,10 +24,12 @@ public class JeRyeung : ActiveSkill
 
         while (true)
         {
+            bool isDrop = true;
             List<Transform> targets;
             if (UnityEngine.Random.Range(0, 100) < int.Parse(skillData.skillEffectParam[0]))
             {
                 targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER, (int)LayerConstant.ITEM);
+                isDrop = false;
             }
             else
             {
@@ -38,7 +40,7 @@ public class JeRyeung : ActiveSkill
             {
                 if (target.TryGetComponent(out Monster monster))
                 {
-                    monster.Die();
+                    monster.Die(isDrop);
                 }
                 else if (target.TryGetComponent(out Item item))
                 {

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GwiGi : ActiveSkill
 {
-    private WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
-
     public GwiGi(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override void Init()
@@ -50,7 +48,7 @@ public class GwiGi : ActiveSkill
             {
                 angle -= Time.fixedDeltaTime * skillData.speed;
                 projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
-                yield return waitForFixedUpdate;
+                yield return frame;
                 DebugManager.Instance.PrintDebug("[GwiGi]: " + projectile.transform.localEulerAngles.z);
             } while (projectile.transform.localEulerAngles.z > 240.0f);
         }
@@ -60,7 +58,7 @@ public class GwiGi : ActiveSkill
             {
                 angle += Time.fixedDeltaTime * skillData.speed;
                 projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
-                yield return waitForFixedUpdate;
+                yield return frame;
                 DebugManager.Instance.PrintDebug("[GwiGi]: " + projectile.transform.localEulerAngles.z);
             }
         }

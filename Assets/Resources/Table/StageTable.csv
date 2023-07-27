@@ -1,5 +1,5 @@
-StageID,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID,MapID,NextStageID,ChapterCategory,ClearType,ClearValue
-?�테?��? ?�이??�??�폰 ?�이�?ID,?�한 ?�간 ,�??�한 ??보상 ?�이??보상 개수,?�트로ID,?�웃?�로ID,�?ID,?�음 ?�테?��? ID,?�테?��?가 ?�함??챕터 구분,?�리??방식,?�리??�?,,,
+StageID,MonsterSpawnID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID,MapID,NextStageID,ChapterCategory,ClearType,ClearValue
+?�테?��? ?�이??�??�폰 ?�이�?ID,?�한 ?�간 ,�??�한 ??보상 ?�이??보상 개수,?�트로ID,?�웃?�로ID,�?ID,?�음 ?�테?��? ID,?�테?��?가 ?�함??챕터 구분,?�리??방식,?�리??�?,,,
 Int,String,Int,Int,Int_Arr,Int_Arr,StoryID,StoryID,String,int,ChapterID,Enum,int
 10101,Stage_01,30000,100,1,1,1101,2101,Map_Stage1,10102,101,KillBoss,101
 10102,TEST,30000,100,1,1,1102,2102,Map2,10103,101,KillBoss,101

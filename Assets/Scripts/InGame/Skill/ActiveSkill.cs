@@ -10,22 +10,22 @@ public abstract class ActiveSkill : Skill
 
     protected int skillNum;
     protected Transform shooter;
-    protected List<Projectile> projectiles;
+    //protected List<Projectile> projectiles;
     protected ActiveData skillData;
     protected Vector2 originSize;
 
     protected WaitForFixedUpdate frame;
-    protected WaitForSeconds coolTime;
+    //protected WaitForSeconds coolTime;
     protected WaitForSeconds intervalTime;
     protected WaitForSeconds duration;
 
-    public abstract void Init();
+    //public abstract void Init();
     public abstract IEnumerator Activation();
 
     public ActiveSkill(int skillId, Transform shooter, int skillNum)
     {
         skillTable = CSVReader.Read("SkillTable");
-        this.projectiles = new List<Projectile>();
+        //this.projectiles = new List<Projectile>();
         this.skillData = new ActiveData();
         this.shooter = shooter;
         SetSkillData(skillId);
@@ -33,30 +33,29 @@ public abstract class ActiveSkill : Skill
         frame = new WaitForFixedUpdate();
     }
 
-    public void DeActivation()
-    {
-        foreach (Projectile projectile in projectiles)
-        {
-            if (projectile.gameObject.activeInHierarchy)
-            {
-                SkillManager.Instance.DeSpawnProjectile(projectile);
-            }
-        }
-        projectiles.Clear();
-    }
-
-    public void SkillUpdate()
-    {
-        DeActivation();
-        SetSkillData(skillData.skillId);
-        Init();
-    }
-
     public void SkillLevelUp()
     {
-        DeActivation();
         SetSkillData(skillData.skillId + 1);
-        Init();
+        SkillDataUpdate();
+    }
+
+    public void SkillDataUpdate()
+    {
+        if (shooter.TryGetComponent(out Player player))
+        {
+            skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(skillData.coolTime));
+            //coolTime = new WaitForSeconds(skillData.coolTime);
+            skillData.ModifyProjectileCount(player.playerManager.playerData.projectileAdd);
+            DebugManager.Instance.PrintDebug("[SkillUpdateTest] " + player.playerManager.playerData.projectileAdd);
+            skillData.SetDamage(player.playerManager.TotalDamage(skillData.damage));
+            skillData.ModifySpeed(player.playerManager.playerData.projectileSpeed);
+            skillData.ModifySplashRange(player.playerManager.playerData.projectileSplash);
+            skillData.ModifyProjectileSizeMulti(player.playerManager.playerData.projectileSize);
+        }
+        else if (shooter.TryGetComponent(out Monster monster))
+        {
+            skillData.SetDamage(monster.monsterData.attack * skillData.damage);
+        }
     }
 
     public void SetSkillData(int skillId)
@@ -64,10 +63,20 @@ public abstract class ActiveSkill : Skill
         Dictionary<string, object> data = skillTable[skillId.ToString()];
 
         skillData.SetSkillId(skillId);
-        skillData.SetCoolTime(Convert.ToInt32(data["Cooltime"]) / 1000.0f);
-        coolTime = new WaitForSeconds(skillData.coolTime);
-        skillData.SetAttackDistance(Convert.ToInt32(data["AttackDistance"]));
-        skillData.SetDamage(Convert.ToInt32(data["Damage"]));
+        try
+        {
+            skillData.SetCoolTime(Convert.ToInt32(data["Cooltime"]) / 1000.0f);
+        }
+        catch
+        {
+            skillData.SetCoolTime(0);
+        }
+        //finally
+        //{
+        //    coolTime = new WaitForSeconds(skillData.coolTime);
+        //}
+        skillData.SetAttackDistance(float.Parse(data["AttackDistance"].ToString()));
+        skillData.SetDamage(float.Parse(data["Damage"].ToString()));
 
         List<string> list = data["SkillEffectParam"] as List<string>;
         if (list == null)

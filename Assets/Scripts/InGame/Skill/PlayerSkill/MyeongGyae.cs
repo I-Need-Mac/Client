@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class MyeongGyae : ActiveSkill
@@ -9,22 +10,6 @@ public class MyeongGyae : ActiveSkill
 
     public MyeongGyae(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
-    {
-        string path = CSVReader.Read("MonsterTable", skillData.skillEffectParam[0], "MonsterPrefabPath").ToString();
-        for (int i = 0; i < skillData.projectileCount - summoners.Count; i++)
-        {
-            if (prefab == null)
-            {
-                prefab = ResourcesManager.Load<Monster>(path);
-            }
-            Monster summoner = Object.Instantiate(prefab, shooter);
-            summoner.gameObject.layer = (int)LayerConstant.SKILL;
-            summoner.gameObject.SetActive(false);
-            summoners.Add(summoner);
-        }
-    }
-
     public override IEnumerator Activation()
     {
         if (!skillData.isEffect)
@@ -32,10 +17,23 @@ public class MyeongGyae : ActiveSkill
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
+        string path = CSVReader.Read("MonsterTable", skillData.skillEffectParam[0], "MonsterPrefabPath").ToString();
         float timeVariable = 1.0f;
         WaitForSeconds timeCount = new WaitForSeconds(timeVariable);
-        while (true)
+        do
         {
+            for (int i = 0; i < skillData.projectileCount - summoners.Count; i++)
+            {
+                if (prefab == null)
+                {
+                    prefab = ResourcesManager.Load<Monster>(path);
+                }
+                Monster summoner = Object.Instantiate(prefab, shooter);
+                summoner.gameObject.layer = (int)LayerConstant.SKILL;
+                summoner.gameObject.SetActive(false);
+                summoners.Add(summoner);
+            }
+
             foreach (Monster summoner in summoners)
             {
                 summoner.monsterData.SetAttack(skillData.damage);
@@ -67,6 +65,6 @@ public class MyeongGyae : ActiveSkill
             }
 
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        }
+        } while (skillData.coolTime > 0.0f);
     }
 }

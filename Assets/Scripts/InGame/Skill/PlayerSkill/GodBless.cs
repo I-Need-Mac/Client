@@ -6,35 +6,29 @@ public class GodBless : ActiveSkill
 {
     public GodBless(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
+    public override IEnumerator Activation()
     {
         shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
 
-        Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-        projectile.transform.localScale = Vector2.zero;
-        projectile.CollisionRadius(skillData.splashRange);
-        projectile.CollisionPower(false);
-        projectiles.Add(projectile);
-    }
-
-    public override IEnumerator Activation()
-    {
         if (!skillData.isEffect)
         {
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
             if (skillData.splashRange < 10)
             {
                 for (int i = 0; i < skillData.projectileCount; i++)
                 {
-                    projectiles[0].transform.localScale = Vector2.one;
-                    projectiles[0].CollisionPower(true);
+                    Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+                    projectile.transform.localScale = Vector2.zero;
+                    projectile.CollisionRadius(skillData.splashRange);
+                    projectile.transform.localScale = Vector2.one;
+                    projectile.CollisionPower(true);
                     yield return duration;
-                    projectiles[0].CollisionPower(false);
-                    projectiles[0].transform.localScale = Vector2.zero;
+                    projectile.CollisionPower(false);
+                    projectile.transform.localScale = Vector2.zero;
                 }
             }
             else    //일정범위 초과시 맵 전체 타격
@@ -42,10 +36,11 @@ public class GodBless : ActiveSkill
                 foreach (Monster monster in MonsterSpawner.Instance.monsters)
                 {
                     //데미지 처리
+                    monster.Hit(skillData.damage);
                 }
             }
 
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        }
+        } while (skillData.coolTime > 0.0f);
     }
 }

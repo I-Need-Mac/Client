@@ -21,6 +21,7 @@ public abstract class PassiveSkill : Skill
         this.skillData = new PassiveData();
         this.shooter = shooter;
         SetSkillData(skillId);
+        SkillDataUpdate();
         this.skillNum = skillNum;
     }
 
@@ -44,14 +45,19 @@ public abstract class PassiveSkill : Skill
         DeActivation();
         SetSkillData(skillData.skillId + 1);
         SkillDataUpdate();
+        SkillManager.Instance.CoroutineStarter(Activation());
     }
 
     public void SkillDataUpdate()
     {
+        SkillDataUpdate(skillData.coolTime, 0, 0.0f, 0.0f, 0.0f, 0.0f);
+    }
+
+    public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
+    {
         if (shooter.TryGetComponent(out Player player))
         {
-            skillData.SetCoolTime(player.playerManager.GetCoolDown(skillData.coolTime));
-            //coolTime = new WaitForSeconds(skillData.coolTime);
+            skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
         }
     }
 

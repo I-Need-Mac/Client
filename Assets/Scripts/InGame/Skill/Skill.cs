@@ -7,6 +7,7 @@ public interface Skill
     //public void DeActivation();
     //public void SkillUpdate();
     public void SkillDataUpdate();
+    public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size);
     public void SkillLevelUp();
     public void SetSkillData(int skillId);
 }

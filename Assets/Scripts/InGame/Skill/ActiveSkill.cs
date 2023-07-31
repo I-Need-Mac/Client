@@ -19,6 +19,8 @@ public abstract class ActiveSkill : Skill
     protected WaitForSeconds intervalTime;
     protected WaitForSeconds duration;
 
+    private float originDamage;
+
     //public abstract void Init();
     public abstract IEnumerator Activation();
 
@@ -29,6 +31,7 @@ public abstract class ActiveSkill : Skill
         this.skillData = new ActiveData();
         this.shooter = shooter;
         SetSkillData(skillId);
+        SkillDataUpdate();
         this.skillNum = skillNum;
         frame = new WaitForFixedUpdate();
     }
@@ -44,17 +47,32 @@ public abstract class ActiveSkill : Skill
         if (shooter.TryGetComponent(out Player player))
         {
             skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(skillData.coolTime));
-            //coolTime = new WaitForSeconds(skillData.coolTime);
             skillData.ModifyProjectileCount(player.playerManager.playerData.projectileAdd);
-            DebugManager.Instance.PrintDebug("[SkillUpdateTest] " + player.playerManager.playerData.projectileAdd);
-            skillData.SetDamage(player.playerManager.TotalDamage(skillData.damage));
+            skillData.SetDamage(player.playerManager.TotalDamage(originDamage));
             skillData.ModifySpeed(player.playerManager.playerData.projectileSpeed);
             skillData.ModifySplashRange(player.playerManager.playerData.projectileSplash);
             skillData.ModifyProjectileSizeMulti(player.playerManager.playerData.projectileSize);
         }
         else if (shooter.TryGetComponent(out Monster monster))
         {
-            skillData.SetDamage(monster.monsterData.attack * skillData.damage);
+            skillData.SetDamage(monster.monsterData.attack * originDamage);
+        }
+    }
+
+    public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
+    {
+        if (shooter.TryGetComponent(out Player player))
+        {
+            skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
+            skillData.ModifyProjectileCount(count);
+            skillData.SetDamage(player.playerManager.TotalDamage(originDamage));
+            skillData.ModifySpeed(speed);
+            skillData.ModifySplashRange(splashRange);
+            skillData.ModifyProjectileSizeMulti(size);
+        }
+        else if (shooter.TryGetComponent(out Monster monster))
+        {
+            skillData.SetDamage(monster.monsterData.attack * originDamage);
         }
     }
 
@@ -77,6 +95,7 @@ public abstract class ActiveSkill : Skill
         //}
         skillData.SetAttackDistance(float.Parse(data["AttackDistance"].ToString()));
         skillData.SetDamage(float.Parse(data["Damage"].ToString()));
+        originDamage = skillData.damage;
 
         List<string> list = data["SkillEffectParam"] as List<string>;
         if (list == null)

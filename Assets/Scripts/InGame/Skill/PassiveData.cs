@@ -24,4 +24,6 @@ public class PassiveData
     public void SetCalcMode(List<CALC_MODE> calcMode) { this.calcMode = calcMode; }
     public void SetEffectParam(List<float> skillEffectParam) { this.skillEffectParam = skillEffectParam; }
     public void SetPrefabPath(string prefabPath) { this.prefabPath = prefabPath; }
+
+    public void ModifyCoolTime(float coolTime) { this.coolTime += coolTime; }
 }

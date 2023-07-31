@@ -78,7 +78,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         {
             if (id / 100 == skillId / 100)
             {
-                DebugManager.Instance.PrintDebug("[ERROR]: 이미 존재하는 스킬입니다");
+                DebugManager.Instance.PrintDebug("[SkillManager]: Skill Level Up!");
+                skillList[id].skill.SkillLevelUp();
                 return;
             }
         }
@@ -181,16 +182,16 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         StartCoroutine(activation);
         SkillInfo skillInfo = new SkillInfo(skill, activation);
         skillList.Add(skillId, skillInfo);
-        SkillDataUpdate();
+        //SkillDataUpdate();
     }
 
     public void SkillLevelUp(SkillInfo skillInfo)
     {
-        StopCoroutine(skillInfo.activation);
+        //StopCoroutine(skillInfo.activation);
         skillInfo.skill.SkillLevelUp();
-        IEnumerator activation = skillInfo.skill.Activation();
-        StartCoroutine(activation);
-        skillInfo.activation = activation;
+        //IEnumerator activation = skillInfo.skill.Activation();
+        //StartCoroutine(activation);
+        //skillInfo.activation = activation;
     }
 
     public void CoroutineStarter(IEnumerator coroutine)
@@ -203,6 +204,14 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         foreach (SkillInfo info in skillList.Values)
         {
             info.skill.SkillDataUpdate();
+        }
+    }
+
+    public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
+    {
+        foreach (SkillInfo info in skillList.Values)
+        {
+            info.skill.SkillDataUpdate(coolTime, count, damage, speed, splashRange, size);
         }
     }
 

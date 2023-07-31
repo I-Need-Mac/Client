@@ -91,7 +91,7 @@ public class Monster : MonoBehaviour
         monsterRigidbody.velocity = Vector2.zero;
     }
 
-    public void SpawnSet()
+    public void SpawnSet(float statusCoefficient)
     {
         Physics2D.IgnoreCollision(monsterCollider, monsterCollider2);
         
@@ -100,7 +100,7 @@ public class Monster : MonoBehaviour
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
         situation = SoundSituation.SOUNDSITUATION.IDLE;
-        MonsterDataSetting(monsterId.ToString());
+        MonsterDataSetting(monsterId.ToString(), statusCoefficient);
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
 
         isAttack = false;
@@ -271,17 +271,17 @@ public class Monster : MonoBehaviour
         this.isPlayer = isPlayer;
     }
 
-    public void MonsterDataSetting(string monsterId)
+    public void MonsterDataSetting(string monsterId, float statusCoefficient)
     {
         Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
         if (monsterTable.ContainsKey(monsterId))
         {
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
-            monsterData.SetHp(Convert.ToInt32(table["HP"]));
+            monsterData.SetHp((int)(Convert.ToInt32(table["HP"]) * statusCoefficient));
             monsterData.SetCurrentHp(monsterData.hp);
             monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
-            monsterData.SetAttack(Convert.ToInt32(table["Attack"]));
+            monsterData.SetAttack((int)(Convert.ToInt32(table["Attack"]) * statusCoefficient));
             monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
             monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));

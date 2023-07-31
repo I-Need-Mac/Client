@@ -8,7 +8,7 @@ using UnityEngine;
 public class UI_Main : MonoBehaviour
 {
     private void Awake()
-    {
+    { 
         SoundManager.Instance.CreateSoundManager();
 
         // manager init

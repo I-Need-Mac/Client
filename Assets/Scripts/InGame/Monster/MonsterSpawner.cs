@@ -16,11 +16,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private Dictionary<int, ObjectPool<Monster>> spawner;
     private Queue<RemainMonster> remainMonsters;
     private WaitForSeconds tick = new WaitForSeconds(0.05f);
-
-    //private Dictionary<string, Dictionary<string, object>> spawnTable;
-    //private Dictionary<string, object> spawnData;
-    //private int spawnId;
-    //private int currentSpawnTime;
+    private float monsterStatusCoefficient;
 
     public List<Monster> monsters;
     
@@ -41,25 +37,15 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         spawnAmount = Convert.ToInt32(CSVReader.Read("StageTable", stageId.ToString(), "LimitAmount"));
         spawnCount = 0;
         spawner = new Dictionary<int, ObjectPool<Monster>>();
-
-        //spawnTable = CSVReader.Read(CSVReader.Read("StageTable", stageId.ToString(), "MonsterSpawnID").ToString());
-        //spawnId = 1;
-        //spawnData = spawnTable[spawnId.ToString()];
-        //currentSpawnTime = Convert.ToInt32(spawnData["SpawnTime"]);
+        monsterStatusCoefficient = float.Parse(CSVReader.Read("BattleConfig", "MonsterStatusCoefficient", "ConfigValue").ToString());
     }
 
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
-        
-        //if (!spawner.ContainsKey(monsterId))
-        //{   
-        //    string prefabPath = CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString();
-        //    spawner.Add(monsterId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(prefabPath), transform));
-        //}
         Monster monster = spawner[monsterId].GetObject();
         monster.monsterId = monsterId;
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
-        monster.SpawnSet();
+        monster.SpawnSet(monsterStatusCoefficient * Timer.Instance.currentTime * 0.001f);
         monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
         monster.SetTarget(GameManager.Instance.player.transform, true);

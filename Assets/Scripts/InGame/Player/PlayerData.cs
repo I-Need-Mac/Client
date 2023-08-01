@@ -65,7 +65,7 @@ public class PlayerData
 
     public int expBuff { get; private set; }
 
-    public int armor { get; private set; }
+    public float armor { get; private set; }
 
     public float projectileSize { get; private set; }
 
@@ -170,7 +170,7 @@ public class PlayerData
         this.expBuff = expBuff;
     }
 
-    public void SetArmor(int armor)
+    public void SetArmor(float armor)
     {
         this.armor = armor;
     }
@@ -289,7 +289,7 @@ public class PlayerData
 
     public int ExpBuff(int exp)
     {
-        return (int)(exp * this.expBuff * 0.01f) + exp;
+        return (int)(exp * (this.expBuff + 1.0f));
     }
 
     public int Armor(int damage)

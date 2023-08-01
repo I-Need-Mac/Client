@@ -218,14 +218,15 @@ public class PlayerManager : MonoBehaviour
     //쉴드 사용 함수
     //쉴드가 존재할경우 1감소시키고 데미지를 1로 반환
     //쉴드가 없을 경우 받은 데미지 그대로 리턴
-    public float IsShield(float monsterDamage)
+    public float IsHit(float monsterDamage)
     {
         if (playerData.shield > 0)
         {
             playerData.ShieldModifier(-1);
             return 1;
         }
-        return monsterDamage;
+
+        return monsterDamage * (1.0f - playerData.armor);
     }
     #endregion
 
@@ -245,7 +246,7 @@ public class PlayerManager : MonoBehaviour
                 Monster monster = collision.GetComponentInParent<Monster>();
                 StartCoroutine(player.Invincible());
                 DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
-                playerData.CurrentHpModifier((int)-IsShield(monster.monsterData.attack));
+                playerData.CurrentHpModifier((int)-IsHit(monster.monsterData.attack));
             }
             catch
             {

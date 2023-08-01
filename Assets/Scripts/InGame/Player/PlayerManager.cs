@@ -5,6 +5,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public class TempStatus
+{
+    public int hp;
+    public int currentHp;
+    public int hpRegen;
+    public int shield;
+    public float attack;
+    public float criRatio;
+    public float criDamage;
+    public float coolDown;
+    public float moveSpeed;
+    public float getItemRange;
+    public float expBuff;
+    public float armor;
+
+    public int projectileAdd;
+    public float projectileSize;
+    public float projectileSplash;
+    public float projectileSpeed;
+
+    public void DataSetter(
+        int hp, int currentHp, int hpRegen, int shield,
+        float attack, float criRatio, float criDamage, float coolDown, float moveSpeed, float getItemRange, float expBuff, float armor,
+        int projectileAdd, float projectileSize, float projectileSplash, float projectileSpeed)
+    {
+        this.hp = hp;
+        this.currentHp = currentHp;
+        this.hpRegen = hpRegen;
+        this.shield = shield;
+        this.attack = attack;
+        this.criRatio = criRatio;
+        this.coolDown = coolDown;
+        this.moveSpeed = moveSpeed;
+        this.getItemRange = getItemRange;
+        this.expBuff = expBuff;
+        this.armor = armor;
+        this.projectileAdd = projectileAdd;
+        this.projectileSize = projectileSize;
+        this.projectileSplash = projectileSplash;
+        this.projectileSpeed = projectileSpeed;
+    }
+}
+
 //싱글톤 사용
 public class PlayerManager : MonoBehaviour
 {
@@ -17,12 +61,24 @@ public class PlayerManager : MonoBehaviour
     private Player player;
     private Collider2D playerCollider;
 
-    [field: SerializeField]  public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
-    //public PlayerData weight { get; private set; } = new PlayerData();     //증감치
+    public PlayerData playerData { get; private set; } = new PlayerData(); //플레이어의 데이터를 가지는 객체
+
+    //임시 스탯 확인용
+    [field: SerializeField] private TempStatus tempStatusWindow = new TempStatus();
+
+    private void Update()
+    {
+        tempStatusWindow.DataSetter(
+            playerData.hp, playerData.currentHp, playerData.shield, playerData.hpRegen, playerData.attack, playerData.criRatio,
+            playerData.criDamage, playerData.coolDown, playerData.moveSpeed, playerData.getItemRange, playerData.expBuff, playerData.armor,
+            playerData.projectileAdd, playerData.projectileSize, playerData.projectileSplash, playerData.projectileSpeed);
+    }
 
     #region
     private void Awake()
     {
+
+
         ConfigSetting();
         player = GetComponentInParent<Player>();
         playerCollider = GetComponent<Collider2D>();

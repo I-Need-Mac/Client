@@ -27,7 +27,8 @@ public class Monster : MonoBehaviour
     private WaitForSeconds tick;
 
     private HpBar hpBar;
-    private WaitForSeconds hpBarVisibleTime;
+    private float hpBarVisibleTime;
+    private WaitForFixedUpdate fixedFrame;
 
     private MonsterCollider attackCollider;
     private SpineManager spineManager;
@@ -50,7 +51,8 @@ public class Monster : MonoBehaviour
         soundRequester = GetComponent<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         tick = new WaitForSeconds(0.4f);
-        hpBarVisibleTime = new WaitForSeconds(Convert.ToInt32(CSVReader.Read("BattleConfig", "HpBarVisibleTime", "ConfigValue")) / 1000.0f);
+        hpBarVisibleTime = Convert.ToInt32(CSVReader.Read("BattleConfig", "HpBarVisibleTime", "ConfigValue")) / 1000.0f;
+        fixedFrame = new WaitForFixedUpdate();
     }
 
     private void Start()
@@ -78,15 +80,15 @@ public class Monster : MonoBehaviour
             btManager.Active();
         }
 
-        if (hpBar != null)
-        {
-            hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
-        }
-        else
-        {
+        //if (hpBar != null)
+        //{
+        //    hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+        //}
+        //else
+        //{
             
-            hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
-        }
+        //    hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        //}
 
         monsterRigidbody.velocity = Vector2.zero;
     }
@@ -304,8 +306,11 @@ public class Monster : MonoBehaviour
 
     public void Hit(float totalDamage)
     {
-        StopCoroutine(HpBarControl());
-        StartCoroutine(HpBarControl());
+        //StopCoroutine(HpBarControl());
+        if (hpBar == null)
+        {
+            StartCoroutine(HpBarControl());
+        }
 
         isHit = true;
         monsterData.SetCurrentHp(monsterData.currentHp - (int)totalDamage);
@@ -317,9 +322,19 @@ public class Monster : MonoBehaviour
 
     private IEnumerator HpBarControl()
     {
-        hpBar.HpBarSwitch(true);
-        yield return hpBarVisibleTime;
-        hpBar.HpBarSwitch(false);
+        //hpBar.HpBarSwitch(true);
+        //yield return hpBarVisibleTime;
+        //hpBar.HpBarSwitch(false);
+        hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        float time = 0.0f;
+        do
+        {
+            hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+            time += Time.fixedDeltaTime;
+            yield return fixedFrame;
+        } while (time < hpBarVisibleTime && monsterData.currentHp > 0);
+        UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+        hpBar = null;
     }
 
     public void Die(bool isDrop)
@@ -332,8 +347,8 @@ public class Monster : MonoBehaviour
         {
             DropItem();
         }
-        UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
-        hpBar = null;
+        //UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+        //hpBar = null;
     }
 
     private IEnumerator DieAnimation()

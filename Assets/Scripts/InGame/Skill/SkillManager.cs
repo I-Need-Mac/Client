@@ -199,20 +199,20 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         StartCoroutine(coroutine);
     }
 
-    private void SkillDataUpdate()
-    {
-        foreach (SkillInfo info in skillList.Values)
-        {
-            info.skill.SkillDataUpdate();
-        }
-    }
+    //private void SkillDataUpdate()
+    //{
+    //    foreach (SkillInfo info in skillList.Values)
+    //    {
+    //        info.skill.SkillDataUpdate();
+    //    }
+    //}
 
-    public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
-    {
-        foreach (SkillInfo info in skillList.Values)
-        {
-            info.skill.SkillDataUpdate(coolTime, count, damage, speed, splashRange, size);
-        }
-    }
+    //public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
+    //{
+    //    foreach (SkillInfo info in skillList.Values)
+    //    {
+    //        info.skill.SkillDataUpdate(coolTime, count, damage, speed, splashRange, size);
+    //    }
+    //}
 
 }

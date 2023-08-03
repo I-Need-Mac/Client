@@ -31,7 +31,7 @@ public abstract class ActiveSkill : Skill
         this.skillData = new ActiveData();
         this.shooter = shooter;
         SetSkillData(skillId);
-        SkillDataUpdate();
+        //SkillDataUpdate();
         this.skillNum = skillNum;
         frame = new WaitForFixedUpdate();
     }
@@ -39,42 +39,42 @@ public abstract class ActiveSkill : Skill
     public void SkillLevelUp()
     {
         SetSkillData(skillData.skillId + 1);
-        SkillDataUpdate();
+        //SkillDataUpdate();
     }
 
-    public void SkillDataUpdate()
-    {
-        if (shooter.TryGetComponent(out Player player))
-        {
-            skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(skillData.coolTime));
-            skillData.ModifyProjectileCount(player.playerManager.playerData.projectileAdd);
-            skillData.SetDamage(player.playerManager.TotalDamage(originDamage));
-            skillData.ModifySpeed(player.playerManager.playerData.projectileSpeed);
-            skillData.ModifySplashRange(player.playerManager.playerData.projectileSplash);
-            skillData.ModifyProjectileSizeMulti(player.playerManager.playerData.projectileSize);
-        }
-        else if (shooter.TryGetComponent(out Monster monster))
-        {
-            skillData.SetDamage(monster.monsterData.attack * originDamage);
-        }
-    }
+    //public void SkillDataUpdate()
+    //{
+    //    if (shooter.TryGetComponent(out Player player))
+    //    {
+    //        skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(skillData.coolTime));
+    //        skillData.ModifyProjectileCount(player.playerManager.playerData.projectileAdd);
+    //        skillData.SetDamage(player.playerManager.TotalDamage(originDamage));
+    //        skillData.ModifySpeed(player.playerManager.playerData.projectileSpeed);
+    //        skillData.ModifySplashRange(player.playerManager.playerData.projectileSplash);
+    //        skillData.ModifyProjectileSizeMulti(player.playerManager.playerData.projectileSize);
+    //    }
+    //    else if (shooter.TryGetComponent(out Monster monster))
+    //    {
+    //        skillData.SetDamage(monster.monsterData.attack * originDamage);
+    //    }
+    //}
 
-    public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
-    {
-        if (shooter.TryGetComponent(out Player player))
-        {
-            skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
-            skillData.ModifyProjectileCount(count);
-            skillData.SetDamage(player.playerManager.TotalDamage(originDamage));
-            skillData.ModifySpeed(speed);
-            skillData.ModifySplashRange(splashRange);
-            skillData.ModifyProjectileSizeMulti(size);
-        }
-        else if (shooter.TryGetComponent(out Monster monster))
-        {
-            skillData.SetDamage(monster.monsterData.attack * originDamage);
-        }
-    }
+    //public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
+    //{
+    //    if (shooter.TryGetComponent(out Player player))
+    //    {
+    //        skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
+    //        skillData.ModifyProjectileCount(count);
+    //        skillData.SetDamage(player.playerManager.TotalDamage(originDamage));
+    //        skillData.ModifySpeed(speed);
+    //        skillData.ModifySplashRange(splashRange);
+    //        skillData.ModifyProjectileSizeMulti(size);
+    //    }
+    //    else if (shooter.TryGetComponent(out Monster monster))
+    //    {
+    //        skillData.SetDamage(monster.monsterData.attack * originDamage);
+    //    }
+    //}
 
     public void SetSkillData(int skillId)
     {
@@ -154,10 +154,10 @@ public abstract class ActiveSkill : Skill
         skillData.SetProjectileSizeMulti(float.Parse(Convert.ToString(data["ProjectileSizeMulti"])));
         skillData.SetIsPenetrate(Convert.ToBoolean(data["IsPenetrate"]));
 
-        PlayerData playerData = GameManager.Instance.player.playerManager.playerData;
-        skillData.SetProjectileSizeMulti(skillData.projectileSizeMulti + playerData.projectileSize);
-        skillData.SetProjectileCount(skillData.projectileCount + playerData.projectileAdd);
-        skillData.SetSplashRange(skillData.splashRange + playerData.projectileSplash);
-        skillData.SetSpeed(skillData.speed + playerData.projectileSpeed);
+        //PlayerData playerData = GameManager.Instance.player.playerManager.playerData;
+        //skillData.SetProjectileSizeMulti(skillData.projectileSizeMulti + playerData.projectileSize);
+        //skillData.SetProjectileCount(skillData.projectileCount + playerData.projectileAdd);
+        //skillData.SetSplashRange(skillData.splashRange + playerData.projectileSplash);
+        //skillData.SetSpeed(skillData.speed + playerData.projectileSpeed);
     }
 }

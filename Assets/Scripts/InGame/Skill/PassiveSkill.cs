@@ -21,45 +21,45 @@ public abstract class PassiveSkill : Skill
         this.skillData = new PassiveData();
         this.shooter = shooter;
         SetSkillData(skillId);
-        SkillDataUpdate();
+        //SkillDataUpdate();
         this.skillNum = skillNum;
     }
 
-    public void DeActivation()
-    {
-        try
-        {
-            for (int i = 0; i < skillData.skillEffect.Count; i++)
-            {
-                PassiveEffect.PassiveEffectActivation(-skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
-            }
-        }
-        catch
-        {
-            DebugManager.Instance.PrintDebug("[SYSTEM]: 해제할 효과가 없습니다");
-        }
-    }
+    //public void DeActivation()
+    //{
+    //    try
+    //    {
+    //        for (int i = 0; i < skillData.skillEffect.Count; i++)
+    //        {
+    //            PassiveEffect.PassiveEffectActivation(-skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
+    //        }
+    //    }
+    //    catch
+    //    {
+    //        DebugManager.Instance.PrintDebug("[SYSTEM]: 해제할 효과가 없습니다");
+    //    }
+    //}
 
     public void SkillLevelUp()
     {
-        DeActivation();
+        //DeActivation();
         SetSkillData(skillData.skillId + 1);
-        SkillDataUpdate();
+        //SkillDataUpdate();
         SkillManager.Instance.CoroutineStarter(Activation());
     }
 
-    public void SkillDataUpdate()
-    {
-        SkillDataUpdate(skillData.coolTime, 0, 0.0f, 0.0f, 0.0f, 0.0f);
-    }
+    //public void SkillDataUpdate()
+    //{
+    //    SkillDataUpdate(skillData.coolTime, 0, 0.0f, 0.0f, 0.0f, 0.0f);
+    //}
 
-    public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
-    {
-        if (shooter.TryGetComponent(out Player player))
-        {
-            skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
-        }
-    }
+    //public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
+    //{
+    //    if (shooter.TryGetComponent(out Player player))
+    //    {
+    //        skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
+    //    }
+    //}
 
     public void SetSkillData(int skillId)
     {

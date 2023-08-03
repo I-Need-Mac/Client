@@ -40,6 +40,7 @@ public class SkillBoxIcon : InGameUI
 
     public IEnumerator Dimmed(float time)
     {
+        time -= GameManager.Instance.player.playerManager.GetCoolDown(time);
         float cool = time;
         dimmed.fillAmount = 1.0f;
         while (cool > 0.0f)

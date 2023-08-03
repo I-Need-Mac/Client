@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
-        hpBar.HpBarSwitch(true);
+        //hpBar.HpBarSwitch(true);
     }
 
     /*

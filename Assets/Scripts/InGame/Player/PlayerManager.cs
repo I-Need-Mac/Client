@@ -29,7 +29,7 @@ public class TempStatus
     public void DataSetter(
         int hp, int currentHp, int hpRegen, int shield,
         float attack, float criRatio, float criDamage, float coolDown, float moveSpeed, float getItemRange, float expBuff, float armor,
-        int projectileAdd, float projectileSize, float projectileSplash, float projectileSpeed)
+        int projectileAdd)
     {
         this.hp = hp;
         this.currentHp = currentHp;
@@ -43,9 +43,6 @@ public class TempStatus
         this.expBuff = expBuff;
         this.armor = armor;
         this.projectileAdd = projectileAdd;
-        this.projectileSize = projectileSize;
-        this.projectileSplash = projectileSplash;
-        this.projectileSpeed = projectileSpeed;
     }
 }
 
@@ -71,7 +68,7 @@ public class PlayerManager : MonoBehaviour
         tempStatusWindow.DataSetter(
             playerData.hp, playerData.currentHp, playerData.shield, playerData.hpRegen, playerData.attack, playerData.criRatio,
             playerData.criDamage, playerData.coolDown, playerData.moveSpeed, playerData.getItemRange, playerData.expBuff, playerData.armor,
-            playerData.projectileAdd, playerData.projectileSize, playerData.projectileSplash, playerData.projectileSpeed);
+            playerData.projectileAdd);
     }
 
     #region

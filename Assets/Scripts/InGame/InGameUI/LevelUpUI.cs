@@ -96,7 +96,8 @@ public class LevelUpUI : MonoBehaviour
      */
     private int RandomSkillId()
     {
-        Dictionary<int, SkillInfo> skillList = SkillManager.Instance.skillList;
+        //Dictionary<int, SkillInfo> skillList = SkillManager.Instance.skillList;
+        Dictionary<int, Skill> skillList = SkillManager.Instance.skillList;
         int skillId = 0;
         int c = skillNums.Count;
         if (PlayerUI.Instance.skillCount < SkillManager.SKILL_MAX_COUNT) //스킬칸이 남은 경우
@@ -147,10 +148,10 @@ public class LevelUpUI : MonoBehaviour
             for (int i = 0; i < SkillManager.SKILL_MAX_COUNT; i++)
             {
                 skillId = skillList.Keys.ElementAt((i + index) % SkillManager.SKILL_MAX_COUNT);
-                //if (skills.Contains(skillId / 100))
-                //{
-                //    continue;
-                //}
+                if (skills.Contains(skillId / 100))
+                {
+                    continue;
+                }
                 if (skillId % 100 != SkillManager.SKILL_MAX_LEVEL)
                 {
                     skills.Add(skillId / 100);

@@ -32,7 +32,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
 
-    public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
+    //public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
+    public Dictionary<int, Skill> skillList { get; private set; } = new Dictionary<int, Skill>();
 
     protected override void Awake()
     {
@@ -84,7 +85,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             if (id / 100 == skillId / 100)
             {
                 DebugManager.Instance.PrintDebug("[SkillManager]: Skill Level Up!");
-                skillList[id].skill.SkillLevelUp();
+                //skillList[id].skill.SkillLevelUp();
+                skillList[id].SkillLevelUp();
                 return;
             }
         }
@@ -138,34 +140,34 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 skill = new Horin(skillId, shooter, skillNum);
                 break;
             case 202:
-                skill = new InnPassive(skillId, shooter, skillNum);
+                skill = new InnPassive(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 203:
-                skill = new HyulPok(skillId, shooter, skillNum);
+                skill = new HyulPok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 205:
-                skill = new GaSok(skillId, shooter, skillNum);
+                skill = new GaSok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 206:
-                skill = new Hyum(skillId, shooter, skillNum);
+                skill = new Hyum(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 207:
-                skill = new JaeSaeng(skillId, shooter, skillNum);
+                skill = new JaeSaeng(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 208:
-                skill = new HwakSan(skillId, shooter, skillNum);
+                skill = new HwakSan(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 209:
-                skill = new HwakHo(skillId, shooter, skillNum);
+                skill = new HwakHo(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 210:
-                skill = new JuJuGaSork(skillId, shooter, skillNum);
+                skill = new JuJuGaSork(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 211:
-                skill = new JuJuJyungPok(skillId, shooter, skillNum);
+                skill = new JuJuJyungPok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             case 212:
-                skill = new GwangHwa(skillId, shooter, skillNum);
+                skill = new GwangHwa(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             default:
                 DebugManager.Instance.PrintDebug("[ERROR]: 아직 미구현된 스킬입니다 (SkillID: " + skillId + ")");
@@ -185,12 +187,12 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             PlayerUI.Instance.passiveSkillCount++;
         }
 
-        //skill.Init();
-        IEnumerator activation = skill.Activation();
-        StartCoroutine(activation);
-        SkillInfo skillInfo = new SkillInfo(skill, activation);
-        skillList.Add(skillId, skillInfo);
-        //SkillDataUpdate();
+        //IEnumerator activation = skill.Activation();
+        //StartCoroutine(activation);
+        //SkillInfo skillInfo = new SkillInfo(skill, activation);
+        //skillList.Add(skillId, skillInfo);
+        StartCoroutine(skill.Activation());
+        skillList.Add(skillId, skill);
     }
 
     public void SkillLevelUp(SkillInfo skillInfo)

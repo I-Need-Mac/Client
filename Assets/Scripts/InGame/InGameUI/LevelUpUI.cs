@@ -8,7 +8,10 @@ using UnityEngine.UI;
 
 public class LevelUpUI : MonoBehaviour
 {
-    private const int SKILL_MAX_LEVEL = 8;
+    //private const int SKILL_MAX_LEVEL = 8;
+    //private const int ACTIVE_SKILL_MAX_COUNT = 6;
+    //private const int PASSIVE_SKILL_MAX_COUNT = 5;
+    //private const int SKILL_MAX_COUNT = ACTIVE_SKILL_MAX_COUNT + PASSIVE_SKILL_MAX_COUNT;
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<string, Dictionary<string, object>> passiveTable;
@@ -96,7 +99,7 @@ public class LevelUpUI : MonoBehaviour
         Dictionary<int, SkillInfo> skillList = SkillManager.Instance.skillList;
         int skillId = 0;
         int c = skillNums.Count;
-        if (PlayerUI.Instance.skillCount < 8) //스킬칸이 남은 경우
+        if (PlayerUI.Instance.skillCount < SkillManager.SKILL_MAX_COUNT) //스킬칸이 남은 경우
         {
             while (c-- != 0)
             {
@@ -117,39 +120,38 @@ public class LevelUpUI : MonoBehaviour
                 {
                     if (id / 100 == skillId / 100) //가지고 있는 스킬일 때
                     {
-                        if (id % 100 != SKILL_MAX_LEVEL) //만렙이 아니라면
+                        if (id % 100 != SkillManager.SKILL_MAX_LEVEL) //만렙이 아니라면
                         {
                             skillId = id + 1;
+                            if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
+                            {
+                                continue;
+                            }
+                            if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
+                            {
+                                continue;
+                            }
                             skills.Add(skillId / 100);
                             return skillId;
                         }
                     }
                 }
-
-                if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == 5)
-                {
-                    continue;
-                }
-
-                if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == 4)
-                {
-                    continue;
-                }
+                
                 skills.Add(skillId / 100);
                 return skillId;
             }
         }
         else
         {
-            int index = UnityEngine.Random.Range(0, 8);
-            for (int i = 0; i < 8; i++)
+            int index = UnityEngine.Random.Range(0, SkillManager.SKILL_MAX_COUNT);
+            for (int i = 0; i < SkillManager.SKILL_MAX_COUNT; i++)
             {
-                skillId = skillList.Keys.ElementAt((i + index) % 8);
-                if (skills.Contains(skillId / 100))
-                {
-                    continue;
-                }
-                if (skillId % 100 != SKILL_MAX_LEVEL)
+                skillId = skillList.Keys.ElementAt((i + index) % SkillManager.SKILL_MAX_COUNT);
+                //if (skills.Contains(skillId / 100))
+                //{
+                //    continue;
+                //}
+                if (skillId % 100 != SkillManager.SKILL_MAX_LEVEL)
                 {
                     skills.Add(skillId / 100);
                     return skillId;

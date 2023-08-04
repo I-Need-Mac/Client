@@ -22,6 +22,11 @@ public struct SkillInfo
 
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
+    public static readonly int SKILL_MAX_LEVEL = 8;
+    public static readonly int ACTIVE_SKILL_MAX_COUNT = 6;
+    public static readonly int PASSIVE_SKILL_MAX_COUNT = 5;
+    public static readonly int SKILL_MAX_COUNT = ACTIVE_SKILL_MAX_COUNT + PASSIVE_SKILL_MAX_COUNT;
+
     [SerializeField] private int skillNum = 10801;
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
@@ -159,6 +164,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 211:
                 skill = new JuJuJyungPok(skillId, shooter, skillNum);
                 break;
+            case 212:
+                skill = new GwangHwa(skillId, shooter, skillNum);
+                break;
             default:
                 DebugManager.Instance.PrintDebug("[ERROR]: 아직 미구현된 스킬입니다 (SkillID: " + skillId + ")");
                 return;
@@ -173,7 +181,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         else if (skillId / 10000 == 2)
         {
             Dictionary<string, Dictionary<string, object>> passiveTable = CSVReader.Read("PassiveTable");
-            PlayerUI.Instance.skillBoxUi.SkillIconInit(passiveTable[skillId.ToString()]["Icon"].ToString(), skillNum + 5);
+            PlayerUI.Instance.skillBoxUi.SkillIconInit(passiveTable[skillId.ToString()]["Icon"].ToString(), skillNum + ACTIVE_SKILL_MAX_COUNT);
             PlayerUI.Instance.passiveSkillCount++;
         }
 

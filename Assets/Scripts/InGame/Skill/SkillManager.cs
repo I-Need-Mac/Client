@@ -145,6 +145,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 203:
                 skill = new HyulPok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
+            case 204:
+                skill = new DaeHum(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+                break;
             case 205:
                 skill = new GaSok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;

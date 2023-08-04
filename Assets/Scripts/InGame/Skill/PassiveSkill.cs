@@ -12,6 +12,7 @@ public abstract class PassiveSkill : Skill
     protected Transform shooter;
     protected PassiveData skillData;
     //protected WaitForSeconds coolTime;
+    protected WaitForFixedUpdate frame;
 
     public abstract IEnumerator Activation();
 
@@ -23,6 +24,7 @@ public abstract class PassiveSkill : Skill
         SetSkillData(skillId);
         //SkillDataUpdate();
         this.skillNum = skillNum;
+        frame = new WaitForFixedUpdate();
     }
 
     //public void DeActivation()

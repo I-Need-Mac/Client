@@ -66,7 +66,7 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         tempStatusWindow.DataSetter(
-            playerData.hp, playerData.currentHp, playerData.shield, playerData.hpRegen, playerData.attack, playerData.criRatio,
+            playerData.hp, playerData.currentHp, playerData.hpRegen, playerData.shield, playerData.attack, playerData.criRatio,
             playerData.criDamage, playerData.coolDown, playerData.moveSpeed, playerData.getItemRange, playerData.expBuff, playerData.armor,
             playerData.projectileAdd);
     }

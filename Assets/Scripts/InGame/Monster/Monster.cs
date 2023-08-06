@@ -317,7 +317,7 @@ public class Monster : MonoBehaviour
         }
 
         isHit = true;
-        monsterData.SetCurrentHp(monsterData.currentHp - (int)totalDamage);
+        monsterData.SetCurrentHp(monsterData.currentHp - (int)(totalDamage * GameManager.Instance.player.playerManager.playerData.attack));
         if (monsterData.currentHp <= 0)
         {
             Die(true);

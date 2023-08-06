@@ -93,7 +93,7 @@ public class Monster : MonoBehaviour
         monsterRigidbody.velocity = Vector2.zero;
     }
 
-    public void SpawnSet(float statusCoefficient)
+    public void SpawnSet(float hpCoefficient, float attackCoefficient)
     {
         Physics2D.IgnoreCollision(monsterCollider, monsterCollider2);
         
@@ -102,7 +102,7 @@ public class Monster : MonoBehaviour
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
         situation = SoundSituation.SOUNDSITUATION.IDLE;
-        MonsterDataSetting(monsterId.ToString(), statusCoefficient);
+        MonsterDataSetting(monsterId.ToString(), hpCoefficient, attackCoefficient);
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
 
         isAttack = false;
@@ -273,17 +273,21 @@ public class Monster : MonoBehaviour
         this.isPlayer = isPlayer;
     }
 
-    public void MonsterDataSetting(string monsterId, float statusCoefficient)
+    public void MonsterDataSetting(string monsterId, float hpCoefficient, float attackCoefficient)
     {
         Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
         if (monsterTable.ContainsKey(monsterId))
         {
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
-            monsterData.SetHp((Convert.ToInt32(table["HP"]) * statusCoefficient) < 1.0f ? 1 : Mathf.FloorToInt(Convert.ToInt32(table["HP"]) * statusCoefficient));
+            int hp = Convert.ToInt32(table["HP"]);
+            hp += Mathf.FloorToInt(hp * hpCoefficient);
+            monsterData.SetHp(hp);
             monsterData.SetCurrentHp(monsterData.hp);
             monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
-            monsterData.SetAttack((Convert.ToInt32(table["Attack"]) * statusCoefficient) < 1.0f ? 1 : Mathf.FloorToInt(Convert.ToInt32(table["Attack"]) * statusCoefficient));
+            int attack = Convert.ToInt32(table["Attack"]);
+            attack += Mathf.FloorToInt(attack * attackCoefficient);
+            monsterData.SetAttack(attack);
             monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
             monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));

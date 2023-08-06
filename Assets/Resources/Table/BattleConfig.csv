@@ -14,4 +14,3 @@ StatIncreaseValueHP,Coefficient,0.001
 StatIncreaseValueAttack,Coefficient,0.001
 HpBarVisibleTime,Constant,1000
 ItemFollowSpeed,Constant,10
-MonsterStatusCoefficient,Coefficient,0.001

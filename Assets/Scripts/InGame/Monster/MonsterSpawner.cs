@@ -21,7 +21,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private Queue<RemainMonster> remainMonsters;
     //private WaitForSeconds tick = new WaitForSeconds(0.05f);
     private WaitForFixedUpdate tick = new WaitForFixedUpdate();
-    private float monsterStatusCoefficient;
+    private float monsterHpCoefficient;
+    private float monsterAttackCoefficient;
 
     public List<Monster> monsters;
     
@@ -47,7 +48,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         spawnAmount = Convert.ToInt32(CSVReader.Read("StageTable", stageId.ToString(), "LimitAmount"));
         spawnCount = 0;
         spawner = new Dictionary<int, ObjectPool<Monster>>();
-        monsterStatusCoefficient = float.Parse(CSVReader.Read("BattleConfig", "MonsterStatusCoefficient", "ConfigValue").ToString());
+        monsterHpCoefficient = float.Parse(CSVReader.Read("BattleConfig", "StatIncreaseValueHP", "ConfigValue").ToString());
+        monsterAttackCoefficient = float.Parse(CSVReader.Read("BattleConfig", "StatIncreaseValueAttack", "ConfigValue").ToString());
     }
 
     public Monster SpawnMonster(int monsterId, Vector2 pos)
@@ -55,7 +57,8 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         Monster monster = spawner[monsterId].GetObject();
         monster.monsterId = monsterId;
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
-        monster.SpawnSet(monsterStatusCoefficient * Timer.Instance.currentTime * 0.001f);
+        float weight = Timer.Instance.currentTime * 0.001f;
+        monster.SpawnSet(monsterHpCoefficient * weight, monsterAttackCoefficient * weight);
         monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
         monster.SetTarget(GameManager.Instance.player.transform, true);

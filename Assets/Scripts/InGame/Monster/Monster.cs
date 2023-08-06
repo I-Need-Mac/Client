@@ -280,10 +280,10 @@ public class Monster : MonoBehaviour
         {
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
-            monsterData.SetHp((int)(Convert.ToInt32(table["HP"]) * statusCoefficient));
+            monsterData.SetHp((Convert.ToInt32(table["HP"]) * statusCoefficient) < 1.0f ? 1 : Mathf.FloorToInt(Convert.ToInt32(table["HP"]) * statusCoefficient));
             monsterData.SetCurrentHp(monsterData.hp);
             monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
-            monsterData.SetAttack((int)(Convert.ToInt32(table["Attack"]) * statusCoefficient));
+            monsterData.SetAttack((Convert.ToInt32(table["Attack"]) * statusCoefficient) < 1.0f ? 1 : Mathf.FloorToInt(Convert.ToInt32(table["Attack"]) * statusCoefficient));
             monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
             monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 [Serializable]
 public class TempStatus
@@ -145,9 +146,13 @@ public class PlayerManager : MonoBehaviour
         playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
         playerData.SetMoveSpeed(float.Parse(Convert.ToString(characterData["MoveSpeed"])));
         playerData.SetGetItemRange(float.Parse(Convert.ToString(characterData["GetItemRange"])));
-
         playerData.SetExpBuff(0);
         playerData.SetArmor(0);
+
+        playerData.SetLevel(1);
+        playerData.SetNeedExp(Convert.ToInt32(CSVReader.Read("LevelUpTable", "2", "NeedExp")));
+        GameManager.Instance.playerUi.expBar.SetExpBar(playerData.exp, playerData.needExp);
+        GameManager.Instance.playerUi.LevelTextChange(playerData.level);
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴

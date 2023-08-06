@@ -9,3 +9,4 @@ int,String,Float,int,int,int,float,int,int,int,String,int,String,Enum
 106,GeuSeunDae,0.5,100,120,2,1,99999,0.05,0,Middle_EXP,10000,Prefabs/InGame/Monster/GeuSeunDae,Bold
 107,Gomogwi,0.4,100,150,2,1,99999,0.05,0,Middle_EXP,10000,Prefabs/InGame/Monster/Gomogwi,Bold
 108,Saldeongi,0.4,100,180,2,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/Saldeongi,Bold
+401,Lesser_Demon,1,420,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/Lesser_Demon,Bold

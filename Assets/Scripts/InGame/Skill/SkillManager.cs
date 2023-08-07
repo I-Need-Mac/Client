@@ -172,6 +172,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 212:
                 skill = new GwangHwa(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
+            case 213:
+                skill = new ChangAe(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+                break;
             default:
                 DebugManager.Instance.PrintDebug("[ERROR]: 아직 미구현된 스킬입니다 (SkillID: " + skillId + ")");
                 return;

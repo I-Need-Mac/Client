@@ -176,7 +176,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 skill = new ChangAe(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
             default:
-                DebugManager.Instance.PrintDebug("[ERROR]: 아직 미구현된 스킬입니다 (SkillID: " + skillId + ")");
+                DebugManager.Instance.PrintError("[SkillManager] 미구현된 스킬입니다 (Skill ID: {0})", skillId);
                 return;
         }
 

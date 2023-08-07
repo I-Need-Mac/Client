@@ -29,6 +29,6 @@ public class DaeHum : PassiveSkill
         {
             prevShield = GameManager.Instance.player.playerManager.playerData.shield;
             yield return frame;
-        } while (prevShield == GameManager.Instance.player.playerManager.playerData.shield);
+        } while (prevShield >= GameManager.Instance.player.playerManager.playerData.shield);
     }
 }

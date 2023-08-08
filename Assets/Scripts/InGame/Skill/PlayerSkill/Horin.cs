@@ -29,7 +29,6 @@ public class Horin : ActiveSkill
                 projectiles[i].transform.localEulerAngles = Vector3.zero;
                 float angle = 360 * i / skillData.projectileCount;
                 projectiles[i].transform.RotateAround(shooter.position, Vector3.back, angle);
-                projectiles[i].CollisionPower(false);
             }
 
             yield return Move();
@@ -39,17 +38,12 @@ public class Horin : ActiveSkill
 
     private IEnumerator Move()
     {
-        for (int i = 0; i < projectiles.Length; i++)
-        {
-            projectiles[i].CollisionPower(true);
-        }
-
         float time = 0.0f;
         while(time < skillData.duration)
         {
             for (int i = 0; i < projectiles.Length; i++)
             {
-                if (projectiles[i].transform.localScale.x < 1.0f && time <= 1.0f)
+                if (projectiles[i].transform.localScale.x < originSize.x && time <= 1.0f)
                 {
                     projectiles[i].transform.localScale = originSize * time;
                 }
@@ -65,7 +59,7 @@ public class Horin : ActiveSkill
 
         for (int i = 0; i < projectiles.Length; i++)
         {
-            projectiles[i].CollisionPower(false);
+            SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
         }
     }
 }

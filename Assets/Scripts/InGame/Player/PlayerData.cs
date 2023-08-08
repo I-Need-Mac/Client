@@ -74,32 +74,32 @@ public class PlayerData
     public int needExp { get; private set; }
 
     #region PASSIVE
-    public PassiveSet projectileSize { get; private set; } = new PassiveSet(0, 0);
-    public PassiveSet projectileSpeed { get; private set; } = new PassiveSet(0, 0);
-    public PassiveSet projectileSplash { get; private set; } = new PassiveSet(0, 0);
-    public PassiveSet projectileDistance { get; private set; } = new PassiveSet(0, 0);
-    public PassiveSet skillDamage { get; private set; } = new PassiveSet(0, 0);
+    public PassiveSet projectileSize { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileSpeed { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileSplash { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileDistance { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet skillDamage { get; private set; } = new PassiveSet(0.0f, 0);
 
     public void SetProjectileSize(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.projectileSize = new PassiveSet(param, mode);
+        this.projectileSize = new PassiveSet(param + this.projectileSize.param, mode);
     }
 
     public void SetProjectileSpeed(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.projectileSpeed= new PassiveSet(param, mode);
+        this.projectileSpeed = new PassiveSet(param + this.projectileSpeed.param, mode);
     }
     public void SetProjectileSplash(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.projectileSplash = new PassiveSet(param, mode);
+        this.projectileSplash = new PassiveSet(param + this.projectileSplash.param, mode);
     }
     public void SetProjectileDistance(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.projectileDistance = new PassiveSet(param, mode);
+        this.projectileDistance = new PassiveSet(param + this.projectileDistance.param, mode);
     }
     public void SetSkillDamage(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.skillDamage = new PassiveSet(param, mode);
+        this.skillDamage = new PassiveSet(param + this.skillDamage.param, mode);
     }
 
     #endregion

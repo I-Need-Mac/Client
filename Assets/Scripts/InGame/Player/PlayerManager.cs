@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
 
 [Serializable]
 public class TempStatus
@@ -30,7 +29,7 @@ public class TempStatus
     public void DataSetter(
         int hp, int currentHp, int hpRegen, int shield,
         float attack, float criRatio, float criDamage, float coolDown, float moveSpeed, float getItemRange, float expBuff, float armor,
-        int projectileAdd)
+        int projectileAdd, float projectileSize, float projectileSplash, float projectileSpeed)
     {
         this.hp = hp;
         this.currentHp = currentHp;
@@ -44,6 +43,9 @@ public class TempStatus
         this.expBuff = expBuff;
         this.armor = armor;
         this.projectileAdd = projectileAdd;
+        this.projectileSize = projectileSize;
+        this.projectileSplash = projectileSplash;
+        this.projectileSpeed = projectileSpeed;
     }
 }
 
@@ -69,7 +71,7 @@ public class PlayerManager : MonoBehaviour
         tempStatusWindow.DataSetter(
             playerData.hp, playerData.currentHp, playerData.hpRegen, playerData.shield, playerData.attack, playerData.criRatio,
             playerData.criDamage, playerData.coolDown, playerData.moveSpeed, playerData.getItemRange, playerData.expBuff, playerData.armor,
-            playerData.projectileAdd);
+            playerData.projectileAdd, playerData.projectileSize.param, playerData.projectileSplash.param, playerData.projectileSpeed.param);
     }
 
     #region

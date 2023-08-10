@@ -9,7 +9,7 @@ public class ExpBar : MonoBehaviour
     private Image expImage;
     private TextMeshProUGUI expText;
 
-    private void Start()
+    private void Awake()
     {
         expImage = GetComponent<Image>();
 
@@ -18,11 +18,8 @@ public class ExpBar : MonoBehaviour
         expText.fontSize = 25;
     }
 
-    private void Update()
+    public void SetExpBar(int exp, int needExp)
     {
-        int exp = GameManager.Instance.player.exp;
-        int needExp = GameManager.Instance.player.needExp;
-
         expImage.fillAmount = exp / (float)needExp;
         expText.text = $"{exp}/{needExp}";
     }

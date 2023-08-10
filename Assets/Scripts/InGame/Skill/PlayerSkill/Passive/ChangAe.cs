@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DaeHum : PassiveSkill
+public class ChangAe : PassiveSkill
 {
-    private int prevShield;
-
-    public DaeHum(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
+    public ChangAe(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
     {
     }
 
@@ -18,17 +16,7 @@ public class DaeHum : PassiveSkill
             {
                 PassiveEffect.PassiveEffectActivation(skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
             }
-            yield return Crash();
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         } while (skillData.coolTime > 0);
-    }
-
-    private IEnumerator Crash()
-    {
-        do
-        {
-            prevShield = GameManager.Instance.player.playerManager.playerData.shield;
-            yield return frame;
-        } while (prevShield <= GameManager.Instance.player.playerManager.playerData.shield);
     }
 }

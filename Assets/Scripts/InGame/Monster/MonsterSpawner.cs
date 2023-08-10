@@ -40,7 +40,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 
     //private void Update()
     //{
-    //    DebugManager.Instance.PrintDebug("[SpawnTest] MobCount: " + spawnCount + "/" + spawnAmount);
+    //    DebugManager.Instance.PrintWarning("[SpawnTest {0}s] MobCount: {1}/{2}", Timer.Instance.currentTime * 0.001, spawnCount, spawnAmount);
     //}
 
     protected override void Awake()

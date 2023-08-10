@@ -139,6 +139,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 120:
                 skill = new Horin(skillId, shooter, skillNum);
                 break;
+            //아래로 패시브
             case 202:
                 skill = new InnPassive(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
@@ -172,8 +173,11 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 212:
                 skill = new GwangHwa(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
+            case 213:
+                skill = new ChangAe(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+                break;
             default:
-                DebugManager.Instance.PrintDebug("[ERROR]: 아직 미구현된 스킬입니다 (SkillID: " + skillId + ")");
+                DebugManager.Instance.PrintError("[SkillManager] 미구현된 스킬입니다 (Skill ID: {0})", skillId);
                 return;
         }
 

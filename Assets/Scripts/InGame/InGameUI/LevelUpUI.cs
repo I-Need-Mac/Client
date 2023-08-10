@@ -21,6 +21,7 @@ public class LevelUpUI : MonoBehaviour
     private List<int> skillBenList;
     private List<int> skillNums = new List<int>();
 
+    public bool isSelect { get; private set; }
     public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
     //public int skillCount { get; private set; } = 0;
     public List<int> skills { get; private set; } = new List<int>();   //가진 스킬이 아니라 ui에 올라온 스킬 목록 (중복 방지)
@@ -60,10 +61,12 @@ public class LevelUpUI : MonoBehaviour
         //Time.timeScale = 1f;
         GameManager.Instance.Pause();
         gameObject.SetActive(false);
+        isSelect = true;
     }
 
     public void SkillBoxInit(int num)
     {
+        isSelect = false;
         float height = 175 + 120 * num;
         bodyRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
         for (int i = 0; i < num; i++)
@@ -124,20 +127,21 @@ public class LevelUpUI : MonoBehaviour
                         if (id % 100 != SkillManager.SKILL_MAX_LEVEL) //만렙이 아니라면
                         {
                             skillId = id + 1;
-                            if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
-                            {
-                                continue;
-                            }
-                            if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
-                            {
-                                continue;
-                            }
                             skills.Add(skillId / 100);
                             return skillId;
                         }
                     }
                 }
-                
+
+                if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
+                {
+                    continue;
+                }
+                if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
+                {
+                    continue;
+                }
+
                 skills.Add(skillId / 100);
                 return skillId;
             }

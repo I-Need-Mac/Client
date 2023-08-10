@@ -1,8 +1,8 @@
 
 public struct PassiveSet
 {
-    public float param;
-    public SKILLCONSTANT.CALC_MODE calcMode;
+    public float param { get; private set; }
+    public SKILLCONSTANT.CALC_MODE calcMode { get; private set; }
 
     public PassiveSet(float param, SKILLCONSTANT.CALC_MODE calcMode)
     {

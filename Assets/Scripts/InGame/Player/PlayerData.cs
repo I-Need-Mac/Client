@@ -1,4 +1,7 @@
 
+using System;
+using System.Collections;
+
 public class PlayerData
 {
     public string characterName { get; private set; }
@@ -64,90 +67,41 @@ public class PlayerData
 
     public float armor { get; private set; }
 
+    public int level { get; private set; }
+
+    public int exp { get; private set; }
+
+    public int needExp { get; private set; }
+
     #region PASSIVE
-    public PassiveSet projectileSize { get; private set; } = new PassiveSet(0, 0);
-    public PassiveSet projectileSpeed { get; private set; } = new PassiveSet(0, 0);
-    public PassiveSet projectileSplash { get; private set; } = new PassiveSet(0, 0);
-    public PassiveSet projectileDistance { get; private set; } = new PassiveSet(0, 0);
-    public PassiveSet skillDamage { get; private set; } = new PassiveSet(0, 0);
+    public PassiveSet projectileSize { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileSpeed { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileSplash { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileDistance { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet skillDamage { get; private set; } = new PassiveSet(0.0f, 0);
 
     public void SetProjectileSize(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.projectileSize = new PassiveSet(param, mode);
+        this.projectileSize = new PassiveSet(param + this.projectileSize.param, mode);
     }
 
     public void SetProjectileSpeed(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.projectileSpeed= new PassiveSet(param, mode);
+        this.projectileSpeed = new PassiveSet(param + this.projectileSpeed.param, mode);
     }
     public void SetProjectileSplash(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.projectileSplash = new PassiveSet(param, mode);
+        this.projectileSplash = new PassiveSet(param + this.projectileSplash.param, mode);
     }
     public void SetProjectileDistance(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.projectileDistance = new PassiveSet(param, mode);
+        this.projectileDistance = new PassiveSet(param + this.projectileDistance.param, mode);
     }
     public void SetSkillDamage(float param, SKILLCONSTANT.CALC_MODE mode)
     {
-        this.skillDamage = new PassiveSet(param, mode);
+        this.skillDamage = new PassiveSet(param + this.skillDamage.param, mode);
     }
 
-    //public float projectileSize { get; private set; }
-    //public float projectileSpeed { get; private set; }
-    //public float projectileSplash { get; private set; }
-    //public float projectileDistance { get; private set; }
-    //public float skillDamage { get; private set; }
-
-    //public void SetProjectileSize(float projectileSize)
-    //{
-    //    this.projectileSize = projectileSize;
-    //}
-
-    //public void SetProjectileSpeed(float projectileSpeed)
-    //{
-    //    this.projectileSpeed = projectileSpeed;
-    //}
-
-    //public void SetProjectileSplash(float projectileSplash)
-    //{
-    //    this.projectileSplash = projectileSplash;
-    //}
-
-    //public void SetAttackDistance(float projectileDistance)
-    //{
-    //    this.projectileDistance = projectileDistance;
-    //}
-
-    //public void SetDamage(float skillDamage)
-    //{
-    //    this.skillDamage = skillDamage;
-    //}
-
-    //public void ProjectileSizeModifier(float projectileSize)
-    //{
-    //    this.projectileSize += projectileSize;
-    //}
-
-    //public void ProjectileSpeedModifier(float projectileSpeed)
-    //{
-    //    this.projectileSpeed += projectileSpeed;
-    //}
-
-    //public void ProjectileSplashModifier(float projectileSplash)
-    //{
-    //    this.projectileSize += projectileSplash;
-    //}
-
-    //public void ProjectileDistanceModifier(float projectileDistance)
-    //{
-    //    this.projectileDistance += projectileDistance;
-    //}
-
-    //public void SkillDamageModifier(float skillDamage)
-    //{
-    //    this.skillDamage += skillDamage;
-    //}
     #endregion
 
     private int originHp;
@@ -251,6 +205,32 @@ public class PlayerData
     {
         this.armor = armor;
     }
+
+    public IEnumerator ExpUp(int exp)
+    {
+        this.exp += this.ExpBuff(exp);
+        while (this.exp >= this.needExp)
+        {
+            ++level;
+            this.exp -= this.needExp;
+            this.needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+            yield return GameManager.Instance.playerUi.SkillSelectWindowOpen();
+        }
+        GameManager.Instance.playerUi.expBar.SetExpBar(this.exp, this.needExp);
+        GameManager.Instance.playerUi.LevelTextChange(level);
+        yield return null;
+    }
+
+    public void SetLevel(int level)
+    {
+        this.level = level;
+    }
+
+    public void SetNeedExp(int needExp)
+    {
+        this.needExp = needExp;
+    }
+
     #endregion
 
     //Modifier - Modify Data
@@ -334,7 +314,7 @@ public class PlayerData
         }
     }
 
-    public int ExpBuff(int exp)
+    private int ExpBuff(int exp)
     {
         return (int)(exp * (this.expBuff + 1.0f));
     }

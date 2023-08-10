@@ -299,7 +299,7 @@ public class PlayerData
         this.expBuff += expBuff;
     }
 
-    public void ArmorModifier(int armor)
+    public void ArmorModifier(float armor)
     {
         this.armor += armor;
     }

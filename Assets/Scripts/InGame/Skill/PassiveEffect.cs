@@ -49,7 +49,7 @@ public struct PassiveEffect
                 break;
             case SKILL_PASSIVE.ARMOR:
                 data = CalcData(GameManager.Instance.player.playerManager.playerData.armor, param, mode);
-                GameManager.Instance.player.playerManager.playerData.ArmorModifier((int)data);
+                GameManager.Instance.player.playerManager.playerData.ArmorModifier(data);
                 break;
             case SKILL_PASSIVE.PROJECTILESIZE:
                 GameManager.Instance.player.playerManager.playerData.SetProjectileSize(param, mode);

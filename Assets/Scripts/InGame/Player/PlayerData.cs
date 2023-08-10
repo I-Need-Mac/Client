@@ -63,7 +63,7 @@ public class PlayerData
 
     public string characterPrefabPath { get; private set; }
 
-    public int expBuff { get; private set; }
+    public float expBuff { get; private set; }
 
     public float armor { get; private set; }
 
@@ -196,7 +196,7 @@ public class PlayerData
         this.modifyGetItemRange = 0;
     }
 
-    public void SetExpBuff(int expBuff)
+    public void SetExpBuff(float expBuff)
     {
         this.expBuff = expBuff;
     }
@@ -294,7 +294,7 @@ public class PlayerData
         this.modifyGetItemRange += getItemRange;
     }
 
-    public void ExpBuffModifier(int expBuff)
+    public void ExpBuffModifier(float expBuff)
     {
         this.expBuff += expBuff;
     }

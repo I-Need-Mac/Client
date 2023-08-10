@@ -51,7 +51,7 @@ public class Horin : ActiveSkill
                 {
                     projectiles[i].transform.localScale = originSize * (skillData.duration - time);
                 }
-                projectiles[i].transform.RotateAround(shooter.position, Vector3.back, skillData.speed);
+                projectiles[i].transform.RotateAround(shooter.position, Vector3.forward, skillData.speed);
             }
             time += Time.fixedDeltaTime;
             yield return frame;

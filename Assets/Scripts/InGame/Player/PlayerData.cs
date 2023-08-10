@@ -238,6 +238,7 @@ public class PlayerData
     public void HpModifier(int hp)
     {
         this.modifyHp += hp;
+        this.currentHp += hp;
         if (this.currentHp > this.hp)
         {
             this.currentHp = this.hp;

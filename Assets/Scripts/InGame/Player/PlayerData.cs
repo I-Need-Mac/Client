@@ -63,7 +63,7 @@ public class PlayerData
 
     public string characterPrefabPath { get; private set; }
 
-    public int expBuff { get; private set; }
+    public float expBuff { get; private set; }
 
     public float armor { get; private set; }
 
@@ -196,7 +196,7 @@ public class PlayerData
         this.modifyGetItemRange = 0;
     }
 
-    public void SetExpBuff(int expBuff)
+    public void SetExpBuff(float expBuff)
     {
         this.expBuff = expBuff;
     }
@@ -238,15 +238,16 @@ public class PlayerData
     public void HpModifier(int hp)
     {
         this.modifyHp += hp;
-        if (this.currentHp > this.hp)
-        {
-            this.currentHp = this.hp;
-        }
+        this.CurrentHpModifier(hp);
     }
 
     public void CurrentHpModifier(int currentHp)
     {
         this.currentHp += currentHp;
+        if (this.currentHp > this.hp)
+        {
+            this.currentHp = this.hp;
+        }
     }
 
     public void AttackModifier(float attack)
@@ -294,12 +295,12 @@ public class PlayerData
         this.modifyGetItemRange += getItemRange;
     }
 
-    public void ExpBuffModifier(int expBuff)
+    public void ExpBuffModifier(float expBuff)
     {
         this.expBuff += expBuff;
     }
 
-    public void ArmorModifier(int armor)
+    public void ArmorModifier(float armor)
     {
         this.armor += armor;
     }

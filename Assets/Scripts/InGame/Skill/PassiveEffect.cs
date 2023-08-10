@@ -25,7 +25,7 @@ public struct PassiveEffect
                 break;
             case SKILL_PASSIVE.EXP:
                 data = CalcData(GameManager.Instance.player.playerManager.playerData.expBuff, param, mode);
-                GameManager.Instance.player.playerManager.playerData.ExpBuffModifier((int)data);
+                GameManager.Instance.player.playerManager.playerData.ExpBuffModifier(data);
                 break;
             case SKILL_PASSIVE.PROJECTILECOUNT:
                 data = CalcData(GameManager.Instance.player.playerManager.playerData.projectileAdd, param, mode);
@@ -49,7 +49,7 @@ public struct PassiveEffect
                 break;
             case SKILL_PASSIVE.ARMOR:
                 data = CalcData(GameManager.Instance.player.playerManager.playerData.armor, param, mode);
-                GameManager.Instance.player.playerManager.playerData.ArmorModifier((int)data);
+                GameManager.Instance.player.playerManager.playerData.ArmorModifier(data);
                 break;
             case SKILL_PASSIVE.PROJECTILESIZE:
                 GameManager.Instance.player.playerManager.playerData.SetProjectileSize(param, mode);

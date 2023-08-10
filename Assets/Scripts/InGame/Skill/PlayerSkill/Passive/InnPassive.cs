@@ -6,11 +6,9 @@ using UnityEngine;
 
 public class InnPassive : PassiveSkill
 {
-    public InnPassive(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
-    {
-    }
+    private WaitForSeconds tick = new WaitForSeconds(0.5f);
 
-    public override void Init()
+    public InnPassive(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
     {
     }
 
@@ -18,12 +16,21 @@ public class InnPassive : PassiveSkill
     {
         do
         {
-            for (int i = 0; i < skillData.skillEffect.Count; i++)
-            {
-                CALC_MODE mode = (CALC_MODE)Enum.Parse(typeof(CALC_MODE), skillData.skillEffectParam[i], true);
-                PassiveEffect.PassiveEffectActivation(float.Parse(skillData.skillEffectParam[i]), skillData.skillEffect[i], mode);
-            }
+            yield return Magnet();
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         } while (skillData.coolTime > 0);
+    }
+
+    private IEnumerator Magnet()
+    {
+        for (int i = 0; i < skillData.skillEffect.Count; i++)
+        {
+            PassiveEffect.PassiveEffectActivation(skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
+        }
+        yield return tick;
+        for (int i = 0; i < skillData.skillEffect.Count; i++)
+        {
+            PassiveEffect.PassiveEffectActivation(-skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
+        }
     }
 }

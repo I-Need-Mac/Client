@@ -8,6 +8,10 @@ using static UnityEditor.FilePathAttribute;
 
 public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 {
+    private const string WALL_NAME = "Wall";
+    private const float RADIUS = 10.0f;
+    private const int ROUND_AMOUNT = 50;
+
     [SerializeField] private float spawnTime = 1f;
     [SerializeField] private int stageId = 10101;
 
@@ -15,12 +19,10 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private int spawnCount;
     private Dictionary<int, ObjectPool<Monster>> spawner;
     private Queue<RemainMonster> remainMonsters;
-    private WaitForSeconds tick = new WaitForSeconds(0.05f);
-
-    //private Dictionary<string, Dictionary<string, object>> spawnTable;
-    //private Dictionary<string, object> spawnData;
-    //private int spawnId;
-    //private int currentSpawnTime;
+    //private WaitForSeconds tick = new WaitForSeconds(0.05f);
+    private WaitForFixedUpdate tick = new WaitForFixedUpdate();
+    private float monsterHpCoefficient;
+    private float monsterAttackCoefficient;
 
     public List<Monster> monsters;
     
@@ -35,31 +37,28 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
             this.location = location;
         }
     }
-    
+
+    //private void Update()
+    //{
+    //    DebugManager.Instance.PrintWarning("[SpawnTest {0}s] MobCount: {1}/{2}", Timer.Instance.currentTime * 0.001, spawnCount, spawnAmount);
+    //}
+
     protected override void Awake()
     {
         spawnAmount = Convert.ToInt32(CSVReader.Read("StageTable", stageId.ToString(), "LimitAmount"));
         spawnCount = 0;
         spawner = new Dictionary<int, ObjectPool<Monster>>();
-
-        //spawnTable = CSVReader.Read(CSVReader.Read("StageTable", stageId.ToString(), "MonsterSpawnID").ToString());
-        //spawnId = 1;
-        //spawnData = spawnTable[spawnId.ToString()];
-        //currentSpawnTime = Convert.ToInt32(spawnData["SpawnTime"]);
+        monsterHpCoefficient = float.Parse(CSVReader.Read("BattleConfig", "StatIncreaseValueHP", "ConfigValue").ToString());
+        monsterAttackCoefficient = float.Parse(CSVReader.Read("BattleConfig", "StatIncreaseValueAttack", "ConfigValue").ToString());
     }
 
     public Monster SpawnMonster(int monsterId, Vector2 pos)
     {
-        
-        //if (!spawner.ContainsKey(monsterId))
-        //{   
-        //    string prefabPath = CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString();
-        //    spawner.Add(monsterId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(prefabPath), transform));
-        //}
         Monster monster = spawner[monsterId].GetObject();
         monster.monsterId = monsterId;
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
-        monster.SpawnSet();
+        float weight = Timer.Instance.currentTime * 0.001f;
+        monster.SpawnSet(monsterHpCoefficient * weight, monsterAttackCoefficient * weight);
         monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
         monster.SetTarget(GameManager.Instance.player.transform, true);
@@ -134,13 +133,13 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                     Vector2 spawnPos = GameManager.Instance.map.transform.Find("SpawnPoint").Find(remainMonster.location).position;
                     monster = SpawnMonster(remainMonster.id, spawnPos);
                 }
+                yield return tick;
             }
 
             if (Timer.Instance.currentTime < spawnData.spawnTime)
             {
                 continue;   //아직 스폰타임이 아니면 스킵
             }
-            DebugManager.Instance.PrintDebug("[SpawnerTest]: " + spawnQueue.Count);
             if (spawnData.spawnTime != -1)
             {
                 Monster monster;
@@ -148,20 +147,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                 {
                     if (spawnLocation == SpawnMobLocation.ROUND)
                     {
-                        Vector2[] spawnPoses = CameraManager.Instance.Round(spawnData.spawnMobAmount);
-
-                        foreach (Vector2 pos in spawnPoses)
-                        {
-                            if (spawnCount < spawnAmount)
-                            {
-                                monster = SpawnMonster(spawnData.spawnMobId, pos);
-                            }
-                            else
-                            {
-                                remainMonsters.Enqueue(new RemainMonster(spawnData.spawnMobId, "top"));
-                            }
-                            yield return tick;
-                        }
+                        StartCoroutine(Round(spawnData.spawnMobAmount, spawnData.spawnMobId));
                     }
                     else
                     {
@@ -235,140 +221,57 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         
     }
 
-    //public IEnumerator Spawn2()
-    //{
-    //    monsters.Clear();
-    //    while (spawnTable.Keys.Count > spawnId)
-    //    {
-    //        if (Timer.Instance.currentTime >= currentSpawnTime)
-    //        {
-    //            if (currentSpawnTime != -1)
-    //            {
-    //                int mobAmount = Convert.ToInt32(spawnData["SpawnMobAmount"]);
-    //                int mobId = Convert.ToInt32(spawnData["SpawnMobID"]);
-    //                string sponeLocation = spawnData["SpawnMobLocation"].ToString();
+    private IEnumerator Round(int amount, int monsterId)
+    {
+        float weight = 10.0f;
+        float angle = 360 / amount;
+        float radius = RADIUS;
 
-    //                if (Enum.TryParse(sponeLocation, true, out SpawnMobLocation spawnLocation))
-    //                {
-    //                    if (spawnLocation == SpawnMobLocation.ROUND)
-    //                    {
-    //                        Vector2[] spawnPoses = CameraManager.Instance.Round(mobAmount);
-    //                        Monster monster;
-    //                        if (spawnCount < spawnAmount)
-    //                        {
-    //                            if (remainMonsters.Count > 0)
-    //                            {
-    //                                RemainMonster remainMonster = remainMonsters.Dequeue();
-    //                                monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
-    //                            }
-    //                            else
-    //                            {
-    //                                foreach (Vector2 pos in spawnPoses)
-    //                                {
-    //                                    monster = SpawnMonster(mobId, pos);
-    //                                    yield return null;
-    //                                }
-    //                            }
-    //                        }
-    //                        else
-    //                        {
-    //                            remainMonsters.Enqueue(new RemainMonster(mobId, SpawnMobLocation.FACE));
-    //                        }
-    //                    }
-    //                    else
-    //                    {
-    //                        SpawnMobLocation location = spawnLocation;
-    //                        for (int i = 0; i < mobAmount; i++)
-    //                        {
-    //                            if (spawnCount < spawnAmount)
-    //                            {
-    //                                Monster monster;
+        if (amount > ROUND_AMOUNT)
+        {
+            radius = RADIUS * 1.25f;
+        }
+        Monster monster;
+        for (int i = 0; i < amount; i++)
+        {
+            yield return tick;
+            Vector2 pos = new Vector2(Mathf.Cos(i * angle * Mathf.Deg2Rad), Mathf.Sin(i * angle * Mathf.Deg2Rad)) * radius + (Vector2)GameManager.Instance.player.transform.position;
+            try
+            {
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, 1.5f, 1 << (int)LayerConstant.MAP);
+                int j;
+                for (j = 0; j < colliders.Length; j++)
+                {
+                    if (colliders[j].name.Equals(WALL_NAME))
+                    {
+                        break;
+                    }
+                }
 
-    //                                if (remainMonsters.Count > 0)
-    //                                {
-    //                                    RemainMonster remainMonster = remainMonsters.Dequeue();
-    //                                    monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
-    //                                }
-    //                                else
-    //                                {
-    //                                    if (spawnLocation == SpawnMobLocation.RANDOMROUND)
-    //                                    {
-    //                                        location = (SpawnMobLocation)(i % (System.Enum.GetValues(typeof(SpawnMobLocation)).Length - 1));
-    //                                        DebugManager.Instance.PrintDebug("SpawnTest: " + location);
-    //                                    }
-
-    //                                    if (location == SpawnMobLocation.FACE)
-    //                                    {
-    //                                        if (GameManager.Instance.player.lookDirection.x < 0)
-    //                                        {
-    //                                            location = SpawnMobLocation.LEFT;
-    //                                        }
-    //                                        else
-    //                                        {
-    //                                            location = SpawnMobLocation.RIGHT;
-    //                                        }
-    //                                    }
-    //                                    else if (location == SpawnMobLocation.BACK)
-    //                                    {
-    //                                        if (GameManager.Instance.player.lookDirection.x < 0)
-    //                                        {
-    //                                            location = SpawnMobLocation.RIGHT;
-    //                                        }
-    //                                        else
-    //                                        {
-    //                                            location = SpawnMobLocation.LEFT;
-    //                                        }
-    //                                    }
-    //                                    monster = SpawnMonster(mobId, CameraManager.Instance.RandomPosInGrid(location));
-    //                                }
-    //                            }
-    //                            else
-    //                            {
-    //                                remainMonsters.Enqueue(new RemainMonster(mobId, location));
-    //                            }
-    //                            yield return tick;
-    //                        }
-    //                    }
-
-    //                }
-    //                else
-    //                {
-    //                    //특정 위치 소환
-    //                    Vector2 sponePos = GameManager.Instance.map.transform.Find("SpawnPoint").Find(sponeLocation).position;
-    //                    for (int i = 0; i < mobAmount; i++)
-    //                    {
-    //                        if (spawnCount < spawnAmount)
-    //                        {
-    //                            Monster monster;
-
-    //                            if (remainMonsters.Count > 0)
-    //                            {
-    //                                RemainMonster remainMonster = remainMonsters.Dequeue();
-    //                                monster = SpawnMonster(remainMonster.id, CameraManager.Instance.RandomPosInGrid(remainMonster.location));
-    //                            }
-    //                            else
-    //                            {
-    //                                monster = SpawnMonster(mobId, sponePos);
-    //                            }
-    //                        }
-    //                        else
-    //                        {
-    //                            remainMonsters.Enqueue(new RemainMonster(mobId, SpawnMobLocation.FACE));
-    //                        }
-    //                        yield return tick;
-    //                    }
-    //                }
-    //            }
-
-    //            if (spawnTable.ContainsKey((++spawnId).ToString()))
-    //            {
-    //                spawnData = spawnTable[spawnId.ToString()];
-    //                currentSpawnTime = Convert.ToInt32(spawnData["SpawnTime"]);
-    //            }
-    //        }
-    //        yield return null;
-    //    }
-    //}
+                if (j == colliders.Length)
+                {
+                    if (spawnCount < spawnAmount)
+                    {
+                        monster = SpawnMonster(monsterId, pos);
+                    }
+                    else
+                    {
+                        remainMonsters.Enqueue(new RemainMonster(monsterId, "top"));
+                    }
+                }
+                else
+                {
+                    --i;
+                    angle += weight;
+                }
+            }
+            catch
+            {
+                --i;
+                angle += weight;
+            }
+        }
+    }
 
 }
 

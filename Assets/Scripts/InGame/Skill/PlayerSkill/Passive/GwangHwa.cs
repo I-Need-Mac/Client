@@ -1,12 +1,10 @@
-using SKILLCONSTANT;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HwakSan : PassiveSkill
+public class GwangHwa : PassiveSkill
 {
-    public HwakSan(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
+    public GwangHwa(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
     {
     }
 

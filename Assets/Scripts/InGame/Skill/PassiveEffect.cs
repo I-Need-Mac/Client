@@ -7,80 +7,78 @@ public struct PassiveEffect
 {
     public static void PassiveEffectActivation(float param, SKILL_PASSIVE type, CALC_MODE mode)
     {
-        PlayerData playerData = GameManager.Instance.player.playerManager.playerData;
         float data;
         switch (type)
         {
             case SKILL_PASSIVE.MAGNET:
-                data = CalcData(playerData.getItemRange, param, mode);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.getItemRange, param, mode);
+                GameManager.Instance.player.playerManager.playerData.GetItemRangeModifier((int)data);
                 GameManager.Instance.player.UpdateGetItemRange();
-                playerData.GetItemRangeModifier((int)data);
                 break;
             case SKILL_PASSIVE.SHIELD:
-                data = CalcData(playerData.shield, param, mode);
-                playerData.ShieldModifier((int)data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.shield, param, mode);
+                GameManager.Instance.player.playerManager.playerData.ShieldModifier((int)data);
                 break;
             case SKILL_PASSIVE.MOVESPEED:
-                data = CalcData(playerData.moveSpeed, param, mode);
-                playerData.MoveSpeedModifier(data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.moveSpeed, param, mode);
+                GameManager.Instance.player.playerManager.playerData.MoveSpeedModifier(data);
                 break;
             case SKILL_PASSIVE.EXP:
-                data = CalcData(playerData.expBuff, param, mode);
-                playerData.ExpBuffModifier((int)data);
-                break;
-            case SKILL_PASSIVE.PROJECTILESIZE:
-                data = CalcData(playerData.projectileSize, param, mode);
-                playerData.ProjectileSizeModifier(data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.expBuff, param, mode);
+                GameManager.Instance.player.playerManager.playerData.ExpBuffModifier(data);
                 break;
             case SKILL_PASSIVE.PROJECTILECOUNT:
-                data = CalcData(playerData.projectileAdd, param, mode);
-                playerData.ProjectileAddModifier((int)data);
-                break;
-            case SKILL_PASSIVE.PROJECTILESPLASH:
-                data = CalcData(playerData.projectileSplash, param, mode);
-                playerData.ProjectileSplashModifier(data);
-                break;
-            case SKILL_PASSIVE.PROJECTILESPEED:
-                data = CalcData(playerData.projectileSpeed, param, mode);
-                playerData.ProjectileSpeedModifier(data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.projectileAdd, param, mode);
+                GameManager.Instance.player.playerManager.playerData.ProjectileAddModifier((int)data);
                 break;
             case SKILL_PASSIVE.HP:
-                data = CalcData(playerData.hp, param, mode);
-                playerData.HpModifier((int)data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.hp, param, mode);
+                GameManager.Instance.player.playerManager.playerData.HpModifier((int)data);
                 break;
             case SKILL_PASSIVE.HPREGEN:
-                data = CalcData(playerData.hpRegen, param, mode);
-                playerData.HpRegenModifier((int)data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.hpRegen, param, mode);
+                GameManager.Instance.player.playerManager.playerData.HpRegenModifier((int)data);
                 break;
             case SKILL_PASSIVE.ATTACK:
-                data = CalcData(playerData.attack, param, mode);
-                playerData.AttackModifier(data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.attack, param, mode);
+                GameManager.Instance.player.playerManager.playerData.AttackModifier(data);
                 break;
             case SKILL_PASSIVE.ATTACKSPEED:
-                data = CalcData(playerData.coolDown, param, mode);
-                playerData.CoolDownModifier((int)data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.coolDown, param, mode);
+                GameManager.Instance.player.playerManager.playerData.CoolDownModifier((int)data);
                 break;
             case SKILL_PASSIVE.ARMOR:
-                data = CalcData(playerData.armor, param, mode);
-                playerData.ArmorModifier((int)data);
+                data = CalcData(GameManager.Instance.player.playerManager.playerData.armor, param, mode);
+                GameManager.Instance.player.playerManager.playerData.ArmorModifier(data);
+                break;
+            case SKILL_PASSIVE.PROJECTILESIZE:
+                GameManager.Instance.player.playerManager.playerData.SetProjectileSize(param, mode);
+                break;
+            case SKILL_PASSIVE.PROJECTILESPEED:
+                GameManager.Instance.player.playerManager.playerData.SetProjectileSpeed(param, mode);
+                break;
+            case SKILL_PASSIVE.PROJECTILESPLASH:
+                GameManager.Instance.player.playerManager.playerData.SetProjectileSplash(param, mode);
+                break;
+            case SKILL_PASSIVE.PROJECTILEDISTANCE:
+                GameManager.Instance.player.playerManager.playerData.SetProjectileDistance(param, mode);
+                break;
+            case SKILL_PASSIVE.SKILLDAMAGE:
+                GameManager.Instance.player.playerManager.playerData.SetSkillDamage(param, mode);
                 break;
             default:
                 DebugManager.Instance.PrintDebug("[ERROR]: 없는 패시브 스킬입니다");
                 break;
         }
-
-        SkillManager.Instance.SkillUpdate();
     }
 
-    private static float CalcData(float origin, float param, CALC_MODE mode)
+    public static float CalcData(float value, float param, CALC_MODE mode)
     {
         if (mode == CALC_MODE.PLUS)
         {
-            return origin + param;
+            return param;
         }
-        else
-        {
-            return origin * param * 0.01f;
-        }
+
+        return value == 0 ? param : value * param;
     }
 }

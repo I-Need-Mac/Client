@@ -1,12 +1,12 @@
-using SKILLCONSTANT;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HwakSan : PassiveSkill
+public class DaeHum : PassiveSkill
 {
-    public HwakSan(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
+    private int prevShield;
+
+    public DaeHum(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
     {
     }
 
@@ -18,7 +18,17 @@ public class HwakSan : PassiveSkill
             {
                 PassiveEffect.PassiveEffectActivation(skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
             }
+            yield return Crash();
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         } while (skillData.coolTime > 0);
+    }
+
+    private IEnumerator Crash()
+    {
+        do
+        {
+            prevShield = GameManager.Instance.player.playerManager.playerData.shield;
+            yield return frame;
+        } while (prevShield <= GameManager.Instance.player.playerManager.playerData.shield);
     }
 }

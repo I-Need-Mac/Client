@@ -1,6 +1,6 @@
 
-
-using SKILLCONSTANT;
+using System;
+using System.Collections;
 
 public class PlayerData
 {
@@ -55,7 +55,7 @@ public class PlayerData
         private set { }
     }
 
-    public int getItemRange
+    public float getItemRange
     {
         get { return originGetItemRange + modifyGetItemRange; }
         private set { }
@@ -63,15 +63,46 @@ public class PlayerData
 
     public string characterPrefabPath { get; private set; }
 
-    public int expBuff { get; private set; }
+    public float expBuff { get; private set; }
 
-    public int armor { get; private set; }
+    public float armor { get; private set; }
 
-    public float projectileSize { get; private set; }
+    public int level { get; private set; }
 
-    public float projectileSplash { get; private set; }
+    public int exp { get; private set; }
 
-    public float projectileSpeed { get; private set; }
+    public int needExp { get; private set; }
+
+    #region PASSIVE
+    public PassiveSet projectileSize { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileSpeed { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileSplash { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet projectileDistance { get; private set; } = new PassiveSet(0.0f, 0);
+    public PassiveSet skillDamage { get; private set; } = new PassiveSet(0.0f, 0);
+
+    public void SetProjectileSize(float param, SKILLCONSTANT.CALC_MODE mode)
+    {
+        this.projectileSize = new PassiveSet(param + this.projectileSize.param, mode);
+    }
+
+    public void SetProjectileSpeed(float param, SKILLCONSTANT.CALC_MODE mode)
+    {
+        this.projectileSpeed = new PassiveSet(param + this.projectileSpeed.param, mode);
+    }
+    public void SetProjectileSplash(float param, SKILLCONSTANT.CALC_MODE mode)
+    {
+        this.projectileSplash = new PassiveSet(param + this.projectileSplash.param, mode);
+    }
+    public void SetProjectileDistance(float param, SKILLCONSTANT.CALC_MODE mode)
+    {
+        this.projectileDistance = new PassiveSet(param + this.projectileDistance.param, mode);
+    }
+    public void SetSkillDamage(float param, SKILLCONSTANT.CALC_MODE mode)
+    {
+        this.skillDamage = new PassiveSet(param + this.skillDamage.param, mode);
+    }
+
+    #endregion
 
     private int originHp;
     private int modifyHp;
@@ -87,8 +118,8 @@ public class PlayerData
     private int modifyHpRegen;
     private float originMoveSpeed;
     private float modifyMoveSpeed;
-    private int originGetItemRange;
-    private int modifyGetItemRange;
+    private float originGetItemRange;
+    private float modifyGetItemRange;
 
     //Setter - Origin Data
     #region Setter
@@ -159,36 +190,47 @@ public class PlayerData
         this.modifyMoveSpeed = 0;
     }
 
-    public void SetGetItemRange(int getItemRange)
+    public void SetGetItemRange(float getItemRange)
     {
         this.originGetItemRange = getItemRange;
         this.modifyGetItemRange = 0;
     }
 
-    public void SetExpBuff(int expBuff)
+    public void SetExpBuff(float expBuff)
     {
         this.expBuff = expBuff;
     }
 
-    public void SetArmor(int armor)
+    public void SetArmor(float armor)
     {
         this.armor = armor;
     }
 
-    public void SetProjectileSize(float projectileSize)
+    public IEnumerator ExpUp(int exp)
     {
-        this.projectileSize = projectileSize;
+        this.exp += this.ExpBuff(exp);
+        while (this.exp >= this.needExp)
+        {
+            ++level;
+            this.exp -= this.needExp;
+            this.needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+            yield return GameManager.Instance.playerUi.SkillSelectWindowOpen();
+        }
+        GameManager.Instance.playerUi.expBar.SetExpBar(this.exp, this.needExp);
+        GameManager.Instance.playerUi.LevelTextChange(level);
+        yield return null;
     }
 
-    public void SetProjectileSplash(float projectileSplash)
+    public void SetLevel(int level)
     {
-        this.projectileSplash = projectileSplash;
+        this.level = level;
     }
 
-    public void SetProjectileSpeed(float projectileSpeed)
+    public void SetNeedExp(int needExp)
     {
-        this.projectileSpeed = projectileSpeed;
+        this.needExp = needExp;
     }
+
     #endregion
 
     //Modifier - Modify Data
@@ -196,15 +238,16 @@ public class PlayerData
     public void HpModifier(int hp)
     {
         this.modifyHp += hp;
-        if (this.currentHp > this.hp)
-        {
-            this.currentHp = this.hp;
-        }
+        this.CurrentHpModifier(hp);
     }
 
     public void CurrentHpModifier(int currentHp)
     {
         this.currentHp += currentHp;
+        if (this.currentHp > this.hp)
+        {
+            this.currentHp = this.hp;
+        }
     }
 
     public void AttackModifier(float attack)
@@ -252,29 +295,14 @@ public class PlayerData
         this.modifyGetItemRange += getItemRange;
     }
 
-    public void ExpBuffModifier(int expBuff)
+    public void ExpBuffModifier(float expBuff)
     {
         this.expBuff += expBuff;
     }
 
-    public void ArmorModifier(int armor)
+    public void ArmorModifier(float armor)
     {
         this.armor += armor;
-    }
-
-    public void ProjectileSizeModifier(float projectileSize)
-    {
-        this.projectileSize += projectileSize;
-    }
-
-    public void ProjectileSplashModifier(float projectileSplash)
-    {
-        this.projectileSize += projectileSplash;
-    }
-
-    public void ProjectileSpeedModifier(float projectileSpeed)
-    {
-        this.projectileSpeed += projectileSpeed;
     }
     #endregion
 
@@ -287,170 +315,14 @@ public class PlayerData
         }
     }
 
-    public int ExpBuff(int exp)
+    private int ExpBuff(int exp)
     {
-        return (int)(exp * this.expBuff * 0.01f) + exp;
+        return (int)(exp * (this.expBuff + 1.0f));
     }
 
     public int Armor(int damage)
     {
         return damage - (int)(damage * this.armor * 0.01f);
     }
-
-    //[field: SerializeField] public string characterName { private set; get; }            //캐릭터 이름
-    //[field: SerializeField] public int hp { private set; get; }                                 //체력
-    //[field: SerializeField] public int currentHp { private set; get; }
-    //[field: SerializeField] public float attack { private set; get; }                         //공격력
-    //[field: SerializeField] public int criRatio { private set; get; }                       //크리티컬 확률
-    //[field: SerializeField] public float criDamage { private set; get; }                      //크리티컬 데미지
-    //[field: SerializeField] public int coolDown { private set; get; }                       //쿨타임 감소량
-    //[field: SerializeField] public int hpRegen { private set; get; }                        //체젠량
-    //[field: SerializeField] public int shield { private set; get; }                         //쉴드 개수
-    //[field: SerializeField] public int projectileAdd { private set; get; }                 //투사체 증가 개수
-    //[field: SerializeField] public int moveSpeed { private set; get; }                      //이동 속도
-    //[field: SerializeField] public int getItemRange { private set; get; }                  //아이템 획득 범위
-    //[field: SerializeField] public string characterPrefabPath { private set; get; }
-
-    //private int originHp;
-    //private float originAttack;
-    //private int originCriRatio;
-    //private float originCriDamage;
-    //private int originCoolDown;
-    //private int originHpRegen;
-    //private int originMoveSpeed;
-    //private int originGetItemRange;
-
-    //#region Setter
-    ////Property setter를 사용할 경우 get이 같이 참조되어 setter를 따로 생성
-    //public void SetCharacterName(string characterName)
-    //{
-    //    this.characterName = characterName;
-    //}
-
-    //public void SetHp(int hp)
-    //{
-    //    this.originHp = hp;
-    //    this.hp = this.originHp;
-    //}
-
-    //public void SetCurrentHp(int currentHp)
-    //{
-    //    this.currentHp = currentHp;
-    //}
-
-    //public void SetAttack(int attack)
-    //{
-    //    this.originAttack = attack * 0.01f;
-    //    this.attack = this.originAttack;
-    //}
-
-    //public void SetCriRatio(int criRatio)
-    //{
-    //    this.originCriRatio = criRatio;
-    //    this.criRatio = this.originCriRatio;
-    //}
-
-    //public void SetCriDamage(float criDamage)
-    //{
-    //    this.originCriDamage = criDamage;
-    //    this.criDamage = this.originCriDamage;
-    //}
-
-    //public void SetCoolDown(int coolDown)
-    //{
-    //    this.originCoolDown = coolDown;
-    //    this.coolDown = this.originCoolDown;
-    //}
-
-    //public void SetHpRegen(int hpRegen)
-    //{
-    //    this.originHpRegen = hpRegen;
-    //    this.hpRegen = this.originHpRegen;
-    //}
-
-    //public void SetShield(int shield)
-    //{
-    //    this.shield = shield;
-    //}
-
-    //public void SetProjectileAdd(int projectileAdd)
-    //{
-    //    this.projectileAdd = projectileAdd;
-    //}
-
-    //public void SetMoveSpeed(int moveSpeed)
-    //{
-    //    this.originMoveSpeed = moveSpeed;
-    //    this.moveSpeed = this.originMoveSpeed;
-    //}
-
-    //public void SetGetItemRange(int getItemRange)
-    //{
-    //    this.originGetItemRange = getItemRange;
-    //    this.getItemRange = this.originGetItemRange;
-    //}
-    //#endregion
-
-    //#region Modifier
-    //public void HpModifier(int hp)
-    //{
-    //    this.hp += hp;
-    //    if (this.currentHp > this.hp)
-    //    {
-    //        this.currentHp = this.hp;
-    //    }
-    //}
-
-    //public void CurrentHpModifier(int currentHp)
-    //{
-    //    this.currentHp += currentHp;
-    //}
-
-    //public void AttackModifier(float attack)
-    //{
-    //    this.attack += attack;
-    //}
-
-    //public void CriRatioModifier(int criRatio)
-    //{
-    //    this.criRatio += criRatio;
-    //}
-
-    //public void CriDamageModifier(float criDamage)
-    //{
-    //    this.criDamage += criDamage;
-    //}
-
-    //public void CoolDownModifier(int coolDown)
-    //{
-    //    this.coolDown += coolDown;
-    //}
-
-    //public void HpRegenModifier(int hpRegen)
-    //{
-    //    this.hpRegen += hpRegen;
-    //}
-
-    //public void ShieldModifier(int shield)
-    //{
-    //    this.shield += shield;
-    //}
-
-    //public void ProjectileAddModifier(int projectileAdd)
-    //{
-    //    this.projectileAdd += projectileAdd;
-    //}
-
-    //public void MoveSpeedModifier(int moveSpeed)
-    //{
-    //    this.moveSpeed = this.originMoveSpeed;
-    //    this.moveSpeed += moveSpeed;
-    //}
-
-    //public void GetItemRangeModifier(int getItemRange)
-    //{
-    //    this.getItemRange += getItemRange;
-    //}
-    //#endregion
 
 }

@@ -15,14 +15,16 @@ public class ExpItem : Item
         if (collision.gameObject.layer == (int)LayerConstant.ITEM)
         {
             target = GameManager.Instance.player.character;
-            StartCoroutine(Move());
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(Move());
+            }
         }
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            StopCoroutine(Move());
             gameObject.SetActive(false);
-            GameManager.Instance.player.GetExp(itemData.itemTypeParam);
+            GameManager.Instance.ExpUp(itemData.itemTypeParam);
         }
     }
 }

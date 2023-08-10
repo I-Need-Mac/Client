@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
-        hpBar.HpBarSwitch(true);
+        //hpBar.HpBarSwitch(true);
     }
 
     /*
@@ -101,28 +101,28 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Level
-    public void GetExp(int exp)
-    {
-        this.exp += playerManager.playerData.ExpBuff(exp);
+    //public void GetExp(int exp)
+    //{
+    //    this.exp += playerManager.playerData.ExpBuff(exp);
 
-        if (this.exp >= needExp)
-        {
-            LevelUp();
-        }
-    }
+    //    if (this.exp >= needExp)
+    //    {
+    //        LevelUp();
+    //    }
+    //}
 
     public void UpdateGetItemRange()
     {
         playerItem.UpdateItemRange();
     }
 
-    private void LevelUp()
-    {
-        exp -= needExp;
-        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
-        GameManager.Instance.playerUi.LevelTextChange(level);
-        GameManager.Instance.playerUi.SkillSelectWindowOpen();
-    }
+    //private void LevelUp()
+    //{
+    //    exp -= needExp;
+    //    needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
+    //    GameManager.Instance.playerUi.LevelTextChange(level);
+    //    GameManager.Instance.playerUi.SkillSelectWindowOpen();
+    //}
     #endregion
 
     #region Collider

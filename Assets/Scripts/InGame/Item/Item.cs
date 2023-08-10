@@ -12,12 +12,14 @@ public class Item : MonoBehaviour
     protected Transform target;
     protected ItemData itemData;
     protected Collider2D itemCollider;
+    protected WaitForFixedUpdate frame;
 
     private void Awake()
     {
         itemSpeed = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ItemFollowSpeed", "ConfigValue")));
         gameObject.tag = "Item";
         itemData = new ItemData();
+        frame = new WaitForFixedUpdate();
     }
 
     private void OnEnable()
@@ -30,7 +32,7 @@ public class Item : MonoBehaviour
         while (true)
         {
             transform.Translate((target.position - transform.position).normalized * Time.deltaTime * itemSpeed);
-            yield return null;
+            yield return frame;
         }
     }
 

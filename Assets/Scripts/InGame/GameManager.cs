@@ -44,7 +44,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            player.GetExp(500);
+            this.ExpUp(500);
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -58,6 +58,11 @@ public class GameManager : SingletonBehaviour<GameManager>
             StopAllCoroutines();
             playerUi.GameOver();
         }
+    }
+
+    public void ExpUp(int exp)
+    {
+        StartCoroutine(player.playerManager.playerData.ExpUp(exp));
     }
 
     public int GetPlayerId()

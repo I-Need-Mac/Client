@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class Irons : ActiveSkill
 {
-    private int weight;
-
     public Irons(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
-
-    public override void Init()
-    {
-        weight = 0;
-    }
 
     public override IEnumerator Activation()
     {
+        int weight = 0;
+
         if (!skillData.isEffect)
         {
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
@@ -53,7 +48,7 @@ public class Irons : ActiveSkill
             }
 
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-            //yield return coolTime;
-        }
+        } while (skillData.coolTime > 0.0f);
+
     }
 }

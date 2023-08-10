@@ -6,28 +6,27 @@ public class JeRyeung : ActiveSkill
 {
     public JeRyeung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
+    public override IEnumerator Activation()
     {
         shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
 
-        Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-        projectile.SetAlpha(0.0f);
-        projectiles.Add(projectile);
-    }
-
-    public override IEnumerator Activation()
-    {
         if (!skillData.isEffect)
         {
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
+            bool isDrop = true;
             List<Transform> targets;
+
+            Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+            projectile.SetAlpha(1.0f);
+
             if (UnityEngine.Random.Range(0, 100) < int.Parse(skillData.skillEffectParam[0]))
             {
                 targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER, (int)LayerConstant.ITEM);
+                isDrop = false;
             }
             else
             {
@@ -38,14 +37,17 @@ public class JeRyeung : ActiveSkill
             {
                 if (target.TryGetComponent(out Monster monster))
                 {
-                    monster.Die();
+                    monster.Die(isDrop);
                 }
                 else if (target.TryGetComponent(out Item item))
                 {
                     ItemManager.Instance.DeSpawnItem(item);
                 }
             }
+            yield return intervalTime;
+            projectile.SetAlpha(0.0f);
+
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        }
+        } while (skillData.coolTime > 0.0f);
     }
 }

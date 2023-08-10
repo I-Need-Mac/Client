@@ -11,9 +11,9 @@ public abstract class PassiveSkill : Skill
     protected int skillNum;
     protected Transform shooter;
     protected PassiveData skillData;
-    protected WaitForSeconds coolTime;
+    //protected WaitForSeconds coolTime;
+    protected WaitForFixedUpdate frame;
 
-    public abstract void Init();
     public abstract IEnumerator Activation();
 
     public PassiveSkill(int skillId, Transform shooter, int skillNum)
@@ -22,38 +22,46 @@ public abstract class PassiveSkill : Skill
         this.skillData = new PassiveData();
         this.shooter = shooter;
         SetSkillData(skillId);
+        //SkillDataUpdate();
         this.skillNum = skillNum;
+        frame = new WaitForFixedUpdate();
     }
 
-    public void DeActivation()
-    {
-        try
-        {
-            for (int i = 0; i < skillData.skillEffect.Count; i++)
-            {
-                CALC_MODE mode = (CALC_MODE)Enum.Parse(typeof(CALC_MODE), skillData.skillEffectParam[i], true);
-                PassiveEffect.PassiveEffectActivation(-float.Parse(skillData.skillEffectParam[i]), skillData.skillEffect[i], mode);
-            }
-        }
-        catch
-        {
-            DebugManager.Instance.PrintDebug("[SYSTEM]: 해제할 효과가 없습니다");
-        }
-    }
-
-    public void SkillUpdate()
-    {
-        DeActivation();
-        SetSkillData(skillData.skillId);
-        Init();
-    }
+    //public void DeActivation()
+    //{
+    //    try
+    //    {
+    //        for (int i = 0; i < skillData.skillEffect.Count; i++)
+    //        {
+    //            PassiveEffect.PassiveEffectActivation(-skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
+    //        }
+    //    }
+    //    catch
+    //    {
+    //        DebugManager.Instance.PrintDebug("[SYSTEM]: 해제할 효과가 없습니다");
+    //    }
+    //}
 
     public void SkillLevelUp()
     {
-        DeActivation();
+        //DeActivation();
         SetSkillData(skillData.skillId + 1);
-        Init();
+        //SkillDataUpdate();
+        SkillManager.Instance.CoroutineStarter(Activation());
     }
+
+    //public void SkillDataUpdate()
+    //{
+    //    SkillDataUpdate(skillData.coolTime, 0, 0.0f, 0.0f, 0.0f, 0.0f);
+    //}
+
+    //public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
+    //{
+    //    if (shooter.TryGetComponent(out Player player))
+    //    {
+    //        skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
+    //    }
+    //}
 
     public void SetSkillData(int skillId)
     {
@@ -79,21 +87,6 @@ public abstract class PassiveSkill : Skill
         }
         catch
         {
-            //try
-            //{
-            //    if (Enum.TryParse(Convert.ToString(data["PassiveEffect"]), true, out SKILL_PASSIVE effect))
-            //    {
-            //        List<SKILL_PASSIVE> list = new List<SKILL_PASSIVE>()
-            //        {
-            //            effect,
-            //        };
-            //        skillData.SetEffect(list);
-            //    }
-            //}
-            //catch
-            //{
-            //    skillData.SetEffect(new List<SKILL_PASSIVE>());
-            //}
             if (Enum.TryParse(Convert.ToString(data["PassiveEffect"]), true, out SKILL_PASSIVE effect))
             {
                 List<SKILL_PASSIVE> list = new List<SKILL_PASSIVE>()
@@ -118,10 +111,10 @@ public abstract class PassiveSkill : Skill
         {
             skillData.SetCoolTime(0);
         }
-        finally
-        {
-            coolTime = new WaitForSeconds(skillData.coolTime);
-        }
+        //finally
+        //{
+        //    coolTime = new WaitForSeconds(skillData.coolTime);
+        //}
 
         try
         {
@@ -139,7 +132,7 @@ public abstract class PassiveSkill : Skill
         {
             try
             {
-                if (Enum.TryParse(Convert.ToString(data["PassiveEffect"]), true, out CALC_MODE mode))
+                if (Enum.TryParse(Convert.ToString(data["CalcType"]), true, out CALC_MODE mode))
                 {
                     List<CALC_MODE> list = new List<CALC_MODE>()
                     {
@@ -156,21 +149,26 @@ public abstract class PassiveSkill : Skill
 
         try
         {
-            skillData.SetEffectParam(data["PassiveParam"] as List<string>);
+            List<float> list = new List<float>();
+            foreach(string str in data["PassiveParam"] as List<string>)
+            {
+                list.Add(float.Parse(str));
+            }
+            skillData.SetEffectParam(list);
         }
         catch
         {
             try
             {
-                List<string> list = new List<string>()
+                List<float> list = new List<float>()
                 {
-                    Convert.ToString(data["PassiveParam"]),
+                    float.Parse(Convert.ToString(data["PassiveParam"])),
                 };
                 skillData.SetEffectParam(list);
             }
             catch
             {
-                skillData.SetEffectParam(new List<string>());
+                skillData.SetEffectParam(new List<float>());
             }
         }
 

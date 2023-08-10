@@ -18,15 +18,16 @@ public class Juhon : ActiveSkill
         do
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+            projectile.CollisionRadius(skillData.attackDistance);
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+                //projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
                 projectile.CollisionPower(true);
                 yield return intervalTime;
                 projectile.CollisionPower(false);
-
             }
-            projectile.transform.localScale = Vector2.zero;
+            //projectile.transform.localScale = Vector2.zero;
+            SkillManager.Instance.DeSpawnProjectile(projectile);
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         } while (skillData.coolTime > 0.0f);
 

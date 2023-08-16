@@ -66,7 +66,27 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         projectile.transform.parent = shooter;
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
         projectile.transform.localPosition = Vector2.zero;
-        projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+        projectile.transform.localScale = Vector3.one * skillData.projectileSizeMulti;
+        projectile.SetProjectile(skillData);
+        projectile.gameObject.SetActive(true);
+        return projectile;
+    }
+
+    //true -> h / false -> v
+    public Projectile SpawnProjectile(ActiveData skillData, Transform shooter, bool direction)
+    {
+        int poolId = skillData.skillId / 100;
+        Projectile projectile = skillPools[poolId].GetObject();
+        projectile.transform.parent = shooter;
+        projectile.gameObject.layer = (int)LayerConstant.SKILL;
+        if (direction)
+        {
+            projectile.transform.localScale = new Vector3(skillData.projectileSizeMulti, 1.0f, 1.0f);
+        }
+        else
+        {
+            projectile.transform.localScale = new Vector3(1.0f, skillData.projectileSizeMulti, 1.0f);
+        }
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
         return projectile;

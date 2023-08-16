@@ -118,16 +118,16 @@ public class LevelUpUI : MonoBehaviour
                     continue;
                 }
 
-                skillId = skillId * 100 + 1;
+                //skillId = skillId * 100 + 1;
 
                 foreach (int id in skillList.Keys)
                 {
-                    if (id / 100 == skillId / 100) //가지고 있는 스킬일 때
+                    if (id / 100 == skillId /*/ 100*/) //가지고 있는 스킬일 때
                     {
                         if (id % 100 != SkillManager.SKILL_MAX_LEVEL) //만렙이 아니라면
                         {
-                            skillId = id + 1;
-                            skills.Add(skillId / 100);
+                            //skillId = id + 1;
+                            skills.Add(skillId /*/ 100*/);
                             return skillId;
                         }
                     }
@@ -142,7 +142,7 @@ public class LevelUpUI : MonoBehaviour
                     continue;
                 }
 
-                skills.Add(skillId / 100);
+                skills.Add(skillId /*/ 100*/);
                 return skillId;
             }
         }

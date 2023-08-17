@@ -1,8 +1,10 @@
 PackageID,PackageSource,IsMultiple,ItemID,ItemAmount,ItemProbability
 ?¨í‚¤ì§€ ID,?¨í‚¤ì§€ ?ŒìŠ¤,ê·¸ë£¹ ???…ë¦½ ?•ë¥ ë¡??œí–‰,?„ì´??ID,?„ì´???˜ëŸ‰,?„ì´???œë ?•ë¥ (ë§Œë¶„??
 int,String,Bool,int,Int,int
-101011,BaseSmallEXP,FALSE,101,1,10000
-101012,AdditionalSmall,FALSE,101,1,10000
+101011,BaseSmallEXP,FALSE,101,1,8500
+101012,BaseSmallEXP,FALSE,102,1,1000
+101013,BaseSmallEXP,FALSE,102,1,500
+101014,AdditionalSmall,FALSE,101,1,10000
 102011,BaseMiddleEXP,FALSE,102,1,10000
 102012,AdditionalMiddle,FALSE,102,1,10000
 103011,BaseBigEXP,FALSE,103,1,10000

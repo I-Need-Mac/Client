@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,12 @@ using UnityEngine;
 public class SoundRequesterSFX : SoundRequester
 {
     public Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem> shootingSounds = new Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem>();
+    public Dictionary<string, GameObject> audioGameObjectDict = new Dictionary<string, GameObject>();
 
     [ExecuteInEditMode]
     public List<AudioSourceSetter> speakerSettings = new List<AudioSourceSetter>();
     public List<SoundPackItem> soundPackItems = new List<SoundPackItem>();
+  
 
     private SoundSituation.SOUNDSITUATION lastSituation;
 
@@ -35,6 +38,8 @@ public class SoundRequesterSFX : SoundRequester
 
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
+                audioGameObjectDict.Add(items.speakerName, speaker);
+
                 SoundManager.Instance.AddAudioSource(items.audioType + "@" + soundObjectID + "!" + items.speakerName, audioSources[items.speakerName]);
 
                 audioSources[items.speakerName].loop = items.isLoop;
@@ -64,6 +69,7 @@ public class SoundRequesterSFX : SoundRequester
                 speaker.transform.SetParent(soundRequester.transform);
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
+                audioGameObjectDict.Add(items.speakerName, speaker);
                 SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
 
             }
@@ -132,10 +138,13 @@ public class SoundRequesterSFX : SoundRequester
         audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
         if (situation == SoundSituation.SOUNDSITUATION.DIE)
         {
-            MoveToSoundManager(FindChild(FindChild(this.gameObject, "SoundRequester"), shootingSounds[situation].usingSpeaker));
+           MoveToSoundManager(audioGameObjectDict[shootingSounds[situation].usingSpeaker]);
         }
 
     }
+
+
+
     protected override void ShootSound(string speakName, AudioClip clip)
     {
         audioSources[speakName].clip = clip;

@@ -343,10 +343,11 @@ public class Monster : MonoBehaviour
 
     public void Die(bool isDrop)
     {
-        //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         monsterCollider.enabled = false;
         monsterCollider2.enabled = false;
         StartCoroutine(DieAnimation());
+
         if (isDrop)
         {
             DropItem();

@@ -21,7 +21,7 @@ public class Aliento : ActiveSkill
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                ProjectileStraight projectile = (ProjectileStraight)SkillManager.Instance.SpawnProjectile(skillData);
+                ProjectileStraight projectile = SkillManager.Instance.SpawnProjectile<ProjectileStraight>(skillData);
                 projectile.transform.localPosition = shooter.position;
                 Vector2 pos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
                 pos -= (Vector2)shooter.position;

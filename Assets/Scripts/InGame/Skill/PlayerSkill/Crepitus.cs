@@ -23,7 +23,7 @@ public class Crepitus : ActiveSkill
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData);
+                Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
                 SkillManager.Instance.CoroutineStarter(Boom(projectile));
                 yield return intervalTime;
             }

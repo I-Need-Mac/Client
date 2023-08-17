@@ -17,7 +17,7 @@ public class Juhon : ActiveSkill
 
         do
         {
-            Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
             projectile.CollisionRadius(skillData.attackDistance);
             for (int i = 0; i < skillData.projectileCount; i++)
             {

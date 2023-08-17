@@ -21,7 +21,7 @@ public class Bujung : ActiveSkill
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                ProjectileStraight projectile = (ProjectileStraight)SkillManager.Instance.SpawnProjectile(skillData);
+                ProjectileStraight projectile = SkillManager.Instance.SpawnProjectile<ProjectileStraight>(skillData);
                 projectile.transform.localPosition = shooter.position;
 
                 Vector2 targetPos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);

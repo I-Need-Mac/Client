@@ -71,7 +71,7 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        transform.localScale *= this.skillData.projectileSizeMulti;
+        //transform.localScale *= this.skillData.projectileSizeMulti;
         //this.totalDamage = skillData.damage;
     }
 

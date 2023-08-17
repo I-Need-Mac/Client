@@ -22,7 +22,7 @@ public class Horin : ActiveSkill
             projectiles = new Projectile[skillData.projectileCount];
             for (int i = 0; i < projectiles.Length; i++)
             {
-                projectiles[i] = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+                projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
                 originSize = projectiles[i].transform.localScale * skillData.projectileSizeMulti;
                 projectiles[i].transform.localScale = Vector2.zero;
                 projectiles[i].transform.localPosition = Vector2.up * skillData.attackDistance;

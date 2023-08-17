@@ -238,4 +238,9 @@ public class SoundManager : SingleTon<SoundManager>
         }
 
     }
+
+    public GameObject getSoundManagerGameObject() { 
+        return soundManager;
+    }
+
 }

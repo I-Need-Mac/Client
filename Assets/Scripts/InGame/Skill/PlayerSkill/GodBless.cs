@@ -21,7 +21,7 @@ public class GodBless : ActiveSkill
             {
                 for (int i = 0; i < skillData.projectileCount; i++)
                 {
-                    Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+                    Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
                     projectile.transform.localScale = Vector2.zero;
                     projectile.CollisionRadius(skillData.splashRange);
                     projectile.transform.localScale = Vector2.one;

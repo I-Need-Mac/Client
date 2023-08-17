@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4ecd13599d8314e8d1c74f19e59bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <monsterId>k__BackingField: 102
   <monsterData>k__BackingField:
     monsterName: 
     sizeMultiple: 0
@@ -65,7 +64,6 @@ MonoBehaviour:
     groupSourceRate: 0
     monsterPrefabPath: 
     attackType: 0
-  aniName: 0
 --- !u!114 &3422411336246179697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,8 +76,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speakerSettings: []
-  soundPackItems: []
+  speakerSettings:
+  - speakerName: Shooter
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 0.5
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 8
+    audioClip: {fileID: 8300000, guid: e885484e1bc99fb47a0ac3f6bfa586b1, type: 3}
 --- !u!114 &6152796279671637203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +162,7 @@ GameObject:
   - component: {fileID: 6480226688596412859}
   - component: {fileID: 7504776616923089388}
   - component: {fileID: 4312069860062731943}
+  - component: {fileID: 9033121750144712078}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -281,6 +301,41 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670677688976737806}
   m_Mesh: {fileID: 0}
+--- !u!114 &9033121750144712078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670677688976737806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Shooter
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 0.5
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 8
+    audioClip: {fileID: 0}
 --- !u!1 &8348437220285926542
 GameObject:
   m_ObjectHideFlags: 0

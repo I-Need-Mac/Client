@@ -54,19 +54,76 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         }
     }
 
-    public Projectile SpawnProjectile(ActiveData skillData)
+    public T SpawnProjectile<T>(ActiveData skillData) where T : Projectile
     {
-        return SpawnProjectile(skillData, transform);
+        return SpawnProjectile<T>(skillData, transform);
     }
 
-    public Projectile SpawnProjectile(ActiveData skillData, Transform shooter)
+    //public Projectile SpawnProjectile(ActiveData skillData)
+    //{
+    //    return SpawnProjectile(skillData, transform);
+    //}
+
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter) where T : Projectile
+    {
+        int poolId = skillData.skillId / 100;
+        T projectile = (T)skillPools[poolId].GetObject();
+        projectile.transform.parent = shooter;
+        projectile.gameObject.layer = (int)LayerConstant.SKILL;
+        projectile.transform.localPosition = Vector2.zero;
+        projectile.transform.localScale = Vector3.one * skillData.projectileSizeMulti;
+        projectile.SetProjectile(skillData);
+        projectile.gameObject.SetActive(true);
+        return projectile;
+    }
+
+    //public Projectile SpawnProjectile(ActiveData skillData, Transform shooter)
+    //{
+    //    int poolId = skillData.skillId / 100;
+    //    Projectile projectile = skillPools[poolId].GetObject();
+    //    projectile.transform.parent = shooter;
+    //    projectile.gameObject.layer = (int)LayerConstant.SKILL;
+    //    projectile.transform.localPosition = Vector2.zero;
+    //    projectile.transform.localScale = Vector3.one * skillData.projectileSizeMulti;
+    //    projectile.SetProjectile(skillData);
+    //    projectile.gameObject.SetActive(true);
+    //    return projectile;
+    //}
+
+    //true -> h / false -> v
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, bool direction) where T : Projectile
+    {
+        int poolId = skillData.skillId / 100;
+        T projectile = (T)skillPools[poolId].GetObject();
+        projectile.transform.parent = shooter;
+        projectile.gameObject.layer = (int)LayerConstant.SKILL;
+        if (direction)
+        {
+            projectile.transform.localScale = new Vector3(skillData.projectileSizeMulti, 1.0f, 1.0f);
+        }
+        else
+        {
+            projectile.transform.localScale = new Vector3(1.0f, skillData.projectileSizeMulti, 1.0f);
+        }
+        projectile.SetProjectile(skillData);
+        projectile.gameObject.SetActive(true);
+        return projectile;
+    }
+
+    public Projectile SpawnProjectile(ActiveData skillData, Transform shooter, bool direction)
     {
         int poolId = skillData.skillId / 100;
         Projectile projectile = skillPools[poolId].GetObject();
         projectile.transform.parent = shooter;
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
-        projectile.transform.localPosition = Vector2.zero;
-        projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+        if (direction)
+        {
+            projectile.transform.localScale = new Vector3(skillData.projectileSizeMulti, 1.0f, 1.0f);
+        }
+        else
+        {
+            projectile.transform.localScale = new Vector3(1.0f, skillData.projectileSizeMulti, 1.0f);
+        }
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
         return projectile;

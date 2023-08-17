@@ -133,11 +133,11 @@ public class LevelUpUI : MonoBehaviour
                     }
                 }
 
-                if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
+                if (skillId / 10000 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
                 {
                     continue;
                 }
-                if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
+                if (skillId / 10000 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
                 {
                     continue;
                 }

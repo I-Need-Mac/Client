@@ -159,7 +159,7 @@ public class LevelUpUI : MonoBehaviour
                 if (skillId % 100 != SkillManager.SKILL_MAX_LEVEL)
                 {
                     skills.Add(skillId / 100);
-                    return skillId;
+                    return skillId + 1;
                 }
             }
         }

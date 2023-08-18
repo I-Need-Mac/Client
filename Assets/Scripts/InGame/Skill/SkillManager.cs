@@ -262,14 +262,14 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillList.Add(skillId, skill);
     }
 
-    public void SkillLevelUp(SkillInfo skillInfo)
-    {
-        //StopCoroutine(skillInfo.activation);
-        skillInfo.skill.SkillLevelUp();
-        //IEnumerator activation = skillInfo.skill.Activation();
-        //StartCoroutine(activation);
-        //skillInfo.activation = activation;
-    }
+    //public void SkillLevelUp(SkillInfo skillInfo)
+    //{
+    //    //StopCoroutine(skillInfo.activation);
+    //    skillInfo.skill.SkillLevelUp();
+    //    //IEnumerator activation = skillInfo.skill.Activation();
+    //    //StartCoroutine(activation);
+    //    //skillInfo.activation = activation;
+    //}
 
     public void CoroutineStarter(IEnumerator coroutine)
     {

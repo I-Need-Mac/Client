@@ -137,18 +137,21 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     public void SkillAdd(int skillId, Transform shooter, int skillNum)
     {
+        Skill skill;
+
         foreach (int id in skillList.Keys)
         {
             if (id / 100 == skillId / 100)
             {
                 DebugManager.Instance.PrintDebug("[SkillManager]: Skill Level Up!");
-                //skillList[id].skill.SkillLevelUp();
                 skillList[id].SkillLevelUp();
+                skill = skillList[id];
+                skillList.Add(id + 1, skill);
+                skillList.Remove(id);
                 return;
             }
         }
         
-        Skill skill;
         switch(skillId / 100)
         {
             case 101:

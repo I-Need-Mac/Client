@@ -224,7 +224,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
     private IEnumerator Round(int amount, int monsterId)
     {
         float weight = 10.0f;
-        float angle = 360 / amount;
+        float angle = amount == 0 ? 0 : 360 / amount;
         float radius = RADIUS;
 
         if (amount > ROUND_AMOUNT)

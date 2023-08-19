@@ -14,7 +14,7 @@ public abstract class SoundRequester : MonoBehaviour
 
     protected Dictionary<string,AudioSource> audioSources = new Dictionary<string, AudioSource>();
     protected GameObject soundRequester;
-    protected GameObject soundManager = SoundManager.Instance.getSoundManagerGameObject();
+    protected GameObject soundManager = SoundManager.Instance.GetSoundManagerGameObject();
 
 
 
@@ -78,7 +78,7 @@ public abstract class SoundRequester : MonoBehaviour
         AudioSource audioSource = target.GetComponent<AudioSource>();
         if (audioSource.clip != null){
             if (soundManager == null) { 
-                soundManager = SoundManager.Instance.getSoundManagerGameObject();
+                soundManager = SoundManager.Instance.GetSoundManagerGameObject();
             }
        
             target.transform.position = new Vector3(soundManager.transform.position.x, soundManager.transform.position.y, soundManager.transform.position.z);

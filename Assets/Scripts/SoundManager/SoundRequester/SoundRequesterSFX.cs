@@ -43,7 +43,7 @@ public class SoundRequesterSFX : SoundRequester
                 SoundManager.Instance.AddAudioSource(items.audioType + "@" + soundObjectID + "!" + items.speakerName, audioSources[items.speakerName]);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType) * items.volume;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;

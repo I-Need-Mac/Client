@@ -12,6 +12,7 @@ public class SoundManager : SingleTon<SoundManager>
     
 
     GameObject soundManager;
+    GameObject bgmRequester;
     SoundManagerUpdater soundManagerUpdater;
     
     private const float soundNomalizer = 10.0f;
@@ -37,7 +38,7 @@ public class SoundManager : SingleTon<SoundManager>
         }
         GameObject.DontDestroyOnLoad(soundManager);
 
-        GameObject bgmRequester = GameObject.Find("BGMRequester");
+        bgmRequester = GameObject.Find("BGMRequester");
         if (bgmRequester != null)
         {
             DebugManager.Instance.PrintDebug("찾음");
@@ -47,6 +48,8 @@ public class SoundManager : SingleTon<SoundManager>
         {
             DebugManager.Instance.PrintDebug("응 없어");
         }
+
+        AudioSourcePreSetting();
     }
 
 
@@ -127,7 +130,7 @@ public class SoundManager : SingleTon<SoundManager>
         return audioSourceList.Keys.ToList();
     }
 
-    public float getSettingSound(string audioType) { 
+    public float GetSettingSound(string audioType) { 
         return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
     }
 
@@ -239,8 +242,35 @@ public class SoundManager : SingleTon<SoundManager>
 
     }
 
-    public GameObject getSoundManagerGameObject() { 
+    public GameObject GetSoundManagerGameObject() { 
         return soundManager;
     }
 
+
+    public void RefindBGMRequester() {
+        bgmRequester = GameObject.Find("BGMRequester");
+        if (bgmRequester != null)
+        {
+            DebugManager.Instance.PrintDebug("찾음");
+            bgmRequester.gameObject.GetComponent<SoundRequesterBGM>().RequestShootSound();
+        }
+        else
+        {
+            DebugManager.Instance.PrintDebug("응 없어");
+        }
+
+    }
+
+    public void AudioSourcePreSetting() {
+        GameObject preRequster = GameObject.Find("SpeakerPreSetter");
+        if (bgmRequester != null)
+        {
+            DebugManager.Instance.PrintDebug("찾음");
+            preRequster.gameObject.GetComponent<SpeakerPreSetter>().preInit();
+        }
+        else
+        {
+            DebugManager.Instance.PrintDebug("응 없어");
+        }
+    }
 }

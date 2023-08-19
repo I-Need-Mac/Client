@@ -71,7 +71,7 @@ public class SoundRequesterBGM : SoundRequester
                 SoundManager.Instance.AddAudioSource(items.audioType + "@" + soundObjectID + items.speakerName, audioSources[items.speakerName]);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType) * items.volume;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;
@@ -145,15 +145,32 @@ public class SoundRequesterBGM : SoundRequester
 
             if (shootingSounds[lastSituation].priority <= shootingSounds[situation].priority)
             {
+                audioSources[shootingSounds[lastSituation].usingSpeaker].Stop();
+
                 if (shootingSounds[situation].delay == 0)
                 {
-                    ShootSound(shootingSounds[situation].usingSpeaker, shootingSounds[situation].introBGMClip);
-                    RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                    if (shootingSounds[situation].introBGMClip != null){ 
+                        ShootSound(shootingSounds[situation].usingSpeaker, shootingSounds[situation].introBGMClip);
+                        RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                    }
+                    else {
+                        ShootSound(shootingSounds[situation].usingSpeaker, shootingSounds[situation].realBGMClip);
+                    }
                 }
                 else
                 {
-                    StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].introBGMClip, shootingSounds[situation].delay));
-                    RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                    if (shootingSounds[situation].introBGMClip != null)
+                    {
+                        StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].introBGMClip, shootingSounds[situation].delay));
+                        RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                    }
+                    else
+                    {
+                        StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].realBGMClip, shootingSounds[situation].delay));
+                    }
+
+
+
                 }
             }
         }

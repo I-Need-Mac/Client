@@ -21,15 +21,23 @@ public class SpeakerPreSetter : MonoBehaviour
         MakeSpeakers();
     }
 
+    private void OnEnable()
+    {
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
         
     }
-
+    public void preInit() { 
+    
+      //  MakeSpeakers();
+    }
     private bool MakeSpeakers()
     {
-        GameObject soundManager = GameObject.Find("SoundManager");
+        GameObject soundManager = SoundManager.Instance.GetSoundManagerGameObject();
         try {
             soundRequester = soundManager.transform.Find("SoundRequester").gameObject;
         }catch(NullReferenceException e) {
@@ -56,7 +64,7 @@ public class SpeakerPreSetter : MonoBehaviour
                 SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType) * items.volume;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;

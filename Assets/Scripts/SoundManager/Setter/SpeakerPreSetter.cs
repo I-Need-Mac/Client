@@ -21,16 +21,16 @@ public class SpeakerPreSetter : MonoBehaviour
         MakeSpeakers();
     }
 
-    private void OnEnable()
-    {
+    //private void OnEnable()
+    //{
         
-    }
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Update is called once per frame
+    //void Update()
+    //{
         
-    }
+    //}
     public void preInit() { 
     
       //  MakeSpeakers();

@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        AudioSetting();
         //hpBar.HpBarSwitch(true);
     }
 
@@ -134,4 +135,10 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    #region Sound
+    private void AudioSetting()
+    {
+        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>());
+    }
+    #endregion
 }

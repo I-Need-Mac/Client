@@ -20,6 +20,8 @@ public class SoundManager : SingleTon<SoundManager>
 
     public void CreateSoundManager()
     {
+       // SettingManager.Instance.ReadSettingFile();
+
         if (null != audioSourceList)
         {
             DebugManager.Instance.PrintDebug("Already Created Dafault AudioSources!");
@@ -30,6 +32,8 @@ public class SoundManager : SingleTon<SoundManager>
 
 
         soundManager = GameObject.Find("SoundManager");
+
+        if(soundManager==null)
         {
             soundManager = new GameObject("SoundManager");
             soundManager.AddComponent<SoundManagerUpdater>();

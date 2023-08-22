@@ -38,9 +38,9 @@ public class SpeakerPreSetter : MonoBehaviour
     private bool MakeSpeakers()
     {
         GameObject soundManager = SoundManager.Instance.GetSoundManagerGameObject();
-        try {
-            soundRequester = soundManager.transform.Find("SoundRequester").gameObject;
-        }catch(NullReferenceException e) {
+        soundRequester = soundManager.transform.Find("SoundRequester").gameObject;
+
+        if(soundRequester == null) {
             soundRequester = new GameObject("SoundRequester");
             soundRequester.transform.position = new Vector3(soundManager.transform.position.x, soundManager.transform.position.y, soundManager.transform.position.z);
             soundRequester.transform.SetParent(soundManager.transform);
@@ -52,7 +52,7 @@ public class SpeakerPreSetter : MonoBehaviour
 
 
 
-            if (items.loadSettingFrom.Equals(null))
+            if (items.loadSettingFrom==null)
             {
 
                 GameObject speaker = new GameObject(items.speakerName);

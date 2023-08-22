@@ -252,9 +252,7 @@ public class SoundManager : SingleTon<SoundManager>
         return soundManager;
     }
 
-    public void RequestShooting(string speakerName, AudioClip audioClip, ) { 
-    
-    }
+
 
 
     public void RefindBGMRequester() {

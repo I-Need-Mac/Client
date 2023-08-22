@@ -95,7 +95,7 @@ public class SoundManager : SingleTon<SoundManager>
     }
 
 
-    public void PlayAudioClip(string audioSourceKey, AudioClip audioClip)
+    public void PlayAudioClip(string audioSourceKey, AudioClip audioClip, bool shootType =true, bool isLoop = false)
     {
         if (audioSourceList.ContainsKey(audioSourceKey) == false)
         {
@@ -107,11 +107,17 @@ public class SoundManager : SingleTon<SoundManager>
         DebugManager.Instance.PrintDebug("Shoot Sound with AudioSourceKey= " + audioSourceKey);
 
 
+        if (shootType) {
+            audioSourceList[audioSourceKey].Stop();
+            audioSourceList[audioSourceKey].PlayOneShot(audioClip);
 
-        audioSourceList[audioSourceKey].Stop();
-        audioSourceList[audioSourceKey].clip = audioClip;
-        audioSourceList[audioSourceKey].Play();
-
+        }
+        else { 
+            audioSourceList[audioSourceKey].Stop();
+            audioSourceList[audioSourceKey].loop = isLoop;
+            audioSourceList[audioSourceKey].clip = audioClip;
+            audioSourceList[audioSourceKey].Play();
+        }
 
 
     }
@@ -244,6 +250,10 @@ public class SoundManager : SingleTon<SoundManager>
 
     public GameObject GetSoundManagerGameObject() { 
         return soundManager;
+    }
+
+    public void RequestShooting(string speakerName, AudioClip audioClip, ) { 
+    
     }
 
 

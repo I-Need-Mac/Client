@@ -40,6 +40,6 @@ public class GameSetter : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        a.ChangeSituation(BGMSituation.BGMSITUATION.CHANGE_SCENE);
+        
     }
 }

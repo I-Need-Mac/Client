@@ -53,7 +53,7 @@ public class SoundManager : SingleTon<SoundManager>
             DebugManager.Instance.PrintDebug("응 없어");
         }
 
-        AudioSourcePreSetting();
+
     }
 
 
@@ -273,16 +273,5 @@ public class SoundManager : SingleTon<SoundManager>
 
     }
 
-    public void AudioSourcePreSetting() {
-        GameObject preRequster = GameObject.Find("SpeakerPreSetter");
-        if (bgmRequester != null)
-        {
-            DebugManager.Instance.PrintDebug("찾음");
-            preRequster.gameObject.GetComponent<SpeakerPreSetter>().preInit();
-        }
-        else
-        {
-            DebugManager.Instance.PrintDebug("응 없어");
-        }
-    }
+   
 }

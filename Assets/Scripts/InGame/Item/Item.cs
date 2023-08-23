@@ -48,6 +48,30 @@ public class Item : MonoBehaviour
             //Enum.TryParse(table["ItemType"].ToString(), true, out ItemConstant result);
             itemData.SetItemTypeParam(Convert.ToInt32(table["ItemTypeParam"]));
             //itemData.SetImagePath(Convert.ToString(table["ImagePath"]));
+
+            if (Enum.TryParse(Convert.ToString(table["ItemType"]), true, out ItemConstant type))
+            {
+                itemData.SetItemType(type);
+            }
+            
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == (int)LayerConstant.ITEM)
+        {
+            target = GameManager.Instance.player.character;
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(Move());
+            }
+        }
+
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            gameObject.SetActive(false);
+            ItemEffect.ItemEffectActivation(itemData.itemTypeParam, itemData.itemType);
         }
     }
 }

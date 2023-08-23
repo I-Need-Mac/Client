@@ -20,6 +20,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     private float defaultScale;
     private float defaultCharScale;
 
+    public int box { get; set; }
+    public int key { get; set; }
+
     protected override void Awake()
     {
         defaultScale = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue")));

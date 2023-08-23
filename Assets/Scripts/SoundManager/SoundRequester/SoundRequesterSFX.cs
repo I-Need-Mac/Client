@@ -40,7 +40,7 @@ public class SoundRequesterSFX : SoundRequester
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
                 audioGameObjectDict.Add(items.speakerName, speaker);
 
-                SoundManager.Instance.AddAudioSource(items.audioType + "@" + soundObjectID + "!" + items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(soundObjectID + "!" + items.speakerName, audioSources[items.speakerName], items.audioType);
 
                 audioSources[items.speakerName].loop = items.isLoop;
                 audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
@@ -70,7 +70,7 @@ public class SoundRequesterSFX : SoundRequester
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
                 audioGameObjectDict.Add(items.speakerName, speaker);
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName],items.audioType);
 
             }
 

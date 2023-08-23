@@ -61,7 +61,7 @@ public class SpeakerPreSetter : MonoBehaviour
 
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName], items.audioType);
 
                 audioSources[items.speakerName].loop = items.isLoop;
                 audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
@@ -90,7 +90,7 @@ public class SpeakerPreSetter : MonoBehaviour
                 speaker.transform.SetParent(soundRequester.transform);
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName],items.audioType);
 
             }
 

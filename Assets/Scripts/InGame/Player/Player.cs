@@ -138,7 +138,7 @@ public class Player : MonoBehaviour
     #region Sound
     private void AudioSetting()
     {
-        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>());
+        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), "EFFECT_SOUND");
     }
     #endregion
 }

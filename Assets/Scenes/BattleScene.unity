@@ -3707,25 +3707,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fec208b9995124baaccdfc1e5dce96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speakerSettings:
-  - speakerName: BGM1
-    _audioType: 0
-    loadSettingFrom: {fileID: 0}
-    audioMixerGroup: {fileID: 0}
-    isLoop: 0
-    isBypassEffects: 0
-    priority: 128
-    pitch: 1
-    streoPan: 0
-    volume: 0.5
-    is3D: 0
-    audioRolloffMode: 0
-    dropperLevel: 0
-    spread: 0
-    minDistance: 0
-    maxDistance: 0
+  speakerSettings: []
   soundPackItems:
-  - usingSpeaker: BGM1
+  - usingSpeaker: BGM
     delay: 0
     priority: 0
     BGMSITUATION: 1

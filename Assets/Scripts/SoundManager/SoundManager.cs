@@ -9,6 +9,7 @@ public class SoundManager : SingleTon<SoundManager>
  
     [SerializeField]
     Dictionary<string, AudioSource> audioSourceList = null;
+   
     
 
     GameObject soundManager;
@@ -17,6 +18,7 @@ public class SoundManager : SingleTon<SoundManager>
     
     private const float soundNomalizer = 10.0f;
     private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
+    private Dictionary<string, string> audioTypeDict = new Dictionary<string, string>();
 
     public void CreateSoundManager()
     {
@@ -38,7 +40,7 @@ public class SoundManager : SingleTon<SoundManager>
             soundManager = new GameObject("SoundManager");
             soundManager.AddComponent<SoundManagerUpdater>();
             soundManagerUpdater = soundManager.GetComponent<SoundManagerUpdater>();
-            DebugManager.Instance.PrintDebug(soundManager != null, "create new SoundManager GameeObject");
+            DebugManager.Instance.PrintDebug(soundManager != null, "create new SoundManager GameObject");
         }
         GameObject.DontDestroyOnLoad(soundManager);
 
@@ -58,18 +60,18 @@ public class SoundManager : SingleTon<SoundManager>
 
 
 
-    public bool AddAudioSource(string audioSourceKey, AudioSource audioSource)
+    public bool AddAudioSource(string audioSourceKey, AudioSource audioSource,string sourceSetter)
     {
         GameObject gameManager = GameObject.Find("SoundManager");
 
 
-        if (audioSourceList.ContainsKey(audioSourceKey) == true)
+        if (audioSourceList.ContainsKey(sourceSetter+"@"+audioSourceKey) == true)
         {
-            DebugManager.Instance.PrintDebug("Already Registed AudioSource! AudioSource= " + audioSourceKey);
+            DebugManager.Instance.PrintDebug("Already Registed AudioSource! AudioSource= " + sourceSetter + "@"+audioSourceKey);
         }
         else
         {
-
+            audioTypeDict.Add(sourceSetter + "@" + audioSourceKey, sourceSetter);
             audioSourceList.Add(audioSourceKey, audioSource);
 
 
@@ -84,6 +86,7 @@ public class SoundManager : SingleTon<SoundManager>
         if (audioSourceList.ContainsKey(audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist AudioSource! AudioSource= " + audioSourceKey);
+            
             return;
         }
 
@@ -99,9 +102,11 @@ public class SoundManager : SingleTon<SoundManager>
     }
 
 
-    public void PlayAudioClip(string audioSourceKey, AudioClip audioClip, bool shootType =true, bool isLoop = false)
+    public void PlayAudioClip(string audioSourceKey, AudioClip audioClip, bool shootType = true, bool isLoop = false)
     {
-        if (audioSourceList.ContainsKey(audioSourceKey) == false)
+        audioSourceKey = GetSpeakerNameWithType(audioSourceKey);
+
+        if (audioSourceList.ContainsKey( audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist audioSourceKey! audioSourceKey= " + audioSourceKey);
             return;
@@ -131,7 +136,7 @@ public class SoundManager : SingleTon<SoundManager>
     }
 
     public AudioSource GetAudioSource(string speakerName) { 
-        return audioSourceList[speakerName];
+        return audioSourceList[GetSpeakerNameWithType(speakerName)];
     }
 
 
@@ -256,6 +261,14 @@ public class SoundManager : SingleTon<SoundManager>
         return soundManager;
     }
 
+    public string GetSpeakerNameWithType(string speakerName) {
+        if (audioTypeDict.ContainsKey(speakerName)) {
+            return audioTypeDict[speakerName]+"@"+speakerName;
+        }
+        else { 
+            return speakerName;
+        }
+    }
 
 
 

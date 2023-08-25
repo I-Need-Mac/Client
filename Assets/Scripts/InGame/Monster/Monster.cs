@@ -374,6 +374,11 @@ public class Monster : MonoBehaviour
     #region SKILL_EFFECT
     public void SkillEffectActivation(SKILL_EFFECT effect, float param)
     {
+        this.SkillEffectActivation(effect, param, 1.0f);
+    }
+
+    public void SkillEffectActivation(SKILL_EFFECT effect, float param, float sec)
+    {
         isHit = true;
         if (gameObject.activeInHierarchy)
         {
@@ -383,7 +388,7 @@ public class Monster : MonoBehaviour
                     StartCoroutine(Stun(param));
                     break;
                 case SKILL_EFFECT.SLOW:
-                    StartCoroutine(Slow(param));
+                    StartCoroutine(Slow(param, sec));
                     break;
                 case SKILL_EFFECT.KNOCKBACK:
                     StartCoroutine(KnockBack(param));
@@ -418,17 +423,22 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private IEnumerator Slow(float n)
+    private IEnumerator Slow(float n, float sec)
     {
         if (!isSlow)
         {
             isSlow = true;
             float originSpeed = monsterData.moveSpeed;
             monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(sec);
             monsterData.SetMoveSpeed(originSpeed);
             isSlow = false;
         }
+    }
+
+    private IEnumerator Slow(float n)
+    {
+        yield return this.Slow(n, 1.0f);
     }
 
     private IEnumerator KnockBack(float n)

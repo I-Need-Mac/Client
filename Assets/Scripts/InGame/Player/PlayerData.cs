@@ -290,7 +290,7 @@ public class PlayerData
         this.modifyMoveSpeed += moveSpeed;
     }
 
-    public void GetItemRangeModifier(int getItemRange)
+    public void GetItemRangeModifier(float getItemRange)
     {
         this.modifyGetItemRange += getItemRange;
     }

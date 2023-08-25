@@ -9,16 +9,21 @@ public class SoundManager : SingleTon<SoundManager>
  
     [SerializeField]
     Dictionary<string, AudioSource> audioSourceList = null;
+   
     
 
     GameObject soundManager;
+    GameObject bgmRequester;
     SoundManagerUpdater soundManagerUpdater;
     
     private const float soundNomalizer = 10.0f;
     private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
+    private Dictionary<string, string> audioTypeDict = new Dictionary<string, string>();
 
     public void CreateSoundManager()
     {
+       // SettingManager.Instance.ReadSettingFile();
+
         if (null != audioSourceList)
         {
             DebugManager.Instance.PrintDebug("Already Created Dafault AudioSources!");
@@ -29,15 +34,17 @@ public class SoundManager : SingleTon<SoundManager>
 
 
         soundManager = GameObject.Find("SoundManager");
+
+        if(soundManager==null)
         {
             soundManager = new GameObject("SoundManager");
             soundManager.AddComponent<SoundManagerUpdater>();
             soundManagerUpdater = soundManager.GetComponent<SoundManagerUpdater>();
-            DebugManager.Instance.PrintDebug(soundManager != null, "create new SoundManager GameeObject");
+            DebugManager.Instance.PrintDebug(soundManager != null, "create new SoundManager GameObject");
         }
         GameObject.DontDestroyOnLoad(soundManager);
 
-        GameObject bgmRequester = GameObject.Find("BGMRequester");
+        bgmRequester = GameObject.Find("BGMRequester");
         if (bgmRequester != null)
         {
             DebugManager.Instance.PrintDebug("찾음");
@@ -47,22 +54,24 @@ public class SoundManager : SingleTon<SoundManager>
         {
             DebugManager.Instance.PrintDebug("응 없어");
         }
+
+
     }
 
 
 
-    public bool AddAudioSource(string audioSourceKey, AudioSource audioSource)
+    public bool AddAudioSource(string audioSourceKey, AudioSource audioSource,string sourceSetter)
     {
         GameObject gameManager = GameObject.Find("SoundManager");
 
 
-        if (audioSourceList.ContainsKey(audioSourceKey) == true)
+        if (audioSourceList.ContainsKey(sourceSetter+"@"+audioSourceKey) == true)
         {
-            DebugManager.Instance.PrintDebug("Already Registed AudioSource! AudioSource= " + audioSourceKey);
+            DebugManager.Instance.PrintDebug("Already Registed AudioSource! AudioSource= " + sourceSetter + "@"+audioSourceKey);
         }
         else
         {
-
+            audioTypeDict.Add(sourceSetter + "@" + audioSourceKey, sourceSetter);
             audioSourceList.Add(audioSourceKey, audioSource);
 
 
@@ -77,6 +86,7 @@ public class SoundManager : SingleTon<SoundManager>
         if (audioSourceList.ContainsKey(audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist AudioSource! AudioSource= " + audioSourceKey);
+            
             return;
         }
 
@@ -92,9 +102,11 @@ public class SoundManager : SingleTon<SoundManager>
     }
 
 
-    public void PlayAudioClip(string audioSourceKey, AudioClip audioClip)
+    public void PlayAudioClip(string audioSourceKey, AudioClip audioClip, bool shootType = true, bool isLoop = false)
     {
-        if (audioSourceList.ContainsKey(audioSourceKey) == false)
+        audioSourceKey = GetSpeakerNameWithType(audioSourceKey);
+
+        if (audioSourceList.ContainsKey( audioSourceKey) == false)
         {
             DebugManager.Instance.PrintDebug("Not exist audioSourceKey! audioSourceKey= " + audioSourceKey);
             return;
@@ -104,11 +116,17 @@ public class SoundManager : SingleTon<SoundManager>
         DebugManager.Instance.PrintDebug("Shoot Sound with AudioSourceKey= " + audioSourceKey);
 
 
+        if (shootType) {
+            audioSourceList[audioSourceKey].Stop();
+            audioSourceList[audioSourceKey].PlayOneShot(audioClip);
 
-        audioSourceList[audioSourceKey].Stop();
-        audioSourceList[audioSourceKey].clip = audioClip;
-        audioSourceList[audioSourceKey].Play();
-
+        }
+        else { 
+            audioSourceList[audioSourceKey].Stop();
+            audioSourceList[audioSourceKey].loop = isLoop;
+            audioSourceList[audioSourceKey].clip = audioClip;
+            audioSourceList[audioSourceKey].Play();
+        }
 
 
     }
@@ -118,7 +136,7 @@ public class SoundManager : SingleTon<SoundManager>
     }
 
     public AudioSource GetAudioSource(string speakerName) { 
-        return audioSourceList[speakerName];
+        return audioSourceList[GetSpeakerNameWithType(speakerName)];
     }
 
 
@@ -127,7 +145,7 @@ public class SoundManager : SingleTon<SoundManager>
         return audioSourceList.Keys.ToList();
     }
 
-    public float getSettingSound(string audioType) { 
+    public float GetSettingSound(string audioType) { 
         return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
     }
 
@@ -239,8 +257,34 @@ public class SoundManager : SingleTon<SoundManager>
 
     }
 
-    public GameObject getSoundManagerGameObject() { 
+    public GameObject GetSoundManagerGameObject() { 
         return soundManager;
     }
 
+    public string GetSpeakerNameWithType(string speakerName) {
+        if (audioTypeDict.ContainsKey(speakerName)) {
+            return audioTypeDict[speakerName]+"@"+speakerName;
+        }
+        else { 
+            return speakerName;
+        }
+    }
+
+
+
+    public void RefindBGMRequester() {
+        bgmRequester = GameObject.Find("BGMRequester");
+        if (bgmRequester != null)
+        {
+            DebugManager.Instance.PrintDebug("찾음");
+            bgmRequester.gameObject.GetComponent<SoundRequesterBGM>().RequestShootSound();
+        }
+        else
+        {
+            DebugManager.Instance.PrintDebug("응 없어");
+        }
+
+    }
+
+   
 }

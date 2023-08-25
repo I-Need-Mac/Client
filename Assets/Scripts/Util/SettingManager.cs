@@ -69,8 +69,14 @@ public class SettingManager
             if( values.Length == 0 ){               
                 sr.Close();                
                 return;            
-            }           
-            settings.Add(values[0],int.Parse(values[1]));
+            }
+            if (!settings.ContainsKey(values[0])) { 
+                settings.Add(values[0],int.Parse(values[1]));
+            }
+            else {
+                settings[values[0]]= int.Parse(values[1]);
+
+            }
             source = sr.ReadLine();    // 한줄 읽는다.        
         }
         sr.Close();

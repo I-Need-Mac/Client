@@ -35,6 +35,7 @@ public class UI_StartMain : UI_Base
 
         version.text = "ver. 1.0.0";
         pressKeyImage = GetImage((int)Images.PressKey).gameObject.GetComponent<Image>();
+        SoundManager.Instance.RefindBGMRequester();
     }
 
     public void OnClickImage(PointerEventData data)
@@ -48,8 +49,8 @@ public class UI_StartMain : UI_Base
         switch (imageValue)
         {
             case Images.PressKey:
-                // UIManager.Instance.OpenUI<UI_Login>();
-                UIManager.Instance.OpenUI<UI_StoryMain>();
+                 UIManager.Instance.OpenUI<UI_Login>();
+                //UIManager.Instance.OpenUI<UI_StoryMain>();
                 break;
             default:
                 break;

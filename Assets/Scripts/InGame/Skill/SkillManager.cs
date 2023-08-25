@@ -22,7 +22,7 @@ public struct SkillInfo
 
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
-    public static readonly int SKILL_MAX_LEVEL = 8;
+    //public static readonly int SKILL_MAX_LEVEL = 8;
     public static readonly int ACTIVE_SKILL_MAX_COUNT = 6;
     public static readonly int PASSIVE_SKILL_MAX_COUNT = 5;
     public static readonly int SKILL_MAX_COUNT = ACTIVE_SKILL_MAX_COUNT + PASSIVE_SKILL_MAX_COUNT;

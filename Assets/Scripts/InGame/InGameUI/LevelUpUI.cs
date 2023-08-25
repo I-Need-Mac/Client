@@ -19,7 +19,8 @@ public class LevelUpUI : MonoBehaviour
     private Transform body;
     private RectTransform bodyRect;
     private List<int> skillBenList;
-    private List<int> skillNums = new List<int>();
+    //private List<int> skillNums = new List<int>();
+    private Dictionary<int, int> skillNums = new Dictionary<int, int>();
 
     public bool isSelect { get; private set; }
     public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
@@ -124,7 +125,7 @@ public class LevelUpUI : MonoBehaviour
                 {
                     if (id / 100 == skillId / 100) //가지고 있는 스킬일 때
                     {
-                        if (id % 100 != SkillManager.SKILL_MAX_LEVEL) //만렙이 아니라면
+                        if (id % 100 != skillNums[id / 100] /*SkillManager.SKILL_MAX_LEVEL*/) //만렙이 아니라면
                         {
                             skillId = id + 1;
                             skills.Add(skillId / 100);
@@ -156,7 +157,7 @@ public class LevelUpUI : MonoBehaviour
                 {
                     continue;
                 }
-                if (skillId % 100 != SkillManager.SKILL_MAX_LEVEL)
+                if (skillId % 100 != skillNums[skillId / 100] /*SkillManager.SKILL_MAX_LEVEL*/)
                 {
                     skills.Add(skillId / 100);
                     return skillId + 1;
@@ -174,9 +175,17 @@ public class LevelUpUI : MonoBehaviour
             try
             {
                 int i = Convert.ToInt32(id) / 100;
-                if (!skillNums.Contains(i))
+                //if (!skillNums.Contains(i))
+                //{
+                //    skillNums.Add(i);
+                //}
+                if (!skillNums.ContainsKey(i))
                 {
-                    skillNums.Add(i);
+                    skillNums.Add(i, 1);
+                }
+                else
+                {
+                    skillNums[i]++;
                 }
             }
             catch
@@ -190,9 +199,17 @@ public class LevelUpUI : MonoBehaviour
             try
             {
                 int i = Convert.ToInt32(id) / 100;
-                if (!skillNums.Contains(i))
+                //if (!skillNums.Contains(i))
+                //{
+                //    skillNums.Add(i);
+                //}
+                if (!skillNums.ContainsKey(i))
                 {
-                    skillNums.Add(i);
+                    skillNums.Add(i, 1);
+                }
+                else
+                {
+                    skillNums[i]++;
                 }
             }
             catch
@@ -200,10 +217,5 @@ public class LevelUpUI : MonoBehaviour
                 continue;
             }
         }
-
-        //foreach (int i in skillNums)
-        //{
-        //    DebugManager.Instance.PrintDebug("[TESTTEST]: " + i);
-        //}
     }
 }

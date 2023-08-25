@@ -20,7 +20,7 @@ public class JeRyeung : ActiveSkill
             bool isDrop = true;
             List<Transform> targets;
 
-            Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
             projectile.SetAlpha(1.0f);
 
             if (UnityEngine.Random.Range(0, 100) < int.Parse(skillData.skillEffectParam[0]))

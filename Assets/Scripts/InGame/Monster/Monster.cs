@@ -27,7 +27,8 @@ public class Monster : MonoBehaviour
     private WaitForSeconds tick;
 
     private HpBar hpBar;
-    private WaitForSeconds hpBarVisibleTime;
+    private float hpBarVisibleTime;
+    private WaitForFixedUpdate fixedFrame;
 
     private MonsterCollider attackCollider;
     private SpineManager spineManager;
@@ -50,7 +51,8 @@ public class Monster : MonoBehaviour
         soundRequester = GetComponent<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         tick = new WaitForSeconds(0.4f);
-        hpBarVisibleTime = new WaitForSeconds(Convert.ToInt32(CSVReader.Read("BattleConfig", "HpBarVisibleTime", "ConfigValue")) / 1000.0f);
+        hpBarVisibleTime = Convert.ToInt32(CSVReader.Read("BattleConfig", "HpBarVisibleTime", "ConfigValue")) / 1000.0f;
+        fixedFrame = new WaitForFixedUpdate();
     }
 
     private void Start()
@@ -78,20 +80,20 @@ public class Monster : MonoBehaviour
             btManager.Active();
         }
 
-        if (hpBar != null)
-        {
-            hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
-        }
-        else
-        {
+        //if (hpBar != null)
+        //{
+        //    hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+        //}
+        //else
+        //{
             
-            hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
-        }
+        //    hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        //}
 
         monsterRigidbody.velocity = Vector2.zero;
     }
 
-    public void SpawnSet(float statusCoefficient)
+    public void SpawnSet(float hpCoefficient, float attackCoefficient)
     {
         Physics2D.IgnoreCollision(monsterCollider, monsterCollider2);
         
@@ -100,7 +102,7 @@ public class Monster : MonoBehaviour
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
         situation = SoundSituation.SOUNDSITUATION.IDLE;
-        MonsterDataSetting(monsterId.ToString(), statusCoefficient);
+        MonsterDataSetting(monsterId.ToString(), hpCoefficient, attackCoefficient);
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
 
         isAttack = false;
@@ -271,17 +273,21 @@ public class Monster : MonoBehaviour
         this.isPlayer = isPlayer;
     }
 
-    public void MonsterDataSetting(string monsterId, float statusCoefficient)
+    public void MonsterDataSetting(string monsterId, float hpCoefficient, float attackCoefficient)
     {
         Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
         if (monsterTable.ContainsKey(monsterId))
         {
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
-            monsterData.SetHp((int)(Convert.ToInt32(table["HP"]) * statusCoefficient));
+            int hp = Convert.ToInt32(table["HP"]);
+            hp += Mathf.FloorToInt(hp * hpCoefficient);
+            monsterData.SetHp(hp);
             monsterData.SetCurrentHp(monsterData.hp);
             monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
-            monsterData.SetAttack((int)(Convert.ToInt32(table["Attack"]) * statusCoefficient));
+            int attack = Convert.ToInt32(table["Attack"]);
+            attack += Mathf.FloorToInt(attack * attackCoefficient);
+            monsterData.SetAttack(attack);
             monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
             monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));
@@ -304,11 +310,14 @@ public class Monster : MonoBehaviour
 
     public void Hit(float totalDamage)
     {
-        StopCoroutine(HpBarControl());
-        StartCoroutine(HpBarControl());
+        //StopCoroutine(HpBarControl());
+        if (hpBar == null)
+        {
+            StartCoroutine(HpBarControl());
+        }
 
         isHit = true;
-        monsterData.SetCurrentHp(monsterData.currentHp - (int)totalDamage);
+        monsterData.SetCurrentHp(monsterData.currentHp - (int)(totalDamage * GameManager.Instance.player.playerManager.playerData.attack));
         if (monsterData.currentHp <= 0)
         {
             Die(true);
@@ -317,23 +326,34 @@ public class Monster : MonoBehaviour
 
     private IEnumerator HpBarControl()
     {
-        hpBar.HpBarSwitch(true);
-        yield return hpBarVisibleTime;
-        hpBar.HpBarSwitch(false);
+        //hpBar.HpBarSwitch(true);
+        //yield return hpBarVisibleTime;
+        //hpBar.HpBarSwitch(false);
+        hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        float time = 0.0f;
+        do
+        {
+            hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+            time += Time.fixedDeltaTime;
+            yield return fixedFrame;
+        } while (time < hpBarVisibleTime && monsterData.currentHp > 0);
+        UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+        hpBar = null;
     }
 
     public void Die(bool isDrop)
     {
-        //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         monsterCollider.enabled = false;
         monsterCollider2.enabled = false;
         StartCoroutine(DieAnimation());
+
         if (isDrop)
         {
             DropItem();
         }
-        UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
-        hpBar = null;
+        //UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+        //hpBar = null;
     }
 
     private IEnumerator DieAnimation()

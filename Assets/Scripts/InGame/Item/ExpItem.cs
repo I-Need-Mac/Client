@@ -24,7 +24,7 @@ public class ExpItem : Item
         if (collision.gameObject.CompareTag("Player"))
         {
             gameObject.SetActive(false);
-            GameManager.Instance.player.GetExp(itemData.itemTypeParam);
+            GameManager.Instance.ExpUp(itemData.itemTypeParam);
         }
     }
 }

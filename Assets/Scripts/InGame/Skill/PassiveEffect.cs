@@ -25,23 +25,11 @@ public struct PassiveEffect
                 break;
             case SKILL_PASSIVE.EXP:
                 data = CalcData(GameManager.Instance.player.playerManager.playerData.expBuff, param, mode);
-                GameManager.Instance.player.playerManager.playerData.ExpBuffModifier((int)data);
-                break;
-            case SKILL_PASSIVE.PROJECTILESIZE:
-                data = CalcData(GameManager.Instance.player.playerManager.playerData.projectileSize, param, mode);
-                GameManager.Instance.player.playerManager.playerData.ProjectileSizeModifier(data);
+                GameManager.Instance.player.playerManager.playerData.ExpBuffModifier(data);
                 break;
             case SKILL_PASSIVE.PROJECTILECOUNT:
                 data = CalcData(GameManager.Instance.player.playerManager.playerData.projectileAdd, param, mode);
                 GameManager.Instance.player.playerManager.playerData.ProjectileAddModifier((int)data);
-                break;
-            case SKILL_PASSIVE.PROJECTILESPLASH:
-                data = CalcData(GameManager.Instance.player.playerManager.playerData.projectileSplash, param, mode);
-                GameManager.Instance.player.playerManager.playerData.ProjectileSplashModifier(data);
-                break;
-            case SKILL_PASSIVE.PROJECTILESPEED:
-                data = CalcData(GameManager.Instance.player.playerManager.playerData.projectileSpeed, param, mode);
-                GameManager.Instance.player.playerManager.playerData.ProjectileSpeedModifier(data);
                 break;
             case SKILL_PASSIVE.HP:
                 data = CalcData(GameManager.Instance.player.playerManager.playerData.hp, param, mode);
@@ -61,7 +49,22 @@ public struct PassiveEffect
                 break;
             case SKILL_PASSIVE.ARMOR:
                 data = CalcData(GameManager.Instance.player.playerManager.playerData.armor, param, mode);
-                GameManager.Instance.player.playerManager.playerData.ArmorModifier((int)data);
+                GameManager.Instance.player.playerManager.playerData.ArmorModifier(data);
+                break;
+            case SKILL_PASSIVE.PROJECTILESIZE:
+                GameManager.Instance.player.playerManager.playerData.SetProjectileSize(param, mode);
+                break;
+            case SKILL_PASSIVE.PROJECTILESPEED:
+                GameManager.Instance.player.playerManager.playerData.SetProjectileSpeed(param, mode);
+                break;
+            case SKILL_PASSIVE.PROJECTILESPLASH:
+                GameManager.Instance.player.playerManager.playerData.SetProjectileSplash(param, mode);
+                break;
+            case SKILL_PASSIVE.PROJECTILEDISTANCE:
+                GameManager.Instance.player.playerManager.playerData.SetProjectileDistance(param, mode);
+                break;
+            case SKILL_PASSIVE.SKILLDAMAGE:
+                GameManager.Instance.player.playerManager.playerData.SetSkillDamage(param, mode);
                 break;
             default:
                 DebugManager.Instance.PrintDebug("[ERROR]: 없는 패시브 스킬입니다");
@@ -69,15 +72,13 @@ public struct PassiveEffect
         }
     }
 
-    private static float CalcData(float origin, float param, CALC_MODE mode)
+    public static float CalcData(float value, float param, CALC_MODE mode)
     {
         if (mode == CALC_MODE.PLUS)
         {
-            return origin + param;
+            return param;
         }
-        else
-        {
-            return origin * param * 0.01f;
-        }
+
+        return value == 0 ? param : value * param;
     }
 }

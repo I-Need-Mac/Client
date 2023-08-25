@@ -22,14 +22,13 @@ public class Horin : ActiveSkill
             projectiles = new Projectile[skillData.projectileCount];
             for (int i = 0; i < projectiles.Length; i++)
             {
-                projectiles[i] = SkillManager.Instance.SpawnProjectile(skillData, shooter);
+                projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
                 originSize = projectiles[i].transform.localScale * skillData.projectileSizeMulti;
                 projectiles[i].transform.localScale = Vector2.zero;
                 projectiles[i].transform.localPosition = Vector2.up * skillData.attackDistance;
                 projectiles[i].transform.localEulerAngles = Vector3.zero;
                 float angle = 360 * i / skillData.projectileCount;
                 projectiles[i].transform.RotateAround(shooter.position, Vector3.back, angle);
-                projectiles[i].CollisionPower(false);
             }
 
             yield return Move();
@@ -39,17 +38,12 @@ public class Horin : ActiveSkill
 
     private IEnumerator Move()
     {
-        for (int i = 0; i < projectiles.Length; i++)
-        {
-            projectiles[i].CollisionPower(true);
-        }
-
         float time = 0.0f;
         while(time < skillData.duration)
         {
             for (int i = 0; i < projectiles.Length; i++)
             {
-                if (projectiles[i].transform.localScale.x < 1.0f && time <= 1.0f)
+                if (projectiles[i].transform.localScale.x < originSize.x && time <= 1.0f)
                 {
                     projectiles[i].transform.localScale = originSize * time;
                 }
@@ -57,7 +51,7 @@ public class Horin : ActiveSkill
                 {
                     projectiles[i].transform.localScale = originSize * (skillData.duration - time);
                 }
-                projectiles[i].transform.RotateAround(shooter.position, Vector3.back, skillData.speed);
+                projectiles[i].transform.RotateAround(shooter.position, Vector3.forward, skillData.speed);
             }
             time += Time.fixedDeltaTime;
             yield return frame;
@@ -65,7 +59,7 @@ public class Horin : ActiveSkill
 
         for (int i = 0; i < projectiles.Length; i++)
         {
-            projectiles[i].CollisionPower(false);
+            SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
         }
     }
 }

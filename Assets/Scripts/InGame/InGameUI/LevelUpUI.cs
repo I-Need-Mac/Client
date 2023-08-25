@@ -108,7 +108,8 @@ public class LevelUpUI : MonoBehaviour
         {
             while (c-- != 0)
             {
-                skillId = skillNums[UnityEngine.Random.Range(0, skillNums.Count)];
+                //skillId = skillNums[UnityEngine.Random.Range(0, skillNums.Count)];
+                skillId = skillNums.ElementAt(UnityEngine.Random.Range(0, skillNums.Count)).Key;
                 if (skillBenList.Contains(skillId))
                 {
                     continue;

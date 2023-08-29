@@ -77,8 +77,8 @@ public class FieldStructure : MonoBehaviour
             }
         }
 
-        fieldStructureData.SetTopIsPassable(Convert.ToBoolean(table["TopIsPassible"].ToString().ToLower()));
-        fieldStructureData.SetFrontIsPassable(Convert.ToBoolean(table["FrontIsPassible"].ToString().ToLower()));
+        fieldStructureData.SetTopIsPassable(Convert.ToBoolean(table["TopIsPassable"].ToString().ToLower()));
+        fieldStructureData.SetFrontIsPassable(Convert.ToBoolean(table["FrontIsPassable"].ToString().ToLower()));
         fieldStructureData.SetCastTime(Convert.ToInt32(table["CastTime"]) / 1000.0f);
         fieldStructureData.SetLayerOrder(Convert.ToInt32(table["LayerOrder"]));
         fieldStructureData.SetCoolTime(Convert.ToInt32(table["CoolTime"]) / 1000.0f);
@@ -91,9 +91,9 @@ public class FieldStructure : MonoBehaviour
         top = transform.Find("Top");
         front = transform.Find("Front");
 
-        top.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.topPath);
+        //top.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.topPath);
         top.GetComponent<Collider2D>().enabled = fieldStructureData.topIsPassable;
-        front.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.frontPath);
+        //front.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.frontPath);
         front.GetComponent<Collider2D>().enabled = fieldStructureData.frontIsPassable;
     }
 

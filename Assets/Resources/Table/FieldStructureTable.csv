@@ -1,4 +1,4 @@
-SturctureID,StructureName,FrontalPath,TopPath,Gimmick,GimmickParam,TopIsPassible,FrontIsPassable,CastTime,LayerOrder,CoolTime,IsAct
+SturctureID,StructureName,FrontPath,TopPath,Gimmick,GimmickParam,TopIsPassable,FrontIsPassable,CastTime,LayerOrder,CoolTime,IsAct
 ?¤ë¸Œ?íŠ¸ ID,?¤ë¸Œ?íŠ¸ ?´ë¦„,?•ë©´ ?´ë?ì§€ ?¨ìŠ¤,?ë‹¨ë©??´ë?ì§€ ?¨ìŠ¤,ê¸°ë? ?¨ê³¼ ?•ì˜,ê¸°ë? ?•ì˜ ???”êµ¬?˜ëŠ” N,?¤ë¸Œ?íŠ¸ ?ë‹¨ë©??µê³¼ ?¬ë?,?¤ë¸Œ?íŠ¸ ?•ë©´ ?µê³¼ ?¬ë?,ê¸°ë? ?¨ê³¼ ?œì „ ?œê°„,?¤ë¸Œ?íŠ¸ ?ˆì´???œì„œ,,
 int,LocalizeID,String,String,GimmickEnum,int_Arr,Bool,Bool,int,int,int,bool
 101,FieldStructure_Untidytile1,Map/Tile/Map_Tile_Rock_01,Null,Tile,0,TRUE,TRUE,0,5,0,FALSE

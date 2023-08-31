@@ -2,106 +2,144 @@ using UnityEngine;
 using Cinemachine;
 using BFM;
 using UnityEngine.Tilemaps;
+using System.Collections;
 
 public class CameraManager : SingletonBehaviour<CameraManager>
 {
-    private CinemachineVirtualCamera virtualCam;
+    private const string SPAWN_POINT_NAME = "Floor";
 
-    private Tilemap tileMap;
-    private float extra = 2.0f;
+    private CinemachineVirtualCamera virtualCam;
+    private WaitForFixedUpdate tick;
+
+    private float extra = 4.0f;
 
     public Camera cam { get; private set; }
 
     protected override void Awake()
     {
-        virtualCam = transform.Find("Cinemachine").GetComponent<CinemachineVirtualCamera>();
-        cam = transform.Find("PlayerCamera").GetComponent<Camera>();
+        virtualCam = GetComponentInChildren<CinemachineVirtualCamera>();
+        cam = GetComponentInChildren<Camera>();
+        tick = new WaitForFixedUpdate();
     }
 
     private void Start()
     {
         ConfinerSetting("Floor");
-        tileMap = GameManager.Instance.tileMap;
     }
 
     #region
-    //카메라 범위에서 그리드 벡터값 가져오게 해줌 아마도
+    //public Vector2[] Round(int amount)
+    //{
+    //    Vector2[] poses = new Vector2[amount];
+    //    float angle = 360 / amount;
 
-    /*
-     * 그리드 좌표는 쓰기 편하게 알파벳으로~!
-     * A B C
-     * D   E
-     * F G H
-     */
+    //    float radius = RADIUS;
 
-    public Vector2 RandomPosInGrid(SponeMobLocation location)
+    //    if (amount > ROUND_AMOUNT)
+    //    {
+    //        radius = RADIUS * 1.25f;
+    //    }
+
+    //    for (int i = 0; i < amount; i++)
+    //    {
+    //        Vector2 pos = new Vector2(Mathf.Cos(i * angle * Mathf.Deg2Rad), Mathf.Sin(i * angle * Mathf.Deg2Rad)) * radius + (Vector2)GameManager.Instance.player.transform.position;
+    //        poses[i] = pos;
+    //        try
+    //        {
+    //            if (Physics2D.OverlapPoint(pos, 1 << (int)LayerConstant.MAP).name.Equals(SPAWN_POINT_NAME))
+    //            {
+    //                poses[i] = pos;
+    //            }
+    //            else
+    //            {
+    //                --i;
+    //                angle += 15;
+    //            }
+    //        }
+    //        catch
+    //        {
+    //            --i;
+    //            angle += 15;
+    //        }
+    //    }
+
+    //    return poses;
+    //}
+
+    //DebugManager.Instance.PrintDebug("[CAM] topleft:" + cam.ScreenToWorldPoint(new Vector2(0, Screen.height)));
+    //DebugManager.Instance.PrintDebug("[CAM] topright:" + cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)));
+    //DebugManager.Instance.PrintDebug("[CAM] bottomleft:" + cam.ScreenToWorldPoint(new Vector2(0, 0)));
+    //DebugManager.Instance.PrintDebug("[CAM] bottomright:" + cam.ScreenToWorldPoint(new Vector2(Screen.width, 0)));
+    private bool IsInCamera(Vector2 target)
     {
-        Vector2 camPoint = cam.ScreenToWorldPoint(new Vector2(cam.orthographicSize * Screen.width / Screen.height, cam.orthographicSize));
-        Vector2 weight = new Vector2((cam.orthographicSize * Screen.width / Screen.height * 2) / 3.0f, (cam.orthographicSize * 2) / 3.0f);
+        Vector2 pos = this.cam.WorldToViewportPoint(target);
+        if (pos.x > 0 && pos.x < 1 && pos.y > 0 && pos.y < 1)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsFloor(Vector2 target)
+    {
+        try
+        {
+            return Physics2D.OverlapPoint(target, 1 << (int)LayerConstant.MAP).name.Equals(SPAWN_POINT_NAME);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    public Vector2 RandomPosInGrid(SpawnMobLocation location)
+    {
+        //Vector2 camPoint = cam.ScreenToWorldPoint(new Vector2(cam.orthographicSize * Screen.width / Screen.height, cam.orthographicSize));
+        //Vector2 weight = new Vector2((cam.orthographicSize * Screen.width / Screen.height * 2) / 3.0f, (cam.orthographicSize * 2) / 3.0f);
+
+        Vector2 topLeft = cam.ScreenToWorldPoint(new Vector2(0, Screen.height));
+        Vector2 topRight = cam.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        Vector2 bottomLeft = cam.ScreenToWorldPoint(new Vector2(0, 0));
+        Vector2 bottomRight = cam.ScreenToWorldPoint(new Vector2(Screen.width, 0));
 
         Vector3 pos = Vector3.zero;
         switch (location)
         {
-            case SponeMobLocation.TOPLEFT:
-                pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(-camPoint.y, -camPoint.y + extra));
-                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
-                {
-                    pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-                }
+            case SpawnMobLocation.TOPLEFT:
+                pos = new Vector2(Random.Range(topLeft.x - extra, topLeft.x), Random.Range(topLeft.y, topLeft.y + extra));
                 break;
-            case SponeMobLocation.TOP:
-                pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(-camPoint.y, -camPoint.y + extra));
-                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
-                {
-                    pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-                }
+            case SpawnMobLocation.TOP:
+                pos = new Vector2(Random.Range(topLeft.x, topRight.x), Random.Range(topLeft.y, topLeft.y + extra));
                 break;
-            case SponeMobLocation.TOPRIGHT:
-                pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(-camPoint.y, -camPoint.y + extra));
-                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
-                {
-                    pos = new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y * 2, -camPoint.y));
-                }
+            case SpawnMobLocation.TOPRIGHT:
+                pos = new Vector2(Random.Range(topRight.x, topRight.x + extra), Random.Range(topLeft.y, topLeft.y + extra));
                 break;
-            case SponeMobLocation.LEFT:
-                pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
-                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
-                {
-                    pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
-                }
+            case SpawnMobLocation.LEFT:
+                pos = new Vector2(Random.Range(topLeft.x - extra, topLeft.x), Random.Range(bottomLeft.y, topLeft.y));
                 break;
-            case SponeMobLocation.RIGHT:
-                pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
-                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
-                {
-                    pos = new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y + weight.y, camPoint.y + weight.y * 2));
-                }
+            case SpawnMobLocation.RIGHT:
+                pos = new Vector2(Random.Range(topRight.x, topRight.x + extra), Random.Range(bottomLeft.y, topLeft.y));
                 break;
-            case SponeMobLocation.BOTTOMLEFT:
-                pos = new Vector2(Random.Range(camPoint.x - extra, camPoint.x), Random.Range(camPoint.y - extra, camPoint.y));
-                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
-                {
-                    pos = new Vector2(Random.Range(camPoint.x, camPoint.x + weight.x), Random.Range(camPoint.y, camPoint.y + weight.y));
-                }
+            case SpawnMobLocation.BOTTOMLEFT:
+                pos = new Vector2(Random.Range(topLeft.x - extra, topLeft.x), Random.Range(bottomLeft.y - extra, bottomLeft.y));
                 break;
-            case SponeMobLocation.BOTTOM:
-                pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y - extra, camPoint.y));
-                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
-                {
-                    pos = new Vector2(Random.Range(camPoint.x + weight.x, camPoint.x + weight.x * 2), Random.Range(camPoint.y, camPoint.y + weight.y));
-                }
+            case SpawnMobLocation.BOTTOM:
+                pos = new Vector2(Random.Range(topLeft.x, topRight.x), Random.Range(bottomLeft.y - extra, bottomLeft.y));
                 break;
-            case SponeMobLocation.BOTTOMRIGHT:
-                pos = new Vector2(Random.Range(-camPoint.x, -camPoint.x + extra), Random.Range(camPoint.y - extra, camPoint.y));
-                if (tileMap.GetTile(tileMap.WorldToCell(pos)) == null)
-                {
-                    pos = new Vector2(Random.Range(camPoint.x + weight.x * 2, -camPoint.x), Random.Range(camPoint.y, camPoint.y + weight.y));
-                }
+            case SpawnMobLocation.BOTTOMRIGHT:
+                pos = new Vector2(Random.Range(topRight.x, topRight.x + extra), Random.Range(bottomLeft.y - extra, bottomLeft.y));
                 break;
             default:
-                pos = Vector2.zero;
+                pos = Vector3.zero;
                 break;
         }
+
+        if (!IsFloor(pos) || IsInCamera(pos))
+        {
+            return RandomPosInGrid((SpawnMobLocation)(((int)location + 1) % 8));
+        }
+
         pos.z = (int)LayerConstant.MONSTER;
         return pos;
     }

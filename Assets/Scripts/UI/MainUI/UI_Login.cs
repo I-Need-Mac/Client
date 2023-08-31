@@ -15,6 +15,11 @@ public class UI_Login : UI_Popup
     }
 
     [SerializeField]
+    Sprite loginButtonOrigin;
+    [SerializeField]
+    Sprite loginButtonHover;
+
+    [SerializeField]
     TextMeshProUGUI titleText;
     [SerializeField]
     TextMeshProUGUI loginText;
@@ -34,7 +39,11 @@ public class UI_Login : UI_Popup
         for (int i = 0; i < imageValue.Length; i++)
         {
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
+            BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnEnterImage(data); }, Define.UIEvent.Enter);
+            BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnExitImage(data); }, Define.UIEvent.Exit);
         }
+
+        //loginButtonOrigin = GetImage((int)Images.LoginButton).gameObject.GetComponent<Image>();
 
         titleText.text = LocalizeManager.Instance.GetText("UI_Login");
         loginText.text = LocalizeManager.Instance.GetText("UI_LoginWithSteam");
@@ -61,6 +70,22 @@ public class UI_Login : UI_Popup
                 break;
             default:
                 break;
+        }
+    }
+
+    public void OnEnterImage(PointerEventData data)
+    {
+        if(loginButtonHover != null)
+        {
+            GetImage((int)Images.LoginButton).gameObject.GetComponent<Image>().sprite = loginButtonHover;
+        }
+    }
+
+    public void OnExitImage(PointerEventData data)
+    {
+        if (loginButtonOrigin != null)
+        {
+            GetImage((int)Images.LoginButton).gameObject.GetComponent<Image>().sprite = loginButtonOrigin;
         }
     }
 

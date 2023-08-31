@@ -1,72 +1,114 @@
 
+using SKILLCONSTANT;
 using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class Monster : MonoBehaviour
 {
-    [field: SerializeField] public int monsterId { get; private set; }
-    [field: SerializeField] public MonsterData monsterData;
+    [field: SerializeField] public MonsterData monsterData { get; private set; }
 
+    private CapsuleCollider2D monsterCollider2;
     private CapsuleCollider2D monsterCollider;
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
+    private bool isSlow;
+    private bool spineSwitch;
     private bool isPlayer;
-    private bool isHit;
     private BehaviorTreeManager btManager;
 
+    private float weightX;
     private float weightY;
     private WaitForSeconds delay;
     private WaitForSeconds tick;
+
+    private HpBar hpBar;
+    private float hpBarVisibleTime;
+    private WaitForFixedUpdate fixedFrame;
 
     private MonsterCollider attackCollider;
     private SpineManager spineManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
 
+    public int monsterId { get; set; }
+    public bool isHit { get; set; }
     public bool isAttack { get; private set; }
     public Transform target { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
+
     private void Awake()
     {
         attackCollider = GetComponentInChildren<MonsterCollider>();
+        monsterCollider2 = transform.Find("Collision").GetComponent<CapsuleCollider2D>();
         monsterCollider = GetComponent<CapsuleCollider2D>();
         spineManager = GetComponent<SpineManager>();
         soundRequester = GetComponent<SoundRequester>();
         monsterRigidbody = GetComponent<Rigidbody2D>();
         tick = new WaitForSeconds(0.4f);
-    }
-
-    private void OnEnable()
-    {
-        monsterCollider.enabled = true;
-        monsterDirection = Vector2.zero;
-        lookDirection = Vector2.right;
-        situation = SoundSituation.SOUNDSITUATION.IDLE;
-        MonsterSetting(monsterId.ToString());
-        delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
-        weightY = monsterCollider.size.y;
-        isAttack = false;
-        isHit = false;
+        hpBarVisibleTime = Convert.ToInt32(CSVReader.Read("BattleConfig", "HpBarVisibleTime", "ConfigValue")) / 1000.0f;
+        fixedFrame = new WaitForFixedUpdate();
     }
 
     private void Start()
     {
-        //StartCoroutine(Move());
         btManager = new BehaviorTreeManager(SetAI(monsterData.attackType));
         spineManager.SetAnimation("Idle", true);
         attackCollider.SetAttackDistance(monsterData.atkDistance);
+
+        if (monsterData.atkDistance <= 1.0f)    //근거리
+        {
+            weightX = attackCollider.attackCollider.size.x * 0.3f;
+            weightY = monsterCollider.size.y * 0.3f;
+        }
+        else    //원거리
+        {
+            weightX = monsterData.atkDistance;
+            weightY = monsterData.atkDistance;
+        }
     }
 
     private void FixedUpdate()
     {
-        btManager.Active();
-        monsterRigidbody.velocity = Vector3.zero;
+        if (spineSwitch)
+        {
+            btManager.Active();
+        }
+
+        //if (hpBar != null)
+        //{
+        //    hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+        //}
+        //else
+        //{
+            
+        //    hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        //}
+
+        monsterRigidbody.velocity = Vector2.zero;
+    }
+
+    public void SpawnSet(float hpCoefficient, float attackCoefficient)
+    {
+        Physics2D.IgnoreCollision(monsterCollider, monsterCollider2);
+        
+        monsterCollider.enabled = true;
+        monsterCollider.enabled = true;
+        monsterDirection = Vector2.zero;
+        lookDirection = Vector2.right;
+        situation = SoundSituation.SOUNDSITUATION.IDLE;
+        MonsterDataSetting(monsterId.ToString(), hpCoefficient, attackCoefficient);
+        delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
+
+        isAttack = false;
+        isHit = false;
+        spineSwitch = true;
+        isSlow = false;
     }
 
     #region AI
@@ -132,7 +174,7 @@ public class Monster : MonoBehaviour
     }
     #endregion
 
-    #region Logic
+    #region AI_Logic
     private NodeConstant IsAttack()
     {
         return spineManager.GetAnimationName().Equals("Attack") ? NodeConstant.RUNNING : NodeConstant.SUCCESS;
@@ -141,8 +183,12 @@ public class Monster : MonoBehaviour
     private NodeConstant IsAttackable()
     {
         Vector2 diff = target.position - transform.position;
-        float distance = diff.magnitude;
-        if (distance < monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
+        //float distance = diff.magnitude;
+        //if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
+        //{
+        //    return NodeConstant.SUCCESS;
+        //}
+        if (((Mathf.Abs(diff.x) <= Mathf.Abs(weightX))) && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
         {
             return NodeConstant.SUCCESS;
         }
@@ -177,7 +223,7 @@ public class Monster : MonoBehaviour
         Vector2 diff = target.position - transform.position;
         float distance = diff.magnitude;
 
-        if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
+        if (distance <= monsterData.atkDistance)
         {
             return NodeConstant.SUCCESS;
         }
@@ -185,9 +231,8 @@ public class Monster : MonoBehaviour
         spineManager.SetAnimation("Run", true, 0, monsterData.moveSpeed);
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
-        //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
         monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
-        monsterRigidbody.velocity = Vector3.zero;
+        //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
         return NodeConstant.RUNNING;
     }
 
@@ -200,7 +245,6 @@ public class Monster : MonoBehaviour
         }
 
         isAttack = false;
-        monsterRigidbody.velocity = Vector3.zero;
         spineManager.SetAnimation("Idle", true);
         return NodeConstant.SUCCESS;
     }
@@ -220,6 +264,7 @@ public class Monster : MonoBehaviour
         attackCollider.AttackColliderSwitch(false);
         isAttack = false;
     }
+
     #endregion
 
     public void SetTarget(Transform target, bool isPlayer)
@@ -228,17 +273,21 @@ public class Monster : MonoBehaviour
         this.isPlayer = isPlayer;
     }
 
-    public void MonsterSetting(string monsterId)
+    public void MonsterDataSetting(string monsterId, float hpCoefficient, float attackCoefficient)
     {
         Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
         if (monsterTable.ContainsKey(monsterId))
         {
             Dictionary<string, object> table = monsterTable[monsterId];
             monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
-            monsterData.SetHp(Convert.ToInt32(table["HP"]));
+            int hp = Convert.ToInt32(table["HP"]);
+            hp += Mathf.FloorToInt(hp * hpCoefficient);
+            monsterData.SetHp(hp);
             monsterData.SetCurrentHp(monsterData.hp);
             monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
-            monsterData.SetAttack(Convert.ToInt32(table["Attack"]));
+            int attack = Convert.ToInt32(table["Attack"]);
+            attack += Mathf.FloorToInt(attack * attackCoefficient);
+            monsterData.SetAttack(attack);
             monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
             monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
             monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));
@@ -259,27 +308,178 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void Hit(float totalDamage)
     {
-        if (collision.TryGetComponent(out Projectile projectile))
+        //StopCoroutine(HpBarControl());
+        if (hpBar == null)
         {
-            if (projectile.isHit)
+            StartCoroutine(HpBarControl());
+        }
+
+        isHit = true;
+        monsterData.SetCurrentHp(monsterData.currentHp - (int)(totalDamage * GameManager.Instance.player.playerManager.playerData.attack));
+        if (monsterData.currentHp <= 0)
+        {
+            Die(true);
+        }
+    }
+
+    private IEnumerator HpBarControl()
+    {
+        //hpBar.HpBarSwitch(true);
+        //yield return hpBarVisibleTime;
+        //hpBar.HpBarSwitch(false);
+        hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        float time = 0.0f;
+        do
+        {
+            hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+            time += Time.fixedDeltaTime;
+            yield return fixedFrame;
+        } while (time < hpBarVisibleTime && monsterData.currentHp > 0);
+        UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+        hpBar = null;
+    }
+
+    public void Die(bool isDrop)
+    {
+        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        monsterCollider.enabled = false;
+        monsterCollider2.enabled = false;
+        StartCoroutine(DieAnimation());
+
+        if (isDrop)
+        {
+            DropItem();
+        }
+        //UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+        //hpBar = null;
+    }
+
+    private IEnumerator DieAnimation()
+    {
+        spineSwitch = false;
+        try
+        {
+            spineManager.SetAnimation("Death", false);
+        }
+        catch
+        {
+            DebugManager.Instance.PrintDebug("[ERROR]: 스파인에 죽는 애니메이션이 없는 몬스터입니다");
+        }
+        yield return new WaitForSeconds(1.0f);
+        MonsterSpawner.Instance.DeSpawnMonster(this);
+    }
+
+    #region SKILL_EFFECT
+    public void SkillEffectActivation(SKILL_EFFECT effect, float param)
+    {
+        this.SkillEffectActivation(effect, param, 1.0f);
+    }
+
+    public void SkillEffectActivation(SKILL_EFFECT effect, float param, float sec)
+    {
+        isHit = true;
+        if (gameObject.activeInHierarchy)
+        {
+            switch (effect)
             {
-                monsterData.SetCurrentHp(monsterData.currentHp - (int)GameManager.Instance.player.playerManager.TotalDamage(projectile.skillData.damage));
-                isHit = true;
-                if (monsterData.currentHp <= 0)
-                {
-                    Die();
-                }
+                case SKILL_EFFECT.STUN:
+                    StartCoroutine(Stun(param));
+                    break;
+                case SKILL_EFFECT.SLOW:
+                    StartCoroutine(Slow(param, sec));
+                    break;
+                case SKILL_EFFECT.KNOCKBACK:
+                    StartCoroutine(KnockBack(param));
+                    break;
+                case SKILL_EFFECT.EXECUTE:
+                    Execute(param);
+                    break;
+                case SKILL_EFFECT.RESTRAINT:
+                    StartCoroutine(Restraint(param));
+                    break;
+                case SKILL_EFFECT.PULL:
+                    StartCoroutine(Pull(param));
+                    break;
+                default:
+                    DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
+                    break;
             }
         }
     }
 
-    private void Die()
+    private IEnumerator Stun(float n)
     {
-        //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
-        DropItem();
-        MonsterSpawner.Instance.DeSpawnMonster(this);
+        if (spineSwitch)
+        {
+            spineSwitch = false;
+            float originSpeed = monsterData.moveSpeed;
+            monsterData.SetMoveSpeed(0.0f);
+            spineManager.SetAnimation("Idle", true);
+            yield return new WaitForSeconds(n);
+            monsterData.SetMoveSpeed(originSpeed);
+            spineSwitch = true;
+        }
     }
 
+    private IEnumerator Slow(float n, float sec)
+    {
+        if (!isSlow)
+        {
+            isSlow = true;
+            float originSpeed = monsterData.moveSpeed;
+            monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
+            yield return new WaitForSeconds(sec);
+            monsterData.SetMoveSpeed(originSpeed);
+            isSlow = false;
+        }
+    }
+
+    private IEnumerator Slow(float n)
+    {
+        yield return this.Slow(n, 1.0f);
+    }
+
+    private IEnumerator KnockBack(float n)
+    {
+        if (spineSwitch)
+        {
+            spineSwitch = false;
+            Vector2 diff = transform.position - target.position;
+            monsterRigidbody.AddRelativeForce(diff.normalized * n * 0.0002f, ForceMode2D.Impulse);
+            yield return tick;
+            spineSwitch = true;
+        }
+    }
+
+    private void Execute(float n)
+    {
+        if (UnityEngine.Random.Range(0.0f, 1.0f) < n)
+        {
+            Die(true);
+        }
+    }
+
+    private IEnumerator Restraint(float n)
+    {
+        float originSpeed = monsterData.moveSpeed;
+        monsterData.SetMoveSpeed(0.0f);
+        yield return new WaitForSeconds(n);
+        monsterData.SetMoveSpeed(originSpeed);
+    }
+
+    private IEnumerator Pull(float n)
+    {
+        if (spineSwitch)
+        {
+            spineSwitch = false;
+            Vector2 diff = target.position - transform.position;
+            monsterRigidbody.AddRelativeForce(diff.normalized * n * 0.0002f, ForceMode2D.Impulse);
+            yield return tick;
+            spineSwitch = true;
+        }
+    }
+
+    #endregion
 }

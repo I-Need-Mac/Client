@@ -2,69 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Horin : Skill
+public class Horin : ActiveSkill
 {
-    public Horin(int skillId, Transform shooter) : base(skillId, shooter) { }
+    Projectile[] projectiles;
 
-    public override void Init()
-    {
-        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
-
-        for (int i = 0; i < skillData.projectileCount; i++)
-        {
-            Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-            originSize = projectile.transform.localScale;
-            projectile.transform.localScale = Vector2.zero;
-            Vector3 rotate = Vector3.forward * 360 * i / skillData.projectileCount;
-            projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-            projectile.transform.Rotate(rotate);
-            projectile.transform.localPosition = projectile.transform.up * skillData.attackDistance;
-            projectiles.Add(projectile);
-        }
-    }
+    public Horin(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override IEnumerator Activation()
     {
+        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        float weight = 0.004f;
-        float time = 0.0f;
-        float size = 0.0f;
-
-        while (true)
+        do
         {
-            if (time >= skillData.duration && size <= 0.0f)
+            projectiles = new Projectile[skillData.projectileCount];
+            for (int i = 0; i < projectiles.Length; i++)
             {
-                time = 0.0f;
-                foreach (Projectile projectile in projectiles)
-                {
-                    projectile.CollisionPower(false);
-                }
-                yield return coolTime;
-                foreach (Projectile projectile in projectiles)
-                {
-                    projectile.CollisionPower(true);
-                }
+                projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+                originSize = projectiles[i].transform.localScale * skillData.projectileSizeMulti;
+                projectiles[i].transform.localScale = Vector2.zero;
+                projectiles[i].transform.localPosition = Vector2.up * skillData.attackDistance;
+                projectiles[i].transform.localEulerAngles = Vector3.zero;
+                float angle = 360 * i / skillData.projectileCount;
+                projectiles[i].transform.RotateAround(shooter.position, Vector3.back, angle);
             }
 
-            if (time >= skillData.duration)
+            yield return Move();
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        } while (skillData.coolTime > 0.0f);
+    }
+
+    private IEnumerator Move()
+    {
+        float time = 0.0f;
+        while(time < skillData.duration)
+        {
+            for (int i = 0; i < projectiles.Length; i++)
             {
-                size -= weight;
+                if (projectiles[i].transform.localScale.x < originSize.x && time <= 1.0f)
+                {
+                    projectiles[i].transform.localScale = originSize * time;
+                }
+                if (skillData.duration - time <= 1.0f)
+                {
+                    projectiles[i].transform.localScale = originSize * (skillData.duration - time);
+                }
+                projectiles[i].transform.RotateAround(shooter.position, Vector3.forward, skillData.speed);
             }
-            else if (size < 1)
-            {
-                size += weight;
-            }
-            foreach (Projectile projectile in projectiles)
-            {
-                projectile.transform.RotateAround(shooter.position, Vector3.back, skillData.speed * Time.deltaTime);
-                projectile.transform.localScale = originSize * size;
-            }
-            time += Time.deltaTime;
-            yield return null;
+            time += Time.fixedDeltaTime;
+            yield return frame;
+        }
+
+        for (int i = 0; i < projectiles.Length; i++)
+        {
+            SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
         }
     }
 }

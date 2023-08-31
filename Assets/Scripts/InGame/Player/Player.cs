@@ -8,15 +8,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int moveSpeed = 5;
-
     private Rigidbody2D playerRigidbody;
     private Vector2 playerDirection;
-    
-    
+    private PlayerItem playerItem;
     private Transform shadow;
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
+    
+    private HpBar hpBar;
+    private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
 
     public Transform character { get; private set; }
     public PlayerManager playerManager { get; private set; }
@@ -35,15 +35,19 @@ public class Player : MonoBehaviour
         shadow = transform.Find("Shadow");
         spineManager = GetComponent<SpineManager>();
         playerManager = GetComponentInChildren<PlayerManager>();
+
+        playerItem = GetComponentInChildren<PlayerItem>();
         gameObject.tag = "Player";
-        invincibleTime = new WaitForSeconds(float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))));
+        invincibleTime = new WaitForSeconds(Convert.ToInt32(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))) / 1000.0f);
     }
 
-    private void OnEnable()
+    private void Start()
     {
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
-        //spineManager.SetAnimation("Idle", true);
+        hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        AudioSetting();
+        //hpBar.HpBarSwitch(true);
     }
 
     /*
@@ -54,7 +58,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         KeyDir();
-        DebugManager.Instance.PrintDebug("RootMotionTest: " + transform.localPosition.ToString("N10"));
+        hpBar.HpBarSetting(transform.position + hpBarPos, playerManager.playerData.currentHp, playerManager.playerData.hp);
     }
 
     private void FixedUpdate()
@@ -81,12 +85,12 @@ public class Player : MonoBehaviour
     {
         spineManager.SetDirection(character, playerDirection);
         spineManager.SetDirection(shadow, playerDirection);
-        playerRigidbody.velocity = playerDirection.normalized * moveSpeed;
+        playerRigidbody.velocity = playerDirection.normalized * playerManager.playerData.moveSpeed;
 
         if (playerRigidbody.velocity == Vector2.zero)
         {
             Vector3 pos = transform.localPosition;
-            pos.y += 0.0000001f;
+            pos.y += 0.00005f;
             transform.localPosition = pos;
             spineManager.SetAnimation("Idle", true);
         }
@@ -98,23 +102,28 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Level
-    public void GetExp(int exp)
-    {
-        this.exp += exp;
+    //public void GetExp(int exp)
+    //{
+    //    this.exp += playerManager.playerData.ExpBuff(exp);
 
-        if (this.exp >= needExp)
-        {
-            LevelUp();
-        }
+    //    if (this.exp >= needExp)
+    //    {
+    //        LevelUp();
+    //    }
+    //}
+
+    public void UpdateGetItemRange()
+    {
+        playerItem.UpdateItemRange();
     }
 
-    private void LevelUp()
-    {
-        exp -= needExp;
-        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
-        GameManager.Instance.playerUi.LevelTextChange(level);
-        GameManager.Instance.playerUi.SkillSelectWindowOpen();
-    }
+    //private void LevelUp()
+    //{
+    //    exp -= needExp;
+    //    needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
+    //    GameManager.Instance.playerUi.LevelTextChange(level);
+    //    GameManager.Instance.playerUi.SkillSelectWindowOpen();
+    //}
     #endregion
 
     #region Collider
@@ -126,4 +135,10 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    #region Sound
+    private void AudioSetting()
+    {
+        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), "EFFECT_SOUND");
+    }
+    #endregion
 }

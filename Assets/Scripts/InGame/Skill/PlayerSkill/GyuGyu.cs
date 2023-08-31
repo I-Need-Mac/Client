@@ -2,33 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GyuGyu : Skill
+public class GyuGyu : ActiveSkill
 {
-    public GyuGyu(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public GyuGyu(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
-    {
-    }
 
     public override IEnumerator Activation()
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                ProjectileBounce projectile = (ProjectileBounce)SkillManager.Instance.SpawnProjectile(skillData);
+                ProjectileStraight projectile = SkillManager.Instance.SpawnProjectile<ProjectileStraight>(skillData);
                 projectile.transform.localPosition = shooter.position;
-                Vector2 direction = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
-                projectile.Fire(direction);
+
+                Vector2 targetPos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
+                Vector2 vec = (targetPos - (Vector2)shooter.position).normalized;
+                projectile.SetFireDirection(vec);
                 yield return intervalTime;
             }
 
-            yield return coolTime;
-        }
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        } while (skillData.coolTime > 0.0f);
     }
 }

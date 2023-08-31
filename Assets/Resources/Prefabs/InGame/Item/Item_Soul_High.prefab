@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2799613057145919734}
-  - component: {fileID: 867809132116140656}
   - component: {fileID: 8912149250325611056}
   - component: {fileID: 5613993176079973130}
+  - component: {fileID: 5460455723777121949}
   m_Layer: 0
   m_Name: Item_Soul_High
   m_TagString: Untagged
@@ -33,20 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &867809132116140656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8081133244538352272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f6ac1cb4c0fff4396ca0842acaf706, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <itemId>k__BackingField: 103
-  itemSpeed: 2
 --- !u!212 &8912149250325611056
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -108,9 +94,22 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
+--- !u!114 &5460455723777121949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8081133244538352272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2072fd9246631ca459983ff6f586310d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <itemId>k__BackingField: 103

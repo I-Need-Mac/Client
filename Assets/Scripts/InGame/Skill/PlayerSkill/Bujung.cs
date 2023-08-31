@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bujung : Skill
+public class Bujung : ActiveSkill
 {
-    public Bujung(int skillId, Transform shooter) : base(skillId, shooter) { }
+    public Bujung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
-    {
-    }
+    //public override void Init()
+    //{
+    //}
 
     public override IEnumerator Activation()
     {
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                ProjectileStraight projectile = (ProjectileStraight)SkillManager.Instance.SpawnProjectile(skillData);
+                ProjectileStraight projectile = SkillManager.Instance.SpawnProjectile<ProjectileStraight>(skillData);
                 projectile.transform.localPosition = shooter.position;
 
                 Vector2 targetPos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
@@ -30,7 +30,7 @@ public class Bujung : Skill
                 yield return intervalTime;
             }
 
-            yield return coolTime;
-        }
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        } while (skillData.coolTime > 0.0f);
     }
 }

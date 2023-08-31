@@ -47,6 +47,23 @@ public class SpineManager : MonoBehaviour
             angles.y = 180.0f;
         }
         transform.localEulerAngles = angles;
+
+        //if (direction.x < 0)
+        //{
+        //    skeletonAnimation.skeleton.ScaleX = 1.0f;
+        //}
+        //else if (direction.x > 0)
+        //{
+        //    skeletonAnimation.skeleton.ScaleX = -1.0f;
+        //}
+
+        //if (direction.x < 0)
+        //{
+
+        //}
+        //else if (direction.x > 0)
+        //{
+        //}
     }
 
     public float SetSpineSpeed(float speed)

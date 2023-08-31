@@ -2,42 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Juhon : Skill
+public class Juhon : ActiveSkill
 {
-    public Juhon(int skillId, Transform shooter) : base(skillId, shooter) { }
-
-    public override void Init()
-    {
-        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
-
-        Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-        projectile.transform.localScale = Vector2.zero;
-        projectiles.Add(projectile);
-    }
+    public Juhon(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override IEnumerator Activation()
     {
+        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+
         if (!skillData.isEffect)
         {
-            yield return coolTime;
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
 
-        while (true)
+        do
         {
-            projectiles[0].transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+            projectile.CollisionRadius(skillData.attackDistance);
             for (int i = 0; i < skillData.projectileCount; i++)
             {
-                projectiles[0].CollisionPower(true);
+                //projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+                projectile.CollisionPower(true);
                 yield return intervalTime;
-                projectiles[0].CollisionPower(false);
-                
+                projectile.CollisionPower(false);
             }
-            projectiles[0].transform.localScale = Vector2.zero;
-            yield return coolTime;
-        }
+            //projectile.transform.localScale = Vector2.zero;
+            SkillManager.Instance.DeSpawnProjectile(projectile);
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        } while (skillData.coolTime > 0.0f);
 
-        //SkillManager.Instance.DeSpawnProjectile(_projectile);
-        //projectiles.Clear();
     }
     
 }

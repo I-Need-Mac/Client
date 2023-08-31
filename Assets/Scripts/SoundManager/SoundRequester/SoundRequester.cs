@@ -10,21 +10,25 @@ public abstract class SoundRequester : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public int soundObjectID { get; set;}
+    public String soundObjectID { get; set;}
 
     protected Dictionary<string,AudioSource> audioSources = new Dictionary<string, AudioSource>();
     protected GameObject soundRequester;
-  
+    protected GameObject soundManager = SoundManager.Instance.GetSoundManagerGameObject();
 
 
 
-    
 
 
- 
+
+
+
     private void Awake()
     {
         DebugManager.Instance.PrintDebug("[SoundRequester] init");
+        Guid guid = Guid.NewGuid();
+        soundObjectID = guid.ToString();
+
         MakeSpeakers();
         ConvertAudioClipData();
 
@@ -71,12 +75,18 @@ public abstract class SoundRequester : MonoBehaviour
     protected abstract IEnumerator PlaySoundWithDelay(string speakerName, AudioClip clip, float delay);
 
     protected void MoveToSoundManager(GameObject target) {
-        GameObject soundManager = GameObject.Find("SoundManager");
-        target.transform.position = new Vector3(soundManager.transform.position.x, soundManager.transform.position.y, soundManager.transform.position.z);
-        target.transform.SetParent(soundManager.transform);
-        
         AudioSource audioSource = target.GetComponent<AudioSource>();
-        StartCoroutine(DestroyAudioAfterPlaying(audioSource, audioSource.clip.length));
+        if (audioSource.clip != null){
+            if (soundManager == null) { 
+                soundManager = SoundManager.Instance.GetSoundManagerGameObject();
+            }
+       
+            target.transform.position = new Vector3(soundManager.transform.position.x, soundManager.transform.position.y, soundManager.transform.position.z);
+            target.transform.SetParent(soundManager.transform);
+        
+
+            StartCoroutine(DestroyAudioAfterPlaying(audioSource, audioSource.clip.length));
+        }
     }
 
 
@@ -99,4 +109,6 @@ public abstract class SoundRequester : MonoBehaviour
 
         return childTransform.gameObject;
     }
+
+
 }

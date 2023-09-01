@@ -5,7 +5,7 @@ int,String,String,Enum,Int,String
 102,Item_Soul_Medium,None,EXP,200,Prefabs/InGame/Item/Item_Soul_Medium
 103,Item_Soul_High,None,EXP,500,Prefabs/InGame/Item/Item_Soul_High
 201,Item_SinKal_Kill,None,KillAll,,Prefabs/InGame/Item/Item_KillAll
-301,Item_Bell,None,MoveStop,1500,Prefabs/InGame/Item/Item_Stun
+301,Item_Bell,None,MoveStop,3,Prefabs/InGame/Item/Item_Stun
 401,Item_HoilyBlood,None,Heal,20,Prefabs/InGame/Item/Item_Heal
 501,Item_Lanturn,None,Magnet,10000,Prefabs/InGame/Item/Item_Magnet
 601,Item_Box,None,GetBox,1,Prefabs/InGame/Item/Item_Box

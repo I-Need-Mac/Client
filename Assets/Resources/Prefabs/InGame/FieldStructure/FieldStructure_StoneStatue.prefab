@@ -73,15 +73,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 3118f015c10e7a64ca0b42505a84ebcb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7.68, y: 11.52}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &8050692169239949027
@@ -116,8 +116,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.755785, y: 0.11559057}
-  m_Size: {x: 4.5367804, y: 4.5367804}
+  m_Offset: {x: -0.037039757, y: -0.53188276}
+  m_Size: {x: 6.650979, y: 9.901559}
   m_Direction: 0
 --- !u!1 &3129428740544843227
 GameObject:
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 4963607715857087516}
   - component: {fileID: 2449526804364140455}
   m_Layer: 0
-  m_Name: FieldStructureSkeletonPrefab
+  m_Name: FieldStructure_StoneStatue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51ac58e30681b54696b7e2fb31896f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structureId: 0
+  structureId: 402
 --- !u!1 &4918027057381335832
 GameObject:
   m_ObjectHideFlags: 0

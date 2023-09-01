@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class FieldStructure : MonoBehaviour
 {
-    [SerializeField] private int structureId;
+    [SerializeField] protected int structureId;
 
-    private FieldStructureData fieldStructureData;
-    private Transform top;
-    private Transform front;
+    protected float hp;
 
-    private void Awake()
+    protected FieldStructureData fieldStructureData;
+    protected Transform top;
+    protected Transform front;
+
+    protected virtual void Awake()
     {
         SetFieldStructureData(structureId);
         FieldStructureInit();
+        hp = 1;
     }
 
     private void SetFieldStructureData(int structureId)
@@ -54,10 +57,10 @@ public class FieldStructure : MonoBehaviour
 
         try
         {
-            List<float> list = new List<float>();
+            List<string> list = new List<string>();
             foreach (string str in (table["GimmickParam"] as List<string>))
             {
-                list.Add(float.Parse(str));
+                list.Add(str);
             }
             fieldStructureData.SetGimmickParam(list);
         }
@@ -65,15 +68,15 @@ public class FieldStructure : MonoBehaviour
         {
             try
             {
-                List<float> list = new List<float>()
+                List<string> list = new List<string>()
                 {
-                    float.Parse(table["GimmickParam"].ToString()),
+                    table["GimmickParam"].ToString(),
                 };
                 fieldStructureData.SetGimmickParam(list);
             }
             catch
             {
-                fieldStructureData.SetGimmickParam(new List<float>());
+                fieldStructureData.SetGimmickParam(new List<string>());
             }
         }
 
@@ -105,4 +108,10 @@ public class FieldStructure : MonoBehaviour
             SetLayer(child);
         }
     }
+
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        
+    }
+
 }

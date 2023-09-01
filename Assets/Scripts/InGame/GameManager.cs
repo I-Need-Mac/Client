@@ -120,9 +120,9 @@ public class GameManager : SingletonBehaviour<GameManager>
                 case "Camera":
                     RecursiveChild(child, LayerConstant.POISONFOG);
                     break;
-                //case "FieldStructure":
-                //    RecursiveChild(child, LayerConstant.OBSTACLE);
-                //    break;
+                case "FieldStructure":
+                    //RecursiveChild(child, LayerConstant.OBSTACLE);
+                    break;
                 case "ItemCollider":
                     RecursiveChild(child, LayerConstant.ITEM);
                     break;

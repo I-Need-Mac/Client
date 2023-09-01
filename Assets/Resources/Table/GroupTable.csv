@@ -7,3 +7,9 @@ int,String,bool,String,int
 10202,Middle_EXP,TRUE,AdditionalMiddle,1500
 10301,Big_EXP,TRUE,BaseBigEXP,10000
 10302,Big_EXP,TRUE,AdditionalBig,1500
+10401,Stone,FALSE,Item_KillAll,1667
+10402,Stone,FALSE,Item_Stun,1667
+10403,Stone,FALSE,Item_Heal,1667
+10404,Stone,FALSE,Item_Magnet,1667
+10405,Stone,FALSE,Item_Box,1666
+10406,Stone,FALSE,Item_Key,1666

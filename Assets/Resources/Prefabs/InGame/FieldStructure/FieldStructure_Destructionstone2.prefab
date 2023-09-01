@@ -119,6 +119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1767078186400196227}
   - component: {fileID: 9050508409272075576}
+  - component: {fileID: 1496962623753535198}
   m_Layer: 0
   m_Name: FieldStructure_Destructionstone2
   m_TagString: Untagged
@@ -155,6 +156,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   structureId: 407
+--- !u!50 &1496962623753535198
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8577769660792428356}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &8801624569715919692
 GameObject:
   m_ObjectHideFlags: 0

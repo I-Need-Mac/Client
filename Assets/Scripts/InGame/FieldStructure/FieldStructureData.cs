@@ -8,7 +8,7 @@ public class FieldStructureData
     public string frontPath { get; private set; }
     public string topPath { get; private set; }
     public List<GimmickEnum> gimmick { get; private set; }
-    public List<float> gimmickParam { get; private set; }
+    public List<string> gimmickParam { get; private set; }
     public bool topIsPassable { get; private set; }
     public bool frontIsPassable { get; private set; }
     public float castTime { get; private set; }
@@ -21,7 +21,7 @@ public class FieldStructureData
     public void SetFrontPath(string frontPath) { this.frontPath = frontPath; }
     public void SetTopPath(string topPath) { this.topPath = topPath; }
     public void SetGimmick(List<GimmickEnum> gimmick) { this.gimmick = gimmick; }
-    public void SetGimmickParam(List<float> gimmickParam) { this.gimmickParam = gimmickParam; }
+    public void SetGimmickParam(List<string> gimmickParam) { this.gimmickParam = gimmickParam; }
     public void SetTopIsPassable(bool topIsPassable) { this.topIsPassable = topIsPassable; }
     public void SetFrontIsPassable(bool frontIsPassable) { this.frontIsPassable = frontIsPassable; }
     public void SetCastTime(float castTime) { this.castTime = castTime; }

@@ -29,8 +29,14 @@ public struct ItemEffect
             case ItemConstant.MAGNET:
                 SkillManager.Instance.CoroutineStarter(Magnet(param));
                 break;
-            case ItemConstant.GETBOX:
-                GameManager.Instance.box += param;
+            case ItemConstant.GETBOXA:
+                GameManager.Instance.boxA += param;
+                break;
+            case ItemConstant.GETBOXB:
+                GameManager.Instance.boxB += param;
+                break;
+            case ItemConstant.GETBOXC:
+                GameManager.Instance.boxC += param;
                 break;
             case ItemConstant.GETKEY:
                 GameManager.Instance.key += param;

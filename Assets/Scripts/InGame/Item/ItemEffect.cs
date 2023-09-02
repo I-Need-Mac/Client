@@ -20,7 +20,7 @@ public struct ItemEffect
             case ItemConstant.MOVESTOP:
                 foreach (Monster monster in MonsterSpawner.Instance.monsters)
                 {
-                    monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.SLOW, 0.0f, param);
+                    monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.STUN, param);
                 }
                 break;
             case ItemConstant.HEAL:

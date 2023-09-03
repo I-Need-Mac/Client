@@ -40,6 +40,6 @@ public class MobStatue : FieldStructure
         top.enabled = false;
         yield return new WaitForSeconds(this.fieldStructureData.coolTime);
         spriteRenderer.enabled = true;
-        top.enabled = this.fieldStructureData.topIsPassable;
+        top.enabled = true;
     }
 }

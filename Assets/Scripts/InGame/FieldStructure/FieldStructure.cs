@@ -95,9 +95,9 @@ public class FieldStructure : MonoBehaviour
         front = transform.Find("Front").GetComponent<Collider2D>();
 
         //top.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.topPath);
-        top.enabled = fieldStructureData.topIsPassable;
+        top.isTrigger = !fieldStructureData.topIsPassable;
         //front.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.frontPath);
-        front.enabled = fieldStructureData.frontIsPassable;
+        front.isTrigger = !fieldStructureData.frontIsPassable;
     }
 
     private void SetLayer(Transform trans)

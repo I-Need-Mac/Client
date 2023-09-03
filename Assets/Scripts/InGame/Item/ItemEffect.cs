@@ -14,13 +14,19 @@ public struct ItemEffect
             case ItemConstant.KILLALL:
                 foreach(Monster monster in MonsterSpawner.Instance.monsters)
                 {
-                    monster.Die(true);
+                    if (CameraManager.Instance.IsTargetVisible(monster.transform.position))
+                    {
+                        monster.Die(true);
+                    }
                 }
                 break;
             case ItemConstant.MOVESTOP:
                 foreach (Monster monster in MonsterSpawner.Instance.monsters)
                 {
-                    monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.STUN, param);
+                    if (CameraManager.Instance.IsTargetVisible(monster.transform.position))
+                    {
+                        monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.STUN, param);
+                    }
                 }
                 break;
             case ItemConstant.HEAL:

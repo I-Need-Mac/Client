@@ -46,7 +46,15 @@ public class Item : MonoBehaviour
             itemData.SetItemImage(Convert.ToString(table["ItemImage"]));
             //itemData.SetItemType((ItemConstant)Enum.Parse(typeof(ItemConstant), Convert.ToString(table["ItemType"])));
             //Enum.TryParse(table["ItemType"].ToString(), true, out ItemConstant result);
-            itemData.SetItemTypeParam(Convert.ToInt32(table["ItemTypeParam"]));
+            try
+            {
+                itemData.SetItemTypeParam(Convert.ToInt32(table["ItemTypeParam"]));
+            }
+            catch
+            {
+                itemData.SetItemTypeParam(0);
+            }
+
             //itemData.SetImagePath(Convert.ToString(table["ImagePath"]));
 
             if (Enum.TryParse(Convert.ToString(table["ItemType"]), true, out ItemConstant type))

@@ -8,5 +8,5 @@ int,String,String,Enum,Int,String
 301,Item_Bell,None,MoveStop,3,Prefabs/InGame/Item/Item_Stun
 401,Item_HoilyBlood,None,Heal,20,Prefabs/InGame/Item/Item_Heal
 501,Item_Lanturn,None,Magnet,10000,Prefabs/InGame/Item/Item_Magnet
-601,Item_Box,None,GetBox,1,Prefabs/InGame/Item/Item_Box
+601,Item_Box,None,GetBoxA,1,Prefabs/InGame/Item/Item_Box
 701,Item_Key,None,GetKey,1,

@@ -146,6 +146,12 @@ public class CameraManager : SingletonBehaviour<CameraManager>
 
     #endregion
 
+    public bool IsTargetVisible(Vector3 targetPos)
+    {
+        Vector3 viewPos = cam.WorldToViewportPoint(targetPos);
+        return (viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0) ? true : false;
+    }
+
     private void RecursiveChild(Transform trans, LayerConstant layer)
     {
         trans.gameObject.layer = (int)layer;

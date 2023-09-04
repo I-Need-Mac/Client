@@ -16,10 +16,11 @@ public class Item : MonoBehaviour
 
     private void Awake()
     {
-        itemSpeed = float.Parse(Convert.ToString(CSVReader.Read("BattleConfig", "ItemFollowSpeed", "ConfigValue")));
+        itemSpeed = float.Parse(CSVReader.Read("BattleConfig", "ItemFollowSpeed", "ConfigValue").ToString());
         gameObject.tag = "Item";
         itemData = new ItemData();
         frame = new WaitForFixedUpdate();
+        transform.localScale *= float.Parse(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue").ToString());
     }
 
     private void OnEnable()

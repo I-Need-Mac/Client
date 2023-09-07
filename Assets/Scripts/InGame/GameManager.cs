@@ -20,7 +20,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     private float defaultScale;
     private float defaultCharScale;
 
-    public int box { get; set; }
+    public int boxA { get; set; }
+    public int boxB { get; set; }
+    public int boxC { get; set; }
     public int key { get; set; }
 
     protected override void Awake()

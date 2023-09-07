@@ -10,8 +10,8 @@ public class FieldStructure : MonoBehaviour
     protected float hp;
 
     protected FieldStructureData fieldStructureData;
-    protected Transform top;
-    protected Transform front;
+    protected Collider2D top;
+    protected Collider2D front;
 
     protected virtual void Awake()
     {
@@ -91,13 +91,13 @@ public class FieldStructure : MonoBehaviour
     private void FieldStructureInit()
     {
         SetLayer(transform);
-        top = transform.Find("Top");
-        front = transform.Find("Front");
+        top = transform.Find("Top").GetComponent<Collider2D>();
+        front = transform.Find("Front").GetComponent<Collider2D>();
 
         //top.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.topPath);
-        top.GetComponent<Collider2D>().enabled = fieldStructureData.topIsPassable;
+        top.isTrigger = fieldStructureData.topIsPassable;
         //front.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.frontPath);
-        front.GetComponent<Collider2D>().enabled = fieldStructureData.frontIsPassable;
+        front.isTrigger = fieldStructureData.frontIsPassable;
     }
 
     private void SetLayer(Transform trans)

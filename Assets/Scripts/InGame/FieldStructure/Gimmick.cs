@@ -11,8 +11,32 @@ public struct Gimmick
         {
             switch (gimmick)
             {
-                case GimmickEnum.DURABILITY:
+                case GimmickEnum.DAMAGE:
                     break;
+                //case GimmickEnum.DAMAGE:
+                //    break;
+                //case GimmickEnum.DAMAGE:
+                //    break;
+                //case GimmickEnum.DAMAGE:
+                //    break;
+                case GimmickEnum.BEAMWIDTH:
+                    break;
+                case GimmickEnum.BEAMVERTICAL:
+                    break;
+                case GimmickEnum.BEAMCIRCLE:
+                    break;
+                case GimmickEnum.BEAMCROSS:
+                    break;
+                //case GimmickEnum.DAMAGE:
+                //    break;
+                //case GimmickEnum.DAMAGE:
+                //    break;
+                //case GimmickEnum.DAMAGE:
+                //    break;
+                //case GimmickEnum.DAMAGE:
+                //    break;
+                //case GimmickEnum.DAMAGE:
+                //    break;
                 default:
                     DebugManager.Instance.PrintWarning("[Gimmick]: 존재하지 않는 기믹 효과입니다");
                     break;

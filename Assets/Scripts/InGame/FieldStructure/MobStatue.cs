@@ -33,7 +33,7 @@ public class MobStatue : FieldStructure
         }
     }
 
-    private IEnumerator Activation()
+    protected override IEnumerator Activation()
     {
         ItemManager.Instance.DropItems(this.fieldStructureData.gimmickParam[1], transform);
         spriteRenderer.enabled = false;

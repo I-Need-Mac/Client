@@ -27,7 +27,7 @@ int,LocalizeID,String,String,GimmickEnum,int_Arr,Bool,Bool,int,int,int,bool
 403,FieldStructure_Teleportcircle,Map/Structure/Gimmick/Map_Gimmick_TeleportCircle_00,Null,Teleport,0,TRUE,TRUE,1,4,100000,FALSE
 404,FieldStructure_Santuary,Map/Structure/Gimmick/Map_Gimmick_Santuary_00,Map/Structure/Gimmick/Map_Gimmick_SantuaryTop_00,Heal,0,TRUE,FALSE,0,2,100000,FALSE
 405,FieldStructure_Santuarycircle,Map/Structure/Gimmick/Map_Gimmick_SantuaryCircle_00,Null,Heal,50|10|3,TRUE,TRUE,0,2,100000,FALSE
-406,FieldStructure_Destructionstone1,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_01,Null,BeamWidth,1,TRUE,TRUE,1,2,100000,FALSE
+406,FieldStructure_Destructionstone1,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_01,Null,BeamWidth,5|1,TRUE,TRUE,1,1,100000,FALSE
 407,FieldStructure_Destructionstone2,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_02,Null,BeamVertical,1,TRUE,TRUE,1,2,100000,FALSE
 408,FieldStructure_Destructionstone3,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_03,Null,BeamCircle,1,TRUE,TRUE,1,2,100000,FALSE
 409,FieldStructure_Destructionstone4,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_04,Null,BeamCross,0,TRUE,TRUE,1,2,100000,FALSE

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class FieldStructure : MonoBehaviour
@@ -111,7 +112,22 @@ public class FieldStructure : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (!front.enabled)
+        {
+            return;
+        }
+
+        if (collision.gameObject.layer == (int)LayerConstant.SKILL)
+        {
+            StartCoroutine(Activation());
+            Gimmick.GimmickActivate(this.fieldStructureData.gimmick, this.fieldStructureData.gimmickParam);
+        }
     }
 
+    protected virtual IEnumerator Activation()
+    {
+        front.enabled = false;
+        yield return new WaitForSeconds(this.fieldStructureData.coolTime);
+        front.enabled = true;
+    }
 }

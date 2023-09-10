@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IBeam
 {
-    public void SetBeam(float n);
+    public void BeamActivation(float n);
+    public IEnumerator Run();
+    public void DestroyBeam();
 }

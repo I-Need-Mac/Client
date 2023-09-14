@@ -32,4 +32,11 @@ public class SoundSituation
   
     
     }
+
+    public enum SKILLSITUATION
+    {
+        SHOOT,
+        HIT,
+        DESTROY,
+    }
 }

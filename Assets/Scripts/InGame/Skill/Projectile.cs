@@ -8,6 +8,10 @@ public class Projectile : MonoBehaviour
 {
     private const string BOUNCE_PATH = "Prefabs/InGame/Skill/Bounce";
 
+    [SerializeField] AudioClip shootAudioClip;
+    [SerializeField] AudioClip hitAudioClip;
+    [SerializeField] AudioClip destroyAudioClip;
+
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
@@ -35,6 +39,11 @@ public class Projectile : MonoBehaviour
         if (projectileCollider != null)
         {
             projectileCollider.enabled = true;
+        }
+        //발사 사운드
+        if (shootAudioClip != null)
+        {
+            SoundManager.Instance.PlayAudioClip("Skill", shootAudioClip);
         }
     }
 
@@ -104,6 +113,11 @@ public class Projectile : MonoBehaviour
         {
             monster.Hit(skillData.damage);
             SkillEffect(monster);
+            //충돌 사운드
+            if (hitAudioClip != null)
+            {
+                SoundManager.Instance.PlayAudioClip("Skill", hitAudioClip);
+            }
 
             if (!skillData.isPenetrate)
             {
@@ -121,6 +135,11 @@ public class Projectile : MonoBehaviour
     protected void Remove()
     {
         SkillManager.Instance.DeSpawnProjectile(this);
+        //소멸 사운드
+        if (destroyAudioClip != null)
+        {
+            SoundManager.Instance.PlayAudioClip("Skill", destroyAudioClip);
+        }
     }
 
     protected void SkillEffect(Monster target)

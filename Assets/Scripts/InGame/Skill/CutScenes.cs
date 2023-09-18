@@ -28,7 +28,7 @@ public class CutScenes : MonoBehaviour
     {
         if (rect.anchoredPosition.x >= slowStartPosX && slow)
         {
-            rigid.velocity *= 0.001f;
+            rigid.velocity *= -0.1f;
             slow = false;
             StartCoroutine(Blink());
         }
@@ -53,8 +53,8 @@ public class CutScenes : MonoBehaviour
 
     private IEnumerator Blink()
     {
-        Time.timeScale = 0.0f;
         yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 0.0f;
 
         WaitForSecondsRealtime blinkTime = new WaitForSecondsRealtime(blinkSpeed);
         float time = disAppearSpeed;

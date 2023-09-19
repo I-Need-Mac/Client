@@ -8,46 +8,34 @@ public class JeRyeung : ActiveSkill
 
     public override IEnumerator Activation()
     {
-        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+        bool isDrop = true;
+        List<Transform> targets;
 
-        if (!skillData.isEffect)
+        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+        projectile.SetAlpha(1.0f);
+
+        if (UnityEngine.Random.Range(0, 100) < int.Parse(skillData.skillEffectParam[0]))
         {
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER, (int)LayerConstant.ITEM);
+            isDrop = false;
+        }
+        else
+        {
+            targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
         }
 
-        do
+        foreach (Transform target in targets)
         {
-            bool isDrop = true;
-            List<Transform> targets;
-
-            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
-            projectile.SetAlpha(1.0f);
-
-            if (UnityEngine.Random.Range(0, 100) < int.Parse(skillData.skillEffectParam[0]))
+            if (target.TryGetComponent(out Monster monster))
             {
-                targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER, (int)LayerConstant.ITEM);
-                isDrop = false;
+                monster.Die(isDrop);
             }
-            else
+            else if (target.TryGetComponent(out Item item))
             {
-                targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
+                ItemManager.Instance.DeSpawnItem(item);
             }
-
-            foreach (Transform target in targets)
-            {
-                if (target.TryGetComponent(out Monster monster))
-                {
-                    monster.Die(isDrop);
-                }
-                else if (target.TryGetComponent(out Item item))
-                {
-                    ItemManager.Instance.DeSpawnItem(item);
-                }
-            }
-            yield return intervalTime;
-            projectile.SetAlpha(0.0f);
-
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0.0f);
+        }
+        yield return intervalTime;
+        projectile.SetAlpha(0.0f);
     }
 }

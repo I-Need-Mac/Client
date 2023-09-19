@@ -16,19 +16,8 @@ public class Possession : ActiveSkill
         Player player = shooter.GetComponent<Player>();
         Dictionary<string, Dictionary<string, object>> table = CSVReader.Read("CharacterTable");
 
-        if (!skillData.isEffect)
-        {
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        }
-
-        do
-        {
-            //변신
-            yield return duration;
-            //원래대로
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0.0f);
-
-        
+        //변신
+        yield return duration;
+        //원래대로
     }
 }

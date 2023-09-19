@@ -14,15 +14,6 @@ public class InnPassive : PassiveSkill
 
     public override IEnumerator Activation()
     {
-        do
-        {
-            yield return Magnet();
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0);
-    }
-
-    private IEnumerator Magnet()
-    {
         for (int i = 0; i < skillData.skillEffect.Count; i++)
         {
             PassiveEffect.PassiveEffectActivation(skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);

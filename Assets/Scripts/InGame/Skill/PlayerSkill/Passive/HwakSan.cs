@@ -12,13 +12,10 @@ public class HwakSan : PassiveSkill
 
     public override IEnumerator Activation()
     {
-        do
+        for (int i = 0; i < skillData.skillEffect.Count; i++)
         {
-            for (int i = 0; i < skillData.skillEffect.Count; i++)
-            {
-                PassiveEffect.PassiveEffectActivation(skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
-            }
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0);
+            PassiveEffect.PassiveEffectActivation(skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
+        }
+        yield return new WaitForFixedUpdate();
     }
 }

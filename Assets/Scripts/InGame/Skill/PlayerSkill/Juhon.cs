@@ -10,27 +10,17 @@ public class Juhon : ActiveSkill
     {
         shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
 
-        if (!skillData.isEffect)
+        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+        projectile.CollisionRadius(skillData.attackDistance);
+        for (int i = 0; i < skillData.projectileCount; i++)
         {
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            //projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
+            projectile.CollisionPower(true);
+            yield return intervalTime;
+            projectile.CollisionPower(false);
         }
-
-        do
-        {
-            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
-            projectile.CollisionRadius(skillData.attackDistance);
-            for (int i = 0; i < skillData.projectileCount; i++)
-            {
-                //projectile.transform.localScale = Vector2.one * skillData.projectileSizeMulti;
-                projectile.CollisionPower(true);
-                yield return intervalTime;
-                projectile.CollisionPower(false);
-            }
-            //projectile.transform.localScale = Vector2.zero;
-            SkillManager.Instance.DeSpawnProjectile(projectile);
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0.0f);
-
+        //projectile.transform.localScale = Vector2.zero;
+        SkillManager.Instance.DeSpawnProjectile(projectile);
     }
     
 }

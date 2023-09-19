@@ -46,6 +46,7 @@ public class CutScenes : MonoBehaviour
 
     private void Start()
     {
+        cutImage.sprite = ResourcesManager.Load<Sprite>(GameManager.Instance.cutSceneImagePath);
         rect.anchoredPosition = new Vector2(-Screen.width, rect.anchoredPosition.y);
         rigid.AddForce(Vector2.right * 100000.0f * Time.fixedDeltaTime, ForceMode2D.Impulse);
         slow = true;
@@ -53,7 +54,7 @@ public class CutScenes : MonoBehaviour
 
     private IEnumerator Blink()
     {
-        yield return new WaitForSecondsRealtime(0.5f);
+        //yield return new WaitForSecondsRealtime(0.5f);
         Time.timeScale = 0.0f;
 
         WaitForSecondsRealtime blinkTime = new WaitForSecondsRealtime(blinkSpeed);

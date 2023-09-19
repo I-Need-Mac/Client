@@ -12,59 +12,49 @@ public class GangSin : ActiveSkill
 
     public override IEnumerator Activation()
     {
-        if (!skillData.isEffect)
-        {
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        }
-
         float timeVariable = 1.0f;
         WaitForSeconds timeCount = new WaitForSeconds(timeVariable);
         string path = CSVReader.Read("MonsterTable", skillData.skillEffectParam[0], "MonsterPrefabPath").ToString();
-        do
+        for (int i = 0; i < skillData.projectileCount - summoners.Count; i++)
         {
-            for (int i = 0; i < skillData.projectileCount - summoners.Count; i++)
+            if (prefab == null)
             {
-                if (prefab == null)
-                {
-                    prefab = ResourcesManager.Load<Monster>(path);
-                }
-                Monster summoner = Object.Instantiate(prefab, shooter);
-                summoner.gameObject.layer = (int)LayerConstant.SKILL;
-                summoner.gameObject.SetActive(false);
-                summoners.Add(summoner);
+                prefab = ResourcesManager.Load<Monster>(path);
             }
+            Monster summoner = Object.Instantiate(prefab, shooter);
+            summoner.gameObject.layer = (int)LayerConstant.SKILL;
+            summoner.gameObject.SetActive(false);
+            summoners.Add(summoner);
+        }
 
+        foreach (Monster summoner in summoners)
+        {
+            summoner.monsterData.SetAttack(skillData.damage);
+            summoner.monsterData.SetMoveSpeed(skillData.speed);
+            summoner.transform.localPosition = Vector2.one;
+            summoner.SetTarget(Scanner.GetTargetTransform(skillData.skillTarget, summoner.transform, skillData.attackDistance), false);
+            summoner.gameObject.SetActive(true);
+            yield return intervalTime;
+        }
+
+        float time = skillData.duration;
+        while (time > 0)
+        {
             foreach (Monster summoner in summoners)
             {
-                summoner.monsterData.SetAttack(skillData.damage);
-                summoner.monsterData.SetMoveSpeed(skillData.speed);
-                summoner.transform.localPosition = Vector2.one;
-                summoner.SetTarget(Scanner.GetTargetTransform(skillData.skillTarget, summoner.transform, skillData.attackDistance), false);
-                summoner.gameObject.SetActive(true);
-                yield return intervalTime;
-            }
-
-            float time = skillData.duration;
-            while (time > 0)
-            {
-                foreach (Monster summoner in summoners)
+                if (summoner.target == null || !summoner.target.gameObject.activeInHierarchy)
                 {
-                    if (summoner.target == null || !summoner.target.gameObject.activeInHierarchy)
-                    {
-                        Transform target = Scanner.GetTargetTransform(skillData.skillTarget, summoner.transform, skillData.attackDistance);
-                        summoner.SetTarget(target, false);
-                    }
+                    Transform target = Scanner.GetTargetTransform(skillData.skillTarget, summoner.transform, skillData.attackDistance);
+                    summoner.SetTarget(target, false);
                 }
-                yield return timeCount;
-                time -= timeVariable;
             }
+            yield return timeCount;
+            time -= timeVariable;
+        }
 
-            foreach (Monster summoner in summoners)
-            {
-                summoner.gameObject.SetActive(false);
-            }
-
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0.0f);
+        foreach (Monster summoner in summoners)
+        {
+            summoner.gameObject.SetActive(false);
+        }
     }
 }

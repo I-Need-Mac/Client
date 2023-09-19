@@ -54,15 +54,11 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         }
     }
 
+    #region Spawn Projectile
     public T SpawnProjectile<T>(ActiveData skillData) where T : Projectile
     {
         return SpawnProjectile<T>(skillData, transform);
     }
-
-    //public Projectile SpawnProjectile(ActiveData skillData)
-    //{
-    //    return SpawnProjectile(skillData, transform);
-    //}
 
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter) where T : Projectile
     {
@@ -76,19 +72,6 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         projectile.gameObject.SetActive(true);
         return projectile;
     }
-
-    //public Projectile SpawnProjectile(ActiveData skillData, Transform shooter)
-    //{
-    //    int poolId = skillData.skillId / 100;
-    //    Projectile projectile = skillPools[poolId].GetObject();
-    //    projectile.transform.parent = shooter;
-    //    projectile.gameObject.layer = (int)LayerConstant.SKILL;
-    //    projectile.transform.localPosition = Vector2.zero;
-    //    projectile.transform.localScale = Vector3.one * skillData.projectileSizeMulti;
-    //    projectile.SetProjectile(skillData);
-    //    projectile.gameObject.SetActive(true);
-    //    return projectile;
-    //}
 
     //true -> h / false -> v
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, bool direction) where T : Projectile
@@ -134,6 +117,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillPools[projectile.skillData.skillId / 100].ReleaseObject(projectile);
         projectile.transform.parent = transform;
     }
+    #endregion
 
     public void SkillAdd(int skillId, Transform shooter, int skillNum)
     {
@@ -258,7 +242,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         //StartCoroutine(activation);
         //SkillInfo skillInfo = new SkillInfo(skill, activation);
         //skillList.Add(skillId, skillInfo);
-        StartCoroutine(skill.Activation());
+        StartCoroutine(skill.SkillActivation());
         skillList.Add(skillId, skill);
     }
 

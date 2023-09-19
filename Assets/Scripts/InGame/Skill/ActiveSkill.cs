@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class ActiveSkill : Skill
 {
@@ -36,45 +37,30 @@ public abstract class ActiveSkill : Skill
         frame = new WaitForFixedUpdate();
     }
 
+    public IEnumerator SkillActivation()
+    {
+        if (!skillData.isEffect)
+        {
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        }
+
+        do
+        {
+            if (skillData.skillCut)
+            {
+                GameManager.Instance.cutSceneImagePath = skillData.cutDire;
+                SceneManager.LoadScene("CutScenes", LoadSceneMode.Additive);
+            }
+            yield return Activation();
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        } while (skillData.coolTime > 0.0f);
+    }
+
     public void SkillLevelUp()
     {
         SetSkillData(skillData.skillId + 1);
         //SkillDataUpdate();
     }
-
-    //public void SkillDataUpdate()
-    //{
-    //    if (shooter.TryGetComponent(out Player player))
-    //    {
-    //        skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(skillData.coolTime));
-    //        skillData.ModifyProjectileCount(player.playerManager.playerData.projectileAdd);
-    //        skillData.SetDamage(player.playerManager.TotalDamage(originDamage));
-    //        skillData.ModifySpeed(player.playerManager.playerData.projectileSpeed);
-    //        skillData.ModifySplashRange(player.playerManager.playerData.projectileSplash);
-    //        skillData.ModifyProjectileSizeMulti(player.playerManager.playerData.projectileSize);
-    //    }
-    //    else if (shooter.TryGetComponent(out Monster monster))
-    //    {
-    //        skillData.SetDamage(monster.monsterData.attack * originDamage);
-    //    }
-    //}
-
-    //public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
-    //{
-    //    if (shooter.TryGetComponent(out Player player))
-    //    {
-    //        skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
-    //        skillData.ModifyProjectileCount(count);
-    //        skillData.SetDamage(player.playerManager.TotalDamage(originDamage));
-    //        skillData.ModifySpeed(speed);
-    //        skillData.ModifySplashRange(splashRange);
-    //        skillData.ModifyProjectileSizeMulti(size);
-    //    }
-    //    else if (shooter.TryGetComponent(out Monster monster))
-    //    {
-    //        skillData.SetDamage(monster.monsterData.attack * originDamage);
-    //    }
-    //}
 
     public void SetSkillData(int skillId)
     {

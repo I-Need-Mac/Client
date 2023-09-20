@@ -12,6 +12,24 @@ EditorBuildSettings:
     path: Assets/Scenes/BattleScene.unity
     guid: 380be427a033eca49b2d93d24b4295ef
   - enabled: 1
-    path: Assets/Scenes/CutScenes.unity
+    path: Assets/Scenes/CutScenes/CutScenes.unity
     guid: 8e5aa7a6df433294cb7c4988b1bef845
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/CutScenes_Bujung.unity
+    guid: 054b9a0218904524d934de403dab6c6b
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/CutScenes_GangSin.unity
+    guid: 7f9b203ee3de17d4aab2fdd42217661f
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/CutScenes_GodBless.unity
+    guid: e057017b4499c764fb617d8f073d6db5
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/CutScenes_Irons.unity
+    guid: db4de6acf1ccdcf4fb69403aca5a1756
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/CutScenes_Juhon.unity
+    guid: fc1b7631c367d4b4dacaad89f4c9d712
+  - enabled: 1
+    path: Assets/Scenes/CutScenes/CutScenes_Possession.unity
+    guid: 9bcea88b9b651614598ffad35c755907
   m_configObjects: {}

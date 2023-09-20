@@ -20,8 +20,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public Player player { get; private set; }
     public GameObject map { get; private set; }
 
-    public string cutSceneImagePath { get; set; }
-
     public int boxA { get; set; }
     public int boxB { get; set; }
     public int boxC { get; set; }

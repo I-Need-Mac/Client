@@ -12,13 +12,18 @@ public class GameManager : SingletonBehaviour<GameManager>
     //private int mapId;
     //private int playerId;
 
+    private bool gameOver = true;
+    private float defaultScale;
+    private float defaultCharScale;
+
     public PlayerUI playerUi { get; private set; }
     public Player player { get; private set; }
     public GameObject map { get; private set; }
 
-    private bool gameOver = true;
-    private float defaultScale;
-    private float defaultCharScale;
+    public int boxA { get; set; }
+    public int boxB { get; set; }
+    public int boxC { get; set; }
+    public int key { get; set; }
 
     protected override void Awake()
     {
@@ -57,6 +62,10 @@ public class GameManager : SingletonBehaviour<GameManager>
             gameOver = false;
             StopAllCoroutines();
             playerUi.GameOver();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            SceneManager.LoadScene("CutScenes", LoadSceneMode.Additive);
         }
     }
 
@@ -118,14 +127,14 @@ public class GameManager : SingletonBehaviour<GameManager>
                     RecursiveChild(child, LayerConstant.POISONFOG);
                     break;
                 case "FieldStructure":
-                    RecursiveChild(child, LayerConstant.OBSTACLE);
+                    //RecursiveChild(child, LayerConstant.OBSTACLE);
                     break;
                 case "ItemCollider":
                     RecursiveChild(child, LayerConstant.ITEM);
                     break;
-                case "Top":
-                    RecursiveChild(child, LayerConstant.OBSTACLE - 2);
-                    break;
+                //case "Top":
+                //    RecursiveChild(child, LayerConstant.OBSTACLE - 2);
+                //    break;
                 case "PlayerManager":
                     RecursiveChild(child, LayerConstant.HIT);
                     break;

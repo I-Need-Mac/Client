@@ -80,7 +80,7 @@ public class DebugManager
     public void PrintError(string target, params object[] args)
     {
         if (isPrintDebug)
-            Debug.LogFormat(target, args);
+            Debug.LogErrorFormat(target, args);
     }
 
     public void PrintDrawLine()

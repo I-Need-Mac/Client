@@ -1,9 +1,20 @@
 PackageID,PackageSource,IsMultiple,ItemID,ItemAmount,ItemProbability
 ?®ÌÇ§ÏßÄ ID,?®ÌÇ§ÏßÄ ?åÏä§,Í∑∏Î£π ???ÖÎ¶Ω ?ïÎ•†Î°??úÌñâ,?ÑÏù¥??ID,?ÑÏù¥???òÎüâ,?ÑÏù¥???úÎûç ?ïÎ•†(ÎßåÎ∂Ñ??
 int,String,Bool,int,Int,int
-101011,BaseSmallEXP,FALSE,101,1,10000
-101012,AdditionalSmall,FALSE,101,1,10000
+101011,BaseSmallEXP,FALSE,101,1,8500
+101012,BaseSmallEXP,FALSE,102,1,1000
+101013,BaseSmallEXP,FALSE,102,1,500
+101014,AdditionalSmall,FALSE,101,1,10000
 102011,BaseMiddleEXP,FALSE,102,1,10000
 102012,AdditionalMiddle,FALSE,102,1,10000
 103011,BaseBigEXP,FALSE,103,1,10000
 103012,AdditionalBig,FALSE,103,1,10000
+104011,Exp_Small,FALSE,101,1,10000
+104012,Exp_Middle,FALSE,102,1,10000
+104013,Exp_Large,FALSE,103,1,10000
+104014,Item_KillAll,FALSE,201,1,10000
+104015,Item_Stun,FALSE,301,1,10000
+104016,Item_Heal,FALSE,401,1,10000
+104017,Item_Magnet,FALSE,501,1,10000
+104018,Item_Box,FALSE,601,1,10000
+104019,Item_Key,FALSE,701,1,10000

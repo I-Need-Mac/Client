@@ -39,6 +39,8 @@ public class UI_GameMain : UI_Popup
         selectSorcererText.text = LocalizeManager.Instance.GetText("UI_SelectSorcerer");
         soulText.text = LocalizeManager.Instance.GetText("UI_Soul");
         sorcereText.text = LocalizeManager.Instance.GetText("UI_Sorcer");
+
+        SoundManager.Instance.RefindBGMRequester();
     }
 
     public void OnClickObject(PointerEventData data)

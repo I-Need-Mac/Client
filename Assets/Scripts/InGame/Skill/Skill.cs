@@ -4,6 +4,7 @@ public interface Skill
 {
     //public abstract void Init();
     public abstract IEnumerator Activation();
+    public IEnumerator SkillActivation();
     //public void DeActivation();
     //public void SkillUpdate();
     //public void SkillDataUpdate();

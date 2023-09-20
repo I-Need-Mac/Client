@@ -22,7 +22,7 @@ public struct SkillInfo
 
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
-    public static readonly int SKILL_MAX_LEVEL = 8;
+    //public static readonly int SKILL_MAX_LEVEL = 8;
     public static readonly int ACTIVE_SKILL_MAX_COUNT = 6;
     public static readonly int PASSIVE_SKILL_MAX_COUNT = 5;
     public static readonly int SKILL_MAX_COUNT = ACTIVE_SKILL_MAX_COUNT + PASSIVE_SKILL_MAX_COUNT;
@@ -54,15 +54,11 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         }
     }
 
+    #region Spawn Projectile
     public T SpawnProjectile<T>(ActiveData skillData) where T : Projectile
     {
         return SpawnProjectile<T>(skillData, transform);
     }
-
-    //public Projectile SpawnProjectile(ActiveData skillData)
-    //{
-    //    return SpawnProjectile(skillData, transform);
-    //}
 
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter) where T : Projectile
     {
@@ -76,19 +72,6 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         projectile.gameObject.SetActive(true);
         return projectile;
     }
-
-    //public Projectile SpawnProjectile(ActiveData skillData, Transform shooter)
-    //{
-    //    int poolId = skillData.skillId / 100;
-    //    Projectile projectile = skillPools[poolId].GetObject();
-    //    projectile.transform.parent = shooter;
-    //    projectile.gameObject.layer = (int)LayerConstant.SKILL;
-    //    projectile.transform.localPosition = Vector2.zero;
-    //    projectile.transform.localScale = Vector3.one * skillData.projectileSizeMulti;
-    //    projectile.SetProjectile(skillData);
-    //    projectile.gameObject.SetActive(true);
-    //    return projectile;
-    //}
 
     //true -> h / false -> v
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, bool direction) where T : Projectile
@@ -134,21 +117,25 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillPools[projectile.skillData.skillId / 100].ReleaseObject(projectile);
         projectile.transform.parent = transform;
     }
+    #endregion
 
     public void SkillAdd(int skillId, Transform shooter, int skillNum)
     {
+        Skill skill;
+
         foreach (int id in skillList.Keys)
         {
             if (id / 100 == skillId / 100)
             {
                 DebugManager.Instance.PrintDebug("[SkillManager]: Skill Level Up!");
-                //skillList[id].skill.SkillLevelUp();
                 skillList[id].SkillLevelUp();
+                skill = skillList[id];
+                skillList.Add(id + 1, skill);
+                skillList.Remove(id);
                 return;
             }
         }
         
-        Skill skill;
         switch(skillId / 100)
         {
             case 101:
@@ -255,18 +242,18 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         //StartCoroutine(activation);
         //SkillInfo skillInfo = new SkillInfo(skill, activation);
         //skillList.Add(skillId, skillInfo);
-        StartCoroutine(skill.Activation());
+        StartCoroutine(skill.SkillActivation());
         skillList.Add(skillId, skill);
     }
 
-    public void SkillLevelUp(SkillInfo skillInfo)
-    {
-        //StopCoroutine(skillInfo.activation);
-        skillInfo.skill.SkillLevelUp();
-        //IEnumerator activation = skillInfo.skill.Activation();
-        //StartCoroutine(activation);
-        //skillInfo.activation = activation;
-    }
+    //public void SkillLevelUp(SkillInfo skillInfo)
+    //{
+    //    //StopCoroutine(skillInfo.activation);
+    //    skillInfo.skill.SkillLevelUp();
+    //    //IEnumerator activation = skillInfo.skill.Activation();
+    //    //StartCoroutine(activation);
+    //    //skillInfo.activation = activation;
+    //}
 
     public void CoroutineStarter(IEnumerator coroutine)
     {

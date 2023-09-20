@@ -27,20 +27,14 @@ public abstract class PassiveSkill : Skill
         frame = new WaitForFixedUpdate();
     }
 
-    //public void DeActivation()
-    //{
-    //    try
-    //    {
-    //        for (int i = 0; i < skillData.skillEffect.Count; i++)
-    //        {
-    //            PassiveEffect.PassiveEffectActivation(-skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
-    //        }
-    //    }
-    //    catch
-    //    {
-    //        DebugManager.Instance.PrintDebug("[SYSTEM]: 해제할 효과가 없습니다");
-    //    }
-    //}
+    public IEnumerator SkillActivation()
+    {
+        do
+        {
+            yield return Activation();
+            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+        } while (skillData.coolTime > 0);
+    }
 
     public void SkillLevelUp()
     {
@@ -49,19 +43,6 @@ public abstract class PassiveSkill : Skill
         //SkillDataUpdate();
         SkillManager.Instance.CoroutineStarter(Activation());
     }
-
-    //public void SkillDataUpdate()
-    //{
-    //    SkillDataUpdate(skillData.coolTime, 0, 0.0f, 0.0f, 0.0f, 0.0f);
-    //}
-
-    //public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
-    //{
-    //    if (shooter.TryGetComponent(out Player player))
-    //    {
-    //        skillData.ModifyCoolTime(-player.playerManager.GetCoolDown(coolTime));
-    //    }
-    //}
 
     public void SetSkillData(int skillId)
     {

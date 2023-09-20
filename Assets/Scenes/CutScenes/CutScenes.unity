@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 165948187}
   - component: {fileID: 165948186}
   - component: {fileID: 165948188}
-  - component: {fileID: 165948189}
   m_Layer: 5
   m_Name: CutSceneImage
   m_TagString: Untagged
@@ -212,31 +211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f083cfa53f91a499913b475b20d0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowStartPosX: 700
-  disAppearPosX: 800
-  disAppearSpeed: 1
+  stopPosX: 550
+  moveSpeed: 3
   blinkSpeed: 0.05
---- !u!50 &165948189
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165948184}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  blinkIntervalTime: 2
 --- !u!1 &1515632185
 GameObject:
   m_ObjectHideFlags: 0

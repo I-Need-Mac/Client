@@ -65,7 +65,7 @@ int,String,String_08,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float
 11006,Skill_Name_CREPITUS,Skill_Desc_CREPITUS_06,,Arts/Skill/Icon/Skill_Icon_CREPITUS_00,3000,FALSE,None,,100,TRUE,FALSE,6,500,5000,80,0,FALSE,2,1,Explore,100,Melee,Prefabs/InGame/Skill/Crepitus,Ranges
 11007,Skill_Name_CREPITUS,Skill_Desc_CREPITUS_07,,Arts/Skill/Icon/Skill_Icon_CREPITUS_00,3000,FALSE,None,,100,TRUE,FALSE,6,500,5000,80,0,FALSE,1.5,1,Explore,100,Melee,Prefabs/InGame/Skill/Crepitus,Ranges
 11008,Skill_Name_CREPITUS,Skill_Desc_CREPITUS_08,,Arts/Skill/Icon/Skill_Icon_CREPITUS_00,3000,FALSE,None,,100,TRUE,FALSE,6,500,5000,80,0,FALSE,1.5,1,Explore|Nuckback,100|0.3,Melee,Prefabs/InGame/Skill/Crepitus,Ranges
-11201,Skill_Name_aliento,Skill_Desc_aliento_01,,Arts/Skill/Icon/Skill_Icon_aliento_00,2200,TRUE,CutScenes_Juhon,,20,FALSE,FALSE,4,50,0,20,5,FALSE,0,0.2,,,Mouse,Prefabs/InGame/Skill/Aliento,Projectile
+11201,Skill_Name_aliento,Skill_Desc_aliento_01,,Arts/Skill/Icon/Skill_Icon_aliento_00,2200,TRUE,CutScenes,,20,FALSE,FALSE,4,50,0,20,5,FALSE,0,0.2,,,Mouse,Prefabs/InGame/Skill/Aliento,Projectile
 11202,Skill_Name_aliento,Skill_Desc_aliento_02,,Arts/Skill/Icon/Skill_Icon_aliento_00,1700,FALSE,None,,20,FALSE,FALSE,4,50,0,20,5,FALSE,0,0.2,,,Mouse,Prefabs/InGame/Skill/Aliento,Projectile
 11203,Skill_Name_aliento,Skill_Desc_aliento_03,,Arts/Skill/Icon/Skill_Icon_aliento_00,1700,FALSE,None,,20,FALSE,FALSE,4,50,0,20,5,FALSE,0,0.2,,,Mouse,Prefabs/InGame/Skill/Aliento,Projectile
 11204,Skill_Name_aliento,Skill_Desc_aliento_04,,Arts/Skill/Icon/Skill_Icon_aliento_00,1700,FALSE,None,,20,FALSE,FALSE,5,50,0,20,5,FALSE,0,0.2,,,Mouse,Prefabs/InGame/Skill/Aliento,Projectile

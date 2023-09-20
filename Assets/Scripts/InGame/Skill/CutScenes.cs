@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class CutScenes : MonoBehaviour
 {
-    [SerializeField] private float slowStartPosX = -600.0f;
-    [SerializeField] private float disAppearPosX = -500.0f;
+    [SerializeField] private float slowStartPosX = 550.0f;
     [SerializeField] private float disAppearSpeed = 2.5f;
+    [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private float blinkSpeed = 0.01f;
 
     private RectTransform rect;
@@ -28,10 +28,24 @@ public class CutScenes : MonoBehaviour
     {
         if (rect.anchoredPosition.x >= slowStartPosX && slow)
         {
-            rigid.velocity *= -0.1f;
             slow = false;
             StartCoroutine(Blink());
         }
+
+        if (slow)
+        {
+            transform.Translate(Vector2.right * moveSpeed * 10000.0f * Time.unscaledDeltaTime);
+            moveSpeed *= 0.99f;
+        }
+        
+        //DebugManager.Instance.PrintError("Velocity: {0}", rigid.velocity);
+        //if (rect.anchoredPosition.x >= slowStartPosX && slow)
+        //{
+        //    rigid.velocity *= -0.1f;
+        //    slow = false;
+        //    StartCoroutine(Blink());
+        //}
+
 
         //if (rect.anchoredPosition.x >= disAppearPosX)
         //{
@@ -46,17 +60,14 @@ public class CutScenes : MonoBehaviour
 
     private void Start()
     {
-        cutImage.sprite = ResourcesManager.Load<Sprite>(GameManager.Instance.cutSceneImagePath);
         rect.anchoredPosition = new Vector2(-Screen.width, rect.anchoredPosition.y);
-        rigid.AddForce(Vector2.right * 100000.0f * Time.fixedDeltaTime, ForceMode2D.Impulse);
         slow = true;
+        Time.timeScale = 0.0f;
     }
 
     private IEnumerator Blink()
     {
-        //yield return new WaitForSecondsRealtime(0.5f);
-        Time.timeScale = 0.0f;
-
+        yield return new WaitForSecondsRealtime(0.5f);
         WaitForSecondsRealtime blinkTime = new WaitForSecondsRealtime(blinkSpeed);
         float time = disAppearSpeed;
         
@@ -70,7 +81,7 @@ public class CutScenes : MonoBehaviour
         }
 
         Time.timeScale = 1.0f;
-        SceneManager.UnloadSceneAsync("CutScenes");
+        SceneManager.UnloadSceneAsync(gameObject.scene.name);
     }
 
 }

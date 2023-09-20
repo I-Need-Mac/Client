@@ -48,8 +48,8 @@ public abstract class ActiveSkill : Skill
         {
             if (skillData.skillCut)
             {
-                GameManager.Instance.cutSceneImagePath = skillData.cutDire;
-                SceneManager.LoadScene("CutScenes", LoadSceneMode.Additive);
+                SceneManager.LoadScene(skillData.cutDire, LoadSceneMode.Additive);
+                yield return new WaitForSeconds(0.1f);
             }
             yield return Activation();
             yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);

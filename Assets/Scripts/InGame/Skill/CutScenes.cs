@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class CutScenes : MonoBehaviour
 {
-    [SerializeField] private float slowStartPosX = -600.0f;
-    [SerializeField] private float disAppearPosX = -500.0f;
-    [SerializeField] private float disAppearSpeed = 2.5f;
+    [SerializeField] private float stopPosX = 550.0f;
+    [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private float blinkSpeed = 0.01f;
+    [SerializeField] private float blinkIntervalTime = 2.5f;
 
     private RectTransform rect;
-    private Rigidbody2D rigid;
     private Image cutImage;
 
     private bool slow;
@@ -20,45 +19,36 @@ public class CutScenes : MonoBehaviour
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
-        rigid = GetComponent<Rigidbody2D>();
         cutImage = GetComponent<Image>();
     }
 
     private void Update()
     {
-        if (rect.anchoredPosition.x >= slowStartPosX && slow)
+        if (rect.anchoredPosition.x >= stopPosX && slow)
         {
-            rigid.velocity *= -0.1f;
             slow = false;
             StartCoroutine(Blink());
         }
 
-        //if (rect.anchoredPosition.x >= disAppearPosX)
-        //{
-        //    cutImage.fillAmount -= Time.deltaTime * disAppearSpeed;
-        //}
-
-        //if (cutImage.fillAmount <= 0.0f)
-        //{
-        //    SceneManager.UnloadSceneAsync("CutScenes");
-        //}
+        if (slow)
+        {
+            transform.Translate(Vector2.right * moveSpeed * 10000.0f * Time.unscaledDeltaTime);
+            moveSpeed *= 0.99f;
+        }
     }
 
     private void Start()
     {
-        cutImage.sprite = ResourcesManager.Load<Sprite>(GameManager.Instance.cutSceneImagePath);
         rect.anchoredPosition = new Vector2(-Screen.width, rect.anchoredPosition.y);
-        rigid.AddForce(Vector2.right * 100000.0f * Time.fixedDeltaTime, ForceMode2D.Impulse);
         slow = true;
+        Time.timeScale = 0.0f;
     }
 
     private IEnumerator Blink()
     {
-        //yield return new WaitForSecondsRealtime(0.5f);
-        Time.timeScale = 0.0f;
-
+        yield return new WaitForSecondsRealtime(0.5f);
         WaitForSecondsRealtime blinkTime = new WaitForSecondsRealtime(blinkSpeed);
-        float time = disAppearSpeed;
+        float time = blinkIntervalTime;
         
         for (int i = 0; i < 3; i++)
         {
@@ -70,7 +60,7 @@ public class CutScenes : MonoBehaviour
         }
 
         Time.timeScale = 1.0f;
-        SceneManager.UnloadSceneAsync("CutScenes");
+        SceneManager.UnloadSceneAsync(gameObject.scene.name);
     }
 
 }

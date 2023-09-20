@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class CutScenes : MonoBehaviour
 {
-    [SerializeField] private float slowStartPosX = 550.0f;
-    [SerializeField] private float disAppearSpeed = 2.5f;
+    [SerializeField] private float stopPosX = 550.0f;
     [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private float blinkSpeed = 0.01f;
+    [SerializeField] private float blinkIntervalTime = 2.5f;
 
     private RectTransform rect;
-    private Rigidbody2D rigid;
     private Image cutImage;
 
     private bool slow;
@@ -20,13 +19,12 @@ public class CutScenes : MonoBehaviour
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
-        rigid = GetComponent<Rigidbody2D>();
         cutImage = GetComponent<Image>();
     }
 
     private void Update()
     {
-        if (rect.anchoredPosition.x >= slowStartPosX && slow)
+        if (rect.anchoredPosition.x >= stopPosX && slow)
         {
             slow = false;
             StartCoroutine(Blink());
@@ -37,25 +35,6 @@ public class CutScenes : MonoBehaviour
             transform.Translate(Vector2.right * moveSpeed * 10000.0f * Time.unscaledDeltaTime);
             moveSpeed *= 0.99f;
         }
-        
-        //DebugManager.Instance.PrintError("Velocity: {0}", rigid.velocity);
-        //if (rect.anchoredPosition.x >= slowStartPosX && slow)
-        //{
-        //    rigid.velocity *= -0.1f;
-        //    slow = false;
-        //    StartCoroutine(Blink());
-        //}
-
-
-        //if (rect.anchoredPosition.x >= disAppearPosX)
-        //{
-        //    cutImage.fillAmount -= Time.deltaTime * disAppearSpeed;
-        //}
-
-        //if (cutImage.fillAmount <= 0.0f)
-        //{
-        //    SceneManager.UnloadSceneAsync("CutScenes");
-        //}
     }
 
     private void Start()
@@ -69,7 +48,7 @@ public class CutScenes : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.5f);
         WaitForSecondsRealtime blinkTime = new WaitForSecondsRealtime(blinkSpeed);
-        float time = disAppearSpeed;
+        float time = blinkIntervalTime;
         
         for (int i = 0; i < 3; i++)
         {

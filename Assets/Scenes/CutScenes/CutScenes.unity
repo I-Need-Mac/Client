@@ -211,10 +211,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f083cfa53f91a499913b475b20d0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
   stopPosX: 550
   moveSpeed: 3
-  blinkSpeed: 0.05
-  blinkIntervalTime: 2
+  animationSpeed: 5
+  animationTime: 1
 --- !u!1 &1515632185
 GameObject:
   m_ObjectHideFlags: 0

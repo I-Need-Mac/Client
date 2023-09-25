@@ -11,29 +11,20 @@ public class Horin : ActiveSkill
     public override IEnumerator Activation()
     {
         shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+        projectiles = new Projectile[skillData.projectileCount];
 
-        if (!skillData.isEffect)
+        for (int i = 0; i < projectiles.Length; i++)
         {
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+            originSize = projectiles[i].transform.localScale * skillData.projectileSizeMulti;
+            projectiles[i].transform.localScale = Vector2.zero;
+            projectiles[i].transform.localPosition = Vector2.up * skillData.attackDistance;
+            projectiles[i].transform.localEulerAngles = Vector3.zero;
+            float angle = 360 * i / skillData.projectileCount;
+            projectiles[i].transform.RotateAround(shooter.position, Vector3.back, angle);
         }
 
-        do
-        {
-            projectiles = new Projectile[skillData.projectileCount];
-            for (int i = 0; i < projectiles.Length; i++)
-            {
-                projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
-                originSize = projectiles[i].transform.localScale * skillData.projectileSizeMulti;
-                projectiles[i].transform.localScale = Vector2.zero;
-                projectiles[i].transform.localPosition = Vector2.up * skillData.attackDistance;
-                projectiles[i].transform.localEulerAngles = Vector3.zero;
-                float angle = 360 * i / skillData.projectileCount;
-                projectiles[i].transform.RotateAround(shooter.position, Vector3.back, angle);
-            }
-
-            yield return Move();
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0.0f);
+        yield return Move();
     }
 
     private IEnumerator Move()

@@ -10,24 +10,14 @@ public class GwiGi : ActiveSkill
     {
         shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
 
-        if (!skillData.isEffect)
+        for (int i = 0; i < skillData.projectileCount; i++)
         {
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter, false);
+            projectile.transform.localPosition = Vector2.up * skillData.attackDistance;
+            projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
+            SkillManager.Instance.CoroutineStarter(Move(projectile));
+            yield return intervalTime;
         }
-
-        do
-        {
-            for (int i = 0; i < skillData.projectileCount; i++)
-            {
-                Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter, false);
-                projectile.transform.localPosition = Vector2.up * skillData.attackDistance;
-                projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                SkillManager.Instance.CoroutineStarter(Move(projectile));
-                yield return intervalTime;
-            }
-
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0.0f);
     }
 
     private IEnumerator Move(Projectile projectile)

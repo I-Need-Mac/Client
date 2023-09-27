@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1270593755556789663}
-  - component: {fileID: 5073479097272275897}
   - component: {fileID: 7655567290919020741}
+  - component: {fileID: 2488794015287581160}
   m_Layer: 0
   m_Name: FieldStructure_Destructionstone8
   m_TagString: Untagged
@@ -34,19 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5073479097272275897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3473233305610128260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d51ac58e30681b54696b7e2fb31896f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  structureId: 406
 --- !u!50 &7655567290919020741
 Rigidbody2D:
   serializedVersion: 4
@@ -68,6 +55,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &2488794015287581160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473233305610128260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2482c2705a23242a1a3dba6b8768ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  structureId: 406
 --- !u!1 &5303301644766111318
 GameObject:
   m_ObjectHideFlags: 0

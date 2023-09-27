@@ -41,5 +41,6 @@ public class MobStatue : FieldStructure
         yield return new WaitForSeconds(this.fieldStructureData.coolTime);
         spriteRenderer.enabled = true;
         top.enabled = true;
+        this.hp = 1;
     }
 }

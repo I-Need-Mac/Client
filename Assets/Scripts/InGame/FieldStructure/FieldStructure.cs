@@ -120,7 +120,7 @@ public class FieldStructure : MonoBehaviour
         if (collision.gameObject.layer == (int)LayerConstant.SKILL)
         {
             StartCoroutine(Activation());
-            Gimmick.GimmickActivate(this.fieldStructureData.gimmick, this.fieldStructureData.gimmickParam);
+            Gimmick.GimmickActivate(transform, this.fieldStructureData.gimmick, this.fieldStructureData.gimmickParam);
         }
     }
 

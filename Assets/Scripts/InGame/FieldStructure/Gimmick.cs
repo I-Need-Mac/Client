@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 
 public struct Gimmick
 {
-    public static void GimmickActivate(List<GimmickEnum> gimmicks, List<string> param)
+    private const string BEAM_PATH = "Prefabs/InGame/FieldStructure/";
+
+    public static void GimmickActivate(Transform transform, List<GimmickEnum> gimmicks, List<string> param)
     {
         int i = 0; //param 참조 순서 (기믹마다 개수가 달라서 사용)
 
@@ -14,40 +18,20 @@ public struct Gimmick
             {
                 case GimmickEnum.DAMAGE:
                     break;
-                //case GimmickEnum.DAMAGE:
-                //    break;
-                //case GimmickEnum.DAMAGE:
-                //    break;
-                //case GimmickEnum.DAMAGE:
-                //    break;
-                case GimmickEnum.BEAMWIDTH:
-                    Beam beamWidth = GameObject.Instantiate(ResourcesManager.Load<BeamWidth>("Prefabs/InGame/FieldStructure/BeamWidth"));
-                    beamWidth.BeamActivation(float.Parse(param[i]), float.Parse(param[++i]));
-                    break;
-                case GimmickEnum.BEAMVERTICAL:
-                    Beam beamVertical = GameObject.Instantiate(ResourcesManager.Load<BeamWidth>("Prefabs/InGame/FieldStructure/BeamWidth"));
-                    beamVertical.BeamActivation(float.Parse(param[i]), float.Parse(param[++i]));
+                case GimmickEnum.BEAMLINE:
+                    Beam beamLine = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamLine"), transform);
+                    beamLine.BeamInit(float.Parse(param[i]), float.Parse(param[++i]));
                     break;
                 case GimmickEnum.BEAMCIRCLE:
-                    Beam beamCircle = GameObject.Instantiate(ResourcesManager.Load<BeamWidth>("Prefabs/InGame/FieldStructure/BeamWidth"));
-                    beamCircle.BeamActivation(float.Parse(param[i]), 0.0f);
+                    Beam beamCircle = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamCircle"), transform);
+                    beamCircle.BeamInit(float.Parse(param[i]), float.Parse(param[i]));
                     break;
                 case GimmickEnum.BEAMCROSS:
-                    Beam beamW = GameObject.Instantiate(ResourcesManager.Load<BeamWidth>("Prefabs/InGame/FieldStructure/BeamWidth"));
-                    Beam beamV = GameObject.Instantiate(ResourcesManager.Load<BeamWidth>("Prefabs/InGame/FieldStructure/BeamWidth"));
-                    beamW.BeamActivation(float.Parse(param[i]), float.Parse(param[i + 1]));
-                    beamV.BeamActivation(float.Parse(param[i]), float.Parse(param[i + 1]));
+                    Beam beamCrossFirst = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamLine"), transform);
+                    Beam beamCrossSecond = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamLine"), transform);
+                    beamCrossFirst.BeamInit(float.Parse(param[i]), float.Parse(param[i + 1]));
+                    beamCrossSecond.BeamInit(float.Parse(param[i + 1]), float.Parse(param[i++]));
                     break;
-                //case GimmickEnum.DAMAGE:
-                //    break;
-                //case GimmickEnum.DAMAGE:
-                //    break;
-                //case GimmickEnum.DAMAGE:
-                //    break;
-                //case GimmickEnum.DAMAGE:
-                //    break;
-                //case GimmickEnum.DAMAGE:
-                //    break;
                 default:
                     DebugManager.Instance.PrintWarning("[Gimmick]: 미구현된 기믹입니다");
                     break;

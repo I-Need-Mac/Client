@@ -6,7 +6,7 @@ public class Destructionstone : FieldStructure
 {
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!top.enabled)
+        if (!front.enabled)
         {
             return;
         }
@@ -20,11 +20,11 @@ public class Destructionstone : FieldStructure
 
     protected override IEnumerator Activation()
     {
-        SpriteRenderer sprite = top.GetComponent<SpriteRenderer>();
-        top.enabled = false;
+        SpriteRenderer sprite = front.GetComponent<SpriteRenderer>();
+        front.enabled = false;
         sprite.enabled = false;
         yield return new WaitForSeconds(this.fieldStructureData.coolTime);
         sprite.enabled = true;
-        top.enabled = true;
+        front.enabled = true;
     }
 }

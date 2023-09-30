@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9105007760126633102}
   - component: {fileID: -524574691731775322}
-  - component: {fileID: 1349355538307882240}
+  - component: {fileID: 36660695351529106}
   m_Layer: 0
   m_Name: FieldStructure_Destructionstone1
   m_TagString: Untagged
@@ -55,7 +55,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &1349355538307882240
+--- !u!114 &36660695351529106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   structureId: 406
+  type: 0
 --- !u!1 &2088322805689534785
 GameObject:
   m_ObjectHideFlags: 0

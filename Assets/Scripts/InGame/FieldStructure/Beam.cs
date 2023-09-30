@@ -4,17 +4,37 @@ using UnityEngine;
 
 public class Beam : MonoBehaviour
 {
-    [SerializeField] private float beamDuration = 1.0f;
+    private bool trigger;
+    private float damage;
 
-    public void BeamInit(float h, float v)
+    private void Start()
     {
-        this.transform.localScale = new Vector2(h, h);
-        StartCoroutine(Activation());
+        trigger = false;
     }
 
-    protected IEnumerator Activation()
+    public void BeamInit(float h, float v, float duration, float damage)
+    {
+        this.damage = damage;
+        this.trigger = true;
+        this.transform.localScale = new Vector2(h, v);
+        StartCoroutine(Activation(duration));
+    }
+
+    protected IEnumerator Activation(float beamDuration)
     {
         yield return new WaitForSeconds(beamDuration);
+        this.trigger = false;
         Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (trigger)
+        {
+            if (collision.TryGetComponent(out Monster monster))
+            {
+                monster.Hit(damage);
+            }
+        }
     }
 }

@@ -32,31 +32,6 @@ public abstract class FieldStructure : MonoBehaviour
 
         try
         {
-            List<GimmickEnum> list = new List<GimmickEnum>();
-            foreach (string str in (table["Gimmick"] as List<string>))
-            {
-                list.Add((GimmickEnum)Enum.Parse(typeof(GimmickEnum), str, true));
-            }
-            fieldStructureData.SetGimmick(list);
-        }
-        catch
-        {
-            try
-            {
-                List<GimmickEnum> list = new List<GimmickEnum>()
-                {
-                    (GimmickEnum)Enum.Parse(typeof(GimmickEnum), table["Gimmick"].ToString(), true),
-                };
-                fieldStructureData.SetGimmick(list);
-            }
-            catch
-            {
-                fieldStructureData.SetGimmick(new List<GimmickEnum>());
-            }
-        }
-
-        try
-        {
             List<string> list = new List<string>();
             foreach (string str in (table["GimmickParam"] as List<string>))
             {

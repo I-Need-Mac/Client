@@ -31,28 +31,28 @@ public class DestructionStone : FieldStructure
             return;
         }
 
-        if (collision.gameObject.layer == (int)LayerConstant.SKILL)
+        if (collision.transform.parent.TryGetComponent(out Player player))
         {
             StartCoroutine(Activation());
             switch (type)
             {
                 case BEAM_TYPE.WIDTH:
                     Beam width = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamWidth"), transform);
-                    width.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]));
+                    width.BeamInit(CameraManager.Instance.cam.orthographicSize * CameraManager.Instance.cam.aspect * 2.0f * 2.5f, float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     break;
                 case BEAM_TYPE.VERTICAL:
                     Beam vertical = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamVertical"), transform);
-                    vertical.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]));
+                    vertical.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), CameraManager.Instance.cam.orthographicSize * 2.0f * 2.5f, float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     break;
                 case BEAM_TYPE.CIRCLE:
                     Beam circle = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamCircle"), transform);
-                    circle.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[0]));
+                    circle.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     break;
                 case BEAM_TYPE.CROSS:
                     Beam crossWidth = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamWidth"), transform);
                     Beam crossVertical = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamVertical"), transform);
-                    crossWidth.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]));
-                    crossVertical.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[0]));
+                    crossWidth.BeamInit(CameraManager.Instance.cam.orthographicSize * CameraManager.Instance.cam.aspect * 2.0f * 2.5f, float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
+                    crossVertical.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), CameraManager.Instance.cam.orthographicSize * 2.0f * 2.5f, float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     break;
                 default:
                     DebugManager.Instance.PrintError("[DestructionStone]: 없는 Type 입니다.");

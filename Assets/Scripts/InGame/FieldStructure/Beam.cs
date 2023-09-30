@@ -8,11 +8,11 @@ public class Beam : MonoBehaviour
 
     public void BeamInit(float h, float v)
     {
-        this.transform.localScale = new Vector2(h, v);
+        this.transform.localScale = new Vector2(h, h);
         StartCoroutine(Activation());
     }
 
-    private IEnumerator Activation()
+    protected IEnumerator Activation()
     {
         yield return new WaitForSeconds(beamDuration);
         Destroy(this.gameObject);

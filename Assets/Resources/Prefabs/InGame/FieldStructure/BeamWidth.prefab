@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 312824990701393021}
   - component: {fileID: 416842280722301459}
   m_Layer: 1
-  m_Name: BeamLine
+  m_Name: BeamWidth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -117,6 +117,14 @@ public class GameManager : SingletonBehaviour<GameManager>
             trans.tag = "Player";
         }
         trans.gameObject.layer = (int)layer;
+        if (trans.TryGetComponent(out Renderer render))
+        {
+            render.sortingLayerName = layer.ToString();
+        }
+        else if (trans.TryGetComponent(out MeshRenderer meshRender))
+        {
+            meshRender.sortingLayerName = layer.ToString();
+        }
         trans.localPosition = new Vector3(trans.localPosition.x, trans.localPosition.y, (int)layer);
 
         foreach (Transform child in trans)

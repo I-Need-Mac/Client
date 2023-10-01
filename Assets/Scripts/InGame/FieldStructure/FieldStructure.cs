@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public abstract class FieldStructure : MonoBehaviour
 {
@@ -78,6 +79,16 @@ public abstract class FieldStructure : MonoBehaviour
     private void SetLayer(Transform trans)
     {
         trans.gameObject.layer = fieldStructureData.layerOrder;
+
+        if (trans.TryGetComponent(out Renderer render))
+        {
+            render.sortingLayerName = ((LayerConstant)fieldStructureData.layerOrder).ToString();
+        }
+        else if (trans.TryGetComponent(out MeshRenderer meshRender))
+        {
+            meshRender.sortingLayerName = ((LayerConstant)fieldStructureData.layerOrder).ToString();
+        }
+
         foreach (Transform child in trans)
         {
             SetLayer(child);

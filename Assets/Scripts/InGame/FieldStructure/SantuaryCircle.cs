@@ -4,25 +4,51 @@ using UnityEngine;
 
 public class SantuaryCircle : FieldStructure
 {
-    private bool isActive;
+    private bool isHeal;
+    private int hpRegen;
+    private int duration;
+    private WaitForSeconds tick;
+    private WaitForSeconds sec;
 
     protected override void Awake()
     {
         base.Awake();
 
-        isActive = false;
+        isHeal = false;
+        front.enabled = false;
+        hpRegen = int.Parse(this.fieldStructureData.gimmickParam[0]);
+        duration = int.Parse(this.fieldStructureData.gimmickParam[1]);
+        tick = new WaitForSeconds(0.01f);
+        sec = new WaitForSeconds(1.0f);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(Activation());
+        DebugManager.Instance.PrintError("circle start");
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isActive)
+        if (collision.transform.parent.TryGetComponent(out Player player) && isHeal)
         {
-            Player player = GetComponentInParent<Player>();
-            if (player != null)
-            {
-                isActive = true;
-                // 작업
-            }
+            player.playerManager.playerData.CurrentHpModifier(hpRegen);
+            isHeal = false;
+            DebugManager.Instance.PrintError("Heal!");
         }
+    }
+
+    private IEnumerator Activation()
+    {
+        for (int i = 0; i < duration; i++)
+        {
+            front.enabled = true;
+            isHeal = true;
+            yield return tick;
+            front.enabled = false;
+            yield return sec;
+        }
+
+        this.gameObject.SetActive(false);
     }
 }

@@ -354,6 +354,8 @@ public class Monster : MonoBehaviour
         }
         //UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
         //hpBar = null;
+
+        GameManager.Instance.killCount++;
     }
 
     private IEnumerator DieAnimation()

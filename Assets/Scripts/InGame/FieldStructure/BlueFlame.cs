@@ -42,13 +42,13 @@ public class BlueFlame : FieldStructure
             if (collision.TryGetComponent(out Monster monster))
             {
                 monster.Hit(-(int)damage);
-                return;
             }
             Player player = collision.GetComponentInParent<Player>();
             if (player != null)
             {
                 StartCoroutine(player.Invincible());
                 player.playerManager.playerData.CurrentHpModifier(-(int)damage);
+                player.Slow(0.5f, slow);
             }
             currentDotTime = dotTime;
         }

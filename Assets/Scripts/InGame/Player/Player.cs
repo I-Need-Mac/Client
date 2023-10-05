@@ -162,5 +162,19 @@ public class Player : MonoBehaviour
         }
         statusEffect.RemoveStatusEffect(STATUS_EFFECT.FIRE);
     }
+
+    public IEnumerator Slow(float time, float value)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.SLOW))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
+        this.playerManager.playerData.MoveSpeedModifier(-value * this.playerManager.playerData.moveSpeed);
+        yield return new WaitForSeconds(time);
+        this.playerManager.playerData.MoveSpeedModifier(value * this.playerManager.playerData.moveSpeed);
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
+    }
     #endregion
 }

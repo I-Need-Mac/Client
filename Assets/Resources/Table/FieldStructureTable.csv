@@ -22,7 +22,7 @@ int,LocalizeID,String,String,GimmickEnum,int_Arr,Bool,Bool,int,int,int,bool
 209,FieldStructure_Mixedcorpse,Map/Structure/Gimmick/Map_Gimmick_Dummy_01,Null,Obstacle,0,TRUE,FALSE,0,2,0,FALSE
 301,FieldStructure_Beatingflesh,Map/Structure/Gimmick/Map_Gimmick_Beatingflesh_00,Null,Ornament,0,TRUE,TRUE,0,2,100000,FALSE
 302,FieldStructure_FleshPillar,Map/Structure/Gimmick/Map_Gimmick_FleshPillar_00,Null,Ornament,0,TRUE,FALSE,0,2,100000,FALSE
-401,FieldStructure_Blueflame,Map/Structure/Gimmick/Map_Gimmick_Beatingflesh_00,Null,Damage,5,TRUE,TRUE,0,2,100000,FALSE
+401,FieldStructure_Blueflame,Map/Structure/Gimmick/Map_Gimmick_Blueflame_00,Null,Damage,5|5|3|10,TRUE,TRUE,0,1,100000,FALSE
 402,FieldStructure_Mobstatue,Map/Structure/Gimmick/Map_Gimmick_MobStatue_00,Map/Structure/Gimmick/Map_Gimmick_MobStatueTop_00,Durability,1|Stone,TRUE,TRUE,0,1,100000,FALSE
 403,FieldStructure_Teleportcircle,Map/Structure/Gimmick/Map_Gimmick_TeleportCircle_00,Null,Teleport,5,TRUE,TRUE,1,4,100000,FALSE
 404,FieldStructure_Santuary,Map/Structure/Gimmick/Map_Gimmick_Santuary_00,Map/Structure/Gimmick/Map_Gimmick_SantuaryTop_00,Heal,2|5,TRUE,FALSE,0,1,100000,FALSE

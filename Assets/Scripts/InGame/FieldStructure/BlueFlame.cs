@@ -36,15 +36,19 @@ public class BlueFlame : FieldStructure
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        
         if (currentDotTime <= 0.0f)
         {
-            if (collision.transform.parent.TryGetComponent(out Player player))
-            {
-                player.playerManager.playerData.CurrentHpModifier(-(int)damage);
-            }
             if (collision.TryGetComponent(out Monster monster))
             {
                 monster.Hit(-(int)damage);
+                return;
+            }
+            Player player = collision.GetComponentInParent<Player>();
+            if (player != null)
+            {
+                StartCoroutine(player.Invincible());
+                player.playerManager.playerData.CurrentHpModifier(-(int)damage);
             }
             currentDotTime = dotTime;
         }
@@ -52,33 +56,15 @@ public class BlueFlame : FieldStructure
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.parent.TryGetComponent(out Player player))
-        {
-            FireDot(player);
-        }
         if (collision.TryGetComponent(out Monster monster))
         {
-            FireDot(monster);
+            StartCoroutine(monster.FireDot(dotTime, dotDamage));
+            return;
         }
-    }
-
-    private IEnumerator FireDot(Player player)
-    {
-        WaitForSeconds tick = new WaitForSeconds(1.0f);
-        for (int i = 0; i < dotTime; i++)
+        Player player = collision.GetComponentInParent<Player>();
+        if (player != null)
         {
-            player.playerManager.playerData.CurrentHpModifier(-(int)dotDamage);
-            yield return tick;
-        }
-    }
-
-    private IEnumerator FireDot(Monster monster)
-    {
-        WaitForSeconds tick = new WaitForSeconds(1.0f);
-        for (int i = 0; i < dotTime; i++)
-        {
-            monster.Hit(-(int)dotDamage);
-            yield return tick;
+            StartCoroutine(player.FireDot(dotTime, dotDamage));
         }
     }
 }

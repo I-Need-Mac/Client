@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
     private Transform shadow;
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
-    
+    private StatusEffect statusEffect;
+
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
 
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     #region Mono
     private void Awake()
     {
+        statusEffect = new StatusEffect();
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
         lookDirection = Vector3.left;
@@ -139,6 +141,26 @@ public class Player : MonoBehaviour
     private void AudioSetting()
     {
         SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), "EFFECT_SOUND");
+    }
+    #endregion
+
+    #region STATUS_EFFECT
+    public IEnumerator FireDot(float time, float dotDamage)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.FIRE);
+        WaitForSeconds sec = new WaitForSeconds(1.0f);
+        for (int i = 0; i < time; i++)
+        {
+            StartCoroutine(Invincible());
+            this.playerManager.playerData.CurrentHpModifier(-(int)dotDamage);
+            yield return sec;
+        }
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.FIRE);
     }
     #endregion
 }

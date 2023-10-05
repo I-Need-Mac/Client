@@ -25,7 +25,6 @@ public class SantuaryCircle : FieldStructure
     private void OnEnable()
     {
         StartCoroutine(Activation());
-        DebugManager.Instance.PrintError("circle start");
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

@@ -10,14 +10,14 @@ public class DemonAttack : FieldStructure
     {
         base.Awake();
 
-        ((CircleCollider2D)front).radius = float.Parse(this.fieldStructureData.gimmickParam[0]);
+        top.GetComponent<CircleCollider2D>().radius = float.Parse(this.fieldStructureData.gimmickParam[0]);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.parent.TryGetComponent(out Player player))
         {
-            front.enabled = false;
+            top.enabled = false;
             MonsterSpawner.Instance.SpawnMonster(monsterList[UnityEngine.Random.Range(0, monsterList.Length)], transform.position);
         }
     }

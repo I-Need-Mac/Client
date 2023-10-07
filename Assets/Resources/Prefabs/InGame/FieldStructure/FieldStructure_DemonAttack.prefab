@@ -42,7 +42,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140045801338466390}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -67,8 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c994118026ac24680f9f0bfba81450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structureId: 0
-  monsterList: 000000000000000000000000
+  structureId: 410
+  monsterList: 65000000
 --- !u!1 &927301774051847262
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,8 +79,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8741404602457527386}
   - component: {fileID: 1043713924071084667}
-  - component: {fileID: 4982584200135857006}
-  - component: {fileID: 2248641919552625436}
+  - component: {fileID: 392788425902185076}
   m_Layer: 0
   m_Name: Front
   m_TagString: Untagged
@@ -153,27 +152,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4982584200135857006
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 927301774051847262}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!58 &2248641919552625436
-CircleCollider2D:
+--- !u!70 &392788425902185076
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -185,9 +165,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1.28
+  m_Offset: {x: 0.049819715, y: 0.010674591}
+  m_Size: {x: 2.2326462, y: 1.2755343}
+  m_Direction: 1
 --- !u!1 &7988307928622554773
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2647973634288113199}
   - component: {fileID: 3862197672575229761}
-  - component: {fileID: 6855475798528360337}
+  - component: {fileID: 8013277992686099160}
   m_Layer: 0
   m_Name: Top
   m_TagString: Untagged
@@ -271,8 +251,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &6855475798528360337
-BoxCollider2D:
+--- !u!58 &8013277992686099160
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -281,19 +261,9 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.0001, y: 0.0001}
-  m_EdgeRadius: 0
+  m_Radius: 0.5

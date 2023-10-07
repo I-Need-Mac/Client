@@ -16,6 +16,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private float defaultScale;
     private float defaultCharScale;
 
+    public int killCount { get; set; }
     public PlayerUI playerUi { get; private set; }
     public Player player { get; private set; }
     public GameObject map { get; private set; }
@@ -43,6 +44,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         StartCoroutine(MonsterSpawner.Instance.Spawn());
         Timer.Instance.TimerSwitch(true);
         playerUi.NameBoxSetting(player.playerManager.playerData.iconImage);
+        killCount = 0;
     }
 
     private void Update()
@@ -117,6 +119,14 @@ public class GameManager : SingletonBehaviour<GameManager>
             trans.tag = "Player";
         }
         trans.gameObject.layer = (int)layer;
+        if (trans.TryGetComponent(out Renderer render))
+        {
+            render.sortingLayerName = layer.ToString();
+        }
+        else if (trans.TryGetComponent(out MeshRenderer meshRender))
+        {
+            meshRender.sortingLayerName = layer.ToString();
+        }
         trans.localPosition = new Vector3(trans.localPosition.x, trans.localPosition.y, (int)layer);
 
         foreach (Transform child in trans)

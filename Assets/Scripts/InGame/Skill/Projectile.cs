@@ -31,6 +31,7 @@ public class Projectile : MonoBehaviour
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        transform.GetComponent<Renderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
         animator = GetComponent<Animator>();
     }
 

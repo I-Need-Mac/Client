@@ -57,6 +57,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         Monster monster = spawner[monsterId].GetObject();
         monster.monsterId = monsterId;
         monster.gameObject.layer = (int)LayerConstant.MONSTER;
+        monster.GetComponentInChildren<MeshRenderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
         float weight = Timer.Instance.currentTime * 0.001f;
         monster.SpawnSet(monsterHpCoefficient * weight, monsterAttackCoefficient * weight);
         monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;

@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class FieldStructure : MonoBehaviour
+public abstract class FieldStructure : MonoBehaviour
 {
     [SerializeField] protected int structureId;
 
@@ -30,31 +30,6 @@ public class FieldStructure : MonoBehaviour
         fieldStructureData.SetStructureName(table["StructureName"].ToString());
         fieldStructureData.SetFrontPath(table["FrontPath"].ToString());
         fieldStructureData.SetTopPath(table["TopPath"].ToString());
-
-        try
-        {
-            List<GimmickEnum> list = new List<GimmickEnum>();
-            foreach (string str in (table["Gimmick"] as List<string>))
-            {
-                list.Add((GimmickEnum)Enum.Parse(typeof(GimmickEnum), str, true));
-            }
-            fieldStructureData.SetGimmick(list);
-        }
-        catch
-        {
-            try
-            {
-                List<GimmickEnum> list = new List<GimmickEnum>()
-                {
-                    (GimmickEnum)Enum.Parse(typeof(GimmickEnum), table["Gimmick"].ToString(), true),
-                };
-                fieldStructureData.SetGimmick(list);
-            }
-            catch
-            {
-                fieldStructureData.SetGimmick(new List<GimmickEnum>());
-            }
-        }
 
         try
         {
@@ -103,31 +78,41 @@ public class FieldStructure : MonoBehaviour
 
     private void SetLayer(Transform trans)
     {
-        trans.gameObject.layer = fieldStructureData.layerOrder;
+        trans.gameObject.layer = (int)LayerConstant.DECORATION;
+
+        if (trans.TryGetComponent(out Renderer render))
+        {
+            render.sortingLayerName = ((LayerConstant)fieldStructureData.layerOrder).ToString();
+        }
+        else if (trans.TryGetComponent(out MeshRenderer meshRender))
+        {
+            meshRender.sortingLayerName = ((LayerConstant)fieldStructureData.layerOrder).ToString();
+        }
+
         foreach (Transform child in trans)
         {
             SetLayer(child);
         }
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!front.enabled)
-        {
-            return;
-        }
+    protected abstract void OnTriggerEnter2D(Collider2D collision);
+    //{
+    //    if (!front.enabled)
+    //    {
+    //        return;
+    //    }
 
-        if (collision.gameObject.layer == (int)LayerConstant.SKILL)
-        {
-            StartCoroutine(Activation());
-            Gimmick.GimmickActivate(this.fieldStructureData.gimmick, this.fieldStructureData.gimmickParam);
-        }
-    }
+    //    if (collision.gameObject.layer == (int)LayerConstant.SKILL)
+    //    {
+    //        StartCoroutine(Activation());
+    //        Gimmick.GimmickActivate(transform, this.fieldStructureData.gimmick, this.fieldStructureData.gimmickParam);
+    //    }
+    //}
 
-    protected virtual IEnumerator Activation()
-    {
-        front.enabled = false;
-        yield return new WaitForSeconds(this.fieldStructureData.coolTime);
-        front.enabled = true;
-    }
+    //protected abstract IEnumerator Activation();
+    //{
+    //    front.enabled = false;
+    //    yield return new WaitForSeconds(this.fieldStructureData.coolTime);
+    //    front.enabled = true;
+    //}
 }

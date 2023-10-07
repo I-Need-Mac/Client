@@ -21,6 +21,7 @@ public class Item : MonoBehaviour
         itemData = new ItemData();
         frame = new WaitForFixedUpdate();
         transform.localScale *= float.Parse(CSVReader.Read("BattleConfig", "ImageMultiple", "ConfigValue").ToString());
+        transform.GetComponent<Renderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
     }
 
     private void OnEnable()

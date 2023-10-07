@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MobStatue : FieldStructure
@@ -33,7 +32,7 @@ public class MobStatue : FieldStructure
         }
     }
 
-    protected override IEnumerator Activation()
+    private IEnumerator Activation()
     {
         ItemManager.Instance.DropItems(this.fieldStructureData.gimmickParam[1], transform);
         spriteRenderer.enabled = false;
@@ -41,5 +40,6 @@ public class MobStatue : FieldStructure
         yield return new WaitForSeconds(this.fieldStructureData.coolTime);
         spriteRenderer.enabled = true;
         top.enabled = true;
+        this.hp = 1;
     }
 }

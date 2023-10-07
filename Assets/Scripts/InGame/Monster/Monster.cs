@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -16,8 +17,9 @@ public class Monster : MonoBehaviour
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
-    private bool isSlow;
+    //private bool isSlow;
     private bool spineSwitch;
+    private StatusEffect statusEffect;
     private bool isPlayer;
     private BehaviorTreeManager btManager;
 
@@ -44,6 +46,7 @@ public class Monster : MonoBehaviour
 
     private void Awake()
     {
+        statusEffect = new StatusEffect();
         attackCollider = GetComponentInChildren<MonsterCollider>();
         monsterCollider2 = transform.Find("Collision").GetComponent<CapsuleCollider2D>();
         monsterCollider = GetComponent<CapsuleCollider2D>();
@@ -108,7 +111,7 @@ public class Monster : MonoBehaviour
         isAttack = false;
         isHit = false;
         spineSwitch = true;
-        isSlow = false;
+        //isSlow = false;
     }
 
     #region AI
@@ -354,6 +357,8 @@ public class Monster : MonoBehaviour
         }
         //UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
         //hpBar = null;
+
+        GameManager.Instance.killCount++;
     }
 
     private IEnumerator DieAnimation()
@@ -425,15 +430,25 @@ public class Monster : MonoBehaviour
 
     private IEnumerator Slow(float n, float sec)
     {
-        if (!isSlow)
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.SLOW))
         {
-            isSlow = true;
+            statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
             float originSpeed = monsterData.moveSpeed;
             monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
             yield return new WaitForSeconds(sec);
             monsterData.SetMoveSpeed(originSpeed);
-            isSlow = false;
+            statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
         }
+
+        //if (!isSlow)
+        //{
+        //    isSlow = true;
+        //    float originSpeed = monsterData.moveSpeed;
+        //    monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
+        //    yield return new WaitForSeconds(sec);
+        //    monsterData.SetMoveSpeed(originSpeed);
+        //    isSlow = false;
+        //}
     }
 
     private IEnumerator Slow(float n)
@@ -463,10 +478,15 @@ public class Monster : MonoBehaviour
 
     private IEnumerator Restraint(float n)
     {
-        float originSpeed = monsterData.moveSpeed;
-        monsterData.SetMoveSpeed(0.0f);
-        yield return new WaitForSeconds(n);
-        monsterData.SetMoveSpeed(originSpeed);
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.RESTRAINT))
+        {
+            statusEffect.AddStatusEffect(STATUS_EFFECT.RESTRAINT);
+            float originSpeed = monsterData.moveSpeed;
+            monsterData.SetMoveSpeed(0.0f);
+            yield return new WaitForSeconds(n);
+            monsterData.SetMoveSpeed(originSpeed);
+            statusEffect.RemoveStatusEffect(STATUS_EFFECT.RESTRAINT);
+        }
     }
 
     private IEnumerator Pull(float n)
@@ -480,6 +500,24 @@ public class Monster : MonoBehaviour
             spineSwitch = true;
         }
     }
+    #endregion
 
+    #region STATUS_EFFECT
+    public IEnumerator FireDot(float time, float dotDamage)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.FIRE);
+        WaitForSeconds sec = new WaitForSeconds(1.0f);
+        for (int i = 0; i < time; i++)
+        {
+            this.Hit(-(int)dotDamage);
+            yield return sec;
+        }
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.FIRE);
+    }
     #endregion
 }

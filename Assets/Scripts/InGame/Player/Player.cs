@@ -171,9 +171,10 @@ public class Player : MonoBehaviour
         }
 
         statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
-        this.playerManager.playerData.MoveSpeedModifier(-value * this.playerManager.playerData.moveSpeed);
+        float decreaseValue = value * this.playerManager.playerData.moveSpeed;
+        this.playerManager.playerData.MoveSpeedModifier(-decreaseValue);
         yield return new WaitForSeconds(time);
-        this.playerManager.playerData.MoveSpeedModifier(value * this.playerManager.playerData.moveSpeed);
+        this.playerManager.playerData.MoveSpeedModifier(decreaseValue);
         statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
     }
     #endregion

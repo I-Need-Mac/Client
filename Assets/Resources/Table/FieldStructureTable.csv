@@ -31,7 +31,7 @@ int,LocalizeID,String,String,GimmickEnum,int_Arr,Bool,Bool,int,int,int,bool
 407,FieldStructure_Destructionstone2,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_02,Null,BeamLine,1|5,TRUE,TRUE,1,1,100000,FALSE
 408,FieldStructure_Destructionstone3,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_03,Null,BeamCircle,1,TRUE,TRUE,1,2,100000,FALSE
 409,FieldStructure_Destructionstone4,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_04,Null,BeamCross,0,TRUE,TRUE,1,2,100000,FALSE
-410,FieldStructure_Demonattack,Map/Structure/Gimmick/Map_Gimmick_DemonAttack_00,Null,SurpriseBox,1|1,TRUE,FALSE,1,2,100000,FALSE
+410,FieldStructure_Demonattack,Map/Structure/Gimmick/Map_Gimmick_DemonAttack_00,Null,SurpriseBox,2,TRUE,FALSE,1,2,100000,FALSE
 411,FieldStructure_Warning,Map/Structure/Gimmick/Map_Gimmick_Warning_00,Null,Warning,2,TRUE,TRUE,0,2,100000,FALSE
 412,FieldStructure_Punishment,Map/Structure/Gimmick/Map_Gimmick_Punishment_00,Null,Punishment,0.5,TRUE,TRUE,0,2,100000,FALSE
-413,FieldStructure_Poisonmist,Map/Structure/Gimmick/Map_Gimmick_PoisonMist_00,Null,DebuffSpeed,1|0.5,TRUE,TRUE,0,0,100000,FALSE
+413,FieldStructure_Poisonmist,Map/Structure/Gimmick/Map_Gimmick_PoisonMist_00,Null,DebuffSpeed,50,TRUE,TRUE,0,0,100000,FALSE

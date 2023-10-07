@@ -9,8 +9,6 @@ public class Santuary : FieldStructure
     private bool isActive;
     private int diffCount;
     private int currentKillCount;
-    private int processCount;
-    private int processMaxCount;
 
     private SantuaryCircle santuaryCircle;
 
@@ -20,8 +18,6 @@ public class Santuary : FieldStructure
 
         isActive = false;
         diffCount = int.Parse(this.fieldStructureData.gimmickParam[0]);
-        processCount = 0;
-        processMaxCount = int.Parse(this.fieldStructureData.gimmickParam[1]);
 
         santuaryCircle = Instantiate(ResourcesManager.Load<SantuaryCircle>(SANTUARY_CIRCLE_PATH), transform);
         santuaryCircle.gameObject.SetActive(false);

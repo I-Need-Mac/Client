@@ -33,7 +33,6 @@ public class SantuaryCircle : FieldStructure
         {
             player.playerManager.playerData.CurrentHpModifier(hpRegen);
             isHeal = false;
-            DebugManager.Instance.PrintError("Heal!");
         }
     }
 

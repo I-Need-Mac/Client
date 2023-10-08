@@ -50,6 +50,14 @@ public class UI_Base : MonoBehaviour
                 evt.OnClickHandler -= action;
                 evt.OnClickHandler += action;
                 break;
+            case Define.UIEvent.Enter:
+                evt.OnEnterHandler -= action;
+                evt.OnEnterHandler += action;
+                break;
+            case Define.UIEvent.Exit:
+                evt.OnExitHandler -= action;
+                evt.OnExitHandler += action;
+                break;
             default:
                 break;
         } 

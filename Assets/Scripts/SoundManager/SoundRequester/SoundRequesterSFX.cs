@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +6,18 @@ using UnityEngine;
 public class SoundRequesterSFX : SoundRequester
 {
     public Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem> shootingSounds = new Dictionary<SoundSituation.SOUNDSITUATION, SoundPackItem>();
+    public Dictionary<string, GameObject> audioGameObjectDict = new Dictionary<string, GameObject>();
 
     [ExecuteInEditMode]
     public List<AudioSourceSetter> speakerSettings = new List<AudioSourceSetter>();
     public List<SoundPackItem> soundPackItems = new List<SoundPackItem>();
+  
+
+    private SoundSituation.SOUNDSITUATION lastSituation;
 
     public override bool MakeSpeakers()
     {
+
         soundRequester = new GameObject("SoundRequester");
         soundRequester.SetActive(true);
         soundRequester.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -20,7 +26,7 @@ public class SoundRequesterSFX : SoundRequester
 
         foreach (AudioSourceSetter items in speakerSettings)
         {
-            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.speakerName);
+            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.audioType + "@" + soundObjectID + "!" + items.speakerName);
 
 
 
@@ -32,10 +38,12 @@ public class SoundRequesterSFX : SoundRequester
 
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                audioGameObjectDict.Add(items.speakerName, speaker);
+
+                SoundManager.Instance.AddAudioSource(soundObjectID + "!" + items.speakerName, audioSources[items.speakerName], items.audioType);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType) * items.volume;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;
@@ -61,7 +69,8 @@ public class SoundRequesterSFX : SoundRequester
                 speaker.transform.SetParent(soundRequester.transform);
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                audioGameObjectDict.Add(items.speakerName, speaker);
+                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName],items.audioType);
 
             }
 
@@ -100,14 +109,21 @@ public class SoundRequesterSFX : SoundRequester
 
         if (shootingSounds.ContainsKey(situation))
         {
-            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource Call " + situation + " With " + shootingSounds[situation].usingSpeaker);
-            if (shootingSounds[situation].delay == 0)
+            if (lastSituation == SoundSituation.SOUNDSITUATION.NONE)
             {
-                ShootSound(situation);
+                lastSituation = situation;
             }
-            else
+            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource Call " + situation + " With " + shootingSounds[situation].usingSpeaker);
+            if (shootingSounds[lastSituation].priority <= shootingSounds[situation].priority)
             {
-                StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].delay));
+                if (shootingSounds[situation].delay == 0)
+                {
+                    ShootSound(situation);
+                }
+                else
+                {
+                    StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].delay));
+                }
             }
         }
         else
@@ -120,11 +136,15 @@ public class SoundRequesterSFX : SoundRequester
     {
         //audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
         audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
-        if (situation == SoundSituation.SOUNDSITUATION.DIE) {
-            MoveToSoundManager( FindChild(FindChild(this.gameObject, "SoundRequester"), shootingSounds[situation].usingSpeaker));
+        if (situation == SoundSituation.SOUNDSITUATION.DIE)
+        {
+           MoveToSoundManager(audioGameObjectDict[shootingSounds[situation].usingSpeaker]);
         }
 
     }
+
+
+
     protected override void ShootSound(string speakName, AudioClip clip)
     {
         audioSources[speakName].clip = clip;
@@ -132,7 +152,8 @@ public class SoundRequesterSFX : SoundRequester
     }
 
 
-    public override void RequestShootSound() { 
+    public override void RequestShootSound()
+    {
     }
 
     protected override IEnumerator PlaySoundWithDelay(SoundSituation.SOUNDSITUATION situation, float delay)

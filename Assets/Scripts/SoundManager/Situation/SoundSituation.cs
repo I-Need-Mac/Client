@@ -5,6 +5,7 @@ using UnityEngine;
 public class SoundSituation
 {
     public enum SOUNDSITUATION { 
+        NONE,
         ACTIVE,
         INTERECT,
         STOP,
@@ -30,5 +31,12 @@ public class SoundSituation
         ENTER
   
     
+    }
+
+    public enum SKILLSITUATION
+    {
+        SHOOT,
+        HIT,
+        DESTROY,
     }
 }

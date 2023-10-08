@@ -4,67 +4,53 @@ using UnityEngine;
 
 public class Horin : ActiveSkill
 {
+    Projectile[] projectiles;
+
     public Horin(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
-
-    public override void Init()
-    {
-        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
-
-        for (int i = 0; i < skillData.projectileCount; i++)
-        {
-            Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-            originSize = projectile.transform.localScale;
-            projectile.transform.localScale = Vector2.zero;
-            Vector3 rotate = Vector3.forward * 360 * i / skillData.projectileCount;
-            projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-            projectile.transform.Rotate(rotate);
-            projectile.transform.localPosition = projectile.transform.up * skillData.attackDistance;
-            projectiles.Add(projectile);
-        }
-    }
 
     public override IEnumerator Activation()
     {
-        if (!skillData.isEffect)
+        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+        projectiles = new Projectile[skillData.projectileCount];
+
+        for (int i = 0; i < projectiles.Length; i++)
         {
-            yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
+            projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+            originSize = projectiles[i].transform.localScale * skillData.projectileSizeMulti;
+            projectiles[i].transform.localScale = Vector2.zero;
+            projectiles[i].transform.localPosition = Vector2.up * skillData.attackDistance;
+            projectiles[i].transform.localEulerAngles = Vector3.zero;
+            float angle = 360 * i / skillData.projectileCount;
+            projectiles[i].transform.RotateAround(shooter.position, Vector3.back, angle);
         }
 
-        float weight = 0.004f;
+        yield return Move();
+    }
+
+    private IEnumerator Move()
+    {
         float time = 0.0f;
-        float size = 0.0f;
-
-        while (true)
+        while(time < skillData.duration)
         {
-            if (time >= skillData.duration && size <= 0.0f)
+            for (int i = 0; i < projectiles.Length; i++)
             {
-                time = 0.0f;
-                foreach (Projectile projectile in projectiles)
+                if (projectiles[i].transform.localScale.x < originSize.x && time <= 1.0f)
                 {
-                    projectile.CollisionPower(false);
+                    projectiles[i].transform.localScale = originSize * time;
                 }
-                yield return PlayerStatusUI.Instance.boxIcons[skillNum].Dimmed(skillData.coolTime / 1000.0f);
-                foreach (Projectile projectile in projectiles)
+                if (skillData.duration - time <= 1.0f)
                 {
-                    projectile.CollisionPower(true);
+                    projectiles[i].transform.localScale = originSize * (skillData.duration - time);
                 }
+                projectiles[i].transform.RotateAround(shooter.position, Vector3.forward, skillData.speed);
             }
+            time += Time.fixedDeltaTime;
+            yield return frame;
+        }
 
-            if (time >= skillData.duration)
-            {
-                size -= weight;
-            }
-            else if (size < 1)
-            {
-                size += weight;
-            }
-            foreach (Projectile projectile in projectiles)
-            {
-                projectile.transform.RotateAround(shooter.position, Vector3.back, skillData.speed * Time.deltaTime);
-                projectile.transform.localScale = originSize * size;
-            }
-            time += Time.deltaTime;
-            yield return null;
+        for (int i = 0; i < projectiles.Length; i++)
+        {
+            SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
         }
     }
 }

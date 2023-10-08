@@ -6,8 +6,9 @@ public class BGMSituation
 {
     public enum BGMSITUATION
     {
+        NONE,
         CHANGE_SCENE
- 
+        
 
     }
 }

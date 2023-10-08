@@ -28,4 +28,9 @@ public class LocalizeManager : SingleTon<LocalizeManager>
     public string GetText(string targetID) {                                                                                                //아이디로 데이터를 반환함
         return Convert.ToString(localTableData[targetID][LANGUAGE[langType]]);
     }
+
+    public int GetLangType()
+    {
+        return langType;
+    }
 }

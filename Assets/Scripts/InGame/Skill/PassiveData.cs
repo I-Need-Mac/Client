@@ -9,9 +9,9 @@ public class PassiveData
     public string iconPath { get; private set; }
     public string imagePath { get; private set; }
     public List<SKILL_PASSIVE> skillEffect { get; private set; }
-    public int coolTime { get; private set; }
+    public float coolTime { get; private set; }
     public List<CALC_MODE> calcMode { get; private set; }
-    public List<string> skillEffectParam { get; private set; }
+    public List<float> skillEffectParam { get; private set; }
     public string prefabPath { get; private set; }
 
     public void SetSkillId(int skillId) { this.skillId = skillId; }
@@ -20,8 +20,10 @@ public class PassiveData
     public void SetIconPath(string iconPath) { this.iconPath = iconPath; }
     public void SetImagePath(string imagePath) { this.imagePath = imagePath; }
     public void SetEffect(List<SKILL_PASSIVE> skillEffect) { this.skillEffect = skillEffect; }
-    public void SetCoolTime(int coolTime) { this.coolTime = coolTime; }
+    public void SetCoolTime(float coolTime) { this.coolTime = coolTime; }
     public void SetCalcMode(List<CALC_MODE> calcMode) { this.calcMode = calcMode; }
-    public void SetEffectParam(List<string> skillEffectParam) { this.skillEffectParam = skillEffectParam; }
+    public void SetEffectParam(List<float> skillEffectParam) { this.skillEffectParam = skillEffectParam; }
     public void SetPrefabPath(string prefabPath) { this.prefabPath = prefabPath; }
+
+    public void ModifyCoolTime(float coolTime) { this.coolTime += coolTime; }
 }

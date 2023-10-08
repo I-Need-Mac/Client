@@ -8,6 +8,10 @@ public class Projectile : MonoBehaviour
 {
     private const string BOUNCE_PATH = "Prefabs/InGame/Skill/Bounce";
 
+    [SerializeField] AudioClip shootAudioClip;
+    [SerializeField] AudioClip hitAudioClip;
+    [SerializeField] AudioClip destroyAudioClip;
+
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
@@ -16,7 +20,7 @@ public class Projectile : MonoBehaviour
     protected int bounceCount;
     protected bool isMetastasis = false;
 
-    public float totalDamage { get; private set; }
+    //public float totalDamage { get; private set; }
     public ActiveData skillData { get; private set; }
 
     private void Awake()
@@ -27,6 +31,7 @@ public class Projectile : MonoBehaviour
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+        transform.GetComponent<Renderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
         animator = GetComponent<Animator>();
     }
 
@@ -35,6 +40,11 @@ public class Projectile : MonoBehaviour
         if (projectileCollider != null)
         {
             projectileCollider.enabled = true;
+        }
+        //발사 사운드
+        if (shootAudioClip != null)
+        {
+            SoundManager.Instance.PlayAudioClip("Skill", shootAudioClip);
         }
     }
 
@@ -71,8 +81,8 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        transform.localScale *= this.skillData.projectileSizeMulti;
-        totalDamage = GameManager.Instance.player.playerManager.TotalDamage(skillData.damage);
+        //transform.localScale *= this.skillData.projectileSizeMulti;
+        //this.totalDamage = skillData.damage;
     }
 
     public void SetAlpha(float alpha)
@@ -102,8 +112,13 @@ public class Projectile : MonoBehaviour
     {
         if (collision.TryGetComponent(out Monster monster))
         {
-            monster.Hit(totalDamage);
+            monster.Hit(skillData.damage);
             SkillEffect(monster);
+            //충돌 사운드
+            if (hitAudioClip != null)
+            {
+                SoundManager.Instance.PlayAudioClip("Skill", hitAudioClip);
+            }
 
             if (!skillData.isPenetrate)
             {
@@ -121,6 +136,11 @@ public class Projectile : MonoBehaviour
     protected void Remove()
     {
         SkillManager.Instance.DeSpawnProjectile(this);
+        //소멸 사운드
+        if (destroyAudioClip != null)
+        {
+            SoundManager.Instance.PlayAudioClip("Skill", destroyAudioClip);
+        }
     }
 
     protected void SkillEffect(Monster target)
@@ -170,7 +190,7 @@ public class Projectile : MonoBehaviour
             {
                 if (target.TryGetComponent(out Monster monster))
                 {
-                    monster.monsterData.SetCurrentHp(monster.monsterData.currentHp - (int)totalDamage);
+                    monster.monsterData.SetCurrentHp(monster.monsterData.currentHp - (int)skillData.damage);
                 }
             }
         }
@@ -185,7 +205,7 @@ public class Projectile : MonoBehaviour
 
     private void Drain(float n)
     {
-        float hp = totalDamage * n * 0.01f;
+        float hp = skillData.damage * n * 0.01f;
         GameManager.Instance.player.playerManager.playerData.CurrentHpModifier((int)hp);
     }
 

@@ -1,4 +1,4 @@
-ChapterID,ChapterName,ChapterImage
-챕터 ID,챕터 이름,챕터 일러스트 이미지
-int,String,String
-101,악을 미워하고 선에 속하라,Art/Background/Main_Full_Main_6
+ChapterID,ChapterHeader,ChapterName,ChapterImage
+챕터 ID,챕터 ?�서,챕터 ?�름,챕터 ?�러?�트 ?��?지
+int,String,String,String
+101,Chapter1_Header,Chapter1_Name,Arts/Background/Main_Full_Main_06

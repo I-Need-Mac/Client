@@ -142,6 +142,7 @@ public class ItemManager : SingletonBehaviour<ItemManager>
             itemPools.Add(itemId, new ObjectPool<Item>(ResourcesManager.Load<Item>(prefabPath), transform));
         }
         Item item = itemPools[itemId].GetObject();
+        item.gameObject.layer = (int)LayerConstant.ITEM;
         item.transform.position = pos;
         item.gameObject.SetActive(true);
         return item;

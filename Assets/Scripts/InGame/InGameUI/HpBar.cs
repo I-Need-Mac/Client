@@ -11,7 +11,7 @@ public class HpBar : InGameUI
     private void Awake()
     {
         hpBar = GetComponent<Image>();
-        hpBar.enabled = false;
+        //hpBar.enabled = false;
     }
 
     //private void Update()
@@ -26,8 +26,8 @@ public class HpBar : InGameUI
         hpBar.fillAmount = currentHp / maxHp;
     }
 
-    public void HpBarSwitch(bool flag)
-    {
-        hpBar.enabled = flag;
-    }
+    //public void HpBarSwitch(bool flag)
+    //{
+    //    hpBar.enabled = flag;
+    //}
 }

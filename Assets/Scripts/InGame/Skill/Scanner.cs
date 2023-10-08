@@ -34,6 +34,8 @@ public struct Scanner
                     return BossTarget().position;
                 case SKILLCONSTANT.SKILL_TARGET.LOWEST:
                     return LowestTarget(shooter, attackDistance).position;
+                case SKILLCONSTANT.SKILL_TARGET.MOUSE:
+                    return CameraManager.Instance.cam.ScreenToWorldPoint(Input.mousePosition);
                 default:
                     return RandomTarget(shooter, attackDistance).position;
             }
@@ -63,9 +65,34 @@ public struct Scanner
                 return PlayerTarget(shooter);
             case SKILLCONSTANT.SKILL_TARGET.LOWEST:
                 return LowestTarget(shooter, attackDistance);
+            case SKILLCONSTANT.SKILL_TARGET.MOUSE:
+                return MouseTarget(exceptions);
             default:
                 return RandomTarget(shooter, attackDistance);
         }
+    }
+
+    private static Transform MouseTarget(List<Transform> exceptions)
+    {
+        Vector2 pos = CameraManager.Instance.cam.ScreenToWorldPoint(Input.mousePosition);
+        targets = Physics2D.CircleCastAll(pos, 99999, Vector2.zero, 0, 1 << (int)LayerConstant.MONSTER);
+        Transform resultTarget = null;
+        float distance = float.MaxValue;
+        foreach (RaycastHit2D target in targets)
+        {
+            if (exceptions.Contains(target.transform))
+            {
+                continue;
+            }
+
+            float diff = (pos - (Vector2)target.transform.position).sqrMagnitude;
+            if (diff < distance)
+            {
+                distance = diff;
+                resultTarget = target.transform;
+            }
+        }
+        return resultTarget;
     }
 
     private static Transform MeleeTarget(Transform shooter, float attackDistance, List<Transform> exceptions)

@@ -13,6 +13,9 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
     private PlayerStatusUI statusUi;
     private LevelUpUI levelUi;
 
+    public ExpBar expBar { get; private set; }
+    public SkillBoxUI skillBoxUi { get; private set; }
+
     [SerializeField] private Color color = new Color(0, 0, 0, 0.75f);
 
     public int skillCount
@@ -28,6 +31,8 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
         gameOverUi = GetComponentInChildren<GameOverUI>();
         statusUi = GetComponentInChildren<PlayerStatusUI>();
         levelUi = GetComponentInChildren<LevelUpUI>();
+        skillBoxUi = GetComponentInChildren<SkillBoxUI>();
+        expBar = GetComponentInChildren<ExpBar>();
     }
 
     private void Start()
@@ -38,7 +43,8 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
 
     private void Update()
     {
-        PlayerStatusUI.Instance.DimmedColorChange(color);
+        //PlayerStatusUI.Instance.DimmedColorChange(color);
+        skillBoxUi.DimmedColorChange(color);
     }
 
     public void NameBoxSetting(string path)
@@ -52,12 +58,18 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
         statusUi.levelText.text = $"Lv.{level}";
     }
 
-    public void SkillSelectWindowOpen()
+    public IEnumerator SkillSelectWindowOpen()
     {
         levelUi.gameObject.SetActive(true);
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
+        GameManager.Instance.Pause();
         levelUi.skills.Clear();
         levelUi.SkillBoxInit(3);
+
+        while (!levelUi.isSelect)
+        {
+            yield return null;
+        }
     }
 
     public void GameOver()
@@ -65,5 +77,4 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
         Time.timeScale = 0f;
         gameOverUi.gameObject.SetActive(true);
     }
-    
 }

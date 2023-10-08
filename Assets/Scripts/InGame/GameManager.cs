@@ -15,6 +15,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private bool gameOver = true;
     private float defaultScale;
     private float defaultCharScale;
+    private UI_ESCPopup esc;
 
     public int killCount { get; set; }
     public PlayerUI playerUi { get; private set; }
@@ -56,6 +57,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         if (Input.GetKeyDown(KeyCode.P))
         {
             Pause();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ESC();
         }
         
 
@@ -170,6 +175,24 @@ public class GameManager : SingletonBehaviour<GameManager>
             SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
             SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
             Time.timeScale = 1f;
+        }
+    }
+
+    private void ESC()
+    {
+        if (Time.timeScale == 1f)
+        {
+            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.EFFECT);
+            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.VOICE);
+            Time.timeScale = 0f;
+            //esc = Instantiate(ResourcesManager.Load<UI_ESCPopup>("Prefabs/UI/UI_ESCPopup"));
+        }
+        else
+        {
+            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
+            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
+            Time.timeScale = 1f;
+            //Destroy(esc.gameObject);
         }
     }
 

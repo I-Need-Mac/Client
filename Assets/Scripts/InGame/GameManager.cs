@@ -97,7 +97,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void MapLoad(int mapId)
     {
         string mapName = CSVReader.Read("StageTable", mapId.ToString(), "MapID").ToString();
-        GameObject map = ResourcesManager.Load<GameObject>("Maps/" + mapName);
+        GameObject map = ResourcesManager.Load<GameObject>("Prefabs/Map/" + mapName);
         this.map = Instantiate(map, transform);
         this.map.transform.localScale = Vector3.one * defaultScale;
         this.map.SetActive(true);

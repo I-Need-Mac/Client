@@ -1,0 +1,31 @@
+﻿2023-10-13 04:53:21.387 INFO  [31976] file Appender.(level: DEBUG)
+2023-10-13 04:53:21.387 INFO  [31976] Log file path: D:\Git\Client\StovePCSDK.log
+2023-10-13 04:53:21.387 INFO  [31976] ---------------------------------------------
+2023-10-13 04:53:21.387 INFO  [31976] StovePCSDK(ver:2.5.0)
+2023-10-13 04:53:21.387 INFO  [31976] ---------------------------------------------
+2023-10-13 04:53:21.387 DEBUG [31976]     osPlatform : 64bit
+2023-10-13 04:53:21.387 DEBUG [31976]     osVersion : Windows 10(10.0), 10.0.22621, 64bit
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : C:\Program Files\2020.3.34f1\Editor\Unity.exe
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : -projectpath
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : D:\Git\Client
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : -useHub
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : -hubIPC
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : -cloudEnvironment
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : production
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : -licensingIpc
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : LicenseClient-taehe
+2023-10-13 04:53:21.387 DEBUG [31976] commandline : -hubSessionId
+2023-10-13 04:53:21.388 DEBUG [31976] commandline : 253609c0-692c-11ee-a82e-89194c852b72
+2023-10-13 04:53:21.388 DEBUG [31976] commandline : -accessToken
+2023-10-13 04:53:21.388 DEBUG [31976] commandline : ysdRn0MtUWbA5TXXEvTd89HjdHawc1qw2RWWWBqr0H000df
+2023-10-13 04:53:21.388 DEBUG [31976]     init tasks
+2023-10-13 04:53:21.388 DEBUG [31976]     transactionId : 2a6fc750-894f-4a12-890f-98a60fc2f32e
+2023-10-13 04:53:21.388 DEBUG [31976]     HKEY_CURRENT_USER : FFFFFFFF80000001
+2023-10-13 04:53:21.388 DEBUG [31976]     subkey : SOFTWARE\SGUP
+2023-10-13 04:53:21.388 DEBUG [31976]     RegOpenKeyEx : 2
+2023-10-13 04:53:21.388 DEBUG [31976]     callerDetail : 
+2023-10-13 04:53:21.388 INFO  [31976] protocol data from ipc
+2023-10-13 04:53:21.388 ERROR [31976]     StovePC_Init exception occurred.
+2023-10-13 04:53:24.853 INFO  [31976] --> StovePC_UnInit
+2023-10-13 04:53:24.853 ERROR [31976]     STOVE_PC_CORE_NOT_INITIALIZE
+2023-10-13 04:53:24.853 ERROR [31976]     StovePC_UnInit Fail.

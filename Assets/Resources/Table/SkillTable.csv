@@ -89,4 +89,4 @@ int,String,String_08,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float
 11406,Skill_Name_JeRyeung,Skill_Desc_JeRyeung_06,,Arts/Skill/Icon/Skill_Icon_JeRyeung_00,150000,FALSE,None,,10,TRUE,FALSE,0,0,0,99999,0,TRUE,0,0,Delete,60,Player,Prefabs/InGame/Skill/JeRyeung,Ranges
 11407,Skill_Name_JeRyeung,Skill_Desc_JeRyeung_07,,Arts/Skill/Icon/Skill_Icon_JeRyeung_00,140000,FALSE,None,,10,TRUE,FALSE,0,0,0,99999,0,TRUE,0,0,Delete,60,Player,Prefabs/InGame/Skill/JeRyeung,Ranges
 11408,Skill_Name_JeRyeung,Skill_Desc_JeRyeung_08,,Arts/Skill/Icon/Skill_Icon_JeRyeung_00,140000,FALSE,None,,10,TRUE,FALSE,0,0,0,99999,0,TRUE,0,0,Delete,40,Player,Prefabs/InGame/Skill/JeRyeung,Ranges
-11501,Skill_Name_ParkSung,Skill_Desc_ParkSung_01,,Arts/Skill/Icon/Skill_Icon_ParkSung_00,8000,FALSE,FALSE,0,4,TRUE,FALSE,5,0,0,20,0,FALSE,0,0,Restraint,1,Random,Prefabs/InGame/Skill/ParkSung,
+11501,Skill_Name_ParkSung,Skill_Desc_ParkSung_01,,Arts/Skill/Icon/Skill_Icon_ParkSung_00,8000,FALSE,FALSE,0,4,TRUE,FALSE,5,0,3000,20,0,FALSE,0,0,Restraint,1,Random,Prefabs/InGame/Skill/ParkSung,

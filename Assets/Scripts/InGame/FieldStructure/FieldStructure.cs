@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public abstract class FieldStructure : MonoBehaviour
 {
@@ -68,12 +67,16 @@ public abstract class FieldStructure : MonoBehaviour
     {
         SetLayer(transform);
         top = transform.Find("Top").GetComponent<Collider2D>();
-        front = transform.Find("Front").GetComponent<Collider2D>();
-
-        //top.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.topPath);
-        top.isTrigger = fieldStructureData.topIsPassable;
-        //front.GetComponent<SpriteRenderer>().sprite = ResourcesManager.Load<Sprite>(fieldStructureData.frontPath);
-        front.isTrigger = fieldStructureData.frontIsPassable;
+        if (transform.Find("Top").TryGetComponent(out Collider2D col))
+        {
+            top = col;
+            top.isTrigger = fieldStructureData.topIsPassable;
+        }
+        if (transform.Find("Front").TryGetComponent(out Collider2D col2))
+        {
+            front = col2;
+            front.isTrigger = fieldStructureData.frontIsPassable;
+        }
     }
 
     private void SetLayer(Transform trans)

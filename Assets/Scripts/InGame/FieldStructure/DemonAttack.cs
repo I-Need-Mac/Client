@@ -5,6 +5,7 @@ using UnityEngine;
 public class DemonAttack : FieldStructure
 {
     [SerializeField] private int[] monsterList;
+    [SerializeField] private int[] mobCountList;
 
     protected override void Awake()
     {
@@ -18,7 +19,11 @@ public class DemonAttack : FieldStructure
         if (collision.transform.parent.TryGetComponent(out Player player))
         {
             top.enabled = false;
-            MonsterSpawner.Instance.SpawnMonster(monsterList[UnityEngine.Random.Range(0, monsterList.Length)], transform.position);
+            int randomNumber = UnityEngine.Random.Range(0, monsterList.Length);
+            for (int i = 0; i < randomNumber; i++)
+            {
+                MonsterSpawner.Instance.SpawnMonster(monsterList[randomNumber], transform.position);
+            }
         }
     }
 }

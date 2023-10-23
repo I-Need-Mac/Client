@@ -9,6 +9,7 @@ public class SantuaryCircle : FieldStructure
     private int duration;
     private WaitForSeconds tick;
     private WaitForSeconds sec;
+    private SpriteRenderer sprite;
 
     protected override void Awake()
     {
@@ -20,11 +21,9 @@ public class SantuaryCircle : FieldStructure
         duration = int.Parse(this.fieldStructureData.gimmickParam[1]);
         tick = new WaitForSeconds(0.01f);
         sec = new WaitForSeconds(1.0f);
-    }
 
-    private void OnEnable()
-    {
-        StartCoroutine(Activation());
+        sprite = front.GetComponent<SpriteRenderer>();
+        sprite.enabled = false;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -36,8 +35,9 @@ public class SantuaryCircle : FieldStructure
         }
     }
 
-    private IEnumerator Activation()
+    public IEnumerator Activation()
     {
+        sprite.enabled = true;
         for (int i = 0; i < duration; i++)
         {
             front.enabled = true;
@@ -47,6 +47,6 @@ public class SantuaryCircle : FieldStructure
             yield return sec;
         }
 
-        this.gameObject.SetActive(false);
+        sprite.enabled = false;
     }
 }

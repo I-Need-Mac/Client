@@ -67,8 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c994118026ac24680f9f0bfba81450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structureId: 410
+  structureId: 27001
   monsterList: 65000000
+  mobCountList: 01000000
 --- !u!1 &927301774051847262
 GameObject:
   m_ObjectHideFlags: 0

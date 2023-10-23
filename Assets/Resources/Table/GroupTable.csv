@@ -16,3 +16,12 @@ int,String,bool,String,int
 10407,Stone,FALSE,Exp_Small,3000
 10408,Stone,FALSE,Exp_Middle,1500
 10409,Stone,FALSE,Exp_Large,1000
+10501,Item_KillAll,FALSE,Item_KillAll,1
+10502,Item_Stun,FALSE,Item_Stun,1
+10503,Item_Heal,FALSE,Item_Heal,1
+10504,Item_Magnet,FALSE,Item_Magnet,1
+10505,Item_Box,FALSE,Item_Box,1
+10506,Item_Key,FALSE,Item_Key,1
+10507,Exp_Small,FALSE,Exp_Small,1
+10508,Exp_Middle,FALSE,Exp_Middle,1
+10509,Exp_Large,FALSE,Exp_Large,1

@@ -15,6 +15,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private bool gameOver = true;
     private float defaultScale;
     private float defaultCharScale;
+    private UI_ESCPopup esc;
 
     public int killCount { get; set; }
     public PlayerUI playerUi { get; private set; }
@@ -57,6 +58,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             Pause();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ESC();
+        }
         
 
         if (player.playerManager.playerData.currentHp <= 0 && gameOver)
@@ -92,7 +97,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void MapLoad(int mapId)
     {
         string mapName = CSVReader.Read("StageTable", mapId.ToString(), "MapID").ToString();
-        GameObject map = ResourcesManager.Load<GameObject>("Maps/" + mapName);
+        GameObject map = ResourcesManager.Load<GameObject>("Prefabs/Map/" + mapName);
         this.map = Instantiate(map, transform);
         this.map.transform.localScale = Vector3.one * defaultScale;
         this.map.SetActive(true);
@@ -170,6 +175,24 @@ public class GameManager : SingletonBehaviour<GameManager>
             SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
             SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
             Time.timeScale = 1f;
+        }
+    }
+
+    private void ESC()
+    {
+        if (Time.timeScale == 1f)
+        {
+            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.EFFECT);
+            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.VOICE);
+            Time.timeScale = 0f;
+            //esc = Instantiate(ResourcesManager.Load<UI_ESCPopup>("Prefabs/UI/UI_ESCPopup"));
+        }
+        else
+        {
+            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
+            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
+            Time.timeScale = 1f;
+            //Destroy(esc.gameObject);
         }
     }
 

@@ -29,7 +29,7 @@ public class UI_StoryMain : UI_Popup
     GameObject chapterList;
     [SerializeField]
     GameObject stageList;
-    
+
     [SerializeField]
     GameObject chapterImage;
 
@@ -72,7 +72,7 @@ public class UI_StoryMain : UI_Popup
     void SetData()
     {
         Dictionary<string, Dictionary<string, object>> chapterDataList = UIData.ChapterData;
-        if(chapterDataList.Count == 0 || chapterDataList == null)
+        if (chapterDataList.Count == 0 || chapterDataList == null)
         {
             Debug.LogError("챕터 테이블 데이터가 없습니다");
         }
@@ -85,23 +85,29 @@ public class UI_StoryMain : UI_Popup
         // create chapter list
         foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterDataList)
         {
-            // get chapter number text
-            chapterData.Value.TryGetValue(UIData.ChapterTableCol.ChapterHeader.ToString(), out object chapterHeaderLocalStr);
-            string chapterHeader = LocalizeManager.Instance.GetText(chapterHeaderLocalStr.ToString());
+            try
+            {
+                // get chapter number text
+                chapterData.Value.TryGetValue(UIData.ChapterTableCol.ChapterHeader.ToString(), out object chapterHeaderLocalStr);
+                string chapterHeader = LocalizeManager.Instance.GetText(chapterHeaderLocalStr.ToString());
 
-            // create chapter element
-            UI_ChapterElement chapterEle = Util.UILoad<UI_ChapterElement>($"{Define.UiPrefabsPath}/UI_ChapterElement");
-            chapterEle.text.text = String.Format(chapterEleText, chapterHeader);
-            GameObject chapterInstance = Instantiate(chapterEle.gameObject) as GameObject;
+                // create chapter element
+                UI_ChapterElement chapterEle = Util.UILoad<UI_ChapterElement>($"{Define.UiPrefabsPath}/UI_ChapterElement");
+                chapterEle.text.text = String.Format(chapterEleText, chapterHeader);
+                GameObject chapterInstance = Instantiate(chapterEle.gameObject) as GameObject;
 
-            // setting chapter element
-            GameObject chapterGo = Util.FindChild(chapterList.gameObject, "Content", true);
-            chapterInstance.transform.SetParent(chapterGo.transform);
-            RectTransform chapterRect = chapterInstance.GetComponent<RectTransform>();
-            chapterRect.localScale = new Vector3(1, 1, 1);
-            chapterRect.anchoredPosition3D = new Vector3(chapterRect.anchoredPosition3D.x, chapterRect.anchoredPosition3D.y, 0);
+                // setting chapter element
+                GameObject chapterGo = Util.FindChild(chapterList.gameObject, "Content", true);
+                chapterInstance.transform.SetParent(chapterGo.transform);
+                RectTransform chapterRect = chapterInstance.GetComponent<RectTransform>();
+                chapterRect.localScale = new Vector3(1, 1, 1);
+                chapterRect.anchoredPosition3D = new Vector3(chapterRect.anchoredPosition3D.x, chapterRect.anchoredPosition3D.y, 0);
+            }catch(Exception e) { 
+                continue;
+            }
+
         }
-        
+
         // 챕터 선택
         SelectChapter(currentChapterID);
     }
@@ -154,7 +160,7 @@ public class UI_StoryMain : UI_Popup
 
         // 해당 챕터 내용 가져오기
         Dictionary<string, object> chapterInfo = chapterDataList[chapterID.ToString()];
-        if( chapterInfo == null || chapterInfo.Count == 0 )
+        if (chapterInfo == null || chapterInfo.Count == 0)
         {
             Debug.LogError("챕터 테이블 데이터가 없습니다");
         }
@@ -199,17 +205,17 @@ public class UI_StoryMain : UI_Popup
 
         foreach (KeyValuePair<string, Dictionary<string, object>> stageData in stageDataList)
         {
-            if(stageData.Value.Count == 0)
+            if (stageData.Value.Count == 0)
             {
                 continue;
             }
 
-            if ( stageData.Value[UIData.StageTableCol.ChapterCategory.ToString()].ToString() == chapterID )
+            if (stageData.Value[UIData.StageTableCol.ChapterCategory.ToString()].ToString() == chapterID)
             {
                 // stage list create
                 GameObject stageGo = Util.FindChild(stageList.gameObject, "Content", true);
                 UI_StageElement stageEle = Util.UILoad<UI_StageElement>($"{Define.UiPrefabsPath}/UI_StageElement");
-                
+
                 string stageHeader = stageData.Value[UIData.StageTableCol.StageHeader.ToString()].ToString();
                 string stageHeaderLocalText = LocalizeManager.Instance.GetText(stageHeader);
                 stageEle.text.text = String.Format(stageEleText, stageHeaderLocalText);
@@ -234,12 +240,12 @@ public class UI_StoryMain : UI_Popup
         string findChapterID = "";
         foreach (KeyValuePair<string, Dictionary<string, object>> stageData in stageDataList)
         {
-            if( stageData.Key == "" || stageData.Key == null )
+            if (stageData.Key == "" || stageData.Key == null)
             {
                 continue;
             }
-            
-            if(stageData.Key == stageId)
+
+            if (stageData.Key == stageId)
             {
                 foreach (KeyValuePair<string, object> val in stageData.Value)
                 {

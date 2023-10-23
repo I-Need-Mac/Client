@@ -9,7 +9,7 @@ public enum BEAM_TYPE
     CROSS,
 }
 
-public class DestructionStone : FieldStructure
+public class Destructionstone : FieldStructure
 {
     private const string BEAM_PATH = "Prefabs/InGame/FieldStructure/";
 

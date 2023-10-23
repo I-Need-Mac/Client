@@ -11,7 +11,7 @@ public class DemonAttack : FieldStructure
     {
         base.Awake();
 
-        top.GetComponent<CircleCollider2D>().radius = float.Parse(this.fieldStructureData.gimmickParam[0]);
+        ((CircleCollider2D)top).radius = float.Parse(this.fieldStructureData.gimmickParam[0]);
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -20,7 +20,7 @@ public class DemonAttack : FieldStructure
         {
             top.enabled = false;
             int randomNumber = UnityEngine.Random.Range(0, monsterList.Length);
-            for (int i = 0; i < randomNumber; i++)
+            for (int i = 0; i < mobCountList[randomNumber]; i++)
             {
                 MonsterSpawner.Instance.SpawnMonster(monsterList[randomNumber], transform.position);
             }

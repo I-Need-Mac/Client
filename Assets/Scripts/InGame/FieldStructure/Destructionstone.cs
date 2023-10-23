@@ -11,17 +11,20 @@ public enum BEAM_TYPE
 
 public class Destructionstone : FieldStructure
 {
+    //private const string MAGICPEARL_PATH = "Prefabs/InGame/FieldStructure/FieldStructure_MagicPearl";
     private const string BEAM_PATH = "Prefabs/InGame/FieldStructure/";
 
     [SerializeField] private BEAM_TYPE type = BEAM_TYPE.WIDTH;
 
     private SpriteRenderer spriteRenderer;
+    private MagicPearl magicPearl;
 
     protected override void Awake()
     {
         base.Awake();
 
         spriteRenderer = front.GetComponent<SpriteRenderer>();
+        magicPearl = GetComponentInChildren<MagicPearl>();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -65,8 +68,10 @@ public class Destructionstone : FieldStructure
     {
         front.enabled = false;
         spriteRenderer.enabled = false;
+        magicPearl.sprite.enabled = false;
         yield return new WaitForSeconds(this.fieldStructureData.coolTime);
-        spriteRenderer.enabled = true;
         front.enabled = true;
+        spriteRenderer.enabled = true;
+        magicPearl.sprite.enabled = true;
     }
 }

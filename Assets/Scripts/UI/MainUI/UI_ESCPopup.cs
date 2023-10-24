@@ -67,6 +67,7 @@ public class UI_ESCPopup : UI_Popup
                 UIManager.Instance.OpenUI<UI_MyInfo>();
                 break;
             case GameObjects.RankBoard:
+                UIManager.Instance.OpenUI<UI_RankBoard>();
                 break;
             case GameObjects.Friend:
                 break;

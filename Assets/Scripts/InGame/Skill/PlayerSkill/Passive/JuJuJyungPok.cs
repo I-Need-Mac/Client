@@ -10,20 +10,12 @@ public class JuJuJyungPok : PassiveSkill
     {
     }
 
-    public override void Init()
-    {
-    }
-
     public override IEnumerator Activation()
     {
-        do
+        for (int i = 0; i < skillData.skillEffect.Count; i++)
         {
-            for (int i = 0; i < skillData.skillEffect.Count; i++)
-            {
-                CALC_MODE mode = (CALC_MODE)Enum.Parse(typeof(CALC_MODE), skillData.skillEffectParam[i], true);
-                PassiveEffect.PassiveEffectActivation(float.Parse(skillData.skillEffectParam[i]), skillData.skillEffect[i], mode);
-            }
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
-        } while (skillData.coolTime > 0);
+            PassiveEffect.PassiveEffectActivation(skillData.skillEffectParam[i], skillData.skillEffect[i], skillData.calcMode[i]);
+        }
+        yield return new WaitForFixedUpdate();
     }
 }

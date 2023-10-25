@@ -10,7 +10,7 @@ public class SkillBoxUI : MonoBehaviour
 
     private void Awake()
     {
-        icons = new Transform[9];
+        icons = new Transform[SkillManager.SKILL_MAX_COUNT];
         for (int i = 0; i < icons.Length; i++)
         {
             icons[i] = transform.GetChild(i);

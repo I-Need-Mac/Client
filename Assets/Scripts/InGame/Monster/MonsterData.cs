@@ -9,7 +9,7 @@ public class MonsterData
     [SerializeField] public float sizeMultiple ;
     [SerializeField] public int hp ;
     [SerializeField] public int currentHp;
-    [SerializeField] public int attack ;
+    [SerializeField] public float attack ;
     [SerializeField] public float moveSpeed ;
     [SerializeField] public float atkSpeed ;
     [SerializeField] public float viewDistance ;
@@ -24,7 +24,7 @@ public class MonsterData
     public void SetSizeMultiple(float sizeMultiple) { this.sizeMultiple = sizeMultiple; }
     public void SetHp(int hp) { this.hp = hp; }
     public void SetCurrentHp(int currentHp) { this.currentHp = currentHp; }
-    public void SetAttack(int attack) { this.attack = attack; }
+    public void SetAttack(float attack) { this.attack = attack; }
     public void SetMoveSpeed(float moveSpeed) { this.moveSpeed = moveSpeed; }
     public void SetAtkSpeed(float atkSpeed) { this.atkSpeed = atkSpeed; }
     public void SetViewDistance(float viewDistance) { this.viewDistance = viewDistance; }

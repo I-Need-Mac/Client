@@ -1,12 +1,12 @@
 
 public enum LayerConstant
 {
-    POISONFOG = 0,
-    DECORATION = 1,
-    SPAWNOBJECT = 2,
-    OBSTACLE = 3,
-    GIMMICK = 4,
-    MAP = 5,
+    MAP = 0,
+    GIMMICK = 1,
+    OBSTACLE = 2,
+    SPAWNOBJECT = 3,
+    DECORATION = 4,
+    POISONFOG = 5,
     MONSTER = 6,
     SKILL = 7,
     ITEM = 8,

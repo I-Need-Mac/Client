@@ -13,17 +13,18 @@ public class SoundRequesterBGM : SoundRequester
     public List<AudioSourceSetter> speakerSettings = new List<AudioSourceSetter>();
     public List<BGMPackItem> soundPackItems = new List<BGMPackItem>();
 
+    private BGMSituation.BGMSITUATION lastSituation = BGMSituation.BGMSITUATION.NONE;
 
 
     private void Awake()
     {
-      
+
 
 
 
     }
     void Start()
-    {   
+    {
         MakeSpeakers();
         ConvertAudioClipData();
 
@@ -55,7 +56,7 @@ public class SoundRequesterBGM : SoundRequester
 
         foreach (AudioSourceSetter items in speakerSettings)
         {
-            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.audioType+"@"+soundObjectID + items.speakerName);
+            DebugManager.Instance.PrintDebug("SoundRequester : SoundSource 생성 " + items.audioType + "@" + soundObjectID + items.speakerName);
 
 
 
@@ -67,10 +68,10 @@ public class SoundRequesterBGM : SoundRequester
 
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.audioType + "@" + soundObjectID + items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource( soundObjectID + items.speakerName, audioSources[items.speakerName], items.audioType);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType) * items.volume;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;
@@ -96,7 +97,7 @@ public class SoundRequesterBGM : SoundRequester
                 speaker.transform.SetParent(soundRequester.transform);
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName], items.audioType);
 
             }
 
@@ -136,15 +137,41 @@ public class SoundRequesterBGM : SoundRequester
         if (shootingSounds.ContainsKey(situation))
         {
             DebugManager.Instance.PrintDebug("SoundRequester : SoundSource Call " + situation + " With " + shootingSounds[situation].usingSpeaker);
-            if (shootingSounds[situation].delay == 0)
+
+            if (lastSituation == BGMSituation.BGMSITUATION.NONE)
             {
-                ShootSound(shootingSounds[situation].usingSpeaker, shootingSounds[situation].introBGMClip);
-                RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                lastSituation = situation;
             }
-            else
+
+            if (shootingSounds[lastSituation].priority <= shootingSounds[situation].priority)
             {
-                StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].introBGMClip, shootingSounds[situation].delay));
-                RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                audioSources[shootingSounds[lastSituation].usingSpeaker].Stop();
+
+                if (shootingSounds[situation].delay == 0)
+                {
+                    if (shootingSounds[situation].introBGMClip != null){ 
+                        ShootSound(shootingSounds[situation].usingSpeaker, shootingSounds[situation].introBGMClip);
+                        RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                    }
+                    else {
+                        ShootSound(shootingSounds[situation].usingSpeaker, shootingSounds[situation].realBGMClip);
+                    }
+                }
+                else
+                {
+                    if (shootingSounds[situation].introBGMClip != null)
+                    {
+                        StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].introBGMClip, shootingSounds[situation].delay));
+                        RequestShootSound(audioSources[shootingSounds[situation].usingSpeaker], shootingSounds[situation]);
+                    }
+                    else
+                    {
+                        StartCoroutine(PlaySoundWithDelay(situation, shootingSounds[situation].realBGMClip, shootingSounds[situation].delay));
+                    }
+
+
+
+                }
             }
         }
         else
@@ -159,25 +186,29 @@ public class SoundRequesterBGM : SoundRequester
         audioSources[speakName].clip = clip;
         audioSources[speakName].Play();
 
-     
+
 
     }
-    public override void RequestShootSound() { 
+    public override void RequestShootSound()
+    {
     }
     public override void RequestShootSound(AudioSource targetSpeaker, BGMPackItem targetItem)
     {
-        SoundManager.Instance.RequestSetCallBack(targetSpeaker,this,targetItem);
+        SoundManager.Instance.RequestSetCallBack(targetSpeaker, this, targetItem);
 
     }
 
-    
-    public override void RequestCallBack(PackItem item) {
+
+    public override void RequestCallBack(PackItem item)
+    {
         BGMPackItem covertItem = (BGMPackItem)item;
-        if (covertItem.delayWithIntro == 0) {
+        if (covertItem.delayWithIntro == 0)
+        {
             audioSources[covertItem.usingSpeaker].loop = true;
             ShootSound(covertItem.usingSpeaker, covertItem.realBGMClip);
         }
-        else {
+        else
+        {
             audioSources[covertItem.usingSpeaker].loop = true;
             StartCoroutine(PlaySoundWithDelay(covertItem.usingSpeaker, covertItem.realBGMClip, covertItem.delayWithIntro));
         }
@@ -213,5 +244,5 @@ public class SoundRequesterBGM : SoundRequester
         throw new System.NotImplementedException();
     }
 
-  
+
 }

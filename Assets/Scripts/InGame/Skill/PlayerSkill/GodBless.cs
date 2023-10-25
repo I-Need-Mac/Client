@@ -6,46 +6,31 @@ public class GodBless : ActiveSkill
 {
     public GodBless(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
-    public override void Init()
+    public override IEnumerator Activation()
     {
         shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
 
-        Projectile projectile = SkillManager.Instance.SpawnProjectile(skillData, shooter);
-        projectile.transform.localScale = Vector2.zero;
-        projectile.CollisionRadius(skillData.splashRange);
-        projectile.CollisionPower(false);
-        projectiles.Add(projectile);
-    }
-
-    public override IEnumerator Activation()
-    {
-        if (!skillData.isEffect)
+        if (skillData.splashRange < 10)
         {
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            for (int i = 0; i < skillData.projectileCount; i++)
+            {
+                Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+                projectile.transform.localScale = Vector2.zero;
+                projectile.CollisionRadius(skillData.splashRange);
+                projectile.transform.localScale = Vector2.one;
+                projectile.CollisionPower(true);
+                yield return duration;
+                projectile.CollisionPower(false);
+                projectile.transform.localScale = Vector2.zero;
+            }
         }
-
-        while (true)
+        else    //일정범위 초과시 맵 전체 타격
         {
-            if (skillData.splashRange < 10)
+            foreach (Monster monster in MonsterSpawner.Instance.monsters)
             {
-                for (int i = 0; i < skillData.projectileCount; i++)
-                {
-                    projectiles[0].transform.localScale = Vector2.one;
-                    projectiles[0].CollisionPower(true);
-                    yield return duration;
-                    projectiles[0].CollisionPower(false);
-                    projectiles[0].transform.localScale = Vector2.zero;
-                }
+                //데미지 처리
+                monster.Hit(skillData.damage);
             }
-            else    //일정범위 초과시 맵 전체 타격
-            {
-                foreach (Monster monster in MonsterSpawner.Instance.monsters)
-                {
-                    //데미지 처리
-                }
-            }
-
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
         }
     }
 }

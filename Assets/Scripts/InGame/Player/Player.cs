@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
     private Transform shadow;
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
-    
+    private StatusEffect statusEffect;
+
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
 
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     #region Mono
     private void Awake()
     {
+        statusEffect = new StatusEffect();
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerDirection = Vector3.zero;
         lookDirection = Vector3.left;
@@ -46,7 +48,8 @@ public class Player : MonoBehaviour
         level = 1;
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
-        hpBar.HpBarSwitch(true);
+        AudioSetting();
+        //hpBar.HpBarSwitch(true);
     }
 
     /*
@@ -101,28 +104,28 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Level
-    public void GetExp(int exp)
-    {
-        this.exp += playerManager.playerData.ExpBuff(exp);
+    //public void GetExp(int exp)
+    //{
+    //    this.exp += playerManager.playerData.ExpBuff(exp);
 
-        if (this.exp >= needExp)
-        {
-            LevelUp();
-        }
-    }
+    //    if (this.exp >= needExp)
+    //    {
+    //        LevelUp();
+    //    }
+    //}
 
     public void UpdateGetItemRange()
     {
         playerItem.UpdateItemRange();
     }
 
-    private void LevelUp()
-    {
-        exp -= needExp;
-        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
-        GameManager.Instance.playerUi.LevelTextChange(level);
-        GameManager.Instance.playerUi.SkillSelectWindowOpen();
-    }
+    //private void LevelUp()
+    //{
+    //    exp -= needExp;
+    //    needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
+    //    GameManager.Instance.playerUi.LevelTextChange(level);
+    //    GameManager.Instance.playerUi.SkillSelectWindowOpen();
+    //}
     #endregion
 
     #region Collider
@@ -134,4 +137,45 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    #region Sound
+    private void AudioSetting()
+    {
+        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), "EFFECT_SOUND");
+    }
+    #endregion
+
+    #region STATUS_EFFECT
+    public IEnumerator FireDot(float time, float dotDamage)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.FIRE);
+        WaitForSeconds sec = new WaitForSeconds(1.0f);
+        for (int i = 0; i < time; i++)
+        {
+            StartCoroutine(Invincible());
+            this.playerManager.playerData.CurrentHpModifier(-(int)dotDamage);
+            yield return sec;
+        }
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.FIRE);
+    }
+
+    public IEnumerator Slow(float time, float value)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.SLOW))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
+        float decreaseValue = value * this.playerManager.playerData.moveSpeed;
+        this.playerManager.playerData.MoveSpeedModifier(-decreaseValue);
+        yield return new WaitForSeconds(time);
+        this.playerManager.playerData.MoveSpeedModifier(decreaseValue);
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
+    }
+    #endregion
 }

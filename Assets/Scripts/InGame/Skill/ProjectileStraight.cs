@@ -67,7 +67,7 @@ public class ProjectileStraight : Projectile
         if (collision.transform.TryGetComponent(out Monster monster))
         {
             monster.isHit = true;
-            monster.Hit(totalDamage);
+            monster.Hit(skillData.damage);
             SkillEffect(monster);
             ++bounced;
             

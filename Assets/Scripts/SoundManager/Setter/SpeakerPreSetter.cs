@@ -21,18 +21,26 @@ public class SpeakerPreSetter : MonoBehaviour
         MakeSpeakers();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    //private void OnEnable()
+    //{
         
-    }
+    //}
 
+    //// Update is called once per frame
+    //void Update()
+    //{
+        
+    //}
+    public void preInit() { 
+    
+      //  MakeSpeakers();
+    }
     private bool MakeSpeakers()
     {
-        GameObject soundManager = GameObject.Find("SoundManager");
-        try {
-            soundRequester = soundManager.transform.Find("SoundRequester").gameObject;
-        }catch(NullReferenceException e) {
+        GameObject soundManager = SoundManager.Instance.GetSoundManagerGameObject();
+        soundRequester = soundManager.transform.Find("SoundRequester").gameObject;
+
+        if(soundRequester == null) {
             soundRequester = new GameObject("SoundRequester");
             soundRequester.transform.position = new Vector3(soundManager.transform.position.x, soundManager.transform.position.y, soundManager.transform.position.z);
             soundRequester.transform.SetParent(soundManager.transform);
@@ -44,7 +52,7 @@ public class SpeakerPreSetter : MonoBehaviour
 
 
 
-            if (items.loadSettingFrom.Equals(null))
+            if (items.loadSettingFrom==null)
             {
 
                 GameObject speaker = new GameObject(items.speakerName);
@@ -53,10 +61,10 @@ public class SpeakerPreSetter : MonoBehaviour
 
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName], items.audioType);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.getSettingSound(items.audioType) * items.volume;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;
@@ -82,7 +90,7 @@ public class SpeakerPreSetter : MonoBehaviour
                 speaker.transform.SetParent(soundRequester.transform);
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName]);
+                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName],items.audioType);
 
             }
 

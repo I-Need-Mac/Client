@@ -6,6 +6,8 @@ public enum ItemConstant
     MOVESTOP,
     HEAL,
     MAGNET,
-    GETBOX,
+    GETBOXA,
+    GETBOXB,
+    GETBOXC,
     GETKEY,
 }

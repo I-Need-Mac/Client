@@ -68,7 +68,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             gameOver = false;
             StopAllCoroutines();
-            playerUi.GameOver();
+            playerUi.GameOver(false);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {

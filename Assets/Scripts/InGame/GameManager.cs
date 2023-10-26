@@ -62,7 +62,17 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             ESC();
         }
-        
+        if (Input.GetKeyDown(KeyCode.F1) && gameOver)
+        {
+            gameOver = false;
+            playerUi.GameOver(true);
+        }
+        if (Input.GetKeyDown(KeyCode.F2) && gameOver)
+        {
+            gameOver = false;
+            playerUi.GameOver(false);
+        }
+
 
         if (player.playerManager.playerData.currentHp <= 0 && gameOver)
         {

@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class BlueFlame : FieldStructure
 {
-    [SerializeField] private float damage;
-    [SerializeField] private float burnTime;
-    [SerializeField] private float burnDamage;
-    [SerializeField] private float burnSlow;
-    [SerializeField] private float duration;
+    [SerializeField][Min (0.0f)] private float damage = 5.0f;      //N
+    [SerializeField][Min (0)] private int burnTime = 3;    //M
+    [SerializeField][Min (0.0f)] private float burnDamage = 3.0f;  //X
+    [SerializeField][Range (0.0f, 100.0f)] private float burnSlow = 5.0f;    //T
+    [SerializeField][Min (1.0f)] private float duration = 3.0f;    //Z
 
+    private WaitForFixedUpdate frame;
+    private float burnDotTime;
     private float currentBurnTime;
+    private float currentDuration;
+    private Vector3 originSize;
+    private bool isTeleport;
 
     protected override void Awake()
     {
         base.Awake();
 
-        currentBurnTime = burnTime;
+        burnDotTime = 1.0f;
+        currentBurnTime = burnDotTime;
+        currentDuration = duration;
+        originSize = transform.localScale;
+        isTeleport = false;
+        frame = new WaitForFixedUpdate();
     }
 
     private void Update()
@@ -25,6 +35,47 @@ public class BlueFlame : FieldStructure
         {
             currentBurnTime -= Time.deltaTime;
         }
+        else if (currentBurnTime <= -0.1f)
+        {
+            currentBurnTime = burnDotTime;
+        }
+
+        if (currentDuration > 0.0f && !isTeleport)
+        {
+            currentDuration -= Time.deltaTime;
+        }
+        else if (!isTeleport)
+        {
+            isTeleport = true;
+            StartCoroutine(Teleport());
+        }
+    }
+
+    private IEnumerator Teleport()
+    {
+        float offSet = 1.0f;
+        while (offSet > 0.0f)
+        {
+            offSet -= Time.deltaTime;
+            transform.localScale = originSize * offSet;
+            yield return frame;
+        }
+
+        transform.localPosition = CameraManager.Instance.GetRandomPosition(transform.position);
+
+        while (offSet < 1.0f)
+        {
+            offSet += Time.deltaTime;
+            if (offSet >= 1.0f)
+            {
+                offSet = 1.0f;
+            }
+            transform.localScale = originSize * offSet;
+            yield return frame;
+        }
+
+        currentDuration = duration;
+        isTeleport = false;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -34,21 +85,19 @@ public class BlueFlame : FieldStructure
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        
         if (currentBurnTime <= 0.0f)
         {
             if (collision.TryGetComponent(out Monster monster))
             {
                 monster.Hit(-(int)damage);
+                monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.SLOW, burnSlow, 1.0f);
+                return;
             }
-            Player player = collision.GetComponentInParent<Player>();
-            if (player != null)
+            if (collision.transform.parent.TryGetComponent(out Player player))
             {
-                StartCoroutine(player.Invincible());
-                player.playerManager.playerData.CurrentHpModifier(-(int)damage);
-                player.Slow(0.5f, burnSlow);
+                StartCoroutine(player.FireDot(1, damage));
+                StartCoroutine(player.Slow(1.0f, burnSlow));
             }
-            currentBurnTime = burnTime;
         }
     }
 
@@ -59,10 +108,14 @@ public class BlueFlame : FieldStructure
             StartCoroutine(monster.FireDot(burnTime, damage));
             return;
         }
-        Player player = collision.GetComponentInParent<Player>();
-        if (player != null)
+        if (collision.transform.parent.TryGetComponent(out Player player))
         {
-            StartCoroutine(player.FireDot(burnTime, damage));
+            if (Vector2.Distance(player.transform.position, transform.position) >= transform.localScale.x * 0.5f)
+            {
+                DebugManager.Instance.PrintError("Good");
+                player.RemoveStatusEffect(STATUS_EFFECT.FIRE);
+                StartCoroutine(player.FireDot(burnTime, damage));
+            }
         }
     }
 }

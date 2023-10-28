@@ -9,7 +9,8 @@ using UnityEngine.UI;
 
 public class PlayerUI : SingletonBehaviour<PlayerUI>
 {
-    private GameOverUI gameOverUi;
+    private const string GAMEOVER_UI_PATH = "Prefabs/UI/";
+
     private PlayerStatusUI statusUi;
     private LevelUpUI levelUi;
 
@@ -28,7 +29,6 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
 
     protected override void Awake()
     {
-        gameOverUi = GetComponentInChildren<GameOverUI>();
         statusUi = GetComponentInChildren<PlayerStatusUI>();
         levelUi = GetComponentInChildren<LevelUpUI>();
         skillBoxUi = GetComponentInChildren<SkillBoxUI>();
@@ -37,7 +37,6 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
 
     private void Start()
     {
-        gameOverUi.gameObject.SetActive(false);
         levelUi.gameObject.SetActive(false);
     }
 
@@ -72,9 +71,16 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
         }
     }
 
-    public void GameOver()
+    public void GameOver(bool isWin)
     {
         Time.timeScale = 0f;
-        gameOverUi.gameObject.SetActive(true);
+        if (isWin)
+        {
+            GameOverUI gameOver = Instantiate(ResourcesManager.Load<GameOverUI>(GAMEOVER_UI_PATH + "GameOverWin"), transform.Find("DynamicUI"));
+        }
+        else
+        {
+            GameOverUI gameOver = Instantiate(ResourcesManager.Load<GameOverUI>(GAMEOVER_UI_PATH + "GameOverFail"), transform.Find("DynamicUI"));
+        }
     }
 }

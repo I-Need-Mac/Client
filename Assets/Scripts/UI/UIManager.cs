@@ -19,6 +19,7 @@ public class UIManager : MonoSingleton<UIManager>
         UI_Agreement,
         UI_ESCPopup,
         UI_MyInfo,
+        UI_RankBoard,
 
         UI_StoryMain,
 

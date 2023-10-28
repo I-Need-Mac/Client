@@ -145,7 +145,12 @@ public class Player : MonoBehaviour
     #endregion
 
     #region STATUS_EFFECT
-    public IEnumerator FireDot(float time, float dotDamage)
+    public void RemoveStatusEffect(STATUS_EFFECT effect)
+    {
+        statusEffect.RemoveStatusEffect(effect);
+    }
+
+    public IEnumerator FireDot(int time, float dotDamage)
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
         {
@@ -171,7 +176,7 @@ public class Player : MonoBehaviour
         }
 
         statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
-        float decreaseValue = value * this.playerManager.playerData.moveSpeed;
+        float decreaseValue = value * 0.01f * this.playerManager.playerData.moveSpeed;
         this.playerManager.playerData.MoveSpeedModifier(-decreaseValue);
         yield return new WaitForSeconds(time);
         this.playerManager.playerData.MoveSpeedModifier(decreaseValue);

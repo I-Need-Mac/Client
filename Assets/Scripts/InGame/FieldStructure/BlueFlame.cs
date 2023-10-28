@@ -4,28 +4,27 @@ using UnityEngine;
 
 public class BlueFlame : FieldStructure
 {
-    private float damage;
-    private float dotTime;
-    private float dotDamage;
-    private float slow;
-    private float currentDotTime;
+    [SerializeField] private float damage;
+    [SerializeField] private float burnTime;
+    [SerializeField] private float burnDamage;
+    [SerializeField] private float burnSlow;
+    [SerializeField] private float number;
+    [SerializeField] private float duration;
+
+    private float currentBurnTime;
 
     protected override void Awake()
     {
         base.Awake();
 
-        damage = float.Parse(this.fieldStructureData.gimmickParam[0]);
-        dotTime = float.Parse(this.fieldStructureData.gimmickParam[1]);
-        dotDamage = float.Parse(this.fieldStructureData.gimmickParam[2]);
-        slow = float.Parse(this.fieldStructureData.gimmickParam[3]);
-        currentDotTime = dotTime;
+        currentBurnTime = burnTime;
     }
 
     private void Update()
     {
-        if (currentDotTime > 0.0f)
+        if (currentBurnTime > 0.0f)
         {
-            currentDotTime -= Time.deltaTime;
+            currentBurnTime -= Time.deltaTime;
         }
     }
 
@@ -37,7 +36,7 @@ public class BlueFlame : FieldStructure
     private void OnTriggerStay2D(Collider2D collision)
     {
         
-        if (currentDotTime <= 0.0f)
+        if (currentBurnTime <= 0.0f)
         {
             if (collision.TryGetComponent(out Monster monster))
             {
@@ -48,9 +47,9 @@ public class BlueFlame : FieldStructure
             {
                 StartCoroutine(player.Invincible());
                 player.playerManager.playerData.CurrentHpModifier(-(int)damage);
-                player.Slow(0.5f, slow);
+                player.Slow(0.5f, burnSlow);
             }
-            currentDotTime = dotTime;
+            currentBurnTime = burnTime;
         }
     }
 
@@ -58,13 +57,13 @@ public class BlueFlame : FieldStructure
     {
         if (collision.TryGetComponent(out Monster monster))
         {
-            StartCoroutine(monster.FireDot(dotTime, dotDamage));
+            StartCoroutine(monster.FireDot(burnTime, damage));
             return;
         }
         Player player = collision.GetComponentInParent<Player>();
         if (player != null)
         {
-            StartCoroutine(player.FireDot(dotTime, dotDamage));
+            StartCoroutine(player.FireDot(burnTime, damage));
         }
     }
 }

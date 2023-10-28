@@ -60,6 +60,7 @@ public class UI_GameMain : UI_Popup
                 UIManager.Instance.OpenUI<UI_SelectSorcerer>();
                 break;
             case GameObjects.Soul:
+                UIManager.Instance.OpenUI<UI_Hon>();
                 break;
             case GameObjects.Sorcere:
                 break;

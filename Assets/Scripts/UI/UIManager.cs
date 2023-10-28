@@ -26,6 +26,8 @@ public class UIManager : MonoSingleton<UIManager>
         UI_StoryBook,
         UI_SelectSorcerer,
         UI_SelectSorcererInfo,
+        UI_Hon,
+        UI_Hon_Unlock_conditions,
 
         UI_Settings
     }

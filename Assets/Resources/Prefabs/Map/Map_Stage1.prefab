@@ -101626,6 +101626,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: FieldStructure_BlueFlame
       objectReference: {fileID: 0}
+    - target: {fileID: 8318758408125603078, guid: ca6143c1351a0db469d6ff32e87673e9, type: 3}
+      propertyPath: burnSlow
+      value: 3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318758408125603078, guid: ca6143c1351a0db469d6ff32e87673e9, type: 3}
+      propertyPath: burnTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318758408125603078, guid: ca6143c1351a0db469d6ff32e87673e9, type: 3}
+      propertyPath: duration
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca6143c1351a0db469d6ff32e87673e9, type: 3}
 --- !u!4 &1034777550233776690 stripped

@@ -1,15 +1,18 @@
 using UnityEngine;
 using Cinemachine;
 using BFM;
-using UnityEngine.Tilemaps;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CameraManager : SingletonBehaviour<CameraManager>
 {
-    private const string SPAWN_POINT_NAME = "Floor";
+    private const string MAP_FLOOR_NAME = "Floor";
 
     private CinemachineVirtualCamera virtualCam;
     private WaitForFixedUpdate tick;
+    private GameObject floor;
+    private Vector2Int floorSize;
+    private List<Vector2Int> floorPos;
 
     private float extra = 4.0f;
 
@@ -24,7 +27,8 @@ public class CameraManager : SingletonBehaviour<CameraManager>
 
     private void Start()
     {
-        ConfinerSetting("Floor");
+        SetConfiner(MAP_FLOOR_NAME);
+        floorPos = new List<Vector2Int>();
     }
 
     #region
@@ -85,7 +89,7 @@ public class CameraManager : SingletonBehaviour<CameraManager>
     {
         try
         {
-            return Physics2D.OverlapPoint(target, 1 << (int)LayerConstant.MAP).name.Equals(SPAWN_POINT_NAME);
+            return Physics2D.OverlapPoint(target, 1 << (int)LayerConstant.MAP).name.Equals(MAP_FLOOR_NAME);
         }
         catch
         {
@@ -152,6 +156,26 @@ public class CameraManager : SingletonBehaviour<CameraManager>
         return (viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0) ? true : false;
     }
 
+    public Vector2 GetRandomPosition(Vector2 pos)
+    {
+        Vector2Int p = Vector2Int.FloorToInt(pos);
+        if (floorPos.Contains(p))
+        {
+            floorPos.Remove(p);
+        }
+
+        int randomX = UnityEngine.Random.Range(floorSize.x / -2, floorSize.x / 2);
+        int randomY = UnityEngine.Random.Range(floorSize.y / -2, floorSize.y / 2);
+        Vector2Int newPos = new Vector2Int(randomX, randomY);
+
+        if (!floorPos.Contains(newPos))
+        {
+            floorPos.Add(newPos);
+            return newPos;
+        }
+        return GetRandomPosition(pos);
+    }
+
     private void RecursiveChild(Transform trans, LayerConstant layer)
     {
         trans.gameObject.layer = (int)layer;
@@ -163,9 +187,10 @@ public class CameraManager : SingletonBehaviour<CameraManager>
         }
     }
 
-    private void ConfinerSetting(string mapName)
+    private void SetConfiner(string mapName)
     {
-        virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D =
-            GameObject.Find(mapName).GetComponent<CompositeCollider2D>();
+        floor = GameObject.Find(mapName);
+        floorSize = Vector2Int.FloorToInt(floor.GetComponent<CompositeCollider2D>().bounds.size);
+        virtualCam.GetComponent<CinemachineConfiner>().m_BoundingShape2D = floor.GetComponent<CompositeCollider2D>();
     }
 }

@@ -501,7 +501,7 @@ public class Monster : MonoBehaviour
     #endregion
 
     #region STATUS_EFFECT
-    public IEnumerator FireDot(float time, float dotDamage)
+    public IEnumerator FireDot(int time, float dotDamage)
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
         {

@@ -8,7 +8,6 @@ public class BlueFlame : FieldStructure
     [SerializeField] private float burnTime;
     [SerializeField] private float burnDamage;
     [SerializeField] private float burnSlow;
-    [SerializeField] private float number;
     [SerializeField] private float duration;
 
     private float currentBurnTime;

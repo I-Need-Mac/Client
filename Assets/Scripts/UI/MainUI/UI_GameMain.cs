@@ -62,6 +62,7 @@ public class UI_GameMain : UI_Popup
             case GameObjects.Soul:
                 break;
             case GameObjects.Sorcere:
+                UIManager.Instance.OpenUI<UI_Jusulso>();
                 break;
             default:
                 break;

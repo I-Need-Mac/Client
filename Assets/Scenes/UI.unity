@@ -227,6 +227,22 @@ MonoBehaviour:
     spread: 0
     minDistance: 0
     maxDistance: 0
+  - speakerName: EFFECT
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 1
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 0.5
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
 --- !u!1 &1892302437
 GameObject:
   m_ObjectHideFlags: 0

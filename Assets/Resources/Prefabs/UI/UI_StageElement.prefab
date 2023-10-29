@@ -144,6 +144,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3589881761093409044}
   - component: {fileID: 2193838890645252517}
+  - component: {fileID: 5990901703554945680}
   m_Layer: 5
   m_Name: UI_StageElement
   m_TagString: Untagged
@@ -186,6 +187,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3033150996203740924}
+--- !u!114 &5990901703554945680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3589881761093409045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Default
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Default
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: 2ace4139d32884bb6a83f5bf583fe201, type: 3}
 --- !u!1 &3589881762390860210
 GameObject:
   m_ObjectHideFlags: 0

@@ -712,7 +712,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1915661959915585728
 RectTransform:
   m_ObjectHideFlags: 0
@@ -811,10 +811,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef0fe71a0ca9e5147b57d31512e099f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Jusulso_title: {fileID: 1915661960380856835}
-  Progress_Box: {fileID: 1915661960649665234}
-  Possesion_Box: {fileID: 1915661960324094056}
-  Close_text: {fileID: 5449858734787944826}
+  jusulso_Title: {fileID: 1915661960380856835}
+  progress_Box: {fileID: 1915661960649665234}
+  possesion_Box: {fileID: 1915661960324094056}
+  close_Text: {fileID: 5449858734787944826}
 --- !u!1 &1915661960020714574
 GameObject:
   m_ObjectHideFlags: 0

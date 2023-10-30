@@ -155,7 +155,17 @@ UI_Rank_Rank,순위,,
 UI_Rank_Name,닉네임,,
 UI_Rank_Progress,진행도,,
 UI_Rank_Character,주술사,,
-UI_Rank_Time,시간,,
+UI_Rank_Time,시간,시간,
+UI_Soul_Title,혼,,
+UI_Soul_UnlockCondition,해금 조건,S,
+UI_Sorcere_Title,주술소,,
+UI_Sorcere_AllBox,전체 상자,,
+UI_Sorcere_MyBoxes,보유 상자,,
+UI_Sorcere_Timer,남은 시간 :,,
+UI_Sorcere_ReadyToOpen,터치하여 해금,,
+UI_Result_GetItem,이번 획득 보상,,
+UI_Result_Exit,나가기,,
+UI_Result_Confirm,확인,,
 Skill_Name_Juhon,주혼참회도,,㣙昏懺意刀
 Skill_Name_Bujung,부정추술,,錇正追術
 Skill_Name_GangSin,강신,Gangsin,降神

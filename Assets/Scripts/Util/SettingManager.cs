@@ -109,6 +109,8 @@ public class SettingManager
             DebugManager.Instance.PrintDrawLine();
             DebugManager.Instance.PrintDebug("Setting 파일 값 세팅", target + " : " + value);
             DebugManager.Instance.PrintDrawLine();
+
+            WriteSettingFile();
             return true;
         }
         return false;

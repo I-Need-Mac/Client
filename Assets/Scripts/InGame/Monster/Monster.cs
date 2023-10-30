@@ -41,7 +41,7 @@ public class Monster : MonoBehaviour
     public Transform target { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
-
+    #region Mono & Setting
     private void Awake()
     {
         statusEffect = new StatusEffect();
@@ -79,19 +79,8 @@ public class Monster : MonoBehaviour
         if (spineSwitch)
         {
             btManager.Active();
+            monsterRigidbody.velocity = Vector2.zero;
         }
-
-        //if (hpBar != null)
-        //{
-        //    hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
-        //}
-        //else
-        //{
-            
-        //    hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
-        //}
-
-        monsterRigidbody.velocity = Vector2.zero;
     }
 
     public void SpawnSet(float hpCoefficient, float attackCoefficient)
@@ -111,6 +100,40 @@ public class Monster : MonoBehaviour
         spineSwitch = true;
         //isSlow = false;
     }
+
+    public void SetTarget(Transform target, bool isPlayer)
+    {
+        this.target = target;
+        this.isPlayer = isPlayer;
+    }
+
+    public void MonsterDataSetting(string monsterId, float hpCoefficient, float attackCoefficient)
+    {
+        Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
+        if (monsterTable.ContainsKey(monsterId))
+        {
+            Dictionary<string, object> table = monsterTable[monsterId];
+            monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
+            int hp = Convert.ToInt32(table["HP"]);
+            hp += Mathf.FloorToInt(hp * hpCoefficient);
+            monsterData.SetHp(hp);
+            monsterData.SetCurrentHp(monsterData.hp);
+            monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
+            int attack = Convert.ToInt32(table["Attack"]);
+            attack += Mathf.FloorToInt(attack * attackCoefficient);
+            monsterData.SetAttack(attack);
+            monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
+            monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
+            monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));
+            monsterData.SetAtkDistance(float.Parse(Convert.ToString(table["AtkDistance"])));
+            monsterData.SetSkillID(Convert.ToInt32(table["SkillID"]));
+            monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
+            monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));
+            monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
+            monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
+        }
+    }
+    #endregion
 
     #region AI
     private Node SetAI(AttackTypeConstant attackType)
@@ -268,39 +291,7 @@ public class Monster : MonoBehaviour
 
     #endregion
 
-    public void SetTarget(Transform target, bool isPlayer)
-    {
-        this.target = target;
-        this.isPlayer = isPlayer;
-    }
-
-    public void MonsterDataSetting(string monsterId, float hpCoefficient, float attackCoefficient)
-    {
-        Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
-        if (monsterTable.ContainsKey(monsterId))
-        {
-            Dictionary<string, object> table = monsterTable[monsterId];
-            monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
-            int hp = Convert.ToInt32(table["HP"]);
-            hp += Mathf.FloorToInt(hp * hpCoefficient);
-            monsterData.SetHp(hp);
-            monsterData.SetCurrentHp(monsterData.hp);
-            monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
-            int attack = Convert.ToInt32(table["Attack"]);
-            attack += Mathf.FloorToInt(attack * attackCoefficient);
-            monsterData.SetAttack(attack);
-            monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
-            monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
-            monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));
-            monsterData.SetAtkDistance(float.Parse(Convert.ToString(table["AtkDistance"])));
-            monsterData.SetSkillID(Convert.ToInt32(table["SkillID"]));
-            monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
-            monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));
-            monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
-            monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
-        }
-    }
-
+    #region Logic
     private void DropItem()
     {
         if (UnityEngine.Random.Range(0, 10001) <= monsterData.groupSourceRate)
@@ -373,6 +364,7 @@ public class Monster : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         MonsterSpawner.Instance.DeSpawnMonster(this);
     }
+    #endregion
 
     #region SKILL_EFFECT
     public void SkillEffectActivation(SKILL_EFFECT effect, float param)
@@ -430,23 +422,15 @@ public class Monster : MonoBehaviour
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.SLOW))
         {
-            statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
-            float originSpeed = monsterData.moveSpeed;
-            monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
-            yield return new WaitForSeconds(sec);
-            monsterData.SetMoveSpeed(originSpeed);
-            statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
+            yield break;
         }
 
-        //if (!isSlow)
-        //{
-        //    isSlow = true;
-        //    float originSpeed = monsterData.moveSpeed;
-        //    monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
-        //    yield return new WaitForSeconds(sec);
-        //    monsterData.SetMoveSpeed(originSpeed);
-        //    isSlow = false;
-        //}
+        statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
+        float originSpeed = monsterData.moveSpeed;
+        monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
+        yield return new WaitForSeconds(sec);
+        monsterData.SetMoveSpeed(originSpeed);
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
     }
 
     private IEnumerator Slow(float n)
@@ -459,11 +443,17 @@ public class Monster : MonoBehaviour
         if (spineSwitch)
         {
             spineSwitch = false;
-            Vector2 diff = transform.position - target.position;
+            Vector2 diff = transform.position - GameManager.Instance.player.transform.position;
             monsterRigidbody.AddRelativeForce(diff.normalized * n * 0.0002f, ForceMode2D.Impulse);
-            yield return tick;
+            yield return KnockBackReset(0.5f);
             spineSwitch = true;
         }
+    }
+
+    private IEnumerator KnockBackReset(float time)
+    {
+        yield return new WaitForSeconds(time);
+        monsterRigidbody.velocity = Vector3.zero;
     }
 
     private void Execute(float n)
@@ -478,13 +468,15 @@ public class Monster : MonoBehaviour
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.RESTRAINT))
         {
-            statusEffect.AddStatusEffect(STATUS_EFFECT.RESTRAINT);
-            float originSpeed = monsterData.moveSpeed;
-            monsterData.SetMoveSpeed(0.0f);
-            yield return new WaitForSeconds(n);
-            monsterData.SetMoveSpeed(originSpeed);
-            statusEffect.RemoveStatusEffect(STATUS_EFFECT.RESTRAINT);
+            yield break;
         }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.RESTRAINT);
+        float originSpeed = monsterData.moveSpeed;
+        monsterData.SetMoveSpeed(0.0f);
+        yield return new WaitForSeconds(n);
+        monsterData.SetMoveSpeed(originSpeed);
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.RESTRAINT);
     }
 
     private IEnumerator Pull(float n)

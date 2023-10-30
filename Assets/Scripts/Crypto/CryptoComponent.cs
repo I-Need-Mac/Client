@@ -10,7 +10,7 @@ public class CryptoComponent : MonoBehaviour
 
     private void Start()
     {
-        Crypto.Instance.SetPrivateKeyPEM(rsaBase64PrivateKey);
-        Crypto.Instance.SetPublicKeyPEM(rsaBase64PublicKey);
+        APIManager.Instance.SetPublicKeyPEM(rsaBase64PublicKey);
+        APIManager.Instance.SetPrivateKeyPEM(rsaBase64PrivateKey);
     }
 }

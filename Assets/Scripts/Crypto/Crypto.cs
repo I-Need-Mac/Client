@@ -11,12 +11,16 @@ using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Utilities.Encoders;
 using UnityEngine;
-public class Crypto : SingleTon<Crypto>
+public class Crypto
 {
     //static Dictionary<string, CryptoRSA> _rsaManages = new Dictionary<string, CryptoRSA>();
     private string publicKeyPEM;
     private string privateKeyPEM;
     
+    public Crypto() {
+        DebugManager.Instance.PrintDebug("[Crypto] Crypto Init");
+    }
+
     public void SetPublicKeyPEM(TextAsset pem) {
         publicKeyPEM = pem.text;
 

@@ -17,43 +17,29 @@ public class UI_Main : MonoBehaviour
 
     void Start()
     {
-        //WebConnectFromGet();
-        //WebConnectFromPost();
-        //WebLoginFromPost();
-        //WebHandShakeFromPost();
+
+        WebConnectFromGet();
+        WebHandShakeFromPost();
     }
 
     async void WebConnectFromGet()
     {
-        var data = await WebRequestManager.Instance.Get<Dictionary<string, string>>("user/user_list");
-    }
-
-    async void WebConnectFromPost()
-    {
         Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", "test_steam_id");
-        sendData.Add("nick_name", "test_nick_name");
-        sendData.Add("admin_level", "0");
-
-        var data = await WebRequestManager.Instance.Post<Dictionary<string, string>>("/user/make_user", sendData);
+        sendData.Add("name", "AA");
+        DuplicatedNickName data = (DuplicatedNickName)await WebRequestManager.Instance.Get<DuplicatedNickName>(APIAdressManager.REQUEST_CHECKNAME, sendData);
+        Debug.Log(data.data.isDuplicated);
     }
 
-    async void WebLoginFromPost()
-    {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", "mongplee92");
-
-        var data = await WebRequestManager.Instance.Post<Dictionary<string, string>>("user/login", sendData);
-    }
 
     async void WebHandShakeFromPost()
     {
         Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", "mongplee92");
-        sendData.Add("nick_name", "mongplee92");
-        sendData.Add("admin_level", "0");
+        sendData.Add("steam_id", "1213");
+        sendData.Add("name", "dasss");
+    
 
-        var data = await WebRequestManager.Instance.Post<Dictionary<string, string>>("user/handshake", sendData);
+        var data = await WebRequestManager.Instance.Post<Dictionary<string, string>>(APIAdressManager.REQUEST_REGIST, sendData);
+
     }
 
     private void Update()

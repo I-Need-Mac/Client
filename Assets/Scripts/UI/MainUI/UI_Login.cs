@@ -89,23 +89,5 @@ public class UI_Login : UI_Popup
         }
     }
 
-    async void WebLoginFromPost()
-    {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", "mongplee92");
 
-        var data = await WebRequestManager.Instance.Post<Dictionary<string, object>>("/user/login", sendData);
-
-        //switch(data.result)
-        //{
-        //    case 100:
-        //        // result 100 : 로그인 성공
-        //        break;
-        //    case 200:
-        //        // result 200 : DB에 없는 유저(회원가입 진행)
-                //this.CloseUI<UI_Login>();
-                //UIManager.Instance.OpenUI<UI_Agreement>();
-        //        break;
-        //}
-    }
 }

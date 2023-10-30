@@ -18,27 +18,26 @@ public class UI_Main : MonoBehaviour
     void Start()
     {
 
-        WebConnectFromGet();
-        WebHandShakeFromPost();
     }
 
     async void WebConnectFromGet()
     {
         Dictionary<string, string> sendData = new Dictionary<string, string>();
         sendData.Add("name", "AA");
-        DuplicatedNickName data = (DuplicatedNickName)await WebRequestManager.Instance.Get<DuplicatedNickName>(APIAdressManager.REQUEST_CHECKNAME, sendData);
-        Debug.Log(data.data.isDuplicated);
+
+        //DuplicatedNickName duplicatedNickName = await APIManager.Instance.CheckNicknameDuplicated<DuplicatedNickName>(sendData);
+       // Debug.Log(duplicatedNickName.data.isDuplicated);
     }
 
 
     async void WebHandShakeFromPost()
     {
         Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", "1213");
-        sendData.Add("name", "dasss");
+        sendData.Add("steam_id", "12213");
+        sendData.Add("name", "dass2s");
     
 
-        var data = await WebRequestManager.Instance.Post<Dictionary<string, string>>(APIAdressManager.REQUEST_REGIST, sendData);
+       var data = await APIManager.Instance.TryRegist(sendData);
 
     }
 

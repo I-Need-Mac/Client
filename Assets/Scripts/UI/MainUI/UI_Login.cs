@@ -64,7 +64,15 @@ public class UI_Login : UI_Popup
                 // 로그인 처리
                 // WebLoginFromPost();
                 this.CloseUI<UI_Login>();
-                UIManager.Instance.OpenUI<UI_NickName>();
+
+                if (SettingManager.Instance.GetSettingValue("FirstRegist") == 1) {
+                    SettingManager.Instance.SetSettingValue("FirstRegist",1);
+                    UIManager.Instance.OpenUI<UI_NickName>();
+                }
+                else {
+                   // UIManager.Instance.OpenUI<UI_NickName>();
+                }
+              
                 if (!SteamManager.Initialized) { return; }
 
                 break;

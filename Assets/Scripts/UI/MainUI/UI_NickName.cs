@@ -30,6 +30,7 @@ public class UI_NickName : UI_Popup
 
     bool isCreate;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +51,7 @@ public class UI_NickName : UI_Popup
         Debug.Log(titleText.text);
         noticeText.text = LocalizeManager.Instance.GetText("Nickname_Able").Replace("\"", "");
 
-        confirmText.text = "확인";
+        confirmText.text = LocalizeManager.Instance.GetText("UI_Result_Confirm"); ;
 
 
         ableText.text = "";
@@ -69,7 +70,8 @@ public class UI_NickName : UI_Popup
         switch (imageValue)
         {
             case Images.Confirm:
-                if (!isCreate)
+                Debug.Log(isCreate);
+                if (isCreate)
                     return;
 
                 // 회원가입 진행
@@ -85,8 +87,7 @@ public class UI_NickName : UI_Popup
 
     public void CheckNickNameAble(string text)
     {
-        isCreate = false;
-
+        WebConnectFromGet(text);
         // 닉네임이 2자 미만 입니다.
         if (text.Length < 2 )
         {
@@ -104,12 +105,21 @@ public class UI_NickName : UI_Popup
             confirm.color = Color.gray;
             return;
         }
-        
+
         // 사용가능한 닉네임 입니다.
-        ableText.text = LocalizeManager.Instance.GetText("Nickname_Able");
-        ableText.color = Color.green;
-        confirm.color = Color.white;
-        isCreate = true;
+        if (isCreate) {
+            ableText.text = LocalizeManager.Instance.GetText("Nickname_SameName");
+            ableText.color = Color.red;
+            confirm.color = Color.gray;
+        }
+        else {
+            ableText.text = LocalizeManager.Instance.GetText("Nickname_Able");
+            ableText.color = Color.green;
+            confirm.color = Color.white;
+           
+        }
+
+ 
     }
 
     async void WebHandShakeFromPost()
@@ -119,7 +129,7 @@ public class UI_NickName : UI_Popup
         sendData.Add("nick_name", "mongplee92");
         sendData.Add("admin_level", "0");
 
-        var data = await WebRequestManager.Instance.Post<Dictionary<string, object>>("/user/handshake", sendData);
+        //var data = await WebRequestManager.Instance.Post<Dictionary<string, object>>("/user/handshake", sendData);
 
         //switch(data.result)
         //{
@@ -131,4 +141,10 @@ public class UI_NickName : UI_Popup
         //        break;
         //}
     }
+    async void WebConnectFromGet(string text)
+    {
+        isCreate = await APIManager.Instance.CheckNicknameDuplicated(text);
+
+    }
+
 }

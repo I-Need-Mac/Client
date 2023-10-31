@@ -32,9 +32,25 @@ public class APIManager : SingleTon<APIManager>
        DuplicatedNickName duplicatedNickName=  (DuplicatedNickName)await requestManager.Get<DuplicatedNickName>(APIAdressManager.REQUEST_CHECKNAME, sendData);
         return duplicatedNickName.data.isDuplicated;
     }
-    public async Task<Dictionary<string,string>> TryRegist(Dictionary<string, string> data)
+    public async Task<NormalResult> TryRegist(string name, string nickname)
     {
-        return (Dictionary<string, string>)await requestManager.Post<Dictionary<string, string>>(APIAdressManager.REQUEST_REGIST, data);
+        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        sendData.Add("steam_id", name);
+        sendData.Add("name", nickname);
+        return (NormalResult)await requestManager.Post<NormalResult>(APIAdressManager.REQUEST_REGIST, sendData);
+    }
+    public async Task<bool> TryLogin(string name, string nickname)
+    {
+        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        sendData.Add("steam_id", name);
+        sendData.Add("name", nickname);
+        NormalResult result = (NormalResult)await requestManager.Post<NormalResult>(APIAdressManager.REQUEST_LOGIN, sendData);
+
+        if (result.statusCode == 200) { 
+            return true;
+        }
+        return false;
+
     }
 
 

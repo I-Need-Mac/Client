@@ -20,26 +20,7 @@ public class UI_Main : MonoBehaviour
 
     }
 
-    async void WebConnectFromGet()
-    {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("name", "AA");
 
-        //DuplicatedNickName duplicatedNickName = await APIManager.Instance.CheckNicknameDuplicated<DuplicatedNickName>(sendData);
-       // Debug.Log(duplicatedNickName.data.isDuplicated);
-    }
-
-
-    async void WebHandShakeFromPost()
-    {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", "12213");
-        sendData.Add("name", "dass2s");
-    
-
-       var data = await APIManager.Instance.TryRegist(sendData);
-
-    }
 
     private void Update()
     {

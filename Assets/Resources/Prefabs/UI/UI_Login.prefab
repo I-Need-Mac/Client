@@ -196,6 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loginButtonOrigin: {fileID: 0}
   loginButtonHover: {fileID: 0}
+  autoLogin: {fileID: 5619401895988837330}
   titleText: {fileID: 9106695980800577132}
   loginText: {fileID: 8646445092319896815}
   autoLoginText: {fileID: 6012365806494862146}

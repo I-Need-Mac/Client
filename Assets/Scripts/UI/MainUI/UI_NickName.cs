@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -57,6 +58,9 @@ public class UI_NickName : UI_Popup
         ableText.text = "";
 
         inputText.onValueChanged.AddListener(CheckNickNameAble);
+
+    
+
     }
 
     public void OnClickImage(PointerEventData data)
@@ -78,7 +82,10 @@ public class UI_NickName : UI_Popup
                 // WebHandShakeFromPost();
 
                 this.CloseUI<UI_NickName>();
+                WebHandShakeFromPost();
                 UIManager.Instance.OpenUI<UI_Agreement>();
+
+                
                 break;
             default:
                 break;
@@ -124,27 +131,15 @@ public class UI_NickName : UI_Popup
 
     async void WebHandShakeFromPost()
     {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", "mongplee92");
-        sendData.Add("nick_name", "mongplee92");
-        sendData.Add("admin_level", "0");
+        if (!SteamManager.Initialized) { return; }
+        string name = SteamUser.GetSteamID().ToString();
 
-        //var data = await WebRequestManager.Instance.Post<Dictionary<string, object>>("/user/handshake", sendData);
 
-        //switch(data.result)
-        //{
-        //    case 100:
-        //        // result 100 : 회원가입 성공
-        //        break;
-        //    case 200:
-        //        // result 200 : 중복된 닉네임
-        //        break;
-        //}
+        await APIManager.Instance.TryRegist(name, inputText.text);
     }
     async void WebConnectFromGet(string text)
     {
         isCreate = await APIManager.Instance.CheckNicknameDuplicated(text);
-
     }
 
 }

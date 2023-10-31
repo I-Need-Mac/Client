@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public partial class WebRequestManager : SingleTon<WebRequestManager>
+public partial class WebRequestManager
 {
     #region ResponseCode
     public enum EResponse
@@ -21,6 +21,11 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
 
     #endregion
 
+    private Crypto crypto;
+    public WebRequestManager(Crypto crypto) {
+        DebugManager.Instance.PrintDebug("[WebRequestManager] WebRequestManager Init");
+        this.crypto = crypto;
+    }
 
     private bool isPostUsing = false;
     private Queue<int> postQueue = new Queue<int>();
@@ -41,8 +46,6 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
     const float TIMEOUT = 3.0f;
 
 
-    // public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
-    // public const string WEBSERVICE_HOST = "http://13.125.55.10:8080/api";
     public const string WEBSERVICE_HOST = "https://wr.blackteam.kr";
     //Singleton을 활용하여 1개의 인스턴스 유지 및 접근 효율성 증가
 
@@ -56,21 +59,9 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
         }
         else return true;
     }
-    /// <summary>
-    /// Byte[] 형을 String 형으로 캐스팅 합니다.
-    /// </summary>
-    /// <param name="strByte"></param>
-    /// <returns></returns>
-    private string ByteToString(byte[] strByte)
-    {
-        return Encoding.Default.GetString(strByte);
-    }
 
-    /// <summary>
-    /// Dictionary를 WWWForm으로 옮겨 WWWForm을 반환합니다.
-    /// </summary>
-    /// <param name="forms">[Dictionary : Map]</param>
-    /// <returns></returns>
+
+
     private String GetDictToString(Dictionary<string, string> forms)
     {
 
@@ -79,28 +70,13 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
         Debug.LogError(jsonData);
         Dictionary<string, string> postData = new Dictionary<string, string>
         {
-            { "data",  Crypto.Instance.Encrypt(jsonData)}
+            { "data",  crypto.Encrypt(jsonData)}
         };
 
 
         Debug.LogError(JsonConvert.SerializeObject(postData));
      
         return JsonConvert.SerializeObject(postData);
-    }
-
-    private string GetStringForm(Dictionary<string, string> forms)
-    {
-        if (forms == null)
-            return "";
-
-        string form = "";
-
-        foreach (KeyValuePair<string, string> value in forms)
-        {
-            form += (value.Key + "=" + value.Value + "&");
-        }
-
-        return form = form.Substring(0, form.Length - 1);
     }
 
 

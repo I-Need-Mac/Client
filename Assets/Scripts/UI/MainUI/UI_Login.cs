@@ -18,6 +18,8 @@ public class UI_Login : UI_Popup
     Sprite loginButtonOrigin;
     [SerializeField]
     Sprite loginButtonHover;
+    [SerializeField]
+    Toggle autoLogin;
 
     [SerializeField]
     TextMeshProUGUI titleText;
@@ -26,7 +28,6 @@ public class UI_Login : UI_Popup
     [SerializeField]
     TextMeshProUGUI autoLoginText;
 
-    Toggle autoLogin;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,7 @@ public class UI_Login : UI_Popup
 
         //loginButtonOrigin = GetImage((int)Images.LoginButton).gameObject.GetComponent<Image>();
 
+        
         titleText.text = LocalizeManager.Instance.GetText("UI_Login");
         loginText.text = LocalizeManager.Instance.GetText("UI_LoginWithSteam");
         autoLoginText.text = LocalizeManager.Instance.GetText("UI_AutoLogin");
@@ -64,8 +66,23 @@ public class UI_Login : UI_Popup
                 // 로그인 처리
                 // WebLoginFromPost();
                 this.CloseUI<UI_Login>();
-                UIManager.Instance.OpenUI<UI_NickName>();
-                if (!SteamManager.Initialized) { return; }
+
+                if (autoLogin.isOn) {
+                    SettingManager.Instance.SetSettingValue("AutoLogin", 1);
+                }
+                else {
+                    SettingManager.Instance.SetSettingValue("AutoLogin", 0);
+                }
+
+                if (SettingManager.Instance.GetSettingValue("FirstRegist") == 1) {
+                    SettingManager.Instance.SetSettingValue("FirstRegist",0);
+                    UIManager.Instance.OpenUI<UI_NickName>();
+                }
+                else {
+                   UIManager.Instance.OpenUI<UI_GameMain>();
+                }
+              
+               
 
                 break;
             default:

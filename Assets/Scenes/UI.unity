@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &307780187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307780189}
+  - component: {fileID: 307780188}
+  m_Layer: 0
+  m_Name: CryptoComponent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &307780188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307780187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f583620d1abbeed4081b6fefe9c26a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rsaBase64PublicKey: {fileID: 4900000, guid: 97f7b70473d993c4097d8f170b51d731, type: 3}
+  rsaBase64PrivateKey: {fileID: 4900000, guid: ec42283d8841ff445b80e0ea6df4bc94, type: 3}
+--- !u!4 &307780189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307780187}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.666883, y: 0.9744021, z: -45.9535}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &511352225
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +265,7 @@ MonoBehaviour:
     priority: 128
     pitch: 1
     streoPan: 0
-    volume: 0.5
+    volume: 1
     is3D: 0
     audioRolloffMode: 0
     dropperLevel: 0
@@ -231,12 +276,12 @@ MonoBehaviour:
     _audioType: 1
     loadSettingFrom: {fileID: 0}
     audioMixerGroup: {fileID: 0}
-    isLoop: 1
+    isLoop: 0
     isBypassEffects: 0
     priority: 128
     pitch: 1
     streoPan: 0
-    volume: 0.5
+    volume: 1
     is3D: 0
     audioRolloffMode: 0
     dropperLevel: 0

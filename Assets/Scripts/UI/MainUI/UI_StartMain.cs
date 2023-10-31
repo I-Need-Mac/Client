@@ -14,6 +14,8 @@ public class UI_StartMain : UI_Base
     }
 
     float time = 0.0f;
+    private bool isFirst;
+    private bool isAutoLogin;
 
     // 시작 창
     Image pressKeyImage;
@@ -21,11 +23,18 @@ public class UI_StartMain : UI_Base
     [SerializeField]
     TextMeshProUGUI version;
 
+    
+
+
     void Start()
     {
         Bind<Image>(typeof(Images));
 
         Array imageValue = Enum.GetValues(typeof(Images));
+
+        isFirst = Convert.ToBoolean( SettingManager.Instance.GetSettingValue("FirstRegist"));
+        isAutoLogin = Convert.ToBoolean(SettingManager.Instance.GetSettingValue("AutoLogin"));
+
 
         // 버튼 이벤트 등록
         for (int i = 0; i < imageValue.Length; i++)
@@ -49,7 +58,19 @@ public class UI_StartMain : UI_Base
         switch (imageValue)
         {
             case Images.PressKey:
-                 UIManager.Instance.OpenUI<UI_Login>();
+                if (isFirst) {
+                    UIManager.Instance.OpenUI<UI_Login>();
+                }
+                else {
+                    if (isAutoLogin) { 
+                        UIManager.Instance.OpenUI<UI_GameMain>();
+                    }
+                    else {
+                        UIManager.Instance.OpenUI<UI_Login>();
+                    }
+                }
+
+               
                 //UIManager.Instance.OpenUI<UI_StoryMain>();
                 break;
             default:

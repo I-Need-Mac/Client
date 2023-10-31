@@ -131,7 +131,7 @@ MonoBehaviour:
     BGMSITUATION: 1
     introBGMClip: {fileID: 0}
     delayWithIntro: 0
-    realBGMClip: {fileID: 8300000, guid: 8c75f9c652e31e64c997bb0fc0acd2f8, type: 3}
+    realBGMClip: {fileID: 8300000, guid: 0a4ff30221b6ba045aabd334107af6c9, type: 3}
 --- !u!1 &5346822900517563360
 GameObject:
   m_ObjectHideFlags: 0

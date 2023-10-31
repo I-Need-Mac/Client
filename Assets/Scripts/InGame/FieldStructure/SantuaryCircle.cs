@@ -26,7 +26,7 @@ public class SantuaryCircle : FieldStructure
         sprite.enabled = false;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.parent.TryGetComponent(out Player player) && isHeal)
         {

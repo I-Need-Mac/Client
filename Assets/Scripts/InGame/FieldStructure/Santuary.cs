@@ -55,9 +55,4 @@ public class Santuary : FieldStructure
 
         isActive = false;
     }
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-    }
 }

@@ -14,7 +14,7 @@ public class DemonAttack : FieldStructure
         ((CircleCollider2D)top).radius = float.Parse(this.fieldStructureData.gimmickParam[0]);
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.parent.TryGetComponent(out Player player))
         {

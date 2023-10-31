@@ -14,8 +14,9 @@ public class BlueFlame : FieldStructure
     private float burnDotTime;
     private float currentBurnTime;
     private float currentDuration;
-    private Vector3 originSize;
+    //private Vector3 originSize;
     private bool isTeleport;
+    private float speed = 2.5f;
 
     protected override void Awake()
     {
@@ -24,7 +25,7 @@ public class BlueFlame : FieldStructure
         burnDotTime = 1.0f;
         currentBurnTime = burnDotTime;
         currentDuration = duration;
-        originSize = transform.localScale;
+        //originSize = transform.localScale;
         isTeleport = false;
         frame = new WaitForFixedUpdate();
     }
@@ -53,34 +54,31 @@ public class BlueFlame : FieldStructure
 
     private IEnumerator Teleport()
     {
-        float offSet = 1.0f;
-        while (offSet > 0.0f)
+        float offSet = 0f;
+        while (offSet > -1.6f)
         {
-            offSet -= Time.deltaTime;
-            transform.localScale = originSize * offSet;
+            offSet -= Time.deltaTime * speed;
+            top.transform.localPosition = new Vector2(0.15f, offSet);
+            //transform.localScale = originSize * offSet;
             yield return frame;
         }
 
         transform.localPosition = CameraManager.Instance.GetRandomPosition(transform.position);
 
-        while (offSet < 1.0f)
+        while (offSet < 0.0f)
         {
-            offSet += Time.deltaTime;
-            if (offSet >= 1.0f)
+            offSet += Time.deltaTime * speed;
+            if (offSet >= 0.0f)
             {
-                offSet = 1.0f;
+                offSet = 0.0f;
             }
-            transform.localScale = originSize * offSet;
+            //transform.localScale = originSize * offSet;
+            top.transform.localPosition = new Vector2(0.15f, offSet);
             yield return frame;
         }
 
         currentDuration = duration;
         isTeleport = false;
-    }
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        
     }
 
     private void OnTriggerStay2D(Collider2D collision)

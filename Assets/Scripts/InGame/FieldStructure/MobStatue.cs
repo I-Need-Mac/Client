@@ -13,7 +13,7 @@ public class MobStatue : FieldStructure
         this.hp = float.Parse(this.fieldStructureData.gimmickParam[0]);
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (!spriteRenderer.enabled)
         {

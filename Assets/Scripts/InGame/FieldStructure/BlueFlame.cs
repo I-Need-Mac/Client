@@ -78,11 +78,6 @@ public class BlueFlame : FieldStructure
         isTeleport = false;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-    }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (currentBurnTime <= 0.0f)

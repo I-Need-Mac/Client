@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class FieldStructure : MonoBehaviour
+public class FieldStructure : MonoBehaviour
 {
     [SerializeField] protected int structureId;
 
@@ -98,7 +98,6 @@ public abstract class FieldStructure : MonoBehaviour
         }
     }
 
-    protected abstract void OnTriggerEnter2D(Collider2D collision);
     //{
     //    if (!front.enabled)
     //    {

@@ -13,7 +13,7 @@ public class PoisonMist : FieldStructure
         slowValue = float.Parse(this.fieldStructureData.gimmickParam[0]) * 0.01f;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.parent.TryGetComponent(out Player player))
         {

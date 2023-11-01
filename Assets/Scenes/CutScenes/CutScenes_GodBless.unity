@@ -257,10 +257,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  stopPosX: -550
-  moveSpeed: 3
-  animationSpeed: 0.01
-  animationTime: 2.5
+  stopPosX: -555
+  moveSpeed: 4
+  animationSpeed: 0.05
+  animationTime: 4
 --- !u!114 &148965104
 MonoBehaviour:
   m_ObjectHideFlags: 0

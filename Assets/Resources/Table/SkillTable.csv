@@ -89,3 +89,11 @@ int,String,String_08,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float
 11406,Skill_Name_JeRyeung,Skill_Desc_JeRyeung_06,,Arts/Skill/Icon/Skill_Icon_JeRyeung_00,150000,FALSE,None,,10,TRUE,FALSE,0,0,0,99999,0,TRUE,0,0,Delete,60,Player,Prefabs/InGame/Skill/JeRyeung,Ranges
 11407,Skill_Name_JeRyeung,Skill_Desc_JeRyeung_07,,Arts/Skill/Icon/Skill_Icon_JeRyeung_00,140000,FALSE,None,,10,TRUE,FALSE,0,0,0,99999,0,TRUE,0,0,Delete,60,Player,Prefabs/InGame/Skill/JeRyeung,Ranges
 11408,Skill_Name_JeRyeung,Skill_Desc_JeRyeung_08,,Arts/Skill/Icon/Skill_Icon_JeRyeung_00,140000,FALSE,None,,10,TRUE,FALSE,0,0,0,99999,0,TRUE,0,0,Delete,40,Player,Prefabs/InGame/Skill/JeRyeung,Ranges
+11601,Skill_Name_Inn,Skill_Desc_Inn,,Arts/Skill/Icon/Skill_Icon_Inn_00,15000,FALSE,None,,2,TRUE,FALSE,0,0,0,25,0,FALSE,0,0,Pull,2,Player,Prefabs/InGame/Skill/Inn,
+11602,Skill_Name_Inn,Skill_Desc_Inn,,Arts/Skill/Icon/Skill_Icon_Inn_00,15000,FALSE,None,,2,TRUE,FALSE,0,0,0,25,0,FALSE,0,0,Pull,2,Player,Prefabs/InGame/Skill/Inn,
+11603,Skill_Name_Inn,Skill_Desc_Inn,,Arts/Skill/Icon/Skill_Icon_Inn_00,15000,FALSE,None,,3,TRUE,FALSE,0,0,0,25,0,FALSE,0,0,Pull,2,Player,Prefabs/InGame/Skill/Inn,
+11604,Skill_Name_Inn,Skill_Desc_Inn,,Arts/Skill/Icon/Skill_Icon_Inn_00,10000,FALSE,None,,3,TRUE,FALSE,0,0,0,50,0,FALSE,0,0,Pull,2,Player,Prefabs/InGame/Skill/Inn,
+11605,Skill_Name_Inn,Skill_Desc_Inn,,Arts/Skill/Icon/Skill_Icon_Inn_00,10000,FALSE,None,,4,TRUE,FALSE,0,0,0,50,0,FALSE,0,0,Pull,2,Player,Prefabs/InGame/Skill/Inn,
+11606,Skill_Name_Inn,Skill_Desc_Inn,,Arts/Skill/Icon/Skill_Icon_Inn_00,5000,FALSE,None,,4,TRUE,FALSE,0,0,0,50,0,FALSE,0,0,Pull,2,Player,Prefabs/InGame/Skill/Inn,
+11607,Skill_Name_Inn,Skill_Desc_Inn,,Arts/Skill/Icon/Skill_Icon_Inn_00,5000,FALSE,None,,4,TRUE,FALSE,0,0,0,75,0,FALSE,0,0,Pull,2,Player,Prefabs/InGame/Skill/Inn,
+11608,Skill_Name_Inn,Skill_Desc_Inn,,Arts/Skill/Icon/Skill_Icon_Inn_00,5000,FALSE,None,,4,TRUE,FALSE,0,0,0,75,0,FALSE,0,0,Pull|Stun,2|1,Player,Prefabs/InGame/Skill/Inn,

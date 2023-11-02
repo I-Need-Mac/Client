@@ -91,7 +91,6 @@ public class Monster : MonoBehaviour
         monsterCollider.enabled = true;
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
-        situation = SoundSituation.SOUNDSITUATION.IDLE;
         MonsterDataSetting(monsterId.ToString(), hpCoefficient, attackCoefficient);
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
 
@@ -99,6 +98,14 @@ public class Monster : MonoBehaviour
         isHit = false;
         spineSwitch = true;
         //isSlow = false;
+    }
+
+    private void OnEnable()
+    {
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.SPAWN);
+        }
     }
 
     public void SetTarget(Transform target, bool isPlayer)
@@ -276,6 +283,7 @@ public class Monster : MonoBehaviour
 
     private NodeConstant IsHit()
     {
+
         return isHit ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
     }
 
@@ -310,6 +318,12 @@ public class Monster : MonoBehaviour
         }
 
         isHit = true;
+
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
+        }
+
         monsterData.SetCurrentHp(monsterData.currentHp - (int)(totalDamage * GameManager.Instance.player.playerManager.playerData.attack));
         if (monsterData.currentHp <= 0)
         {
@@ -336,7 +350,9 @@ public class Monster : MonoBehaviour
 
     public void Die(bool isDrop)
     {
-        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        if (soundRequester != null) {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        }
         monsterCollider.enabled = false;
         monsterCollider2.enabled = false;
         StartCoroutine(DieAnimation());

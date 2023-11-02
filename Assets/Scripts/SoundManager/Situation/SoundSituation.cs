@@ -20,8 +20,6 @@ public class SoundSituation
         GET,
         LOST,
         SPECAIL,
-        EXPLORE,
-        SHOOT,
         DEMISE,
         PRESS,
         RELEASE,

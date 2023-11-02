@@ -13,9 +13,11 @@ public class Item : MonoBehaviour
     protected ItemData itemData;
     protected Collider2D itemCollider;
     protected WaitForFixedUpdate frame;
+    protected SoundRequester soundRequester;
 
     private void Awake()
     {
+        soundRequester = GetComponent<SoundRequester>();
         itemSpeed = float.Parse(CSVReader.Read("BattleConfig", "ItemFollowSpeed", "ConfigValue").ToString());
         gameObject.tag = "Item";
         itemData = new ItemData();
@@ -27,6 +29,11 @@ public class Item : MonoBehaviour
     private void OnEnable()
     {
         ItemSetting(itemId.ToString());
+
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DROP);
+        }
     }
 
     protected virtual IEnumerator Move()
@@ -80,6 +87,11 @@ public class Item : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
+     
+            if (soundRequester != null) { 
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.GET);
+            }
+
             gameObject.SetActive(false);
             ItemEffect.ItemEffectActivation(itemData.itemTypeParam, itemData.itemType);
         }

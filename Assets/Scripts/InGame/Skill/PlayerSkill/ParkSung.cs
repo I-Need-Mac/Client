@@ -42,7 +42,6 @@ public class ParkSung : ActiveSkill
             {
                 Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
                 projectile.transform.position = target.position+new Vector3(0,0.3f,0);
-                target.GetComponent<Monster>().SkillEffectActivation(SKILL_EFFECT.STUN, 3);
                 projectiles.Add(projectile);
             }
         }

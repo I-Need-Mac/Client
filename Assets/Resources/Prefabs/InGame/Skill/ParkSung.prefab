@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1212575488293943708}
   - component: {fileID: 8102567208378549868}
   - component: {fileID: 8001305155237530369}
+  - component: {fileID: 1911006547522061766}
   m_Layer: 0
   m_Name: ParkSung
   m_TagString: Untagged
@@ -98,3 +99,19 @@ MonoBehaviour:
   shootAudioClip: {fileID: 0}
   hitAudioClip: {fileID: 0}
   destroyAudioClip: {fileID: 0}
+--- !u!58 &1911006547522061766
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6703835998789534210}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5000001

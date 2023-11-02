@@ -87,7 +87,7 @@ public class BlueFlame : FieldStructure
         {
             if (collision.TryGetComponent(out Monster monster))
             {
-                monster.Hit(-(int)damage);
+                monster.Hit((int)damage);
                 monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.SLOW, burnSlow, 1.0f);
                 return;
             }
@@ -110,7 +110,6 @@ public class BlueFlame : FieldStructure
         {
             if (Vector2.Distance(player.transform.position, transform.position) >= transform.localScale.x * 0.5f)
             {
-                DebugManager.Instance.PrintError("Good");
                 player.RemoveStatusEffect(STATUS_EFFECT.FIRE);
                 StartCoroutine(player.FireDot(burnTime, damage));
             }

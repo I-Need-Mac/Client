@@ -12,6 +12,8 @@ public class Santuary : FieldStructure
     private float diffCount;
     private int needKillCount;
     private int currentKillCount;
+    private float killCountRatio;
+    private Vector3 beadSize;
 
     private SantuaryCircle santuaryCircle;
 
@@ -21,7 +23,7 @@ public class Santuary : FieldStructure
 
         isActive = false;
         needKillCount = int.Parse(this.fieldStructureData.gimmickParam[0]);
-
+        beadSize = top.transform.localScale;
         santuaryCircle = Instantiate(ResourcesManager.Load<SantuaryCircle>(SANTUARY_CIRCLE_PATH), transform);
     }
 
@@ -33,7 +35,12 @@ public class Santuary : FieldStructure
         }
 
         //top.transform.localScale = Vector2.one * (diffCount / needKillCount);
-        top.transform.localScale = Vector2.Lerp(top.transform.localScale, Vector2.one * (diffCount / needKillCount), Time.deltaTime * speed);
+        killCountRatio = diffCount / needKillCount;
+        if (killCountRatio > 1.0f)
+        {
+            killCountRatio = 1.0f;
+        }
+        top.transform.localScale = Vector2.Lerp(top.transform.localScale, beadSize * killCountRatio, Time.deltaTime * speed);
     }
 
     private IEnumerator Activation()

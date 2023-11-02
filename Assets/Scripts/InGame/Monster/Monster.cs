@@ -132,6 +132,7 @@ public class Monster : MonoBehaviour
             monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
             monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
         }
+        spineSwitch = true;
     }
     #endregion
 
@@ -427,7 +428,7 @@ public class Monster : MonoBehaviour
 
         statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
         float originSpeed = monsterData.moveSpeed;
-        monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
+        monsterData.SetMoveSpeed(originSpeed * (1 - n * 0.01f));
         yield return new WaitForSeconds(sec);
         monsterData.SetMoveSpeed(originSpeed);
         statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);

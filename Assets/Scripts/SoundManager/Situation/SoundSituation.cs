@@ -13,6 +13,7 @@ public class SoundSituation
         IDLE,
         RUN,
         ATTACK,
+        BURNED,
         DIE,
         SPAWN,
         HIT,

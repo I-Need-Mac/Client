@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
     private StatusEffect statusEffect;
+    private SoundRequester soundRequester;
 
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
@@ -132,6 +133,10 @@ public class Player : MonoBehaviour
     public IEnumerator Invincible()
     {
         spineManager.SetColor(Color.red);
+        if (soundRequester != null) { 
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
+        }
+
         yield return invincibleTime;
         spineManager.SetColor(Color.white);
     }
@@ -161,6 +166,11 @@ public class Player : MonoBehaviour
         WaitForSeconds sec = new WaitForSeconds(1.0f);
         for (int i = 0; i < time; i++)
         {
+            if (soundRequester != null)
+            {
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.BURNED);
+            }
+
             StartCoroutine(Invincible());
             this.playerManager.playerData.CurrentHpModifier(-(int)dotDamage);
             yield return sec;

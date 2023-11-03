@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ public class UI_Login : UI_Popup
     [SerializeField]
     TextMeshProUGUI autoLoginText;
 
+    bool isLogin;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +74,8 @@ public class UI_Login : UI_Popup
                 }
                 else {
                     SettingManager.Instance.SetSettingValue("AutoLogin", 0);
+                    RequestLogin();
+            
                 }
 
                 if (SettingManager.Instance.GetSettingValue("FirstRegist") == 1) {
@@ -106,5 +110,18 @@ public class UI_Login : UI_Popup
         }
     }
 
+    async void RequestLogin()
+    {
+        if (!SteamManager.Initialized) { return; }
+        string name = SteamUser.GetSteamID().ToString();
+        isLogin = await APIManager.Instance.TryLogin(name);
 
+        if (isLogin)
+        {
+            UIManager.Instance.OpenUI<UI_GameMain>();
+        }
+        else
+        {
+        }
+    }
 }

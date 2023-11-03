@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using TMPro;
@@ -23,8 +24,7 @@ public class UI_StartMain : UI_Base
     [SerializeField]
     TextMeshProUGUI version;
 
-    
-
+    private bool isLogin;
 
     void Start()
     {
@@ -62,9 +62,9 @@ public class UI_StartMain : UI_Base
                     UIManager.Instance.OpenUI<UI_Login>();
                 }
                 else {
-                    if (isAutoLogin) { 
-                        UIManager.Instance.OpenUI<UI_GameMain>();
-                    }
+                    if (isAutoLogin) {
+                            RequestLogin();
+                     }
                     else {
                         UIManager.Instance.OpenUI<UI_Login>();
                     }
@@ -104,5 +104,21 @@ public class UI_StartMain : UI_Base
             else
                 UIManager.Instance.CloseUI<UI_ESCPopup>();
         }
+    }
+
+    async void RequestLogin()
+    {
+        if (!SteamManager.Initialized) { return; }
+        string name = SteamUser.GetSteamID().ToString();
+        isLogin = await APIManager.Instance.TryLogin(name);
+        if (isLogin)
+        {
+            UIManager.Instance.OpenUI<UI_GameMain>();
+        }
+        else
+        {
+            UIManager.Instance.OpenUI<UI_Login>();
+        }
+
     }
 }

@@ -91,7 +91,7 @@ public class BlueFlame : FieldStructure
                 monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.SLOW, burnSlow, 1.0f);
                 return;
             }
-            if (collision.transform.parent.TryGetComponent(out Player player))
+            if (collision.gameObject.layer != (int)LayerConstant.SKILL && collision.transform.parent.TryGetComponent(out Player player))
             {
                 StartCoroutine(player.FireDot(1, damage));
                 StartCoroutine(player.Slow(1.0f, burnSlow));
@@ -106,7 +106,7 @@ public class BlueFlame : FieldStructure
             StartCoroutine(monster.FireDot(burnTime, damage));
             return;
         }
-        if (collision.transform.parent.TryGetComponent(out Player player))
+        if (collision.gameObject.layer != (int)LayerConstant.SKILL && collision.transform.parent.TryGetComponent(out Player player))
         {
             if (Vector2.Distance(player.transform.position, transform.position) >= transform.localScale.x * 0.5f)
             {

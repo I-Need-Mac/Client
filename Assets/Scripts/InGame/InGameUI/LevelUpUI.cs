@@ -19,6 +19,7 @@ public class LevelUpUI : MonoBehaviour
     private Transform body;
     private RectTransform bodyRect;
     private List<int> skillBenList;
+    private SoundRequester soundRequester;
     //private List<int> skillNums = new List<int>();
     private Dictionary<int, int> skillNums = new Dictionary<int, int>();
 
@@ -44,9 +45,18 @@ public class LevelUpUI : MonoBehaviour
         skillTable = CSVReader.Read("SkillTable");
         passiveTable = CSVReader.Read("PassiveTable");
 
+        soundRequester = GetComponent<SoundRequester>();
+
         SkillNumRead();
         body = transform.Find("Body");
         bodyRect = body.GetComponent<RectTransform>();
+    }
+
+    private void OnEnable()
+    {
+        if (soundRequester != null) { 
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ACTIVE);
+        }
     }
 
     private void CloseBox(int skillId)
@@ -58,7 +68,10 @@ public class LevelUpUI : MonoBehaviour
         {
             UIPoolManager.Instance.DeSpawnUI("SkillUI", ui);
         }
-
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DEMISE);
+        }
         //Time.timeScale = 1f;
         GameManager.Instance.Pause();
         gameObject.SetActive(false);

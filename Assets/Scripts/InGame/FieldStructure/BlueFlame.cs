@@ -55,6 +55,10 @@ public class BlueFlame : FieldStructure
     private IEnumerator Teleport()
     {
         float offSet = 0f;
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DEMISE);
+        }
         while (offSet > -1.6f)
         {
             offSet -= Time.deltaTime * speed;
@@ -64,6 +68,11 @@ public class BlueFlame : FieldStructure
         }
 
         transform.localPosition = CameraManager.Instance.GetRandomPosition(transform.position);
+
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.SPAWN);
+        }
 
         while (offSet < 0.0f)
         {

@@ -361,8 +361,11 @@ public class Monster : MonoBehaviour
         {
             DropItem();
         }
-        //UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
-        //hpBar = null;
+        if (hpBar != null)
+        {
+            UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+            hpBar = null;
+        }
 
         GameManager.Instance.killCount++;
     }

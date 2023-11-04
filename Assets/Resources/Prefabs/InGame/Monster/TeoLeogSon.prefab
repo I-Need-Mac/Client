@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369328805725257415}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4742952839061673294}
@@ -218,7 +218,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.20985718, y: 1.3757962}
+  m_Offset: {x: 0.20985718, y: -0.14}
   m_Size: {x: 4.376738, y: 2.035405}
   m_Direction: 1
 --- !u!1 &7480269056077799653
@@ -270,7 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4ecd13599d8314e8d1c74f19e59bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <monsterId>k__BackingField: 103
   <monsterData>k__BackingField:
     monsterName: 
     sizeMultiple: 0
@@ -286,7 +285,6 @@ MonoBehaviour:
     groupSourceRate: 0
     monsterPrefabPath: 
     attackType: 0
-  aniName: 0
 --- !u!114 &2489519167274124905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +345,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.20985718, y: 1.3757962}
+  m_Offset: {x: 0.20985718, y: -0.14}
   m_Size: {x: 4.376738, y: 2.035405}
   m_Direction: 1

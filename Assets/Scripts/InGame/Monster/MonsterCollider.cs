@@ -28,7 +28,7 @@ public class MonsterCollider : MonoBehaviour
         attackCollider.size = size;
 
         Vector2 offSet = attackCollider.offset;
-        offSet.x += -atkDistance;
+        offSet.x += -0.5f * atkDistance;
         attackCollider.offset = offSet;
     }
 

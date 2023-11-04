@@ -1,6 +1,6 @@
 
+using Cinemachine.Utility;
 using SKILLCONSTANT;
-using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,13 +65,15 @@ public class Monster : MonoBehaviour
         if (monsterData.atkDistance <= 1.0f)    //근거리
         {
             weightX = attackCollider.attackCollider.size.x * 0.3f;
-            weightY = monsterCollider.size.y * 0.3f;
+            weightY = attackCollider.attackCollider.size.y * 0.3f;
         }
         else    //원거리
         {
             weightX = monsterData.atkDistance;
             weightY = monsterData.atkDistance;
         }
+        weightX = Math.Abs(weightX);
+        weightY = Math.Abs(weightY);
     }
 
     private void FixedUpdate()
@@ -214,13 +216,9 @@ public class Monster : MonoBehaviour
 
     private NodeConstant IsAttackable()
     {
-        Vector2 diff = target.position - transform.position;
-        //float distance = diff.magnitude;
-        //if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
-        //{
-        //    return NodeConstant.SUCCESS;
-        //}
-        if (((Mathf.Abs(diff.x) <= Mathf.Abs(weightX))) && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
+        Vector2 diff = (target.position - transform.position).Abs();
+        
+        if ((diff.x <= weightX) && (diff.y <= weightY))
         {
             return NodeConstant.SUCCESS;
         }
@@ -264,7 +262,6 @@ public class Monster : MonoBehaviour
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
         monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
-        //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
         return NodeConstant.RUNNING;
     }
 
@@ -283,7 +280,6 @@ public class Monster : MonoBehaviour
 
     private NodeConstant IsHit()
     {
-
         return isHit ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
     }
 
@@ -297,7 +293,6 @@ public class Monster : MonoBehaviour
         attackCollider.AttackColliderSwitch(false);
         isAttack = false;
     }
-
     #endregion
 
     #region Logic
@@ -344,8 +339,12 @@ public class Monster : MonoBehaviour
             time += Time.fixedDeltaTime;
             yield return fixedFrame;
         } while (time < hpBarVisibleTime && monsterData.currentHp > 0);
-        UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
-        hpBar = null;
+
+        if (hpBar != null)
+        {
+            UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+            hpBar = null;
+        }
     }
 
     public void Die(bool isDrop)

@@ -39,13 +39,13 @@ public class APIManager : SingleTon<APIManager>
         sendData.Add("name", nickname);
         return (NormalResult)await requestManager.Post<NormalResult>(APIAdressManager.REQUEST_REGIST, sendData);
     }
-    public async Task<bool> TryLogin(string name, string nickname)
+    public async Task<bool> TryLogin(string name)
     {
         Dictionary<string, string> sendData = new Dictionary<string, string>();
         sendData.Add("steam_id", name);
-        sendData.Add("name", nickname);
         NormalResult result = (NormalResult)await requestManager.Post<NormalResult>(APIAdressManager.REQUEST_LOGIN, sendData);
 
+        Debug.LogError(result.statusCode);
         if (result.statusCode == 200) { 
             return true;
         }

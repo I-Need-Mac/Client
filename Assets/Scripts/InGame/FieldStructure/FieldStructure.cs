@@ -12,12 +12,23 @@ public class FieldStructure : MonoBehaviour
     protected FieldStructureData fieldStructureData;
     protected Collider2D top;
     protected Collider2D front;
+    protected SoundRequester soundRequester;
 
     protected virtual void Awake()
     {
         SetFieldStructureData(structureId);
         FieldStructureInit();
+        soundRequester = GetComponent<SoundRequester>();
+        
         hp = 1;
+    }
+
+    private void OnEnable()
+    {
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.SPAWN);
+        }
     }
 
     private void SetFieldStructureData(int structureId)
@@ -97,6 +108,8 @@ public class FieldStructure : MonoBehaviour
             SetLayer(child);
         }
     }
+
+
 
     //{
     //    if (!front.enabled)

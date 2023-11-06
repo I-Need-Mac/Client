@@ -36,7 +36,12 @@ public class Item : MonoBehaviour
         }
     }
 
-    protected virtual IEnumerator Move()
+    public IEnumerator Move()
+    {
+        yield return Move(this.target);
+    }
+
+    public virtual IEnumerator Move(Transform target)
     {
         while (true)
         {

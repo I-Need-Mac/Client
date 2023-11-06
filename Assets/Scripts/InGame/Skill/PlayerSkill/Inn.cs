@@ -15,7 +15,7 @@ public class Inn : ActiveSkill
     
     public override IEnumerator Activation()
     {
-        allTargets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
+        allTargets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER, (int)LayerConstant.ITEM);
         Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
         foreach (Transform target in allTargets )
         {
@@ -23,11 +23,15 @@ public class Inn : ActiveSkill
             //target.GetComponent<Monster>().Hit(skillData.damage);
             if (target.TryGetComponent(out Monster monster))
             {
-                monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.PULL, skillData.attackDistance);
+                monster.SkillEffectActivation(skillData.skillEffect[0], float.Parse(skillData.skillEffectParam[0]));
                 monster.Hit(skillData.damage);
             }
+            if (target.TryGetComponent(out Item item))
+            {
+                SkillManager.Instance.CoroutineStarter(item.Move(shooter));
+            }
         }
-        Debug.Log("인 발동");
+        DebugManager.Instance.PrintError("인 발동");
         yield return frame;
 
         SkillManager.Instance.DeSpawnProjectile(projectile);

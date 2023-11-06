@@ -338,7 +338,7 @@ public class Monster : MonoBehaviour
             hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
             time += Time.fixedDeltaTime;
             yield return fixedFrame;
-        } while (time < hpBarVisibleTime && monsterData.currentHp > 0);
+        } while (hpBar != null && time < hpBarVisibleTime && monsterData.currentHp > 0);
 
         if (hpBar != null)
         {

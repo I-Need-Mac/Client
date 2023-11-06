@@ -31,7 +31,6 @@ public class Inn : ActiveSkill
                 SkillManager.Instance.CoroutineStarter(item.Move(shooter));
             }
         }
-        DebugManager.Instance.PrintError("인 발동");
         yield return frame;
 
         SkillManager.Instance.DeSpawnProjectile(projectile);

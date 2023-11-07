@@ -6,27 +6,23 @@ public class Churk : ActiveSkill
 {
     private List<Transform> allTargets = new List<Transform>();
 
-    Projectile projectile;
     public Churk(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
     public override IEnumerator Activation()
     {
-        allTargets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER,(int)LayerConstant.ITEM);
-        projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
-        Debug.Log("척 발동");
-        yield return expansionProjectile();
-    }
-    IEnumerator expansionProjectile()
-    {
-        float initialScale = skillData.projectileSizeMulti;
+        allTargets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
+        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
 
-        while (initialScale < skillData.attackDistance * 2)
+        foreach (Transform target in allTargets)
         {
-            float newScale = Mathf.Max(0.0f, initialScale + 10.0f * Time.deltaTime);
-            projectile.transform.localScale = new Vector2(newScale, newScale);
-            yield return frame;
-            initialScale = newScale;
+            if (target.TryGetComponent(out Monster monster))
+            {
+                monster.SkillEffectActivation(skillData.skillEffect[0], float.Parse(skillData.skillEffectParam[0]));
+            }
         }
+        
+        Debug.Log("척 발동");
         yield return frame;
-        SkillManager.Instance.DeSpawnProjectile(projectile);       
+
+        SkillManager.Instance.DeSpawnProjectile(projectile);
     }
 }

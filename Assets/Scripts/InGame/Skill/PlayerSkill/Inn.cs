@@ -1,3 +1,4 @@
+using SKILLCONSTANT;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,14 +22,27 @@ public class Inn : ActiveSkill
         {
             //target.GetComponent<Monster>().SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.PULL,skillData.attackDistance);
             //target.GetComponent<Monster>().Hit(skillData.damage);
-            if (target.TryGetComponent(out Monster monster))
+            foreach (SKILL_EFFECT effect in skillData.skillEffect)
             {
-                monster.SkillEffectActivation(skillData.skillEffect[0], float.Parse(skillData.skillEffectParam[0]));
-                monster.Hit(skillData.damage);
-            }
-            if (target.TryGetComponent(out Item item))
-            {
-                SkillManager.Instance.CoroutineStarter(item.Move(shooter));
+                switch (effect)
+                {
+                    case SKILL_EFFECT.PULL:
+                        if (target.TryGetComponent(out Monster monster))
+                        {
+                            monster.SkillEffectActivation(SKILL_EFFECT.PULL, float.Parse(skillData.skillEffectParam[0]));
+                            monster.Hit(skillData.damage);
+                        }
+                        break;
+                    case SKILL_EFFECT.ITEMPULL:
+                        if (target.TryGetComponent(out Item item))
+                        {
+                            SkillManager.Instance.CoroutineStarter(item.Move(shooter));
+                        }
+                        break;
+                    default:
+                        DebugManager.Instance.PrintError("[Skill: Inn] {0}은 구현되지 않은 효과입니다", effect);
+                        break;
+                }
             }
         }
         yield return frame;

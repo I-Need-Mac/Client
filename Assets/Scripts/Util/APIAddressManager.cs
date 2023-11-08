@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class APIAdressManager 
+public static class APIAddressManager 
 {
 
     public const string REQUEST_GETTEST = "api";

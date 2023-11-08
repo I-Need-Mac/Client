@@ -29,7 +29,7 @@ public class APIManager : SingleTon<APIManager>
     {
         Dictionary<string, string> sendData = new Dictionary<string, string>();
         sendData.Add("name", data);
-       DuplicatedNickName duplicatedNickName=  (DuplicatedNickName)await requestManager.Get<DuplicatedNickName>(APIAdressManager.REQUEST_CHECKNAME, sendData);
+       DuplicatedNickName duplicatedNickName=  (DuplicatedNickName)await requestManager.Get<DuplicatedNickName>(APIAddressManager.REQUEST_CHECKNAME, sendData);
         return duplicatedNickName.data.isDuplicated;
     }
     public async Task<NormalResult> TryRegist(string name, string nickname)
@@ -37,13 +37,13 @@ public class APIManager : SingleTon<APIManager>
         Dictionary<string, string> sendData = new Dictionary<string, string>();
         sendData.Add("steam_id", name);
         sendData.Add("name", nickname);
-        return (NormalResult)await requestManager.Post<NormalResult>(APIAdressManager.REQUEST_REGIST, sendData);
+        return (NormalResult)await requestManager.Post<NormalResult>(APIAddressManager.REQUEST_REGIST, sendData);
     }
     public async Task<bool> TryLogin(string name)
     {
         Dictionary<string, string> sendData = new Dictionary<string, string>();
         sendData.Add("steam_id", name);
-        NormalResult result = (NormalResult)await requestManager.Post<NormalResult>(APIAdressManager.REQUEST_LOGIN, sendData);
+        NormalResult result = (NormalResult)await requestManager.Post<NormalResult>(APIAddressManager.REQUEST_LOGIN, sendData);
 
         Debug.LogError(result.statusCode);
         if (result.statusCode == 200) { 

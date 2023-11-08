@@ -192,6 +192,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 120:
                 skill = new Horin(skillId, shooter, skillNum);
                 break;
+            case 121:
+                skill = new JuckHwa(skillId, shooter, skillNum);
+                break;
             //아래로 패시브
             case 202:
                 skill = new InnPassive(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);

@@ -22,6 +22,7 @@ public class SoundSituation
         SPECAIL,
         DEMISE,
         PRESS,
+        NAGATIVE,
         RELEASE,
         HOVER,
         CLICK,

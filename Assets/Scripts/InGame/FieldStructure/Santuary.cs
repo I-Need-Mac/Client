@@ -6,9 +6,14 @@ public class Santuary : FieldStructure
 {
     private const string SANTUARY_CIRCLE_PATH = "Prefabs/InGame/FieldStructure/FieldStructure_SantuaryCircle";
 
+    [SerializeField] float speed = 5.0f;
+
     private bool isActive;
-    private int diffCount;
+    private float diffCount;
+    private int needKillCount;
     private int currentKillCount;
+    private float killCountRatio;
+    private Vector3 beadSize;
 
     private SantuaryCircle santuaryCircle;
 
@@ -17,29 +22,25 @@ public class Santuary : FieldStructure
         base.Awake();
 
         isActive = false;
-        diffCount = int.Parse(this.fieldStructureData.gimmickParam[0]);
-
+        needKillCount = int.Parse(this.fieldStructureData.gimmickParam[0]);
+        beadSize = top.transform.localScale;
         santuaryCircle = Instantiate(ResourcesManager.Load<SantuaryCircle>(SANTUARY_CIRCLE_PATH), transform);
-        santuaryCircle.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        //DebugManager.Instance.PrintWarning("KillCount: {0} / CurrentCount: {1} / Diffcount: {2}", GameManager.Instance.killcount, killCount, diffCount);
-        //if (GameManager.Instance.killCount - diffCount * (processMaxCount - processCount) == 0 && !santuaryCircle.gameObject.activeInHierarchy)
-        //{
-        //    ++processCount;
-        //    if (processCount > processMaxCount)
-        //    {
-        //        this.gameObject.SetActive(false);
-        //    }
-        //    santuaryCircle.gameObject.SetActive(true);
-        //}
-
         if (!isActive)
         {
             StartCoroutine(Activation());
         }
+
+        //top.transform.localScale = Vector2.one * (diffCount / needKillCount);
+        killCountRatio = diffCount / needKillCount;
+        if (killCountRatio > 1.0f)
+        {
+            killCountRatio = 1.0f;
+        }
+        top.transform.localScale = Vector2.Lerp(top.transform.localScale, beadSize * killCountRatio, Time.deltaTime * speed);
     }
 
     private IEnumerator Activation()
@@ -47,22 +48,18 @@ public class Santuary : FieldStructure
         isActive = true;
         WaitForFixedUpdate tick = new WaitForFixedUpdate();
         currentKillCount = GameManager.Instance.killCount;
-        while (GameManager.Instance.killCount - currentKillCount < diffCount)
+        //while (GameManager.Instance.killCount - currentKillCount < needKillCount)
+        //{
+        //    yield return tick;
+        //}
+        do
         {
+            diffCount = GameManager.Instance.killCount - currentKillCount;
             yield return tick;
-        }
+        } while (diffCount < needKillCount);
 
-        santuaryCircle.gameObject.SetActive(true);
-        while (santuaryCircle.gameObject.activeInHierarchy)
-        {
-            yield return tick;
-        }
+        yield return santuaryCircle.Activation();
 
         isActive = false;
-    }
-
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        
     }
 }

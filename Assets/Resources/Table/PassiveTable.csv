@@ -63,3 +63,8 @@ Int,String,String,String,String,String,EffectEnum,Int,Enum,Enum,TargetEnum,Strin
 21303,Skill_Name_ChangAe,Skill_Desc_ChangAe_03,,Arts/Skill/Icon/Skill_Icon_ChangAe_00,,Armor,,Self,Multi,0.05,
 21304,Skill_Name_ChangAe,Skill_Desc_ChangAe_04,,Arts/Skill/Icon/Skill_Icon_ChangAe_00,,Armor,,Self,Multi,0.05,
 21305,Skill_Name_ChangAe,Skill_Desc_ChangAe_05,,Arts/Skill/Icon/Skill_Icon_ChangAe_00,,Armor,,Self,Multi,0.05,
+21401,Skill_Name_ChukDan,Skill_Desc_ChukDan_01,,Arts/Skill/Icon/Skill_Icon_ChukDan_00,,AttackSpeed,,Self,Multi,0.01,
+21402,Skill_Name_ChukDan,Skill_Desc_ChukDan_02,,Arts/Skill/Icon/Skill_Icon_ChangAe_00,,AttackSpeed,,Self,Multi,0.01,
+21403,Skill_Name_ChukDan,Skill_Desc_ChukDan_03,,Arts/Skill/Icon/Skill_Icon_ChangAe_00,,AttackSpeed,,Self,Multi,0.01,
+21404,Skill_Name_ChukDan,Skill_Desc_ChukDan_04,,Arts/Skill/Icon/Skill_Icon_ChangAe_00,,AttackSpeed,,Self,Multi,0.01,
+21405,Skill_Name_ChukDan,Skill_Desc_ChukDan_05,,Arts/Skill/Icon/Skill_Icon_ChangAe_00,,AttackSpeed,,Self,Multi,0.01,

@@ -1,11 +1,9 @@
 
+using Cinemachine.Utility;
 using SKILLCONSTANT;
-using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -43,7 +41,7 @@ public class Monster : MonoBehaviour
     public Transform target { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
 
-
+    #region Mono & Setting
     private void Awake()
     {
         statusEffect = new StatusEffect();
@@ -67,13 +65,15 @@ public class Monster : MonoBehaviour
         if (monsterData.atkDistance <= 1.0f)    //근거리
         {
             weightX = attackCollider.attackCollider.size.x * 0.3f;
-            weightY = monsterCollider.size.y * 0.3f;
+            weightY = attackCollider.attackCollider.size.y * 0.3f;
         }
         else    //원거리
         {
             weightX = monsterData.atkDistance;
             weightY = monsterData.atkDistance;
         }
+        weightX = Math.Abs(weightX);
+        weightY = Math.Abs(weightY);
     }
 
     private void FixedUpdate()
@@ -81,19 +81,8 @@ public class Monster : MonoBehaviour
         if (spineSwitch)
         {
             btManager.Active();
+            monsterRigidbody.velocity = Vector2.zero;
         }
-
-        //if (hpBar != null)
-        //{
-        //    hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
-        //}
-        //else
-        //{
-            
-        //    hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
-        //}
-
-        monsterRigidbody.velocity = Vector2.zero;
     }
 
     public void SpawnSet(float hpCoefficient, float attackCoefficient)
@@ -104,7 +93,6 @@ public class Monster : MonoBehaviour
         monsterCollider.enabled = true;
         monsterDirection = Vector2.zero;
         lookDirection = Vector2.right;
-        situation = SoundSituation.SOUNDSITUATION.IDLE;
         MonsterDataSetting(monsterId.ToString(), hpCoefficient, attackCoefficient);
         delay = new WaitForSeconds(1.0f / monsterData.atkSpeed);
 
@@ -113,6 +101,49 @@ public class Monster : MonoBehaviour
         spineSwitch = true;
         //isSlow = false;
     }
+
+    private void OnEnable()
+    {
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.SPAWN);
+        }
+    }
+
+    public void SetTarget(Transform target, bool isPlayer)
+    {
+        this.target = target;
+        this.isPlayer = isPlayer;
+    }
+
+    public void MonsterDataSetting(string monsterId, float hpCoefficient, float attackCoefficient)
+    {
+        Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
+        if (monsterTable.ContainsKey(monsterId))
+        {
+            Dictionary<string, object> table = monsterTable[monsterId];
+            monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
+            int hp = Convert.ToInt32(table["HP"]);
+            hp += Mathf.FloorToInt(hp * hpCoefficient);
+            monsterData.SetHp(hp);
+            monsterData.SetCurrentHp(monsterData.hp);
+            monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
+            int attack = Convert.ToInt32(table["Attack"]);
+            attack += Mathf.FloorToInt(attack * attackCoefficient);
+            monsterData.SetAttack(attack);
+            monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
+            monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
+            monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));
+            monsterData.SetAtkDistance(float.Parse(Convert.ToString(table["AtkDistance"])));
+            monsterData.SetSkillID(Convert.ToInt32(table["SkillID"]));
+            monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
+            monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));
+            monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
+            monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
+        }
+        spineSwitch = true;
+    }
+    #endregion
 
     #region AI
     private Node SetAI(AttackTypeConstant attackType)
@@ -185,13 +216,9 @@ public class Monster : MonoBehaviour
 
     private NodeConstant IsAttackable()
     {
-        Vector2 diff = target.position - transform.position;
-        //float distance = diff.magnitude;
-        //if (distance <= monsterData.atkDistance && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
-        //{
-        //    return NodeConstant.SUCCESS;
-        //}
-        if (((Mathf.Abs(diff.x) <= Mathf.Abs(weightX))) && ((Mathf.Abs(diff.y) <= Mathf.Abs(weightY))))
+        Vector2 diff = (target.position - transform.position).Abs();
+        
+        if ((diff.x <= weightX) && (diff.y <= weightY))
         {
             return NodeConstant.SUCCESS;
         }
@@ -235,7 +262,6 @@ public class Monster : MonoBehaviour
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
         monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
-        //monsterRigidbody.velocity = monsterDirection * monsterData.moveSpeed;
         return NodeConstant.RUNNING;
     }
 
@@ -267,42 +293,9 @@ public class Monster : MonoBehaviour
         attackCollider.AttackColliderSwitch(false);
         isAttack = false;
     }
-
     #endregion
 
-    public void SetTarget(Transform target, bool isPlayer)
-    {
-        this.target = target;
-        this.isPlayer = isPlayer;
-    }
-
-    public void MonsterDataSetting(string monsterId, float hpCoefficient, float attackCoefficient)
-    {
-        Dictionary<string, Dictionary<string, object>> monsterTable = CSVReader.Read("MonsterTable");
-        if (monsterTable.ContainsKey(monsterId))
-        {
-            Dictionary<string, object> table = monsterTable[monsterId];
-            monsterData.SetMonsterName(Convert.ToString(table["MonsterName"]));
-            int hp = Convert.ToInt32(table["HP"]);
-            hp += Mathf.FloorToInt(hp * hpCoefficient);
-            monsterData.SetHp(hp);
-            monsterData.SetCurrentHp(monsterData.hp);
-            monsterData.SetSizeMultiple(float.Parse(Convert.ToString(table["SizeMultiple"])));
-            int attack = Convert.ToInt32(table["Attack"]);
-            attack += Mathf.FloorToInt(attack * attackCoefficient);
-            monsterData.SetAttack(attack);
-            monsterData.SetMoveSpeed(float.Parse(Convert.ToString(table["MoveSpeed"])));
-            monsterData.SetAtkSpeed(float.Parse(Convert.ToString(table["AtkSpeed"])));
-            monsterData.SetViewDistance(float.Parse(Convert.ToString(table["ViewDistance"])));
-            monsterData.SetAtkDistance(float.Parse(Convert.ToString(table["AtkDistance"])));
-            monsterData.SetSkillID(Convert.ToInt32(table["SkillID"]));
-            monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
-            monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));
-            monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
-            monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
-        }
-    }
-
+    #region Logic
     private void DropItem()
     {
         if (UnityEngine.Random.Range(0, 10001) <= monsterData.groupSourceRate)
@@ -320,6 +313,12 @@ public class Monster : MonoBehaviour
         }
 
         isHit = true;
+
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
+        }
+
         monsterData.SetCurrentHp(monsterData.currentHp - (int)(totalDamage * GameManager.Instance.player.playerManager.playerData.attack));
         if (monsterData.currentHp <= 0)
         {
@@ -339,14 +338,20 @@ public class Monster : MonoBehaviour
             hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
             time += Time.fixedDeltaTime;
             yield return fixedFrame;
-        } while (time < hpBarVisibleTime && monsterData.currentHp > 0);
-        UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
-        hpBar = null;
+        } while (hpBar != null && time < hpBarVisibleTime && monsterData.currentHp > 0);
+
+        if (hpBar != null)
+        {
+            UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+            hpBar = null;
+        }
     }
 
     public void Die(bool isDrop)
     {
-        soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        if (soundRequester != null) {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
+        }
         monsterCollider.enabled = false;
         monsterCollider2.enabled = false;
         StartCoroutine(DieAnimation());
@@ -355,8 +360,11 @@ public class Monster : MonoBehaviour
         {
             DropItem();
         }
-        //UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
-        //hpBar = null;
+        if (hpBar != null)
+        {
+            UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+            hpBar = null;
+        }
 
         GameManager.Instance.killCount++;
     }
@@ -375,6 +383,7 @@ public class Monster : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         MonsterSpawner.Instance.DeSpawnMonster(this);
     }
+    #endregion
 
     #region SKILL_EFFECT
     public void SkillEffectActivation(SKILL_EFFECT effect, float param)
@@ -432,23 +441,15 @@ public class Monster : MonoBehaviour
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.SLOW))
         {
-            statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
-            float originSpeed = monsterData.moveSpeed;
-            monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
-            yield return new WaitForSeconds(sec);
-            monsterData.SetMoveSpeed(originSpeed);
-            statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
+            yield break;
         }
 
-        //if (!isSlow)
-        //{
-        //    isSlow = true;
-        //    float originSpeed = monsterData.moveSpeed;
-        //    monsterData.SetMoveSpeed(originSpeed * n * 0.01f);
-        //    yield return new WaitForSeconds(sec);
-        //    monsterData.SetMoveSpeed(originSpeed);
-        //    isSlow = false;
-        //}
+        statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
+        float originSpeed = monsterData.moveSpeed;
+        monsterData.SetMoveSpeed(originSpeed * (1 - n * 0.01f));
+        yield return new WaitForSeconds(sec);
+        monsterData.SetMoveSpeed(originSpeed);
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
     }
 
     private IEnumerator Slow(float n)
@@ -461,11 +462,17 @@ public class Monster : MonoBehaviour
         if (spineSwitch)
         {
             spineSwitch = false;
-            Vector2 diff = transform.position - target.position;
+            Vector2 diff = transform.position - GameManager.Instance.player.transform.position;
             monsterRigidbody.AddRelativeForce(diff.normalized * n * 0.0002f, ForceMode2D.Impulse);
-            yield return tick;
+            yield return KnockBackReset(0.5f);
             spineSwitch = true;
         }
+    }
+
+    private IEnumerator KnockBackReset(float time)
+    {
+        yield return new WaitForSeconds(time);
+        monsterRigidbody.velocity = Vector3.zero;
     }
 
     private void Execute(float n)
@@ -480,13 +487,15 @@ public class Monster : MonoBehaviour
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.RESTRAINT))
         {
-            statusEffect.AddStatusEffect(STATUS_EFFECT.RESTRAINT);
-            float originSpeed = monsterData.moveSpeed;
-            monsterData.SetMoveSpeed(0.0f);
-            yield return new WaitForSeconds(n);
-            monsterData.SetMoveSpeed(originSpeed);
-            statusEffect.RemoveStatusEffect(STATUS_EFFECT.RESTRAINT);
+            yield break;
         }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.RESTRAINT);
+        float originSpeed = monsterData.moveSpeed;
+        monsterData.SetMoveSpeed(0.0f);
+        yield return new WaitForSeconds(n);
+        monsterData.SetMoveSpeed(originSpeed);
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.RESTRAINT);
     }
 
     private IEnumerator Pull(float n)
@@ -503,7 +512,7 @@ public class Monster : MonoBehaviour
     #endregion
 
     #region STATUS_EFFECT
-    public IEnumerator FireDot(float time, float dotDamage)
+    public IEnumerator FireDot(int time, float dotDamage)
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
         {

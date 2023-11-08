@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c66584e359961fe4099e74cf88827c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structureId: 403
+  structureId: 23001
   connectedTeleport: {fileID: 0}
   coolTime: 5
 --- !u!50 &5247613359630550777

@@ -5,20 +5,25 @@ using UnityEngine;
 public class DemonAttack : FieldStructure
 {
     [SerializeField] private int[] monsterList;
+    [SerializeField] private int[] mobCountList;
 
     protected override void Awake()
     {
         base.Awake();
 
-        top.GetComponent<CircleCollider2D>().radius = float.Parse(this.fieldStructureData.gimmickParam[0]);
+        ((CircleCollider2D)top).radius = float.Parse(this.fieldStructureData.gimmickParam[0]);
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.parent.TryGetComponent(out Player player))
         {
             top.enabled = false;
-            MonsterSpawner.Instance.SpawnMonster(monsterList[UnityEngine.Random.Range(0, monsterList.Length)], transform.position);
+            int randomNumber = UnityEngine.Random.Range(0, monsterList.Length);
+            for (int i = 0; i < mobCountList[randomNumber]; i++)
+            {
+                MonsterSpawner.Instance.SpawnMonster(monsterList[randomNumber], transform.position);
+            }
         }
     }
 }

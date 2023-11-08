@@ -10,6 +10,15 @@ public class Beam : MonoBehaviour
     private void Start()
     {
         trigger = false;
+
+        if (transform.TryGetComponent(out Renderer render))
+        {
+            render.sortingLayerName = (LayerConstant.OBSTACLE).ToString();
+        }
+        else if (transform.TryGetComponent(out MeshRenderer meshRender))
+        {
+            meshRender.sortingLayerName = (LayerConstant.OBSTACLE).ToString();
+        }
     }
 
     public void BeamInit(float h, float v, float duration, float damage)

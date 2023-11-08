@@ -11,6 +11,7 @@ public class TeleportCircle : FieldStructure
     private SpriteRenderer frontSpriteRenderer;
     private int teleportCount;
     private bool available;
+    private SoundRequester soundRequester;
 
     protected override void Awake()
     {
@@ -20,15 +21,19 @@ public class TeleportCircle : FieldStructure
         available = true;
         topSpriteRenderer = top.GetComponent<SpriteRenderer>();
         frontSpriteRenderer = front.GetComponent<SpriteRenderer>();
+        soundRequester = GetComponent<SoundRequester>();
         frontSpriteRenderer.enabled = false;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (available)
         {
             if (collision.transform.parent.TryGetComponent(out Player player))
             {
+                if (soundRequester != null) { 
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ACTIVE);
+                }
                 StartCoroutine(Activation(player));
             }
         }

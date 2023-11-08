@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public partial class WebRequestManager : SingleTon<WebRequestManager>
+public partial class WebRequestManager
 {
     #region ResponseCode
     public enum EResponse
@@ -21,6 +21,11 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
 
     #endregion
 
+    private Crypto crypto;
+    public WebRequestManager(Crypto crypto) {
+        DebugManager.Instance.PrintDebug("[WebRequestManager] WebRequestManager Init");
+        this.crypto = crypto;
+    }
 
     private bool isPostUsing = false;
     private Queue<int> postQueue = new Queue<int>();
@@ -41,9 +46,7 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
     const float TIMEOUT = 3.0f;
 
 
-    // public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
-    // public const string WEBSERVICE_HOST = "http://13.125.55.10:8080/api";
-    public const string WEBSERVICE_HOST = "http://13.209.13.32:8080/api";
+    public const string WEBSERVICE_HOST = "https://wr.blackteam.kr";
     //Singleton을 활용하여 1개의 인스턴스 유지 및 접근 효율성 증가
 
     public bool IsConnectInternet()
@@ -56,56 +59,45 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
         }
         else return true;
     }
-    /// <summary>
-    /// Byte[] 형을 String 형으로 캐스팅 합니다.
-    /// </summary>
-    /// <param name="strByte"></param>
-    /// <returns></returns>
-    private string ByteToString(byte[] strByte)
-    {
-        return Encoding.Default.GetString(strByte);
-    }
 
-    /// <summary>
-    /// Dictionary를 WWWForm으로 옮겨 WWWForm을 반환합니다.
-    /// </summary>
-    /// <param name="forms">[Dictionary : Map]</param>
-    /// <returns></returns>
-    private WWWForm GetWWWForm(Dictionary<string, string> forms)
-    {
-        WWWForm form = new WWWForm();
 
-        foreach (KeyValuePair<string, string> value in forms)
+
+    private String GetDictToString(Dictionary<string, string> forms)
+    {
+
+        string jsonData = JsonConvert.SerializeObject(forms);
+        Debug.LogError(forms.Count);
+        Debug.LogError(jsonData);
+        Dictionary<string, string> postData = new Dictionary<string, string>
         {
-            form.AddField(value.Key, value.Value);
-        }
+            { "data",  crypto.Encrypt(jsonData)}
+        };
 
-        return form;
+
+        Debug.LogError(JsonConvert.SerializeObject(postData));
+     
+        return JsonConvert.SerializeObject(postData);
     }
 
-    private string GetStringForm(Dictionary<string, string> forms)
-    {
-        if (forms == null)
-            return "";
 
-        string form = "";
-
-        foreach (KeyValuePair<string, string> value in forms)
+    public string MakeUrlWithParam(string url, Dictionary<string, string> data) {
+        if (data != null)
         {
-            form += (value.Key + "=" + value.Value + "&");
+            url += "?";
+            foreach (string i in data.Keys)
+            {
+                url += i + "=" + data[i] + "&";
+            }
+            url.TrimEnd('&');
         }
-
-        return form = form.Substring(0, form.Length - 1);
+        return url;
     }
-
-
-
 
 
 
     public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
     {
-        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{url}"))
+        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}"))
         {
             float timeout = 0f;
             request.SendWebRequest();
@@ -117,7 +109,7 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
                 else
                     await Task.Yield();
             }
-            Debug.Log(request.result);
+            Debug.Log(request.downloadHandler.text);
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
 
@@ -127,8 +119,6 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
             return dataObj;
 
         }
-
-
 
         return default;
 
@@ -137,11 +127,16 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
 
     public async Task<object> Post<T>(string url, Dictionary<string, string> data)
     {
-        using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}/{url}", GetWWWForm(data)))
+        UnityWebRequest request = new UnityWebRequest($"{WEBSERVICE_HOST}/{url}", "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(GetDictToString(data));
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        using (request)
         {
             float timeout = 0f;
             request.SendWebRequest();
-            Debug.Log("Send2");
             while (!request.isDone)
             {
                 timeout += Time.deltaTime;
@@ -150,9 +145,11 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
                 else
                     await Task.Yield();
             }
+
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
-            Debug.Log(request.result);
+
+            Debug.LogError(jsonString);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
@@ -160,29 +157,9 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
             return dataObj;
 
         }
-
-
-
         return default;
 
     }
 
 
-    public async Task<RECIEVE_LOGIN> RequestLogin(string ID)
-    {
-
-        Dictionary<string, string> data = new Dictionary<string, string>();
-        data.Add("ID", "test data");
-
-        Debug.Log("Send1");
-
-        return (RECIEVE_LOGIN)await Post<RECIEVE_LOGIN>(APIAdressManager.REQUEST_LOGIN, data);
-    }
-
-
-}
-
-public class RECIEVE_LOGIN
-{
-    public string ID;
 }

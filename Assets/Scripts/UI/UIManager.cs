@@ -19,12 +19,15 @@ public class UIManager : MonoSingleton<UIManager>
         UI_Agreement,
         UI_ESCPopup,
         UI_MyInfo,
+        UI_RankBoard,
 
         UI_StoryMain,
 
         UI_StoryBook,
         UI_SelectSorcerer,
         UI_SelectSorcererInfo,
+        UI_Hon,
+        UI_Jusulso,
 
         UI_Settings
     }

@@ -19,6 +19,7 @@ public class LevelUpUI : MonoBehaviour
     private Transform body;
     private RectTransform bodyRect;
     private List<int> skillBenList;
+    private SoundRequester soundRequester;
     //private List<int> skillNums = new List<int>();
     private Dictionary<int, int> skillNums = new Dictionary<int, int>();
 
@@ -44,9 +45,18 @@ public class LevelUpUI : MonoBehaviour
         skillTable = CSVReader.Read("SkillTable");
         passiveTable = CSVReader.Read("PassiveTable");
 
+        soundRequester = GetComponent<SoundRequester>();
+
         SkillNumRead();
         body = transform.Find("Body");
         bodyRect = body.GetComponent<RectTransform>();
+    }
+
+    private void OnEnable()
+    {
+        if (soundRequester != null) { 
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ACTIVE);
+        }
     }
 
     private void CloseBox(int skillId)
@@ -58,7 +68,10 @@ public class LevelUpUI : MonoBehaviour
         {
             UIPoolManager.Instance.DeSpawnUI("SkillUI", ui);
         }
-
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DEMISE);
+        }
         //Time.timeScale = 1f;
         GameManager.Instance.Pause();
         gameObject.SetActive(false);
@@ -110,42 +123,58 @@ public class LevelUpUI : MonoBehaviour
             {
                 //skillId = skillNums[UnityEngine.Random.Range(0, skillNums.Count)];
                 skillId = skillNums.ElementAt(UnityEngine.Random.Range(0, skillNums.Count)).Key;
-                if (skillBenList.Contains(skillId))
-                {
-                    continue;
-                }
+                //if (skillBenList.Contains(skillId))
+                //{
+                //    continue;
+                //}
 
                 if (skills.Contains(skillId))
                 {
                     continue;
                 }
+                if (skillId / 100 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
+                {
+                    continue;
+                }
+                if (skillId / 100 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
+                {
+                    continue;
+                }
 
-                skillId = skillId * 100 + 1;
+                //skillId = skillId * 100 + 1;
 
                 foreach (int id in skillList.Keys)
                 {
-                    if (id / 100 == skillId / 100) //가지고 있는 스킬일 때
+                    if (id / 100 == skillId) //가지고 있는 스킬일 때
                     {
-                        if (id % 100 != skillNums[id / 100] /*SkillManager.SKILL_MAX_LEVEL*/) //만렙이 아니라면
+                        if (id % 100 != skillNums[id / 100]) //만렙이 아니라면
                         {
-                            skillId = id + 1;
-                            skills.Add(skillId / 100);
-                            return skillId;
+                            skills.Add(skillId);
+                            return id + 1;
+                        }
+                        else if (id % 100 == skillNums[id / 100]) //만렙이면 리스트에서 제거
+                        {
+                            skillNums.Remove(skillId);
+                            break;
                         }
                     }
                 }
 
-                if (skillId / 10000 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
+                if (!skillNums.ContainsKey(skillId))
                 {
                     continue;
                 }
-                if (skillId / 10000 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
-                {
-                    continue;
-                }
+                //if (skillId / 10000 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
+                //{
+                //    continue;
+                //}
+                //if (skillId / 10000 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
+                //{
+                //    continue;
+                //}
 
-                skills.Add(skillId / 100);
-                return skillId;
+                skills.Add(skillId);
+                return skillId * 100 + 1;
             }
         }
         else
@@ -158,7 +187,7 @@ public class LevelUpUI : MonoBehaviour
                 {
                     continue;
                 }
-                if (skillId % 100 != skillNums[skillId / 100] /*SkillManager.SKILL_MAX_LEVEL*/)
+                if (skillId % 100 != skillNums[skillId / 100])
                 {
                     skills.Add(skillId / 100);
                     return skillId + 1;
@@ -176,10 +205,10 @@ public class LevelUpUI : MonoBehaviour
             try
             {
                 int i = Convert.ToInt32(id) / 100;
-                //if (!skillNums.Contains(i))
-                //{
-                //    skillNums.Add(i);
-                //}
+                if (skillBenList.Contains(i))
+                {
+                    continue;
+                }
                 if (!skillNums.ContainsKey(i))
                 {
                     skillNums.Add(i, 1);
@@ -200,10 +229,10 @@ public class LevelUpUI : MonoBehaviour
             try
             {
                 int i = Convert.ToInt32(id) / 100;
-                //if (!skillNums.Contains(i))
-                //{
-                //    skillNums.Add(i);
-                //}
+                if (skillBenList.Contains(i))
+                {
+                    continue;
+                }
                 if (!skillNums.ContainsKey(i))
                 {
                     skillNums.Add(i, 1);

@@ -18,6 +18,7 @@ namespace SKILLCONSTANT
         DELETE,
         RESTRAINT,
         PULL,
+        ITEMPULL,
         METASTASIS,
     }
 

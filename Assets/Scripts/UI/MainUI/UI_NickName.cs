@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,7 @@ public class UI_NickName : UI_Popup
 
     bool isCreate;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,12 +52,15 @@ public class UI_NickName : UI_Popup
         Debug.Log(titleText.text);
         noticeText.text = LocalizeManager.Instance.GetText("Nickname_Able").Replace("\"", "");
 
-        confirmText.text = "확인";
+        confirmText.text = LocalizeManager.Instance.GetText("UI_Result_Confirm"); ;
 
 
         ableText.text = "";
 
         inputText.onValueChanged.AddListener(CheckNickNameAble);
+
+    
+
     }
 
     public void OnClickImage(PointerEventData data)
@@ -69,14 +74,18 @@ public class UI_NickName : UI_Popup
         switch (imageValue)
         {
             case Images.Confirm:
-                if (!isCreate)
+                Debug.Log(isCreate);
+                if (isCreate)
                     return;
 
                 // 회원가입 진행
                 // WebHandShakeFromPost();
 
                 this.CloseUI<UI_NickName>();
+                WebHandShakeFromPost();
                 UIManager.Instance.OpenUI<UI_Agreement>();
+
+                
                 break;
             default:
                 break;
@@ -85,8 +94,7 @@ public class UI_NickName : UI_Popup
 
     public void CheckNickNameAble(string text)
     {
-        isCreate = false;
-
+        WebConnectFromGet(text);
         // 닉네임이 2자 미만 입니다.
         if (text.Length < 2 )
         {
@@ -104,31 +112,34 @@ public class UI_NickName : UI_Popup
             confirm.color = Color.gray;
             return;
         }
-        
+
         // 사용가능한 닉네임 입니다.
-        ableText.text = LocalizeManager.Instance.GetText("Nickname_Able");
-        ableText.color = Color.green;
-        confirm.color = Color.white;
-        isCreate = true;
+        if (isCreate) {
+            ableText.text = LocalizeManager.Instance.GetText("Nickname_SameName");
+            ableText.color = Color.red;
+            confirm.color = Color.gray;
+        }
+        else {
+            ableText.text = LocalizeManager.Instance.GetText("Nickname_Able");
+            ableText.color = Color.green;
+            confirm.color = Color.white;
+           
+        }
+
+ 
     }
 
     async void WebHandShakeFromPost()
     {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", "mongplee92");
-        sendData.Add("nick_name", "mongplee92");
-        sendData.Add("admin_level", "0");
+        if (!SteamManager.Initialized) { return; }
+        string name = SteamUser.GetSteamID().ToString();
 
-        var data = await WebRequestManager.Instance.Post<Dictionary<string, object>>("/user/handshake", sendData);
 
-        //switch(data.result)
-        //{
-        //    case 100:
-        //        // result 100 : 회원가입 성공
-        //        break;
-        //    case 200:
-        //        // result 200 : 중복된 닉네임
-        //        break;
-        //}
+        await APIManager.Instance.TryRegist(name, inputText.text);
     }
+    async void WebConnectFromGet(string text)
+    {
+        isCreate = await APIManager.Instance.CheckNicknameDuplicated(text);
+    }
+
 }

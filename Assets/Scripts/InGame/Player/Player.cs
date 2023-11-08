@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private SpineManager spineManager;
     private WaitForSeconds invincibleTime;
     private StatusEffect statusEffect;
+    private SoundRequester soundRequester;
 
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
@@ -132,6 +133,10 @@ public class Player : MonoBehaviour
     public IEnumerator Invincible()
     {
         spineManager.SetColor(Color.red);
+        if (soundRequester != null) { 
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
+        }
+
         yield return invincibleTime;
         spineManager.SetColor(Color.white);
     }
@@ -145,7 +150,12 @@ public class Player : MonoBehaviour
     #endregion
 
     #region STATUS_EFFECT
-    public IEnumerator FireDot(float time, float dotDamage)
+    public void RemoveStatusEffect(STATUS_EFFECT effect)
+    {
+        statusEffect.RemoveStatusEffect(effect);
+    }
+
+    public IEnumerator FireDot(int time, float dotDamage)
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
         {
@@ -156,6 +166,11 @@ public class Player : MonoBehaviour
         WaitForSeconds sec = new WaitForSeconds(1.0f);
         for (int i = 0; i < time; i++)
         {
+            if (soundRequester != null)
+            {
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.BURNED);
+            }
+
             StartCoroutine(Invincible());
             this.playerManager.playerData.CurrentHpModifier(-(int)dotDamage);
             yield return sec;
@@ -171,7 +186,7 @@ public class Player : MonoBehaviour
         }
 
         statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
-        float decreaseValue = value * this.playerManager.playerData.moveSpeed;
+        float decreaseValue = value * 0.01f * this.playerManager.playerData.moveSpeed;
         this.playerManager.playerData.MoveSpeedModifier(-decreaseValue);
         yield return new WaitForSeconds(time);
         this.playerManager.playerData.MoveSpeedModifier(decreaseValue);

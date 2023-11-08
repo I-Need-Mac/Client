@@ -5,12 +5,21 @@ using UnityEngine;
 public class SoundRequesterBtn : SoundRequesterSFX
 {
 
+    bool isNagative = true;
 
-
+    public void SetIsNagative(bool isNagative) { 
+        this.isNagative = isNagative;
+    }
     private void OnMouseDown()
     {
         DebugManager.Instance.PrintDebug("SoundRequest : Press");
-        this.ChangeSituation(SoundSituation.SOUNDSITUATION.PRESS); 
+        if (isNagative) { 
+            this.ChangeSituation(SoundSituation.SOUNDSITUATION.PRESS);
+        }
+        else {
+            this.ChangeSituation(SoundSituation.SOUNDSITUATION.NAGATIVE);
+
+        }
     }
 
     private void OnMouseEnter()

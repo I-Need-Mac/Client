@@ -316,8 +316,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 667, y: -180}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: -450, y: -89.483}
+  m_SizeDelta: {x: 2241.838, y: 1261.0337}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2017736302
 MonoBehaviour:
@@ -331,10 +331,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f083cfa53f91a499913b475b20d0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stopPosX: 550
-  moveSpeed: 3
-  blinkSpeed: 0.05
-  blinkIntervalTime: 2.5
+  type: 0
+  stopPosX: -450
+  moveSpeed: 5
+  animationSpeed: 0.01
+  animationTime: 1.5
 --- !u!114 &2017736303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +356,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c187b23da2ad95c498da34a4028dbb43, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6cc44bc2304ac784b8f0ac22f9b12c12, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1

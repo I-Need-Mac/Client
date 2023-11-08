@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using TMPro;
@@ -14,6 +15,8 @@ public class UI_StartMain : UI_Base
     }
 
     float time = 0.0f;
+    private bool isFirst;
+    private bool isAutoLogin;
 
     // 시작 창
     Image pressKeyImage;
@@ -21,11 +24,17 @@ public class UI_StartMain : UI_Base
     [SerializeField]
     TextMeshProUGUI version;
 
+    private bool isLogin;
+
     void Start()
     {
         Bind<Image>(typeof(Images));
 
         Array imageValue = Enum.GetValues(typeof(Images));
+
+        isFirst = Convert.ToBoolean( SettingManager.Instance.GetSettingValue("FirstRegist"));
+        isAutoLogin = Convert.ToBoolean(SettingManager.Instance.GetSettingValue("AutoLogin"));
+
 
         // 버튼 이벤트 등록
         for (int i = 0; i < imageValue.Length; i++)
@@ -49,7 +58,19 @@ public class UI_StartMain : UI_Base
         switch (imageValue)
         {
             case Images.PressKey:
-                 UIManager.Instance.OpenUI<UI_Login>();
+                if (isFirst) {
+                    UIManager.Instance.OpenUI<UI_Login>();
+                }
+                else {
+                    if (isAutoLogin) {
+                            RequestLogin();
+                     }
+                    else {
+                        UIManager.Instance.OpenUI<UI_Login>();
+                    }
+                }
+
+               
                 //UIManager.Instance.OpenUI<UI_StoryMain>();
                 break;
             default:
@@ -83,5 +104,21 @@ public class UI_StartMain : UI_Base
             else
                 UIManager.Instance.CloseUI<UI_ESCPopup>();
         }
+    }
+
+    async void RequestLogin()
+    {
+        if (!SteamManager.Initialized) { return; }
+        string name = SteamUser.GetSteamID().ToString();
+        isLogin = await APIManager.Instance.TryLogin(name);
+        if (isLogin)
+        {
+            UIManager.Instance.OpenUI<UI_GameMain>();
+        }
+        else
+        {
+            UIManager.Instance.OpenUI<UI_Login>();
+        }
+
     }
 }

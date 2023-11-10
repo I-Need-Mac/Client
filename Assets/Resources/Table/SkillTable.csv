@@ -1,5 +1,5 @@
 SkillID,Name,Desc,!Desc,Icon,Cooltime,Skill_Cut,Cut_dire,SkillImage,AttackDistance,IsEffect,IsUltimate,ProjectileCount,IntervalTime,Duration,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,SkillPrefabPath,SkillType
-½ºÅ³¾ÆÀÌµð,½ºÅ³ÀÌ¸§,½ºÅ³ÀÌ¸§_07,½ºÅ³¼³¸í ±âÈ¹¿ë,¾ÆÀÌÄÜ,ÄðÅ¸ÀÓ,½ºÅ³ÄÆ¾À À¯¹«,½ºÅ³ ÄÆ¾À °æ·Î,½ºÅ³ ÀÌ¹ÌÁö,»ç°Å¸®,½ºÅ³ ¹Ù·Î ½ÃÀü¿©ºÎ,±Ã±Ø±â ¿©ºÎ,Åõ»çÃ¼ °³¼ö,°£°Ý,À¯Áö½Ã°£,ÇÇÇØ,Åõ»çÃ¼ ½ºÇÇµå,°üÅë¿©ºÎ,Æø¹ß ¹ÝÁö¸§,Åõ»çÃ¼ »çÀÌÁî ¹èÀ²,½ºÅ³ È¿°ú,½ºÅ³ È¿°ú ÆÄ¶÷,½ºÅ³ ¹ß»ç Å¸°Ù,ÇÁ¸®ÆÕ,½ºÅ³ÀÇ ÇüÅÂ
+ï¿½ï¿½Å³ï¿½ï¿½ï¿½Ìµï¿½,ï¿½ï¿½Å³ï¿½Ì¸ï¿½,ï¿½ï¿½Å³ï¿½Ì¸ï¿½_07,ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¹ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Å¸ï¿½ï¿½,ï¿½ï¿½Å³ï¿½Æ¾ï¿½ ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Å³ ï¿½Æ¾ï¿½ ï¿½ï¿½ï¿½,ï¿½ï¿½Å³ ï¿½Ì¹ï¿½ï¿½ï¿½,ï¿½ï¿½Å¸ï¿½,ï¿½ï¿½Å³ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½Ã±Ø±ï¿½ ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Ã°ï¿½,ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½Çµï¿½,ï¿½ï¿½ï¿½ë¿©ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Å³ È¿ï¿½ï¿½,ï¿½ï¿½Å³ È¿ï¿½ï¿½ ï¿½Ä¶ï¿½,ï¿½ï¿½Å³ ï¿½ß»ï¿½ Å¸ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 int,String,String_08,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float,float,int,int,bool,int,int,EffectEnum,int,TargetEnum,TargetEnum,Enum
 10101,Skill_Name_Juhon,Skill_Desc_Juhon_01,,Arts/Skill/Icon/Skill_Icon_Juhon_00,62000,TRUE,CutScenes_Juhon,,5,FALSE,FALSE,1,500,2000,100,500,TRUE,0,2,,,Player,Prefabs/InGame/Skill/Juhon,Ranges
 10102,Skill_Name_Juhon,Skill_Desc_Juhon_02,,Arts/Skill/Icon/Skill_Icon_Juhon_00,62000,TRUE,CutScenes_Juhon,,5,FALSE,FALSE,1,500,2000,150,500,TRUE,0,2,,,Player,Prefabs/InGame/Skill/Juhon,Ranges
@@ -105,6 +105,14 @@ int,String,String_08,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float
 11606,Skill_Name_Inn,Skill_Desc_Inn_06,,Arts/Skill/Icon/Skill_Icon_Inn_00,5000,FALSE,None,,4,TRUE,FALSE,0,0,0,50,0,FALSE,0,0,Pull,0.5,Player,Prefabs/InGame/Skill/Inn,
 11607,Skill_Name_Inn,Skill_Desc_Inn_07,,Arts/Skill/Icon/Skill_Icon_Inn_00,5000,FALSE,None,,4,TRUE,FALSE,0,0,0,75,0,FALSE,0,0,Pull,0.5,Player,Prefabs/InGame/Skill/Inn,
 11608,Skill_Name_Inn,Skill_Desc_Inn_08,,Arts/Skill/Icon/Skill_Icon_Inn_00,5000,FALSE,None,,4,TRUE,FALSE,0,0,0,75,0,FALSE,0,0,Pull|Stun,1|1,Player,Prefabs/InGame/Skill/Inn,
+11801,Skill_Name_BunGye,Skill_Desc_BunGye_01,,Arts/Skill/Icon/Skill_Icon_BunGye_00,2000,FALSE,FALSE,,1,FALSE,FALSE,0,0,1500,20,0,FALSE,0,0,0,0,Player,Prefabs/InGame/Skill/BunGye,
+11802,Skill_Name_BunGye,Skill_Desc_BunGye_02,,Arts/Skill/Icon/Skill_Icon_BunGye_00,2000,FALSE,FALSE,,1.2,FALSE,FALSE,0,0,1500,20,0,FALSE,0,0,0,0,Player,Prefabs/InGame/Skill/BunGye,
+11803,Skill_Name_BunGye,Skill_Desc_BunGye_03,,Arts/Skill/Icon/Skill_Icon_BunGye_00,1800,FALSE,FALSE,,1.2,FALSE,FALSE,0,0,1500,20,0,FALSE,0,0,0,0,Player,Prefabs/InGame/Skill/BunGye,
+11804,Skill_Name_BunGye,Skill_Desc_BunGye_04,,Arts/Skill/Icon/Skill_Icon_BunGye_00,1800,FALSE,FALSE,,1.2,FALSE,FALSE,0,0,1500,25,0,FALSE,0,0,0,0,Player,Prefabs/InGame/Skill/BunGye,
+11805,Skill_Name_BunGye,Skill_Desc_BunGye_05,,Arts/Skill/Icon/Skill_Icon_BunGye_00,1800,FALSE,FALSE,,1.5,FALSE,FALSE,0,0,1500,25,0,FALSE,0,0,0,0,Player,Prefabs/InGame/Skill/BunGye,
+11806,Skill_Name_BunGye,Skill_Desc_BunGye_06,,Arts/Skill/Icon/Skill_Icon_BunGye_00,1400,FALSE,FALSE,,1.5,FALSE,FALSE,0,0,1500,25,0,FALSE,0,0,0,0,Player,Prefabs/InGame/Skill/BunGye,
+11807,Skill_Name_BunGye,Skill_Desc_BunGye_07,,Arts/Skill/Icon/Skill_Icon_BunGye_00,1400,FALSE,FALSE,,1.5,FALSE,FALSE,0,0,2500,25,0,FALSE,0,0,0,0,Player,Prefabs/InGame/Skill/BunGye,
+11808,Skill_Name_BunGye,Skill_Desc_BunGye_08,,Arts/Skill/Icon/Skill_Icon_BunGye_00,1400,FALSE,FALSE,,1.5,FALSE,FALSE,0,0,2500,35,0,FALSE,0,0,0,0,Player,Prefabs/InGame/Skill/BunGye,
 11701,Skill_Name_Churk,Skill_Desc_Churk_01,,Arts/Skill/Icon/Skill_Icon_Churk_00,20000,FALSE,None,,2,TRUE,FALSE,0,0,0,15,0,FALSE,0,0,Knockback,2,Player,Prefabs/InGame/Skill/Churk,
 11702,Skill_Name_Churk,Skill_Desc_Churk_02,,Arts/Skill/Icon/Skill_Icon_Churk_00,20000,FALSE,None,,3,TRUE,FALSE,0,0,0,15,0,FALSE,0,0,Knockback,2,Player,Prefabs/InGame/Skill/Churk,
 11703,Skill_Name_Churk,Skill_Desc_Churk_03,,Arts/Skill/Icon/Skill_Icon_Churk_00,18000,FALSE,None,,3,TRUE,FALSE,0,0,0,15,0,FALSE,0,0,Knockback,2,Player,Prefabs/InGame/Skill/Churk,

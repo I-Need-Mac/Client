@@ -188,6 +188,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 break;
             case 117:
                 skill = new Churk(skillId, shooter, skillNum);
+            case 118:
+                skill = new BunGye(skillId, shooter, skillNum);
                 break;
             case 120:
                 skill = new Horin(skillId, shooter, skillNum);

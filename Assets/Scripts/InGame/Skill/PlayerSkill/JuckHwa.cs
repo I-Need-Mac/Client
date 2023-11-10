@@ -9,32 +9,51 @@ public class JuckHwa : ActiveSkill
     public JuckHwa(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
     public override IEnumerator Activation()
     {
-        float ignitionTime = 0.1f;
-        float activateTime = 0.0f;
-        while (activateTime < skillData.duration)
+        //float ignitionTime = 0.1f;
+        //float activateTime = 0.0f;
+        //while (activateTime < skillData.duration)
+        //{
+        //    if (ignitionTime <= 0.0f)
+        //    {
+        //        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
+        //        projectile.transform.position = shooter.position;
+        //        projectiles.Add(projectile);
+        //        Debug.Log(projectiles.Count);
+        //        ignitionTime = 0.2f;
+        //    }
+        //    else
+        //    {
+        //        ignitionTime -= Time.fixedDeltaTime;
+        //    }
+
+        //    activateTime += Time.fixedDeltaTime;
+        //    yield return frame;
+        //}
+        //SkillManager.Instance.CoroutineStarter(Extinguish());
+        //while (projectiles.Count > 0)
+        //{
+        //    yield return frame;
+        //}
+        float activeTime = skillData.duration;
+        do
         {
-            if (ignitionTime <= 0.0f)
+            activeTime -= Time.fixedDeltaTime;
+            if (((int)activeTime) % 97 == 0)
             {
                 Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
                 projectile.transform.position = shooter.position;
-                projectiles.Add(projectile);
-                Debug.Log(projectiles.Count);
-                ignitionTime = 0.2f;
+                SkillManager.Instance.CoroutineStarter(Ignition(projectile));
             }
-            else
-            {
-                ignitionTime -= Time.fixedDeltaTime;
-            }
-            
-            activateTime += Time.fixedDeltaTime;
             yield return frame;
-        }
-        SkillManager.Instance.CoroutineStarter(Extinguish());
-        while (projectiles.Count > 0)
-        {
-            yield return frame;
-        }
+        } while (activeTime > 0);
     }
+
+    private IEnumerator Ignition(Projectile projectile)
+    {
+        yield return duration;
+        SkillManager.Instance.DeSpawnProjectile(projectile);
+    }
+
     private IEnumerator Extinguish()
     {
         float extinguishTime = 1f;

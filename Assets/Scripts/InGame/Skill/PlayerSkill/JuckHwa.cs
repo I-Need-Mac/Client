@@ -4,56 +4,63 @@ using UnityEngine;
 
 public class JuckHwa : ActiveSkill
 {
+
     private List<Projectile> projectiles = new List<Projectile>();
     public JuckHwa(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
     public override IEnumerator Activation()
     {
-        float ignitionlTime = 0.0f;
-
+        float ignitionTime = 0.1f;
         float activateTime = 0.0f;
         while (activateTime < skillData.duration)
         {
-            if (ignitionlTime >= 0.2f)
+            if (ignitionTime <= 0.0f)
             {
                 Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
                 projectile.transform.position = shooter.position;
                 projectiles.Add(projectile);
-                ignitionlTime = 0.0f;
+                Debug.Log(projectiles.Count);
+                ignitionTime = 0.2f;
             }
             else
             {
-                ignitionlTime += Time.fixedDeltaTime;
+                ignitionTime -= Time.fixedDeltaTime;
             }
-
+            
             activateTime += Time.fixedDeltaTime;
             yield return frame;
         }
-
-        foreach (var projectile in projectiles)
+        SkillManager.Instance.CoroutineStarter(Extinguish());
+        while (projectiles.Count > 0)
         {
-            SkillManager.Instance.DeSpawnProjectile(projectile);
+            yield return frame;
         }
     }
-    //private IEnumerator ExtinguishProjectile()
-    //{
-    //    float time = 0.0f;
-    //    while (time < skillData.duration)
-    //    {
-    //        for (int i = 0; i < projectiles.Count; i++)
-    //        {
-    //            if (skillData.duration - time <= 0.5f)
-    //            {
-    //                projectiles[i].transform.localScale = originSize * (skillData.duration - time);
-    //            }
-    //        }
-    //        time += Time.fixedDeltaTime;
-    //        yield return frame;
-    //    }
-
-    //    for (int i = 0; i < projectiles.Count; i++)
-    //    {
-    //        SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
-    //    }
-    //}
+    private IEnumerator Extinguish()
+    {
+        float extinguishTime = 1f;
+        while (projectiles.Count > 0)
+        {
+            if (extinguishTime <= 0.0f)
+            {
+                if (projectiles.Count > 0)
+                {
+                    SkillManager.Instance.DeSpawnProjectile(projectiles[0]);
+                    projectiles.RemoveAt(0);
+                }
+            }
+            else
+            {
+                if (projectiles.Count > 0)
+                {
+                    extinguishTime -= Time.fixedDeltaTime;
+                }
+            }
+            if(projectiles.Count<=0)
+            {
+                yield break;
+            }
+            yield return frame;
+        }
+    }
 }
 

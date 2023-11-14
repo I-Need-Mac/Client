@@ -5,6 +5,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum SKILL_TYPE
+{
+    RANGE,
+    PROJECTILE,
+}
+
 public abstract class ActiveSkill : Skill
 {
     private Dictionary<string, Dictionary<string, object>> skillTable;
@@ -129,7 +135,10 @@ public abstract class ActiveSkill : Skill
                 skillData.SetSkillEffect(new List<SKILL_EFFECT>());
             }
         }
-        skillData.SetSkillTarget((SKILL_TARGET)Enum.Parse(typeof(SKILL_TARGET), Convert.ToString(data["SkillTarget"]).ToUpper()));
+        if (Enum.TryParse(Convert.ToString(data["SkillTarget"]), true, out SKILL_TARGET skillTarget))
+        {
+            skillData.SetSkillTarget(skillTarget);
+        }
         skillData.SetProjectileCount(Convert.ToInt32(data["ProjectileCount"]));
         skillData.SetIntervalTime(Convert.ToInt32(data["IntervalTime"]) / 1000.0f);
         intervalTime = new WaitForSeconds(skillData.intervalTime);
@@ -139,6 +148,10 @@ public abstract class ActiveSkill : Skill
         skillData.SetSplashRange(float.Parse(Convert.ToString(data["SplashRange"])));
         skillData.SetProjectileSizeMulti(float.Parse(Convert.ToString(data["ProjectileSizeMulti"])));
         skillData.SetIsPenetrate(Convert.ToBoolean(data["IsPenetrate"]));
+        if (Enum.TryParse(Convert.ToString(data["SkillType"]), true, out SKILL_TYPE skillType))
+        {
+            skillData.SetSkillType(skillType);
+        }
 
         //PlayerData playerData = GameManager.Instance.player.playerManager.playerData;
         //skillData.SetProjectileSizeMulti(skillData.projectileSizeMulti + playerData.projectileSize);

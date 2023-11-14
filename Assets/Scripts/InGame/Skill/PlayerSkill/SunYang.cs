@@ -42,7 +42,7 @@ public class SunYang : ActiveSkill
 
         while (Vector2.Distance(projectile1.position, projectile2.position) > minDistance)
         {
-            weight += 0.002f;
+            weight += 0.2f;
             angle -= 1+ weight;
 
             projectile1.position = shooter.position + Quaternion.Euler(0, 0, angle) * Vector2.right * radius;

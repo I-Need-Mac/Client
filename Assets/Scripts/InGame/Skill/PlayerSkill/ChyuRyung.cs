@@ -36,16 +36,9 @@ public class ChyuRyung : ActiveSkill
                     {
                         SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
                     }
+                    projectiles.Clear();
                     yield return Active(area,center);
-                }
-                else
-                {
-                    for (int i = 0; i < projectiles.Count; i++)
-                    {
-                        SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
-                    }
-                }
-                projectiles.Clear();
+                }              
             }
             elapsedTime += Time.fixedDeltaTime;
             yield return frame;
@@ -95,7 +88,7 @@ public class ChyuRyung : ActiveSkill
     private IEnumerator Despawn(Projectile projectile)
     {
         float despawnTime = 5f;
-        do
+        do 
         {
             if (despawnTime<=0)
             {
@@ -108,6 +101,6 @@ public class ChyuRyung : ActiveSkill
                 despawnTime -= Time.fixedDeltaTime;
             }
             yield return frame;
-        } while (projectiles.Count > 0);
+        }while (projectiles.Count > 0);
     }
 }

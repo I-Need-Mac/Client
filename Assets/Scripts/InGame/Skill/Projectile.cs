@@ -19,6 +19,7 @@ public class Projectile : MonoBehaviour
     protected Collider2D projectileCollider;
     protected int bounceCount;
     protected bool isMetastasis = false;
+    protected int hitCount;
 
     //public float totalDamage { get; private set; }
     public ActiveData skillData { get; private set; }
@@ -37,6 +38,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        hitCount = 0;
         if (projectileCollider != null)
         {
             projectileCollider.enabled = true;
@@ -112,7 +114,28 @@ public class Projectile : MonoBehaviour
     {
         if (collision.TryGetComponent(out Monster monster))
         {
-            monster.Hit(skillData.damage);
+            float totalDamage = skillData.damage;
+            hitCount++;
+            if (hitCount == 1)
+            {
+                totalDamage += SoulManager.Instance.GetEffect(SoulEffect.SINGLEDAMAGE, skillData._damage);
+            }
+            else if (hitCount > 1)
+            {
+                totalDamage += hitCount * SoulManager.Instance.GetEffect(SoulEffect.MULTIATTACK, skillData._damage);
+            }
+
+            if (monster.isBoss)
+            {
+                totalDamage += SoulManager.Instance.GetEffect(SoulEffect.BOSSDAMAGE, skillData._damage);
+            }
+            else
+            {
+                totalDamage += SoulManager.Instance.GetEffect(SoulEffect.NORMALDAMAGE, skillData._damage);
+            }
+
+            monster.Hit(totalDamage);
+            
             SkillEffect(monster);
             //충돌 사운드
             if (hitAudioClip != null)

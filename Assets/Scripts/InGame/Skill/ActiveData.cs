@@ -20,6 +20,7 @@ public class ActiveData
     public float intervalTime { get; private set; }                 //투사체간 발사 간격
     public float duration { get; private set; }                     //스킬 지속 시간
     public bool isPenetrate { get; private set; }                   //스킬의 관통 여부
+    public SKILL_TYPE skillType { get; private set; }
 
     //투사체 개수
     public int projectileCount
@@ -103,14 +104,33 @@ public class ActiveData
         {
             if (GameManager.Instance.player != null)
             {
-                return _damage + PassiveEffect.CalcData(_damage, GameManager.Instance.player.playerManager.playerData.skillDamage.param, GameManager.Instance.player.playerManager.playerData.skillDamage.calcMode);
+                float totalDamage = PassiveEffect.CalcData(_damage, GameManager.Instance.player.playerManager.playerData.skillDamage.param, GameManager.Instance.player.playerManager.playerData.skillDamage.calcMode);
+                if (skillType == SKILL_TYPE.RANGE)
+                {
+                    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.RANGEDAMAGE, _damage);
+                }
+                else if (skillType == SKILL_TYPE.PROJECTILE)
+                {
+                    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.PROJECTILEDAMAGE, _damage);
+                }
+
+                if (isPenetrate)
+                {
+                    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.PENETRATEDAMAGE, _damage);
+                }
+                if (splashRange > 0.0f)
+                {
+                    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.BOOMDAMAGE, _damage);
+                }
+
+                return _damage + SoulManager.Instance.GetEffect(SoulEffect.SKILLDAMAGE, _damage) + totalDamage;
             }
 
             return _damage;
         }
         private set { }
     }
-    private float _damage;
+    public float _damage { get; private set; }
 
     public void SetSkillId(int skillId) { this.skillId = skillId; }
     public void SetCoolTime(float coolTime) { this.coolTime = coolTime; }
@@ -135,6 +155,7 @@ public class ActiveData
     public void SetSkillEffect(List<SKILL_EFFECT> skillEffect) { this.skillEffect = skillEffect; }
     public void SetSkillTarget(SKILL_TARGET skillTarget) { this.skillTarget = skillTarget; }
     public void SetSkillPrefabPath(string skillPrefabPath) { this.skillPrefabPath = skillPrefabPath; }
+    public void SetSkillType(SKILL_TYPE skillType) { this.skillType = skillType; }
 
     //public void ModifyCoolTime(float coolTime) { this.coolTime += coolTime; }
     //public void ModifyAttackDistance(float attackDistance) { this.attackDistance += attackDistance; }

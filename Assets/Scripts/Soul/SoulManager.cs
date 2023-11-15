@@ -17,18 +17,34 @@ public class SoulManager : SingleTon<SoulManager>
 
     public void Add(Soul soul)
     {
-        soulList.Add(soul);
-        for (int i = 0; i < soul.soulData.soulEffects.Count; i++)
+        try
         {
-            if (soulEffects.ContainsKey(soul.soulData.soulEffects[i]))
+            foreach (Soul s in soulList)
             {
-                soulEffects[soul.soulData.soulEffects[i]] += soul.soulData.effectParams[i];
+                if (s.soulData.soulId == soul.soulData.soulId)
+                {
+                    DebugManager.Instance.PrintError("[SoulManager] 이미 장착된 혼 입니다. (SoulID: {0})", soul.soulData.soulId);
+                    return;
+                }
             }
-            else
+            soulList.Add(soul);
+            for (int i = 0; i < soul.soulData.soulEffects.Count; i++)
             {
-                soulEffects.Add(soul.soulData.soulEffects[i], soul.soulData.effectParams[i]);
+                if (soulEffects.ContainsKey(soul.soulData.soulEffects[i]))
+                {
+                    soulEffects[soul.soulData.soulEffects[i]] += soul.soulData.effectParams[i];
+                }
+                else
+                {
+                    soulEffects.Add(soul.soulData.soulEffects[i], soul.soulData.effectParams[i]);
+                }
             }
         }
+        catch
+        {
+            DebugManager.Instance.PrintError("[Error: SoulManager] 혼 테이블을 체크해 주세요. (SoulID: {0})", soul.soulData.soulId);
+        }
+        
     }
 
     //Default Mode: Plus

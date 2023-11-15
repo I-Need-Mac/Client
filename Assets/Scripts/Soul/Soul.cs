@@ -4,13 +4,23 @@ using System.Collections.Generic;
 
 public class Soul
 {
-    private SoulData soulData;
+    public SoulData soulData { get; private set; }
+
+    public Soul(string soulId)
+    {
+        this.SetSoul(soulId);
+    }
+
+    public Soul(int soulId)
+    {
+        this.SetSoul(soulId.ToString());
+    }
 
     private void SetSoul(string id)
     {
         soulData = new SoulData();
 
-        Dictionary<string, object> table = CSVReader.Read("MainCategorySoul")[id];
+        Dictionary<string, object> table = CSVReader.Read("UnderSoul")[id];
         soulData.SetSoulId(int.Parse(id));
         soulData.SetSoulName(Convert.ToString(table["SoulNameText"]));
         soulData.SetSoulExplain(Convert.ToString(table["SoulExplainText"]));

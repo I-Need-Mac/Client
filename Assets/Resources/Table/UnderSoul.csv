@@ -1,7 +1,7 @@
-SoulID,SoulNameText,SoulImagePath,SoulExplainText,SoulEffectEnum,SoulEffectParam,SoulMainCategoty,SoulColumnGroup,SoulOrderInColumn,SoulUnlock
+SoulID,SoulNameText,SoulImagePath,SoulExplainText,SoulEffectEnum,SoulEffectParam,SoulMainCategory,SoulColumnGroup,SoulOrderInColumn,SoulUnlock
 ???ÑÏù¥?????¥Î¶Ñ,???¥Î?ÏßÄ,???§Î™ÖÎ¨????®Í≥º Enum,???®Í≥º Param,???ÄÎ∂ÑÎ•ò,???âÍ∑∏Î£????âÍ∑∏Î£????úÏÑú,???¥Í∏à Ï°∞Í±¥,???¥Í∏à Ï°∞Í±¥ ?åÎûå,,
 int,LocalizeID,string,LocalizeID,SoulEffect_Arr,int_arr,SoulMainCategotyID,int,int,SoulUnlockEnum_arr
-1010101,Soul_Name_Soul_1_1_1,,Soul_Description_Soul_1_1_1,,,101,1,1,
+1010101,Soul_Name_Soul_1_1_1,,Soul_Description_Soul_1_1_1,Attack,33,101,1,1,
 1010102,Soul_Name_Soul_1_1_2,,Soul_Description_Soul_1_1_2,,,101,1,2,
 1010103,Soul_Name_Soul_1_1_3,,Soul_Description_Soul_1_1_3,,,101,1,3,
 1010201,Soul_Name_Soul_1_2_1,,Soul_Description_Soul_1_2_1,,,101,2,1,

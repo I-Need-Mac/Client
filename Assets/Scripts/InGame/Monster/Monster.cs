@@ -9,6 +9,7 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     [field: SerializeField] public MonsterData monsterData { get; private set; }
+    [SerializeField] public bool isBoss { get; private set; } = false;
 
     private CapsuleCollider2D monsterCollider2;
     private CapsuleCollider2D monsterCollider;

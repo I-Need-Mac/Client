@@ -4,12 +4,13 @@ using System.Collections;
 
 public class PlayerData
 {
+    #region STATUS
     public string characterName { get; private set; }
     public string iconImage { get; private set; }
 
     public int hp
     {
-        get { return originHp + modifyHp; }
+        get { return originHp + modifyHp + (int)SoulManager.Instance.GetEffect(SoulEffect.HP, originHp); }
         private set { }
     }
 
@@ -17,7 +18,8 @@ public class PlayerData
 
     public float attack
     {
-        get { return originAttack + modifyAttack; }
+        //get { return originAttack + modifyAttack; }
+        get { return originAttack + +modifyAttack + SoulManager.Instance.GetEffect(SoulEffect.ATTACK, originAttack); }
         private set { }
     }
 
@@ -65,13 +67,19 @@ public class PlayerData
 
     public float expBuff { get; private set; }
 
-    public float armor { get; private set; }
+    public float armor
+    {
+        get { return _armor + SoulManager.Instance.GetEffect(SoulEffect.ARMOR, _armor); }
+        private set { }
+    }
+    private float _armor;
 
     public int level { get; private set; }
 
     public int exp { get; private set; }
 
     public int needExp { get; private set; }
+    #endregion
 
     #region PASSIVE
     public PassiveSet projectileSize { get; private set; } = new PassiveSet(0.0f, 0);
@@ -101,7 +109,6 @@ public class PlayerData
     {
         this.skillDamage = new PassiveSet(param + this.skillDamage.param, mode);
     }
-
     #endregion
 
     private int originHp;
@@ -203,7 +210,7 @@ public class PlayerData
 
     public void SetArmor(float armor)
     {
-        this.armor = armor;
+        this._armor = armor;
     }
 
     public IEnumerator ExpUp(int exp)
@@ -302,7 +309,7 @@ public class PlayerData
 
     public void ArmorModifier(float armor)
     {
-        this.armor += armor;
+        this._armor += armor;
     }
     #endregion
 

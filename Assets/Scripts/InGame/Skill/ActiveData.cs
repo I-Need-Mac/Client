@@ -104,14 +104,33 @@ public class ActiveData
         {
             if (GameManager.Instance.player != null)
             {
-                return _damage + PassiveEffect.CalcData(_damage, GameManager.Instance.player.playerManager.playerData.skillDamage.param, GameManager.Instance.player.playerManager.playerData.skillDamage.calcMode);
+                float totalDamage = PassiveEffect.CalcData(_damage, GameManager.Instance.player.playerManager.playerData.skillDamage.param, GameManager.Instance.player.playerManager.playerData.skillDamage.calcMode);
+                if (skillType == SKILL_TYPE.RANGE)
+                {
+                    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.RANGEDAMAGE, _damage);
+                }
+                else if (skillType == SKILL_TYPE.PROJECTILE)
+                {
+                    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.PROJECTILEDAMAGE, _damage);
+                }
+
+                if (isPenetrate)
+                {
+                    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.PENETRATEDAMAGE, _damage);
+                }
+                if (splashRange > 0.0f)
+                {
+                    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.BOOMDAMAGE, _damage);
+                }
+
+                return _damage + SoulManager.Instance.GetEffect(SoulEffect.SKILLDAMAGE, _damage) + totalDamage;
             }
 
             return _damage;
         }
         private set { }
     }
-    private float _damage;
+    public float _damage { get; private set; }
 
     public void SetSkillId(int skillId) { this.skillId = skillId; }
     public void SetCoolTime(float coolTime) { this.coolTime = coolTime; }

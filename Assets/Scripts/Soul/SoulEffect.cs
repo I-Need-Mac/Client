@@ -5,9 +5,9 @@ using UnityEngine;
 public enum SoulEffect
 {
     #region 컨셉: 공격력
-    //혼의 공명: 구현 가능할 지 모르겠음
+    MULTIATTACK,            //충돌한 적의 수 만큼 데미지 증폭
     ATTACK,                 //캐릭터 공격력
-    //이름 불명: 밑에 혼이랑 중복인거 같은데 체크해야됨
+    //SingleDamage 그대로 쓰기
 
     MOVESPEED,              //이동 속도
     HP,                     //체력

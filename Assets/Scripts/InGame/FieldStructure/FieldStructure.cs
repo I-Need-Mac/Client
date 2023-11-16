@@ -109,7 +109,11 @@ public class FieldStructure : MonoBehaviour
         }
     }
 
-
+    public virtual void Remove()
+    {
+        StopAllCoroutines();
+        Destroy(this.gameObject);
+    }
 
     //{
     //    if (!front.enabled)

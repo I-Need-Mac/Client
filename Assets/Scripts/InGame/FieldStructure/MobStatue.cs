@@ -42,4 +42,9 @@ public class MobStatue : FieldStructure
         top.enabled = true;
         this.hp = 1;
     }
+
+    public override void Remove()
+    {
+        StartCoroutine(Activation());
+    }
 }

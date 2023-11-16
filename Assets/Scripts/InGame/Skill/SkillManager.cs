@@ -201,6 +201,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 125:
                 skill = new HwiPung(skillId, shooter, skillNum);
                 break;
+            case 126:
+                skill = new SeRae(skillId, shooter, skillNum);
+                break;
             //아래로 패시브
             case 202:
                 skill = new InnPassive(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);

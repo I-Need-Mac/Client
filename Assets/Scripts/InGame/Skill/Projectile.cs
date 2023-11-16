@@ -149,6 +149,10 @@ public class Projectile : MonoBehaviour
             }
             DebugManager.Instance.PrintDebug("[TEST]: Hit");
         }
+        else 
+        {
+            SkillEffect(null);
+        }
     }
 
     //private void OnBecameInvisible()
@@ -239,7 +243,7 @@ public class Projectile : MonoBehaviour
                 {
                     blueFlame.Remove();
                 }
-                else if (target.TryGetComponent(out MobStatue statue))
+                else if (target.parent.TryGetComponent(out MobStatue statue))
                 {
                     statue.Remove();
                 }

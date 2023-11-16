@@ -15,7 +15,7 @@ public class HwiPung : ActiveSkill
         {
             Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
             projectile.transform.position = shooter.position;
-            Move(projectile);
+            SkillManager.Instance.StartCoroutine(Move(projectile));
             yield return intervalTime;
         }
     }
@@ -24,25 +24,29 @@ public class HwiPung : ActiveSkill
     {
         Vector2 direction = (Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance) - (Vector2)shooter.position).normalized;
 
-        float travel = skillData.attackDistance;
+        float travel = skillData.attackDistance * 4.0f;
+        float coefficient = skillData.attackDistance;
+        float weight = 0.0f;
         do
         {
-            float distance = Time.fixedDeltaTime * skillData.speed;
+            float distance = Time.fixedDeltaTime * skillData.speed * coefficient / skillData.attackDistance;
             projectile.transform.Translate(direction * distance);
             travel -= distance;
+            weight -= Time.fixedDeltaTime / skillData.attackDistance;
+            coefficient += weight;
             yield return frame;
         } while (travel > 0.0f);
 
-        direction *= -1.0f;
+        //direction *= -1.0f;
 
-        travel = skillData.attackDistance * 3.0f;
-        do
-        {
-            float distance = Time.fixedDeltaTime * skillData.speed;
-            projectile.transform.Translate(direction * distance);
-            travel -= distance;
-            yield return frame;
-        } while (travel > 0.0f);
+        //travel = skillData.attackDistance * 3.0f;
+        //do
+        //{
+        //    float distance = Time.fixedDeltaTime * skillData.speed;
+        //    projectile.transform.Translate(direction * distance);
+        //    travel -= distance;
+        //    yield return frame;
+        //} while (travel > 0.0f);
 
         SkillManager.Instance.DeSpawnProjectile(projectile);
     }

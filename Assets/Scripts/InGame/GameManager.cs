@@ -17,6 +17,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     private float defaultCharScale;
     private UI_ESCPopup esc;
 
+    public bool playerTrigger { get; set; } = true;
+    public bool skillTrigger { get; set; } = true;
     public int killCount { get; set; }
     public PlayerUI playerUi { get; private set; }
     public Player player { get; private set; }

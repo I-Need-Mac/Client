@@ -31,8 +31,15 @@ public abstract class PassiveSkill : Skill
     {
         do
         {
-            yield return Activation();
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            if (GameManager.Instance.skillTrigger)
+            {
+                yield return Activation();
+                yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            }
+            else
+            {
+                yield return frame;
+            }
         } while (skillData.coolTime > 0);
     }
 

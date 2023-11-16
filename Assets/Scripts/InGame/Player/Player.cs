@@ -75,6 +75,13 @@ public class Player : MonoBehaviour
     //키보드 입력을 받아 방향을 결정하는 함수
     private void KeyDir()
     {
+        if (!GameManager.Instance.playerTrigger)
+        {
+            playerDirection = Vector2.zero;
+            playerRigidbody.velocity = Vector2.zero;
+            return;
+        }
+
         playerDirection.x = Input.GetAxisRaw("Horizontal");
         playerDirection.y = Input.GetAxisRaw("Vertical");
 
@@ -130,15 +137,21 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Collider
-    public IEnumerator Invincible()
+    public IEnumerator Invincible(WaitForSeconds seconds)
     {
         spineManager.SetColor(Color.red);
-        if (soundRequester != null) { 
+        if (soundRequester != null)
+        {
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
         }
 
-        yield return invincibleTime;
+        yield return seconds;
         spineManager.SetColor(Color.white);
+    }
+
+    public IEnumerator Invincible()
+    {
+        yield return this.Invincible(invincibleTime);
     }
     #endregion
 

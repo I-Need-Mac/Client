@@ -92,7 +92,7 @@ public class FieldStructure : MonoBehaviour
 
     private void SetLayer(Transform trans)
     {
-        trans.gameObject.layer = (int)LayerConstant.DECORATION;
+        trans.gameObject.layer = (int)LayerConstant.GIMMICK;
 
         if (trans.TryGetComponent(out Renderer render))
         {

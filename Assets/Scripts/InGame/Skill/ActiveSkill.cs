@@ -52,13 +52,20 @@ public abstract class ActiveSkill : Skill
 
         do
         {
-            if (skillData.skillCut)
+            if (GameManager.Instance.skillTrigger)
             {
-                SceneManager.LoadScene(skillData.cutDire, LoadSceneMode.Additive);
-                yield return new WaitForSeconds(0.1f);
+                if (skillData.skillCut)
+                {
+                    SceneManager.LoadScene(skillData.cutDire, LoadSceneMode.Additive);
+                    yield return new WaitForSeconds(0.1f);
+                }
+                yield return Activation();
+                yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
             }
-            yield return Activation();
-            yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
+            else
+            {
+                yield return frame;
+            }
         } while (skillData.coolTime > 0.0f);
     }
 

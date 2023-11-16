@@ -230,7 +230,7 @@ public class PlayerManager : MonoBehaviour
             return 1;
         }
 
-        return monsterDamage * (1.0f - playerData.armor);
+        return monsterDamage * playerData.armor * 0.01f;
     }
     #endregion
 

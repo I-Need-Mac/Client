@@ -169,9 +169,9 @@ public class Projectile : MonoBehaviour
     protected void SkillEffect(Monster target)
     {
         int count = skillData.skillEffect.Count;
-        for (int i = 0; i < count; i++)
+        for (int i = 0, j = 0; i < count; i++)
         {
-            float param = float.Parse(skillData.skillEffectParam[i]);
+            float param = float.Parse(skillData.skillEffectParam[j]);
             switch (skillData.skillEffect[i])
             {
                 case SKILL_EFFECT.EXPLORE:
@@ -182,6 +182,9 @@ public class Projectile : MonoBehaviour
                     break;
                 case SKILL_EFFECT.DRAIN:
                     Drain(param);
+                    break;
+                case SKILL_EFFECT.DELETE:
+                    Delete(param, float.Parse(skillData.skillEffectParam[++j]));
                     break;
                 case SKILL_EFFECT.STUN:
                 case SKILL_EFFECT.SLOW:
@@ -201,6 +204,7 @@ public class Projectile : MonoBehaviour
                     DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
                     break;
             }
+            j++;
         }
     }
 
@@ -214,6 +218,42 @@ public class Projectile : MonoBehaviour
                 if (target.TryGetComponent(out Monster monster))
                 {
                     monster.monsterData.SetCurrentHp(monster.monsterData.currentHp - (int)skillData.damage);
+                }
+            }
+        }
+    }
+
+    private void Delete(float n, float m) //n: gimmick, m: item
+    {
+        List<Transform> targets;
+        if (UnityEngine.Random.Range(0, 100) < n)
+        {
+            targets = Scanner.RangeTarget(transform, skillData.splashRange, (int)LayerConstant.MONSTER, (int)LayerConstant.GIMMICK);
+            foreach (Transform target in targets)
+            {
+                if (target.TryGetComponent(out Monster monster))
+                {
+                    monster.Die(true);
+                }
+                else if (target.TryGetComponent(out BlueFlame blueFlame))
+                {
+                    blueFlame.Remove();
+                }
+                else if (target.TryGetComponent(out MobStatue statue))
+                {
+                    statue.Remove();
+                }
+            }
+        }
+
+        if (UnityEngine.Random.Range(0, 100) < m)
+        {
+            targets = Scanner.RangeTarget(transform, skillData.splashRange, (int)LayerConstant.ITEM);
+            foreach (Transform target in targets)
+            {
+                if (target.TryGetComponent(out Item item))
+                {
+                    ItemManager.Instance.DeSpawnItem(item);
                 }
             }
         }

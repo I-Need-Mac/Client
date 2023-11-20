@@ -24,12 +24,16 @@ public class ProjectileStraight : Projectile
     {
         if (bounceCount != 0)
         {
-            DebugManager.Instance.PrintDebug("BounceTest: " + rigid.velocity);
             if (!isFire)
             {
-                rigid.velocity = target.normalized * skillData.speed;
+                rigid.velocity = Quaternion.Normalize(transform.rotation) * Vector2.up * skillData.speed;
                 isFire = true;
             }
+            else
+            {
+                rigid.velocity = rigid.velocity.normalized * skillData.speed;
+            }
+
             if (bounced >= bounceCount)
             {
                 Remove();
@@ -40,7 +44,6 @@ public class ProjectileStraight : Projectile
             float speed = skillData.speed * Time.fixedDeltaTime;
             transform.Translate(Vector2.up * speed);
             shiftingDistance += speed;
-
             if (shiftingDistance > skillData.attackDistance)
             {
                 Remove();

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class ChyuRyung : ActiveSkill
@@ -11,7 +12,7 @@ public class ChyuRyung : ActiveSkill
         float elapsedTime = 0.0f;
         while(true)
         {
-            if(elapsedTime>0.1f)
+            if(elapsedTime>0.2f)
             {
                 Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
                 projectile.transform.position = shooter.position;
@@ -20,7 +21,7 @@ public class ChyuRyung : ActiveSkill
                 elapsedTime = 0.0f;
                 SkillManager.Instance.CoroutineStarter(Despawn(projectile));
             }
-            if (projectiles.Count > 3&&Vector2.Distance(projectiles[0].transform.position, projectiles[projectiles.Count - 1].transform.position) < 0.5f)
+            if (projectiles.Count > 3&&Vector2.Distance(projectiles[0].transform.position, shooter.transform.position) < 0.5f)
             {
                 List<Vector2> fourPoints = new List<Vector2>();
                 fourPoints.Add(projectiles[0].transform.position);
@@ -87,20 +88,11 @@ public class ChyuRyung : ActiveSkill
     }
     private IEnumerator Despawn(Projectile projectile)
     {
-        float despawnTime = 5f;
-        do 
+        if (projectiles.Count > 20)
         {
-            if (despawnTime<=0)
-            {
-                SkillManager.Instance.DeSpawnProjectile(projectile);
-                projectiles.RemoveAt(0);
-                despawnTime = 5f;
-            }
-            else
-            {
-                despawnTime -= Time.fixedDeltaTime;
-            }
-            yield return frame;
-        }while (projectiles.Count > 0);
+            SkillManager.Instance.DeSpawnProjectile(projectiles[0]);
+            projectiles.RemoveAt(0);
+        }
+        yield return frame;
     }
 }

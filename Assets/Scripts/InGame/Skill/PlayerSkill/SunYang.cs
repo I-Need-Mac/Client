@@ -16,41 +16,41 @@ public class SunYang : ActiveSkill
     {
         projectiles = new Projectile[skillData.projectileCount];
 
-        for (int i = 0; i < projectiles.Length; i++)
+    for (int i = 0; i < projectiles.Length; i++)
+    {
+        projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+        if (shooter.TryGetComponent(out Player player))
         {
-            projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
-            if (shooter.TryGetComponent(out Player player))
-            {
-                look = player.lookDirection;
-            }
-            projectiles[i].transform.localPosition = look * skillData.attackDistance;
+            look = player.lookDirection;
         }
-        Debug.Log($"{look.x},{look.y}");
 
+        float diagonalCorrection = Mathf.Abs(look.x) == Mathf.Abs(look.y) ? 0.7f : 1.0f;
+
+        float projectileSpacing = 5.0f;
+
+        float offsetY = projectileSpacing * (i - (projectiles.Length - 1) * 0.5f) * diagonalCorrection;
+        Vector2 offset = new Vector2(look.y, -look.x) * offsetY;
+        projectiles[i].transform.localPosition = look * skillData.attackDistance + offset;
+    }
         yield return Move();
-
     }
     private IEnumerator Move()
     {
-        Transform projectile1 = projectiles[0].transform;
-        Transform projectile2 = projectiles[1].transform;
-
-        float minDistance = 0.1f;
-        float angle = 0f;
+        Projectile projectile1 = projectiles[0];
+        Projectile projectile2 = projectiles[1];
+        float angle = 0.0f;
         float weight = 0.0f;
         do
         {
-            weight += 0.2f;
-            angle -= 1 + weight;
-
-            projectile1.position = shooter.position + Quaternion.Euler(0, 0, angle) * look * skillData.attackDistance;
-            projectile2.position = shooter.position + Quaternion.Euler(0, 0, -angle) * -look * skillData.attackDistance;
-
+            weight += 0.002f;
+            angle -= Time.fixedDeltaTime * skillData.speed + weight;
+            projectile1.transform.RotateAround(shooter.position, Vector3.forward, angle);
+            projectile2.transform.RotateAround(shooter.position, Vector3.back, angle);
             yield return frame;
-        } while (Vector2.Distance(projectile1.position, projectile2.position) > minDistance);
-        for (int i = 0; i < projectiles.Length; i++)
+        } while (Vector2.Distance(projectile1.transform.position, projectile2.transform.position) > 0.1f);
+        for(int i = 0; i < projectiles.Length; i++)
         {
             SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
-        }
+        }       
     }
 }

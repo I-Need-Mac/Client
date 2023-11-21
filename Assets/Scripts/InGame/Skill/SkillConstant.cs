@@ -20,6 +20,7 @@ namespace SKILLCONSTANT
         PULL,
         ITEMPULL,
         METASTASIS,
+        TRANSITION,
     }
 
     public enum SKILL_PASSIVE

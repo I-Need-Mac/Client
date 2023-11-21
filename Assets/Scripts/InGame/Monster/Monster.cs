@@ -1,6 +1,7 @@
 
 using Cinemachine.Utility;
 using SKILLCONSTANT;
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -366,7 +367,6 @@ public class Monster : MonoBehaviour
             UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
             hpBar = null;
         }
-
         GameManager.Instance.killCount++;
     }
 
@@ -386,7 +386,7 @@ public class Monster : MonoBehaviour
     }
     #endregion
 
-    #region SKILL_EFFECT
+    #region SKILL_EFFECT & STATUS_EFFECT
     public void SkillEffectActivation(SKILL_EFFECT effect, float param)
     {
         this.SkillEffectActivation(effect, param, 1.0f);
@@ -510,9 +510,7 @@ public class Monster : MonoBehaviour
             spineSwitch = true;
         }
     }
-    #endregion
 
-    #region STATUS_EFFECT
     public IEnumerator FireDot(int time, float dotDamage)
     {
         if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
@@ -528,6 +526,24 @@ public class Monster : MonoBehaviour
             yield return sec;
         }
         statusEffect.RemoveStatusEffect(STATUS_EFFECT.FIRE);
+    }
+
+    public IEnumerator Transition(float time, int monsterId)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.TRANSITION))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.TRANSITION);
+
+        SkeletonDataAsset asset = spineManager.GetSkeletonDataAsset();
+        spineManager.SetSkeletonDataAsset(ResourcesManager.Load<Monster>(CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString()).transform.Find("Character").GetComponent<SkeletonAnimation>().skeletonDataAsset);
+        spineManager.SetAnimation("Idle", true);
+        yield return new WaitForSeconds(time);
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.TRANSITION);
+        spineManager.SetSkeletonDataAsset(asset);
+        spineManager.SetAnimation("Idle", true);
     }
     #endregion
 }

@@ -190,6 +190,12 @@ public class Projectile : MonoBehaviour
                 case SKILL_EFFECT.DELETE:
                     Delete(param, float.Parse(skillData.skillEffectParam[++j]));
                     break;
+                case SKILL_EFFECT.TRANSITION:
+                    if (target != null)
+                    {
+                        SkillManager.Instance.CoroutineStarter(target.Transition(param, int.Parse(skillData.skillEffectParam[++j])));
+                    }
+                    break;
                 case SKILL_EFFECT.STUN:
                 case SKILL_EFFECT.SLOW:
                 case SKILL_EFFECT.KNOCKBACK:

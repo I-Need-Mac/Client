@@ -89,4 +89,15 @@ public class SpineManager : MonoBehaviour
     {
         return skeletonAnimation.AnimationName;
     }
+
+    public SkeletonDataAsset GetSkeletonDataAsset()
+    {
+        return skeletonAnimation.skeletonDataAsset;
+    }
+
+    public void SetSkeletonDataAsset(SkeletonDataAsset asset)
+    {
+        skeletonAnimation.skeletonDataAsset = asset;
+        skeletonAnimation.Initialize(true);
+    }
 }

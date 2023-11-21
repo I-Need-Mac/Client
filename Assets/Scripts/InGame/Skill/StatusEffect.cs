@@ -4,13 +4,14 @@ using UnityEngine;
 
 public enum STATUS_EFFECT
 {
-    NONE = 0,           //0000 0000
-    SLOW = 1 << 0,      //0000 0001
-    POISON = 1 << 1,    //0000 0010
-    STUN = 1 << 2,      //0000 0100
-    RESTRAINT = 1 << 3, //0000 1000
-    FIRE = 1 << 4,      //0001 0000
-    ALL = int.MaxValue, //1111 1111
+    NONE = 0,               //0000 0000
+    SLOW = 1 << 0,          //0000 0001
+    POISON = 1 << 1,        //0000 0010
+    STUN = 1 << 2,          //0000 0100
+    RESTRAINT = 1 << 3,     //0000 1000
+    FIRE = 1 << 4,          //0001 0000
+    TRANSITION = 1 << 5,    //0010 0000
+    ALL = int.MaxValue,     //1111 1111
 }
 
 public class StatusEffect

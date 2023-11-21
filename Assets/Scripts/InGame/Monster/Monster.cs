@@ -540,7 +540,24 @@ public class Monster : MonoBehaviour
         SkeletonDataAsset asset = spineManager.GetSkeletonDataAsset();
         spineManager.SetSkeletonDataAsset(ResourcesManager.Load<Monster>(CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString()).transform.Find("Character").GetComponent<SkeletonAnimation>().skeletonDataAsset);
         spineManager.SetAnimation("Idle", true);
-        yield return new WaitForSeconds(time);
+        //yield return new WaitForSeconds(time);
+        float currentTime = 0.0f;
+        while (currentTime < time)
+        {
+            currentTime += Time.fixedDeltaTime;
+            yield return fixedFrame;
+            if (monsterData.currentHp <= 0.0f)
+            {
+                statusEffect.RemoveStatusEffect(STATUS_EFFECT.TRANSITION);
+                spineManager.SetSkeletonDataAsset(asset);
+                spineManager.SetAnimation("Idle", true);
+                if (Scanner.RangeTarget(transform, 2.0f, (int)LayerConstant.MONSTER)[0].TryGetComponent(out Monster monster))
+                {
+                    SkillManager.Instance.CoroutineStarter(monster.Transition(time, monsterId));
+                }
+                yield break;
+            }
+        }
         statusEffect.RemoveStatusEffect(STATUS_EFFECT.TRANSITION);
         spineManager.SetSkeletonDataAsset(asset);
         spineManager.SetAnimation("Idle", true);

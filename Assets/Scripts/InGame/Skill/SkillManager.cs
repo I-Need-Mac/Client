@@ -213,6 +213,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 129:
                 skill = new JuOrk(skillId, shooter, skillNum);
                 break;
+            case 130:
+                skill = new BuGong(skillId, shooter, skillNum);
+                break;
             //아래로 패시브
             case 202:
                 skill = new InnPassive(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);

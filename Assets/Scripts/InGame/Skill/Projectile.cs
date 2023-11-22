@@ -202,7 +202,10 @@ public class Projectile : MonoBehaviour
                 case SKILL_EFFECT.EXECUTE:
                 case SKILL_EFFECT.RESTRAINT:
                 case SKILL_EFFECT.PULL:
-                    target.SkillEffectActivation(skillData.skillEffect[i], param);
+                    if (target != null)
+                    {
+                        target.SkillEffectActivation(skillData.skillEffect[i], param);
+                    }
                     break;
                 case SKILL_EFFECT.SPAWNMOB:
                     if (!target.gameObject.activeInHierarchy)

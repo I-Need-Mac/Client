@@ -210,6 +210,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 127:
                 skill = new GamYum(skillId, shooter, skillNum);
                 break;
+            case 128:
+                skill = new Ildo(skillId, shooter, skillNum);
+                break;
             case 129:
                 skill = new JuOrk(skillId, shooter, skillNum);
                 break;

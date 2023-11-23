@@ -24,13 +24,22 @@ public class SunYang : ActiveSkill
             look = player.lookDirection;
         }
 
-        float diagonalCorrection = Mathf.Abs(look.x) == Mathf.Abs(look.y) ? 0.7f : 1.0f;
-
         float projectileSpacing = 5.0f;
+        if(Mathf.Abs(look.x)>0)
+        {
+            look.y = 0;
+            projectiles[i].transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        if(Mathf.Abs(look.y)>0)
+        {
+            look.x = 0;
+            projectiles[i].transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
 
-        float offsetY = projectileSpacing * (i - (projectiles.Length - 1) * 0.5f) * diagonalCorrection;
+        float offsetY = projectileSpacing * (i - (projectiles.Length - 1) * 0.5f);
         Vector2 offset = new Vector2(look.y, -look.x) * offsetY;
         projectiles[i].transform.localPosition = look * skillData.attackDistance + offset;
+
     }
         yield return Move();
     }
@@ -40,14 +49,20 @@ public class SunYang : ActiveSkill
         Projectile projectile2 = projectiles[1];
         float angle = 0.0f;
         float weight = 0.0f;
+        float time = 0.0f;
         do
         {
-            weight += 0.002f;
+            weight += skillData.speed / 100;
             angle -= Time.fixedDeltaTime * skillData.speed + weight;
             projectile1.transform.RotateAround(shooter.position, Vector3.forward, angle);
             projectile2.transform.RotateAround(shooter.position, Vector3.back, angle);
+            time += Time.fixedDeltaTime;
+            if(time>=1.0f)
+            {
+                break;
+            }
             yield return frame;
-        } while (Vector2.Distance(projectile1.transform.position, projectile2.transform.position) > 0.1f);
+        } while (Vector2.Distance(projectile1.transform.position, projectile2.transform.position) > 0.3f);
         for(int i = 0; i < projectiles.Length; i++)
         {
             SkillManager.Instance.DeSpawnProjectile(projectiles[i]);

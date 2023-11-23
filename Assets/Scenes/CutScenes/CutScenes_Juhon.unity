@@ -258,8 +258,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   stopPosX: 510
-  moveSpeed: 2
-  animationSpeed: 0.1
+  moveSpeed: 25
+  animationSpeed: 3
   animationTime: 1
 --- !u!114 &1680593883
 MonoBehaviour:

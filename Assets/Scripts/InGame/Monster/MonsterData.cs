@@ -1,24 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum MonsterType
+{
+    NORMAL,
+    ELITE,
+    BOSS,
+}
+
+public enum AttackType
+{
+    Shy,
+    Bold,
+}
+
 [System.Serializable]
 public class MonsterData
 {
     
-    [SerializeField] public string monsterName ;
-    [SerializeField] public float sizeMultiple ;
-    [SerializeField] public int hp ;
-    [SerializeField] public int currentHp;
-    [SerializeField] public float attack ;
-    [SerializeField] public float moveSpeed ;
-    [SerializeField] public float atkSpeed ;
-    [SerializeField] public float viewDistance ;
-    [SerializeField] public float atkDistance ;
-    [SerializeField] public int skillID ;
-    [SerializeField] public string groupSource ;
-    [SerializeField] public int groupSourceRate ;
-    [SerializeField] public string monsterPrefabPath ;
-    [SerializeField] public AttackTypeConstant attackType ;
+    [field: SerializeField] public string monsterName { get; private set; }
+    [field: SerializeField] public float sizeMultiple { get; private set; }
+    [field: SerializeField] public int hp { get; private set; }
+    [field: SerializeField] public int currentHp { get; private set; }
+    [field: SerializeField] public float attack { get; private set; }
+    [field: SerializeField] public float moveSpeed { get; private set; }
+    [field: SerializeField] public float atkSpeed { get; private set; }
+    [field: SerializeField] public float viewDistance { get; private set; }
+    [field: SerializeField] public float atkDistance { get; private set; }
+    [field: SerializeField] public int skillID { get; private set; }
+    [field: SerializeField] public string groupSource { get; private set; }
+    [field: SerializeField] public int groupSourceRate { get; private set; }
+    [field: SerializeField] public string monsterPrefabPath { get; private set; }
+    [field: SerializeField] public AttackType attackType { get; private set; }
+    [field: SerializeField] public MonsterType monsterType { get; private set; }
 
     public void SetMonsterName(string monsterName) { this.monsterName = monsterName; }
     public void SetSizeMultiple(float sizeMultiple) { this.sizeMultiple = sizeMultiple; }
@@ -33,5 +48,6 @@ public class MonsterData
     public void SetGroupSource(string groupSource) { this.groupSource = groupSource; }
     public void SetGroupSourceRate(int groupSourceRate) { this.groupSourceRate = groupSourceRate; }
     public void SetMonsterPrefabPath(string monsterPrefabPath) { this.monsterPrefabPath = monsterPrefabPath; }
-    public void SetAttackType(AttackTypeConstant attackType) { this.attackType = attackType; }
+    public void SetAttackType(AttackType attackType) { this.attackType = attackType; }
+    public void SetMonsterType(MonsterType monsterType) { this.monsterType = monsterType; }
 }

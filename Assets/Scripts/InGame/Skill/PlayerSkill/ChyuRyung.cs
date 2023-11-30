@@ -5,44 +5,67 @@ using UnityEngine;
 
 public class ChyuRyung : ActiveSkill
 {
-    private List<Projectile> projectiles = new List<Projectile>();
+    private List<Vector2> pathList = new List<Vector2>();
+    private LineRenderer lineRenderer;
     public ChyuRyung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
     public override IEnumerator Activation()
     {
+        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData,shooter);
+        projectile.transform.position = (Vector2)shooter.position;
+
+        lineRenderer = projectile.gameObject.AddComponent<LineRenderer>();
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+        lineRenderer.material.color = Color.red;
         float elapsedTime = 0.0f;
         while(true)
         {
-            if(elapsedTime>0.2f)
+
+            if (elapsedTime>0.2f)
             {
-                Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
-                projectile.transform.position = shooter.position;
-                projectile.CollisionPower(false);
-                projectiles.Add(projectile);
+                Vector2 path = shooter.transform.position;
+                pathList.Add(path);
                 elapsedTime = 0.0f;
-                SkillManager.Instance.CoroutineStarter(Despawn(projectile));
+                SkillManager.Instance.CoroutineStarter(Despawn());
             }
-            if (projectiles.Count > 3&&Vector2.Distance(projectiles[0].transform.position, shooter.transform.position) < 0.5f)
+            if (pathList.Count > 3&&Vector2.Distance(pathList[0], shooter.transform.position) < 0.3f)
             {
-                List<Vector2> fourPoints = new List<Vector2>();
-                fourPoints.Add(projectiles[0].transform.position);
-                fourPoints.Add(projectiles[projectiles.Count / 3].transform.position);
-                fourPoints.Add(projectiles[(2 * projectiles.Count) / 3].transform.position);
-                fourPoints.Add(projectiles[projectiles.Count - 1].transform.position);
+                List<Vector2> fourPoints = new List<Vector2>
+                {
+                    pathList[0],
+                    pathList[pathList.Count / 3],
+                    pathList[(2 * pathList.Count) / 3],
+                    pathList[pathList.Count - 1]
+                };
                 float area = CalculateMinimumArea(fourPoints.ToArray());
                 Vector2 center = CalculateCentroid(fourPoints.ToArray());
-                if (area > 0.5f)
+                if (area > 0.1f)
                 {
                     Debug.Log("소환!");
-                    for (int i = 0; i < projectiles.Count; i++)
+                    pathList.Clear();
+                    if (area < 0.5f)
                     {
-                        SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
+                        yield return Active(area + 0.5f, center);
                     }
-                    projectiles.Clear();
-                    yield return Active(area,center);
+                    else
+                    {
+                        yield return Active(area,center);
+                    }
                 }              
             }
+            UpdateLineRenderer();
+
             elapsedTime += Time.fixedDeltaTime;
             yield return frame;
+        }
+    }
+    private void UpdateLineRenderer()
+    {
+        // 경로를 LineRenderer에 적용
+        lineRenderer.positionCount = pathList.Count;
+        for (int i = 0; i < pathList.Count; i++)
+        {
+            lineRenderer.SetPosition(i, pathList[i]);
         }
     }
     private float CalculateMinimumArea(Vector2[] polygon)
@@ -82,16 +105,17 @@ public class ChyuRyung : ActiveSkill
     {
         Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
         projectile.transform.localScale = Vector2.one* area;
-        projectile.transform.localPosition = center;      
+        projectile.transform.localPosition = center;
+        lineRenderer.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
         SkillManager.Instance.DeSpawnProjectile(projectile);
+        lineRenderer.gameObject.SetActive(true);
     }
-    private IEnumerator Despawn(Projectile projectile)
+    private IEnumerator Despawn()
     {
-        if (projectiles.Count > 20)
+        if (pathList.Count > 20)
         {
-            SkillManager.Instance.DeSpawnProjectile(projectiles[0]);
-            projectiles.RemoveAt(0);
+            pathList.RemoveAt(0);
         }
         yield return frame;
     }

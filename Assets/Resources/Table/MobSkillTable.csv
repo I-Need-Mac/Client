@@ -1,0 +1,27 @@
+SkillID,Name,!Desc,Cooltime,Skill_Cut,Cut_dire,AttackDistance,IsEffect,IsUltimate,ProjectileCount,IntervalTime,Duration,Damage,Speed,IsPenetrate,SplashRange,ProjectileSizeMulti,SkillEffect,SkillEffectParam,SkillTarget,SkillPrefabPath
+스킬아이디,스킬이름,스킬설명 기획용,쿨타임,스킬컷씬 유무,스킬 컷씬 경로,사거리,스킬 바로 시전여부,궁극기 여부,투사체 개수,간격,유지시간,피해,투사체 스피드,관통여부,폭발 반지름,투사체 사이즈 배율,스킬 효과,스킬 효과 파람,스킬 발사 타겟,
+int,String,String,Int,Bool,String,int,bool,bool,int,Float,Float,int,int,bool,int,int,EffectEnum,int,TargetEnum,
+50101,Skill_Komogui_Delusion,PC의 움직임이 N%만큼 느려짐. 해당 효과는 M초간 유지되며 M초 이후 해제됨.,5000,FALSE,Null,,TRUE,FALSE,0,0,5,0,0,FALSE,0,0,Slow,20,Debuff,Prefabs/InGame/MonsterSkill/Delusion
+50102,Skill_Komogui_Rush,"* 고모귀가 PC 방향으로 N초간 매우 빠르게 돌진. 스킬 1 사용 이후 곧바로 해당 스킬을 사용하는 알고리즘으로 작동.
+* 해당 스킬 적중 시 현혹 효과 M초 더 지속",5000,FALSE,Null,5,TRUE,FALSE,0,0,3,10,0,FALSE,0,0,Rush,1,Single_Target_Range,Prefabs/InGame/MonsterSkill/Rush
+50201,Skill_Geogugwi_Crushing,"PC 방향으로 거구귀가 N초간 빠르게 질주하며, PC와 부딪힐 시 M만큼의 데미지를 입음. 그와 동시에 지나간 길에 붉은 피를 흘림.
+바닥에 흘린 피는 N초간 유지되며, PC가 이를 밟을 시 M만큼의 데미지를 입음.
+해당 스킬은 연속으로 3회간 수행되며, 이후 거구귀는 X초간 정지함.",5000,FALSE,Null,5,TRUE,FALSE,0,0,9,15,0,FALSE,0,0,MoveUp|Crush|Blood|Retire,20|3|3|3,Single_Target_Range,Prefabs/InGame/MonsterSkill/Crushing
+50202,Skill_Geogugwi_Vibration,"거구귀가 크게 소리를 질러 PC가 위치한 방향으로 핏방울을 날림.
+음파는 8방향으로 조금씩 각도를 달리하여 총 4회 발사됨.",5000,FALSE,Null,5,TRUE,FALSE,8,0.5,5,10,10,TRUE,0,0,Projectile,3,Non_Target_Range,Prefabs/InGame/MonsterSkill/Vibration
+50301,Skill_Vassago_Teleport,바사고 아래에 붉은 마법진이 생성되며 스킬 발동 시 PC 위치로 N초 이후 텔레포트함.,5000,FALSE,Null,5,TRUE,FALSE,0,0,3,15,0,FALSE,0,0,Teleport,3,Single_Target_Range,Prefabs/InGame/MonsterSkill/Teleport
+50302,Skill_Vassago_Beam,"바사고가 타고 있는 악어가 입을 크게 벌리고 원기옥을 모음. N초 이후 일자형의 광역 레이저 3개가 연속되어 발사. 레이저는 M초간 유지됨. 
+레이저 위치는 랜덤으로 지정.",5000,FALSE,Null,5,TRUE,FALSE,1,0.3,0.5,20,0,FALSE,0,0,Beam,3,Non_Target_Range,Prefabs/InGame/MonsterSkill/Beam
+50303,Skill_Vassago_CrossBeam,"바사고가 타고 있는 악어가 입을 크게 벌리고 원기옥을 모음. N초 이후 광역 레이저 5개가 연속적으로 발사. 레이저는 M초간 유지됨.
+레이저 위치는 랜덤으로 지정.",5000,FALSE,Null,5,TRUE,FALSE,1,0.3,0.5,20,0,FALSE,0,0,CrossBeam,5,Non_Target_Range,Prefabs/InGame/MonsterSkill/CrossBeam
+50401,Skill_FatGiant_Jump,"맵의 특정 지역에서 다른 지역으로 텔레포트하며 주변에 N초간 기절, M만큼의 데미지를 줌
+텔레포트 예정인 지역 위에 그림자가 드리워짐",5000,FALSE,Null,5,TRUE,FALSE,0,0,3,20,0,FALSE,0,0,Jump|Stun,5|3,Single_Target_Range,Prefabs/InGame/MonsterSkill/Jump
+50402,Skill_FatGiant_ChasingFist,"N개의 주먹들이 바닥에서 솟아올라 M초간 PC를 추적
+솟아오른 주먹에 닿으면 PC는 Damage만큼의 피해를 입음",5000,FALSE,Null,5,TRUE,FALSE,5,0.1,1,25,10,FALSE,0,0,ChasingPist,1,Single_Target_Range,Prefabs/InGame/MonsterSkill/ChasingFist
+50403,Skill_FatGiant_BluntAttack,오른손 공격과 왼손 공격을 번갈아 2회씩 수행하여 공격,5000,FALSE,Null,2,TRUE,FALSE,0,0.3,0.5,20,0,FALSE,0,0,BluntAttack|NuckBack,5|3,Single_Target_Range,Prefabs/InGame/MonsterSkill/BluntAttack
+50404,Skill_FatGiant_ChasingFist2,"N개의 주먹들이 2줄로 바닥에서 솟아올라 M초간 PC를 추적
+솟아오른 주먹에 닿으면 PC는 Damage만큼의 피해를 입음",5000,FALSE,Null,5,TRUE,FALSE,5,0.1,1,30,10,FALSE,0,0,ChasingPist,2,Single_Target_Range,Prefabs/InGame/MonsterSkill/ChasingFist2
+50405,Skill_FatGiant_Summon,PC의 주변을 반지름 N의 원형으로 둘러싸고 작은 살덩이 몹들이 생성,5000,FALSE,Null,5,TRUE,FALSE,0,0,1000,30,0,FALSE,0,0,SpawnMob,5,Single_Target_Range,Prefabs/InGame/MonsterSkill/Summon
+50406,Skill_FatGiant_BloodCross,"거인을 기준으로 십자가 모양의 검붉은 피가 흐름
+피에 닿을 시 데미지
+퍼진 피는 N초간 유지됨",5000,FALSE,Null,5,TRUE,FALSE,1,0,5,40,10,FALSE,0,0,BloodCross,5,Single_Target_Range,Prefabs/InGame/MonsterSkill/BloodCross

@@ -216,7 +216,7 @@ public class Player : MonoBehaviour
         statusEffect.AddStatusEffect(STATUS_EFFECT.TRANSITION);
 
         SkeletonDataAsset asset = spineManager.GetSkeletonDataAsset();
-        spineManager.SetSkeletonDataAsset(ResourcesManager.Load<Monster>(CSVReader.Read("CharacterTable", id.ToString(), "CharacterPrefabPath").ToString()).transform.Find("Character").GetComponent<SkeletonAnimation>().skeletonDataAsset);
+        spineManager.SetSkeletonDataAsset(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", id.ToString(), "CharacterPrefabPath").ToString()).transform.Find("Character").GetComponent<SkeletonAnimation>().skeletonDataAsset);
         spineManager.SetAnimation("Idle", true);
         playerManager.PlayerSetting(playerManager.FindCharacter(Convert.ToString(id)));
 

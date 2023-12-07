@@ -208,10 +208,10 @@ public class Projectile : MonoBehaviour
                     }
                     break;
                 case SKILL_EFFECT.SPAWNMOB:
-                    if (!target.gameObject.activeInHierarchy)
-                    {
-                        SkillManager.Instance.CoroutineStarter(SpawnMob(param));
-                    }
+                    SkillManager.Instance.CoroutineStarter(SpawnMob(param));
+                    break;
+                case SKILL_EFFECT.CHANGEFORM:
+                    StartCoroutine(GameManager.Instance.player.ChangeForm(param, int.Parse(skillData.skillEffectParam[++j])));
                     break;
                 default:
                     DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");

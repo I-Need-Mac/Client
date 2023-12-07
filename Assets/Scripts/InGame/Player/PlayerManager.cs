@@ -158,7 +158,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     //캐릭터 id와 일치하는 행(Dictionary)을 리턴
-    private Dictionary<string, object> FindCharacter(string characterId)
+    public Dictionary<string, object> FindCharacter(string characterId)
     {
         Dictionary<string, Dictionary<string, object>> playerStatusTable = CSVReader.Read("CharacterTable");
 

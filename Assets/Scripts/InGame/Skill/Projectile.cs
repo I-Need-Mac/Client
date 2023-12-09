@@ -287,32 +287,26 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator SpawnMob(float n)
     {
-        float x = UnityEngine.Random.Range(-skillData.attackDistance, skillData.attackDistance);
-        float y = UnityEngine.Random.Range(-skillData.attackDistance, skillData.attackDistance);
-        Vector2 spawnPos = new Vector2(x, y);
+        Monster summoner = MonsterSpawner.Instance.SpawnMonster((int)n, GameManager.Instance.player.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
 
-        string path = CSVReader.Read("MonsterTable", n.ToString(), "MonsterPrefabPath").ToString();
-        Monster summoner = Instantiate(ResourcesManager.Load<Monster>(path), GameManager.Instance.player.transform);
-        summoner.gameObject.layer = (int)LayerConstant.SKILL;
-        summoner.transform.localPosition = spawnPos;
-        summoner.gameObject.SetActive(true);
+        //float duration = skillData.duration / 1000.0f;
+        float duration = 5.0f;
+        //float time = 0.1f;
+        //WaitForSeconds tick = new WaitForSeconds(time);
+        //while (duration > 0)
+        //{
+        //    if (summoner.target == null || !summoner.target.gameObject.activeInHierarchy)
+        //    {
+        //        Transform target = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, summoner.transform, skillData.attackDistance);
+        //        summoner.SetTarget(target, false);
+        //    }
+        //    yield return tick;
+        //    duration -= time;
+        //}
 
-        float duration = skillData.duration / 1000.0f;
-        float time = 0.1f;
-        DebugManager.Instance.PrintDebug("[SpawnMob]: " + duration);
-        WaitForSeconds tick = new WaitForSeconds(time);
-        while (duration > 0)
-        {
-            if (summoner.target == null || !summoner.target.gameObject.activeInHierarchy)
-            {
-                Transform target = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, summoner.transform, skillData.attackDistance);
-                summoner.SetTarget(target, false);
-            }
-            yield return tick;
-            duration -= time;
-        }
+        yield return new WaitForSeconds(duration);
 
-        summoner.gameObject.SetActive(false);
+        MonsterSpawner.Instance.DeSpawnMonster(summoner);
     }
 
 }

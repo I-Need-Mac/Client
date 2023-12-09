@@ -289,22 +289,7 @@ public class Projectile : MonoBehaviour
     {
         Monster summoner = MonsterSpawner.Instance.SpawnMonster((int)n, GameManager.Instance.player.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
 
-        //float duration = skillData.duration / 1000.0f;
-        float duration = 5.0f;
-        //float time = 0.1f;
-        //WaitForSeconds tick = new WaitForSeconds(time);
-        //while (duration > 0)
-        //{
-        //    if (summoner.target == null || !summoner.target.gameObject.activeInHierarchy)
-        //    {
-        //        Transform target = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, summoner.transform, skillData.attackDistance);
-        //        summoner.SetTarget(target, false);
-        //    }
-        //    yield return tick;
-        //    duration -= time;
-        //}
-
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(skillData.duration / 1000.0f);
 
         MonsterSpawner.Instance.DeSpawnMonster(summoner);
     }

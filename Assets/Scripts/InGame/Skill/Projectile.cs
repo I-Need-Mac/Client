@@ -208,7 +208,7 @@ public class Projectile : MonoBehaviour
                     SkillManager.Instance.CoroutineStarter(SpawnMob(param));
                     break;
                 case SKILL_EFFECT.CHANGEFORM:
-                    StartCoroutine(GameManager.Instance.player.ChangeForm(param, int.Parse(skillData.skillEffectParam[++j])));
+                    SkillManager.Instance.CoroutineStarter(GameManager.Instance.player.ChangeForm(skillData.duration, param));
                     break;
                 default:
                     DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");

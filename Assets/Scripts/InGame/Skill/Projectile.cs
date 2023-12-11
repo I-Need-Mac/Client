@@ -83,6 +83,7 @@ public class Projectile : MonoBehaviour
             }
         }
 
+        SkillEffect(null);
         //transform.localScale *= this.skillData.projectileSizeMulti;
         //this.totalDamage = skillData.damage;
     }
@@ -148,10 +149,6 @@ public class Projectile : MonoBehaviour
                 Remove();
             }
             DebugManager.Instance.PrintDebug("[TEST]: Hit");
-        }
-        else 
-        {
-            SkillEffect(null);
         }
     }
 
@@ -289,7 +286,7 @@ public class Projectile : MonoBehaviour
     {
         Monster summoner = MonsterSpawner.Instance.SpawnMonster((int)n, GameManager.Instance.player.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
 
-        yield return new WaitForSeconds(skillData.duration / 1000.0f);
+        yield return new WaitForSeconds(2.0f);
 
         MonsterSpawner.Instance.DeSpawnMonster(summoner);
     }

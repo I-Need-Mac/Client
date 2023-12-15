@@ -52,6 +52,14 @@ public class APIManager : SingleTon<APIManager>
         return false;
 
     }
+    public async Task<bool> CheckCharacterUnlock(string name, string nickname)
+    {
+        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        sendData.Add("steam_id", name);
+        sendData.Add("name", nickname);
+        StartGame startGame = (StartGame)await requestManager.Get<StartGame>(APIAddressManager.REQUEST_GAME_START, sendData);
+        return startGame.data.hojin;
+    }
 
 
 }

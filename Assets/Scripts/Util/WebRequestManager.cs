@@ -109,13 +109,13 @@ public partial class WebRequestManager
                 else
                     await Task.Yield();
             }
-            Debug.Log(request.downloadHandler.text);
+            Debug.LogError(request.downloadHandler.text);
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
-
+            
             return dataObj;
 
         }

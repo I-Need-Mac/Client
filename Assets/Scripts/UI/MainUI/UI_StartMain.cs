@@ -17,7 +17,6 @@ public class UI_StartMain : UI_Base
     float time = 0.0f;
     private bool isFirst;
     private bool isAutoLogin;
-    private bool hojin;
 
     // 시작 창
     Image pressKeyImage;
@@ -65,7 +64,6 @@ public class UI_StartMain : UI_Base
                 else {
                     if (isAutoLogin) {
                             RequestLogin();
-                        hojinlock();                      
                      }
                     else {
                         UIManager.Instance.OpenUI<UI_Login>();
@@ -122,10 +120,5 @@ public class UI_StartMain : UI_Base
             UIManager.Instance.OpenUI<UI_Login>();
         }
     }
-    async void hojinlock()
-    {
-        if (!SteamManager.Initialized) { return; }
-        string name = SteamUser.GetSteamID().ToString();
-        hojin = await APIManager.Instance.CheckCharacterUnlock(name,"adf");
-    }
+
 }

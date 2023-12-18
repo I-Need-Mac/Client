@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,10 +28,12 @@ public class UI_Sorcerer : UI_Base
     Image ultiImage;
 
     int sorcererInfoID = 0;
+    private bool sorcererUnlock;
     Dictionary<string, object> sorcererInfo = new Dictionary<string, object>();
 
     void Start()
     {
+        CharacterUnlock();
         Bind<Image>(typeof(Images));
         Array imageValue = Enum.GetValues(typeof(Images));
         for (int i = 0; i < imageValue.Length-1; i++)
@@ -57,8 +60,15 @@ public class UI_Sorcerer : UI_Base
         switch (imageValue)
         {
             case Images.Image:
-                UI_SelectSorcererInfo info = UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                info.SetSorcererInfo(sorcererInfoID, sorcererInfo);
+                if(sorcererUnlock)
+                {
+                     UI_SelectSorcererInfo info = UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
+                     info.SetSorcererInfo(sorcererInfoID, sorcererInfo);
+                }
+                else
+                {
+                    UIManager.Instance.OpenUI<UI_Hon_Unlock_conditions>();
+                }
                 break;
             case Images.Ultimate:
                 break;
@@ -154,5 +164,31 @@ public class UI_Sorcerer : UI_Base
         }
 
         return ultiPath;
+    }
+    async void CharacterUnlock()
+    {
+        if (!SteamManager.Initialized) { return; }
+        string name = SteamUser.GetSteamID().ToString();     
+        switch (sorcererInfoID)
+        {
+            case 101:
+                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "hojin");
+                break;
+            case 102:
+                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "siwoo");
+                break;
+            case 103:
+                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "sinwol");
+                break;
+            case 104:
+                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "ulises");
+                break;
+            case 105:
+                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "seimei");
+                break;
+            case 106:
+                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "macia");
+                break;
+        }
     }
 }

@@ -40,7 +40,8 @@ public class UI_SelectSorcerer : UI_Popup
         {
             if (data.Key == "")
                 continue;
-
+            if (Convert.ToInt32(data.Key)>200)
+                continue;
             // 생성
             GameObject instance = Instantiate(sorcerer.gameObject) as GameObject;
             instance.GetComponent<UI_Sorcerer>().SetSorcerer(int.Parse(data.Key), data.Value);

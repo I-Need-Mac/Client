@@ -33,14 +33,14 @@ public class UI_Sorcerer : UI_Base
     {
         Bind<Image>(typeof(Images));
         Array imageValue = Enum.GetValues(typeof(Images));
-        for (int i = 0; i < imageValue.Length; i++)
+        for (int i = 0; i < imageValue.Length-1; i++)
         {
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
 
         Bind<Text>(typeof(Texts));
         Array textValue = Enum.GetValues(typeof(Texts));
-        for (int i = 0; i < textValue.Length; i++)
+        for (int i = 0; i < textValue.Length-1; i++)
         {
             BindUIEvent(GetText(i).gameObject, (PointerEventData data) => { OnClickText(data); }, Define.UIEvent.Click);
         }

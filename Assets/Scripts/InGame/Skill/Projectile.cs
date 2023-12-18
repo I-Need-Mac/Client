@@ -83,6 +83,7 @@ public class Projectile : MonoBehaviour
             }
         }
 
+        SkillEffect(null);
         //transform.localScale *= this.skillData.projectileSizeMulti;
         //this.totalDamage = skillData.damage;
     }
@@ -149,10 +150,6 @@ public class Projectile : MonoBehaviour
             }
             DebugManager.Instance.PrintDebug("[TEST]: Hit");
         }
-        else 
-        {
-            SkillEffect(null);
-        }
     }
 
     //private void OnBecameInvisible()
@@ -208,10 +205,10 @@ public class Projectile : MonoBehaviour
                     }
                     break;
                 case SKILL_EFFECT.SPAWNMOB:
-                    if (!target.gameObject.activeInHierarchy)
-                    {
-                        SkillManager.Instance.CoroutineStarter(SpawnMob(param));
-                    }
+                    SkillManager.Instance.CoroutineStarter(SpawnMob(param));
+                    break;
+                case SKILL_EFFECT.CHANGEFORM:
+                    SkillManager.Instance.CoroutineStarter(GameManager.Instance.player.ChangeForm(skillData.duration, param));
                     break;
                 default:
                     DebugManager.Instance.PrintDebug("[ERROR]: 없는 스킬 효과입니다");
@@ -287,32 +284,11 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator SpawnMob(float n)
     {
-        float x = UnityEngine.Random.Range(-skillData.attackDistance, skillData.attackDistance);
-        float y = UnityEngine.Random.Range(-skillData.attackDistance, skillData.attackDistance);
-        Vector2 spawnPos = new Vector2(x, y);
+        Monster summoner = MonsterSpawner.Instance.SpawnMonster((int)n, GameManager.Instance.player.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
 
-        string path = CSVReader.Read("MonsterTable", n.ToString(), "MonsterPrefabPath").ToString();
-        Monster summoner = Instantiate(ResourcesManager.Load<Monster>(path), GameManager.Instance.player.transform);
-        summoner.gameObject.layer = (int)LayerConstant.SKILL;
-        summoner.transform.localPosition = spawnPos;
-        summoner.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
 
-        float duration = skillData.duration / 1000.0f;
-        float time = 0.1f;
-        DebugManager.Instance.PrintDebug("[SpawnMob]: " + duration);
-        WaitForSeconds tick = new WaitForSeconds(time);
-        while (duration > 0)
-        {
-            if (summoner.target == null || !summoner.target.gameObject.activeInHierarchy)
-            {
-                Transform target = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, summoner.transform, skillData.attackDistance);
-                summoner.SetTarget(target, false);
-            }
-            yield return tick;
-            duration -= time;
-        }
-
-        summoner.gameObject.SetActive(false);
+        MonsterSpawner.Instance.DeSpawnMonster(summoner);
     }
 
 }

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
-  m_Name: Gomogwi_Atlas
+  m_Name: Main_Seimei2_Ingame_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: 79443ad843dd6aa44b2ee450aa37e38c, type: 3}
+  atlasFile: {fileID: 4900000, guid: 58484c5023b4d0747b8ffa78fd347eda, type: 3}
   materials:
-  - {fileID: 2100000, guid: 93d5d91641fff4b42b48642237ffa239, type: 2}
+  - {fileID: 2100000, guid: dba6dd1161b4b2d45924e810416f0453, type: 2}

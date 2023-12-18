@@ -177,7 +177,7 @@ MonoBehaviour:
   stopPosX: 465
   moveSpeed: 10
   animationSpeed: 2
-  animationTime: 3
+  animationTime: 1
 --- !u!114 &233282559
 MonoBehaviour:
   m_ObjectHideFlags: 0

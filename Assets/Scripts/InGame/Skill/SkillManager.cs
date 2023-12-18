@@ -183,8 +183,17 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 118:
                 skill = new BunGye(skillId, shooter, skillNum);
                 break;
+            case 119:
+                skill = new SunYang(skillId, shooter, skillNum);
+                break;
             case 120:
                 skill = new Horin(skillId, shooter, skillNum);
+                break;
+            case 121:
+                skill = new JuckHwa(skillId, shooter, skillNum);
+                break;
+            case 122:
+                skill = new KumJul(skillId, shooter, skillNum);
                 break;
             case 123:
                 skill = new ChyuRyung(skillId, shooter, skillNum);

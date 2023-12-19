@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5584758753761605851}
   - component: {fileID: 2687123821705098120}
   - component: {fileID: 4152312827485388044}
+  - component: {fileID: -2444304250664829717}
   m_Layer: 0
   m_Name: Item_Magnet
   m_TagString: Untagged
@@ -113,3 +114,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <itemId>k__BackingField: 501
+--- !u!114 &-2444304250664829717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8383334973114467609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 13
+    audioClip: {fileID: 8300000, guid: b8bb6a31f2258974c890732a6da57b9f, type: 3}

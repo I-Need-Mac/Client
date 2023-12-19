@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8462205984165839752}
   - component: {fileID: 4839524657218026162}
   - component: {fileID: 3530442154950074504}
+  - component: {fileID: 4359950463274573379}
   m_Layer: 0
   m_Name: Item_Soul_Low
   m_TagString: Untagged
@@ -113,3 +114,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <itemId>k__BackingField: 101
+--- !u!114 &4359950463274573379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9143548431325803304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 13
+    audioClip: {fileID: 8300000, guid: 298ef102e782c614ab5f1f6d0166bf08, type: 3}

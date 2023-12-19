@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speakerSettings:
   - speakerName: Shooter
-    _audioType: 0
+    _audioType: 1
     loadSettingFrom: {fileID: 0}
     audioMixerGroup: {fileID: 0}
     isLoop: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
-    SOUNDSITUATION: 8
+    SOUNDSITUATION: 11
     audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
 --- !u!114 &5461332211756131446
 MonoBehaviour:

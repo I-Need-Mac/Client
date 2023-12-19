@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2222110973691964540}
   - component: {fileID: 5028101389830374510}
   - component: {fileID: 6463223947906066281}
+  - component: {fileID: 2211019777379922002}
   m_Layer: 5
   m_Name: PressKey
   m_TagString: Untagged
@@ -75,6 +76,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2211019777379922002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716592515990861538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: a1496dd2464f85145b54dc13354782e1, type: 3}
 --- !u!1 &3159181057983087040
 GameObject:
   m_ObjectHideFlags: 0

@@ -70,7 +70,7 @@ public class SoundRequesterSFX : SoundRequester
 
                 audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
                 audioGameObjectDict.Add(items.speakerName, speaker);
-                SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName],items.audioType);
+                SoundManager.Instance.AddAudioSource(soundObjectID + "!" + items.speakerName, audioSources[items.speakerName], items.audioType);
 
             }
 
@@ -150,7 +150,18 @@ public class SoundRequesterSFX : SoundRequester
         audioSources[speakName].clip = clip;
         audioSources[speakName].Play();
     }
+    public override bool isPlaying(SoundSituation.SOUNDSITUATION situation)
+    {
+        if (shootingSounds.ContainsKey(situation))
+        {
+            return audioSources[shootingSounds[situation].usingSpeaker].isPlaying;
+        }
+        else
+        {
+            return false;
+        }
 
+    }
 
     public override void RequestShootSound()
     {

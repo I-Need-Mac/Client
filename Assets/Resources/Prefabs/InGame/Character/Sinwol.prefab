@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 3819438005419506193}
   - component: {fileID: 4229899587848520334}
   - component: {fileID: 3548978357132433681}
+  - component: {fileID: 8060729590316168324}
   m_Layer: 0
   m_Name: Sinwol
   m_TagString: ItemCollider
@@ -435,6 +436,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8060729590316168324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4229899587848520331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Sinwol
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 1
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Sinwol
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: 587b3aed23cab654781f28b09cb9a8cc, type: 3}
 --- !u!1 &4229899588456256851
 GameObject:
   m_ObjectHideFlags: 0

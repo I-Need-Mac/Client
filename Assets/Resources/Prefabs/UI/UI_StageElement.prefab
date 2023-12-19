@@ -217,11 +217,16 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
   soundPackItems:
-  - usingSpeaker: Default
+  - usingSpeaker: EFFECT
     delay: 0
     priority: 0
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: 2ace4139d32884bb6a83f5bf583fe201, type: 3}
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 18
+    audioClip: {fileID: 8300000, guid: 17fe5ef2da0884a4fa8fd249af25b9a3, type: 3}
 --- !u!1 &3589881762390860210
 GameObject:
   m_ObjectHideFlags: 0

@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 8475085571032762004}
   - component: {fileID: 8475085571032762006}
   - component: {fileID: 8475085571032762007}
+  - component: {fileID: 9203066489859925501}
   m_Layer: 5
   m_Name: BackBtn
   m_TagString: Untagged
@@ -304,6 +305,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9203066489859925501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475085571032762005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: fd92546304880dc49940d35275db1064, type: 3}
 --- !u!1 &8475085571120180275
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,6 +2546,7 @@ GameObject:
   - component: {fileID: 8475085572767001759}
   - component: {fileID: 8475085572767001756}
   - component: {fileID: 8475085572767001757}
+  - component: {fileID: 2537611012842698539}
   m_Layer: 5
   m_Name: Dropdown
   m_TagString: Untagged
@@ -2652,6 +2673,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &2537611012842698539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475085572767001747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: 1fe2217cf866a094dbae5504a6ed9348, type: 3}
 --- !u!1 &8475085572794535565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2817,7 +2857,12 @@ MonoBehaviour:
     delay: 0
     priority: 0
     SOUNDSITUATION: 21
-    audioClip: {fileID: 8300000, guid: d880f6cbe4f994cfaa4fd768514f39ea, type: 3}
+    audioClip: {fileID: 8300000, guid: 162bac0097f9efc45b23bafcba3233a3, type: 3}
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 20
+    audioClip: {fileID: 8300000, guid: b5e914141ad19ae4daea35f13d2a4f0d, type: 3}
 --- !u!1 &8475085572890318592
 GameObject:
   m_ObjectHideFlags: 0

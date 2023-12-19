@@ -678,6 +678,7 @@ GameObject:
   - component: {fileID: 4963921792173515779}
   - component: {fileID: 5427300941323639964}
   - component: {fileID: 7309028348998424580}
+  - component: {fileID: 1706117435096631249}
   m_Layer: 0
   m_Name: Macia
   m_TagString: ItemCollider
@@ -845,6 +846,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1706117435096631249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5427300941323639961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Macia
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 1
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Macia
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: 56b74cd01be2dcd438c82bce74225092, type: 3}
 --- !u!1 &5948073490916353557
 GameObject:
   m_ObjectHideFlags: 0

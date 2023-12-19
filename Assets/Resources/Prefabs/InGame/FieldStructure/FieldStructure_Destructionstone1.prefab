@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9105007760126633102}
   - component: {fileID: -524574691731775322}
   - component: {fileID: 36660695351529106}
+  - component: {fileID: 8076257700295275308}
   m_Layer: 0
   m_Name: FieldStructure_Destructionstone1
   m_TagString: Untagged
@@ -70,6 +71,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structureId: 26101
   type: 1
+--- !u!114 &8076257700295275308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284876514879051081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: 3DEffect
+    _audioType: 1
+    loadSettingFrom: {fileID: 2449816606897266266, guid: 4b8b239c985f7af4d882c4941336295c, type: 3}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 0
+    pitch: 0
+    streoPan: 0
+    volume: 0
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: 3DEffect
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 1
+    audioClip: {fileID: 8300000, guid: 722f3c87d96c26e4690610fdb125a6bb, type: 3}
 --- !u!1 &2088322805689534785
 GameObject:
   m_ObjectHideFlags: 0

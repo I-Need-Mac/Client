@@ -853,6 +853,7 @@ GameObject:
   - component: {fileID: 2607096526259074492}
   - component: {fileID: 6298853014303431564}
   - component: {fileID: 5706009448461038416}
+  - component: {fileID: 5897547761358029467}
   m_Layer: 5
   m_Name: Close
   m_TagString: Untagged
@@ -917,6 +918,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5897547761358029467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5829953729426662420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: 82b48c5d03374e24e8ed98be1001f1df, type: 3}
 --- !u!1 &6983291036508183528
 GameObject:
   m_ObjectHideFlags: 0

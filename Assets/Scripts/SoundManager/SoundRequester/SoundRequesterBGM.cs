@@ -244,5 +244,8 @@ public class SoundRequesterBGM : SoundRequester
         throw new System.NotImplementedException();
     }
 
-
+    public override bool isPlaying(SoundSituation.SOUNDSITUATION situation)
+    {
+        throw new System.NotImplementedException();
+    }
 }

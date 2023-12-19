@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 7387770760763333285}
   - component: {fileID: 259681628420339998}
   - component: {fileID: 5247613359630550777}
+  - component: {fileID: 5447300389682105174}
   m_Layer: 0
   m_Name: FieldStructure_TeleportCircle
   m_TagString: Untagged
@@ -189,6 +190,41 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5447300389682105174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651071884238957410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: 3DEffect
+    _audioType: 1
+    loadSettingFrom: {fileID: 2449816606897266266, guid: 4b8b239c985f7af4d882c4941336295c, type: 3}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 0
+    pitch: 0
+    streoPan: 0
+    volume: 0
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: 3DEffect
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 1
+    audioClip: {fileID: 8300000, guid: 06e9ab0e614c4bf4ab4e60bdaf53049c, type: 3}
 --- !u!1 &7360204759021979041
 GameObject:
   m_ObjectHideFlags: 0

@@ -126,7 +126,7 @@ UI_SelectSorcerer,주술사 선택,Sorcerer select,呪術者選択
 UI_Setting,설정,Settings,設定
 UI_Shield,보호막,Shield,シールド
 UI_Skill,스킬,Skills,スキル
-UI_Sorcer,주술사,Sorcerer,呪術者
+UI_Sorcer,주술소,,
 UI_Soul,혼,Soul,魂
 UI_SoulSettings,혼 설정,Soul Settings,魂設定
 UI_StageList,{0}번째 이야기,Chapter {0},第{0}話
@@ -176,8 +176,7 @@ Skill_Name_GwiGi,귀기발파 ,,鬼氣發破
 Skill_Name_JuHyung,주형염,,呪形染
 Skill_Name_MyeongGyae,명계예사령,,冥界隸死灵
 Skill_Name_CREPITUS,CREPITUS est ars,,
-Skill_Name_GyuGyu,"急急如律令.
-歯を明らかにする",,
+Skill_Name_GyuGyu,急急如律令.歯を明らかにする,,
 Skill_Name_aliento,aliento del segador,,
 Skill_Name_Pok,폭,,暴
 Skill_Name_JeRyeung,제령,,除令

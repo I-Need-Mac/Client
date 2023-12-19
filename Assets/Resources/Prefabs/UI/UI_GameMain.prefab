@@ -583,13 +583,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speakerSettings: []
+  speakerSettings:
+  - speakerName: TEST
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
   soundPackItems:
   - usingSpeaker: EFFECT
     delay: 0
-    priority: 0
+    priority: 5
     SOUNDSITUATION: 21
-    audioClip: {fileID: 8300000, guid: 4147f58487a9440178380404a2838f6c, type: 3}
+    audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
 --- !u!1 &4560841767860258092
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,6 +615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8728728607021867187}
+  - component: {fileID: 3116005700225005995}
   m_Layer: 0
   m_Name: Sorcere
   m_TagString: Untagged
@@ -627,6 +644,41 @@ RectTransform:
   m_AnchoredPosition: {x: 655, y: -370}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3116005700225005995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560841767860258092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: TEST
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 5
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
 --- !u!1 &5152335398159802511
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,11 +747,11 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
   soundPackItems:
-  - usingSpeaker: TEST
+  - usingSpeaker: EFFECT
     delay: 0
     priority: 5
-    SOUNDSITUATION: 20
-    audioClip: {fileID: 8300000, guid: 42461a9e2873a9741a426f5d3de4105d, type: 3}
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
 --- !u!1 &6450225297404861222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,11 +1373,11 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
   soundPackItems:
-  - usingSpeaker: TEST
+  - usingSpeaker: EFFECT
     delay: 0
     priority: 5
-    SOUNDSITUATION: 20
-    audioClip: {fileID: 8300000, guid: 6986af91abc976d4a9e812ad713bcd9b, type: 3}
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
 --- !u!65 &61340846482778318
 BoxCollider:
   m_ObjectHideFlags: 0

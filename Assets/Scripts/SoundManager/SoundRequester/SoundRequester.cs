@@ -70,6 +70,7 @@ public abstract class SoundRequester : MonoBehaviour
 
     public abstract void RequestCallBack(PackItem item);
 
+    public abstract bool isPlaying(SoundSituation.SOUNDSITUATION situation);
     protected abstract IEnumerator PlaySoundWithDelay(SoundSituation.SOUNDSITUATION situation, float delay);
     protected abstract IEnumerator PlaySoundWithDelay(BGMSituation.BGMSITUATION situation, AudioClip clip, float delay);
     protected abstract IEnumerator PlaySoundWithDelay(string speakerName, AudioClip clip, float delay);

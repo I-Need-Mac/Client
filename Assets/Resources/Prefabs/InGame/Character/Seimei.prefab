@@ -290,6 +290,7 @@ GameObject:
   - component: {fileID: 4387514153110122160}
   - component: {fileID: 3697830239830742575}
   - component: {fileID: 5566308464505013297}
+  - component: {fileID: 8313560670529292001}
   m_Layer: 0
   m_Name: Seimei
   m_TagString: ItemCollider
@@ -457,6 +458,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8313560670529292001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3697830239830742570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Seimei
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 1
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Seimei
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: 6724bda979293be4fb788daebb780ba0, type: 3}
 --- !u!1 &3697830240125579559
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +796,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5680310982455497881}
-  - component: {fileID: 4926910423250141141}
   - component: {fileID: 5680310982455497880}
   - component: {fileID: 5680310982455497887}
   - component: {fileID: 1965507226752799706}
@@ -786,20 +821,6 @@ Transform:
   m_Father: {fileID: 3697830239830742573}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4926910423250141141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5680310982455497885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakerSettings: []
-  soundPackItems: []
 --- !u!33 &5680310982455497880
 MeshFilter:
   m_ObjectHideFlags: 0

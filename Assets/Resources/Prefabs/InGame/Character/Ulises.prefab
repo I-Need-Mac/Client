@@ -543,6 +543,7 @@ GameObject:
   - component: {fileID: 6473097409567720570}
   - component: {fileID: 6226171710553898213}
   - component: {fileID: 8465346000727160198}
+  - component: {fileID: 5143573471697782597}
   m_Layer: 0
   m_Name: Ulises
   m_TagString: ItemCollider
@@ -710,6 +711,41 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5143573471697782597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6226171710553898208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings:
+  - speakerName: Ulises
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 1
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Ulises
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: aeda4d3e9c2ce7c4985ad495deec5880, type: 3}
 --- !u!1 &6226171710795176941
 GameObject:
   m_ObjectHideFlags: 0

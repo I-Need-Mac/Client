@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     private StatusEffect statusEffect;
     private SoundRequester soundRequester;
 
+    private int exState = 0;
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
 
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
     public int exp { get; private set; }
     public int level { get; private set; }
     public int needExp { get; private set; }
+
 
     #region Mono
     private void Awake()
@@ -103,10 +105,16 @@ public class Player : MonoBehaviour
             pos.y += 0.00005f;
             transform.localPosition = pos;
             spineManager.SetAnimation("Idle", true);
+            if ((soundRequester != null && exState ==1) || (soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.IDLE)))
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
+            exState =0;
         }
         else
         {
             spineManager.SetAnimation("Run", true, 0, playerManager.playerData.moveSpeed);
+            if ((soundRequester != null && exState == 0)||(soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.RUN)))
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
+            exState = 1;
         }
     }
     #endregion
@@ -159,6 +167,7 @@ public class Player : MonoBehaviour
     private void AudioSetting()
     {
         SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), "EFFECT_SOUND");
+        soundRequester = GetComponent<SoundRequesterSFX>();
     }
     #endregion
 

@@ -1,9 +1,6 @@
 using BFM;
-using SKILLCONSTANT;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 #region Structure

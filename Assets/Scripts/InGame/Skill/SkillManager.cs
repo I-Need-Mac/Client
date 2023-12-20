@@ -265,6 +265,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             case 213:
                 skill = new ChangAe(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;
+            case 214:
+                skill = new ChukDan(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+                break;
             default:
                 DebugManager.Instance.PrintError("[SkillManager] 미구현된 스킬입니다 (Skill ID: {0})", skillId);
                 return;

@@ -78,6 +78,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         if (player.playerManager.playerData.currentHp <= 0 && gameOver)
         {
+            player.DiePlayerVoice();
             gameOver = false;
             StopAllCoroutines();
             playerUi.GameOver(false);

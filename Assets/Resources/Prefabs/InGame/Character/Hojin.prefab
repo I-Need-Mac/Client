@@ -528,7 +528,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7ab448bebc4ab7a438048086c1ba403b, type: 3}
   - {fileID: 8300000, guid: 00040f4e21b21df4087fad2bec7ba12d, type: 3}
   - {fileID: 8300000, guid: 8d8f0a73eb6fe194ab99131ef8861f2a, type: 3}
-  dieVoice: []
+  dieVoice:
+  - {fileID: 8300000, guid: 2998b3627c03e824d9dc616f2591cdd3, type: 3}
 --- !u!114 &2084806861268700656
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -152,6 +152,17 @@ public class Player : MonoBehaviour
 
 
     }
+    public void DiePlayerVoice()
+    {
+         if (dieVoice.Length != 0)
+            {
+
+                int rnd = Random.Range(0, dieVoice.Length);
+                DebugManager.Instance.PrintError("[SoundRequest] Player Shoot Die Sound " + rnd);
+                playerAudioSource.PlayOneShot(dieVoice[rnd]);
+            }
+
+    }
     #endregion
 
     #region Level

@@ -1218,8 +1218,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Chapter Stage
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
-  m_sharedMaterial: {fileID: -3305390525445643378, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c238644fffdb61a41a4464826b104a1d, type: 2}
+  m_sharedMaterial: {fileID: -4691880593218274680, guid: c238644fffdb61a41a4464826b104a1d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -87,7 +87,7 @@ public class UI_SelectSorcererInfo : UI_Popup
         StatContents.gameObject.SetActive(false);
         SkillContents.gameObject.SetActive(false);
 
-        titleText.text = LocalizeManager.Instance.GetText("UI_Sorcer");
+        titleText.text = LocalizeManager.Instance.GetText("UI_SelectSorcerer");
         storyText.text = LocalizeManager.Instance.GetText("UI_Story");
         statText.text = LocalizeManager.Instance.GetText("UI_Stat");
         skillText.text = LocalizeManager.Instance.GetText("UI_Skill");

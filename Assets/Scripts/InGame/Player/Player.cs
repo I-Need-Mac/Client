@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -16,10 +17,19 @@ public class Player : MonoBehaviour
     private WaitForSeconds invincibleTime;
     private StatusEffect statusEffect;
     private SoundRequester soundRequester;
+    private AudioSource playerAudioSource;
+    
+    private const long VOICE = 15*1000;
 
     private int exState = 0;
+    private int shootVoiceTimer = 0;
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
+
+    [SerializeField]
+    public AudioClip[] randomVoice;
+    [SerializeField]
+    public AudioClip[] dieVoice;
 
     public Transform character { get; private set; }
     public PlayerManager playerManager { get; private set; }
@@ -27,6 +37,8 @@ public class Player : MonoBehaviour
     public int exp { get; private set; }
     public int level { get; private set; }
     public int needExp { get; private set; }
+
+    
 
 
     #region Mono
@@ -62,7 +74,9 @@ public class Player : MonoBehaviour
      */
     private void Update()
     {
+    
         KeyDir();
+        ShootPlayerVoice();
         hpBar.HpBarSetting(transform.position + hpBarPos, playerManager.playerData.currentHp, playerManager.playerData.hp);
     }
 
@@ -114,8 +128,29 @@ public class Player : MonoBehaviour
             spineManager.SetAnimation("Run", true, 0, playerManager.playerData.moveSpeed);
             if ((soundRequester != null && exState == 0)||(soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.RUN)))
                 soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
+            
+         
+
+
             exState = 1;
         }
+    }
+
+    private void ShootPlayerVoice()
+    {
+        shootVoiceTimer++;
+        if (shootVoiceTimer == VOICE)
+        {
+            if (randomVoice.Length != 0)
+            {
+                shootVoiceTimer=0;
+                int rnd = Random.Range(0, randomVoice.Length);
+                DebugManager.Instance.PrintError("[SoundRequest] Player Shoot Sound " + rnd);
+                playerAudioSource.PlayOneShot(randomVoice[rnd]);
+            }
+        }
+
+
     }
     #endregion
 
@@ -168,6 +203,7 @@ public class Player : MonoBehaviour
     {
         SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), "EFFECT_SOUND");
         soundRequester = GetComponent<SoundRequesterSFX>();
+        playerAudioSource = GetComponent<AudioSource>();
     }
     #endregion
 

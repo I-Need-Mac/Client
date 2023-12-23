@@ -523,6 +523,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  randomVoice:
+  - {fileID: 8300000, guid: 973ee12c1d7927f4591eb78f0cabaded, type: 3}
+  - {fileID: 8300000, guid: 7ab448bebc4ab7a438048086c1ba403b, type: 3}
+  - {fileID: 8300000, guid: 00040f4e21b21df4087fad2bec7ba12d, type: 3}
+  - {fileID: 8300000, guid: 8d8f0a73eb6fe194ab99131ef8861f2a, type: 3}
+  dieVoice: []
 --- !u!114 &2084806861268700656
 MonoBehaviour:
   m_ObjectHideFlags: 0

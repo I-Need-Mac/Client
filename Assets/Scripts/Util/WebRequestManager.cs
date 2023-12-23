@@ -149,7 +149,7 @@ public partial class WebRequestManager
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
 
-            Debug.LogError(jsonString);
+            DebugManager.Instance.PrintDebug("[WebAPI]Result of Request :\n"+ request.downloadHandler.text);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");

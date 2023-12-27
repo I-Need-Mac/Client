@@ -2,6 +2,7 @@ using BFM;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 #region Structure
 public struct SkillInfo
@@ -86,16 +87,22 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         return SpawnProjectile<T>(skillData, shooter, LayerConstant.SKILL);
     }
 
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position) where T : Projectile
+    {
+        return SpawnProjectile<T>(skillData, shooter, position, LayerConstant.SKILL);
+    }
+
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, LayerConstant layer) where T : Projectile
-        return SpawnProjectile<T>(skillData, shooter, Vector2.zero);
+    {
+        return SpawnProjectile<T>(skillData, shooter, Vector2.zero, LayerConstant.SKILL);
     }
 
     public T SpawnProjectile<T>(ActiveData skillData, Vector2 position) where T : Projectile
     {
-        return SpawnProjectile<T>(skillData, transform, position);
+        return SpawnProjectile<T>(skillData, transform, position, LayerConstant.SKILL);
     }
 
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position) where T : Projectile
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position, LayerConstant layer) where T : Projectile
     {
         int poolId = skillData.skillId / 100;
         T projectile = (T)skillPools[poolId].GetObject();

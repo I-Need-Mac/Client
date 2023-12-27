@@ -18,6 +18,8 @@ public class Destructionstone : FieldStructure
 
     private SpriteRenderer spriteRenderer;
     private MagicPearl magicPearl;
+    private SoundRequesterSFX soundRequester = null;
+
 
     protected override void Awake()
     {
@@ -27,6 +29,11 @@ public class Destructionstone : FieldStructure
         magicPearl = GetComponentInChildren<MagicPearl>();
     }
 
+
+    private void Start()
+    {
+        soundRequester = GetComponent<SoundRequesterSFX>();
+    }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (!front.enabled)
@@ -69,9 +76,17 @@ public class Destructionstone : FieldStructure
         front.enabled = false;
         spriteRenderer.enabled = false;
         magicPearl.sprite.enabled = false;
+        if (soundRequester != null) {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ACTIVE);
+        }
+
         yield return new WaitForSeconds(this.fieldStructureData.coolTime);
         front.enabled = true;
         spriteRenderer.enabled = true;
         magicPearl.sprite.enabled = true;
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.SPAWN);
+        }
     }
 }

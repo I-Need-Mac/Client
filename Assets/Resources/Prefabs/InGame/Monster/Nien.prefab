@@ -216,6 +216,7 @@ MonoBehaviour:
     groupSourceRate: 0
     monsterPrefabPath: 
     attackType: 0
+  monsterID: 
 --- !u!114 &8432360679213270949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,16 +279,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speakerSettings:
-  - speakerName: Nien
+  - speakerName: Shooter
     _audioType: 1
-    loadSettingFrom: {fileID: 0}
+    loadSettingFrom: {fileID: 2449816606897266266, guid: 4b8b239c985f7af4d882c4941336295c, type: 3}
     audioMixerGroup: {fileID: 0}
     isLoop: 0
     isBypassEffects: 0
     priority: 128
     pitch: 1
     streoPan: 0
-    volume: 1
+    volume: 0.5
     is3D: 0
     audioRolloffMode: 0
     dropperLevel: 0
@@ -295,11 +296,11 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
   soundPackItems:
-  - usingSpeaker: Nien
-    delay: 1
-    priority: 5
-    SOUNDSITUATION: 5
-    audioClip: {fileID: 8300000, guid: e885484e1bc99fb47a0ac3f6bfa586b1, type: 3}
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 11
+    audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
 --- !u!1 &1159884816420337776
 GameObject:
   m_ObjectHideFlags: 0

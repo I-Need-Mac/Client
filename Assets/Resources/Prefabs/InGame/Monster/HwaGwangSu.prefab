@@ -64,6 +64,7 @@ MonoBehaviour:
     groupSourceRate: 0
     monsterPrefabPath: 
     attackType: 0
+  monsterID: 
 --- !u!114 &3422411336246179697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,7 +80,7 @@ MonoBehaviour:
   speakerSettings:
   - speakerName: Shooter
     _audioType: 1
-    loadSettingFrom: {fileID: 0}
+    loadSettingFrom: {fileID: 2449816606897266266, guid: 4b8b239c985f7af4d882c4941336295c, type: 3}
     audioMixerGroup: {fileID: 0}
     isLoop: 0
     isBypassEffects: 0
@@ -97,8 +98,8 @@ MonoBehaviour:
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
-    SOUNDSITUATION: 8
-    audioClip: {fileID: 8300000, guid: e885484e1bc99fb47a0ac3f6bfa586b1, type: 3}
+    SOUNDSITUATION: 11
+    audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
 --- !u!114 &6152796279671637203
 MonoBehaviour:
   m_ObjectHideFlags: 0

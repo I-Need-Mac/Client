@@ -30,6 +30,7 @@ public class Monster : MonoBehaviour
 
     private HpBar hpBar;
     private float hpBarVisibleTime;
+  
     private WaitForFixedUpdate fixedFrame;
 
     private MonsterCollider attackCollider;
@@ -42,6 +43,9 @@ public class Monster : MonoBehaviour
     public bool isAttack { get; private set; }
     public Transform target { get; private set; }
     public Vector2 lookDirection { get; private set; } //바라보는 방향
+
+    [SerializeField]
+    public String monsterID;
 
     #region Mono & Setting
     private void Awake()
@@ -56,6 +60,11 @@ public class Monster : MonoBehaviour
         tick = new WaitForSeconds(0.4f);
         hpBarVisibleTime = Convert.ToInt32(CSVReader.Read("BattleConfig", "HpBarVisibleTime", "ConfigValue")) / 1000.0f;
         fixedFrame = new WaitForFixedUpdate();
+
+      
+        Guid guid = Guid.NewGuid();
+        monsterID = guid.ToString();
+        DebugManager.Instance.PrintDebug("[Monster Spawn] "+ monsterID);
     }
 
     private void Start()
@@ -110,6 +119,9 @@ public class Monster : MonoBehaviour
         {
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.SPAWN);
         }
+    }
+    public string GetMonsterID() { 
+        return monsterID;
     }
 
     public void SetTarget(Transform target, bool isPlayer)

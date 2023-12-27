@@ -76,7 +76,7 @@ public class FieldStructure : MonoBehaviour
 
     private void FieldStructureInit()
     {
-        SetLayer(transform);
+        SetLayer(transform, (LayerConstant)fieldStructureData.layerOrder);
         top = transform.Find("Top").GetComponent<Collider2D>();
         SetLayer(top.transform, LayerConstant.DECORATION);
         if (transform.Find("Top").TryGetComponent(out Collider2D col))
@@ -91,22 +91,22 @@ public class FieldStructure : MonoBehaviour
         }
     }
 
-    private void SetLayer(Transform trans, LayerConstant layer = LayerConstant.GIMMICK)
+    private void SetLayer(Transform trans, LayerConstant layer)
     {
-        trans.gameObject.layer = (int)layer;
+        trans.gameObject.layer = (int)LayerConstant.GIMMICK;
 
         if (trans.TryGetComponent(out Renderer render))
         {
-            render.sortingLayerName = ((LayerConstant)fieldStructureData.layerOrder).ToString();
+            render.sortingLayerName = layer.ToString();
         }
         else if (trans.TryGetComponent(out MeshRenderer meshRender))
         {
-            meshRender.sortingLayerName = ((LayerConstant)fieldStructureData.layerOrder).ToString();
+            meshRender.sortingLayerName = layer.ToString();
         }
 
         foreach (Transform child in trans)
         {
-            SetLayer(child);
+            SetLayer(child, layer);
         }
     }
 

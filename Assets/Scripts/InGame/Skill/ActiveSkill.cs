@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public enum SKILL_TYPE
 {
-    RANGE,
+    RANGES,
     PROJECTILE,
 }
 
@@ -59,6 +59,7 @@ public abstract class ActiveSkill : Skill
                     SceneManager.LoadScene(skillData.cutDire, LoadSceneMode.Additive);
                     yield return new WaitForSeconds(0.1f);
                 }
+
                 yield return Activation();
                 yield return PlayerUI.Instance.skillBoxUi.boxIcons[skillNum].Dimmed(skillData.coolTime);
             }

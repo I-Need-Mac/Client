@@ -94,7 +94,13 @@ public class Projectile : MonoBehaviour
 
         if (skillData.skillType == SKILL_TYPE.RANGES)
         {
-            SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.projectileSizeMulti, this.transform);
+            if(skillData.splashRange > 0) {
+                SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.splashRange, this.transform);
+            }
+            else {
+                SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.attackDistance, this.transform);
+
+            }
         }
         //transform.localScale *= this.skillData.projectileSizeMulti;
         //this.totalDamage = skillData.damage;

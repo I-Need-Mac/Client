@@ -78,6 +78,7 @@ public class FieldStructure : MonoBehaviour
     {
         SetLayer(transform);
         top = transform.Find("Top").GetComponent<Collider2D>();
+        SetLayer(top.transform, LayerConstant.DECORATION);
         if (transform.Find("Top").TryGetComponent(out Collider2D col))
         {
             top = col;
@@ -90,9 +91,9 @@ public class FieldStructure : MonoBehaviour
         }
     }
 
-    private void SetLayer(Transform trans)
+    private void SetLayer(Transform trans, LayerConstant layer = LayerConstant.GIMMICK)
     {
-        trans.gameObject.layer = (int)LayerConstant.GIMMICK;
+        trans.gameObject.layer = (int)layer;
 
         if (trans.TryGetComponent(out Renderer render))
         {

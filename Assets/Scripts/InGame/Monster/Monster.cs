@@ -10,7 +10,6 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     [field: SerializeField] public MonsterData monsterData { get; private set; }
-    [SerializeField] public bool isBoss { get; private set; } = false;
 
     private CapsuleCollider2D monsterCollider2;
     private CapsuleCollider2D monsterCollider;
@@ -153,20 +152,39 @@ public class Monster : MonoBehaviour
             monsterData.SetGroupSource(Convert.ToString(table["GroupSource"]));
             monsterData.SetGroupSourceRate(Convert.ToInt32(table["GroupSourceRate"]));
             monsterData.SetMonsterPrefabPath(Convert.ToString(table["MonsterPrefabPath"]));
-            monsterData.SetAttackType((AttackTypeConstant)Enum.Parse(typeof(AttackTypeConstant), Convert.ToString(table["AttackType"])));
+
+            if (Enum.TryParse(Convert.ToString(table["AttackType"]), true, out AttackType attackType))
+            {
+                monsterData.SetAttackType(attackType);
+            }
+            else
+            {
+                DebugManager.Instance.PrintError("[Error: Monster] 테이블의 AttackType을 체크해 주세요 (MonsterID: {0})", monsterId);
+                monsterData.SetAttackType(AttackType.Bold);
+            }
+
+            if (Enum.TryParse(Convert.ToString(table["MonsterType"]), true, out MonsterType monsterType))
+            {
+                monsterData.SetMonsterType(monsterType);
+            }
+            else
+            {
+                DebugManager.Instance.PrintError("[Error: Monster] 테이블의 MonsterType을 체크해 주세요 (MonsterID: {0})", monsterId);
+                monsterData.SetMonsterType(MonsterType.NORMAL);
+            }
         }
         spineSwitch = true;
     }
     #endregion
 
     #region AI
-    private Node SetAI(AttackTypeConstant attackType)
+    private Node SetAI(AttackType attackType)
     {
         switch (attackType)
         {
-            case AttackTypeConstant.Bold:
+            case AttackType.Bold:
                 return BoldAI();
-            case AttackTypeConstant.Shy:
+            case AttackType.Shy:
                 return ShyAI();
             default:
                 return null;

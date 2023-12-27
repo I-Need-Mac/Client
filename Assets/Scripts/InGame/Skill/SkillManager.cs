@@ -1,10 +1,8 @@
 using BFM;
-using SKILLCONSTANT;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 #region Structure
 public struct SkillInfo
@@ -76,24 +74,41 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     public T SpawnProjectile<T>(ActiveData skillData) where T : Projectile
     {
-        return SpawnProjectile<T>(skillData, transform);
+        return SpawnProjectile<T>(skillData, transform, LayerConstant.SKILL);
+    }
+
+    public T SpawnProjectile<T>(ActiveData skillData, LayerConstant layer) where T : Projectile
+    {
+        return SpawnProjectile<T>(skillData, transform, layer);
     }
 
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter) where T : Projectile
     {
-        return SpawnProjectile<T>(skillData, shooter, Vector2.zero);
-    }
-
-    public T SpawnProjectile<T>(ActiveData skillData, Vector2 position) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, transform, position);
+        return SpawnProjectile<T>(skillData, shooter, LayerConstant.SKILL);
     }
 
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position) where T : Projectile
     {
+        return SpawnProjectile<T>(skillData, shooter, position, LayerConstant.SKILL);
+    }
+
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, LayerConstant layer) where T : Projectile
+    {
+        return SpawnProjectile<T>(skillData, shooter, Vector2.zero, LayerConstant.SKILL);
+    }
+
+    public T SpawnProjectile<T>(ActiveData skillData, Vector2 position) where T : Projectile
+    {
+        return SpawnProjectile<T>(skillData, transform, position, LayerConstant.SKILL);
+    }
+
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position, LayerConstant layer) where T : Projectile
+    {
         int poolId = skillData.skillId / 100;
         T projectile = (T)skillPools[poolId].GetObject();
         projectile.transform.parent = shooter;
+        projectile.gameObject.layer = (int)layer;
+        projectile.transform.localPosition = Vector2.zero;
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
         //projectile.transform.localPosition = Vector3.zero;
         projectile.transform.localPosition = position;
@@ -109,25 +124,6 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         int poolId = skillData.skillId / 100;
         T projectile = (T)skillPools[poolId].GetObject();
-        projectile.transform.parent = shooter;
-        projectile.gameObject.layer = (int)LayerConstant.SKILL;
-        if (direction)
-        {
-            projectile.transform.localScale = new Vector3(skillData.projectileSizeMulti, 1.0f, 1.0f);
-        }
-        else
-        {
-            projectile.transform.localScale = new Vector3(1.0f, skillData.projectileSizeMulti, 1.0f);
-        }
-        projectile.SetProjectile(skillData);
-        projectile.gameObject.SetActive(true);
-        return projectile;
-    }
-
-    public Projectile SpawnProjectile(ActiveData skillData, Transform shooter, bool direction)
-    {
-        int poolId = skillData.skillId / 100;
-        Projectile projectile = skillPools[poolId].GetObject();
         projectile.transform.parent = shooter;
         projectile.gameObject.layer = (int)LayerConstant.SKILL;
         if (direction)

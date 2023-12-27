@@ -329,6 +329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  randomVoice: []
+  dieVoice: []
 --- !u!114 &4387514153110122160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,7 +505,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3697830240125579558}
   - component: {fileID: 3697830240125579547}
-  - component: {fileID: 3697830240125579544}
   - component: {fileID: 3697830240125579545}
   m_Layer: 0
   m_Name: PlayerCamera
@@ -569,14 +570,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3697830240125579544
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3697830240125579559}
-  m_Enabled: 1
 --- !u!114 &3697830240125579545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -800,6 +793,7 @@ GameObject:
   - component: {fileID: 5680310982455497887}
   - component: {fileID: 1965507226752799706}
   - component: {fileID: 4939858064779222103}
+  - component: {fileID: 916620880241366375}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -926,3 +920,11 @@ CapsuleCollider2D:
   m_Offset: {x: 0.011232391, y: 0.86685693}
   m_Size: {x: 0.45669022, y: 1.661865}
   m_Direction: 0
+--- !u!81 &916620880241366375
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680310982455497885}
+  m_Enabled: 1

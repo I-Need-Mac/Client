@@ -547,6 +547,11 @@ public class Monster : MonoBehaviour
             yield break;
         }
 
+        if (monsterData.currentHp <= 0.0f)
+        {
+            yield break;
+        }
+
         statusEffect.AddStatusEffect(STATUS_EFFECT.TRANSITION);
 
         SkeletonDataAsset asset = spineManager.GetSkeletonDataAsset();

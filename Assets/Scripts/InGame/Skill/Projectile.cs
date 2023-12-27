@@ -126,7 +126,7 @@ public class Projectile : MonoBehaviour
                 totalDamage += hitCount * SoulManager.Instance.GetEffect(SoulEffect.MULTIATTACK, skillData._damage);
             }
 
-            if (monster.isBoss)
+            if (monster.monsterData.monsterType == MonsterType.BOSS)
             {
                 totalDamage += SoulManager.Instance.GetEffect(SoulEffect.BOSSDAMAGE, skillData._damage);
             }

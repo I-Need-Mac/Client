@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 3129428740544843227}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 1018659917899590562}
   - {fileID: 6040392655793334743}
@@ -203,7 +203,7 @@ MonoBehaviour:
   speakerSettings:
   - speakerName: 3DEffect
     _audioType: 1
-    loadSettingFrom: {fileID: 2449816606897266266, guid: 4b8b239c985f7af4d882c4941336295c, type: 3}
+    loadSettingFrom: {fileID: 2449816606897266266, guid: 80bd715ea9362754487b5d83f07c9950, type: 3}
     audioMixerGroup: {fileID: 0}
     isLoop: 0
     isBypassEffects: 0

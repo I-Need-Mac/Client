@@ -83,5 +83,9 @@ public class ProjectileStraight : Projectile
 
             DebugManager.Instance.PrintDebug("[TEST]: Hit");
         }
+        else if (collision.gameObject.layer == (int)LayerConstant.MAP)
+        {
+            ++bounced;
+        }
     }
 }

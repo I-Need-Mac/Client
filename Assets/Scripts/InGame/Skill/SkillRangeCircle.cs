@@ -19,6 +19,5 @@ public class SkillRangeCircle : MonoBehaviour
         yield return new WaitForSeconds(duration);
         this.transform.localScale = Vector3.zero;
         SkillManager.Instance.DeSpawnRangeCircle(this);
-        DebugManager.Instance.PrintError(duration);
     }
 }

@@ -28,6 +28,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
+    private ObjectPool<SkillRangeCircle> rangeCirclePool;
 
     //public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
     public Dictionary<int, Skill> skillList { get; private set; } = new Dictionary<int, Skill>();
@@ -49,9 +50,27 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 }
             }
         }
+
+        rangeCirclePool = new ObjectPool<SkillRangeCircle>(ResourcesManager.Load<SkillRangeCircle>("Prefabs/InGame/Skill/SkillRangeCircle"), transform);
     }
 
     #region Spawn Projectile
+    public SkillRangeCircle SpawnRangeCircle(float duration, float size, Transform parent)
+    {
+        SkillRangeCircle circle = rangeCirclePool.GetObject();
+        circle.Activation(duration, size);
+        circle.transform.SetParent(parent);
+        circle.transform.localPosition = Vector3.zero;
+        circle.gameObject.SetActive(true);
+        return circle;
+    }
+
+    public void DeSpawnRangeCircle(SkillRangeCircle circle)
+    {
+        rangeCirclePool.ReleaseObject(circle);
+        circle.transform.SetParent(transform);
+    }
+
     public T SpawnProjectile<T>(ActiveData skillData) where T : Projectile
     {
         return SpawnProjectile<T>(skillData, transform, LayerConstant.SKILL);
@@ -68,12 +87,25 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     }
 
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, LayerConstant layer) where T : Projectile
+        return SpawnProjectile<T>(skillData, shooter, Vector2.zero);
+    }
+
+    public T SpawnProjectile<T>(ActiveData skillData, Vector2 position) where T : Projectile
+    {
+        return SpawnProjectile<T>(skillData, transform, position);
+    }
+
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position) where T : Projectile
     {
         int poolId = skillData.skillId / 100;
         T projectile = (T)skillPools[poolId].GetObject();
         projectile.transform.parent = shooter;
         projectile.gameObject.layer = (int)layer;
         projectile.transform.localPosition = Vector2.zero;
+        projectile.gameObject.layer = (int)LayerConstant.SKILL;
+        //projectile.transform.localPosition = Vector3.zero;
+        projectile.transform.localPosition = position;
+        //projectile.transform.position = position;
         projectile.transform.localScale = Vector3.one * skillData.projectileSizeMulti;
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);

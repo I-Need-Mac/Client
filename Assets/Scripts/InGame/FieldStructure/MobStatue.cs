@@ -22,18 +22,30 @@ public class MobStatue : FieldStructure
 
         if (collision.gameObject.TryGetComponent(out Projectile projectile))
         {
+     
             this.hp -= projectile.skillData.damage;
             if (this.hp <= 0)
             {
-                //ItemManager.Instance.DropItems(this.fieldStructureData.gimmickParam[1], transform);
-                //gameObject.SetActive(false);
                 StartCoroutine(Activation());
+            }
+            else {
+                if (soundRequester != null)
+                {
+                    DebugManager.Instance.PrintDebug("[SoundRequest] MobStatue Hit");
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
+                }
             }
         }
     }
 
     private IEnumerator Activation()
     {
+        if (soundRequester != null)
+        {
+            DebugManager.Instance.PrintDebug("[SoundRequest] MobStatue DESTORY");
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DESTORY);
+        }
+
         ItemManager.Instance.DropItems(this.fieldStructureData.gimmickParam[1], transform);
         spriteRenderer.enabled = false;
         top.enabled = false;
@@ -45,6 +57,7 @@ public class MobStatue : FieldStructure
 
     public override void Remove()
     {
+
         StartCoroutine(Activation());
     }
 }

@@ -96,6 +96,7 @@ public class BlueFlame : FieldStructure
         {
             if (collision.TryGetComponent(out Monster monster))
             {
+                DebugManager.Instance.PrintDebug("[DamgeLog] BlueFrame Damaged To " + monster.GetMonsterID());
                 monster.Hit((int)damage);
                 monster.SkillEffectActivation(SKILLCONSTANT.SKILL_EFFECT.SLOW, burnSlow, 1.0f);
                 return;

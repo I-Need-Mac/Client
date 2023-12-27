@@ -16,8 +16,7 @@ public class SeRae : ActiveSkill
             pos.x += UnityEngine.Random.Range(-2.0f, 2.0f);
             pos.y += UnityEngine.Random.Range(-2.0f, 2.0f);
 
-            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
-            projectile.transform.position = pos;
+            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, pos);
             yield return intervalTime;
             SkillManager.Instance.DeSpawnProjectile(projectile);
         }

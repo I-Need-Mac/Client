@@ -32,7 +32,9 @@ public class SoundRequesterSFX : SoundRequester
 
             if (items.loadSettingFrom == null)
             {
-                GameObject speaker = new GameObject(items.speakerName);
+                DebugManager.Instance.PrintDebug("SoundRequester : "+ items.audioType + "@" + soundObjectID + "!" + items.speakerName + " Make New Speaker ");
+
+               GameObject speaker = new GameObject(items.speakerName);
                 speaker.transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);
                 speaker.transform.SetParent(soundRequester.transform);
 
@@ -61,14 +63,14 @@ public class SoundRequesterSFX : SoundRequester
             }
             else
             {
-
+                DebugManager.Instance.PrintDebug("SoundRequester : " + items.audioType + "@" + soundObjectID + "!" + items.speakerName + " Load Speaker ");
                 GameObject speaker = Instantiate(items.loadSettingFrom);
 
                 speaker.name = items.speakerName;
                 speaker.transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);
                 speaker.transform.SetParent(soundRequester.transform);
 
-                audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
+                audioSources.Add(items.speakerName, speaker.GetComponent<AudioSource>());
                 audioGameObjectDict.Add(items.speakerName, speaker);
                 SoundManager.Instance.AddAudioSource(soundObjectID + "!" + items.speakerName, audioSources[items.speakerName], items.audioType);
 

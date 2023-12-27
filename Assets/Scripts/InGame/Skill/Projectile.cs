@@ -48,6 +48,13 @@ public class Projectile : MonoBehaviour
         {
             SoundManager.Instance.PlayAudioClip("Skill", shootAudioClip);
         }
+
+        //if (this.skillData != null && skillData.skillType == SKILL_TYPE.RANGES)
+        //{
+        //    DebugManager.Instance.PrintError(this.transform.localPosition);
+        //    DebugManager.Instance.PrintError(this.transform.position);
+        //    SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.projectileSizeMulti, this.transform.localPosition);
+        //}
     }
 
     public void SetAnimation(Sprite sprite, RuntimeAnimatorController controller)
@@ -84,6 +91,11 @@ public class Projectile : MonoBehaviour
         }
 
         SkillEffect(null);
+
+        if (skillData.skillType == SKILL_TYPE.RANGES)
+        {
+            SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.projectileSizeMulti, this.transform);
+        }
         //transform.localScale *= this.skillData.projectileSizeMulti;
         //this.totalDamage = skillData.damage;
     }

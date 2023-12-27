@@ -105,7 +105,7 @@ public class ActiveData
             if (GameManager.Instance.player != null)
             {
                 float totalDamage = PassiveEffect.CalcData(_damage, GameManager.Instance.player.playerManager.playerData.skillDamage.param, GameManager.Instance.player.playerManager.playerData.skillDamage.calcMode);
-                if (skillType == SKILL_TYPE.RANGE)
+                if (skillType == SKILL_TYPE.RANGES)
                 {
                     totalDamage += SoulManager.Instance.GetEffect(SoulEffect.RANGEDAMAGE, _damage);
                 }

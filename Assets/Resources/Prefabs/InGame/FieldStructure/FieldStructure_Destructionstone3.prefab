@@ -195,7 +195,7 @@ MonoBehaviour:
   speakerSettings:
   - speakerName: 3DEffect
     _audioType: 1
-    loadSettingFrom: {fileID: 2449816606897266266, guid: 4b8b239c985f7af4d882c4941336295c, type: 3}
+    loadSettingFrom: {fileID: 2449816606897266266, guid: 80bd715ea9362754487b5d83f07c9950, type: 3}
     audioMixerGroup: {fileID: 0}
     isLoop: 0
     isBypassEffects: 0

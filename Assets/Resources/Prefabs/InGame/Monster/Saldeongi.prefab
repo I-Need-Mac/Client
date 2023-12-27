@@ -54,7 +54,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: f94da322c595f384d96ff8d821bad122, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -285,6 +285,7 @@ MonoBehaviour:
     groupSourceRate: 0
     monsterPrefabPath: 
     attackType: 0
+  monsterID: 
 --- !u!114 &7751576797987361664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,8 +298,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speakerSettings: []
-  soundPackItems: []
+  speakerSettings:
+  - speakerName: Shooter
+    _audioType: 1
+    loadSettingFrom: {fileID: 2449816606897266266, guid: 4b8b239c985f7af4d882c4941336295c, type: 3}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 0.5
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 11
+    audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
 --- !u!114 &275744116487021074
 MonoBehaviour:
   m_ObjectHideFlags: 0

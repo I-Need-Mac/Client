@@ -10,5 +10,6 @@ public class UIStatus : SingleTon<UIStatus>
     public bool Sinwol { get; set; }
     public bool SiWoo { get; set; }
     public bool Ulises { get; set; }
+    public int Last_Clear_Stage { get; set; }
 
 }

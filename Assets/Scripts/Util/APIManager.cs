@@ -58,12 +58,12 @@ public class APIManager : SingleTon<APIManager>
         sendData.Add("steam_id", name);
         sendData.Add("name", nickname);
         StartGame startGame = (StartGame)await requestManager.Get<StartGame>(APIAddressManager.REQUEST_GAME_START, sendData);
-        UIStatus.Instance.Hojin = startGame.data.hojin;
-        UIStatus.Instance.Seimei = startGame.data.seimei;
-        UIStatus.Instance.Macia = startGame.data.macia;
-        UIStatus.Instance.SiWoo = startGame.data.siWoo;
-        UIStatus.Instance.Sinwol = startGame.data.sinwol;
-        UIStatus.Instance.Ulises = startGame.data.ulises;
+        //UIStatus.Instance.Hojin = startGame.data.hojin;
+        //UIStatus.Instance.Seimei = startGame.data.seimei;
+        //UIStatus.Instance.Macia = startGame.data.macia;
+        //UIStatus.Instance.SiWoo = startGame.data.siWoo;
+        //UIStatus.Instance.Sinwol = startGame.data.sinwol;
+        //UIStatus.Instance.Ulises = startGame.data.ulises;
         switch (characterName.ToLower())
         {
             case "hojin":
@@ -82,6 +82,15 @@ public class APIManager : SingleTon<APIManager>
                 Debug.LogError("There's no such character");
                 return false;
         }
+    }
+    public async Task<int> StageLastClear(string name, string nickname)
+    {
+        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        sendData.Add("steam_id", name);
+        sendData.Add("name", nickname);
+        StartGame startGame = (StartGame)await requestManager.Get<StartGame>(APIAddressManager.REQUEST_GAME_START, sendData);
+        UIStatus.Instance.Last_Clear_Stage = startGame.data.last_stage.GetValueOrDefault();
+        return startGame.data.last_stage.GetValueOrDefault();
     }
 
 

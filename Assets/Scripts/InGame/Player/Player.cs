@@ -145,7 +145,7 @@ public class Player : MonoBehaviour
             {
                 shootVoiceTimer=0;
                 int rnd = Random.Range(0, randomVoice.Length);
-                DebugManager.Instance.PrintError("[SoundRequest] Player Shoot Sound " + rnd);
+                DebugManager.Instance.PrintDebug("[SoundRequest] Player Shoot Sound " + rnd);
                 playerAudioSource.PlayOneShot(randomVoice[rnd]);
             }
         }

@@ -15,9 +15,9 @@ public class SoundManager : SingleTon<SoundManager>
     GameObject soundManager;
     GameObject bgmRequester;
     SoundManagerUpdater soundManagerUpdater;
-    
+
+    public string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
     private const float soundNomalizer = 10.0f;
-    private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
     private Dictionary<string, string> audioTypeDict = new Dictionary<string, string>();
 
     public void CreateSoundManager()
@@ -180,11 +180,11 @@ public class SoundManager : SingleTon<SoundManager>
     }
     public void PauseType(EAudioType audioType)
     {
-        foreach (string key in audioSourceList.Keys)
+        foreach (string key in audioTypeDict.Keys)
         {
            if (key.Split('@')[0] == audioTypeList[(int)audioType])
             {
-                audioSourceList[key].Pause();
+                audioSourceList[key.Split('@')[1]].Pause();
             }
             DebugManager.Instance.PrintDebug("SoundManager : Pause " + key);
 
@@ -193,11 +193,11 @@ public class SoundManager : SingleTon<SoundManager>
     }
     public void PauseType(string audioType)
     {
-        foreach (string key in audioSourceList.Keys)
+        foreach (string key in audioTypeDict.Keys)
         {
             if (key.Split('@')[0].Equals(audioType))
             {
-                audioSourceList[key].Pause();
+                audioSourceList[key.Split('@')[1]].Pause();
             }
             DebugManager.Instance.PrintDebug("SoundManager : Pause " + key);
 
@@ -207,11 +207,11 @@ public class SoundManager : SingleTon<SoundManager>
 
     public void PlayType(EAudioType audioType)
     {
-        foreach (string key in audioSourceList.Keys)
+        foreach (string key in audioTypeDict.Keys)
         {
             if (key.Split('@')[0] == audioTypeList[(int)audioType])
             {
-                audioSourceList[key].Play();
+                audioSourceList[key.Split('@')[1]].Play();
             }
             DebugManager.Instance.PrintDebug("SoundManager : Play " + key);
         }
@@ -219,16 +219,43 @@ public class SoundManager : SingleTon<SoundManager>
     }
     public void PlayType(string audioType)
     {
-        foreach (string key in audioSourceList.Keys)
+        foreach (string key in audioTypeDict.Keys)
         {
             if (key.Split('@')[0].Equals(audioType))
             {
-                audioSourceList[key].Play();
+                audioSourceList[key.Split('@')[1]].Play();
             }
             DebugManager.Instance.PrintDebug("SoundManager : Play " + key);
         }
 
     }
+
+    public void ResetVolume()
+    {
+        foreach (string key in audioTypeDict.Keys)
+        {
+            if (key.Split('@')[0] == audioTypeList[(int)EAudioType.BGM])
+            {
+                audioSourceList[key.Split('@')[1]].volume= GetSettingSound(audioTypeList[(int)EAudioType.BGM]);
+                DebugManager.Instance.PrintDebug("SoundManager : ResetVolume " + key +" "+ EAudioType.BGM.ToString());
+            }
+            else if (key.Split('@')[0] == audioTypeList[(int)EAudioType.EFFECT])
+            {
+                audioSourceList[key.Split('@')[1]].volume = GetSettingSound(audioTypeList[(int)EAudioType.EFFECT]);
+                DebugManager.Instance.PrintDebug("SoundManager : ResetVolume " + key + " " + EAudioType.EFFECT.ToString());
+
+            }
+            else if(key.Split('@')[0] == audioTypeList[(int)EAudioType.VOICE])
+            {
+                audioSourceList[key.Split('@')[1]].volume = GetSettingSound(audioTypeList[(int)EAudioType.VOICE]);
+                DebugManager.Instance.PrintDebug("SoundManager : ResetVolume " + key + " " + EAudioType.VOICE.ToString());
+
+            }
+
+        }
+
+    }
+
 
     public void UnPauseType(EAudioType audioType)
     {

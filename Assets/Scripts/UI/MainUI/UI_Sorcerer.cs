@@ -153,29 +153,27 @@ public class UI_Sorcerer : UI_Base
 
         return ultiPath;
     }
-    async void CharacterUnlock()
+    void CharacterUnlock()
     {
-        if (!SteamManager.Initialized) { return; }
-        string name = SteamUser.GetSteamID().ToString();     
         switch (sorcererInfoID)
         {
             case 101:
-                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "hojin");
+                sorcererUnlock = UIStatus.Instance.hojin;
                 break;
             case 102:
-                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "siwoo");
+                sorcererUnlock = UIStatus.Instance.siWoo;
                 break;
             case 103:
-                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "sinwol");
+                sorcererUnlock = UIStatus.Instance.sinwol;
                 break;
             case 104:
-                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "ulises");
+                sorcererUnlock = UIStatus.Instance.ulises;
                 break;
             case 105:
-                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "seimei");
+                sorcererUnlock = UIStatus.Instance.seimei;
                 break;
             case 106:
-                sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "macia");
+                sorcererUnlock = UIStatus.Instance.macia;
                 break;
         }
     }

@@ -31,11 +31,11 @@ public class UI_StageElement : UI_Base
         }
         
         stageId = int.Parse(stageIds[prefabIndex]);
-        if(UIStatus.Instance.Last_Clear_Stage == 0 && stageId%10 == 1)
+        if(UIStatus.Instance.last_stage == 0 && stageId%10 == 1)
         {
             access= true;
         }
-        else if(stageId%10<=UIStatus.Instance.Last_Clear_Stage%10+1)
+        else if(stageId%10<=UIStatus.Instance.last_stage %10+1)
         {
             access = true;
         }

@@ -64,6 +64,7 @@ public class UI_StartMain : UI_Base
                 else {
                     if (isAutoLogin) {
                             RequestLogin();
+                        GetStartData();
                      }
                     else {
                         UIManager.Instance.OpenUI<UI_Login>();
@@ -120,6 +121,12 @@ public class UI_StartMain : UI_Base
         {
             UIManager.Instance.OpenUI<UI_Login>();
         }
+    }
+    async void GetStartData()
+    {
+        if (!SteamManager.Initialized) { return; }
+        string name = SteamUser.GetSteamID().ToString();
+        await APIManager.Instance.StartGame(name,"adf");
     }
 
 }

@@ -56,11 +56,16 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     }
 
     #region Spawn Projectile
+    public SkillRangeCircle SpawnRangeCircle(float duration, Transform parent)
+    {
+        return SpawnRangeCircle(duration, 1.0f, parent);
+    }
+
     public SkillRangeCircle SpawnRangeCircle(float duration, float size, Transform parent)
     {
         SkillRangeCircle circle = rangeCirclePool.GetObject();
-        circle.Activation(duration, size);
         circle.transform.SetParent(parent);
+        circle.Activation(duration, size);
         circle.transform.localPosition = Vector3.zero;
         circle.gameObject.SetActive(true);
         return circle;
@@ -256,6 +261,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 skill = new BuGong(skillId, shooter, skillNum);
                 break;
             //아래로 패시브
+            case 201:
+                skill = new MyungSang(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+                break;
             case 202:
                 skill = new InnPassive(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
                 break;

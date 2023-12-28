@@ -7,4 +7,4 @@ Int,String,Int,Int,Int,Int,Int,Int,Int,Int,Float,Int,Int,Int,String,String,Strin
 104,CharName_SeiMei,180,80,1500,15000,0,0,0,0,1.3,1.5,10501,11201,Prefabs/InGame/Character/Seimei,Character\SeiMei\MainIllustrator\Main_SeiMei_Main_01,UI\Character_Select\Kino_Select_Box_Use,SeiMei,Character_Inform_SeiMei,Arts/UI/Character_Profile/Seimei_Profile
 105,CharName_Ulises,300,80,1500,15000,0,1,0,0,1.3,1.5,10401,11201,Prefabs/InGame/Character/Ulises,Character\Ulises\MainIllustrator\Main_Ulises_Main_01,UI\Character_Select\Ulises_Select_Box_Use,Ulises,Character_Inform_Ulises,Arts/UI/Character_Profile/Ulises_Profile
 106,CharName_Macia,200,60,7500,20000,0,0,0,0,1.5,1.5,10601,11201,Prefabs/InGame/Character/Macia,Character\Macia\MainIllustrator\Main_Macia_Main_01,UI\Character_Select\Macia_Select_Box_Use,Macia,Character_Inform_Macia,Arts/UI/Character_Profile/Macia_Profile
-201,CharName_SeiMei2,360,160,3000,30000,0,0,0,0,1.5,1.5,,12001,Prefabs/InGame/Character/Seimei2,,,,,
+201,CharName_SeiMei2,360,160,3000,30000,0,0,0,0,1.5,1.5,,30101,Prefabs/InGame/Character/Seimei2,,,,,

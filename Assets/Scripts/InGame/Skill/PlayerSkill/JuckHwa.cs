@@ -41,7 +41,9 @@ public class JuckHwa : ActiveSkill
             if (((int)activeTime) % 97 == 0)
             {
                 Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
-                projectile.transform.position = shooter.position;
+                Vector3 pos = shooter.position;
+                pos.y -= 0.5f;
+                projectile.transform.position = pos;
                 SkillManager.Instance.CoroutineStarter(Ignition(projectile));
             }
             yield return frame;

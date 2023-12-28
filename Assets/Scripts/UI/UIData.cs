@@ -19,6 +19,8 @@ public class UIData
         CharacterId,
         CharacterName,          // 캐릭터 이름
         MainShowImagePath,    // 캐릭터 선택 이미지 경로
+        MainSelectImagePath,
+        IntroduceTextPath,
         SkillID_01,              // 캐릭터 궁극기 id
         SkillID_02              // 캐릭터 스킬 id
     }

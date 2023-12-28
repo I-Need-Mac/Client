@@ -100,72 +100,74 @@ TestStory8,,,
 TestStory9,,,
 UI_AgreeCheck,약관에 동의합니다.,Agree to terms,利用規約に同意します
 UI_Agreement,약관 동의,Agree to terms,利用規約同意
-UI_Attack,공격,Attack,攻撃
 UI_AutoLogin,자동으로 로그인하기,Stay logged in/Keep me signed in,自動ログイン
+UI_BGMSound,배경음,Music,環境音
 UI_ChapterSelect,{0}째장,Part {0},第{0}章
+UI_ClearTime,{0}:{1},{0}:{1},{0}:{1}
+UI_ClearTime_Text,클리어 타임 평균,Average Clear Time,クリアタイム平均
 UI_ConnectID,동의하고 계정 불러오기,log back into existing account,同意してアカウント接続
-UI_CoolDown,재사용 대기시간 감소,cooldown reduces,クールタイム短縮
-UI_CriRatio,치명타 확률,critical hit percentage,クリティカル率
 UI_CurrentStage,{0}번째장 {1}번째 이야기,chapter {0} of part {1},第{0}章　第{1}話
 UI_CustomerCenter,문의 및 후원,support/ contact us,サポート又はお問い合わせ
 UI_Email,team.theblackgames@gmail.com,team.theblackgames@gmail.com,team.theblackgames@gmail.com
 UI_Friend,친구,Friends,フレンド
 UI_GameOff,게임 종료,Exit,ゲーム終了
 UI_GetItemRange,성물 획득 범위,Item acquisition range,アイテム獲得範囲
-UI_HP,체력,Hit points,体力
 UI_HPRegen,초당 체력 회복,Regen per sec,秒間体力回復
+UI_Langauge,언어,Language,言語
+UI_Langauge_Eng,영어,English,英語
+UI_Langauge_JP,일본어,Japanese,日本語
+UI_Langauge_Kor,한국어,Korean,韓国語
 UI_Login,로그인,Sign in,ログイン
 UI_LoginWithSteam,스팀으로 로그인,Sign in with Steam account,Steamでログイン
 UI_MakeNickname,닉네임 생성,Create nickname,ニックネーム作成
-UI_MoveSpeed,이동 속도,Speed,移動速度
 UI_MyInfo,내 정보,My account,個人情報
 UI_OpenKakaoTalk,https://open.kakao.com/o/soKo5OBe,https://open.kakao.com/o/soKo5OBe,https://open.kakao.com/o/soKo5OBe
-UI_ProjectileAdd,투사체 증가,Projectile increase,
+UI_Rank_Character,주술사,,
+UI_Rank_Name,닉네임,,
+UI_Rank_Progress,진행도,,
+UI_Rank_Rank,순위,,
+UI_Rank_Time,시간,시간,
 UI_RankingBoard,랭킹보드,Ranking board,ランキングボード
+UI_Resolution,해상도,Resolution,解像度
+UI_Result_Confirm,확인,,
+UI_Result_Exit,나가기,,
+UI_Result_GetItem,이번 획득 보상,,
+UI_Save,저장,Save,セーブ
+UI_ScreenType,화면,Screen,画面
+UI_ScreenType_Full,전체 화면,Full Screen,フルスクリーン
+UI_ScreenType_FullWindow,테두리 없는 창,Borderless Windowed,枠なしウィンドウ
+UI_ScreenType_Window,창 화면,Windowed,ウィンドウ画面
 UI_SelectSorcerer,주술사 선택,Sorcerer select,呪術者選択
 UI_Setting,설정,Settings,設定
-UI_Shield,보호막,Shield,シールド
+UI_SFXSound,효과음,SFX,効果音
+UI_Shake,흔들림,Shake,バイブレーション
 UI_Skill,스킬,Skills,スキル
 UI_Sorcer,주술소,,
+UI_Sorcere_AllBox,전체 상자,,
+UI_Sorcere_MyBoxes,보유 상자,,
+UI_Sorcere_ReadyToOpen,터치하여 해금,,
+UI_Sorcere_Timer,남은 시간 :,,
+UI_Sorcere_Title,주술소,,
 UI_Soul,혼,Soul,魂
+UI_Soul_Title,혼,,
+UI_Soul_UnlockCondition,해금 조건,S,
 UI_SoulSettings,혼 설정,Soul Settings,魂設定
 UI_StageList,{0}번째 이야기,Chapter {0},第{0}話
 UI_Start,시작하기,Start,開始
 UI_Stat,능력치,Status,能力値
+UI_Stat_Attack,공격,Attack,攻撃
+UI_Stat_CriRatio,치명타 확률,critical hit percentage,クリティカル率
+UI_Stat_CriDmgRatio,치명타 피해 증가률,Critcal Damage Rate,
+UI_Stat_HP,체력,Hit points,体力
+UI_Stat_MoveSpeed,이동 속도,Speed,移動速度
+UI_Stat_ItemRange,성물 획득 범위,Item Range,
+UI_Stat_ProjectileAdd,투사체 증가,Projectile increase,
+UI_Stat_Shield,보호막,Shield,シールド
+UI_Stat_CoolDown,재사용 대기시간 감소,cooldown reduces,クールタイム短縮
 UI_Story,이야기,Story,ストーリー
 UI_StoryMode,이야기 모드,story mode,ストーリーモード
-Unlock_Percent_Text,해금 진행도,progress,解放進行度
-UI_ClearTime_Text,클리어 타임 평균,Average Clear Time,クリアタイム平均
-UI_ClearTime,{0}:{1},{0}:{1},{0}:{1}
-UI_BGMSound,배경음,Music,環境音
-UI_SFXSound,효과음,SFX,効果音
 UI_VoiceSound,음성,Voice,音声
-UI_Langauge,언어,Language,言語
-UI_Langauge_Kor,한국어,Korean,韓国語
-UI_Langauge_Eng,영어,English,英語
-UI_Langauge_JP,일본어,Japanese,日本語
-UI_Resolution,해상도,Resolution,解像度
-UI_ScreenType,화면,Screen,画面
-UI_ScreenType_Window,창 화면,Windowed,ウィンドウ画面
-UI_ScreenType_Full,전체 화면,Full Screen,フルスクリーン
-UI_ScreenType_FullWindow,테두리 없는 창,Borderless Windowed,枠なしウィンドウ
-UI_Shake,흔들림,Shake,バイブレーション
-UI_Save,저장,Save,セーブ
-UI_Rank_Rank,순위,,
-UI_Rank_Name,닉네임,,
-UI_Rank_Progress,진행도,,
-UI_Rank_Character,주술사,,
-UI_Rank_Time,시간,시간,
-UI_Soul_Title,혼,,
-UI_Soul_UnlockCondition,해금 조건,S,
-UI_Sorcere_Title,주술소,,
-UI_Sorcere_AllBox,전체 상자,,
-UI_Sorcere_MyBoxes,보유 상자,,
-UI_Sorcere_Timer,남은 시간 :,,
-UI_Sorcere_ReadyToOpen,터치하여 해금,,
-UI_Result_GetItem,이번 획득 보상,,
-UI_Result_Exit,나가기,,
-UI_Result_Confirm,확인,,
+Unlock_Percent_Text,해금 진행도,progress,解放進行度
 Skill_Name_Juhon,주혼참회도,,㣙昏懺意刀
 Skill_Name_Bujung,부정추술,,錇正追術
 Skill_Name_GangSin,강신,Gangsin,降神

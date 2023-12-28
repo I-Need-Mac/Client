@@ -25,6 +25,8 @@ public class UI_Sorcerer : UI_Base
     TextMeshProUGUI sorcererName;
     [SerializeField]
     Image ultiImage;
+    [SerializeField]
+    GameObject selected;
 
     int sorcererInfoID = 0;
     Dictionary<string, object> sorcererInfo = new Dictionary<string, object>();
@@ -140,5 +142,9 @@ public class UI_Sorcerer : UI_Base
         ultiPath = skillData[skillID]["Icon"].ToString();
 
         return ultiPath;
+    }
+
+    public void SetIsSelected(bool isActive) {
+        selected.SetActive(isActive);
     }
 }

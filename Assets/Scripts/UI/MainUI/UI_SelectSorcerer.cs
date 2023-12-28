@@ -55,6 +55,7 @@ public class UI_SelectSorcerer : UI_Popup
             sorcererList.Add(instance);
         }
 
+        sorcererList[0].GetComponent<UI_Sorcerer>().SetIsSelected(true);
         // 위치 셋팅
         SetCharacterPos();
     }

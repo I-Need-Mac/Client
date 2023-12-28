@@ -263,6 +263,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 return new JuOrk(skillId, shooter, skillNum);
             case 130:
                 return new BuGong(skillId, shooter, skillNum);
+            case 301:
+                return new Horin(skillId, shooter, skillNum);
             //아래로 패시브
             case 201:
                 return new MyungSang(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);

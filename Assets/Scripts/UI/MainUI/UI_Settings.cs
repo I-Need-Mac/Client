@@ -21,10 +21,12 @@ public class UI_Settings : UI_Popup
     [SerializeField] Slider bgm_gauge;
     [SerializeField] Slider sfx_gauge;
     [SerializeField] Slider voice_gauge;
+    [SerializeField] UI_LocalizeText[] textList;
 
     List<Resolution> resolutions;
 
     private int nowSizeIndex=0;
+    private int originLang;
 
 
 
@@ -34,8 +36,10 @@ public class UI_Settings : UI_Popup
     {
         Bind<Image>(typeof(Images));
         Array imageValue = Enum.GetValues(typeof(Images));
-        langDropDown.value = SettingManager.Instance.GetSettingValue("lang");
+        originLang = SettingManager.Instance.GetSettingValue("lang");
+        langDropDown.value = originLang;
         skipCutScene.isOn = SettingManager.Instance.GetSettingValue("CutScene") > 0;
+       
 
         for (int i = 0; i < imageValue.Length; i++)
         {
@@ -59,6 +63,9 @@ public class UI_Settings : UI_Popup
             case Images.Close:
                 SaveSoundValue();
                 this.CloseUI<UI_Settings>();
+                if(originLang != SettingManager.Instance.GetSettingValue("lang")) { 
+                    Application.Quit();
+                }
                 break;
             default:
                 break;
@@ -81,7 +88,7 @@ public class UI_Settings : UI_Popup
     }
     void SetResolution()
     {
-        string nowSize = SettingManager.Instance.GetSettingValue("ScreenWidth") + " x " + SettingManager.Instance.GetSettingValue("ScreenHeight");
+        string nowSize = SettingManager.Instance.GetSettingValue("ScreenWidth") + " x " + SettingManager.Instance.GetSettingValue("ScreenHeight")+" " + SettingManager.Instance.GetSettingValue("ScreenRate")+"hz";
 
         SettingManager.Instance.GetSettingValue("ScreenType");
 
@@ -94,7 +101,7 @@ public class UI_Settings : UI_Popup
         int index =0;
         foreach (var resolution in resolutions)
         {
-            string option = $"{resolution.width} x {resolution.height}";
+            string option = $"{resolution.width} x {resolution.height} {resolution.refreshRate}hz";
             if (option.Equals(nowSize)) {
                 nowSizeIndex = index;
             }
@@ -160,14 +167,30 @@ public class UI_Settings : UI_Popup
             ScreenTypeDropdownOptionChanged(true);
             SettingManager.Instance.SetSettingValue("ScreenWidth", resolution.width);
             SettingManager.Instance.SetSettingValue("ScreenHeight", resolution.height);
-            
+            SettingManager.Instance.SetSettingValue("ScreenRate", resolution.refreshRate);
+
+
         }
     }
 
     public void LangDropdownOptionChanged()
-    {
-        DebugManager.Instance.PrintDebug("[Setting] Set Lang to "+ langDropDown.value);
-        SettingManager.Instance.SetSettingValue("lang", langDropDown.value);
+    { 
+       
+        if (langDropDown.value != SettingManager.Instance.GetSettingValue("lang")) {
+            DebugManager.Instance.PrintDebug("[Setting] Set Lang to " + langDropDown.value);
+            SettingManager.Instance.SetSettingValue("lang", langDropDown.value);
+            LocalizeManager.Instance.SetLangType();
+            foreach (UI_LocalizeText lt in textList) { 
+                lt.ResetLang();
+            }
+
+            foreach(UI_Popup ui in UIManager.Instance.currentPopup) {
+                ui.gameObject.SetActive(false);
+                ui.gameObject.SetActive(true);
+            }
+        }
+        
+
     }
 
     // 창모드로 변경합니다

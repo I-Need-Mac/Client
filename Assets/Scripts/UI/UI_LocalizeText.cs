@@ -21,4 +21,7 @@ public class UI_LocalizeText : MonoBehaviour
     {
         
     }
+    public void ResetLang() {
+        textview.SetText(LocalizeManager.Instance.GetText(localizeID));
+    }
 }

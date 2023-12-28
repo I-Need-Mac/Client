@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 10820147567922274}
   - component: {fileID: 4972345784371333671}
   m_Layer: 0
-  m_Name: 3DAudioSourceMonster
+  m_Name: 3DAudioSourceStructure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

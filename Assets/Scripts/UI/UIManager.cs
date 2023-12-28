@@ -50,7 +50,7 @@ public class UIManager : MonoSingleton<UIManager>
     List<UI_Popup> popupList = new List<UI_Popup>();
 
     // 실시간 팝업 목록
-    LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
+   public LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
 
     private void Update()
     {

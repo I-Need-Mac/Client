@@ -27,7 +27,7 @@ public class LocalizeManager : SingleTon<LocalizeManager>
 
     public string GetText(string targetID) {                                                                                                //아이디로 데이터를 반환함
         if (localTableData.ContainsKey(targetID)) {
-            return Convert.ToString(localTableData[targetID][LANGUAGE[langType]]);
+            return ConvertString(Convert.ToString(localTableData[targetID][LANGUAGE[langType]]));
         }
         else { 
             DebugManager.Instance.PrintError("Cant Find Localized : "+ targetID);
@@ -40,5 +40,11 @@ public class LocalizeManager : SingleTon<LocalizeManager>
     public int GetLangType()
     {
         return langType;
+    }
+
+    private string ConvertString(String targetString) {
+        targetString  = targetString.Replace("\\n","\n");
+        targetString = targetString.Replace("\\c", ",");
+        return targetString;
     }
 }

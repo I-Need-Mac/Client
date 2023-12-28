@@ -124,6 +124,26 @@ public class PlayerManager : MonoBehaviour
     }
 
     //캐릭터에 스탯 부여
+    public void PlayerChange(Dictionary<string, object> characterData)
+    {
+        if (characterData == null)
+        {
+            //없는 캐릭터일 경우 에러메시지 송출
+            Debug.LogError("존재하지 않는 캐릭터입니다");
+            return;
+        }
+
+        playerData.SetHp(Convert.ToInt32(characterData["HP"]));
+        playerData.SetAttack(Convert.ToInt32(characterData["Attack"]));
+        playerData.SetCriRatio(Convert.ToInt32(characterData["CriRatio"]));
+        playerData.SetCriDamage(float.Parse(Convert.ToString(characterData["CriDamage"])));
+        playerData.SetCoolDown(Convert.ToInt32(characterData["CoolDown"]));
+        playerData.SetHpRegen(Convert.ToInt32(characterData["HPRegen"]));
+        playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
+        playerData.SetMoveSpeed(float.Parse(Convert.ToString(characterData["MoveSpeed"])));
+        playerData.SetGetItemRange(float.Parse(Convert.ToString(characterData["GetItemRange"])));
+    }
+
     public void PlayerSetting(Dictionary<string, object> characterData)
     {
         if (characterData == null)

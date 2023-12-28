@@ -287,7 +287,7 @@ public class Player : MonoBehaviour
         SkeletonDataAsset asset = spineManager.GetSkeletonDataAsset();
         spineManager.SetSkeletonDataAsset(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", id.ToString(), "CharacterPrefabPath").ToString()).transform.Find("Character").GetComponent<SkeletonAnimation>().skeletonDataAsset);
         spineManager.SetAnimation("Idle", true);
-        playerManager.PlayerSetting(playerManager.FindCharacter(Convert.ToString(id)));
+        playerManager.PlayerChange(playerManager.FindCharacter(Convert.ToString(id)));
 
         ActiveSkill prevSkill = (ActiveSkill)SkillManager.Instance.skillList[playerManager.playerData.basicSkillId];
         int newSkillId = Convert.ToInt32(CSVReader.Read("CharacterTable", id.ToString(), "SkillID_02"));
@@ -298,7 +298,7 @@ public class Player : MonoBehaviour
         statusEffect.RemoveStatusEffect(STATUS_EFFECT.TRANSITION);
         spineManager.SetSkeletonDataAsset(asset);
         spineManager.SetAnimation("Idle", true);
-        playerManager.PlayerSetting(playerManager.FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
+        playerManager.PlayerChange(playerManager.FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
 
         SkillManager.Instance.SwapSkill(newSkillId, prevSkill.skillId);
     }

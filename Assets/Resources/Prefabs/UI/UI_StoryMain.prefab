@@ -1927,6 +1927,7 @@ MonoBehaviour:
   chapterList: {fileID: 8475085572667746230}
   stageList: {fileID: 8475085572429234299}
   chapterImage: {fileID: 8475085572038819222}
+  gameStage: []
 --- !u!1 &8475085572533243642
 GameObject:
   m_ObjectHideFlags: 0

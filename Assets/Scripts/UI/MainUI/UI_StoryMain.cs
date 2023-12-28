@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ public class UI_StoryMain : UI_Popup
         BackBtn,
         StartButton,
     }
-
     [SerializeField]
     TextMeshProUGUI title;
 
@@ -33,17 +33,18 @@ public class UI_StoryMain : UI_Popup
     [SerializeField]
     GameObject chapterImage;
 
+    
     void Start()
     {
+        GetLastStage();
         Bind<Image>(typeof(Images));
         Array imageValue = Enum.GetValues(typeof(Images));
         for (int i = 0; i < imageValue.Length; i++)
         {
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
-
         title.text = LocalizeManager.Instance.GetText("UI_StoryMode");
-
+        Debug.LogError(UIManager.Instance.selectCharacterID);
         SetData();
     }
 
@@ -68,7 +69,6 @@ public class UI_StoryMain : UI_Popup
                 break;
         }
     }
-
     void SetData()
     {
         Dictionary<string, Dictionary<string, object>> chapterDataList = UIData.ChapterData;
@@ -81,7 +81,7 @@ public class UI_StoryMain : UI_Popup
 
         // 서버에서 받은 스테이지가 속한 챕터 아이디 get
         string currentChapterID = GetChapterID(UIManager.Instance.selectStageID.ToString());
-
+        
         // create chapter list
         foreach (KeyValuePair<string, Dictionary<string, object>> chapterData in chapterDataList)
         {
@@ -148,7 +148,6 @@ public class UI_StoryMain : UI_Popup
 
         // draw stage
     }
-
     void SelectChapter(string chapterID)
     {
         // 챕터 리스트 가져오기
@@ -222,6 +221,8 @@ public class UI_StoryMain : UI_Popup
                 GameObject stageInstance = Instantiate(stageEle.gameObject) as GameObject;
 
                 stageInstance.transform.SetParent(stageGo.transform);
+                
+                stageInstance.GetComponent<UI_StageElement>();
                 RectTransform stageRect = stageInstance.GetComponent<RectTransform>();
                 stageRect.localScale = new Vector3(1, 1, 1);
                 stageRect.anchoredPosition3D = new Vector3(stageRect.anchoredPosition3D.x, stageRect.anchoredPosition3D.y, 0);
@@ -259,5 +260,11 @@ public class UI_StoryMain : UI_Popup
         }
 
         return findChapterID;
+    }
+    async void GetLastStage()
+    {
+        if (!SteamManager.Initialized) { return; }
+        string name = SteamUser.GetSteamID().ToString();
+        UIStatus.Instance.Last_Clear_Stage = await APIManager.Instance.StageLastClear(name, "adf");
     }
 }

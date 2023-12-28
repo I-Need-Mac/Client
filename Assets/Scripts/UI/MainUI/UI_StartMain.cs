@@ -120,6 +120,6 @@ public class UI_StartMain : UI_Base
         {
             UIManager.Instance.OpenUI<UI_Login>();
         }
-
     }
+
 }

@@ -86,7 +86,7 @@ public partial class WebRequestManager
             {
                 url += i + "=" + data[i] + "&";
             }
-            url.TrimEnd('&');
+            url = url.Substring(0, url.Length - 1);
         }
         return url;
     }
@@ -97,6 +97,7 @@ public partial class WebRequestManager
     {
         using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}"))
         {
+            DebugManager.Instance.PrintError("[RequestManager] Send get request to " + $"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}");
             float timeout = 0f;
             request.SendWebRequest();
             while (!request.isDone)
@@ -107,13 +108,13 @@ public partial class WebRequestManager
                 else
                     await Task.Yield();
             }
-            Debug.Log(request.downloadHandler.text);
+            Debug.LogError(request.downloadHandler.text);
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
-
+            
             return dataObj;
 
         }

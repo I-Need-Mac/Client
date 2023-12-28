@@ -52,6 +52,46 @@ public class APIManager : SingleTon<APIManager>
         return false;
 
     }
+    public async Task<bool> CheckCharacterUnlock(string name, string nickname,string characterName)
+    {
+        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        sendData.Add("steam_id", name);
+        sendData.Add("name", nickname);
+        StartGame startGame = (StartGame)await requestManager.Get<StartGame>(APIAddressManager.REQUEST_GAME_START, sendData);
+        //UIStatus.Instance.Hojin = startGame.data.hojin;
+        //UIStatus.Instance.Seimei = startGame.data.seimei;
+        //UIStatus.Instance.Macia = startGame.data.macia;
+        //UIStatus.Instance.SiWoo = startGame.data.siWoo;
+        //UIStatus.Instance.Sinwol = startGame.data.sinwol;
+        //UIStatus.Instance.Ulises = startGame.data.ulises;
+        switch (characterName.ToLower())
+        {
+            case "hojin":
+                return startGame.data.hojin;
+            case "seimei":
+                return startGame.data.seimei;
+            case "macia":
+                return startGame.data.macia;
+            case "siwoo":
+                return startGame.data.siWoo;
+            case "sinwol":
+                return startGame.data.sinwol;
+            case "ulises":
+                return startGame.data.ulises;
+            default:
+                Debug.LogError("There's no such character");
+                return false;
+        }
+    }
+    public async Task<int> StageLastClear(string name, string nickname)
+    {
+        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        sendData.Add("steam_id", name);
+        sendData.Add("name", nickname);
+        StartGame startGame = (StartGame)await requestManager.Get<StartGame>(APIAddressManager.REQUEST_GAME_START, sendData);
+        UIStatus.Instance.Last_Clear_Stage = startGame.data.last_stage.GetValueOrDefault();
+        return startGame.data.last_stage.GetValueOrDefault();
+    }
 
 
 }

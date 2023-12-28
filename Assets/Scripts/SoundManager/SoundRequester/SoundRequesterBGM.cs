@@ -71,7 +71,7 @@ public class SoundRequesterBGM : SoundRequester
                 SoundManager.Instance.AddAudioSource( soundObjectID + items.speakerName, audioSources[items.speakerName], items.audioType);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType);
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;
@@ -89,14 +89,15 @@ public class SoundRequesterBGM : SoundRequester
             }
             else
             {
-
+                (items.loadSettingFrom).GetComponent<AudioSource>().volume = SoundManager.Instance.GetSettingSound(items.audioType);
                 GameObject speaker = Instantiate(items.loadSettingFrom);
 
                 speaker.name = items.speakerName;
                 speaker.transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);
                 speaker.transform.SetParent(soundRequester.transform);
 
-                audioSources.Add(items.speakerName, speaker.AddComponent<AudioSource>());
+                
+                audioSources.Add(items.speakerName, speaker.GetComponent<AudioSource>());
                 SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName], items.audioType);
 
             }

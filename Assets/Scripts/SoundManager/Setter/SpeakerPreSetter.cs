@@ -82,7 +82,7 @@ public class SpeakerPreSetter : MonoBehaviour
             }
             else
             {
-
+                (items.loadSettingFrom).GetComponent<AudioSource>().volume = SoundManager.Instance.GetSettingSound(items.audioType);
                 GameObject speaker = Instantiate(items.loadSettingFrom);
 
                 speaker.name = items.speakerName;

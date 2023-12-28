@@ -18,8 +18,9 @@ public class Player : MonoBehaviour
     private StatusEffect statusEffect;
     private SoundRequester soundRequester;
     private AudioSource playerAudioSource;
-    
-    private const long VOICE = 15*1000;
+    private AudioSource playerVoiceAudioSource;
+
+    private const long VOICE = 3*1000;
 
     private int exState = 0;
     private int shootVoiceTimer = 0;
@@ -139,14 +140,15 @@ public class Player : MonoBehaviour
     private void ShootPlayerVoice()
     {
         shootVoiceTimer++;
+
         if (shootVoiceTimer == VOICE)
         {
             if (randomVoice.Length != 0)
-            {
+            {   
                 shootVoiceTimer=0;
                 int rnd = Random.Range(0, randomVoice.Length);
                 DebugManager.Instance.PrintDebug("[SoundRequest] Player Shoot Sound " + rnd);
-                playerAudioSource.PlayOneShot(randomVoice[rnd]);
+                playerVoiceAudioSource.PlayOneShot(randomVoice[rnd]);
             }
         }
 
@@ -159,7 +161,7 @@ public class Player : MonoBehaviour
 
                 int rnd = Random.Range(0, dieVoice.Length);
                 DebugManager.Instance.PrintError("[SoundRequest] Player Shoot Die Sound " + rnd);
-                playerAudioSource.PlayOneShot(dieVoice[rnd]);
+                 playerVoiceAudioSource.PlayOneShot(dieVoice[rnd]);
             }
 
     }
@@ -212,9 +214,20 @@ public class Player : MonoBehaviour
     #region Sound
     private void AudioSetting()
     {
-        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), "EFFECT_SOUND");
+        playerVoiceAudioSource = gameObject.AddComponent<AudioSource>();
+
+        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), SettingManager.EFFECT_SOUND);
+        SoundManager.Instance.AddAudioSource("PlayerVoice", playerVoiceAudioSource, SettingManager.VOCIE_SOUND);
+
+
         soundRequester = GetComponent<SoundRequesterSFX>();
         playerAudioSource = GetComponent<AudioSource>();
+
+        playerAudioSource.volume = SoundManager.Instance.GetSettingSound( SettingManager.EFFECT_SOUND);
+        playerVoiceAudioSource.volume = SoundManager.Instance.GetSettingSound(SettingManager.VOCIE_SOUND);
+
+
+
     }
     #endregion
 

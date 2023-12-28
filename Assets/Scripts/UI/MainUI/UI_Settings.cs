@@ -15,6 +15,10 @@ public class UI_Settings : UI_Popup
 
     [SerializeField] Toggle windowMode;
     [SerializeField] TMP_Dropdown resolutionDropdown;
+    [SerializeField] Slider total_gauge;
+    [SerializeField] Slider bgm_gauge;
+    [SerializeField] Slider sfx_gauge;
+    [SerializeField] Slider voice_gauge;
 
     List<Resolution> resolutions;
 
@@ -39,7 +43,7 @@ public class UI_Settings : UI_Popup
         {
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
-
+        SetSoundGauge();
         SetResolution();
     }
 
@@ -54,13 +58,28 @@ public class UI_Settings : UI_Popup
         switch (imageValue)
         {
             case Images.Close:
+                SaveSoundValue();
                 this.CloseUI<UI_Settings>();
                 break;
             default:
                 break;
         }
     }
-
+    private void SaveSoundValue()
+    {
+        SettingManager.Instance.SetSettingValue(SettingManager.TOTAL_SOUND,(int)total_gauge.value);
+        SettingManager.Instance.SetSettingValue(SettingManager.BGM_SOUND, (int)bgm_gauge.value);
+        SettingManager.Instance.SetSettingValue(SettingManager.EFFECT_SOUND, (int)sfx_gauge.value);
+        SettingManager.Instance.SetSettingValue(SettingManager.VOCIE_SOUND, (int)voice_gauge.value);
+        SettingManager.Instance.WriteSettingFile();
+        SoundManager.Instance.ResetVolume();
+    }
+    private void SetSoundGauge() {
+        total_gauge.value = (float)SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
+        bgm_gauge.value = (float)SettingManager.Instance.GetSettingValue(SettingManager.BGM_SOUND);
+        sfx_gauge.value = (float)SettingManager.Instance.GetSettingValue(SettingManager.EFFECT_SOUND);
+        voice_gauge.value = (float)SettingManager.Instance.GetSettingValue(SettingManager.VOCIE_SOUND);
+    }
     void SetResolution()
     {
         // 해상도 리스트 생

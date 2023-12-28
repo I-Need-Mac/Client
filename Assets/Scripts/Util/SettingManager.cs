@@ -7,7 +7,9 @@ using UnityEngine;
 public class SettingManager
 {
     public const string TOTAL_SOUND = "TOTAL_SOUND";
-
+    public const string BGM_SOUND = "BGM_SOUND";
+    public const string EFFECT_SOUND = "EFFECT_SOUND";
+    public const string VOCIE_SOUND = "VOCIE_SOUND";
 
     private Dictionary<string, int> _settings { get; set; }
     public Dictionary<string, int> settings

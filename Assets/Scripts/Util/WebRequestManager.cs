@@ -97,7 +97,7 @@ public partial class WebRequestManager
     {
         using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}"))
         {
-            DebugManager.Instance.PrintError("[RequestManager] Send get request to " + $"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}");
+            DebugManager.Instance.PrintDebug("[RequestManager] Send get request to " + $"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}");
             float timeout = 0f;
             request.SendWebRequest();
             while (!request.isDone)
@@ -108,7 +108,7 @@ public partial class WebRequestManager
                 else
                     await Task.Yield();
             }
-            Debug.LogError(request.downloadHandler.text);
+            DebugManager.Instance.PrintDebug(request.downloadHandler.text);
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
 

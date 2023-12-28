@@ -167,6 +167,8 @@ UI_Stat_CoolDown,재사용 대기시간 감소,cooldown reduces,クールタイ�
 UI_Story,이야기,Story,ストーリー
 UI_StoryMode,이야기 모드,story mode,ストーリーモード
 UI_VoiceSound,음성,Voice,音声
+UI_TotalSound,전체 음량,Total Sound,全音量
+UI_CutSceneSkip,컷씬 스킵,Skip CutScene,カットシーン·スキップ
 Unlock_Percent_Text,해금 진행도,progress,解放進行度
 Skill_Name_Juhon,주혼참회도,,㣙昏懺意刀
 Skill_Name_Bujung,부정추술,,錇正追術

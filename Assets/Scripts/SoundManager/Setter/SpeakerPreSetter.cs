@@ -64,7 +64,7 @@ public class SpeakerPreSetter : MonoBehaviour
                 SoundManager.Instance.AddAudioSource(items.speakerName, audioSources[items.speakerName], items.audioType);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) * items.volume;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) ;
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;
@@ -73,7 +73,7 @@ public class SpeakerPreSetter : MonoBehaviour
                 audioSources[items.speakerName].panStereo = items.streoPan;
                 audioSources[items.speakerName].outputAudioMixerGroup = items.audioMixerGroup;
 
-                audioSources[items.speakerName].volume = items.volume;
+      
                 audioSources[items.speakerName].spatialBlend = items.spatialBlend;
                 audioSources[items.speakerName].dopplerLevel = items.dropperLevel;
                 audioSources[items.speakerName].spread = items.spread;

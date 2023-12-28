@@ -52,45 +52,33 @@ public class APIManager : SingleTon<APIManager>
         return false;
 
     }
-    public async Task<bool> CheckCharacterUnlock(string name, string nickname,string characterName)
+    public async Task<StartGame> StartGame(string name, string nickname)
     {
         Dictionary<string, string> sendData = new Dictionary<string, string>();
         sendData.Add("steam_id", name);
         sendData.Add("name", nickname);
         StartGame startGame = (StartGame)await requestManager.Get<StartGame>(APIAddressManager.REQUEST_GAME_START, sendData);
-        //UIStatus.Instance.Hojin = startGame.data.hojin;
-        //UIStatus.Instance.Seimei = startGame.data.seimei;
-        //UIStatus.Instance.Macia = startGame.data.macia;
-        //UIStatus.Instance.SiWoo = startGame.data.siWoo;
-        //UIStatus.Instance.Sinwol = startGame.data.sinwol;
-        //UIStatus.Instance.Ulises = startGame.data.ulises;
-        switch (characterName.ToLower())
-        {
-            case "hojin":
-                return startGame.data.hojin;
-            case "seimei":
-                return startGame.data.seimei;
-            case "macia":
-                return startGame.data.macia;
-            case "siwoo":
-                return startGame.data.siWoo;
-            case "sinwol":
-                return startGame.data.sinwol;
-            case "ulises":
-                return startGame.data.ulises;
-            default:
-                Debug.LogError("There's no such character");
-                return false;
-        }
-    }
-    public async Task<int> StageLastClear(string name, string nickname)
-    {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", name);
-        sendData.Add("name", nickname);
-        StartGame startGame = (StartGame)await requestManager.Get<StartGame>(APIAddressManager.REQUEST_GAME_START, sendData);
-        UIStatus.Instance.Last_Clear_Stage = startGame.data.last_stage.GetValueOrDefault();
-        return startGame.data.last_stage.GetValueOrDefault();
+        UIStatus.Instance.steam_id = startGame.data.steam_id;
+        UIStatus.Instance.high_stage = startGame.data.high_stage;
+        UIStatus.Instance.last_stage = startGame.data.last_stage;
+        UIStatus.Instance.last_is_finished = startGame.data.last_is_finished;
+        UIStatus.Instance.last_is_clear = startGame.data.last_is_clear;
+        UIStatus.Instance.last_saint_soul_type = startGame.data.last_saint_soul_type;
+        UIStatus.Instance.last_soul1 = startGame.data.last_soul1;
+        UIStatus.Instance.last_soul2 = startGame.data.last_soul2;
+        UIStatus.Instance.last_soul3 = startGame.data.last_soul3;
+        UIStatus.Instance.last_soul4 = startGame.data.last_soul4;
+        UIStatus.Instance.last_soul5 = startGame.data.last_soul5;
+        UIStatus.Instance.last_soul6 = startGame.data.last_soul6;
+        UIStatus.Instance.last_character = startGame.data.last_character;
+        UIStatus.Instance.key = startGame.data.key;
+        UIStatus.Instance.hojin= startGame.data.hojin;
+        UIStatus.Instance.seimei= startGame.data.seimei;
+        UIStatus.Instance.macia= startGame.data.macia;
+        UIStatus.Instance.sinwol = startGame.data.sinwol;
+        UIStatus.Instance.siWoo= startGame.data.siWoo;
+        UIStatus.Instance.ulises = startGame.data.ulises;
+       return startGame;       
     }
 
 

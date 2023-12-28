@@ -113,7 +113,7 @@ public class ChyuRyung : ActiveSkill
     }
     private IEnumerator Despawn()
     {
-        if (pathList.Count > 20)
+        if (pathList.Count > skillData.duration*1000)
         {
             pathList.RemoveAt(0);
         }

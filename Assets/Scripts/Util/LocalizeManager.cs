@@ -48,4 +48,4 @@ public class LocalizeManager : SingleTon<LocalizeManager>
         return targetString;
     }
 }
-}
+

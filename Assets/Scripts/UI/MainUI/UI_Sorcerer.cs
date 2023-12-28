@@ -178,7 +178,7 @@ public class UI_Sorcerer : UI_Base
                 sorcererUnlock = await APIManager.Instance.CheckCharacterUnlock(name, "adf", "macia");
                 break;
         }
-
+    }
     public void SetIsSelected(bool isActive) {
         selected.SetActive(isActive);
     }

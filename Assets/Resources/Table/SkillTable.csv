@@ -249,3 +249,4 @@ int,String,String_08,String,Dummy,Int,Bool,String,String,int,bool,bool,int,float
 13106,Skill_Name_Horin,Skill_Desc_Horin_06,,Arts/Skill/Icon/Skill_Icon_Horin_00,3500,FALSE,None,None,5,TRUE,FALSE,7,0,5000,65,2.5,TRUE,0,1,,,Player,Prefabs/InGame/Skill/Horin,Projectile
 13107,Skill_Name_Horin,Skill_Desc_Horin_07,,Arts/Skill/Icon/Skill_Icon_Horin_00,3500,FALSE,None,None,5,TRUE,FALSE,7,0,5000,65,2.5,TRUE,0,1,,,Player,Prefabs/InGame/Skill/Horin,Projectile
 13108,Skill_Name_Horin,Skill_Desc_Horin_08,,Arts/Skill/Icon/Skill_Icon_Horin_00,3500,FALSE,None,None,5,TRUE,FALSE,7,0,5000,65,2.5,TRUE,0,1,,,Player,Prefabs/InGame/Skill/Horin,Projectile
+30101,Skill_Name_Horin_Seimei,Skill_Desc_Horin_Seimei_01,,Arts/Skill/Icon/Skill_Icon_Horin_Seimei_00,3500,FALSE,None,None,5,TRUE,FALSE,3,0,1000000,35,2,TRUE,0,1,,,Player,Prefabs/InGame/Skill/Horin_Seimei,Projectile

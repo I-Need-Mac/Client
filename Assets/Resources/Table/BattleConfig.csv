@@ -7,7 +7,7 @@ ImageMultiple,Coefficient,0.5
 CharImageMultiple,Coefficient,0.45
 Fraction,Coefficient,10000
 SkillBenList,Constant,999|998|108
-benben,Constant,101|102|103|104|105|106|107|108|109|110|111|112
+benben,Constant,101|102|103|104|105|106|107|108|109|110|111|112|301
 InvincibleTime,Constant,500
 StatIncreaseInterval,Constant,10000
 StatIncreaseValueHP,Coefficient,0.001

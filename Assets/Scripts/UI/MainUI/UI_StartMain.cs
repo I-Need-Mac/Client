@@ -111,6 +111,7 @@ public class UI_StartMain : UI_Base
         if (!SteamManager.Initialized) { return; }
         string name = SteamUser.GetSteamID().ToString();
         isLogin = await APIManager.Instance.TryLogin(name);
+        DebugManager.Instance.PrintDebug("[SteamAPI] load steam id "+name);
         if (isLogin)
         {
             UIManager.Instance.OpenUI<UI_GameMain>();

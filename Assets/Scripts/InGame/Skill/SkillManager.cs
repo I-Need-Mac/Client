@@ -2,21 +2,6 @@ using BFM;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
-
-#region Structure
-public struct SkillInfo
-{
-    public Skill skill;
-    public IEnumerator activation;
-
-    public SkillInfo(Skill skill, IEnumerator activation)
-    {
-        this.skill = skill;
-        this.activation = activation;
-    }
-}
-#endregion
 
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
@@ -30,6 +15,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
     private ObjectPool<SkillRangeCircle> rangeCirclePool;
+    private Dictionary<int, IEnumerator> skillCoroutineList;
 
     //public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
     public Dictionary<int, Skill> skillList { get; private set; } = new Dictionary<int, Skill>();
@@ -38,6 +24,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         skillTable = CSVReader.Read("SkillTable");
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
+        skillCoroutineList = new Dictionary<int, IEnumerator>();
 
         foreach (string skillId in skillTable.Keys)
         {
@@ -167,146 +154,8 @@ public class SkillManager : SingletonBehaviour<SkillManager>
                 return;
             }
         }
-        
-        switch(skillId / 100)
-        {
-            case 101:
-                skill = new Juhon(skillId, shooter, skillNum);
-                break;
-            case 102:
-                skill = new Bujung(skillId, shooter, skillNum);
-                break;
-            case 103:
-                skill = new GangSin(skillId, shooter, skillNum);
-                break;
-            case 104:
-                skill = new GodBless(skillId, shooter, skillNum);
-                break;
-            case 105:
-                skill = new Possession(skillId, shooter, skillNum);
-                break;
-            case 106:
-                skill = new Irons(skillId, shooter, skillNum);
-                break;
-            case 107:
-                skill = new GwiGi(skillId, shooter, skillNum);
-                break;
-            case 108:
-                skill = new JuHyung(skillId, shooter, skillNum);
-                break;
-            case 109:
-                skill = new MyeongGyae(skillId, shooter, skillNum);
-                break;
-            case 110:
-                skill = new Crepitus(skillId, shooter, skillNum);
-                break;
-            case 111:
-                skill = new GyuGyu(skillId, shooter, skillNum);
-                break;
-            case 112:
-                skill = new Aliento(skillId, shooter, skillNum);
-                break;
-            case 113:
-                skill = new Pok(skillId, shooter, skillNum);
-                break;
-            case 114:
-                skill = new JeRyeung(skillId, shooter, skillNum);
-                break;
-            case 115:
-                skill = new ParkSung(skillId, shooter, skillNum);
-                break;
-            case 116:
-                skill = new Inn(skillId, shooter, skillNum);
-                break;
-            case 117:
-                skill = new Churk(skillId, shooter, skillNum);
-                break;
-            case 118:
-                skill = new BunGye(skillId, shooter, skillNum);
-                break;
-            case 119:
-                skill = new SunYang(skillId, shooter, skillNum);
-                break;
-            case 120:
-                skill = new Horin(skillId, shooter, skillNum);
-                break;
-            case 121:
-                skill = new JuckHwa(skillId, shooter, skillNum);
-                break;
-            case 122:
-                skill = new KumJul(skillId, shooter, skillNum);
-                break;
-            case 123:
-                skill = new ChyuRyung(skillId, shooter, skillNum);
-                break;
-            case 124:
-                skill = new JuckJung(skillId, shooter, skillNum);
-                break;
-            case 125:
-                skill = new HwiPung(skillId, shooter, skillNum);
-                break;
-            case 126:
-                skill = new SeRae(skillId, shooter, skillNum);
-                break;
-            case 127:
-                skill = new GamYum(skillId, shooter, skillNum);
-                break;
-            case 128:
-                skill = new Ildo(skillId, shooter, skillNum);
-                break;
-            case 129:
-                skill = new JuOrk(skillId, shooter, skillNum);
-                break;
-            case 130:
-                skill = new BuGong(skillId, shooter, skillNum);
-                break;
-            //아래로 패시브
-            case 201:
-                skill = new MyungSang(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 202:
-                skill = new InnPassive(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 203:
-                skill = new HyulPok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 204:
-                skill = new DaeHum(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 205:
-                skill = new GaSok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 206:
-                skill = new Hyum(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 207:
-                skill = new JaeSaeng(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 208:
-                skill = new HwakSan(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 209:
-                skill = new HwakHo(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 210:
-                skill = new JuJuGaSork(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 211:
-                skill = new JuJuJyungPok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 212:
-                skill = new GwangHwa(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 213:
-                skill = new ChangAe(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            case 214:
-                skill = new ChukDan(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
-                break;
-            default:
-                DebugManager.Instance.PrintError("[SkillManager] 미구현된 스킬입니다 (Skill ID: {0})", skillId);
-                return;
-        }
+
+        skill = FindSkill(skillId, shooter, skillNum);
 
         if (skillId / 10000 == 1)
         {
@@ -321,42 +170,134 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             PlayerUI.Instance.passiveSkillCount++;
         }
 
-        //IEnumerator activation = skill.Activation();
-        //StartCoroutine(activation);
-        //SkillInfo skillInfo = new SkillInfo(skill, activation);
-        //skillList.Add(skillId, skillInfo);
-        StartCoroutine(skill.SkillActivation());
+        IEnumerator enumerator = skill.SkillActivation();
+        StartCoroutine(enumerator);
         skillList.Add(skillId, skill);
+        skillCoroutineList.Add(skillId, enumerator);
     }
-
-    //public void SkillLevelUp(SkillInfo skillInfo)
-    //{
-    //    //StopCoroutine(skillInfo.activation);
-    //    skillInfo.skill.SkillLevelUp();
-    //    //IEnumerator activation = skillInfo.skill.Activation();
-    //    //StartCoroutine(activation);
-    //    //skillInfo.activation = activation;
-    //}
 
     public void CoroutineStarter(IEnumerator coroutine)
     {
         StartCoroutine(coroutine);
     }
 
-    //private void SkillDataUpdate()
-    //{
-    //    foreach (SkillInfo info in skillList.Values)
-    //    {
-    //        info.skill.SkillDataUpdate();
-    //    }
-    //}
+    public void SwapSkill(int prevId, int newId)
+    {
+        ActiveSkill prevSkill = (ActiveSkill)skillList[prevId];
 
-    //public void SkillDataUpdate(float coolTime, int count, float damage, float speed, float splashRange, float size)
-    //{
-    //    foreach (SkillInfo info in skillList.Values)
-    //    {
-    //        info.skill.SkillDataUpdate(coolTime, count, damage, speed, splashRange, size);
-    //    }
-    //}
+        StopCoroutine(skillCoroutineList[prevId]);
+        skillCoroutineList.Remove(prevId);
+        Skill skill = FindSkill(newId, prevSkill.shooter, prevSkill.skillNum);
+        skillList.Remove(prevId);
+
+        Dictionary<string, Dictionary<string, object>> skillTable = CSVReader.Read("SkillTable");
+        PlayerUI.Instance.skillBoxUi.SkillIconInit(skillTable[newId.ToString()]["Icon"].ToString(), prevSkill.skillNum);
+
+        IEnumerator enumerator = skill.SkillActivation();
+        StartCoroutine(enumerator);
+        skillList.Add(newId, skill);
+        skillCoroutineList.Add(newId, enumerator);
+    }
+
+    public Skill FindSkill(int skillId, Transform shooter, int skillNum)
+    {
+        switch (skillId / 100)
+        {
+            case 101:
+                return new Juhon(skillId, shooter, skillNum);
+            case 102:
+                return new Bujung(skillId, shooter, skillNum);
+            case 103:
+                return new GangSin(skillId, shooter, skillNum);
+            case 104:
+                return new GodBless(skillId, shooter, skillNum);
+            case 105:
+                return new Possession(skillId, shooter, skillNum);
+            case 106:
+                return new Irons(skillId, shooter, skillNum);
+            case 107:
+                return new GwiGi(skillId, shooter, skillNum);
+            case 108:
+                return new JuHyung(skillId, shooter, skillNum);
+            case 109:
+                return new MyeongGyae(skillId, shooter, skillNum);
+            case 110:
+                return new Crepitus(skillId, shooter, skillNum);
+            case 111:
+                return new GyuGyu(skillId, shooter, skillNum);
+            case 112:
+                return new Aliento(skillId, shooter, skillNum);
+            case 113:
+                return new Pok(skillId, shooter, skillNum);
+            case 114:
+                return new JeRyeung(skillId, shooter, skillNum);
+            case 115:
+                return new ParkSung(skillId, shooter, skillNum);
+            case 116:
+                return new Inn(skillId, shooter, skillNum);
+            case 117:
+                return new Churk(skillId, shooter, skillNum);
+            case 118:
+                return new BunGye(skillId, shooter, skillNum);
+            case 119:
+                return new SunYang(skillId, shooter, skillNum);
+            case 120:
+                return new Horin(skillId, shooter, skillNum);
+            case 121:
+                return new JuckHwa(skillId, shooter, skillNum);
+            case 122:
+                return new KumJul(skillId, shooter, skillNum);
+            case 123:
+                return new ChyuRyung(skillId, shooter, skillNum);
+            case 124:
+                return new JuckJung(skillId, shooter, skillNum);
+            case 125:
+                return new HwiPung(skillId, shooter, skillNum);
+            case 126:
+                return new SeRae(skillId, shooter, skillNum);
+            case 127:
+                return new GamYum(skillId, shooter, skillNum);
+            case 128:
+                return new Ildo(skillId, shooter, skillNum);
+            case 129:
+                return new JuOrk(skillId, shooter, skillNum);
+            case 130:
+                return new BuGong(skillId, shooter, skillNum);
+            //아래로 패시브
+            case 201:
+                return new MyungSang(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 202:
+                return new InnPassive(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 203:
+                return new HyulPok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 204:
+                return new DaeHum(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 205:
+                return new GaSok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 206:
+                return new Hyum(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 207:
+                return new JaeSaeng(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 208:
+                return new HwakSan(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 209:
+                return new HwakHo(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 210:
+                return new JuJuGaSork(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 211:
+                return new JuJuJyungPok(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 212:
+                return new GwangHwa(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 213:
+                return new ChangAe(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            case 214:
+                return new ChukDan(skillId, shooter, skillNum + ACTIVE_SKILL_MAX_COUNT);
+            default:
+                DebugManager.Instance.PrintError("[SkillManager] 미구현된 스킬입니다 (Skill ID: {0})", skillId);
+                return null;
+        }
+    }
+
+    
 
 }

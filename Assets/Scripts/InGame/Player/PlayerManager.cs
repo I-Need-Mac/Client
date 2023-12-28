@@ -97,8 +97,8 @@ public class PlayerManager : MonoBehaviour
 
         try
         {
-            int skillId = Convert.ToInt32(characterData["SkillID_01"]);
-            SkillManager.Instance.SkillAdd(skillId, player.transform, 0);
+            playerData.SetUltSkillId(Convert.ToInt32(characterData["SkillID_01"]));
+            SkillManager.Instance.SkillAdd(playerData.ultSkillId, player.transform, 0);
         }
         catch
         {
@@ -107,15 +107,13 @@ public class PlayerManager : MonoBehaviour
 
         try
         {
-            int skillId = Convert.ToInt32(characterData["SkillID_02"]);
-            SkillManager.Instance.SkillAdd(skillId, player.transform, 1);
+            playerData.SetBasicSkillId(Convert.ToInt32(characterData["SkillID_02"]));
+            SkillManager.Instance.SkillAdd(playerData.basicSkillId, player.transform, 1);
         }
         catch
         {
             DebugManager.Instance.PrintDebug("[ERROR]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_02)");
         }
-        //int skillId2 = Convert.ToInt32(characterData["SkillID_02"]);
-        //SkillManager.Instance.SkillAdd(skillId2, player.transform, 1);
     }
 
     private void ConfigSetting()

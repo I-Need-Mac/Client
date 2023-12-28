@@ -276,12 +276,18 @@ public class Player : MonoBehaviour
         spineManager.SetAnimation("Idle", true);
         playerManager.PlayerSetting(playerManager.FindCharacter(Convert.ToString(id)));
 
+        ActiveSkill prevSkill = (ActiveSkill)SkillManager.Instance.skillList[playerManager.playerData.basicSkillId];
+        int newSkillId = Convert.ToInt32(CSVReader.Read("CharacterTable", id.ToString(), "SkillID_02"));
+        SkillManager.Instance.SwapSkill(prevSkill.skillId, newSkillId);
+
         yield return new WaitForSeconds(time);
 
         statusEffect.RemoveStatusEffect(STATUS_EFFECT.TRANSITION);
         spineManager.SetSkeletonDataAsset(asset);
         spineManager.SetAnimation("Idle", true);
         playerManager.PlayerSetting(playerManager.FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
+
+        SkillManager.Instance.SwapSkill(newSkillId, prevSkill.skillId);
     }
 
     #endregion

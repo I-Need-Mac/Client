@@ -95,8 +95,9 @@ public class UI_Sorcerer : UI_Base
             return;
         selectImage.sprite = imageSprite;
 
-        string ultiPath = GetUltiPath(ultimate);
-        Sprite ultiSprite = Resources.Load<Sprite>($"{Define.UiArtsPath}/" + ultiPath);
+        ultimate = GetUltiPath(ultimate);
+        Sprite ultiSprite = Resources.Load<Sprite>( ultimate);
+
         if (ultiSprite == null)
             return;
         ultiImage.sprite = ultiSprite;
@@ -118,7 +119,7 @@ public class UI_Sorcerer : UI_Base
             {
                 name = LocalizeManager.Instance.GetText(val.Value.ToString());
             }
-            else if (val.Key == UIData.CharacterTableCol.MainShowImagePath.ToString())
+            else if (val.Key == UIData.CharacterTableCol.MainSelectImagePath.ToString())
             {
                 imagePath = val.Value.ToString();
             }
@@ -136,22 +137,7 @@ public class UI_Sorcerer : UI_Base
         string ultiPath = "";
 
         Dictionary<string, Dictionary<string, object>> skillData = UIData.SkillData;
-        foreach (KeyValuePair<string, Dictionary<string, object>> data in skillData)
-        {
-            if(data.Key == skillID)
-            {
-                foreach (KeyValuePair<string, object> val in data.Value)
-                {
-                    if (val.Key == "Icon")
-                    {
-                        ultiPath = val.Value.ToString();
-                        break;
-                    }
-                }
-
-                break;
-            }    
-        }
+        ultiPath = skillData[skillID]["Icon"].ToString();
 
         return ultiPath;
     }

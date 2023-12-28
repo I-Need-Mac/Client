@@ -46,6 +46,13 @@ public class UI_SelectSorcererInfo : UI_Popup
     TextMeshProUGUI storyBottomText;
 
     [SerializeField]
+    GameObject storySelect;
+    [SerializeField]
+    GameObject statSelect;
+    [SerializeField]
+    GameObject skillSelect;
+
+    [SerializeField]
     GameObject StatContents;
     
     [SerializeField]
@@ -125,16 +132,27 @@ public class UI_SelectSorcererInfo : UI_Popup
                 StoryContents.gameObject.SetActive(true);
                 StatContents.gameObject.SetActive(false);
                 SkillContents.gameObject.SetActive(false);
+                storySelect.SetActive(true);
+                statSelect.SetActive(false);
+                skillSelect.SetActive(false);
+                
                 break;
             case Buttons.StatBtn:
                 StoryContents.gameObject.SetActive(false);
                 StatContents.gameObject.SetActive(true);
                 SkillContents.gameObject.SetActive(false);
+                storySelect.SetActive(false);
+                statSelect.SetActive(true);
+                skillSelect.SetActive(false);
                 break;
             case Buttons.SkillBtn:
                 StoryContents.gameObject.SetActive(false);
                 StatContents.gameObject.SetActive(false);
                 SkillContents.gameObject.SetActive(true);
+                storySelect.SetActive(false);
+                statSelect.SetActive(false);
+                skillSelect.SetActive(true);
+
                 break;
             case Buttons.Select:
                 UIManager.Instance.selectCharacterID = sorcererInfoID;
@@ -168,6 +186,10 @@ public class UI_SelectSorcererInfo : UI_Popup
                 selectImage.sprite = imageSprite;
 
             }
+            else if (val.Key == UIData.CharacterTableCol.IntroduceTextPath.ToString()) { 
+                storyTopText.SetText(LocalizeManager.Instance.GetText(val.Value.ToString()));
+            }
+
             else if(val.Key == UIData.CharacterTableCol.SkillID_01.ToString())
             {
                 Skill_1_Name.text = GetSkillName(val.Value.ToString());

@@ -62,8 +62,10 @@ public class UI_Settings : UI_Popup
         {
             case Images.Close:
                 SaveSoundValue();
+                SetBootOption();
                 this.CloseUI<UI_Settings>();
-                if(originLang != SettingManager.Instance.GetSettingValue("lang")) { 
+      
+                if (originLang != SettingManager.Instance.GetSettingValue("lang")) { 
                     Application.Quit();
                 }
                 break;
@@ -183,11 +185,8 @@ public class UI_Settings : UI_Popup
             foreach (UI_LocalizeText lt in textList) { 
                 lt.ResetLang();
             }
+            SetScreenType();
 
-            foreach(UI_Popup ui in UIManager.Instance.currentPopup) {
-                ui.gameObject.SetActive(false);
-                ui.gameObject.SetActive(true);
-            }
         }
         
 
@@ -197,5 +196,32 @@ public class UI_Settings : UI_Popup
     public void SkipCutSceneToggleChanged()
     {
         SettingManager.Instance.SetSettingValue("CutScene",  skipCutScene.isOn?1:0 );
+    }
+
+
+    public void SetBootOption() {
+            // 해상도 및 전체 화면 모드 저장
+        PlayerPrefs.SetInt("ScreenWidth", SettingManager.Instance.GetSettingValue("ScreenWidth"));  
+        PlayerPrefs.SetInt("ScreenHeight", SettingManager.Instance.GetSettingValue("ScreenHeight"));
+        PlayerPrefs.SetInt("TargetFrameRate", SettingManager.Instance.GetSettingValue("ScreenRate"));
+        switch (SettingManager.Instance.GetSettingValue("ScreenType")) { 
+            case 0:
+                PlayerPrefs.SetInt("FullScreenMode", 1);
+                break;
+                case 1:
+                PlayerPrefs.SetInt("FullScreenMode", 1);
+                PlayerPrefs.SetInt("BorderlessFullScreen", 1);
+                break;
+                case 2:
+                PlayerPrefs.SetInt("FullScreenMode", 0);
+                break;
+            }
+            
+      
+
+            // 변경 사항 저장
+         PlayerPrefs.Save();
+        
+
     }
 }

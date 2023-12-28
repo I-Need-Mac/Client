@@ -36,7 +36,6 @@ public class UI_StoryMain : UI_Popup
     
     void Start()
     {
-        GetLastStage();
         Bind<Image>(typeof(Images));
         Array imageValue = Enum.GetValues(typeof(Images));
         for (int i = 0; i < imageValue.Length; i++)
@@ -260,11 +259,5 @@ public class UI_StoryMain : UI_Popup
         }
 
         return findChapterID;
-    }
-    async void GetLastStage()
-    {
-        if (!SteamManager.Initialized) { return; }
-        string name = SteamUser.GetSteamID().ToString();
-        UIStatus.Instance.Last_Clear_Stage = await APIManager.Instance.StageLastClear(name, "adf");
     }
 }

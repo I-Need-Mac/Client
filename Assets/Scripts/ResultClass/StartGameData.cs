@@ -8,9 +8,6 @@ public class StartGame
       public string message { get; set; }
       public StartGameData data { get; set; }
     
-    override public string ToString() { 
-        return data.hojin.ToString();
-    }
 
     public class StartGameData
     {

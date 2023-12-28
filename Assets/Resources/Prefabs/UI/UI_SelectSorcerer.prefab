@@ -213,14 +213,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.29872733, g: 0.33418706, b: 0.46226418, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 98807b7af83d92c4a88a64e2400c6c71, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f32d7d8a431bc4246ace0ac2d86e4167, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -427,8 +427,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Select Sorcerer
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
-  m_sharedMaterial: {fileID: -3305390525445643378, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c238644fffdb61a41a4464826b104a1d, type: 2}
+  m_sharedMaterial: {fileID: -4691880593218274680, guid: c238644fffdb61a41a4464826b104a1d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

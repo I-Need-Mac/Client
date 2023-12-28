@@ -97,14 +97,14 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                     }
                     catch
                     {
-                        DebugManager.Instance.PrintDebug("[ERROR] 현재 존재하지 않는 몬스터입니다 MonsterID: " + spawnMobId);
+                        DebugManager.Instance.PrintError("[MonsterSpawner] 현재 존재하지 않는 몬스터입니다 MonsterID: " + spawnMobId);
                     }
                 }
                 spawnQueue.Enqueue(new MonsterSpawnData(Convert.ToInt32(spawnId), Convert.ToInt32(stageData[spawnId]["SpawnTime"]), spawnMobId, Convert.ToInt32(stageData[spawnId]["SpawnMobAmount"]), Convert.ToString(stageData[spawnId]["SpawnMobLocation"])));
             }
             catch
             {
-                DebugManager.Instance.PrintDebug("[ERROR] 빈 줄이 삽입되어 있습니다: " + spawnId);
+                DebugManager.Instance.PrintError("[MonsterSpawner] 빈 줄이 삽입되어 있습니다: " + spawnId);
             }
         }
     }
@@ -208,7 +208,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
             {
                 if (remainMonsters.Count == 0)
                 {
-                    DebugManager.Instance.PrintDebug("[SpawnerTest]: End");
+                    DebugManager.Instance.PrintDebug("[MonsterSpawner]: End");
                     yield break;  //더이상 스폰할 몬스터가 없을 경우 종료
                 }
             }

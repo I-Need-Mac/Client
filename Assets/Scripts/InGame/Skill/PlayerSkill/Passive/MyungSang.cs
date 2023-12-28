@@ -10,7 +10,9 @@ public class MyungSang : PassiveSkill
 
     public override IEnumerator Activation()
     {
+        GameManager.Instance.playerTrigger = false;
         yield return new WaitForSeconds(skillData.skillEffectParam[0] / 1000.0f);
+        GameManager.Instance.playerTrigger = true;
 
         for (int i = 1; i < skillData.skillEffect.Count; i++)
         {

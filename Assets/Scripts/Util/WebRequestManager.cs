@@ -66,15 +66,13 @@ public partial class WebRequestManager
     {
 
         string jsonData = JsonConvert.SerializeObject(forms);
-        Debug.LogError(forms.Count);
-        Debug.LogError(jsonData);
+      
         Dictionary<string, string> postData = new Dictionary<string, string>
         {
             { "data",  crypto.Encrypt(jsonData)}
         };
 
-
-        Debug.LogError(JsonConvert.SerializeObject(postData));
+        DebugManager.Instance.PrintDebug("[WebRequester] " + postData);
      
         return JsonConvert.SerializeObject(postData);
     }

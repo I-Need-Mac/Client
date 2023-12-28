@@ -45,7 +45,7 @@ public class APIManager : SingleTon<APIManager>
         sendData.Add("steam_id", name);
         NormalResult result = (NormalResult)await requestManager.Post<NormalResult>(APIAddressManager.REQUEST_LOGIN, sendData);
 
-        Debug.LogError(result.statusCode);
+        DebugManager.Instance.PrintDebug("[WebRequest] "+"Login Result for "+name+" result : "+result.statusCode);
         if (result.statusCode == 200) { 
             return true;
         }

@@ -44,6 +44,10 @@ public class UI_SelectSorcererInfo : UI_Popup
     TextMeshProUGUI storyMiddleText;
     [SerializeField]
     TextMeshProUGUI storyBottomText;
+    [SerializeField]
+    TMP_FontAsset selectedFont;
+    [SerializeField]
+    TMP_FontAsset defaultFont;
 
     [SerializeField]
     GameObject storySelect;
@@ -69,6 +73,12 @@ public class UI_SelectSorcererInfo : UI_Popup
     TextMeshProUGUI Skill_2_Name;
     [SerializeField]
     TextMeshProUGUI Skill_2_Context;
+    [SerializeField]
+    Image Skill_Icon_1_Image;
+    [SerializeField]
+    Image Skill_Icon_2_Image;
+    [SerializeField]
+    UI_SorcererGauge[] gaugeList;
 
     int sorcererInfoID = 0;
     Dictionary<string, object> sorcererInfo = new Dictionary<string, object>();
@@ -129,6 +139,10 @@ public class UI_SelectSorcererInfo : UI_Popup
         switch (buttonValue)
         {
             case Buttons.StoryBtn:
+                storyText.font = selectedFont;
+                statText.font = defaultFont;
+                skillText.font = defaultFont;
+
                 StoryContents.gameObject.SetActive(true);
                 StatContents.gameObject.SetActive(false);
                 SkillContents.gameObject.SetActive(false);
@@ -138,6 +152,10 @@ public class UI_SelectSorcererInfo : UI_Popup
                 
                 break;
             case Buttons.StatBtn:
+                storyText.font = defaultFont;
+                statText.font = selectedFont;
+                skillText.font = defaultFont;
+
                 StoryContents.gameObject.SetActive(false);
                 StatContents.gameObject.SetActive(true);
                 SkillContents.gameObject.SetActive(false);
@@ -145,7 +163,13 @@ public class UI_SelectSorcererInfo : UI_Popup
                 statSelect.SetActive(true);
                 skillSelect.SetActive(false);
                 break;
+
+
             case Buttons.SkillBtn:
+                storyText.font = defaultFont;
+                statText.font = defaultFont;
+                skillText.font = selectedFont;
+
                 StoryContents.gameObject.SetActive(false);
                 StatContents.gameObject.SetActive(false);
                 SkillContents.gameObject.SetActive(true);
@@ -193,90 +217,65 @@ public class UI_SelectSorcererInfo : UI_Popup
             else if(val.Key == UIData.CharacterTableCol.SkillID_01.ToString())
             {
                 Skill_1_Name.text = GetSkillName(val.Value.ToString());
-                Skill_1_Image.sprite = GetSkillSprite(val.Value.ToString());
+               // Skill_1_Image.sprite = GetSkillSprite(val.Value.ToString());
                 Skill_1_Context.text = GetSkillDesc(val.Value.ToString());
+                Skill_Icon_1_Image.sprite = GetSkillIconSprite(val.Value.ToString());
             }
             else if (val.Key == UIData.CharacterTableCol.SkillID_02.ToString())
             {
                 Skill_2_Name.text = GetSkillName(val.Value.ToString());
-                Skill_2_Image.sprite = GetSkillSprite(val.Value.ToString());
+                Skill_Icon_2_Image.sprite = GetSkillIconSprite(val.Value.ToString());
                 Skill_2_Context.text = GetSkillDesc(val.Value.ToString());
             }
+            else if (val.Key == UIData.CharacterTableCol.HP.ToString()) { 
+                gaugeList[0].SetValue(Convert.ToInt32(val.Value),400);
+            }
+            else if (val.Key == UIData.CharacterTableCol.Attack.ToString())
+            {
+                gaugeList[1].SetValue(Convert.ToInt32(val.Value), 300);
+            }
+            else if (val.Key == UIData.CharacterTableCol.Shield.ToString())
+            {
+                gaugeList[2].SetValue(Convert.ToInt32(val.Value), 3);
+            }
+            else if (val.Key == UIData.CharacterTableCol.MoveSpeed.ToString())
+            {
+                gaugeList[3].SetValue(Convert.ToDouble(val.Value), 4.0);
+            }
+            else if (val.Key == UIData.CharacterTableCol.CriRatio.ToString())
+            {
+                gaugeList[4].SetValue(Convert.ToInt32(val.Value)/100, 100, "%");
+            }
+            else if (val.Key == UIData.CharacterTableCol.CriDamage.ToString())
+            {
+                gaugeList[5].SetValue(Convert.ToInt32(val.Value)/100, 400,"%");
+            }
+            else if (val.Key == UIData.CharacterTableCol.GetItemRange.ToString())
+            {
+                gaugeList[6].SetValue(Convert.ToDouble(val.Value), 5.0,"M");
+            }
+            else if (val.Key == UIData.CharacterTableCol.CoolDown.ToString())
+            {
+                gaugeList[7].SetValue(Convert.ToInt32(val.Value), 100);
+
+            }
+
+
         }
     }
 
     string GetSkillName(string skillID)
     {
-        string skillName = "";
-
-        Dictionary<string, Dictionary<string, object>> skillData = UIData.SkillData;
-        foreach (KeyValuePair<string, Dictionary<string, object>> data in skillData)
-        {
-            if (data.Key == skillID)
-            {
-                foreach (KeyValuePair<string, object> val in data.Value)
-                {
-                    if (val.Key == UIData.SkillTableCol.Name.ToString())
-                    {
-                        skillName = val.Value.ToString();
-                        break;
-                    }
-                }
-
-                break;
-            }
-        }
-
-        return skillName;
+        return LocalizeManager.Instance.GetText(UIData.SkillData[skillID]["Name"].ToString());
     }
-
-    Sprite GetSkillSprite(string skillID)
-    {
-        Sprite skillSprite = null;
-
-        Dictionary<string, Dictionary<string, object>> skillData = UIData.SkillData;
-        foreach (KeyValuePair<string, Dictionary<string, object>> data in skillData)
-        {
-            if (data.Key == skillID)
-            {
-                foreach (KeyValuePair<string, object> val in data.Value)
-                {
-                    if (val.Key == UIData.SkillTableCol.SkillImage.ToString())
-                    {
-                        skillSprite = Resources.Load<Sprite>($"{Define.UiArtsPath}/" + val.Value.ToString());
-                        break;
-                    }
-                }
-
-                break;
-            }
-        }
-
-        return skillSprite;
-    }
-
     string GetSkillDesc(string skillID)
     {
-        string skillDesc = "";
-
-        Dictionary<string, Dictionary<string, object>> skillData = UIData.SkillData;
-        foreach (KeyValuePair<string, Dictionary<string, object>> data in skillData)
-        {
-            if (data.Key == skillID)
-            {
-                foreach (KeyValuePair<string, object> val in data.Value)
-                {
-                    if (val.Key == UIData.SkillTableCol.Desc.ToString())
-                    {
-                        skillDesc = val.Value.ToString();
-                        break;
-                    }
-                }
-
-                break;
-            }
-        }
-
-        return skillDesc;
+        return LocalizeManager.Instance.GetText(UIData.SkillData[skillID]["Desc"].ToString());
     }
+    Sprite GetSkillIconSprite(string skillID)
+    {
+        return ResourcesManager.Load<Sprite>(UIData.SkillData[skillID]["Icon"].ToString());
+    }
+
+
 }

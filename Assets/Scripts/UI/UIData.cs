@@ -18,6 +18,16 @@ public class UIData
     {
         CharacterId,
         CharacterName,          // 캐릭터 이름
+        HP,
+        Attack,
+        CriRatio,
+        CriDamage,
+        CoolDown,
+        HPRegen,
+        Shield,
+        ProjectileAdd,
+        MoveSpeed,
+        GetItemRange,
         MainShowImagePath,    // 캐릭터 선택 이미지 경로
         MainSelectImagePath,
         IntroduceTextPath,

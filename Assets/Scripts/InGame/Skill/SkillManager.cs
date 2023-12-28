@@ -56,11 +56,16 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     }
 
     #region Spawn Projectile
+    public SkillRangeCircle SpawnRangeCircle(float duration, Transform parent)
+    {
+        return SpawnRangeCircle(duration, 1.0f, parent);
+    }
+
     public SkillRangeCircle SpawnRangeCircle(float duration, float size, Transform parent)
     {
         SkillRangeCircle circle = rangeCirclePool.GetObject();
-        circle.Activation(duration, size);
         circle.transform.SetParent(parent);
+        circle.Activation(duration, size);
         circle.transform.localPosition = Vector3.zero;
         circle.gameObject.SetActive(true);
         return circle;

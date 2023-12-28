@@ -15,8 +15,8 @@ public abstract class ActiveSkill : Skill
 {
     private Dictionary<string, Dictionary<string, object>> skillTable;
 
-    protected int skillNum;
-    protected Transform shooter;
+    //protected int skillNum;
+    //protected Transform shooter;
     //protected List<Projectile> projectiles;
     protected ActiveData skillData;
     protected Vector2 originSize;
@@ -28,6 +28,10 @@ public abstract class ActiveSkill : Skill
 
     private float originDamage;
 
+    public int skillId { get; set; }
+    public int skillNum { get; set; }
+    public Transform shooter { get; set; }
+
     //public abstract void Init();
     public abstract IEnumerator Activation();
 
@@ -37,7 +41,8 @@ public abstract class ActiveSkill : Skill
         //this.projectiles = new List<Projectile>();
         this.skillData = new ActiveData();
         this.shooter = shooter;
-        SetSkillData(skillId);
+        this.skillId = skillId;
+        SetSkillData(this.skillId);
         //SkillDataUpdate();
         this.skillNum = skillNum;
         frame = new WaitForFixedUpdate();

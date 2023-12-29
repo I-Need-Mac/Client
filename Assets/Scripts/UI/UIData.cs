@@ -49,6 +49,7 @@ public class UIData
         IntroID,
         OutroID,
         ChapterCategory,
+        StageName
     }
 
     public enum ChapterTableCol

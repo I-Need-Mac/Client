@@ -33,6 +33,8 @@ public class UI_StoryMain : UI_Popup
     [SerializeField]
     GameObject chapterImage;
 
+    private string selectedStage;
+
     
     void Start()
     {
@@ -43,7 +45,7 @@ public class UI_StoryMain : UI_Popup
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
         title.text = LocalizeManager.Instance.GetText("UI_StoryMode");
-    
+        selectedStage = UIManager.Instance.selectStageID.ToString();
         SetData();
     }
 
@@ -108,7 +110,7 @@ public class UI_StoryMain : UI_Popup
         }
 
         // 챕터 선택
-        SelectChapter(currentChapterID);
+        SelectChapter(selectedStage);
     }
 
     void DrawStoryModeList()
@@ -147,8 +149,9 @@ public class UI_StoryMain : UI_Popup
 
         // draw stage
     }
-    void SelectChapter(string chapterID)
+    void SelectChapter(string stageID)
     {
+        string chapterID = (Convert.ToInt32(stageID)/100).ToString();
         // 챕터 리스트 가져오기
         Dictionary<string, Dictionary<string, object>> chapterDataList = UIData.ChapterData;
         if (chapterDataList.Count == 0 || chapterDataList == null)
@@ -168,19 +171,19 @@ public class UI_StoryMain : UI_Popup
         string headerLocalText = LocalizeManager.Instance.GetText(headerText);
         string chapterEleText = LocalizeManager.Instance.GetText("UI_ChapterSelect");
 
-        Dictionary<string, object> selectStageData = UIData.StageData[UIManager.Instance.selectStageID.ToString()];
+        Dictionary<string, object> selectStageData = UIData.StageData[stageID];
         string stageHeaderText = selectStageData[UIData.StageTableCol.StageHeader.ToString()].ToString();
         string stageHeaderLocalText = LocalizeManager.Instance.GetText(stageHeaderText);
+        chapterName.text = LocalizeManager.Instance.GetText(chapterInfo[UIData.ChapterTableCol.ChapterName.ToString()].ToString());
 
         string stageEleText = LocalizeManager.Instance.GetText("UI_StageList");
-        chapterStageTitle.text = String.Format(chapterEleText, headerLocalText)
-            + " " + String.Format(stageEleText, stageHeaderLocalText);
+        chapterStageTitle.text = String.Format(chapterEleText, headerLocalText)+ " " + String.Format(stageEleText, stageHeaderLocalText);
 
         // set chapter name
-        string nameText = chapterInfo[UIData.ChapterTableCol.ChapterName.ToString()].ToString();
+        string nameText = selectStageData[UIData.StageTableCol.StageName.ToString()].ToString();
         string nameLocalText = LocalizeManager.Instance.GetText(nameText);
         chapterNameSub.text = "<" + nameLocalText + ">";
-        chapterName.text = nameLocalText;
+
 
         // set chapter image
         string imageText = chapterInfo[UIData.ChapterTableCol.ChapterImage.ToString()].ToString();

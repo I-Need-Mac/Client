@@ -37,6 +37,7 @@ public class UI_SelectSorcerer : UI_Popup
         keyCountText.text = UIStatus.Instance.key.ToString();
         Dictionary<string, Dictionary<string, object>> characterData = UIData.CharacterData;
         UI_Sorcerer sorcerer = Util.UILoad<UI_Sorcerer>(Define.UiPrefabsPath + "/UI_Sorcerer");
+        
 
         foreach (KeyValuePair<string, Dictionary<string, object>> data in characterData)
         {
@@ -47,9 +48,13 @@ public class UI_SelectSorcerer : UI_Popup
             // 생성
             GameObject instance = Instantiate(sorcerer.gameObject) as GameObject;
             instance.GetComponent<UI_Sorcerer>().SetSorcerer(int.Parse(data.Key), data.Value);
+            
             instance.name = "sorcerer_" + data.Key;
             instance.transform.SetParent(sorcererObject.transform);
             instance.transform.localScale = Vector3.one;
+            if (UIStatus.Instance.selectedChar == Convert.ToInt32(data.Key)) {
+                instance.GetComponent<UI_Sorcerer>().SetIsSelected(true);
+            }
 
             RectTransform rect = instance.GetComponent<RectTransform>();
             rect.anchoredPosition3D = Vector3.zero;

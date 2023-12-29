@@ -27,13 +27,22 @@ public class Destructionstone : FieldStructure
 
         spriteRenderer = front.GetComponent<SpriteRenderer>();
         magicPearl = GetComponentInChildren<MagicPearl>();
-    }
 
+        if (top.TryGetComponent(out Renderer render))
+        {
+            render.sortingLayerName = ((LayerConstant)(fieldStructureData.layerOrder)).ToString();
+        }
+        else if (top.TryGetComponent(out MeshRenderer meshRender))
+        {
+            meshRender.sortingLayerName = ((LayerConstant)(fieldStructureData.layerOrder)).ToString();
+        }
+    }
 
     private void Start()
     {
         soundRequester = GetComponent<SoundRequesterSFX>();
     }
+
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (!front.enabled)
@@ -47,20 +56,20 @@ public class Destructionstone : FieldStructure
             switch (type)
             {
                 case BEAM_TYPE.WIDTH:
-                    Beam width = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamWidth"), transform);
+                    Beam width = Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamWidth"), transform);
                     width.BeamInit(CameraManager.Instance.cam.orthographicSize * CameraManager.Instance.cam.aspect * 2.0f * 2.5f, float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     break;
                 case BEAM_TYPE.VERTICAL:
-                    Beam vertical = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamVertical"), transform);
+                    Beam vertical = Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamVertical"), transform);
                     vertical.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), CameraManager.Instance.cam.orthographicSize * 2.0f * 2.5f, float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     break;
                 case BEAM_TYPE.CIRCLE:
-                    Beam circle = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamCircle"), transform);
+                    Beam circle = Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamCircle"), transform);
                     circle.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     break;
                 case BEAM_TYPE.CROSS:
-                    Beam crossWidth = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamWidth"), transform);
-                    Beam crossVertical = GameObject.Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamVertical"), transform);
+                    Beam crossWidth = Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamWidth"), transform);
+                    Beam crossVertical = Instantiate(ResourcesManager.Load<Beam>(BEAM_PATH + "BeamVertical"), transform);
                     crossWidth.BeamInit(CameraManager.Instance.cam.orthographicSize * CameraManager.Instance.cam.aspect * 2.0f * 2.5f, float.Parse(this.fieldStructureData.gimmickParam[0]), float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     crossVertical.BeamInit(float.Parse(this.fieldStructureData.gimmickParam[0]), CameraManager.Instance.cam.orthographicSize * 2.0f * 2.5f, float.Parse(this.fieldStructureData.gimmickParam[1]), float.Parse(this.fieldStructureData.gimmickParam[2]));
                     break;

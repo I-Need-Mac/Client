@@ -1,11 +1,12 @@
 lang=0
 TOTAL_SOUND=10
-BGM_SOUND=0
+BGM_SOUND=10
 EFFECT_SOUND=10
-VOCIE_SOUND=0
+VOCIE_SOUND=10
 FirstRegist=0
 AutoLogin=1
 CutScene=0
-ScreenWidth=3620
-ScreenHeight=2036
-ScreenType=1
+ScreenWidth=2560
+ScreenHeight=1440
+ScreenRate=144
+ScreenType=2

@@ -237,14 +237,14 @@ Prolog_Line15,빛과 어둠이 하나가 되어 새로운 혼돈이 탄생할 �
 Prolog_Line16,그 곳에는 새로운 희망이 싹틀 것이니.,,
 Chapter1_Header,첫,1st,一
 Chapter_Footer,째장,Jang,番目 チャプター
-Stage1_Header,1,1st,一
-Stage2_Header,2,2nd,二
-Stage3_Header,3,3rd,三
-Stage4_Header,4,4th,四
-Stage5_Header,5,5th,五
-Stage6_Header,6,6th,六
-Stage7_Header,7,7th,七
-Stage8_Header,8,8th,八
+Stage1_Header,첫,1st,一
+Stage2_Header,두,2nd,二
+Stage3_Header,세,3rd,三
+Stage4_Header,넷,4th,四
+Stage5_Header,다섯,5th,五
+Stage6_Header,여섯,6th,六
+Stage7_Header,일곱,7th,七
+Stage8_Header,여덟,8th,八
 Stage_Footer,번째 이야기,Story of {0},番目話
 Skill_Desc_Juhon_01,본인의 일정거리 주변을 광역으로 원형으로의 적을 여러 번 벱니다.,,
 Skill_Desc_Juhon_02,피해량이 소량 추가됩니다.,the amount of damages will be slightly added,

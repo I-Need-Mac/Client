@@ -1878,7 +1878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6166b5cbcef6e024baa9e85be26d5094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTime: 5
+  spawnTime: 1
   stageId: 10101
   monsters: []
 --- !u!4 &414780806
@@ -3793,14 +3793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speakerSettings: []
-  soundPackItems:
-  - usingSpeaker: BGM
-    delay: 0
-    priority: 0
-    BGMSITUATION: 1
-    introBGMClip: {fileID: 0}
-    delayWithIntro: 0
-    realBGMClip: {fileID: 8300000, guid: c7458310d0604cf4c881c724af3f6910, type: 3}
+  soundPackItems: []
 --- !u!4 &948163360
 Transform:
   m_ObjectHideFlags: 0

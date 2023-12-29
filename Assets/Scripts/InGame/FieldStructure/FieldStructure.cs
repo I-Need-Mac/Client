@@ -91,7 +91,7 @@ public class FieldStructure : MonoBehaviour
         }
     }
 
-    private void SetLayer(Transform trans, LayerConstant layer)
+    protected void SetLayer(Transform trans, LayerConstant layer)
     {
         trans.gameObject.layer = (int)LayerConstant.GIMMICK;
 

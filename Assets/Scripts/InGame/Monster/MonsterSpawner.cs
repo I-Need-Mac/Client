@@ -50,17 +50,22 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         monsterAttackCoefficient = float.Parse(CSVReader.Read("BattleConfig", "StatIncreaseValueAttack", "ConfigValue").ToString());
     }
 
-    public Monster SpawnMonster(int monsterId, Vector2 pos)
+    public Monster SpawnMonster(int monsterId, Vector2 pos, LayerConstant layer = LayerConstant.MONSTER)
+    {
+        return SpawnMonster(monsterId, pos, GameManager.Instance.player.transform, false, layer);
+    }
+
+    public Monster SpawnMonster(int monsterId, Vector2 pos, Transform target, bool isFriendly, LayerConstant layer = LayerConstant.MONSTER)
     {
         Monster monster = spawner[monsterId].GetObject();
         monster.monsterId = monsterId;
-        monster.gameObject.layer = (int)LayerConstant.MONSTER;
+        monster.gameObject.layer = (int)layer;
         monster.GetComponentInChildren<MeshRenderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
         float weight = Timer.Instance.currentTime * 0.001f;
         monster.SpawnSet(monsterHpCoefficient * weight, monsterAttackCoefficient * weight);
         monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
-        monster.SetTarget(GameManager.Instance.player.transform, true);
+        monster.SetTarget(target, isFriendly);
         monster.gameObject.SetActive(true);
         monsters.Add(monster);
         ++spawnCount;

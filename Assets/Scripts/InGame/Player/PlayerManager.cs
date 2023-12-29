@@ -256,27 +256,8 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.TryGetComponent(out Skill skill))
-        //{
-        //    //StartCoroutine(player.Invincible());
-        //    //playerData.CurrentHpModifier(-IsShield(/*스킬데미지*/));
-        //}
-        //else
-        //{
-        //    try
-        //    {
-        //        Monster monster = collision.GetComponentInParent<Monster>();
-        //        StartCoroutine(player.Invincible());
-        //        DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
-        //        playerData.CurrentHpModifier((int)-IsHit(monster.monsterData.attack));
-        //    }
-        //    catch
-        //    {
-        //        DebugManager.Instance.PrintDebug("[충돌테스트]: 윽아님");
-        //    }
-        //}
         Monster monster;
-        if (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster))
+        if (collision.gameObject.layer == (int)LayerConstant.MONSTER && (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster)))
         {
             StartCoroutine(player.Invincible());
             playerData.CurrentHpModifier((int)-IsHit(monster.monsterData.attack));

@@ -25,7 +25,7 @@ public class UI_StartMain : UI_Base
     [SerializeField]
     TextMeshProUGUI version;
     [SerializeField]
-    SoundRequesterBTN soundRequester;
+    SoundRequesterBtn soundRequester;
 
     private bool isLogin;
 

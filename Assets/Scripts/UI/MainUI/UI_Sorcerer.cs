@@ -11,14 +11,10 @@ public class UI_Sorcerer : UI_Base
 {
     enum Images
     {
-        Image,
-        Ultimate
+        TouchPanel,
+        ImageLock
     }
 
-    enum Texts
-    {
-        Name
-    }
 
     [SerializeField]
     Image selectImage;
@@ -28,6 +24,8 @@ public class UI_Sorcerer : UI_Base
     Image ultiImage;
     [SerializeField]
     GameObject selected;
+    [SerializeField]
+    GameObject locked;
 
     int sorcererInfoID = 0;
     private bool sorcererUnlock;
@@ -35,20 +33,16 @@ public class UI_Sorcerer : UI_Base
 
     void Start()
     {
-        CharacterUnlock();
+      
         Bind<Image>(typeof(Images));
         Array imageValue = Enum.GetValues(typeof(Images));
-        for (int i = 0; i < imageValue.Length-1; i++)
+        for (int i = 0; i < imageValue.Length; i++)
         {
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
 
-        Bind<Text>(typeof(Texts));
-        Array textValue = Enum.GetValues(typeof(Texts));
-        for (int i = 0; i < textValue.Length-1; i++)
-        {
-            BindUIEvent(GetText(i).gameObject, (PointerEventData data) => { OnClickText(data); }, Define.UIEvent.Click);
-        }
+
+        CharacterUnlock();
     }
 
     public void OnClickImage(PointerEventData data)
@@ -57,46 +51,25 @@ public class UI_Sorcerer : UI_Base
         if ((int)imageValue < -1)
             return;
 
-        Debug.Log(data.pointerClick.name);
+        Debug.Log("[Click] Sorcerer "+data.pointerClick.name);
 
         switch (imageValue)
         {
-            case Images.Image:
-                if(sorcererUnlock)
-                {
-                     UI_SelectSorcererInfo info = UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                     info.SetSorcererInfo(sorcererInfoID, sorcererInfo);
-                }
-                else
-                {
-                    UIManager.Instance.OpenUI<UI_Hon_Unlock_conditions>();
-                }
-                break;
-            case Images.Ultimate:
+            case Images.TouchPanel:
+                 UI_SelectSorcererInfo info = UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
+                 info.SetSorcererInfo(sorcererInfoID, sorcererInfo);
+            break;
+
+            case Images.ImageLock:
+                UI_Sorcerer_Unlock_conditions buy =UIManager.Instance.OpenUI<UI_Sorcerer_Unlock_conditions>();
+                buy.SetSorcererName(sorcererInfo[UIData.CharacterTableCol.CharacterName.ToString()].ToString());
                 break;
             default:
                 break;
         }
     }
 
-    public void OnClickText(PointerEventData data)
-    {
-        Texts textValue = (Texts)FindEnumValue<Texts>(data.pointerClick.name);
-        if ((int)textValue < -1)
-            return;
-        
-        Debug.Log(data.pointerClick.name);
 
-        switch (textValue)
-        {
-            case Texts.Name:
-                UI_SelectSorcererInfo info = UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                info.SetSorcererInfo(sorcererInfoID, sorcererInfo);
-                break;
-            default:
-                break;
-        }
-    }
 
     public void SetResource(string imagePath, string name, string ultimate)
     {
@@ -159,25 +132,35 @@ public class UI_Sorcerer : UI_Base
         {
             case 101:
                 sorcererUnlock = UIStatus.Instance.hojin;
+                SetIsLocked(sorcererUnlock);
                 break;
             case 102:
                 sorcererUnlock = UIStatus.Instance.siWoo;
+                SetIsLocked(sorcererUnlock);
                 break;
             case 103:
                 sorcererUnlock = UIStatus.Instance.sinwol;
+                SetIsLocked(sorcererUnlock);
                 break;
             case 104:
                 sorcererUnlock = UIStatus.Instance.ulises;
+                SetIsLocked(sorcererUnlock);
                 break;
             case 105:
                 sorcererUnlock = UIStatus.Instance.seimei;
+                SetIsLocked(sorcererUnlock);
                 break;
             case 106:
                 sorcererUnlock = UIStatus.Instance.macia;
+                SetIsLocked(sorcererUnlock);
                 break;
         }
     }
     public void SetIsSelected(bool isActive) {
         selected.SetActive(isActive);
+    }
+    public void SetIsLocked(bool isLock)
+    {
+        locked.SetActive(!isLock);
     }
 }

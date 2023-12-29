@@ -159,6 +159,40 @@ public partial class WebRequestManager
         return default;
 
     }
+    public async Task<object> Patch<T>(string url, Dictionary<string, string> data)
+    {
+        UnityWebRequest request = new UnityWebRequest($"{WEBSERVICE_HOST}/{url}", "PATCH");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(GetDictToString(data));
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
 
+        using (request)
+        {
+            float timeout = 0f;
+            request.SendWebRequest();
+            while (!request.isDone)
+            {
+                timeout += Time.deltaTime;
+                if (timeout > TIMEOUT)
+                    return default;
+                else
+                    await Task.Yield();
+            }
+
+            var jsonString = request.downloadHandler.text;
+            var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
+
+            DebugManager.Instance.PrintDebug("[WebAPI]Result of Request :\n" + request.downloadHandler.text);
+
+            if (request.result != UnityWebRequest.Result.Success)
+                Debug.LogError($"Failed: {request.error}");
+
+            return dataObj;
+
+        }
+        return default;
+
+    }
 
 }

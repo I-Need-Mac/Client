@@ -170,6 +170,10 @@ UI_VoiceSound,음성,Voice,音声
 UI_TotalSound,전체 음량,Total Sound,全音量
 UI_CutSceneSkip,컷씬 스킵,Skip CutScene,カットシーン·スキップ
 UI_Warning,※ 언어 변경 후 저장 시 자동으로 게임이 종료됩니다.\n※ 해상도 변경 시 재시작하면 깔끔하게 적용됩니다. ,"※ If you change the language and save it, the game will automatically end.\n※ Reboot when you change the resolution and it will be applied neatly.",※ 言語変更後、保存すると自動的にゲームが終了します。\n※ 解像度変更時に再起動するとすっきり適用されます。
+UI_BuySorcerer,주술사는 상자에서 뽑거나 열쇠로 구매할 수 있습니다.\n열쇠 {0}개를 소모하여 {1}를(을) 구매하시겠습니까?,,
+UI_Buy,구매,,
+UI_Cancle,취소,,
+UI_NotEnough,보유한 열쇠가 부족합니다.,,
 Unlock_Percent_Text,해금 진행도,progress,解放進行度
 Skill_Name_Juhon,주혼참회도,,㣙昏懺意刀
 Skill_Name_Bujung,부정추술,,錇正追術

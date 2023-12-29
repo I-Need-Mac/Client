@@ -43,7 +43,7 @@ public class UI_StoryMain : UI_Popup
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
         title.text = LocalizeManager.Instance.GetText("UI_StoryMode");
-        Debug.LogError(UIManager.Instance.selectCharacterID);
+    
         SetData();
     }
 

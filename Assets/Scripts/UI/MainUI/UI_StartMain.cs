@@ -12,6 +12,7 @@ public class UI_StartMain : UI_Base
     {
         Title,
         PressKey,
+        TouchPanel
     }
 
     float time = 0.0f;
@@ -63,15 +64,29 @@ public class UI_StartMain : UI_Base
                 }
                 else {
                     if (isAutoLogin) {
-                            RequestLogin();
-                        GetStartData();
+                        RequestLogin();
                      }
                     else {
                         UIManager.Instance.OpenUI<UI_Login>();
                     }
                 }
-
-               
+                break;
+            case Images.TouchPanel:
+                if (isFirst)
+                {
+                    UIManager.Instance.OpenUI<UI_Login>();
+                }
+                else
+                {
+                    if (isAutoLogin)
+                    {
+                        RequestLogin();
+                    }
+                    else
+                    {
+                        UIManager.Instance.OpenUI<UI_Login>();
+                    }
+                }
                 //UIManager.Instance.OpenUI<UI_StoryMain>();
                 break;
             default:
@@ -105,6 +120,24 @@ public class UI_StartMain : UI_Base
             else
                 UIManager.Instance.CloseUI<UI_ESCPopup>();
         }
+        else if(Input.anyKeyDown){
+            if (isFirst)
+            {
+                UIManager.Instance.OpenUI<UI_Login>();
+            }
+            else
+            {
+                if (isAutoLogin)
+                {
+                    RequestLogin();
+                }
+                else
+                {
+                    UIManager.Instance.OpenUI<UI_Login>();
+                }
+            }
+        }
+   
     }
 
     async void RequestLogin()
@@ -116,17 +149,13 @@ public class UI_StartMain : UI_Base
         if (isLogin)
         {
             UIManager.Instance.OpenUI<UI_GameMain>();
+           
         }
         else
         {
             UIManager.Instance.OpenUI<UI_Login>();
         }
     }
-    async void GetStartData()
-    {
-        if (!SteamManager.Initialized) { return; }
-        string name = SteamUser.GetSteamID().ToString();
-        await APIManager.Instance.StartGame(name,"adf");
-    }
+
 
 }

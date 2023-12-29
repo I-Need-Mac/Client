@@ -25,6 +25,8 @@ public class SettingManager
 
     private FileStream settingFileR;
     private FileStream settingFileW;
+    private Dictionary<string, Dictionary<string, object>> configData;
+
     private static SettingManager _instance { get; set; }
     public static SettingManager Instance
     {
@@ -37,6 +39,7 @@ public class SettingManager
 
     public SettingManager() { 
         ReadSettingFile();
+        configData = CSVReader.Read("Config");
     }
 
     public void WriteSettingFile() {
@@ -119,4 +122,12 @@ public class SettingManager
 
     }
 
+    public string GetConfigSetting(string id) {
+        if (configData.ContainsKey(id)) { 
+            return configData[id]["Value"].ToString();
+        }
+        else { 
+            return "Wrong ID";
+        }
+    }
 }

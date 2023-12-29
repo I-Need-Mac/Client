@@ -18,6 +18,8 @@ public class UI_SelectSorcerer : UI_Popup
     [SerializeField]
     TextMeshProUGUI titleText;
     [SerializeField]
+    TextMeshProUGUI keyCountText;
+    [SerializeField]
     GameObject sorcererObject;
     [SerializeField]
     List<GameObject> sorcererList = new List<GameObject>();
@@ -32,7 +34,7 @@ public class UI_SelectSorcerer : UI_Popup
         }
 
         titleText.text = LocalizeManager.Instance.GetText("UI_SelectSorcerer");
-
+        keyCountText.text = UIStatus.Instance.key.ToString();
         Dictionary<string, Dictionary<string, object>> characterData = UIData.CharacterData;
         UI_Sorcerer sorcerer = Util.UILoad<UI_Sorcerer>(Define.UiPrefabsPath + "/UI_Sorcerer");
 

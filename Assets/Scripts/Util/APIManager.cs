@@ -41,12 +41,14 @@ public class APIManager : SingleTon<APIManager>
     }
     public async Task<bool> TryLogin(string name)
     {
+        DebugManager.Instance.PrintDebug("[WebRequest] " + "Reqested Login ");
         Dictionary<string, string> sendData = new Dictionary<string, string>();
         sendData.Add("steam_id", name);
-        NormalResult result = (NormalResult)await requestManager.Post<NormalResult>(APIAddressManager.REQUEST_LOGIN, sendData);
+        LoginResult result = (LoginResult)await requestManager.Post<LoginResult>(APIAddressManager.REQUEST_LOGIN, sendData);
 
         DebugManager.Instance.PrintDebug("[WebRequest] "+"Login Result for "+name+" result : "+result.statusCode);
         if (result.statusCode == 200) { 
+            UIStatus.Instance.nickname = result.data.name;
             return true;
         }
         return false;
@@ -54,6 +56,7 @@ public class APIManager : SingleTon<APIManager>
     }
     public async Task<StartGame> StartGame(string name, string nickname)
     {
+        DebugManager.Instance.PrintDebug("[WebRequest] " + "Reqested GetStartData ");
         Dictionary<string, string> sendData = new Dictionary<string, string>();
         sendData.Add("steam_id", name);
         sendData.Add("name", nickname);

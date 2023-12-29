@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UIStatus : SingleTon<UIStatus>
 {
+    public int sorcererCost {get=> Convert.ToInt32(SettingManager.Instance.GetConfigSetting("Sorcerer"));}
     public string steam_id { get; set; }
+    public string nickname { get; set; }
+    public int selectedChar { get; set; }
+
     public int? high_stage { get; set; }
     public int? last_stage { get; set; }
     public bool last_is_finished { get; set; }

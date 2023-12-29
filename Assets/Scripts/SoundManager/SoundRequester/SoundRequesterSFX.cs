@@ -137,12 +137,21 @@ public class SoundRequesterSFX : SoundRequester
     protected override void ShootSound(SoundSituation.SOUNDSITUATION situation)
     {
         //audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
-       
+        
         try {
             audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
+
         }
-        catch(Exception e) { 
-            DebugManager.Instance.PrintError("[SoundRequester] 요청 사운드 이상 "+ situation+ " "+shootingSounds[situation].usingSpeaker);
+        catch(Exception e) {
+            DebugManager.Instance.PrintDebug("[SoundRequester] 오디오 소스 재요청 및 재재생 " + situation + " " + shootingSounds[situation].usingSpeaker);
+            if (audioSources.ContainsKey(shootingSounds[situation].usingSpeaker)) {
+                audioSources[shootingSounds[situation].usingSpeaker] =SoundManager.Instance.GetAudioSource(shootingSounds[situation].usingSpeaker);
+            }
+            else {
+                audioSources.Add(shootingSounds[situation].usingSpeaker, SoundManager.Instance.GetAudioSource(shootingSounds[situation].usingSpeaker));
+            }
+            
+            audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
         
         }
         if (situation == SoundSituation.SOUNDSITUATION.DIE)

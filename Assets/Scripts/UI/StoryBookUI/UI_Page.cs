@@ -73,7 +73,10 @@ public class UI_Page : UI_Popup
     PictureTextType pictureTextBottom;
 
     PageType type = PageType.Text;
+    
+    public bool isFinished =false;
     public PageType TYPE { get { return type; } }
+
 
     private FadeInImage topFade;
     private FadeInImage bottomFade;
@@ -191,6 +194,7 @@ public class UI_Page : UI_Popup
                 topText.TypeText(textTypeScript[0], onComplete:
                     () => middleText.TypeText(textTypeScript[1], onComplete:
                     () => bottomText.TypeText(textTypeScript[2], onComplete: () => storyBook.NextPage())));
+                isFinished = true;
                 Debug.Log("Text Complete");
                 break;
             case PageType.Picture:
@@ -200,13 +204,14 @@ public class UI_Page : UI_Popup
                 pictureTopText.TypeText(textTypeScript[0], onComplete: 
                     () => topFade.StartFadeIn(onComplete: 
                     () =>storyBook.NextPage()));
-               
+                isFinished = true;
                 Debug.Log("PictureTextTop Text Complete");
                 break;
             case PageType.PictureTextBottom:
                 bottomFade.StartFadeIn(onComplete:
                     ()=>pictureBottomText.TypeText(textTypeScript[0], onComplete:
                     () => storyBook.NextPage()));
+                isFinished = true;
                 Debug.Log("PictureTextBottom Text Complete");
                 break;
             default:
@@ -271,6 +276,7 @@ public class UI_Page : UI_Popup
             default:
                 break;
         }
+        isFinished = true;
     }
 
     public bool IsPageSkippable()

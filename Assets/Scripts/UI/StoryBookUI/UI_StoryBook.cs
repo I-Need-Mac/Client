@@ -53,7 +53,7 @@ public class UI_StoryBook : UI_Popup
     [SerializeField]
     Image nextBtn;
     [SerializeField]
-    GameObject  pageBox;
+    GameObject pageBox;
 
 
 
@@ -61,6 +61,7 @@ public class UI_StoryBook : UI_Popup
     int totalPage = 0;
     int currentPage = 0;
     int skipPage = 0;
+    bool check = false;
 
     StoryBookID bookId = 0;
 
@@ -148,17 +149,20 @@ public class UI_StoryBook : UI_Popup
 
         // 해당 페이지만 활성
         pageList[page].gameObject.SetActive(true);
-        pageList[page + 1].gameObject.SetActive(true);
+        if (page + 1 < totalPage)
+            pageList[page + 1].gameObject.SetActive(true);
 
         if (pageList[page].TYPE == UI_Page.PageType.Picture)
         {
-            pageList[page + 1].ActivePage();
+            if (page + 1 < totalPage)
+                pageList[page + 1].ActivePage();
             skipPage = page + 1;
         }
         else
         {
             pageList[page].ActivePage();
-            pageList[page + 1].ClearPage();
+            if (page + 1 < totalPage)
+                pageList[page + 1].ClearPage();
             skipPage = page;
         }
 
@@ -213,30 +217,47 @@ public class UI_StoryBook : UI_Popup
                 break;
             case Buttons.ContentSkip:
                 {
-                
-                    if ((currentPage+1) % 2 == 0 && !pageList[currentPage].IsPageSkippable())
+                    try
                     {
-                        DebugManager.Instance.PrintDebug("[Story] Move to Page 1" + currentPage + " -> " + totalPage + " " + pageList[currentPage].IsPageSkippable());
-                        bool isLast = false;
-                        pageList[currentPage].SkipPage(out isLast, true);
+                        if ((currentPage ) % 2 == 1)
+                        {
+                            if (!check) {
+                                DebugManager.Instance.PrintDebug("[Story] Move to Page 1 " + currentPage + " -> " + totalPage + " " + pageList[currentPage].isFinished);
+                                bool isLast = false;
+                                pageList[currentPage].SkipPage(out isLast, true);
+                                check = !check;
+                            }
+                            else {
+                              
+                                if (++currentPage >= totalPage)
+                                {
+                                    UIManager.Instance.CloseUI<UI_StoryBook>();
+                                    SceneManager.LoadScene("BattleScene");
+                                }
+                                else
+                                {
+                                    check = !check;
+                                    DebugManager.Instance.PrintDebug("[Story] Move to Page 3 " + currentPage + " -> " + totalPage + " " + pageList[currentPage].isFinished);
+                                    ActivePage(currentPage);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            DebugManager.Instance.PrintDebug("[Story] Move to Page 4 " + currentPage + " -> " + totalPage + " " + pageList[currentPage].isFinished);
+                            bool isLast = false;
+                            pageList[currentPage].SkipPage(out isLast, true);
+                            NextPage();
+                        }
                     }
-                    else if ((currentPage + 1) % 2 == 0 && pageList[currentPage].IsPageSkippable())
+                    catch (Exception e)
                     {
-                        DebugManager.Instance.PrintDebug("[Story] Move to Page 2" + currentPage + " -> " + totalPage+" "+ pageList[currentPage].IsPageSkippable());
-                        if (++currentPage >= totalPage) {
+                        if (++currentPage >= totalPage)
+                        {
                             UIManager.Instance.CloseUI<UI_StoryBook>();
                             SceneManager.LoadScene("BattleScene");
                         }
-                        else {
-                            ActivePage(currentPage);
-                        }
-                     
-                    }
-                    else
-                    {
-                        bool isLast = false;
-                        pageList[currentPage].SkipPage(out isLast, true);
-                        NextPage();
+
                     }
                 }
 
@@ -301,8 +322,11 @@ public class UI_StoryBook : UI_Popup
         }
         else
         {
-            pageList[currentPage].ActivePage();
-            pageText.text = (currentPage) + "/" + (PAGE_UNIT);
+            if (currentPage + 1 < totalPage)
+            {
+                pageList[currentPage].ActivePage();
+                pageText.text = (currentPage) + "/" + (PAGE_UNIT);
+            }
         }
 
     }

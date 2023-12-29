@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageToFade: {fileID: 6156089146677853623}
-  fadeInDuration: 2
+  fadeDuration: 2
 --- !u!1 &3922223557995121386
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a49154528bc0c948b47d6513afe8c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typingSpeed: 0.05
+  typingSpeed: 0.01
 --- !u!1 &5050323861479421229
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageToFade: {fileID: 4813502769281380340}
-  fadeInDuration: 2
+  fadeDuration: 2
 --- !u!1 &5310552484742787220
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,7 +932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a49154528bc0c948b47d6513afe8c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typingSpeed: 0.05
+  typingSpeed: 0.01
 --- !u!1 &6550530771716253286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a49154528bc0c948b47d6513afe8c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typingSpeed: 0.05
+  typingSpeed: 0.01
 --- !u!1 &7572641029446034512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1300,7 +1300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a49154528bc0c948b47d6513afe8c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typingSpeed: 0.05
+  typingSpeed: 0.01
 --- !u!1 &9188065534397704038
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,4 +1448,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a49154528bc0c948b47d6513afe8c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typingSpeed: 0.05
+  typingSpeed: 0.01

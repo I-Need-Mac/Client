@@ -3793,7 +3793,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speakerSettings: []
-  soundPackItems: []
+  soundPackItems:
+  - usingSpeaker: BGM
+    delay: 0
+    priority: 0
+    BGMSITUATION: 1
+    introBGMClip: {fileID: 0}
+    delayWithIntro: 0
+    realBGMClip: {fileID: 8300000, guid: 3e5ab832c9d349540922570ca974e8b2, type: 3}
 --- !u!4 &948163360
 Transform:
   m_ObjectHideFlags: 0

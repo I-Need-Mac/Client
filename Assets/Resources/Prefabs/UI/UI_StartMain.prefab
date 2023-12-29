@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: {fileID: 7249429849657349225}
+  soundRequester: {fileID: 510735171720379058}
 --- !u!223 &-6685878808184368226
 Canvas:
   m_ObjectHideFlags: 0

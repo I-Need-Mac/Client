@@ -72,7 +72,7 @@ public partial class WebRequestManager
             { "data",  crypto.Encrypt(jsonData)}
         };
 
-        DebugManager.Instance.PrintDebug("[WebRequester] " + postData);
+        DebugManager.Instance.PrintDebug("[WebRequester] " + jsonData);
      
         return JsonConvert.SerializeObject(postData);
     }

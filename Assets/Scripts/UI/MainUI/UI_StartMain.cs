@@ -24,6 +24,8 @@ public class UI_StartMain : UI_Base
 
     [SerializeField]
     TextMeshProUGUI version;
+    [SerializeField]
+    SoundRequesterBTN soundRequester;
 
     private bool isLogin;
 
@@ -58,37 +60,9 @@ public class UI_StartMain : UI_Base
 
         switch (imageValue)
         {
-            case Images.PressKey:
-                if (isFirst) {
-                    UIManager.Instance.OpenUI<UI_Login>();
-                }
-                else {
-                    if (isAutoLogin) {
-                        RequestLogin();
-                     }
-                    else {
-                        UIManager.Instance.OpenUI<UI_Login>();
-                    }
-                }
-                break;
-            case Images.TouchPanel:
-                if (isFirst)
-                {
-                    UIManager.Instance.OpenUI<UI_Login>();
-                }
-                else
-                {
-                    if (isAutoLogin)
-                    {
-                        RequestLogin();
-                    }
-                    else
-                    {
-                        UIManager.Instance.OpenUI<UI_Login>();
-                    }
-                }
+        
                 //UIManager.Instance.OpenUI<UI_StoryMain>();
-                break;
+              
             default:
                 break;
         }
@@ -129,7 +103,9 @@ public class UI_StartMain : UI_Base
             {
                 if (isAutoLogin)
                 {
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.CLICK);
                     RequestLogin();
+                       
                 }
                 else
                 {

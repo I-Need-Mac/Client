@@ -13,12 +13,12 @@ public enum AttackType
 {
     Shy,
     Bold,
+    FRIENDLY,
 }
 
 [System.Serializable]
 public class MonsterData
 {
-    
     [field: SerializeField] public string monsterName { get; private set; }
     [field: SerializeField] public float sizeMultiple { get; private set; }
     [field: SerializeField] public int hp { get; private set; }

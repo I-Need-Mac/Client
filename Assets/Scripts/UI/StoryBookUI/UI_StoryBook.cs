@@ -216,50 +216,8 @@ public class UI_StoryBook : UI_Popup
                 }
                 break;
             case Buttons.ContentSkip:
-                {
-                    try
-                    {
-                        if ((currentPage ) % 2 == 1)
-                        {
-                            if (!check) {
-                                DebugManager.Instance.PrintDebug("[Story] Move to Page 1 " + currentPage + " -> " + totalPage + " " + pageList[currentPage].isFinished);
-                                bool isLast = false;
-                                pageList[currentPage].SkipPage(out isLast, true);
-                                check = !check;
-                            }
-                            else {
-                              
-                                if (++currentPage >= totalPage)
-                                {
-                                    UIManager.Instance.CloseUI<UI_StoryBook>();
-                                    SceneManager.LoadScene("BattleScene");
-                                }
-                                else
-                                {
-                                    check = !check;
-                                    DebugManager.Instance.PrintDebug("[Story] Move to Page 3 " + currentPage + " -> " + totalPage + " " + pageList[currentPage].isFinished);
-                                    ActivePage(currentPage);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            DebugManager.Instance.PrintDebug("[Story] Move to Page 4 " + currentPage + " -> " + totalPage + " " + pageList[currentPage].isFinished);
-                            bool isLast = false;
-                            pageList[currentPage].SkipPage(out isLast, true);
-                            NextPage();
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        if (++currentPage >= totalPage)
-                        {
-                            UIManager.Instance.CloseUI<UI_StoryBook>();
-                            SceneManager.LoadScene("BattleScene");
-                        }
-
-                    }
-                }
+                UIManager.Instance.CloseUI<UI_StoryBook>();
+                SceneManager.LoadScene("BattleScene");
 
                 break;
             /*

@@ -11,8 +11,7 @@ public class UI_StartMain : UI_Base
     enum Images
     {
         Title,
-        PressKey,
-        TouchPanel
+        PressKey
     }
 
     float time = 0.0f;
@@ -103,7 +102,7 @@ public class UI_StartMain : UI_Base
             {
                 if (isAutoLogin)
                 {
-                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.CLICK);
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.PRESS);
                     RequestLogin();
                        
                 }

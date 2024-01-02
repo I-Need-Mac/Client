@@ -23,7 +23,15 @@ public class SpineManager : MonoBehaviour
     {
         if (skeletonAnimation.AnimationName != clipName)
         {
-            skeletonAnimation.AnimationState.SetAnimation(track, clipName, loop).TimeScale = SetSpineSpeed(speed);
+            try
+            {
+                skeletonAnimation.AnimationState.SetAnimation(track, clipName, loop).TimeScale = SetSpineSpeed(speed);
+            }
+            catch (Exception e)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(track, "Run", loop).TimeScale = SetSpineSpeed(speed);
+                DebugManager.Instance.PrintError("[SpineManager: Error] {0}", e);
+            }
         }
     }
 
@@ -31,7 +39,15 @@ public class SpineManager : MonoBehaviour
     {
         if (skeletonAnimation.AnimationName != clipName)
         {
-            skeletonAnimation.AnimationState.AddAnimation(track, clipName, loop, delay).TimeScale = SetSpineSpeed(speed);
+            try
+            {
+                skeletonAnimation.AnimationState.AddAnimation(track, clipName, loop, delay).TimeScale = SetSpineSpeed(speed);
+            }
+            catch (Exception e)
+            {
+                skeletonAnimation.AnimationState.SetAnimation(track, "Run", loop).TimeScale = SetSpineSpeed(speed);
+                DebugManager.Instance.PrintError("[SpineManager: Error] {0}", e);
+            }
         }
     }
 
@@ -87,7 +103,15 @@ public class SpineManager : MonoBehaviour
 
     public string GetAnimationName()
     {
-        return skeletonAnimation.AnimationName;
+        try
+        {
+            return skeletonAnimation.AnimationName;
+        }
+        catch (Exception e)
+        {
+            DebugManager.Instance.PrintError("[SpineManager: Error] {0}", e);
+            return "Run";
+        }
     }
 
     public SkeletonDataAsset GetSkeletonDataAsset()

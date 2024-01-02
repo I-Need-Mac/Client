@@ -105,14 +105,14 @@ public class APIManager : SingleTon<APIManager>
        return startGame;       
     }
 
-    public async Task<NormalResult> UnlockSorcerer(int sorcererId) {
-        NormalResult nr = null;
+    public async Task<BuySorcererResult> UnlockSorcerer(int sorcererId) {
+        BuySorcererResult nr = null;
         Dictionary<string, object> sendData = new Dictionary<string, object>();
         sendData.Add("steam_id", GetSteamID());
         sendData.Add("character", UIStatus.Instance.GetSorcerer(sorcererId));
 
-        NormalResult startGame = (NormalResult)await requestManager.Patch<NormalResult>(APIAddressManager.REQUEST_OPEN_SORCERER, sendData);
-
+        nr = (BuySorcererResult)await requestManager.Patch<BuySorcererResult>(APIAddressManager.REQUEST_OPEN_SORCERER, sendData);
+        UIStatus.Instance.key = nr.data.keys;
         return nr;
     }
 

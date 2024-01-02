@@ -18,6 +18,7 @@ public class UI_Sorcerer_Unlock_conditions : UI_Popup
     [SerializeField] TextMeshProUGUI ment;
     [SerializeField] TextMeshProUGUI keyCount;
     [SerializeField] GameObject buyBtn;
+    [SerializeField] Image nagative;
     int sorcererID;
     private void Start()
     {
@@ -62,7 +63,7 @@ public class UI_Sorcerer_Unlock_conditions : UI_Popup
     async void RequestUnlockSorcerer()
     {
 
-       NormalResult getSorcerer = await APIManager.Instance.UnlockSorcerer(sorcererID);
+       BuySorcererResult getSorcerer = await APIManager.Instance.UnlockSorcerer(sorcererID);
         if(getSorcerer.statusCode == 200) {
             UIStatus.Instance.SetSorcerer(sorcererID,true);
             UIStatus.Instance.uI_SelectSorcerer.SetCharacterState();

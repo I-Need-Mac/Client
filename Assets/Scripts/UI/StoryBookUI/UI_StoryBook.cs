@@ -201,6 +201,7 @@ public class UI_StoryBook : UI_Popup
                     if (currentPage >= totalPage)
                     {
                         UIManager.Instance.CloseUI<UI_StoryBook>();
+                        UIManager.Instance.OpenUI<UI_Loading>();
                         SceneManager.LoadScene("BattleScene");
                     }
 
@@ -217,6 +218,7 @@ public class UI_StoryBook : UI_Popup
                 break;
             case Buttons.ContentSkip:
                 UIManager.Instance.CloseUI<UI_StoryBook>();
+                UIManager.Instance.OpenUI<UI_Loading>();
                 SceneManager.LoadScene("BattleScene");
 
                 break;

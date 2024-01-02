@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 3507055433600443235}
   - component: {fileID: 8404517661271781853}
   m_Layer: 5
-  m_Name: UI_Sorcerer_Unlock_conditions
+  m_Name: UI_PopUpWithOkay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

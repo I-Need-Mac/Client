@@ -86,7 +86,7 @@ public class UI_SelectSorcerer : UI_Popup
     }
 
     public void SetCharacterState() { 
-       
+       keyCountText.text = UIStatus.Instance.key.ToString();
         foreach(GameObject s in sorcererList) {
             DebugManager.Instance.PrintDebug("[Sorcerer] Sorcerer Set ", s.GetComponent<UI_Sorcerer>().sorcererInfoID);
             s.GetComponent<UI_Sorcerer>().CharacterUnlock();

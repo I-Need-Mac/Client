@@ -20,6 +20,7 @@ public class UIManager : MonoSingleton<UIManager>
         UI_ESCPopup,
         UI_MyInfo,
         UI_RankBoard,
+        UI_Loading,
 
         UI_StoryMain,
 
@@ -30,7 +31,7 @@ public class UIManager : MonoSingleton<UIManager>
         UI_Hon,
         UI_Hon_Unlock_conditions,
         UI_Jusulso,
-
+        
         UI_Settings
     }
 

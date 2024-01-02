@@ -90,7 +90,6 @@ public class UI_GameMain : UI_Popup
     async void GetStartData()
     {
         if (!SteamManager.Initialized) { return; }
-        string name = SteamUser.GetSteamID().ToString();
-        await APIManager.Instance.StartGame(name, UIStatus.Instance.nickname);
+        await APIManager.Instance.StartGame(UIStatus.Instance.steam_id, UIStatus.Instance.nickname);
     }
 }

@@ -62,7 +62,7 @@ public partial class WebRequestManager
 
 
 
-    private String GetDictToString(Dictionary<string, string> forms)
+    private String GetDictToString(Dictionary<string, object> forms)
     {
 
         string jsonData = JsonConvert.SerializeObject(forms);
@@ -78,7 +78,7 @@ public partial class WebRequestManager
     }
 
 
-    public string MakeUrlWithParam(string url, Dictionary<string, string> data) {
+    public string MakeUrlWithParam(string url, Dictionary<string, object> data) {
         if (data != null)
         {
             url += "?";
@@ -93,7 +93,7 @@ public partial class WebRequestManager
 
 
 
-    public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
+    public async Task<object> Get<T>(string url, Dictionary<string, object> data = null)
     {
         using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}"))
         {
@@ -124,7 +124,7 @@ public partial class WebRequestManager
     }
 
 
-    public async Task<object> Post<T>(string url, Dictionary<string, string> data)
+    public async Task<object> Post<T>(string url, Dictionary<string, object> data)
     {
         UnityWebRequest request = new UnityWebRequest($"{WEBSERVICE_HOST}/{url}", "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(GetDictToString(data));
@@ -159,7 +159,7 @@ public partial class WebRequestManager
         return default;
 
     }
-    public async Task<object> Patch<T>(string url, Dictionary<string, string> data)
+    public async Task<object> Patch<T>(string url, Dictionary<string, object> data)
     {
         UnityWebRequest request = new UnityWebRequest($"{WEBSERVICE_HOST}/{url}", "PATCH");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(GetDictToString(data));

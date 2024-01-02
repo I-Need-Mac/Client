@@ -84,8 +84,8 @@ public class UI_NickName : UI_Popup
                 this.CloseUI<UI_NickName>();
                 WebHandShakeFromPost();
                 UIManager.Instance.OpenUI<UI_Agreement>();
+               
 
-                
                 break;
             default:
                 break;

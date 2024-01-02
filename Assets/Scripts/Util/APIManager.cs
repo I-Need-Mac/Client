@@ -1,3 +1,4 @@
+using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ public class APIManager : SingleTon<APIManager>
 {
     Crypto crypto;
     WebRequestManager requestManager;
+    string steamID;
+
     public APIManager()
     {
         crypto = new Crypto();
@@ -25,25 +28,43 @@ public class APIManager : SingleTon<APIManager>
 
     }
 
+    public void SetSteamID(string steamid) {
+        steamID = steamid;
+    }
+
+    public string GetSteamID() {
+        if (steamID.Equals(""))
+        {
+            UIStatus.Instance.steam_id = SteamUser.GetSteamID().ToString();
+          
+        }
+        else
+        {
+            UIStatus.Instance.steam_id = steamID;
+        }
+
+        return UIStatus.Instance.steam_id;
+    }
+
     public async Task<bool> CheckNicknameDuplicated(string data)
     {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        Dictionary<string, object> sendData = new Dictionary<string, object>();
         sendData.Add("name", data);
        DuplicatedNickName duplicatedNickName=  (DuplicatedNickName)await requestManager.Get<DuplicatedNickName>(APIAddressManager.REQUEST_CHECKNAME, sendData);
         return duplicatedNickName.data.isDuplicated;
     }
     public async Task<NormalResult> TryRegist(string name, string nickname)
     {
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", name);
+        Dictionary<string, object> sendData = new Dictionary<string, object>();
+        sendData.Add("steam_id", GetSteamID());
         sendData.Add("name", nickname);
         return (NormalResult)await requestManager.Post<NormalResult>(APIAddressManager.REQUEST_REGIST, sendData);
     }
     public async Task<bool> TryLogin(string name)
     {
         DebugManager.Instance.PrintDebug("[WebRequest] " + "Reqested Login ");
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
-        sendData.Add("steam_id", name);
+        Dictionary<string, object> sendData = new Dictionary<string, object>();
+        sendData.Add("steam_id", GetSteamID());
         LoginResult result = (LoginResult)await requestManager.Post<LoginResult>(APIAddressManager.REQUEST_LOGIN, sendData);
 
         DebugManager.Instance.PrintDebug("[WebRequest] "+"Login Result for "+name+" result : "+result.statusCode);
@@ -57,7 +78,7 @@ public class APIManager : SingleTon<APIManager>
     public async Task<StartGame> StartGame(string name, string nickname)
     {
         DebugManager.Instance.PrintDebug("[WebRequest] " + "Reqested GetStartData ");
-        Dictionary<string, string> sendData = new Dictionary<string, string>();
+        Dictionary<string, object> sendData = new Dictionary<string, object>();
         sendData.Add("steam_id", name);
         sendData.Add("name", nickname);
         StartGame startGame = (StartGame)await requestManager.Get<StartGame>(APIAddressManager.REQUEST_GAME_START, sendData);
@@ -84,5 +105,15 @@ public class APIManager : SingleTon<APIManager>
        return startGame;       
     }
 
+    public async Task<NormalResult> UnlockSorcerer(int sorcererId) {
+        NormalResult nr = null;
+        Dictionary<string, object> sendData = new Dictionary<string, object>();
+        sendData.Add("steam_id", GetSteamID());
+        sendData.Add("character", UIStatus.Instance.GetSorcerer(sorcererId));
+
+        NormalResult startGame = (NormalResult)await requestManager.Patch<NormalResult>(APIAddressManager.REQUEST_OPEN_SORCERER, sendData);
+
+        return nr;
+    }
 
 }

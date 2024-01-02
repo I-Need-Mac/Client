@@ -27,7 +27,7 @@ public class UI_Sorcerer : UI_Base
     [SerializeField]
     GameObject locked;
 
-    int sorcererInfoID = 0;
+    public int sorcererInfoID = 0;
     private bool sorcererUnlock;
     Dictionary<string, object> sorcererInfo = new Dictionary<string, object>();
 
@@ -62,7 +62,7 @@ public class UI_Sorcerer : UI_Base
 
             case Images.ImageLock:
                 UI_Sorcerer_Unlock_conditions buy =UIManager.Instance.OpenUI<UI_Sorcerer_Unlock_conditions>();
-                buy.SetSorcererName(sorcererInfo[UIData.CharacterTableCol.CharacterName.ToString()].ToString());
+                buy.SetSorcererName(sorcererInfo[UIData.CharacterTableCol.CharacterName.ToString()].ToString(), sorcererInfoID);
                 break;
             default:
                 break;
@@ -126,31 +126,31 @@ public class UI_Sorcerer : UI_Base
 
         return ultiPath;
     }
-    void CharacterUnlock()
+    public void CharacterUnlock()
     {
         switch (sorcererInfoID)
         {
-            case 101:
+            case (int)UIStatus.Sorcerers.hojin :
                 sorcererUnlock = UIStatus.Instance.hojin;
                 SetIsLocked(sorcererUnlock);
                 break;
-            case 102:
+            case (int)UIStatus.Sorcerers.siWoo:
                 sorcererUnlock = UIStatus.Instance.siWoo;
                 SetIsLocked(sorcererUnlock);
                 break;
-            case 103:
+            case (int)UIStatus.Sorcerers.sinwol:
                 sorcererUnlock = UIStatus.Instance.sinwol;
                 SetIsLocked(sorcererUnlock);
                 break;
-            case 104:
+            case (int)UIStatus.Sorcerers.ulises:
                 sorcererUnlock = UIStatus.Instance.ulises;
                 SetIsLocked(sorcererUnlock);
                 break;
-            case 105:
+            case (int)UIStatus.Sorcerers.seimei:
                 sorcererUnlock = UIStatus.Instance.seimei;
                 SetIsLocked(sorcererUnlock);
                 break;
-            case 106:
+            case (int)UIStatus.Sorcerers.macia:
                 sorcererUnlock = UIStatus.Instance.macia;
                 SetIsLocked(sorcererUnlock);
                 break;
@@ -158,6 +158,14 @@ public class UI_Sorcerer : UI_Base
     }
     public void SetIsSelected(bool isActive) {
         selected.SetActive(isActive);
+    }
+
+    public void SetIsSelected()
+    {
+        if (UIStatus.Instance.selectedChar == sorcererInfoID) {
+            selected.SetActive(true);
+        }
+        
     }
     public void SetIsLocked(bool isLock)
     {

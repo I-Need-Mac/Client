@@ -12,7 +12,8 @@ public class UI_SelectSorcerer : UI_Popup
 
     enum Images
     {
-        BackBtn
+        BackBtn,
+        Key
     }
 
     [SerializeField]
@@ -33,6 +34,7 @@ public class UI_SelectSorcerer : UI_Popup
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
 
+        UIStatus.Instance.uI_SelectSorcerer = this;
         titleText.text = LocalizeManager.Instance.GetText("UI_SelectSorcerer");
         keyCountText.text = UIStatus.Instance.key.ToString();
         Dictionary<string, Dictionary<string, object>> characterData = UIData.CharacterData;
@@ -62,7 +64,7 @@ public class UI_SelectSorcerer : UI_Popup
             sorcererList.Add(instance);
         }
 
-        sorcererList[0].GetComponent<UI_Sorcerer>().SetIsSelected(true);
+      
         // 위치 셋팅
         SetCharacterPos();
     }
@@ -83,6 +85,26 @@ public class UI_SelectSorcerer : UI_Popup
         r.anchoredPosition3D = new Vector3(750, 0, 0);
     }
 
+    public void SetCharacterState() { 
+       
+        foreach(GameObject s in sorcererList) {
+            DebugManager.Instance.PrintDebug("[Sorcerer] Sorcerer Set ", s.GetComponent<UI_Sorcerer>().sorcererInfoID);
+            s.GetComponent<UI_Sorcerer>().CharacterUnlock();
+            s.GetComponent<UI_Sorcerer>().SetIsSelected();
+
+        }
+    }
+    public void AllLock()
+    {
+
+        foreach (GameObject s in sorcererList)
+        {
+            DebugManager.Instance.PrintDebug("[Sorcerer] Sorcerer Set ", s.GetComponent<UI_Sorcerer>().sorcererInfoID);
+            s.GetComponent<UI_Sorcerer>().SetIsLocked(false);
+
+        }
+    }
+
     public void OnClickImage(PointerEventData data)
     {
         Images imageValue = (Images)FindEnumValue<Images>(data.pointerClick.name);
@@ -95,6 +117,9 @@ public class UI_SelectSorcerer : UI_Popup
         {
             case Images.BackBtn:
                 UIManager.Instance.CloseUI<UI_SelectSorcerer>();
+                break;
+            case Images.Key:
+                AllLock();
                 break;
             default:
                 break;

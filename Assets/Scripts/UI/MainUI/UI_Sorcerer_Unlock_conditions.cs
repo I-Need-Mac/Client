@@ -18,6 +18,7 @@ public class UI_Sorcerer_Unlock_conditions : UI_Popup
     [SerializeField] TextMeshProUGUI ment;
     [SerializeField] TextMeshProUGUI keyCount;
     [SerializeField] GameObject buyBtn;
+    int sorcererID;
     private void Start()
     {
         Bind<Image>(typeof(Images));
@@ -40,19 +41,33 @@ public class UI_Sorcerer_Unlock_conditions : UI_Popup
             case Images.Close:
                 this.CloseUI<UI_Sorcerer_Unlock_conditions>();
                 break;
+            case Images.Click:
+                RequestUnlockSorcerer();
+                break;
             default:
                 break;
         }
     }
 
-    public void SetSorcererName(string name) { 
+    public void SetSorcererName(string name,int id) { 
         ment.text = LocalizeManager.Instance.GetText("UI_BuySorcerer", UIStatus.Instance.sorcererCost, $"\"{LocalizeManager.Instance.GetText(name)}\"");
         keyCount.text = UIStatus.Instance.key.ToString();
+        sorcererID =id;
 
         if (UIStatus.Instance.sorcererCost > UIStatus.Instance.key) { 
             keyCount.color = Color.red;
             buyBtn.GetComponent<SoundRequesterBtn>().SetIsNagative(false);
         }
     }
+    async void RequestUnlockSorcerer()
+    {
 
+       NormalResult getSorcerer = await APIManager.Instance.UnlockSorcerer(sorcererID);
+        if(getSorcerer.statusCode == 200) {
+            UIStatus.Instance.SetSorcerer(sorcererID,true);
+            UIStatus.Instance.uI_SelectSorcerer.SetCharacterState();
+            this.CloseUI<UI_Sorcerer_Unlock_conditions>();
+        }
+       
+    }
 }

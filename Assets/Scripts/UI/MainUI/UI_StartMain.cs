@@ -83,7 +83,7 @@ public class UI_StartMain : UI_Base
 
         OnPressKeyDown();
     }
-
+     
     public void OnPressKeyDown()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -118,7 +118,7 @@ public class UI_StartMain : UI_Base
     async void RequestLogin()
     {
         if (!SteamManager.Initialized) { return; }
-        string name = SteamUser.GetSteamID().ToString();
+        string name = UIStatus.Instance.steam_id;
         isLogin = await APIManager.Instance.TryLogin(name);
         DebugManager.Instance.PrintDebug("[SteamAPI] load steam id "+name);
         if (isLogin)

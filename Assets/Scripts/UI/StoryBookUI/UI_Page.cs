@@ -235,6 +235,8 @@ public class UI_Page : UI_Popup
                     topText.ShowText();
                     middleText.ShowText();
                     bottomText.ShowText();
+
+                    
                 }
                 else
                 {   // 한 문단을 스킵합니다.

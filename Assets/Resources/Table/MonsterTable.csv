@@ -17,3 +17,5 @@ int,String,Float,int,int,int,float,int,int,int,String,int,String,Enum,Enum
 504,Saldeongi,0.4,2000,180,1.4,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/Saldeongi,Bold,Boss
 601,Lesser_Demon,0.5,120,10,0.5,4,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/Lesser_Demon,Bold,Normal
 602,HwaGwangSu,0.3,75,8,1.2,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/HwaGwangSu,Bold,Normal
+701,SinWol_Base,0.5,300,30,1.5,1,99999,0.05,0,,,,Friendly,Elite
+702,SinWol_Ulti,0.5,300,40,1.5,1,99999,0.05,0,,,,Friendly,Boss

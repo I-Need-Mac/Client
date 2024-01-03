@@ -1,0 +1,31 @@
+Main_Ingame_Monster_Sinwol_02.png
+size:2048,256
+filter:Linear,Linear
+pma:true
+1
+bounds:2,2,78,42
+offsets:0,0,79,42
+2
+bounds:182,2,101,70
+offsets:0,1,101,71
+3
+bounds:362,2,39,82
+4
+bounds:542,2,178,114
+offsets:0,0,179,114
+L_down arm
+bounds:722,2,43,88
+L_hand
+bounds:902,2,49,55
+R_bottom arm
+bounds:1082,2,85,108
+offsets:0,0,87,108
+R_hand
+bounds:1262,2,55,44
+offsets:6,2,61,46
+Tail
+bounds:1442,2,168,123
+body
+bounds:1622,2,93,126
+head
+bounds:1802,2,37,62

@@ -112,6 +112,12 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                 DebugManager.Instance.PrintError("[MonsterSpawner] 빈 줄이 삽입되어 있습니다: " + spawnId);
             }
         }
+
+        int[] summons = new int[] { 701, 702, };
+        foreach (int summonId in summons)
+        {
+            spawner.Add(summonId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(CSVReader.Read("MonsterTable", summonId.ToString(), "MonsterPrefabPath").ToString()), transform));
+        }
     }
 
     public IEnumerator Spawn()

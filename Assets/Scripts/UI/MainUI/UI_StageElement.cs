@@ -18,10 +18,18 @@ public class UI_StageElement : UI_Base
     public int stageId;
     int prefabIndex;
     List<string> stageIds;
-    public bool access;
+
+    private bool access;
+    private bool isSelect;
+
+    [SerializeField]
+    private TMP_FontAsset[] font;
+    [SerializeField]
+    private Image[] selectImage;
     private void Start()
     {
         SetStageID();
+        UIManager.Instance.stageList.Add(this);
         prefabIndex = transform.GetSiblingIndex();
         Bind<GameObject>(typeof(GameObjects));
         Array objectValue = Enum.GetValues(typeof(GameObjects));
@@ -29,13 +37,13 @@ public class UI_StageElement : UI_Base
         {
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
         }
-        
         stageId = int.Parse(stageIds[prefabIndex]);
-        if(UIStatus.Instance.last_stage == 0 && stageId%10 == 1)
+        //access = true;
+        if (UIStatus.Instance.last_stage == 0 && stageId % 10 == 1)
         {
-            access= true;
+            access = true;
         }
-        else if(stageId%10<=UIStatus.Instance.last_stage %10+1)
+        else if (stageId % 10 <= UIStatus.Instance.last_stage % 10 + 1)
         {
             access = true;
         }
@@ -55,10 +63,12 @@ public class UI_StageElement : UI_Base
         switch (imageValue)
         {
             case GameObjects.Text:
-                if(access)
+                if (access)
                 {
-                    UIManager.Instance.selectStageID= stageId;
-                    Debug.Log("SelectStage :"+UIManager.Instance.selectStageID);
+                    UIManager.Instance.selectStageID = stageId;
+                    isSelect = true;
+                    OnSelectImage();
+                    Debug.Log("SelectStage :" + UIManager.Instance.selectStageID);
                 }
                 else
                 {
@@ -80,6 +90,31 @@ public class UI_StageElement : UI_Base
             string stageId = entry.Key;
             stageIds.Add(stageId);
         }
+    }
+    public void OnSelectImage()
+    {
+        foreach (var stage in UIManager.Instance.stageList)
+        {
+            if (stage == this)
+            {
+                stage.isSelect = (stageId == UIManager.Instance.selectStageID);
+                stage.selectImage[0].gameObject.SetActive(!stage.isSelect);
+                stage.selectImage[1].gameObject.SetActive(stage.isSelect);
+                stage.text.font = font[1];
+
+
+
+
+            }
+            else
+            {
+                stage.isSelect = false;
+                stage.selectImage[0].gameObject.SetActive(!stage.isSelect);
+                stage.selectImage[1].gameObject.SetActive(stage.isSelect);
+                stage.text.font = font[0];
+            }
+        }
+
     }
 
 }

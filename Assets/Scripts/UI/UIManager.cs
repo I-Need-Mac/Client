@@ -37,6 +37,7 @@ public class UIManager : MonoSingleton<UIManager>
 
     public int selectCharacterID;
     public int selectStageID;
+    public List<UI_StageElement> stageList = new List<UI_StageElement>();
 
     GameObject uiCamera = null;
     GameObject uiCanvas = null;

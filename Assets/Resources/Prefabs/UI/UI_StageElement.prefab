@@ -225,6 +225,13 @@ MonoBehaviour:
   text: {fileID: 3033150996203740924}
   stageId: 0
   access: 0
+  isSelect: 0
+  font:
+  - {fileID: 11400000, guid: 588a518fb193dd643a801f27304f97f8, type: 2}
+  - {fileID: 11400000, guid: b961825fb4328654db71e4b95886ac1b, type: 2}
+  selectImage:
+  - {fileID: 3589881762390860172}
+  - {fileID: 5862869367372014394}
 --- !u!114 &5990901703554945680
 MonoBehaviour:
   m_ObjectHideFlags: 0

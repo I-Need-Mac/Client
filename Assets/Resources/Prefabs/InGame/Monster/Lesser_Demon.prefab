@@ -119,20 +119,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <monsterData>k__BackingField:
-    monsterName: 
-    sizeMultiple: 0
-    hp: 0
-    currentHp: 0
-    attack: 0
-    moveSpeed: 0
-    atkSpeed: 0
-    viewDistance: 0
-    atkDistance: 0
-    skillID: 0
-    groupSource: 
-    groupSourceRate: 0
-    monsterPrefabPath: 
-    attackType: 0
+    <monsterName>k__BackingField: 
+    <sizeMultiple>k__BackingField: 0
+    <hp>k__BackingField: 0
+    <currentHp>k__BackingField: 0
+    <attack>k__BackingField: 0
+    <moveSpeed>k__BackingField: 0
+    <atkSpeed>k__BackingField: 0
+    <viewDistance>k__BackingField: 0
+    <atkDistance>k__BackingField: 0
+    <skillID>k__BackingField: 0
+    <groupSource>k__BackingField: 
+    <groupSourceRate>k__BackingField: 0
+    <monsterPrefabPath>k__BackingField: 
+    <attackType>k__BackingField: 0
+    <monsterType>k__BackingField: 0
   monsterID: 
 --- !u!114 &1925695355295134593
 MonoBehaviour:
@@ -165,10 +166,25 @@ MonoBehaviour:
     maxDistance: 0
   soundPackItems:
   - usingSpeaker: Shooter
+    delay: 0.5
+    priority: 0
+    SOUNDSITUATION: 7
+    audioClip: {fileID: 8300000, guid: 87ea402f7cf6b324b914eb81259a12c9, type: 3}
+  - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 11
-    audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
+    audioClip: {fileID: 8300000, guid: b67f4dfa42a78f84b83a968889199bf7, type: 3}
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 9
+    audioClip: {fileID: 8300000, guid: 581c9a89a939f194fb08dde5a7a31fe5, type: 3}
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 10
+    audioClip: {fileID: 8300000, guid: 581c9a89a939f194fb08dde5a7a31fe5, type: 3}
 --- !u!114 &5461332211756131446
 MonoBehaviour:
   m_ObjectHideFlags: 0

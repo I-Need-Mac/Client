@@ -287,6 +287,10 @@ public class Monster : MonoBehaviour
     private NodeConstant Attack()
     {
         monsterRigidbody.velocity = Vector3.zero;
+        if (soundRequester != null) { 
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ATTACK);
+        }
+            
         if (!isAttack)
         {
             spineManager.SetAnimation("Attack", false);

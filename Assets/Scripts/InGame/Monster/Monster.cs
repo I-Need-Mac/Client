@@ -37,7 +37,7 @@ public class Monster : MonoBehaviour
     private SpineManager spineManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
-
+    private int exState = 0;
     public int monsterId { get; set; }
     public bool isHit { get; set; }
     public bool isAttack { get; private set; }
@@ -290,6 +290,7 @@ public class Monster : MonoBehaviour
         if (soundRequester != null) { 
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ATTACK);
         }
+        exState = 2;
             
         if (!isAttack)
         {
@@ -330,6 +331,12 @@ public class Monster : MonoBehaviour
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
         monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
+
+        if ((soundRequester != null && exState != 1) || (soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.RUN)))
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
+
+        exState = 1;
+
         return NodeConstant.RUNNING;
     }
 
@@ -343,6 +350,10 @@ public class Monster : MonoBehaviour
 
         isAttack = false;
         spineManager.SetAnimation("Idle", true);
+        if ((soundRequester != null && exState != 0) || (soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.IDLE)))
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
+
+        exState = 0;
         return NodeConstant.SUCCESS;
     }
 

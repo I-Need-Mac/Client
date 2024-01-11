@@ -271,20 +271,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <monsterData>k__BackingField:
-    monsterName: 
-    sizeMultiple: 0
-    hp: 0
-    currentHp: 0
-    attack: 0
-    moveSpeed: 0
-    atkSpeed: 0
-    viewDistance: 0
-    atkDistance: 0
-    skillID: 0
-    groupSource: 
-    groupSourceRate: 0
-    monsterPrefabPath: 
-    attackType: 0
+    <monsterName>k__BackingField: 
+    <sizeMultiple>k__BackingField: 0
+    <hp>k__BackingField: 0
+    <currentHp>k__BackingField: 0
+    <attack>k__BackingField: 0
+    <moveSpeed>k__BackingField: 0
+    <atkSpeed>k__BackingField: 0
+    <viewDistance>k__BackingField: 0
+    <atkDistance>k__BackingField: 0
+    <skillID>k__BackingField: 0
+    <groupSource>k__BackingField: 
+    <groupSourceRate>k__BackingField: 0
+    <monsterPrefabPath>k__BackingField: 
+    <attackType>k__BackingField: 0
+    <monsterType>k__BackingField: 0
   monsterID: 
 --- !u!114 &1602099649883656872
 MonoBehaviour:
@@ -298,6 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: Shooter
     _audioType: 1
@@ -316,11 +319,26 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
   soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 10
+    audioClip: {fileID: 8300000, guid: eac0e4b57ef85f24e98eea9b19a6ae62, type: 3}
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 7
+    audioClip: {fileID: 8300000, guid: a2ccb2949281982498356a2bd08ed05a, type: 3}
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 11
-    audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
+    audioClip: {fileID: 8300000, guid: 37bd4804f12136448ba39b6463c99c14, type: 3}
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 9
+    audioClip: {fileID: 8300000, guid: 5bd07c5b7cb58a745ae4e1a6ceeb2e3b, type: 3}
 --- !u!114 &1918048749579110289
 MonoBehaviour:
   m_ObjectHideFlags: 0

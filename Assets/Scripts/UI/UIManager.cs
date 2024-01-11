@@ -35,7 +35,7 @@ public class UIManager : MonoSingleton<UIManager>
         UI_Settings
     }
 
-    public int selectCharacterID;
+    public int selectCharacterID =0;
     public int selectStageID;
     public List<UI_StageElement> stageList = new List<UI_StageElement>();
 

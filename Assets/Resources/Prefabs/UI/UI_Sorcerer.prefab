@@ -321,6 +321,7 @@ MonoBehaviour:
   ultiImage: {fileID: 5315950602720509418}
   selected: {fileID: 8695888267188929284}
   locked: {fileID: 885288123409462878}
+  sorcererInfoID: 0
 --- !u!1 &3720060855267139540
 GameObject:
   m_ObjectHideFlags: 0

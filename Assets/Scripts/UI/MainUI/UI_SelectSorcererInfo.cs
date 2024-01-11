@@ -80,6 +80,22 @@ public class UI_SelectSorcererInfo : UI_Popup
     [SerializeField]
     UI_SorcererGauge[] gaugeList;
 
+    [SerializeField]
+    public AudioClip[] hojin;
+    [SerializeField]
+    public AudioClip[] siwoo;
+    [SerializeField]
+    public AudioClip[] sinwol;
+    [SerializeField]
+    public AudioClip[] seimei;
+    [SerializeField]
+    public AudioClip[] macia;
+    [SerializeField]
+    public AudioClip[] ulises;
+    [SerializeField]
+    public SoundRequesterSFX voiceShooter;
+
+    UI_Sorcerer ui_SelectSorcerer;
     int sorcererInfoID = 0;
     Dictionary<string, object> sorcererInfo = new Dictionary<string, object>();
 
@@ -108,6 +124,8 @@ public class UI_SelectSorcererInfo : UI_Popup
         storyText.text = LocalizeManager.Instance.GetText("UI_Story");
         statText.text = LocalizeManager.Instance.GetText("UI_Stat");
         skillText.text = LocalizeManager.Instance.GetText("UI_Skill");
+
+        
     }
 
     public void OnClickImage(PointerEventData data)
@@ -179,7 +197,9 @@ public class UI_SelectSorcererInfo : UI_Popup
 
                 break;
             case Buttons.Select:
-                UIManager.Instance.selectCharacterID = sorcererInfoID;
+                DebugManager.Instance.PrintDebug("[SelectSorcerer] Selected Char to " + sorcererInfoID);
+                UIStatus.Instance.selectedChar = sorcererInfoID;
+                UIStatus.Instance.uI_SelectSorcerer.SetCharacterState();
                 CloseUI<UI_SelectSorcererInfo>();
                 break;
             default:
@@ -187,10 +207,10 @@ public class UI_SelectSorcererInfo : UI_Popup
         }
     }
 
-    public void SetSorcererInfo(int id, Dictionary<string, object> sorcerer)
+    public void SetSorcererInfo(int id, Dictionary<string, object> sorcerer, UI_Sorcerer parentUI)
     {
         sorcererInfoID = id;
-
+        ui_SelectSorcerer = parentUI;
         string skill_1;
         string skill_2;
 
@@ -259,7 +279,7 @@ public class UI_SelectSorcererInfo : UI_Popup
                 gaugeList[7].SetValue(Convert.ToInt32(val.Value), 100);
 
             }
-
+            SetVoiceResource(sorcererInfoID);
 
         }
     }
@@ -277,5 +297,31 @@ public class UI_SelectSorcererInfo : UI_Popup
         return ResourcesManager.Load<Sprite>(UIData.SkillData[skillID]["Icon"].ToString());
     }
 
-
+    public void SetVoiceResource(int sorcererID)
+    {
+        switch (sorcererID)
+        {
+            case (int)UIStatus.Sorcerers.hojin:
+                voiceShooter.soundPackItems[0].audioClipList=hojin;
+                break;
+            case (int)UIStatus.Sorcerers.sinwol:
+                voiceShooter.soundPackItems[0].audioClipList = sinwol;
+                break;
+            case (int)UIStatus.Sorcerers.siWoo:
+                voiceShooter.soundPackItems[0].audioClipList = siwoo;
+                break;
+            case (int)UIStatus.Sorcerers.seimei:
+                voiceShooter.soundPackItems[0].audioClipList = seimei;
+                break;
+            case (int)UIStatus.Sorcerers.ulises:
+                voiceShooter.soundPackItems[0].audioClipList = ulises;
+                break;
+            case (int)UIStatus.Sorcerers.macia:
+                voiceShooter.soundPackItems[0].audioClipList = macia;
+                break;
+            default:
+                break;
+        }
+        voiceShooter.ChangeSituation(SoundSituation.SOUNDSITUATION.INTERECT);
+    }
 }

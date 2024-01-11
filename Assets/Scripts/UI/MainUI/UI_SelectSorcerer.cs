@@ -64,7 +64,7 @@ public class UI_SelectSorcerer : UI_Popup
             sorcererList.Add(instance);
         }
 
-      
+        DebugManager.Instance.PrintDebug("[SelectSorcerer] Selected Char " + UIStatus.Instance.selectedChar);
         // 위치 셋팅
         SetCharacterPos();
     }

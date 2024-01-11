@@ -37,7 +37,9 @@ public class GameManager : SingletonBehaviour<GameManager>
         SoundManager.Instance.CreateSoundManager();
         LocalizeManager.Instance.SetLocalizeManager();
         //mapId = UIManager.Instance.selectStageID;
-        //playerId = UIManager.Instance.selectCharacterID;
+        
+        if (UIStatus.Instance.selectedChar != 0)
+            playerId = UIStatus.Instance.selectedChar;
         //playerPoolManager.playerId = playerId;
     }
 

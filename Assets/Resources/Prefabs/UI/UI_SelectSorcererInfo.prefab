@@ -2088,6 +2088,16 @@ MonoBehaviour:
   - {fileID: 4719418718023430501}
   - {fileID: 6655638602177824676}
   - {fileID: 2304806736348909901}
+  hojin:
+  - {fileID: 8300000, guid: 44454e5725984b44fb252d73f56fbfae, type: 3}
+  - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
+  - {fileID: 8300000, guid: 96664b1d7ab577240879138d74e20335, type: 3}
+  siwoo: []
+  sinwol: []
+  seimei: []
+  macia: []
+  ulises: []
+  voiceShooter: {fileID: 3555940498570662950}
 --- !u!1 &2692833131822882339
 GameObject:
   m_ObjectHideFlags: 0
@@ -4435,6 +4445,8 @@ GameObject:
   - component: {fileID: 8753153870946469446}
   - component: {fileID: 5753972661903183228}
   - component: {fileID: 4818668632609311804}
+  - component: {fileID: 3555940498570662950}
+  - component: {fileID: 4400181789157082930}
   m_Layer: 5
   m_Name: Select
   m_TagString: Untagged
@@ -4544,6 +4556,60 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3555940498570662950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5104930983488118221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
+  speakerSettings:
+  - speakerName: Info
+    _audioType: 2
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 0
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Info
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 2
+    audioClip: {fileID: 0}
+    audioClipList: []
+--- !u!114 &4400181789157082930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5104930983488118221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
+  speakerSettings: []
+  soundPackItems: []
 --- !u!1 &5173809335679606735
 GameObject:
   m_ObjectHideFlags: 0
@@ -8828,6 +8894,7 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: fd92546304880dc49940d35275db1064, type: 3}
+    audioClipList: []
 --- !u!1 &8901311497459098974
 GameObject:
   m_ObjectHideFlags: 0

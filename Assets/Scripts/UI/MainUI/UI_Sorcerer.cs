@@ -27,6 +27,7 @@ public class UI_Sorcerer : UI_Base
     [SerializeField]
     GameObject locked;
 
+    UI_Sorcerer ui_SelectSorcerer;
     public int sorcererInfoID = 0;
     private bool sorcererUnlock;
     Dictionary<string, object> sorcererInfo = new Dictionary<string, object>();
@@ -40,7 +41,7 @@ public class UI_Sorcerer : UI_Base
         {
             BindUIEvent(GetImage(i).gameObject, (PointerEventData data) => { OnClickImage(data); }, Define.UIEvent.Click);
         }
-
+     
 
         CharacterUnlock();
     }
@@ -57,7 +58,7 @@ public class UI_Sorcerer : UI_Base
         {
             case Images.TouchPanel:
                  UI_SelectSorcererInfo info = UIManager.Instance.OpenUI<UI_SelectSorcererInfo>();
-                 info.SetSorcererInfo(sorcererInfoID, sorcererInfo);
+                 info.SetSorcererInfo(sorcererInfoID, sorcererInfo, this);
             break;
 
             case Images.ImageLock:
@@ -91,6 +92,8 @@ public class UI_Sorcerer : UI_Base
     public void SetSorcerer(int id, Dictionary<string, object> sorcerer)
     {
         sorcererInfoID = id;
+       
+
 
         string imagePath = "";
         string name = "";
@@ -164,6 +167,9 @@ public class UI_Sorcerer : UI_Base
     {
         if (UIStatus.Instance.selectedChar == sorcererInfoID) {
             selected.SetActive(true);
+        }
+        else {
+            selected.SetActive(false);
         }
         
     }

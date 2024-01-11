@@ -121,6 +121,14 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         }
     }
 
+    public void SpawnInit(int monsterId)
+    {
+        if (!spawner.ContainsKey(monsterId))
+        {
+            spawner.Add(monsterId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString()), transform));
+        }
+    }
+
     public IEnumerator Spawn()
     {
         WaitForFixedUpdate fixedUpdate = new WaitForFixedUpdate();

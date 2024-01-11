@@ -694,16 +694,15 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 6
     audioClip: {fileID: 0}
+    audioClipList: []
   - usingSpeaker: Hojin
     delay: 0
     priority: 0
     SOUNDSITUATION: 11
-    audioClip: {fileID: 8300000, guid: 361a43452acad5c4e9e4c5e97b72cfc0, type: 3}
-  - usingSpeaker: Hojin
-    delay: 0
-    priority: 0
-    SOUNDSITUATION: 11
-    audioClip: {fileID: 8300000, guid: 00072d1f60c491149a4c406c29fe18b1, type: 3}
+    audioClip: {fileID: 0}
+    audioClipList:
+    - {fileID: 8300000, guid: 361a43452acad5c4e9e4c5e97b72cfc0, type: 3}
+    - {fileID: 8300000, guid: 00072d1f60c491149a4c406c29fe18b1, type: 3}
 --- !u!1 &7603766091490081587
 GameObject:
   m_ObjectHideFlags: 0

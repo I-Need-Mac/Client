@@ -118,6 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fec208b9995124baaccdfc1e5dce96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings: []
   soundPackItems:
   - usingSpeaker: BGM
@@ -583,6 +585,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: TEST
     _audioType: 1
@@ -606,6 +610,7 @@ MonoBehaviour:
     priority: 5
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClipList: []
 --- !u!1 &4560841767860258092
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +661,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: TEST
     _audioType: 1
@@ -679,6 +686,7 @@ MonoBehaviour:
     priority: 5
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClipList: []
 --- !u!1 &5152335398159802511
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,6 +737,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: TEST
     _audioType: 1
@@ -752,6 +762,7 @@ MonoBehaviour:
     priority: 5
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClipList: []
 --- !u!1 &6450225297404861222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,6 +1366,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: TEST
     _audioType: 1
@@ -1378,6 +1391,7 @@ MonoBehaviour:
     priority: 5
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClipList: []
 --- !u!65 &61340846482778318
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -143,7 +143,7 @@ public class SoundRequesterSFX : SoundRequester
             try
             {
                 lastSoundSituation = situation;
-                audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
+                audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].targetClip);
                 BlockSituation();
 
             }
@@ -160,7 +160,7 @@ public class SoundRequesterSFX : SoundRequester
                 }
 
                 lastSoundSituation = situation;
-                audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
+                audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].targetClip);
                 BlockSituation();
 
             }

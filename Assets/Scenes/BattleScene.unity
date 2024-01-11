@@ -7007,6 +7007,7 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 16
     audioClip: {fileID: 8300000, guid: fd92546304880dc49940d35275db1064, type: 3}
+    audioClipList: []
 --- !u!1 &1765820609
 GameObject:
   m_ObjectHideFlags: 0
@@ -7712,6 +7713,7 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: ea9a00dc65a01ed47b29658d1fda1a12, type: 3}
+    audioClipList: []
 --- !u!114 &1909131675
 MonoBehaviour:
   m_ObjectHideFlags: 0

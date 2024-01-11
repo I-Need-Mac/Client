@@ -26,6 +26,8 @@ public class UI_StageElement : UI_Base
     private TMP_FontAsset[] font;
     [SerializeField]
     private Image[] selectImage;
+
+    public Image image;
     private void Start()
     {
         SetStageID();
@@ -38,7 +40,6 @@ public class UI_StageElement : UI_Base
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
         }
         stageId = int.Parse(stageIds[prefabIndex]);
-        //access = true;
         if (UIStatus.Instance.last_stage == 0 && stageId % 10 == 1)
         {
             access = true;
@@ -50,6 +51,17 @@ public class UI_StageElement : UI_Base
         else
         {
             access = false;
+            Color textColor = text.color;
+            textColor.a = 0.5f;
+            text.color = textColor;
+        }
+        //access = true;        
+        if(prefabIndex == 0)
+        {
+            isSelect = true;
+            selectImage[0].gameObject.SetActive(false);
+            selectImage[1].gameObject.SetActive(true);
+            text.font = font[1];
         }
     }
     public void OnClickObject(PointerEventData data)
@@ -66,13 +78,11 @@ public class UI_StageElement : UI_Base
                 if (access)
                 {
                     UIManager.Instance.selectStageID = stageId;
-                    isSelect = true;
                     OnSelectImage();
-                    Debug.Log("SelectStage :" + UIManager.Instance.selectStageID);
                 }
                 else
                 {
-                    Debug.LogError("아직 접근할 수 없습니다");
+                    Debug.Log("아직 접근할 수 없습니다");
                 }
                 break;
             default:
@@ -84,7 +94,6 @@ public class UI_StageElement : UI_Base
         Dictionary<string, Dictionary<string, object>> stageTable = CSVReader.Read("StageTable");
         stageIds = new List<string>();
 
-        // 스테이지 ID를 읽어와서 리스트에 추가합니다.
         foreach (var entry in stageTable)
         {
             string stageId = entry.Key;
@@ -98,23 +107,33 @@ public class UI_StageElement : UI_Base
             if (stage == this)
             {
                 stage.isSelect = (stageId == UIManager.Instance.selectStageID);
-                stage.selectImage[0].gameObject.SetActive(!stage.isSelect);
-                stage.selectImage[1].gameObject.SetActive(stage.isSelect);
-                stage.text.font = font[1];
 
+                if (stage.selectImage[0] != null && stage.selectImage[1] != null)
+                {
+                    stage.selectImage[0].gameObject.SetActive(!stage.isSelect);
+                    stage.selectImage[1].gameObject.SetActive(stage.isSelect);
+                }
 
-
-
+                if (stage.text != null)
+                {
+                    stage.text.font = (stage.isSelect) ? font[1] : font[0];
+                }
             }
             else
             {
                 stage.isSelect = false;
-                stage.selectImage[0].gameObject.SetActive(!stage.isSelect);
-                stage.selectImage[1].gameObject.SetActive(stage.isSelect);
-                stage.text.font = font[0];
+
+                if (stage.selectImage[0] != null && stage.selectImage[1] != null)
+                {
+                    stage.selectImage[0].gameObject.SetActive(!stage.isSelect);
+                    stage.selectImage[1].gameObject.SetActive(stage.isSelect);
+                }
+
+                if (stage.text != null)
+                {
+                    stage.text.font = font[0];
+                }
             }
         }
-
     }
-
 }

@@ -1,0 +1,8 @@
+MonsterID,IsPhase,PhaseNum,PhaseStandard,SkillCycle,CoolTime
+몬스터 아이디,페이즈 존재 유무,페이즈 순번,페이즈 변환 기준,스킬 사이클 내 스킬 순서,사이클 간격
+int,Bool,int,int_arr,int_arr,int
+501,FALSE,1,,50101|50102|50102,5000
+502,FALSE,1,,50201|50202,5000
+503,FALSE,1,,50301|50302|50301|50303,5000
+504,TRUE,1,50,50401|50403|50402,5000
+504,TRUE,2,0,50405|50401|50404|50406,5000

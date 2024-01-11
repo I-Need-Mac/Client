@@ -1,29 +1,87 @@
+using SKILLCONSTANT;
+using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-
 using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private GameManager GAME;
-    [SerializeField] private Transform[] satelliteParents;
+    private Rigidbody2D playerRigidbody;
+    private Vector2 playerDirection;
+    private PlayerItem playerItem;
+    private Transform shadow;
+    private SpineManager spineManager;
+    private WaitForSeconds invincibleTime;
+    private StatusEffect statusEffect;
+    private SoundRequester soundRequester;
+    private AudioSource playerAudioSource;
+    private AudioSource playerVoiceAudioSource;
 
-    public PlayerData playerData { get; private set; } = new PlayerData();
+    private const long VOICE = 15*1000;
 
-    private int moveDirX;
-    private int moveDirY;
+    private int exState = 0;
+    private int shootVoiceTimer = 0;
+    private HpBar hpBar;
+    private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
+
+    [SerializeField]
+    public AudioClip[] startVoice;
+    [SerializeField]
+    public AudioClip[] randomVoice;
+    [SerializeField]
+    public AudioClip[] dieVoice;
+
+    public Transform character { get; private set; }
+    public PlayerManager playerManager { get; private set; }
+    public Vector2 lookDirection { get; private set; } //Î∞îÎùºÎ≥¥Îäî Î∞©Ìñ•
+    public int exp { get; private set; }
+    public int level { get; private set; }
+    public int needExp { get; private set; }
+
+    
+
+
+    #region Mono
+    private void Awake()
+    {
+        statusEffect = new StatusEffect();
+        playerRigidbody = GetComponent<Rigidbody2D>();
+        playerDirection = Vector3.zero;
+        lookDirection = Vector3.left;
+        character = transform.Find("Character");
+        shadow = transform.Find("Shadow");
+        spineManager = GetComponent<SpineManager>();
+        playerManager = GetComponentInChildren<PlayerManager>();
+
+        playerItem = GetComponentInChildren<PlayerItem>();
+        gameObject.tag = "Player";
+        invincibleTime = new WaitForSeconds(Convert.ToInt32(Convert.ToString(CSVReader.Read("BattleConfig", "InvincibleTime", "ConfigValue"))) / 1000.0f);
+    }
 
     private void Start()
     {
-        StartCoroutine(Fire());
+        level = 1;
+        needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+        hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
+        AudioSetting();
+        ShootPlayerVoice(startVoice,true);
+        //hpBar.HpBarSwitch(true);
     }
 
-    public void Init()
+    /*
+     *ÌÇ§Î≥¥Îìú ÏûÖÎ†•Ïù¥Îûë ÏõÄÏßÅÏù¥Îäî Î∂ÄÎ∂ÑÏùÄ ÏïàÏ†ïÏÑ±ÏùÑ ÏúÑÌï¥ Î∂ÑÎ¶¨ÏãúÌÇ¥
+     *Update -> ÌÇ§Î≥¥Îìú input
+     *FixedUpdate -> movement
+     */
+    private void Update()
     {
-        moveDirX = 1;
-        moveDirY = 0;
+    
+        KeyDir();
+        ShootPlayerVoice(randomVoice);
+        hpBar.HpBarSetting(transform.position + hpBarPos, playerManager.playerData.currentHp, playerManager.playerData.hp);
     }
 
     private void FixedUpdate()
@@ -31,176 +89,219 @@ public class Player : MonoBehaviour
         Move();
     }
 
+    #endregion
+
+    #region Movement, Animation
+    //ÌÇ§Î≥¥Îìú ÏûÖÎ†•ÏùÑ Î∞õÏïÑ Î∞©Ìñ•ÏùÑ Í≤∞Ï†ïÌïòÎäî Ìï®Ïàò
+    private void KeyDir()
+    {
+        if (!GameManager.Instance.playerTrigger)
+        {
+            playerDirection = Vector2.zero;
+            playerRigidbody.velocity = Vector2.zero;
+            return;
+        }
+
+        playerDirection.x = Input.GetAxisRaw("Horizontal");
+        playerDirection.y = Input.GetAxisRaw("Vertical");
+
+        if (playerDirection != Vector2.zero)
+        {
+            lookDirection = playerDirection; //Ï≥êÎã§Î≥¥Îäî Î∞©Ìñ• Ï†ÄÏû•
+        }
+    }
+
     private void Move()
     {
-        Vector3 moveVelocity = Vector3.zero;
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        spineManager.SetDirection(character, playerDirection);
+        spineManager.SetDirection(shadow, playerDirection);
+        playerRigidbody.velocity = playerDirection.normalized * playerManager.playerData.moveSpeed;
 
-        //x
-        if (horizontal < 0)
+        if (playerRigidbody.velocity == Vector2.zero)
         {
-            moveVelocity.x = -1;
+            Vector3 pos = transform.localPosition;
+            pos.y += 0.00005f;
+            transform.localPosition = pos;
+            spineManager.SetAnimation("Idle", true);
+            if ((soundRequester != null && exState ==1) || (soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.IDLE)))
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
+            exState =0;
         }
-        else if (horizontal > 0)
+        else
         {
-            moveVelocity.x = 1;
-        }
-        //y
-        if (vertical > 0)
-        {
-            moveVelocity.y = 1;
-        }
-        else if (vertical < 0)
-        {
-            moveVelocity.y = -1;
-        }
-
-        transform.position += moveVelocity * playerData.moveSpeed * Time.deltaTime;
-
-        if (moveVelocity.x != 0 || moveVelocity.y != 0)
-        {
-            moveDirX = (int)moveVelocity.x;
-            moveDirY = (int)moveVelocity.y;
+            spineManager.SetAnimation("Run", true, 0, playerManager.playerData.moveSpeed);
+            if ((soundRequester != null && exState == 0)||(soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.RUN)))
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
+            
+            exState = 1;
         }
     }
 
-    private IEnumerator Fire()
+    private void ShootPlayerVoice(AudioClip[] audioClipList, bool ignore = false)
     {
-        SkillData skillData = playerData.skillData;
-        var fireDelay = new WaitForSeconds(skillData.coolTime); //√—æÀ πﬂªÁ µÙ∑π¿Ã
+        shootVoiceTimer++;
 
-        //∞‘¿” Ω√¿€ »ƒ, ¥Î±‚ Ω√∞£ ¿Ã»ƒ πﬂµø
-        if (!skillData.isEffect)
+        if (shootVoiceTimer == VOICE || ignore)
         {
-            yield return fireDelay;
+            if (randomVoice.Length != 0)
+            {   
+                shootVoiceTimer=0;
+                int rnd = Random.Range(0, audioClipList.Length);
+                DebugManager.Instance.PrintDebug("[SoundRequest] Player Shoot Sound " + rnd);
+                playerVoiceAudioSource.PlayOneShot(audioClipList[rnd]);
+            }
         }
 
-        while (true)
-        {
-            try
-            {
-                //∫Ò»∞º∫»≠ µ«æÓ ¿÷¥¬ ≈ıªÁ√º æÚ±‚
-                Projectile projectile = GAME.projectilePool.GetProjectile(skillData.projectileType);
-                //∫Œ∏ ø¿∫Í¡ß∆Æ º≥¡§ (Satellite)
-                Transform parent = skillData.projectileType != ProjectileType.Satellite ? transform : GetEmptySateliteParent();
 
-                if (parent != null)
-                {
-                    projectile.Init(); //≈ıªÁ√º √ ±‚»≠
-                    projectile.SetIsMyProjectile(true); //≥ª √—æÀ ø©∫Œ bool ∞™ True
-                    Vector2 targetPos = GetTargetPos(skillData.skillTarget, skillData.atkDis); //Skill Targetø° µ˚∏• ≈ıªÁ√º ¿Ãµø ¿ßƒ°
-
-                    projectile.gameObject.SetActive(true);
-
-                    projectile.Fire(parent, targetPos, playerData.skillData);
-                }
-            }
-            catch (NullReferenceException nullEx)
-            {
-                Debug.LogError("[Player.Fire] " + nullEx.Message);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("[Player.Fire] " + ex.Message);
-            }
-
-            yield return fireDelay;
-        }
     }
-
-    //ProjectileTypeø° µ˚∏• √—æÀ ¿Ãµø ¿ßƒ° æÚ±‚
-    private Vector2 GetTargetPos(SkillTarget skillTarget, int atkDis)
+    public void DiePlayerVoice()
     {
-        Vector2 targetPos = default(Vector2);
-
-        switch (skillTarget)
-        {
-            case SkillTarget.Melee:
-                targetPos = GameObject.FindGameObjectWithTag("Monster").transform.position;
-                break;
-
-            case SkillTarget.Front:
-                targetPos = (Vector2)transform.position + (new Vector2(moveDirX, moveDirY) * atkDis);
-                break;
-
-            case SkillTarget.Back:
-                targetPos = (Vector2)transform.position + (new Vector2(moveDirX, moveDirY) * -atkDis);
-                break;
-
-            case SkillTarget.Top:
-                targetPos = (Vector2)transform.position + (Vector2.up * atkDis);
-                break;
-
-            case SkillTarget.Bottom:
-                targetPos = (Vector2)transform.position + (Vector2.down * atkDis);
-                break;
-
-            case SkillTarget.RandomDrop:
-                CameraManager cameraManager = CameraManager.Instance;
-
-                if (cameraManager != null)
-                {
-                    targetPos = new Vector2(
-                        Random.Range(cameraManager.Left, cameraManager.Right),
-                        Random.Range(cameraManager.Top, cameraManager.Bottom)
-                        );
-                }
-                else
-                {
-                    Debug.LogError("[GetTargetPos] cameraManager is null");
-
-                    //TODO :: Add cameraManager object
-                }
-
-                break;
-
-            case SkillTarget.Random:
-                List<int> numList = new List<int>() { -1, -1, 0, 1, 1 };
-                int index = 0;
-
-                index = Random.Range(0, numList.Count);
-                float x = numList[index];
-                numList.RemoveAt(index);
-
-                index = Random.Range(0, numList.Count);
-                float y = numList[index];
-
-                targetPos = new Vector2(x, y) * atkDis;
-                break;
-
-            case SkillTarget.Near:
-                targetPos = transform.position;
-                break;
-
-            case SkillTarget.Boss:
-                Monster[] monsters = FindObjectsOfType<Monster>();
-
-                foreach (var monster in monsters)
-                {
-                    if (monster.isBoss)
-                    {
-                        targetPos = monster.transform.position;
-                        break;
-                    }
-                }
-
-                break;
-        }
-
-        return targetPos;
-    }
-
-    private Transform GetEmptySateliteParent()
-    {
-        for (int i = 0; i < satelliteParents.Length; i++)
-        {
-            if (satelliteParents[i].childCount == 0)
+         if (dieVoice.Length != 0)
             {
-                return satelliteParents[i];
+
+                int rnd = Random.Range(0, dieVoice.Length);
+                DebugManager.Instance.PrintError("[SoundRequest] Player Shoot Die Sound " + rnd);
+                 playerVoiceAudioSource.PlayOneShot(dieVoice[rnd]);
             }
+
+    }
+    #endregion
+
+    #region Level
+    //public void GetExp(int exp)
+    //{
+    //    this.exp += playerManager.playerData.ExpBuff(exp);
+
+    //    if (this.exp >= needExp)
+    //    {
+    //        LevelUp();
+    //    }
+    //}
+
+    public void UpdateGetItemRange()
+    {
+        playerItem.UpdateItemRange();
+    }
+
+    //private void LevelUp()
+    //{
+    //    exp -= needExp;
+    //    needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (++level + 1).ToString(), "NeedExp"));
+    //    GameManager.Instance.playerUi.LevelTextChange(level);
+    //    GameManager.Instance.playerUi.SkillSelectWindowOpen();
+    //}
+    #endregion
+
+    #region Collider
+    public IEnumerator Invincible(WaitForSeconds seconds)
+    {
+        spineManager.SetColor(Color.red);
+        if (soundRequester != null)
+        {
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
         }
 
-        return null;
+        yield return seconds;
+        spineManager.SetColor(Color.white);
     }
+
+    public IEnumerator Invincible()
+    {
+        yield return this.Invincible(invincibleTime);
+    }
+    #endregion
+
+    #region Sound
+    private void AudioSetting()
+    {
+        playerVoiceAudioSource = gameObject.AddComponent<AudioSource>();
+
+        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), SettingManager.EFFECT_SOUND);
+        SoundManager.Instance.AddAudioSource("PlayerVoice", playerVoiceAudioSource, SettingManager.VOCIE_SOUND);
+
+
+        soundRequester = GetComponent<SoundRequesterSFX>();
+        playerAudioSource = GetComponent<AudioSource>();
+
+        playerAudioSource.volume = SoundManager.Instance.GetSettingSound( SettingManager.EFFECT_SOUND);
+        playerVoiceAudioSource.volume = SoundManager.Instance.GetSettingSound(SettingManager.VOCIE_SOUND);
+
+
+
+    }
+    #endregion
+
+    #region STATUS_EFFECT
+    public void RemoveStatusEffect(STATUS_EFFECT effect)
+    {
+        statusEffect.RemoveStatusEffect(effect);
+    }
+
+    public IEnumerator FireDot(int time, float dotDamage)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.FIRE))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.FIRE);
+        WaitForSeconds sec = new WaitForSeconds(1.0f);
+        for (int i = 0; i < time; i++)
+        {
+            if (soundRequester != null)
+            {
+                soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.BURNED);
+            }
+
+            StartCoroutine(Invincible());
+            this.playerManager.playerData.CurrentHpModifier(-(int)dotDamage);
+            yield return sec;
+        }
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.FIRE);
+    }
+
+    public IEnumerator Slow(float time, float value)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.SLOW))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.SLOW);
+        float decreaseValue = value * 0.01f * this.playerManager.playerData.moveSpeed;
+        this.playerManager.playerData.MoveSpeedModifier(-decreaseValue);
+        yield return new WaitForSeconds(time);
+        this.playerManager.playerData.MoveSpeedModifier(decreaseValue);
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.SLOW);
+    }
+
+    public IEnumerator ChangeForm(float time, float id)
+    {
+        if (statusEffect.IsStatusEffect(STATUS_EFFECT.TRANSITION))
+        {
+            yield break;
+        }
+
+        statusEffect.AddStatusEffect(STATUS_EFFECT.TRANSITION);
+
+        SkeletonDataAsset asset = spineManager.GetSkeletonDataAsset();
+        spineManager.SetSkeletonDataAsset(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", id.ToString(), "CharacterPrefabPath").ToString()).transform.Find("Character").GetComponent<SkeletonAnimation>().skeletonDataAsset);
+        spineManager.SetAnimation("Idle", true);
+        playerManager.PlayerChange(playerManager.FindCharacter(Convert.ToString(id)));
+
+        ActiveSkill prevSkill = (ActiveSkill)SkillManager.Instance.skillList[playerManager.playerData.basicSkillId];
+        int newSkillId = Convert.ToInt32(CSVReader.Read("CharacterTable", id.ToString(), "SkillID_02"));
+        SkillManager.Instance.SwapSkill(prevSkill.skillId, newSkillId);
+
+        yield return new WaitForSeconds(time);
+
+        statusEffect.RemoveStatusEffect(STATUS_EFFECT.TRANSITION);
+        spineManager.SetSkeletonDataAsset(asset);
+        spineManager.SetAnimation("Idle", true);
+        playerManager.PlayerChange(playerManager.FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
+
+        SkillManager.Instance.SwapSkill(newSkillId, prevSkill.skillId);
+    }
+
+    #endregion
 }

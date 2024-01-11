@@ -5,18 +5,24 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monster
+  - ItemCollider
+  - PlayerSkill
+  - MonsterSkill
+  - Item
+  - Exp
+  - PlayerUI
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - 3
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
   - 
   - 
   - 
@@ -41,4 +47,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: MAP
+    uniqueID: 3294546553
+    locked: 0
+  - name: GIMMICK
+    uniqueID: 710553871
+    locked: 0
+  - name: OBSTACLE
+    uniqueID: 2628837911
+    locked: 0
+  - name: SPAWNOBJECT
+    uniqueID: 3661276191
+    locked: 0
+  - name: DECORATION
+    uniqueID: 3817809807
+    locked: 0
+  - name: POISONFOG
+    uniqueID: 1351565373
     locked: 0

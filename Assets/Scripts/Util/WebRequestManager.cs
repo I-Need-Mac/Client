@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public partial class WebRequestManager : SingleTon<WebRequestManager>
+public partial class WebRequestManager
 {
     #region ResponseCode
     public enum EResponse
@@ -21,86 +21,118 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
 
     #endregion
 
+    private Crypto crypto;
+    public WebRequestManager(Crypto crypto) {
+        DebugManager.Instance.PrintDebug("[WebRequestManager] WebRequestManager Init");
+        this.crypto = crypto;
+    }
 
     private bool isPostUsing = false;
     private Queue<int> postQueue = new Queue<int>();
 
     /// <summary>
-    /// API ¡æ∑· ø©∫Œ
+    /// API Ï¢ÖÎ£å Ïó¨Î∂Ä
     /// </summary>
     private bool isAPIFinished = false;
 
     /// <summary>
-    /// API ºˆΩ≈ º∫∞¯ ø©∫Œ
+    /// API ÏàòÏã† ÏÑ±Í≥µ Ïó¨Î∂Ä
     /// </summary>
     private bool isSuccessApiReceived = false;
 
     /// <summary>
-    /// ≈∏¿”æ∆øÙ
+    /// ÌÉÄÏûÑÏïÑÏõÉ
     /// </summary>
     const float TIMEOUT = 3.0f;
 
 
-    public const string WEBSERVICE_HOST = "http://ec2-3-34-48-14.ap-northeast-2.compute.amazonaws.com:8080";
-    //Singleton¿ª »∞øÎ«œø© 1∞≥¿« ¿ŒΩ∫≈œΩ∫ ¿Ø¡ˆ π◊ ¡¢±Ÿ »ø¿≤º∫ ¡ı∞°
+    public const string WEBSERVICE_HOST = "https://wr.blackteam.kr";
+    //SingletonÏùÑ ÌôúÏö©ÌïòÏó¨ 1Í∞úÏùò Ïù∏Ïä§ÌÑ¥Ïä§ Ïú†ÏßÄ Î∞è Ï†ëÍ∑º Ìö®Ïú®ÏÑ± Ï¶ùÍ∞Ä
 
     public bool IsConnectInternet()
     {
 
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            DebugManager.Instance.PrintDebug("¿Œ≈Õ≥› ≤˜»˚");
+            DebugManager.Instance.PrintDebug("Ïù∏ÌÑ∞ÎÑ∑ ÎÅäÌûò");
             return false;
         }
         else return true;
     }
-    /// <summary>
-    /// Byte[] «¸¿ª String «¸¿∏∑Œ ƒ≥Ω∫∆√ «’¥œ¥Ÿ.
-    /// </summary>
-    /// <param name="strByte"></param>
-    /// <returns></returns>
-    private string ByteToString(byte[] strByte)
+
+
+
+    private String GetDictToString(Dictionary<string, object> forms)
     {
-        return Encoding.Default.GetString(strByte);
+
+        string jsonData = JsonConvert.SerializeObject(forms);
+      
+        Dictionary<string, string> postData = new Dictionary<string, string>
+        {
+            { "data",  crypto.Encrypt(jsonData)}
+        };
+
+        DebugManager.Instance.PrintDebug("[WebRequester] " + jsonData);
+     
+        return JsonConvert.SerializeObject(postData);
     }
 
-    /// <summary>
-    /// Dictionary∏¶ WWWForm¿∏∑Œ ø≈∞‹ WWWForm¿ª π›»Ø«’¥œ¥Ÿ.
-    /// </summary>
-    /// <param name="forms">[Dictionary : Map]</param>
-    /// <returns></returns>
-    private WWWForm GetWWWForm(Dictionary<string, string> forms)
-    {
-        WWWForm form = new WWWForm();
 
-        foreach (KeyValuePair<string, string> value in forms)
+    public string MakeUrlWithParam(string url, Dictionary<string, object> data) {
+        if (data != null)
         {
-            form.AddField(value.Key, value.Value);
+            url += "?";
+            foreach (string i in data.Keys)
+            {
+                url += i + "=" + data[i] + "&";
+            }
+            url = url.Substring(0, url.Length - 1);
+        }
+        return url;
+    }
+
+
+
+    public async Task<object> Get<T>(string url, Dictionary<string, object> data = null)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}"))
+        {
+            DebugManager.Instance.PrintDebug("[RequestManager] Send get request to " + $"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}");
+            float timeout = 0f;
+            request.SendWebRequest();
+            while (!request.isDone)
+            {
+                timeout += Time.deltaTime;
+                if (timeout > TIMEOUT)
+                    return default;
+                else
+                    await Task.Yield();
+            }
+            DebugManager.Instance.PrintDebug(request.downloadHandler.text);
+            var jsonString = request.downloadHandler.text;
+            var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
+
+            if (request.result != UnityWebRequest.Result.Success)
+                Debug.LogError($"Failed: {request.error}");
+            
+            return dataObj;
+
         }
 
-        return form;
-    }
+        return default;
 
-    private string GetStringForm(Dictionary<string, string> forms)
-    {
-        string form = "";
-
-        foreach (KeyValuePair<string, string> value in forms)
-        {
-            form += (value.Key + "=" + value.Value + "&");
-        }
-
-        return form = form.Substring(0, form.Length - 1);
     }
 
 
-
-
-
-
-    public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
+    public async Task<object> Post<T>(string url, Dictionary<string, object> data)
     {
-        using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{url}?{GetStringForm(data)}"))
+        UnityWebRequest request = new UnityWebRequest($"{WEBSERVICE_HOST}/{url}", "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(GetDictToString(data));
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        using (request)
         {
             float timeout = 0f;
             request.SendWebRequest();
@@ -112,9 +144,11 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
                 else
                     await Task.Yield();
             }
-            Debug.Log(request.result);
+
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
+
+            DebugManager.Instance.PrintDebug("[WebAPI]Result of Request :\n"+ request.downloadHandler.text);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
@@ -122,21 +156,21 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
             return dataObj;
 
         }
-
-
-
         return default;
 
     }
-
-
-    public async Task<object> Post<T>(string url, Dictionary<string, string> data)
+    public async Task<object> Patch<T>(string url, Dictionary<string, object> data)
     {
-        using (UnityWebRequest request = UnityWebRequest.Post($"{WEBSERVICE_HOST}/{url}", GetWWWForm(data)))
+        UnityWebRequest request = new UnityWebRequest($"{WEBSERVICE_HOST}/{url}", "PATCH");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(GetDictToString(data));
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        using (request)
         {
             float timeout = 0f;
             request.SendWebRequest();
-            Debug.Log("Send2");
             while (!request.isDone)
             {
                 timeout += Time.deltaTime;
@@ -145,9 +179,11 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
                 else
                     await Task.Yield();
             }
+
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
-            Debug.Log(request.result);
+
+            DebugManager.Instance.PrintDebug("[WebAPI]Result of Request :\n" + request.downloadHandler.text);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
@@ -155,29 +191,8 @@ public partial class WebRequestManager : SingleTon<WebRequestManager>
             return dataObj;
 
         }
-
-
-
         return default;
 
     }
 
-
-    public async Task<RECIEVE_LOGIN> RequestLogin(string ID)
-    {
-
-        Dictionary<string, string> data = new Dictionary<string, string>();
-        data.Add("ID", "test data");
-
-        Debug.Log("Send1");
-
-        return (RECIEVE_LOGIN)await Post<RECIEVE_LOGIN>(APIAdressManager.REQUEST_LOGIN, data);
-    }
-
-
-}
-
-public class RECIEVE_LOGIN
-{
-    public string ID;
 }

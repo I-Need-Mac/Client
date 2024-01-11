@@ -1,9 +1,10 @@
-ï»¿CharacterId,Character_Name,HP,Attack,CriRatio,CriDamage,CoolDown,HPRegen,EnergyRegen,Shield,ProjectileAdd,MoveSpeed,GetItemRange
-ìŠ¤íƒ¯ ì•„ì´ë””,ìºë¦­í„° ì´ë¦„,ì²´ë ¥,ê³µê²©,ì¹˜ëª…íƒ€ í™•ë¥ ,ì¹˜ëª…íƒ€ ëŒ€ë¯¸ì§€,ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ ê°ì†Œ,ì´ˆë‹¹ ì²´ë ¥ íšŒë³µ,ì—ë„ˆì§€ ì´ˆë‹¹ íšŒë³µ,ì‹¤ë“œ,íˆ¬ì‚¬ì²´ ì¦ê°€,ì´ë™ ì†ë„,ì•„ì´í…œ íšë“ ë²”ìœ„
-Int,String,Int,Int,Int,Int,Int,Int,Int,Int,Int,Int,Int
-101,qwerty,100,0,20,5000,3000,1000,500,20000,10,30,10
-102,asdfgh,100,0,30,6000,4000,2000,1500,25000,20,40,20
-103,qwerty,100,0,40,7000,5000,3000,2500,30000,30,50,30
-104,asdfgh,100,0,50,8000,6000,4000,3500,35000,40,60,40
-105,qwerty,100,0,60,9000,7000,5000,4500,40000,50,70,50
-106,qwerty,100,0,70,10000,8000,6000,5500,45000,60,80,60
+CharacterId,CharacterName,HP,Attack,CriRatio,CriDamage,CoolDown,HPRegen,Shield,ProjectileAdd,MoveSpeed,GetItemRange,SkillID_01,SkillID_02,CharacterPrefabPath,MainShowImagePath,MainSelectImagePath,MainSpinePath,IntroduceTextPath,IconImage
+½ºÅÈ ¾ÆÀÌµğ,Ä³¸¯ÅÍ ÀÌ¸§,Ã¼·Â,°ø°İ,Ä¡¸íÅ¸ È®·ü,Ä¡¸íÅ¸ ´ë¹ÌÁö,Àç»ç¿ë ´ë±â½Ã°£ °¨¼Ò,ÃÊ´ç Ã¼·Â È¸º¹,½Çµå,Åõ»çÃ¼ Áõ°¡,ÀÌµ¿ ¼Óµµ,¾ÆÀÌÅÛ È¹µæ ¹üÀ§,±âº» ±Ã±Ø±â ¾ÆÀÌµğ,±âº» ½ºÅ³ ¾ÆÀÌµğ,Ä³¸¯ÅÍ ÀÏ·¯ °æ·Î,¸ŞÀÎ Ä³¸¯ÅÍ ÀÌ¹ÌÁö °æ·Î,¸ŞÀÎ Ä³¸¯ÅÍ ÀÌ¹ÌÁö °æ·Î,¸ŞÀÎ Ä³¸¯ÅÍ Spine °æ·Î,¸ŞÀÎ Ä³¸¯ÅÍ ½ºÅä¸® ÅØ½ºÆ®,Ä³¸¯ÅÍ ¾ÆÀÌÄÜ ÀÌ¹ÌÁö
+Int,String,Int,Int,Int,Int,Int,Int,Int,Int,Float,Int,Int,Int,String,String,String,String,String,String
+101,CharName_YunHoJin,200,120,1500,15000,0,0,0,0,1.5,1.5,10101,10701,Prefabs/InGame/Character/Hojin,Character\Hojin\MainIllustrator\Main_Hojin_Main_01,UI\Character_Select\Yoon_Select_Box_Use,Hojin,Character_Inform_Hojin,Arts/UI/Character_Profile/Hojin_Profile
+102,CharName_Sinwol,180,100,1500,15000,20,0,1,0,1.3,1.5,10301,10901,Prefabs/InGame/Character/Sinwol,Character\Sinwol\MainIllustrator\Main_Sinwol_Main_01,UI\Character_Select\Sinwool_Select_Box_Use,Sinwol,Character_Inform_Sinwol,Arts/UI/Character_Profile/Sinwol_Profile
+103,CharName_JinSiWoo,160,150,0,0,0,-1,0,0,1.3,1.5,10201,10801,Prefabs/InGame/Character/Siwoo,Character\Siwoo\MainIllustrator\Main_Siwoo_Main_01,UI\Character_Select\Jin_Select_Box_Use,Siwoo,Character_Inform_Siwoo,Arts/UI/Character_Profile/Siwoo_Profile
+104,CharName_SeiMei,180,80,1500,15000,0,0,0,0,1.3,1.5,10501,11101,Prefabs/InGame/Character/Seimei,Character\SeiMei\MainIllustrator\Main_SeiMei_Main_01,UI\Character_Select\Kino_Select_Box_Use,SeiMei,Character_Inform_SeiMei,Arts/UI/Character_Profile/Seimei_Profile
+105,CharName_Ulises,300,80,1500,15000,0,1,0,0,1.3,1.5,10401,11001,Prefabs/InGame/Character/Ulises,Character\Ulises\MainIllustrator\Main_Ulises_Main_01,UI\Character_Select\Ulises_Select_Box_Use,Ulises,Character_Inform_Ulises,Arts/UI/Character_Profile/Ulises_Profile
+106,CharName_Macia,200,60,7500,20000,0,0,0,0,1.5,1.5,10601,11201,Prefabs/InGame/Character/Macia,Character\Macia\MainIllustrator\Main_Macia_Main_01,UI\Character_Select\Macia_Select_Box_Use,Macia,Character_Inform_Macia,Arts/UI/Character_Profile/Macia_Profile
+201,CharName_SeiMei2,360,160,3000,30000,0,0,0,0,1.5,1.5,,30101,Prefabs/InGame/Character/Seimei2,,,,,

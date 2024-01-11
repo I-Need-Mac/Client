@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class SettingManager
 {
+    public const string TOTAL_SOUND = "TOTAL_SOUND";
+    public const string BGM_SOUND = "BGM_SOUND";
+    public const string EFFECT_SOUND = "EFFECT_SOUND";
+    public const string VOCIE_SOUND = "VOCIE_SOUND";
+
     private Dictionary<string, int> _settings { get; set; }
     public Dictionary<string, int> settings
     {
@@ -20,6 +25,8 @@ public class SettingManager
 
     private FileStream settingFileR;
     private FileStream settingFileW;
+    private Dictionary<string, Dictionary<string, object>> configData;
+
     private static SettingManager _instance { get; set; }
     public static SettingManager Instance
     {
@@ -28,6 +35,11 @@ public class SettingManager
 
             return _instance ?? (_instance = new SettingManager());
         }
+    }
+
+    public SettingManager() { 
+        ReadSettingFile();
+        configData = CSVReader.Read("Config");
     }
 
     public void WriteSettingFile() {
@@ -48,6 +60,7 @@ public class SettingManager
 
     public void ReadSettingFile() {
         settingFileR = new FileStream("./setting.txt", FileMode.Open);
+        //settingFileR = new FileStream("./Assets/Resources/setting.txt", FileMode.Open);
         StreamReader sr = new StreamReader(settingFileR);
 
         DebugManager.Instance.PrintDrawLine();
@@ -61,8 +74,14 @@ public class SettingManager
             if( values.Length == 0 ){               
                 sr.Close();                
                 return;            
-            }           
-            settings.Add(values[0],int.Parse(values[1]));
+            }
+            if (!settings.ContainsKey(values[0])) { 
+                settings.Add(values[0],int.Parse(values[1]));
+            }
+            else {
+                settings[values[0]]= int.Parse(values[1]);
+
+            }
             source = sr.ReadLine();    // 한줄 읽는다.        
         }
         sr.Close();
@@ -95,10 +114,20 @@ public class SettingManager
             DebugManager.Instance.PrintDrawLine();
             DebugManager.Instance.PrintDebug("Setting 파일 값 세팅", target + " : " + value);
             DebugManager.Instance.PrintDrawLine();
+
+            WriteSettingFile();
             return true;
         }
         return false;
 
     }
 
+    public string GetConfigSetting(string id) {
+        if (configData.ContainsKey(id)) { 
+            return configData[id]["Value"].ToString();
+        }
+        else { 
+            return "Wrong ID";
+        }
+    }
 }

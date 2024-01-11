@@ -1,4 +1,11 @@
-﻿StageID,StageWidth,StageHeight,PlayerSponeX,PlayerSponeY,MonsterSponeID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID
-스테이지 아이디,스테이지 폭,스테이지 높이,플레이어 스폰 X좌표,플레어이 스폰 Y좌표,몹 스폰 테이블 ID,제한 시간 ,몹 제한 수,보상 아이디,보상 개수,인트로ID,아웃트로ID
-Int,Int,Int,Int,Int,String,Int,Int,Int_Arr,Int_Arr,Int,Int
-10101,3000,3000,100,100,Stage1,5000,30,100,100,1025,1026
+StageID,MonsterSpawnID,LimitTime,LimitAmount,RewardID,RewardAmout,IntroID,OutroID,MapID,NextStageID,ChapterCategory,ClearType,ClearValue,StageName,StageHeader
+?�테?��? ?�이??�??�폰 ?�이�?ID,?�한 ?�간 ,�??�한 ??보상 ?�이??보상 개수,?�트로ID,?�웃?�로ID,�?ID,?�음 ?�테?��? ID,?�테?��?가 ?�함??챕터 구분,?�리??방식,?�리??�?,,,,,
+Int,String,Int,Int,Int_Arr,Int_Arr,StoryID,StoryID,String,int,ChapterID,Enum,int,String,String
+10101,SpawnData/Stage_01,30000,500,1,1,1101,2101,Map_Stage1_,10102,101,KillBoss,101,Stage_01_Name,Stage1_Header
+10102,SpawnData/Stage_01,30000,100,1,1,1102,2102,Map2,10103,101,KillBoss,101,Stage_02_Name,Stage2_Header
+10103,SpawnData/Test,30000,100,1,1,1103,2103,Map3,10104,101,KillBoss,101,Stage_03_Name,Stage3_Header
+10104,TEST,30000,100,1,1,1104,2104,Map4,10105,101,KillBoss,101,Stage_04_Name,Stage4_Header
+10105,TEST,30000,100,1,1,1105,2105,Map5,10106,101,KillBoss,101,Stage_05_Name,Stage5_Header
+10106,TEST,30000,100,1,1,1106,2106,Map6,10107,101,KillBoss,101,Stage_06_Name,Stage6_Header
+10107,TEST,30000,100,1,1,1107,2107,Map7,10108,101,KillBoss,101,Stage_07_Name,Stage7_Header
+10108,TEST,30000,100,1,1,1108,2108,Map8,10201,101,KillBoss,101,Stage_08_Name,Stage8_Header

@@ -1,0 +1,35 @@
+bigmouth.png
+size:524,524
+filter:Linear,Linear
+pma:true
+L_foot
+bounds:54,2,62,66
+offsets:0,0,64,66
+rotate:270
+L_hand
+bounds:2,5,46,51
+L_leg
+bounds:38,138,76,126
+rotate:90
+L_under arm
+bounds:140,37,73,63
+rotate:90
+L_upper arm
+bounds:175,84,84,167
+R_hand
+bounds:2,215,77,172
+rotate:270
+R_leg
+bounds:2,58,78,137
+offsets:0,0,78,167
+rotate:90
+body
+bounds:2,301,168,221
+offsets:0,13,168,234
+closed_mouth
+bounds:204,15,68,42
+offsets:0,7,80,53
+rotate:90
+head
+bounds:169,252,77,270
+offsets:6,0,95,271

@@ -1,60 +1,55 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// UIÀÌº¥Æ® ÇÚµé·¯
-public class UIEventHandler : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+// UIì´ë²¤íŠ¸ í•¸ë“¤ëŸ¬
+public class UIEventHandler : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Action<PointerEventData> OnClickHandler = null;
     public Action<PointerEventData> OnEnterHandler = null;
     public Action<PointerEventData> OnExitHandler = null;
-    public Action<PointerEventData> OnDownHandler = null;
-    public Action<PointerEventData> OnUpHandler = null;
 
-    // ¿ÀºêÁ§Æ®¿¡¼­ Æ÷ÀÎÅÍ¸¦ ´©¸£°í µ¿ÀÏÇÑ ¿ÀºêÁ§Æ®¿¡¼­ ¶¿ ¶§ È£Ãâ
+    // ì˜¤ë¸Œì íŠ¸ì—ì„œ í¬ì¸í„°ë¥¼ ëˆ„ë¥´ê³  ë™ì¼í•œ ì˜¤ë¸Œì íŠ¸ì—ì„œ ë—„ ë•Œ í˜¸ì¶œ
     public void OnPointerClick(PointerEventData eventData)
     {
         if (OnClickHandler != null)
         {
             OnClickHandler.Invoke(eventData);
+            if (GetComponent<SoundRequesterBtn>()!= null){
+               if(GetComponent<SoundRequesterBtn>().GetIsNagative()) { 
+                    GetComponent<SoundRequesterBtn>().ChangeSituation(SoundSituation.SOUNDSITUATION.CLICK);
+                }
+                else
+                {
+                    GetComponent<SoundRequesterBtn>().ChangeSituation(SoundSituation.SOUNDSITUATION.NAGATIVE);
+                }
+            }
         }
     }
 
-    // Æ÷ÀÎÅÍ°¡ ¿ÀºêÁ§Æ®¿¡ µé¾î¿ÔÀ» ¶§ È£Ãâ
+    // ì˜¤ë¸Œì íŠ¸ì—ì„œ í¬ì¸í„°ë¥¼ uiìœ„ì— ì˜¬ë ¸ì„ ë•Œ í˜¸ì¶œ
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (OnEnterHandler != null)
+        if(OnEnterHandler != null)
         {
             OnEnterHandler.Invoke(eventData);
+            if (GetComponent<SoundRequesterBtn>() != null)
+            {
+                GetComponent<SoundRequesterBtn>().ChangeSituation(SoundSituation.SOUNDSITUATION.HOVER);
+            }
         }
     }
 
-    // Æ÷ÀÎÅÍ°¡ ¿ÀºêÁ§Æ®·ÎºÎÅÍ ¸Ö¾îÁ³À» ¶§¿¡ È£Ãâ
+    // ì˜¤ë¸Œì íŠ¸ì—ì„œ í¬ì¸í„°ë¥¼ uiìœ„ì—ì„œ ë‚´ë ¸ì„ ë•Œ í˜¸ì¶œ 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (OnExitHandler != null)
         {
-            OnEnterHandler.Invoke(eventData);
-        }
-    }
-
-    // Æ÷ÀÎÅÍ°¡ ¿ÀºêÁ§Æ®¸¦ ´­·¶À» ¶§ È£Ãâ
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (OnDownHandler != null)
-        {
-            OnDownHandler.Invoke(eventData);
-        }
-    }
-
-    // Æ÷ÀÎÅÍ¸¦ ¶ÃÀ» ¶§ È£Ãâ(´­·Á ÀÖ´Â ¿ÀºêÁ§Æ®¿¡¼­ È£Ãâ)
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (OnUpHandler != null)
-        {
-            OnUpHandler.Invoke(eventData);
+            OnExitHandler.Invoke(eventData);
+            if (GetComponent<SoundRequesterBtn>() != null)
+            {
+                GetComponent<SoundRequesterBtn>().ChangeSituation(SoundSituation.SOUNDSITUATION.HOVER);
+            }
         }
     }
 }

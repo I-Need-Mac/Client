@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: c4c6704bee3d8e84187cb80ae1eb9bb0
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Yydimibang
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e5e095fae19067e458e0c21f30b6b620, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

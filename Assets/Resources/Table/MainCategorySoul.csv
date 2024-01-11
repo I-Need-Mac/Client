@@ -1,0 +1,8 @@
+SoulMainCategoryID,SoulMainOrder,SoulMainNameText,SoulMainUnlockText,SoulMainImagePath,SoulMainUnlock,SoulMainUnlockParam
+??ì¹´í…Œê³ ë¦¬ ?„ì´???ìœ„ ???¸ì¶œ ?œì„œ,?ìœ„ ???´ë¦„,?ìœ„ ???´ê¸ˆ ì¡°ê±´,?ìœ„ ???´ë?ì§€,?ìœ„ ???´ê¸ˆ ì¡°ê±´,?ìœ„ ???´ê¸ˆ ì¡°ê±´ ?ŒëŒ,?˜ìœ„ ??ê°?ˆ˜
+int,int,LocalizeID,LocalizeID,String,SoulUnlockEnum_arr,int_arr
+101,1,Soul_Name_BigSoul1,,Seonghon/Main_Seonghon_01,,
+102,2,Soul_Name_BigSoul2,,Seonghon/Main_Seonghon_02,,
+103,3,Soul_Name_BigSoul3,,Seonghon/Main_Seonghon_03,,
+104,4,Soul_Name_BigSoul4,,Seonghon/Main_Seonghon_04,,
+105,5,Soul_Name_BigSoul5,,Seonghon/Main_Seonghon_05,,

@@ -1,0 +1,27 @@
+GroupID,GroupSource,IsMultiple,PackageID,PackageProbability
+Í∑∏Î£π?ÑÏù¥??Í∑∏Î£π ?åÏä§,Í∑∏Î£π ???ÖÎ¶Ω ?ïÎ•†Î°??úÌñâ,?®ÌÇ§ÏßÄ ID,?®ÌÇ§ÏßÄ???úÎûç ?ïÎ•†(ÎßåÎ∂Ñ??,
+int,String,bool,String,int
+10101,Small_EXP,TRUE,BaseSmallEXP,10000
+10102,Small_EXP,TRUE,AdditionalSmall,1500
+10201,Middle_EXP,TRUE,BaseMiddleEXP,10000
+10202,Middle_EXP,TRUE,AdditionalMiddle,1500
+10301,Big_EXP,TRUE,BaseBigEXP,10000
+10302,Big_EXP,TRUE,AdditionalBig,1500
+10401,Stone,FALSE,Item_KillAll,500
+10402,Stone,FALSE,Item_Stun,1000
+10403,Stone,FALSE,Item_Heal,1500
+10404,Stone,FALSE,Item_Magnet,500
+10405,Stone,FALSE,Item_Box,500
+10406,Stone,FALSE,Item_Key,500
+10407,Stone,FALSE,Exp_Small,3000
+10408,Stone,FALSE,Exp_Middle,1500
+10409,Stone,FALSE,Exp_Large,1000
+10501,Item_KillAll,FALSE,Item_KillAll,1
+10502,Item_Stun,FALSE,Item_Stun,1
+10503,Item_Heal,FALSE,Item_Heal,1
+10504,Item_Magnet,FALSE,Item_Magnet,1
+10505,Item_Box,FALSE,Item_Box,1
+10506,Item_Key,FALSE,Item_Key,1
+10507,Exp_Small,FALSE,Exp_Small,1
+10508,Exp_Middle,FALSE,Exp_Middle,1
+10509,Exp_Large,FALSE,Exp_Large,1

@@ -232,6 +232,7 @@ MonoBehaviour:
   selectImage:
   - {fileID: 3589881762390860172}
   - {fileID: 5862869367372014394}
+  image: {fileID: 3589881762390860172}
 --- !u!114 &5990901703554945680
 MonoBehaviour:
   m_ObjectHideFlags: 0

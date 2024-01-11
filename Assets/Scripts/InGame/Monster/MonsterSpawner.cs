@@ -57,6 +57,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
 
     public Monster SpawnMonster(int monsterId, Vector2 pos, Transform target, bool isFriendly, LayerConstant layer = LayerConstant.MONSTER)
     {
+        DebugManager.Instance.PrintDebug("[MonsterSpawnData] MonsterSpawnRequest "+monsterId);
         Monster monster = spawner[monsterId].GetObject();
         monster.monsterId = monsterId;
         monster.gameObject.layer = (int)layer;

@@ -7,10 +7,10 @@ int,String,Float,int,int,int,float,int,int,int,String,int,String,Enum,Enum
 202,DokGaGwi,0.35,170,55,1.3,5,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/DokGaGwi,Shy,Normal
 203,TeoLeogSon,0.3,400,80,0.5,0.5,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/TeoLeogSon,Bold,Normal
 301,GeoSeunDae,0.5,600,100,1.3,1,99999,0.05,0,Middle_EXP,10000,Prefabs/InGame/Monster/GeuSeunDae,Bold,Normal
-401,Lesser_Demon,1,8000,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/Lesser_Demon_Elite,Bold,Elite
-402,Nien,1,8000,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/Nien_Elite,Bold,Elite
-403,DokGaGwi,1,8000,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/DokGaGwi_Elite,Bold,Elite
-404,GeoSeunDae,1,8000,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/GeoSeunDae_Elite,Bold,Elite
+401,Lesser_Demon,1,8000,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/Lesser_Demon,Bold,Elite
+402,Nien,1,8000,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/Nien,Bold,Elite
+403,DokGaGwi,1,8000,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/DokGaGwi,Bold,Elite
+404,GeoSeunDae,1,8000,150,1.6,4,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/GeuSeunDae,Bold,Elite
 501,Gomogwi,0.4,1800,125,0.8,1,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/Gomogwi,Bold,Boss
 502,GeoGuGwi,0.5,1950,120,1.3,1,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/GeoGuGwi,Bold,Boss
 503,Vassago,0.5,1950,120,1.3,1,99999,0.05,0,Big_EXP,10000,Prefabs/InGame/Monster/Basago,Bold,Boss

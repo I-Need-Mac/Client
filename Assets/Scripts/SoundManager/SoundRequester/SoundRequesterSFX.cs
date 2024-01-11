@@ -11,7 +11,7 @@ public class SoundRequesterSFX : SoundRequester
     [ExecuteInEditMode]
     public List<AudioSourceSetter> speakerSettings = new List<AudioSourceSetter>();
     public List<SoundPackItem> soundPackItems = new List<SoundPackItem>();
-  
+
 
     private SoundSituation.SOUNDSITUATION lastSituation;
 
@@ -32,8 +32,8 @@ public class SoundRequesterSFX : SoundRequester
 
             if (items.loadSettingFrom == null)
             {
-                DebugManager.Instance.PrintDebug("SoundRequester : "+ items.audioType + "@" + soundObjectID + "!" + items.speakerName + " Make New Speaker ");
-            
+                DebugManager.Instance.PrintDebug("SoundRequester : " + items.audioType + "@" + soundObjectID + "!" + items.speakerName + " Make New Speaker ");
+
                 GameObject speaker = new GameObject(items.speakerName);
                 speaker.transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);
                 speaker.transform.SetParent(soundRequester.transform);
@@ -45,7 +45,7 @@ public class SoundRequesterSFX : SoundRequester
                 SoundManager.Instance.AddAudioSource(soundObjectID + "!" + items.speakerName, audioSources[items.speakerName], items.audioType);
 
                 audioSources[items.speakerName].loop = items.isLoop;
-                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType) ;
+                audioSources[items.speakerName].volume = SoundManager.Instance.GetSettingSound(items.audioType);
                 audioSources[items.speakerName].playOnAwake = false;
 
                 audioSources[items.speakerName].bypassEffects = items.isBypassEffects;
@@ -137,28 +137,38 @@ public class SoundRequesterSFX : SoundRequester
     protected override void ShootSound(SoundSituation.SOUNDSITUATION situation)
     {
         //audioSources[shootingSounds[situation].usingSpeaker].clip = shootingSounds[situation].audioClip;
-        
-        try {
-            audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
 
-        }
-        catch(Exception e) {
-            DebugManager.Instance.PrintDebug("[SoundRequester] 오디오 소스 재요청 및 재재생 " + situation + " " + shootingSounds[situation].usingSpeaker);
-            if (audioSources.ContainsKey(shootingSounds[situation].usingSpeaker)) {
-                audioSources[shootingSounds[situation].usingSpeaker] =SoundManager.Instance.GetAudioSource(shootingSounds[situation].usingSpeaker);
-            }
-            else {
-                audioSources.Add(shootingSounds[situation].usingSpeaker, SoundManager.Instance.GetAudioSource(shootingSounds[situation].usingSpeaker));
-            }
-            
-            audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
-        
-        }
-        if (situation == SoundSituation.SOUNDSITUATION.DIE)
+        if (!((isBlockSituation&& situation == lastSoundSituation)||(isBlockSituation&&isBlockAllSituation)))
         {
-           MoveToSoundManager(audioGameObjectDict[shootingSounds[situation].usingSpeaker]);
-        }
+            try
+            {
+                lastSoundSituation = situation;
+                audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
+                BlockSituation();
 
+            }
+            catch (Exception e)
+            {
+                DebugManager.Instance.PrintDebug("[SoundRequester] 오디오 소스 재요청 및 재재생 " + situation + " " + shootingSounds[situation].usingSpeaker);
+                if (audioSources.ContainsKey(shootingSounds[situation].usingSpeaker))
+                {
+                    audioSources[shootingSounds[situation].usingSpeaker] = SoundManager.Instance.GetAudioSource(shootingSounds[situation].usingSpeaker);
+                }
+                else
+                {
+                    audioSources.Add(shootingSounds[situation].usingSpeaker, SoundManager.Instance.GetAudioSource(shootingSounds[situation].usingSpeaker));
+                }
+
+                lastSoundSituation = situation;
+                audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].audioClip);
+                BlockSituation();
+
+            }
+            if (situation == SoundSituation.SOUNDSITUATION.DIE)
+            {
+                MoveToSoundManager(audioGameObjectDict[shootingSounds[situation].usingSpeaker]);
+            }
+        }
     }
 
 

@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 364, y: 36}
+  m_SizeDelta: {x: 473, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3944153976606765175
 CanvasRenderer:
@@ -118,6 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fec208b9995124baaccdfc1e5dce96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings: []
   soundPackItems:
   - usingSpeaker: BGM
@@ -296,7 +298,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 364, y: 36}
+  m_SizeDelta: {x: 473, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3084350552677304134
 CanvasRenderer:
@@ -371,7 +373,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 364, y: 36}
+  m_SizeDelta: {x: 473, y: 34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7188131479842883618
 CanvasRenderer:
@@ -543,6 +545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8665551908793614949}
   - component: {fileID: 7847763903317710704}
+  - component: {fileID: 6329926287381495612}
   m_Layer: 0
   m_Name: Soul
   m_TagString: Untagged
@@ -583,6 +586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: TEST
     _audioType: 1
@@ -606,6 +611,23 @@ MonoBehaviour:
     priority: 5
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClipList: []
+--- !u!114 &6329926287381495612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3343425724875737489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d462d2a3e5eb14774aa79f217cd3353e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Origin: {fileID: 21300000, guid: e2f3ee8917bebbb4390acfde29bf6772, type: 3}
+  Hover: {fileID: 21300000, guid: 2ce64eec76e3da94f83706e92667ae75, type: 3}
+  Click: {fileID: 21300000, guid: 469606c332d90bc4b890665cd7b434a1, type: 3}
+  img: {fileID: 9119110150652196967}
 --- !u!1 &4560841767860258092
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: TEST
     _audioType: 1
@@ -679,6 +703,7 @@ MonoBehaviour:
     priority: 5
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClipList: []
 --- !u!1 &5152335398159802511
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,6 +714,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1272387016147578416}
   - component: {fileID: 8874295364392173542}
+  - component: {fileID: 5333588589294448135}
   m_Layer: 0
   m_Name: SelectSorcerer
   m_TagString: Untagged
@@ -729,6 +755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: TEST
     _audioType: 1
@@ -752,6 +780,23 @@ MonoBehaviour:
     priority: 5
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClipList: []
+--- !u!114 &5333588589294448135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152335398159802511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d462d2a3e5eb14774aa79f217cd3353e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Origin: {fileID: 21300000, guid: e2f3ee8917bebbb4390acfde29bf6772, type: 3}
+  Hover: {fileID: 21300000, guid: 2ce64eec76e3da94f83706e92667ae75, type: 3}
+  Click: {fileID: 21300000, guid: 469606c332d90bc4b890665cd7b434a1, type: 3}
+  img: {fileID: 2579348620604101598}
 --- !u!1 &6450225297404861222
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,7 +832,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 157, y: 35}
+  m_SizeDelta: {x: 210, y: 47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3667743347985128309
 CanvasRenderer:
@@ -1122,15 +1167,15 @@ RectTransform:
   m_GameObject: {fileID: 8650851415530405160}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.212, y: 0.96, z: 0.96}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8728728607021867187}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7.6, y: 10}
-  m_SizeDelta: {x: 100, y: 30}
+  m_AnchoredPosition: {x: 10.28, y: 18.535}
+  m_SizeDelta: {x: 119.46, y: 37.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4665882209359665323
 CanvasRenderer:
@@ -1223,7 +1268,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 4.5300636, y: -15.251511, z: 12.080406, w: 0}
+  m_margin: {x: -0.77700424, y: 0.66947937, z: -0.302536, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1315,6 +1360,7 @@ GameObject:
   - component: {fileID: 8586975892360379252}
   - component: {fileID: 6799569625609025356}
   - component: {fileID: 61340846482778318}
+  - component: {fileID: 6994689059829413128}
   m_Layer: 0
   m_Name: StoryMode
   m_TagString: Untagged
@@ -1355,6 +1401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: TEST
     _audioType: 1
@@ -1378,6 +1426,7 @@ MonoBehaviour:
     priority: 5
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClipList: []
 --- !u!65 &61340846482778318
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1391,3 +1440,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6994689059829413128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9190807605750113542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d462d2a3e5eb14774aa79f217cd3353e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Origin: {fileID: 21300000, guid: e2f3ee8917bebbb4390acfde29bf6772, type: 3}
+  Hover: {fileID: 21300000, guid: 2ce64eec76e3da94f83706e92667ae75, type: 3}
+  Click: {fileID: 21300000, guid: 469606c332d90bc4b890665cd7b434a1, type: 3}
+  img: {fileID: 7079670318836326795}

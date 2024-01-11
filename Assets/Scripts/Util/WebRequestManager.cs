@@ -62,25 +62,23 @@ public partial class WebRequestManager
 
 
 
-    private String GetDictToString(Dictionary<string, string> forms)
+    private String GetDictToString(Dictionary<string, object> forms)
     {
 
         string jsonData = JsonConvert.SerializeObject(forms);
-        Debug.LogError(forms.Count);
-        Debug.LogError(jsonData);
+      
         Dictionary<string, string> postData = new Dictionary<string, string>
         {
             { "data",  crypto.Encrypt(jsonData)}
         };
 
-
-        Debug.LogError(JsonConvert.SerializeObject(postData));
+        DebugManager.Instance.PrintDebug("[WebRequester] " + jsonData);
      
         return JsonConvert.SerializeObject(postData);
     }
 
 
-    public string MakeUrlWithParam(string url, Dictionary<string, string> data) {
+    public string MakeUrlWithParam(string url, Dictionary<string, object> data) {
         if (data != null)
         {
             url += "?";
@@ -88,17 +86,18 @@ public partial class WebRequestManager
             {
                 url += i + "=" + data[i] + "&";
             }
-            url.TrimEnd('&');
+            url = url.Substring(0, url.Length - 1);
         }
         return url;
     }
 
 
 
-    public async Task<object> Get<T>(string url, Dictionary<string, string> data = null)
+    public async Task<object> Get<T>(string url, Dictionary<string, object> data = null)
     {
         using (UnityWebRequest request = UnityWebRequest.Get($"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}"))
         {
+            DebugManager.Instance.PrintDebug("[RequestManager] Send get request to " + $"{WEBSERVICE_HOST}/{MakeUrlWithParam(url, data)}");
             float timeout = 0f;
             request.SendWebRequest();
             while (!request.isDone)
@@ -109,13 +108,13 @@ public partial class WebRequestManager
                 else
                     await Task.Yield();
             }
-            Debug.Log(request.downloadHandler.text);
+            DebugManager.Instance.PrintDebug(request.downloadHandler.text);
             var jsonString = request.downloadHandler.text;
             var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
 
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.LogError($"Failed: {request.error}");
-
+            
             return dataObj;
 
         }
@@ -125,7 +124,7 @@ public partial class WebRequestManager
     }
 
 
-    public async Task<object> Post<T>(string url, Dictionary<string, string> data)
+    public async Task<object> Post<T>(string url, Dictionary<string, object> data)
     {
         UnityWebRequest request = new UnityWebRequest($"{WEBSERVICE_HOST}/{url}", "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(GetDictToString(data));
@@ -160,6 +159,40 @@ public partial class WebRequestManager
         return default;
 
     }
+    public async Task<object> Patch<T>(string url, Dictionary<string, object> data)
+    {
+        UnityWebRequest request = new UnityWebRequest($"{WEBSERVICE_HOST}/{url}", "PATCH");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(GetDictToString(data));
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
 
+        using (request)
+        {
+            float timeout = 0f;
+            request.SendWebRequest();
+            while (!request.isDone)
+            {
+                timeout += Time.deltaTime;
+                if (timeout > TIMEOUT)
+                    return default;
+                else
+                    await Task.Yield();
+            }
+
+            var jsonString = request.downloadHandler.text;
+            var dataObj = JsonConvert.DeserializeObject<T>(jsonString);
+
+            DebugManager.Instance.PrintDebug("[WebAPI]Result of Request :\n" + request.downloadHandler.text);
+
+            if (request.result != UnityWebRequest.Result.Success)
+                Debug.LogError($"Failed: {request.error}");
+
+            return dataObj;
+
+        }
+        return default;
+
+    }
 
 }

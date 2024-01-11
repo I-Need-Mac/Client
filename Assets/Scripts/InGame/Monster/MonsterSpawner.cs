@@ -50,17 +50,23 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         monsterAttackCoefficient = float.Parse(CSVReader.Read("BattleConfig", "StatIncreaseValueAttack", "ConfigValue").ToString());
     }
 
-    public Monster SpawnMonster(int monsterId, Vector2 pos)
+    public Monster SpawnMonster(int monsterId, Vector2 pos, LayerConstant layer = LayerConstant.MONSTER)
     {
+        return SpawnMonster(monsterId, pos, GameManager.Instance.player.transform, false, layer);
+    }
+
+    public Monster SpawnMonster(int monsterId, Vector2 pos, Transform target, bool isFriendly, LayerConstant layer = LayerConstant.MONSTER)
+    {
+        DebugManager.Instance.PrintDebug("[MonsterSpawnData] MonsterSpawnRequest "+monsterId);
         Monster monster = spawner[monsterId].GetObject();
         monster.monsterId = monsterId;
-        monster.gameObject.layer = (int)LayerConstant.MONSTER;
+        monster.gameObject.layer = (int)layer;
         monster.GetComponentInChildren<MeshRenderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
         float weight = Timer.Instance.currentTime * 0.001f;
         monster.SpawnSet(monsterHpCoefficient * weight, monsterAttackCoefficient * weight);
         monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;
         monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
-        monster.SetTarget(GameManager.Instance.player.transform, true);
+        monster.SetTarget(target, isFriendly);
         monster.gameObject.SetActive(true);
         monsters.Add(monster);
         ++spawnCount;
@@ -97,15 +103,29 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
                     }
                     catch
                     {
-                        DebugManager.Instance.PrintDebug("[ERROR] 현재 존재하지 않는 몬스터입니다 MonsterID: " + spawnMobId);
+                        DebugManager.Instance.PrintError("[MonsterSpawner] 현재 존재하지 않는 몬스터입니다 MonsterID: " + spawnMobId);
                     }
                 }
                 spawnQueue.Enqueue(new MonsterSpawnData(Convert.ToInt32(spawnId), Convert.ToInt32(stageData[spawnId]["SpawnTime"]), spawnMobId, Convert.ToInt32(stageData[spawnId]["SpawnMobAmount"]), Convert.ToString(stageData[spawnId]["SpawnMobLocation"])));
             }
             catch
             {
-                DebugManager.Instance.PrintDebug("[ERROR] 빈 줄이 삽입되어 있습니다: " + spawnId);
+                DebugManager.Instance.PrintError("[MonsterSpawner] 빈 줄이 삽입되어 있습니다: " + spawnId);
             }
+        }
+
+        int[] summons = new int[] { 701, 702, };
+        foreach (int summonId in summons)
+        {
+            spawner.Add(summonId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(CSVReader.Read("MonsterTable", summonId.ToString(), "MonsterPrefabPath").ToString()), transform));
+        }
+    }
+
+    public void SpawnInit(int monsterId)
+    {
+        if (!spawner.ContainsKey(monsterId))
+        {
+            spawner.Add(monsterId, new ObjectPool<Monster>(ResourcesManager.Load<Monster>(CSVReader.Read("MonsterTable", monsterId.ToString(), "MonsterPrefabPath").ToString()), transform));
         }
     }
 
@@ -208,7 +228,7 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
             {
                 if (remainMonsters.Count == 0)
                 {
-                    DebugManager.Instance.PrintDebug("[SpawnerTest]: End");
+                    DebugManager.Instance.PrintDebug("[MonsterSpawner]: End");
                     yield break;  //더이상 스폰할 몬스터가 없을 경우 종료
                 }
             }

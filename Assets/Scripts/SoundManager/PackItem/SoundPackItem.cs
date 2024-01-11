@@ -8,5 +8,22 @@ public class SoundPackItem : PackItem
 {
     [SerializeField] public SoundSituation.SOUNDSITUATION SOUNDSITUATION;
 
-    [SerializeField] public AudioClip audioClip;
+   [SerializeField]
+    public AudioClip audioClip;
+    [SerializeField]
+    public AudioClip[] audioClipList;
+
+    public AudioClip targetClip
+    {
+        get {
+            if (audioClipList.Length != 0)
+            {
+                int rnd = Random.Range(0, audioClipList.Length);
+                if (audioClipList[rnd] !=null)
+                    return audioClipList[rnd];
+                else return audioClip;
+            }
+            else return audioClip;
+        }
+    }
 }

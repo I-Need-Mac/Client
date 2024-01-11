@@ -18,6 +18,7 @@ public class CutScenes : MonoBehaviour
     [SerializeField] private float animationSpeed = 0.01f;
     [SerializeField] private float animationTime = 2.5f;
 
+    private SoundRequesterSFX soundRequester;
     private RectTransform rect;
     private Image cutImage;
 
@@ -26,6 +27,7 @@ public class CutScenes : MonoBehaviour
     private void Awake()
     {
         rect = GetComponent<RectTransform>();
+        soundRequester = GetComponent<SoundRequesterSFX>();
         cutImage = GetComponent<Image>();
     }
 
@@ -49,6 +51,9 @@ public class CutScenes : MonoBehaviour
         rect.anchoredPosition = new Vector2(-Screen.width, rect.anchoredPosition.y);
         slow = true;
         Time.timeScale = 0.0f;
+        if(soundRequester != null) { 
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ACTIVE);
+        }
     }
 
     private IEnumerator CutScenesAnimation()
@@ -61,6 +66,10 @@ public class CutScenes : MonoBehaviour
                 WaitForSecondsRealtime blinkTime = new WaitForSecondsRealtime(animationSpeed);
                 float intervalTime = animationTime;
 
+                if (soundRequester != null)
+                {
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.INTERECT);
+                }
                 for (int i = 0; i < 3; i++)
                 {
                     cutImage.fillAmount = 0.0f;
@@ -71,6 +80,10 @@ public class CutScenes : MonoBehaviour
                 }
                 break;
             case CutSceneType.FADEOUT:
+                if (soundRequester != null)
+                {
+                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.INTERECT);
+                }
                 while (cutImage.fillAmount > 0)
                 {
                     cutImage.fillAmount -= Time.unscaledDeltaTime * animationSpeed;

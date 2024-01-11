@@ -16,9 +16,11 @@ public class Crypto
     //static Dictionary<string, CryptoRSA> _rsaManages = new Dictionary<string, CryptoRSA>();
     private string publicKeyPEM;
     private string privateKeyPEM;
+
     
     public Crypto() {
-        DebugManager.Instance.PrintDebug("[Crypto] Crypto Init");
+
+      
     }
 
     public void SetPublicKeyPEM(TextAsset pem) {

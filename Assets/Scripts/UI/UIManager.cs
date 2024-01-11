@@ -20,20 +20,24 @@ public class UIManager : MonoSingleton<UIManager>
         UI_ESCPopup,
         UI_MyInfo,
         UI_RankBoard,
+        UI_Loading,
 
         UI_StoryMain,
 
         UI_StoryBook,
         UI_SelectSorcerer,
         UI_SelectSorcererInfo,
+        UI_Sorcerer_Unlock_conditions,
         UI_Hon,
+        UI_Hon_Unlock_conditions,
         UI_Jusulso,
-
+        
         UI_Settings
     }
 
-    public int selectCharacterID;
+    public int selectCharacterID =0;
     public int selectStageID;
+    public List<UI_StageElement> stageList = new List<UI_StageElement>();
 
     GameObject uiCamera = null;
     GameObject uiCanvas = null;
@@ -49,7 +53,7 @@ public class UIManager : MonoSingleton<UIManager>
     List<UI_Popup> popupList = new List<UI_Popup>();
 
     // 실시간 팝업 목록
-    LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
+   public LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
 
     private void Update()
     {

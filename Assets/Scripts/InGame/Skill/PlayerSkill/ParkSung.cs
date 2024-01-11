@@ -1,4 +1,3 @@
-
 using SKILLCONSTANT;
 using System;
 using System.Collections;
@@ -9,46 +8,73 @@ using UnityEngine;
 public class ParkSung : ActiveSkill
 {
     private List<Projectile> projectiles = new List<Projectile>();
-    private List<Transform> allTargets = new List<Transform>();
-    private List<Transform> targets = new List<Transform>();
+    //private List<Transform> allTargets = new List<Transform>();
+    //private List<Transform> targets = new List<Transform>();
 
     public ParkSung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
     public override IEnumerator Activation()
     {
-        allTargets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
-        while (targets.Count<skillData.projectileCount)
+        List<Transform> targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
+
+        if (targets.Count <= 0)
         {
-            Transform target = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
-            if (!targets.Contains(target))
+            yield break;
+        }
+
+        float time = 0.5f;
+        for (int i = 0; i < Mathf.Min(skillData.projectileCount, targets.Count); i++)
+        {
+            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
+
+            if (targets[i].TryGetComponent(out Monster monster))
             {
-                targets.Add(target);
-                if (targets.Count>=allTargets.Count)
+                for (int j = 0; j < skillData.skillEffect.Count; j++)
                 {
-                    break;
+                    monster.SkillEffectActivation(skillData.skillEffect[j], float.Parse(skillData.skillEffectParam[j]));
+                    monster.Hit(skillData.damage);
+
+                    if (skillData.skillEffect[j] == SKILL_EFFECT.RESTRAINT)
+                    {
+                        time = float.Parse(skillData.skillEffectParam[j]);
+                    }
                 }
             }
+            
+            projectile.transform.position = targets[i].transform.position;
+            projectiles.Add(projectile);
+            yield return frame;
         }
-        
-        foreach (Transform target in targets)
+
+        yield return new WaitForSeconds(time);
+
+        foreach (Projectile projectile in projectiles)
         {
-            if (target != null)
-            {
-                Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
-                projectile.transform.position = target.position+new Vector3(0,0.3f,0);
-                if (target.TryGetComponent(out Monster monster))
-                {
-                    monster.SkillEffectActivation(skillData.skillEffect[0], float.Parse(skillData.skillEffectParam[0]));
-                }
-                projectiles.Add(projectile);
-            }
+            SkillManager.Instance.DeSpawnProjectile(projectile);
         }
-        Debug.Log("박승 발동");
-        yield return new WaitForSeconds(int.Parse(skillData.skillEffectParam[0]));
-        for(int i = 0; i< projectiles.Count; i++)
-        {
-            SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
-        }
+        projectiles.Clear();
+
+        //allTargets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
+        //for (int i = 0; i < Mathf.Min(skillData.projectileCount, allTargets.Count); i++)
+        //{
+        //    targets.Add(allTargets[i]);
+        //    Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
+        //    projectile.transform.position = targets[i].transform.position;
+        //    projectiles.Add(projectile);
+        //}
+        //foreach (Transform target in targets)
+        //{
+        //    if (target.TryGetComponent(out Monster monster))
+        //    {
+        //        monster.SkillEffectActivation(skillData.skillEffect[0], float.Parse(skillData.skillEffectParam[0]));
+        //        monster.Hit(skillData.damage);
+        //    }
+        //}
+        //yield return new WaitForSeconds(int.Parse(skillData.skillEffectParam[0]));
+        //for (int i = 0; i < projectiles.Count; i++)
+        //{
+        //    SkillManager.Instance.DeSpawnProjectile(projectiles[i]);
+        //    targets.Clear();
+        //}
     }
 
 }
-

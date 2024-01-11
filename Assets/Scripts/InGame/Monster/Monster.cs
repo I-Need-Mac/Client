@@ -5,6 +5,7 @@ using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -19,7 +20,7 @@ public class Monster : MonoBehaviour
     //private bool isSlow;
     private bool spineSwitch;
     private StatusEffect statusEffect;
-    private bool isPlayer;
+    private bool isFriendly;
     private BehaviorTreeManager btManager;
 
     private float weightX;
@@ -36,7 +37,7 @@ public class Monster : MonoBehaviour
     private SpineManager spineManager;
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
-
+    private int exState = 0;
     public int monsterId { get; set; }
     public bool isHit { get; set; }
     public bool isAttack { get; private set; }
@@ -86,6 +87,17 @@ public class Monster : MonoBehaviour
         weightY = Math.Abs(weightY);
     }
 
+    private void Update()
+    {
+        if (isFriendly)
+        {
+            if (target == null)
+            {
+                this.target = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, });
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         if (spineSwitch)
@@ -123,10 +135,10 @@ public class Monster : MonoBehaviour
         return monsterID;
     }
 
-    public void SetTarget(Transform target, bool isPlayer)
+    public void SetTarget(Transform target, bool isFriendly)
     {
         this.target = target;
-        this.isPlayer = isPlayer;
+        this.isFriendly = isFriendly;
     }
 
     public void MonsterDataSetting(string monsterId, float hpCoefficient, float attackCoefficient)
@@ -186,6 +198,8 @@ public class Monster : MonoBehaviour
                 return BoldAI();
             case AttackType.Shy:
                 return ShyAI();
+            case AttackType.FRIENDLY:
+                return FriendlyAI();
             default:
                 return null;
         }
@@ -238,6 +252,14 @@ public class Monster : MonoBehaviour
                     new ActionNode(Idle),
                 });
     }
+    
+    private Node FriendlyAI()
+    {
+        gameObject.layer = (int)LayerConstant.HIT;
+        this.SetTarget(Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, }), true);
+
+        return BoldAI();
+    }
     #endregion
 
     #region AI_Logic
@@ -248,6 +270,11 @@ public class Monster : MonoBehaviour
 
     private NodeConstant IsAttackable()
     {
+        if (target == null)
+        {
+            return NodeConstant.FAILURE;
+        }
+
         Vector2 diff = (target.position - transform.position).Abs();
         
         if ((diff.x <= weightX) && (diff.y <= weightY))
@@ -260,6 +287,11 @@ public class Monster : MonoBehaviour
     private NodeConstant Attack()
     {
         monsterRigidbody.velocity = Vector3.zero;
+        if (soundRequester != null) { 
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ATTACK);
+        }
+        exState = 2;
+            
         if (!isAttack)
         {
             spineManager.SetAnimation("Attack", false);
@@ -271,6 +303,11 @@ public class Monster : MonoBehaviour
 
     private NodeConstant IsVisible()
     {
+        if (target == null)
+        {
+            return NodeConstant.FAILURE;
+        }
+
         return (target.position - transform.position).magnitude <= monsterData.viewDistance ? NodeConstant.SUCCESS : NodeConstant.FAILURE;
     }
 
@@ -294,6 +331,12 @@ public class Monster : MonoBehaviour
         monsterDirection = diff.normalized;
         spineManager.SetDirection(transform, monsterDirection);
         monsterRigidbody.MovePosition(monsterRigidbody.position + (monsterDirection * monsterData.moveSpeed * Time.fixedDeltaTime));
+
+        if ((soundRequester != null && exState != 1) || (soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.RUN)))
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
+
+        exState = 1;
+
         return NodeConstant.RUNNING;
     }
 
@@ -307,6 +350,10 @@ public class Monster : MonoBehaviour
 
         isAttack = false;
         spineManager.SetAnimation("Idle", true);
+        if ((soundRequester != null && exState != 0) || (soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.IDLE)))
+            soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.IDLE);
+
+        exState = 0;
         return NodeConstant.SUCCESS;
     }
 
@@ -413,6 +460,15 @@ public class Monster : MonoBehaviour
         }
         yield return new WaitForSeconds(1.0f);
         MonsterSpawner.Instance.DeSpawnMonster(this);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Monster monster;
+        if (collision.gameObject.layer == (int)LayerConstant.HIT && (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster)))
+        {
+            Hit(monster.monsterData.attack);
+        }
     }
     #endregion
 

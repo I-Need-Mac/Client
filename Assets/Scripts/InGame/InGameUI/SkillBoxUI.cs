@@ -21,7 +21,15 @@ public class SkillBoxUI : MonoBehaviour
     {
         SkillBoxIcon boxIcon = (SkillBoxIcon)UIPoolManager.Instance.SpawnUI("SkillBoxIcon", icons[skillNum]);
         boxIcon.UiSetting(iconPath);
-        boxIcons.Add(skillNum, boxIcon);
+        
+        if (boxIcons.ContainsKey(skillNum))
+        {
+            boxIcons[skillNum] = boxIcon;
+        }
+        else
+        {
+            boxIcons.Add(skillNum, boxIcon);
+        }
     }
 
     public void DimmedColorChange(Color color)

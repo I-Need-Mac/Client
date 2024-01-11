@@ -97,8 +97,8 @@ public class PlayerManager : MonoBehaviour
 
         try
         {
-            int skillId = Convert.ToInt32(characterData["SkillID_01"]);
-            SkillManager.Instance.SkillAdd(skillId, player.transform, 0);
+            playerData.SetUltSkillId(Convert.ToInt32(characterData["SkillID_01"]));
+            SkillManager.Instance.SkillAdd(playerData.ultSkillId, player.transform, 0);
         }
         catch
         {
@@ -107,15 +107,13 @@ public class PlayerManager : MonoBehaviour
 
         try
         {
-            int skillId = Convert.ToInt32(characterData["SkillID_02"]);
-            SkillManager.Instance.SkillAdd(skillId, player.transform, 1);
+            playerData.SetBasicSkillId(Convert.ToInt32(characterData["SkillID_02"]));
+            SkillManager.Instance.SkillAdd(playerData.basicSkillId, player.transform, 1);
         }
         catch
         {
             DebugManager.Instance.PrintDebug("[ERROR]: 테이블에 유효한 데이터가 들어있는지 체크해주세요. (SkillID_02)");
         }
-        //int skillId2 = Convert.ToInt32(characterData["SkillID_02"]);
-        //SkillManager.Instance.SkillAdd(skillId2, player.transform, 1);
     }
 
     private void ConfigSetting()
@@ -126,6 +124,26 @@ public class PlayerManager : MonoBehaviour
     }
 
     //캐릭터에 스탯 부여
+    public void PlayerChange(Dictionary<string, object> characterData)
+    {
+        if (characterData == null)
+        {
+            //없는 캐릭터일 경우 에러메시지 송출
+            Debug.LogError("존재하지 않는 캐릭터입니다");
+            return;
+        }
+
+        playerData.SetHp(Convert.ToInt32(characterData["HP"]));
+        playerData.SetAttack(Convert.ToInt32(characterData["Attack"]));
+        playerData.SetCriRatio(Convert.ToInt32(characterData["CriRatio"]));
+        playerData.SetCriDamage(float.Parse(Convert.ToString(characterData["CriDamage"])));
+        playerData.SetCoolDown(Convert.ToInt32(characterData["CoolDown"]));
+        playerData.SetHpRegen(Convert.ToInt32(characterData["HPRegen"]));
+        playerData.SetProjectileAdd(Convert.ToInt32(characterData["ProjectileAdd"]));
+        playerData.SetMoveSpeed(float.Parse(Convert.ToString(characterData["MoveSpeed"])));
+        playerData.SetGetItemRange(float.Parse(Convert.ToString(characterData["GetItemRange"])));
+    }
+
     public void PlayerSetting(Dictionary<string, object> characterData)
     {
         if (characterData == null)
@@ -238,27 +256,8 @@ public class PlayerManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //if (collision.TryGetComponent(out Skill skill))
-        //{
-        //    //StartCoroutine(player.Invincible());
-        //    //playerData.CurrentHpModifier(-IsShield(/*스킬데미지*/));
-        //}
-        //else
-        //{
-        //    try
-        //    {
-        //        Monster monster = collision.GetComponentInParent<Monster>();
-        //        StartCoroutine(player.Invincible());
-        //        DebugManager.Instance.PrintDebug("[충돌테스트]: 윽!");
-        //        playerData.CurrentHpModifier((int)-IsHit(monster.monsterData.attack));
-        //    }
-        //    catch
-        //    {
-        //        DebugManager.Instance.PrintDebug("[충돌테스트]: 윽아님");
-        //    }
-        //}
         Monster monster;
-        if (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster))
+        if (collision.gameObject.layer == (int)LayerConstant.MONSTER && (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster)))
         {
             StartCoroutine(player.Invincible());
             playerData.CurrentHpModifier((int)-IsHit(monster.monsterData.attack));

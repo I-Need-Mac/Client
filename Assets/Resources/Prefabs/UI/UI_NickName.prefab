@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 2570895033676868231}
   - component: {fileID: 6367157221509341863}
   - component: {fileID: 8032415150591485055}
+  - component: {fileID: 712300529342049368}
   m_Layer: 5
   m_Name: Confirm
   m_TagString: Untagged
@@ -294,6 +295,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &712300529342049368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703831182157708285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerSettings: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 1
+    audioClip: {fileID: 8300000, guid: 9d40c6b897758e640a63215545182bce, type: 3}
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 3
+    audioClip: {fileID: 8300000, guid: 0c5b9ff408289424e9dd67394108e003, type: 3}
 --- !u!1 &1946299393822459686
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +411,6 @@ GameObject:
   - component: {fileID: 5953561876642392438}
   - component: {fileID: 3542003839762645459}
   - component: {fileID: 7028904047793038319}
-  - component: {fileID: 4932938952944036970}
   m_Layer: 5
   m_Name: UI_NickName
   m_TagString: Untagged
@@ -493,30 +517,6 @@ MonoBehaviour:
   ableText: {fileID: 6334804384745667203}
   confirmText: {fileID: 7697009372530855483}
   inputText: {fileID: 79557226699394801}
---- !u!114 &4932938952944036970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2317005941662447405}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakerSettings: []
-  soundPackItems:
-  - usingSpeaker: EFFECT
-    delay: 0
-    priority: 0
-    SOUNDSITUATION: 1
-    audioClip: {fileID: 8300000, guid: 9d40c6b897758e640a63215545182bce, type: 3}
-  - usingSpeaker: EFFECT
-    delay: 0
-    priority: 0
-    SOUNDSITUATION: 3
-    audioClip: {fileID: 8300000, guid: 0c5b9ff408289424e9dd67394108e003, type: 3}
 --- !u!1 &2773962405227533465
 GameObject:
   m_ObjectHideFlags: 0

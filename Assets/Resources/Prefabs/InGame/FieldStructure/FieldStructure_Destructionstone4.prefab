@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   structureId: 26401
-  type: 0
+  type: 2
 --- !u!114 &-7226944857126543488
 MonoBehaviour:
   m_ObjectHideFlags: 0

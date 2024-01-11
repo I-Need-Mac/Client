@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ public class UI_GameMain : UI_Popup
 
     void Start()
     {
+        GetStartData();
         Bind<GameObject>(typeof(GameObjects));
 
         Array objectValue = Enum.GetValues(typeof(GameObjects));
@@ -39,10 +41,26 @@ public class UI_GameMain : UI_Popup
         selectSorcererText.text = LocalizeManager.Instance.GetText("UI_SelectSorcerer");
         soulText.text = LocalizeManager.Instance.GetText("UI_Soul");
         sorcereText.text = LocalizeManager.Instance.GetText("UI_Sorcer");
+        UIManager.Instance.CloseUI<UI_StartMain>();
 
         SoundManager.Instance.RefindBGMRequester();
     }
+    private void Update()
+    {
+        OnPressKeyDown();
+    }
 
+    public void OnPressKeyDown()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!UIManager.Instance.IsUiPopup("UI_ESCPopup"))
+                UIManager.Instance.OpenUI<UI_ESCPopup>();
+            else
+                UIManager.Instance.CloseUI<UI_ESCPopup>();
+        }
+
+    }
     public void OnClickObject(PointerEventData data)
     {
         GameObjects imageValue = (GameObjects)FindEnumValue<GameObjects>(data.pointerClick.name);
@@ -68,5 +86,10 @@ public class UI_GameMain : UI_Popup
             default:
                 break;
         }
+    }
+    async void GetStartData()
+    {
+        if (!SteamManager.Initialized) { return; }
+        await APIManager.Instance.StartGame(UIStatus.Instance.steam_id, UIStatus.Instance.nickname);
     }
 }

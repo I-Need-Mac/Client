@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
     private StatusEffect statusEffect;
     private SoundRequester soundRequester;
     private AudioSource playerAudioSource;
-    
+    private AudioSource playerVoiceAudioSource;
+
     private const long VOICE = 15*1000;
 
     private int exState = 0;
@@ -26,6 +27,8 @@ public class Player : MonoBehaviour
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
 
+    [SerializeField]
+    public AudioClip[] startVoice;
     [SerializeField]
     public AudioClip[] randomVoice;
     [SerializeField]
@@ -64,6 +67,7 @@ public class Player : MonoBehaviour
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
         AudioSetting();
+        ShootPlayerVoice(startVoice,true);
         //hpBar.HpBarSwitch(true);
     }
 
@@ -76,7 +80,7 @@ public class Player : MonoBehaviour
     {
     
         KeyDir();
-        ShootPlayerVoice();
+        ShootPlayerVoice(randomVoice);
         hpBar.HpBarSetting(transform.position + hpBarPos, playerManager.playerData.currentHp, playerManager.playerData.hp);
     }
 
@@ -129,27 +133,36 @@ public class Player : MonoBehaviour
             if ((soundRequester != null && exState == 0)||(soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.RUN)))
                 soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
             
-         
-
-
             exState = 1;
         }
     }
 
-    private void ShootPlayerVoice()
+    private void ShootPlayerVoice(AudioClip[] audioClipList, bool ignore = false)
     {
         shootVoiceTimer++;
-        if (shootVoiceTimer == VOICE)
+
+        if (shootVoiceTimer == VOICE || ignore)
         {
             if (randomVoice.Length != 0)
-            {
+            {   
                 shootVoiceTimer=0;
-                int rnd = Random.Range(0, randomVoice.Length);
+                int rnd = Random.Range(0, audioClipList.Length);
                 DebugManager.Instance.PrintDebug("[SoundRequest] Player Shoot Sound " + rnd);
-                playerAudioSource.PlayOneShot(randomVoice[rnd]);
+                playerVoiceAudioSource.PlayOneShot(audioClipList[rnd]);
             }
         }
 
+
+    }
+    public void DiePlayerVoice()
+    {
+         if (dieVoice.Length != 0)
+            {
+
+                int rnd = Random.Range(0, dieVoice.Length);
+                DebugManager.Instance.PrintError("[SoundRequest] Player Shoot Die Sound " + rnd);
+                 playerVoiceAudioSource.PlayOneShot(dieVoice[rnd]);
+            }
 
     }
     #endregion
@@ -201,9 +214,20 @@ public class Player : MonoBehaviour
     #region Sound
     private void AudioSetting()
     {
-        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), "EFFECT_SOUND");
+        playerVoiceAudioSource = gameObject.AddComponent<AudioSource>();
+
+        SoundManager.Instance.AddAudioSource("Skill", GetComponent<AudioSource>(), SettingManager.EFFECT_SOUND);
+        SoundManager.Instance.AddAudioSource("PlayerVoice", playerVoiceAudioSource, SettingManager.VOCIE_SOUND);
+
+
         soundRequester = GetComponent<SoundRequesterSFX>();
         playerAudioSource = GetComponent<AudioSource>();
+
+        playerAudioSource.volume = SoundManager.Instance.GetSettingSound( SettingManager.EFFECT_SOUND);
+        playerVoiceAudioSource.volume = SoundManager.Instance.GetSettingSound(SettingManager.VOCIE_SOUND);
+
+
+
     }
     #endregion
 
@@ -263,14 +287,20 @@ public class Player : MonoBehaviour
         SkeletonDataAsset asset = spineManager.GetSkeletonDataAsset();
         spineManager.SetSkeletonDataAsset(ResourcesManager.Load<Player>(CSVReader.Read("CharacterTable", id.ToString(), "CharacterPrefabPath").ToString()).transform.Find("Character").GetComponent<SkeletonAnimation>().skeletonDataAsset);
         spineManager.SetAnimation("Idle", true);
-        playerManager.PlayerSetting(playerManager.FindCharacter(Convert.ToString(id)));
+        playerManager.PlayerChange(playerManager.FindCharacter(Convert.ToString(id)));
+
+        ActiveSkill prevSkill = (ActiveSkill)SkillManager.Instance.skillList[playerManager.playerData.basicSkillId];
+        int newSkillId = Convert.ToInt32(CSVReader.Read("CharacterTable", id.ToString(), "SkillID_02"));
+        SkillManager.Instance.SwapSkill(prevSkill.skillId, newSkillId);
 
         yield return new WaitForSeconds(time);
 
         statusEffect.RemoveStatusEffect(STATUS_EFFECT.TRANSITION);
         spineManager.SetSkeletonDataAsset(asset);
         spineManager.SetAnimation("Idle", true);
-        playerManager.PlayerSetting(playerManager.FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
+        playerManager.PlayerChange(playerManager.FindCharacter(Convert.ToString(GameManager.Instance.GetPlayerId())));
+
+        SkillManager.Instance.SwapSkill(newSkillId, prevSkill.skillId);
     }
 
     #endregion

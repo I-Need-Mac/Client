@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class ChyuRyung : ActiveSkill
@@ -113,7 +112,7 @@ public class ChyuRyung : ActiveSkill
     }
     private IEnumerator Despawn()
     {
-        if (pathList.Count > 20)
+        if (pathList.Count > skillData.duration*1000)
         {
             pathList.RemoveAt(0);
         }

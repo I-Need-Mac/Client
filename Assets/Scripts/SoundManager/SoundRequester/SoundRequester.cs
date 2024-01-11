@@ -15,8 +15,11 @@ public abstract class SoundRequester : MonoBehaviour
     protected Dictionary<string,AudioSource> audioSources = new Dictionary<string, AudioSource>();
     protected GameObject soundRequester;
     protected GameObject soundManager = SoundManager.Instance.GetSoundManagerGameObject();
-
-
+    protected SoundSituation.SOUNDSITUATION lastSoundSituation = SoundSituation.SOUNDSITUATION.NONE;
+    protected bool isBlockSituation = false;
+    
+    public bool isBlockAllSituation = false;
+    public float situationBlockTime = 1.0f;
 
 
 
@@ -111,5 +114,14 @@ public abstract class SoundRequester : MonoBehaviour
         return childTransform.gameObject;
     }
 
+    protected void BlockSituation() {
+        isBlockSituation = true;
+        StartCoroutine(UnlockBlockSituation());
+    }
+    protected IEnumerator UnlockBlockSituation()
+    {
+        yield return new WaitForSeconds(situationBlockTime);
+        isBlockSituation = false;
 
+    }
 }

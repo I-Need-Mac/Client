@@ -15,7 +15,6 @@ public class SunYang : ActiveSkill
     public override IEnumerator Activation()
     {
         projectiles = new Projectile[skillData.projectileCount];
-
     for (int i = 0; i < projectiles.Length; i++)
     {
         projectiles[i] = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
@@ -47,6 +46,8 @@ public class SunYang : ActiveSkill
     {
         Projectile projectile1 = projectiles[0];
         Projectile projectile2 = projectiles[1];
+        projectile1.transform.localScale = new Vector3(1.0f, projectile1.transform.localScale.y, projectile1.transform.localScale.z);
+        projectile2.transform.localScale = new Vector3(1.0f, projectile2.transform.localScale.y, projectile1.transform.localScale.z);
         float angle = 0.0f;
         float weight = 0.0f;
         float time = 0.0f;

@@ -13,7 +13,12 @@ public class UI_Main : MonoBehaviour
 
         // manager init
         UIManager.Instance.Init();
+
+
+
     }
+
+    // 해상도를 변경합니다
 
     void Start()
     {

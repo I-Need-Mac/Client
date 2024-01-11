@@ -10,6 +10,10 @@ public class SoundRequesterBtn : SoundRequesterSFX
     public void SetIsNagative(bool isNagative) { 
         this.isNagative = isNagative;
     }
+    public bool GetIsNagative()
+    {
+        return isNagative;
+    }
     private void OnMouseDown()
     {
         DebugManager.Instance.PrintDebug("SoundRequest : Press");

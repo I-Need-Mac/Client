@@ -100,72 +100,81 @@ TestStory8,,,
 TestStory9,,,
 UI_AgreeCheck,약관에 동의합니다.,Agree to terms,利用規約に同意します
 UI_Agreement,약관 동의,Agree to terms,利用規約同意
-UI_Attack,공격,Attack,攻撃
 UI_AutoLogin,자동으로 로그인하기,Stay logged in/Keep me signed in,自動ログイン
+UI_BGMSound,배경음,Music,環境音
 UI_ChapterSelect,{0}째장,Part {0},第{0}章
+UI_ClearTime,{0}:{1},{0}:{1},{0}:{1}
+UI_ClearTime_Text,클리어 타임 평균,Average Clear Time,クリアタイム平均
 UI_ConnectID,동의하고 계정 불러오기,log back into existing account,同意してアカウント接続
-UI_CoolDown,재사용 대기시간 감소,cooldown reduces,クールタイム短縮
-UI_CriRatio,치명타 확률,critical hit percentage,クリティカル率
 UI_CurrentStage,{0}번째장 {1}번째 이야기,chapter {0} of part {1},第{0}章　第{1}話
 UI_CustomerCenter,문의 및 후원,support/ contact us,サポート又はお問い合わせ
 UI_Email,team.theblackgames@gmail.com,team.theblackgames@gmail.com,team.theblackgames@gmail.com
 UI_Friend,친구,Friends,フレンド
 UI_GameOff,게임 종료,Exit,ゲーム終了
 UI_GetItemRange,성물 획득 범위,Item acquisition range,アイテム獲得範囲
-UI_HP,체력,Hit points,体力
 UI_HPRegen,초당 체력 회복,Regen per sec,秒間体力回復
+UI_Langauge,언어,Language,言語
+UI_Langauge_Eng,영어,English,英語
+UI_Langauge_JP,일본어,Japanese,日本語
+UI_Langauge_Kor,한국어,Korean,韓国語
 UI_Login,로그인,Sign in,ログイン
 UI_LoginWithSteam,스팀으로 로그인,Sign in with Steam account,Steamでログイン
 UI_MakeNickname,닉네임 생성,Create nickname,ニックネーム作成
-UI_MoveSpeed,이동 속도,Speed,移動速度
 UI_MyInfo,내 정보,My account,個人情報
 UI_OpenKakaoTalk,https://open.kakao.com/o/soKo5OBe,https://open.kakao.com/o/soKo5OBe,https://open.kakao.com/o/soKo5OBe
-UI_ProjectileAdd,투사체 증가,Projectile increase,
+UI_Rank_Character,주술사,,
+UI_Rank_Name,닉네임,,
+UI_Rank_Progress,진행도,,
+UI_Rank_Rank,순위,,
+UI_Rank_Time,시간,시간,
 UI_RankingBoard,랭킹보드,Ranking board,ランキングボード
+UI_Resolution,해상도,Resolution,解像度
+UI_Result_Confirm,확인,,
+UI_Result_Exit,나가기,,
+UI_Result_GetItem,이번 획득 보상,,
+UI_Save,저장,Save,セーブ
+UI_ScreenType,화면,Screen,画面
+UI_ScreenType_Full,전체 화면,Full Screen,フルスクリーン
+UI_ScreenType_FullWindow,테두리 없는 창,Borderless Windowed,枠なしウィンドウ
+UI_ScreenType_Window,창 화면,Windowed,ウィンドウ画面
 UI_SelectSorcerer,주술사 선택,Sorcerer select,呪術者選択
 UI_Setting,설정,Settings,設定
-UI_Shield,보호막,Shield,シールド
+UI_SFXSound,효과음,SFX,効果音
+UI_Shake,흔들림,Shake,バイブレーション
 UI_Skill,스킬,Skills,スキル
 UI_Sorcer,주술소,,
+UI_Sorcere_AllBox,전체 상자,,
+UI_Sorcere_MyBoxes,보유 상자,,
+UI_Sorcere_ReadyToOpen,터치하여 해금,,
+UI_Sorcere_Timer,남은 시간 :,,
+UI_Sorcere_Title,주술소,,
 UI_Soul,혼,Soul,魂
+UI_Soul_Title,혼,,
+UI_Soul_UnlockCondition,해금 조건,S,
 UI_SoulSettings,혼 설정,Soul Settings,魂設定
 UI_StageList,{0}번째 이야기,Chapter {0},第{0}話
 UI_Start,시작하기,Start,開始
 UI_Stat,능력치,Status,能力値
+UI_Stat_Attack,공격,Attack,攻撃
+UI_Stat_CriRatio,치명타 확률,critical hit percentage,クリティカル率
+UI_Stat_CriDmgRatio,치명타 피해 증가률,Critcal Damage Rate,
+UI_Stat_HP,체력,Hit points,体力
+UI_Stat_MoveSpeed,이동 속도,Speed,移動速度
+UI_Stat_ItemRange,성물 획득 범위,Item Range,
+UI_Stat_ProjectileAdd,투사체 증가,Projectile increase,
+UI_Stat_Shield,보호막,Shield,シールド
+UI_Stat_CoolDown,재사용 대기시간 감소,cooldown reduces,クールタイム短縮
 UI_Story,이야기,Story,ストーリー
 UI_StoryMode,이야기 모드,story mode,ストーリーモード
-Unlock_Percent_Text,해금 진행도,progress,解放進行度
-UI_ClearTime_Text,클리어 타임 평균,Average Clear Time,クリアタイム平均
-UI_ClearTime,{0}:{1},{0}:{1},{0}:{1}
-UI_BGMSound,배경음,Music,環境音
-UI_SFXSound,효과음,SFX,効果音
 UI_VoiceSound,음성,Voice,音声
-UI_Langauge,언어,Language,言語
-UI_Langauge_Kor,한국어,Korean,韓国語
-UI_Langauge_Eng,영어,English,英語
-UI_Langauge_JP,일본어,Japanese,日本語
-UI_Resolution,해상도,Resolution,解像度
-UI_ScreenType,화면,Screen,画面
-UI_ScreenType_Window,창 화면,Windowed,ウィンドウ画面
-UI_ScreenType_Full,전체 화면,Full Screen,フルスクリーン
-UI_ScreenType_FullWindow,테두리 없는 창,Borderless Windowed,枠なしウィンドウ
-UI_Shake,흔들림,Shake,バイブレーション
-UI_Save,저장,Save,セーブ
-UI_Rank_Rank,순위,,
-UI_Rank_Name,닉네임,,
-UI_Rank_Progress,진행도,,
-UI_Rank_Character,주술사,,
-UI_Rank_Time,시간,시간,
-UI_Soul_Title,혼,,
-UI_Soul_UnlockCondition,해금 조건,S,
-UI_Sorcere_Title,주술소,,
-UI_Sorcere_AllBox,전체 상자,,
-UI_Sorcere_MyBoxes,보유 상자,,
-UI_Sorcere_Timer,남은 시간 :,,
-UI_Sorcere_ReadyToOpen,터치하여 해금,,
-UI_Result_GetItem,이번 획득 보상,,
-UI_Result_Exit,나가기,,
-UI_Result_Confirm,확인,,
+UI_TotalSound,전체 음량,Total Sound,全音量
+UI_CutSceneSkip,컷씬 스킵,Skip CutScene,カットシーン·スキップ
+UI_Warning,※ 언어 변경 후 저장 시 자동으로 게임이 종료됩니다.\n※ 해상도 변경 시 재시작하면 깔끔하게 적용됩니다. ,"※ If you change the language and save it, the game will automatically end.\n※ Reboot when you change the resolution and it will be applied neatly.",※ 言語変更後、保存すると自動的にゲームが終了します。\n※ 解像度変更時に再起動するとすっきり適用されます。
+UI_BuySorcerer,주술사는 상자에서 뽑거나 열쇠로 구매할 수 있습니다.\n열쇠 {0}개를 소모하여 {1}를(을) 구매하시겠습니까?,,
+UI_Buy,구매,,
+UI_Cancle,취소,,
+UI_NotEnough,보유한 열쇠가 부족합니다.,,
+Unlock_Percent_Text,해금 진행도,progress,解放進行度
 Skill_Name_Juhon,주혼참회도,,㣙昏懺意刀
 Skill_Name_Bujung,부정추술,,錇正追術
 Skill_Name_GangSin,강신,Gangsin,降神
@@ -228,14 +237,14 @@ Prolog_Line15,빛과 어둠이 하나가 되어 새로운 혼돈이 탄생할 �
 Prolog_Line16,그 곳에는 새로운 희망이 싹틀 것이니.,,
 Chapter1_Header,첫,1st,一
 Chapter_Footer,째장,Jang,番目 チャプター
-Stage1_Header,1,1st,一
-Stage2_Header,2,2nd,二
-Stage3_Header,3,3rd,三
-Stage4_Header,4,4th,四
-Stage5_Header,5,5th,五
-Stage6_Header,6,6th,六
-Stage7_Header,7,7th,七
-Stage8_Header,8,8th,八
+Stage1_Header,첫,1st,一
+Stage2_Header,두,2nd,二
+Stage3_Header,세,3rd,三
+Stage4_Header,넷,4th,四
+Stage5_Header,다섯,5th,五
+Stage6_Header,여섯,6th,六
+Stage7_Header,일곱,7th,七
+Stage8_Header,여덟,8th,八
 Stage_Footer,번째 이야기,Story of {0},番目話
 Skill_Desc_Juhon_01,본인의 일정거리 주변을 광역으로 원형으로의 적을 여러 번 벱니다.,,
 Skill_Desc_Juhon_02,피해량이 소량 추가됩니다.,the amount of damages will be slightly added,
@@ -752,3 +761,13 @@ Soul_Description_Soul_5_5_3,실드 1회,,
 Soul_Description_Soul_5_6_1,방어력 소폭 증가,,
 Soul_Description_Soul_5_6_2,체력 소폭 증가,,
 Soul_Description_Soul_5_6_3,체력 재생 소량 추가,,
+Story_Blank, ,,
+Story_Chapter01_Before_0001,"서울의 심장부, 그 지하에서는 무언가 악몽 같은 장면이 펼쳐지고 있었다. 어둠이 가득한 이곳, 지하 대공동에서는 인간과는 도저히 상상할 수 없는 존재들이 모여 어두운 의식을 진행하고 있었다. 그들의 모습은 인간과는 거리가 멀었으며, 그들의 눈동자에서는 악의가 번뜩이고 있었다.\n\n제단 주변은 공포에 떨며 울부짖는 사람들로 가득 차 있었다. 그들의 눈에서는 절망과 고통이 넘쳐흘렀다. 그들의 몸은 체인으로 묶여 있었고, 그 체인은 제단의 중앙으로 이어져 있었다. 제단 위에서는 불길이 타오르고 있었으며, 그 불길 위로는 검은 연기가 솟아오르며 어둠 속으로 사라지고 있었다.",,
+Story_Chapter01_Before_0002,"제사장처럼 보이는 요괴는 손을 휘저으며 다른 요괴들에게 명령을 내렸다. 그 요괴들은 체인을 끌며 사람들을 제단 가까이로 끌고 갔다. 그리고 그들은 무언가를 외치며 손을 제단 위로 들었다. 그 순간, 사람들의 몸이 녹아내리기 시작했다. 그들의 비명은 지하 공간을 메우며 메아리쳤다.\n\n“살려주세요 제발..”\n그러나 그 비명은 지하의 어둠 속으로 사라져버렸다. 그들의 몸은 완전히 녹아내려 제단 위에 모여 하나의 형태를 이루기 시작했다. 그 형태는 점점 커져가며, 끔찍한 존재로 변모되었다.",,
+Story_Chapter01_Before_0003,"그러나 그 비명은 지하의 어둠 속으로 사라져버렸다. 그들의 몸은 완전히 녹아내려 제단 위에 모여 하나의 형태를 이루기 시작했다. 그 형태는 점점 커져가며, 끔찍한 존재로 변모되었다.\n\n제단 주변의 공기는 무거워졌고, 그 무거운 공기 속에서도 요괴들의 웃음소리가 들려왔다. 그들은 인간들의 고통과 절망에서 즐거움을 느끼고 있었다. 그들의 눈빛은 사악하고, 그들의 웃음소리는 지하 공간을 가득 채웠다.\n\n제단 주변의 공기는 무거워졌고, 그 무거운 공기 속에서도 요괴들의 웃음소리가 들려왔다. 그들은 인간들의 고통과 절망에서 즐거움을 느끼고 있었다. 그들의 눈빛은 사악하고, 그들의 웃음소리는 지하 공간을 가득 채웠다.",,
+Story_Chapter01_Before_0004,"“인간들이여, 너희들의 저항은 허망한 것이다. 너희들의 영혼은 우리의 아버지의 육신이 되어, 이 세계에 새로운 달의 문을 열 것이다!”\n\n요괴들은 사람들을 더욱더 고문하며, 그들의 영혼을 끌어내려 그 존재를 더욱 강력하게 만들었다. 사람들은 더 이상 비명조차 지르지 못하고, 그저 무력하게 눈물을 흘리며 고통에 몸부림쳤다.",,
+Story_Chapter01_Before_0005,"그 모습을 멀리서 지켜보던 한 그룹의 퇴마사들은 분노와 슬픔에 가슴이 뜨거워졌다. 그들은 그 모습을 보며 손을 물어댔고, 눈물이 흘렀다. 그들은 이곳에 들어오기 전부터 이런 잔혹한 행위가 일어나고 있을 것을 알고 있었다. 그러나 그들은 명령에 따라 행동해야 했고, 그 명령이 내려오지 않는 한 그들은 손을 댈 수 없었다.\n\n한 퇴마사는 나서지 못하는 자신을 보며 분노와 슬픔으로 가득 차 있었다. 그러나 그는 깊게 숨을 들이마시며, 자신에게 다시 한 번 되뇌였다.\n\n그의 눈에는 눈물이 괸차 있었지만, 그는 그 눈물을 떨쳤다. 그의 마음속에는 결심이 굳어졌고, 그는 그 결심을 품고 조용히 기다렸다. 그의 심장은 빠르게 뛰고 있었지만, 그는 그 두려움을 깊이 내면에 묻어버렸다. 그는 앞으로의 전투를 위해, 그리고 더 많은 생명을 구하기 위해, 지금의 그의 작은 인내가 필요했다.",,
+Story_Chapter01_Before_0006,"그 퇴마사는 숨을 깊게 들이마시며 주변을 둘러보았다. 지하의 어둠 속에서는 요괴들의 웃음소리와 인간들의 비명이 교차하며 메아리쳤다. 그러나 그 소리 사이에서도, 그는 동료 퇴마사들의 숨소리와 기도의 속삭임을 들을 수 있었다. 그들 모두가 각자의 방식으로 이 상황을 견디고 있었다.\n\n그는 발 밑의 차가운 바닥을 느끼며, 자신의 심장 박동을 조절하려 노력했다. 그의 손에는 그의 무기가 꽉 쥐어져 있었고, 그 무기는 그의 의지와 함께 빛나고 있었다.\n‘이곳에서의 전투는 시작되지 않았다. 아직 시작되지 않았다.’ 그는 속으로 되뇌였다. 그의 눈에는 결의가 깃들어 있었고, 그 결의는 그를 더욱 강하게 만들었다.",,
+Story_Chapter01_Before_0007,"그는 동료들의 눈빛을 하나씩 확인하며, 그들과의 연결을 느꼈다. 그들 모두가 하나의 목표를 향해 나아가고 있었다. 그 목표는 이 지하의 악의 세력을 무찌르고, 인간들을 구하는 것이었다.\n그러던 중, 그의 귀에 예상한 소리가 들려왔다. 그 소리는 높은 천장까지 울려 퍼져, 지하의 어둠을 한 순간, 눈이 멀 정도로 밝게 비추었다.\n신관들의 작전이었다. 그들은 요괴들의 주의를 딴 데로 돌리기 위한 미끼 작전을 세워, 이곳의 압도적인 악의 힘을 약간이나마 분산시키려 했다. 그리고 그 미끼 작전이 성공한 것이다.",,
+Story_Chapter01_Before_0008,"퇴마사들은 이 기회를 틈타, 신속하게 포지션을 잡았다. 그들의 눈빛은 더 이상 망설임이 없었다. 이제, 그들을 구축하기 위해 여기에 왔다. 그리고 그들은 그 목표를 이루기 위해, 자신들의 모든 것을 걸 준비가 되어 있었다.\n""이제 시작이다,"" 퇴마사의 대장이 속삭였다.\n그의 목소리는 작지만, 그의 의지는 단단했다. 그리고 그의 말과 동시에, 퇴마사들은 한 명씩, 그들의 위치에서 나타났다. 그들은 그들의 무기를 들고, 그들의 주력을 불러, 그들은 앞으로 나아갔다.",,
+Story_Chapter01_Before_0009,"이제, 이 지하 세계는 그들의 전장이 되었다. 그리고 그들은 이 전장에서, 그들의 의지와 힘으로 승리를 가져올 것이다.",,

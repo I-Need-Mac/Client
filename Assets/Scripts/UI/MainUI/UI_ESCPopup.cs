@@ -72,6 +72,7 @@ public class UI_ESCPopup : UI_Popup
             case GameObjects.Friend:
                 break;
             case GameObjects.Setting:
+                UIManager.Instance.OpenUI<UI_Settings>();
                 break;
             case GameObjects.GameQuit:
                 Application.Quit();

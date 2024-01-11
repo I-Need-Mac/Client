@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -44,18 +45,18 @@ public class UI_Page : UI_Popup
     struct TextType
     {
         [SerializeField]
-        public Text topText;
+        public TextMeshProUGUI topText;
         [SerializeField]
-        public Text middleText;
+        public TextMeshProUGUI middleText;
         [SerializeField]
-        public Text bottomText;
+        public TextMeshProUGUI bottomText;
     }
 
     [System.Serializable]
     struct PictureTextType
     {
         [SerializeField]
-        public Text text;
+        public TextMeshProUGUI text;
         [SerializeField]
         public Image picture;
     }
@@ -72,12 +73,34 @@ public class UI_Page : UI_Popup
     PictureTextType pictureTextBottom;
 
     PageType type = PageType.Text;
+    
+    public bool isFinished =false;
     public PageType TYPE { get { return type; } }
 
-    Queue<string> textTypeScript = new Queue<string>();
 
-    public void SetData(int id, List<object> data)
+    private FadeInImage topFade;
+    private FadeInImage bottomFade;
+    private TypeMeshProComponent topText;
+    private TypeMeshProComponent middleText;
+    private TypeMeshProComponent bottomText;
+    private TypeMeshProComponent pictureTopText;
+    private TypeMeshProComponent pictureBottomText;
+
+    List<string> textTypeScript = new List<string>();
+    UI_StoryBook  storyBook;
+
+    public void SetData(int id, List<object> data, UI_StoryBook parent)
     {
+        storyBook = parent;
+        topFade = pictureTextTop.picture.GetComponent<FadeInImage>();
+        bottomFade = pictureTextBottom.picture.GetComponent<FadeInImage>();
+
+        topText = text.topText.GetComponent<TypeMeshProComponent>();
+        middleText = text.middleText.GetComponent<TypeMeshProComponent>();
+        bottomText = text.bottomText.GetComponent<TypeMeshProComponent>();
+        pictureTopText = pictureTextTop.text.GetComponent<TypeMeshProComponent>();
+        pictureBottomText = pictureTextBottom.text.GetComponent<TypeMeshProComponent>();
+
         // 페이지 타입별로 페이지 구성을 해줍니다.
         string typeName = data[(int)PageTableInfo.PageType].ToString();
         string[] pageTypes = Enum.GetNames(typeof(PageType));
@@ -102,9 +125,13 @@ public class UI_Page : UI_Popup
         {   // 텍스트 타입
             type = PageType.Text;
 
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox2].ToString());
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox3].ToString());
+            textTypeScript.Add(LocalizeManager.Instance.GetText(data[(int)PageTableInfo.TextBox1].ToString()));
+            textTypeScript.Add(LocalizeManager.Instance.GetText(data[(int)PageTableInfo.TextBox2].ToString()));
+            textTypeScript.Add(LocalizeManager.Instance.GetText(data[(int)PageTableInfo.TextBox3].ToString()));
+
+            topText.SetTextToType(textTypeScript[0]);
+            middleText.SetTextToType(textTypeScript[1]);
+            bottomText.SetTextToType(textTypeScript[2]);
 
             text.topText.text = null;
             text.middleText.text = null;
@@ -120,21 +147,23 @@ public class UI_Page : UI_Popup
         {   // 텍스트-이미지 타입
             type = PageType.PictureTextTop;
 
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
+            textTypeScript.Add(LocalizeManager.Instance.GetText(data[(int)PageTableInfo.TextBox1].ToString()));
             //pictureTextTop.text.text = data[(int)PageTableInfo.TextBox1].ToString();
-            
-            string path = $"{Define.UiCharacterPath}/" + data[(int)PageTableInfo.ImagePath].ToString();
-            pictureTextTop.picture.sprite = Resources.Load<Sprite>(path);
+            pictureTopText.SetTextToType(textTypeScript[0]);
+
+            string path = data[(int)PageTableInfo.ImagePath].ToString();
+            pictureTextTop.picture.sprite = ResourcesManager.Load<Sprite>(path);
         }
         else if (typeName == pageTypes[(int)PageType.PictureTextBottom])
         {   // 이미지-텍스트 타입
             type = PageType.PictureTextBottom;
 
-            textTypeScript.Enqueue(data[(int)PageTableInfo.TextBox1].ToString());
+            textTypeScript.Add(LocalizeManager.Instance.GetText(data[(int)PageTableInfo.TextBox1].ToString()));
             //pictureTextBottom.text.text = data[(int)PageTableInfo.TextBox1].ToString();
+            pictureBottomText.SetTextToType(textTypeScript[0]);
 
-            string path = $"{Define.UiCharacterPath}/" + data[(int)PageTableInfo.ImagePath].ToString();
-            pictureTextBottom.picture.sprite = Resources.Load<Sprite>(path);
+            string path = data[(int)PageTableInfo.ImagePath].ToString();
+            pictureTextBottom.picture.sprite = ResourcesManager.Load<Sprite>(path);
         }
         else
         {
@@ -150,6 +179,9 @@ public class UI_Page : UI_Popup
 
         pictureTextTop.text.text = null;
         pictureTextBottom.text.text = null;
+
+        pictureTextTop.picture.GetComponent<FadeInImage>().SetFadeOut();
+        pictureTextBottom.picture.GetComponent<FadeInImage>().SetFadeOut();
     }
 
     public void ActivePage()
@@ -159,17 +191,28 @@ public class UI_Page : UI_Popup
         switch (type)
         {
             case PageType.Text:
-                text.topText.TypeText(textTypeScript.Peek(), onComplete:
-                    () => text.middleText.TypeText(textTypeScript.Peek(), onComplete:
-                    () => text.bottomText.TypeText(textTypeScript.Peek(), onComplete: () => Debug.Log("Text Complete"))));
+                topText.TypeText(textTypeScript[0], onComplete:
+                    () => middleText.TypeText(textTypeScript[1], onComplete:
+                    () => bottomText.TypeText(textTypeScript[2], onComplete: () => storyBook.NextPage())));
+                isFinished = true;
+                Debug.Log("Text Complete");
                 break;
             case PageType.Picture:
                 break;
             case PageType.PictureTextTop:
-                pictureTextTop.text.TypeText(textTypeScript.Peek(), onComplete: () => Debug.Log("PictureTextTop Text Complete"));
+
+                pictureTopText.TypeText(textTypeScript[0], onComplete: 
+                    () => topFade.StartFadeIn(onComplete: 
+                    () =>storyBook.NextPage()));
+                isFinished = true;
+                Debug.Log("PictureTextTop Text Complete");
                 break;
             case PageType.PictureTextBottom:
-                pictureTextBottom.text.TypeText(textTypeScript.Peek(), onComplete: () => Debug.Log("PictureTextBottom Text Complete"));
+                bottomFade.StartFadeIn(onComplete:
+                    ()=>pictureBottomText.TypeText(textTypeScript[0], onComplete:
+                    () => storyBook.NextPage()));
+                isFinished = true;
+                Debug.Log("PictureTextBottom Text Complete");
                 break;
             default:
                 break;
@@ -185,23 +228,32 @@ public class UI_Page : UI_Popup
             case PageType.Text:
                 if (isPageSkip)
                 {   // 한 쪽을 스킵합니다.
-                    text.topText.SkipTypeText();
-                    text.middleText.SkipTypeText();
-                    text.bottomText.SkipTypeText();
+                    topText.SkipTypeText();
+                    middleText.SkipTypeText();
+                    bottomText.SkipTypeText();
+
+                    topText.ShowText();
+                    middleText.ShowText();
+                    bottomText.ShowText();
+
+                    
                 }
                 else
                 {   // 한 문단을 스킵합니다.
-                    if (text.topText.IsSkippable())
+                    if (topText.IsSkippable())
                     {
-                        text.topText.SkipTypeText();
+                        topText.SkipTypeText();
+                        topText.ShowText();
                     }
-                    else if (text.middleText.IsSkippable())
+                    else if (middleText.IsSkippable())
                     {
-                        text.middleText.SkipTypeText();
+                        middleText.SkipTypeText();
+                        middleText.ShowText();
                     }
-                    else if (text.bottomText.IsSkippable())
+                    else if (bottomText.IsSkippable())
                     {
-                        text.bottomText.SkipTypeText();
+                        bottomText.SkipTypeText();
+                        bottomText.ShowText();
                         isLast = true;
                     }
                 }
@@ -210,16 +262,23 @@ public class UI_Page : UI_Popup
                 isLast = true;
                 break;
             case PageType.PictureTextTop:
-                pictureTextTop.text.SkipTypeText();
+                pictureTopText.SkipTypeText();
+                pictureTopText.ShowText();
+                topFade.SkipFade();
+                topFade.SetFadeIn();
                 isLast = true;
                 break;
             case PageType.PictureTextBottom:
-                pictureTextBottom.text.SkipTypeText();
+                pictureBottomText.SkipTypeText();
+                pictureBottomText.ShowText();
+                bottomFade.SkipFade();
+                bottomFade.SetFadeIn();
                 isLast = true;
                 break;
             default:
                 break;
         }
+        isFinished = true;
     }
 
     public bool IsPageSkippable()
@@ -228,20 +287,20 @@ public class UI_Page : UI_Popup
         {
             case PageType.Text:
                 // 스킵할게 없습니다.
-                if (!text.topText.IsSkippable() && !text.middleText.IsSkippable() 
-                    && !text.bottomText.IsSkippable())
+                if (!topText.IsSkippable() && !middleText.IsSkippable() 
+                    && !bottomText.IsSkippable())
                     return false;
 
                 break;
             case PageType.Picture:
                 break;
             case PageType.PictureTextTop:
-                if (!pictureTextTop.text.IsSkippable())
+                if (!pictureTopText.IsSkippable()&& topFade.IsSkippable())
                     return false;
                 
                 break;
             case PageType.PictureTextBottom:
-                if (!pictureTextBottom.text.IsSkippable())
+                if (!pictureBottomText.IsSkippable() && bottomFade.IsSkippable())
                     return false;
 
                 break;

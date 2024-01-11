@@ -32,11 +32,7 @@ public class UI_StoryBook : UI_Popup
     {
         PreArrow,
         NextArrow,
-
-        ContentSkip,
-        PageSkip,
-
-        Close
+        ContentSkip
     }
 
     enum Images
@@ -52,11 +48,20 @@ public class UI_StoryBook : UI_Popup
     Text pageText;
     [SerializeField]
     Image background;
+    [SerializeField]
+    Image preBtn;
+    [SerializeField]
+    Image nextBtn;
+    [SerializeField]
+    GameObject pageBox;
+
+
 
     List<UI_Page> pageList = new List<UI_Page>();
     int totalPage = 0;
     int currentPage = 0;
     int skipPage = 0;
+    bool check = false;
 
     StoryBookID bookId = 0;
 
@@ -66,11 +71,12 @@ public class UI_StoryBook : UI_Popup
         Array buttonValue = Enum.GetValues(typeof(Buttons));
 
         // 버튼 이벤트 등록
-        for(int i = 0; i < buttonValue.Length; i++)
+        for (int i = 0; i < buttonValue.Length; i++)
         {
             BindUIEvent(GetButton(i).gameObject, (PointerEventData data) => { OnClickButton(data); }, Define.UIEvent.Click);
         }
-
+        preBtn.gameObject.SetActive(false);
+        nextBtn.gameObject.SetActive(false);
         currentPage = 0;
     }
 
@@ -80,7 +86,7 @@ public class UI_StoryBook : UI_Popup
         bookId = id;
         Dictionary<int, List<object>> pageInfo = UIData.PageTableData[(int)id];
         totalPage = pageInfo.Count;
-        
+
         int pagePos = PAGE_RECT_POSITION * -1;
         int index = 0;
         foreach (KeyValuePair<int, List<object>> pair in pageInfo)
@@ -89,9 +95,8 @@ public class UI_StoryBook : UI_Popup
             UI_Page page = Util.UILoad<UI_Page>($"{Define.UiPrefabsPath}/UI_Page");
 
             // 씬에 올립니다.
-            UI_Page instPage = GameObject.Instantiate<UI_Page>(page);
-            // 페이지 데이터 셋팅
-            instPage.SetData(pair.Key, pair.Value);
+            UI_Page instPage = GameObject.Instantiate<UI_Page>(page);       // 페이지 데이터 셋팅
+            instPage.SetData(pair.Key, pair.Value, this);
 
             GameObject go = instPage.gameObject;
 
@@ -100,7 +105,7 @@ public class UI_StoryBook : UI_Popup
             go.name = reName + "_" + index++;
 
             // 책 하위에 위치
-            go.transform.SetParent(this.transform);
+            go.transform.SetParent(pageBox.transform);
 
             // 초기화시 활성은 꺼주도록 합니다.
             go.SetActive(false);
@@ -115,45 +120,49 @@ public class UI_StoryBook : UI_Popup
             // 리스트에 추가
             pageList.Add(instPage);
         }
-        
+
         // 1페이지로 셋팅
-        ActivePage(0);
+        ActivePage(currentPage);
     }
 
     // 페이지를 활성화 합니다.
     void ActivePage(int page)
     {
+
         if (page >= totalPage)
         {
             currentPage = totalPage;
             return;
         }
-
-        if(page < 0)
+        else if (page < 0)
         {
             currentPage = 0;
             return;
         }
 
+
         // 전체 비활성
-        for( int i = 0; i < pageList.Count; i++ )
+        for (int i = 0; i < pageList.Count; i++)
         {
             pageList[i].gameObject.SetActive(false);
         }
 
         // 해당 페이지만 활성
         pageList[page].gameObject.SetActive(true);
-        pageList[page + 1].gameObject.SetActive(true);
+        if (page + 1 < totalPage)
+            pageList[page + 1].gameObject.SetActive(true);
 
-        if(pageList[page].TYPE == UI_Page.PageType.Picture)
+        if (pageList[page].TYPE == UI_Page.PageType.Picture)
         {
-            pageList[page + 1].ActivePage();
+            if (page + 1 < totalPage)
+                pageList[page + 1].ActivePage();
             skipPage = page + 1;
         }
         else
         {
             pageList[page].ActivePage();
-            pageList[page + 1].ClearPage();
+            if (page + 1 < totalPage)
+                pageList[page + 1].ClearPage();
             skipPage = page;
         }
 
@@ -173,20 +182,55 @@ public class UI_StoryBook : UI_Popup
         switch (buttonValue)
         {
             case Buttons.PreArrow:
-                ActivePage(currentPage - PAGE_UNIT);
+                if (!preBtn.GetComponent<FadeInImage>().isFadeOut())
+                {
+                    preBtn.GetComponent<FadeInImage>().StartFadeOut(onComplete: () => preBtn.gameObject.SetActive(false));
+                    nextBtn.GetComponent<FadeInImage>().StartFadeOut(onComplete: () => preBtn.gameObject.SetActive(false));
+
+                    currentPage = (currentPage - 4);
+                    DebugManager.Instance.PrintDebug("[Story] Move to Page -> " + currentPage);
+                    ActivePage(currentPage);
+                }
                 break;
             case Buttons.NextArrow:
-                if (currentPage >= totalPage)
+                if (!nextBtn.GetComponent<FadeInImage>().isFadeOut())
                 {
-                    SceneManager.LoadScene("BattleScene");
-                }
+                    preBtn.GetComponent<FadeInImage>().StartFadeOut(onComplete: () => preBtn.gameObject.SetActive(false));
+                    nextBtn.GetComponent<FadeInImage>().StartFadeOut(onComplete: () => preBtn.gameObject.SetActive(false));
 
-                ActivePage(currentPage + PAGE_UNIT);
-                
+                    if (currentPage >= totalPage)
+                    {
+                        UIManager.Instance.CloseUI<UI_StoryBook>();
+                        UIManager.Instance.OpenUI<UI_Loading>();
+                        SceneManager.LoadScene("BattleScene");
+                    }
+
+                    if (currentPage % 2 == 0)
+                    {
+                        ActivePage(currentPage);
+                    }
+                    else
+                    {
+                        pageList[currentPage].ActivePage();
+                        pageText.text = (currentPage) + "/" + (PAGE_UNIT);
+                    }
+                }
                 break;
             case Buttons.ContentSkip:
-                {
-                    // 한 문단 스킵
+                UIManager.Instance.CloseUI<UI_StoryBook>();
+                UIManager.Instance.OpenUI<UI_Loading>();
+                SceneManager.LoadScene("BattleScene");
+
+                break;
+            /*
+        case Buttons.PageSkip:
+            {
+                // 한쪽 스킵
+                bool isLast = false;
+                pageList[currentPage].SkipPage(out isLast, true);
+                pageList[currentPage + 1].SkipPage(out isLast, true);
+            }
+               // 한 문단 스킵
                     bool isLast = false;
                     if (pageList[skipPage].IsPageSkippable())
                     {
@@ -214,29 +258,36 @@ public class UI_StoryBook : UI_Popup
                     }
                     else
                     {
-                        if(pageList[skipPage].TYPE == UI_Page.PageType.Picture)
+                        if (pageList[skipPage].TYPE == UI_Page.PageType.Picture)
                         {
 
                         }
                         ActivePage(currentPage + PAGE_UNIT);
                     }
-                }
+            break;*/
 
-                break;
-            case Buttons.PageSkip:
-                {
-                    // 한쪽 스킵
-                    bool isLast = false;
-                    pageList[currentPage].SkipPage(out isLast, true);
-                    pageList[currentPage + 1].SkipPage(out isLast, true);
-                }
-                
-                break;
-            case Buttons.Close:
-                UIManager.Instance.CloseUI<UI_StoryBook>();
-                break;
             default:
                 break;
         }
+    }
+
+    public void NextPage()
+    {
+        if (++currentPage % 2 == 0)
+        {
+            preBtn.gameObject.SetActive(true);
+            nextBtn.gameObject.SetActive(true);
+            preBtn.GetComponent<FadeInImage>().StartFadeIn();
+            nextBtn.GetComponent<FadeInImage>().StartFadeIn();
+        }
+        else
+        {
+            if (currentPage + 1 < totalPage)
+            {
+                pageList[currentPage].ActivePage();
+                pageText.text = (currentPage) + "/" + (PAGE_UNIT);
+            }
+        }
+
     }
 }

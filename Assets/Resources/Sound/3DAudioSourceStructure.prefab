@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 10820147567922274}
   - component: {fileID: 4972345784371333671}
   m_Layer: 0
-  m_Name: 3DAudioSourceMonster
+  m_Name: 3DAudioSourceStructure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.9
   m_Pitch: 1
   Loop: 0
   Mute: 0

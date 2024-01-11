@@ -4,6 +4,14 @@ using System.Collections;
 
 public class PlayerData
 {
+    #region Skill
+    public int ultSkillId { get; private set; }
+    public int basicSkillId { get; private set; }
+
+    public void SetUltSkillId(int ultSkillId) { this.ultSkillId = ultSkillId; }
+    public void SetBasicSkillId(int basicSkillId) { this.basicSkillId = basicSkillId; }
+    #endregion
+
     #region STATUS
     public string characterName { get; private set; }
     public string iconImage { get; private set; }

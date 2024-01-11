@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rsaBase64PublicKey: {fileID: 4900000, guid: 97f7b70473d993c4097d8f170b51d731, type: 3}
   rsaBase64PrivateKey: {fileID: 4900000, guid: ec42283d8841ff445b80e0ea6df4bc94, type: 3}
+  steamCustomID: 990321
 --- !u!4 &307780189
 Transform:
   m_ObjectHideFlags: 0

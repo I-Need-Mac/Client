@@ -20,13 +20,15 @@ public class Player : MonoBehaviour
     private AudioSource playerAudioSource;
     private AudioSource playerVoiceAudioSource;
 
-    private const long VOICE = 3*1000;
+    private const long VOICE = 15*1000;
 
     private int exState = 0;
     private int shootVoiceTimer = 0;
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
 
+    [SerializeField]
+    public AudioClip[] startVoice;
     [SerializeField]
     public AudioClip[] randomVoice;
     [SerializeField]
@@ -65,6 +67,7 @@ public class Player : MonoBehaviour
         needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
         AudioSetting();
+        ShootPlayerVoice(startVoice,true);
         //hpBar.HpBarSwitch(true);
     }
 
@@ -77,7 +80,7 @@ public class Player : MonoBehaviour
     {
     
         KeyDir();
-        ShootPlayerVoice();
+        ShootPlayerVoice(randomVoice);
         hpBar.HpBarSetting(transform.position + hpBarPos, playerManager.playerData.currentHp, playerManager.playerData.hp);
     }
 
@@ -130,25 +133,22 @@ public class Player : MonoBehaviour
             if ((soundRequester != null && exState == 0)||(soundRequester != null && !soundRequester.isPlaying(SoundSituation.SOUNDSITUATION.RUN)))
                 soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.RUN);
             
-         
-
-
             exState = 1;
         }
     }
 
-    private void ShootPlayerVoice()
+    private void ShootPlayerVoice(AudioClip[] audioClipList, bool ignore = false)
     {
         shootVoiceTimer++;
 
-        if (shootVoiceTimer == VOICE)
+        if (shootVoiceTimer == VOICE || ignore)
         {
             if (randomVoice.Length != 0)
             {   
                 shootVoiceTimer=0;
-                int rnd = Random.Range(0, randomVoice.Length);
+                int rnd = Random.Range(0, audioClipList.Length);
                 DebugManager.Instance.PrintDebug("[SoundRequest] Player Shoot Sound " + rnd);
-                playerVoiceAudioSource.PlayOneShot(randomVoice[rnd]);
+                playerVoiceAudioSource.PlayOneShot(audioClipList[rnd]);
             }
         }
 

@@ -83,6 +83,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: 3DEffect
     _audioType: 1
@@ -105,7 +107,7 @@ MonoBehaviour:
     delay: 0
     priority: 0
     SOUNDSITUATION: 1
-    audioClip: {fileID: 8300000, guid: 2998b3627c03e824d9dc616f2591cdd3, type: 3}
+    audioClip: {fileID: 8300000, guid: 7bcadbc5f42a99c4d87fef48312a0353, type: 3}
 --- !u!1 &927301774051847262
 GameObject:
   m_ObjectHideFlags: 0

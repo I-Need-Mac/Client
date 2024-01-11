@@ -149,7 +149,7 @@ public class SoundManager : SingleTon<SoundManager>
     }
 
     public float GetSettingSound(string audioType) { 
-        return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND);
+        return SettingManager.Instance.GetSettingValue(audioType) / soundNomalizer * SettingManager.Instance.GetSettingValue(SettingManager.TOTAL_SOUND) / soundNomalizer;
     }
 
     public void PauseAll() { 

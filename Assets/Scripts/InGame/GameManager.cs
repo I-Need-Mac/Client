@@ -180,13 +180,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         if (Time.timeScale == 1f)
         {
             SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.EFFECT);
-            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.VOICE);
+            //SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.VOICE);
             Time.timeScale = 0f;
         }
         else
         {
             SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
-            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
+            //SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
             Time.timeScale = 1f;
         }
     }

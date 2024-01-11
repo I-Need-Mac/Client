@@ -3923,7 +3923,7 @@ MonoBehaviour:
     BGMSITUATION: 1
     introBGMClip: {fileID: 0}
     delayWithIntro: 0
-    realBGMClip: {fileID: 8300000, guid: 3e5ab832c9d349540922570ca974e8b2, type: 3}
+    realBGMClip: {fileID: 8300000, guid: f300af3aa2923ff4989b2c7ba84a3c6a, type: 3}
 --- !u!4 &948163360
 Transform:
   m_ObjectHideFlags: 0

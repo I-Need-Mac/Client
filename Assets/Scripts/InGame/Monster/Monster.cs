@@ -386,14 +386,14 @@ public class Monster : MonoBehaviour
     public void Hit(float totalDamage)
     {
         //StopCoroutine(HpBarControl());
-        if (hpBar == null)
+        if (hpBar == null && gameObject.activeInHierarchy)
         {
             StartCoroutine(HpBarControl());
         }
 
         isHit = true;
 
-        if (soundRequester != null)
+        if (soundRequester != null && gameObject.activeInHierarchy)
         {
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
         }
@@ -445,6 +445,8 @@ public class Monster : MonoBehaviour
             hpBar = null;
         }
         GameManager.Instance.killCount++;
+        StopAllCoroutines();
+        MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
     private IEnumerator DieAnimation()
@@ -459,7 +461,6 @@ public class Monster : MonoBehaviour
             DebugManager.Instance.PrintDebug("[ERROR]: 스파인에 죽는 애니메이션이 없는 몬스터입니다");
         }
         yield return new WaitForSeconds(1.0f);
-        MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -126,9 +126,12 @@ public class Monster : MonoBehaviour
 
     private void OnEnable()
     {
+
         if (soundRequester != null)
         {
+            soundRequester.GetBackSpeakers();
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.SPAWN);
+         
         }
     }
     public string GetMonsterID() { 

@@ -55,5 +55,14 @@ public class SoundManagerUpdater : MonoBehaviour
 
         requestedDict.Add(packItem.usingSpeaker, new RequestedSource(targetSpeaker, soundRequester, packItem));
     }
-
+    public void ReturnBackAfterShooting(GameObject parentRequester, GameObject target, float duration)
+    {
+        StartCoroutine(DestroyAudioAfterPlaying(parentRequester, target, duration));
+    }
+    protected IEnumerator DestroyAudioAfterPlaying(GameObject parentRequester, GameObject target, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        DebugManager.Instance.PrintDebug("[SoundRequester] Return Back AudioSource " + duration);
+        target.transform.SetParent(parentRequester.transform);
+    }
 }

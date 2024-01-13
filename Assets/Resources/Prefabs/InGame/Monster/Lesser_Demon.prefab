@@ -147,6 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings:
   - speakerName: Shooter
     _audioType: 1
@@ -170,21 +172,19 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 7
     audioClip: {fileID: 8300000, guid: 87ea402f7cf6b324b914eb81259a12c9, type: 3}
+    audioClipList: []
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 11
     audioClip: {fileID: 8300000, guid: b67f4dfa42a78f84b83a968889199bf7, type: 3}
+    audioClipList: []
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 9
     audioClip: {fileID: 8300000, guid: 581c9a89a939f194fb08dde5a7a31fe5, type: 3}
-  - usingSpeaker: Shooter
-    delay: 0
-    priority: 0
-    SOUNDSITUATION: 10
-    audioClip: {fileID: 8300000, guid: 581c9a89a939f194fb08dde5a7a31fe5, type: 3}
+    audioClipList: []
 --- !u!114 &5461332211756131446
 MonoBehaviour:
   m_ObjectHideFlags: 0

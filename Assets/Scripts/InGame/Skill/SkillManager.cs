@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SCALE_TYPE
+{
+    NONE,
+    VERTICAL,
+    HORIZON,
+}
+
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
     //public static readonly int SKILL_MAX_LEVEL = 8;
@@ -66,8 +73,13 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     public T SpawnProjectile<T>(ActiveData skillData) where T : Projectile
     {
-        return SpawnProjectile<T>(skillData, transform, LayerConstant.SKILL);
+        return SpawnProjectile<T>(skillData, transform);
     }
+
+    //public T SpawnProjectile<T>(ActiveData skillData, SCALE_TYPE scaleType) where T : Projectile
+    //{
+    //    return SpawnProjectile<T>(skillData, transform, LayerConstant.SKILL, scaleType);
+    //}
 
     public T SpawnProjectile<T>(ActiveData skillData, LayerConstant layer) where T : Projectile
     {
@@ -76,56 +88,34 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     public T SpawnProjectile<T>(ActiveData skillData, Transform shooter) where T : Projectile
     {
-        return SpawnProjectile<T>(skillData, shooter, LayerConstant.SKILL);
+        return SpawnProjectile<T>(skillData, shooter);
     }
 
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, shooter, position, LayerConstant.SKILL);
-    }
+    //public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, SCALE_TYPE scaleType) where T : Projectile
+    //{
+    //    return SpawnProjectile<T>(skillData, shooter, scaleType);
+    //}
 
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, LayerConstant layer) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, shooter, Vector2.zero, LayerConstant.SKILL);
-    }
-
-    public T SpawnProjectile<T>(ActiveData skillData, Vector2 position) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, transform, position, LayerConstant.SKILL);
-    }
-
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position, LayerConstant layer) where T : Projectile
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, LayerConstant layer = LayerConstant.SKILL, SCALE_TYPE scaleType = SCALE_TYPE.NONE) where T : Projectile
     {
         int poolId = skillData.skillId / 100;
         T projectile = (T)skillPools[poolId].GetObject();
         projectile.transform.parent = shooter;
         projectile.gameObject.layer = (int)layer;
         projectile.transform.localPosition = Vector2.zero;
-        projectile.gameObject.layer = (int)LayerConstant.SKILL;
-        //projectile.transform.localPosition = Vector3.zero;
-        projectile.transform.localPosition = position;
-        //projectile.transform.position = position;
-        projectile.transform.localScale = Vector3.one * skillData.projectileSizeMulti;
-        projectile.SetProjectile(skillData);
-        projectile.gameObject.SetActive(true);
-        return projectile;
-    }
-
-    //true -> h / false -> v
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, bool direction) where T : Projectile
-    {
-        int poolId = skillData.skillId / 100;
-        T projectile = (T)skillPools[poolId].GetObject();
-        projectile.transform.parent = shooter;
-        projectile.gameObject.layer = (int)LayerConstant.SKILL;
-        if (direction)
+        if (scaleType == SCALE_TYPE.NONE)
         {
-            projectile.transform.localScale = new Vector3(skillData.projectileSizeMulti, 1.0f, 1.0f);
+            projectile.transform.localScale *= skillData.projectileSizeMulti;
         }
-        else
+        else if (scaleType == SCALE_TYPE.HORIZON)
         {
-            projectile.transform.localScale = new Vector3(1.0f, skillData.projectileSizeMulti, 1.0f);
+            projectile.transform.localScale = new Vector2(projectile.transform.localScale.x, skillData.projectileSizeMulti);
         }
+        else if (scaleType == SCALE_TYPE.VERTICAL)
+        {
+            projectile.transform.localScale = new Vector2(skillData.projectileSizeMulti, projectile.transform.localScale.y);
+        }
+        
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
         return projectile;

@@ -29,6 +29,7 @@ public class DemonAttack : FieldStructure
             int randomNumber = UnityEngine.Random.Range(0, monsterList.Length);
             for (int i = 0; i < mobCountList[randomNumber]; i++)
             {
+                MonsterSpawner.Instance.SpawnInit(monsterList[randomNumber]);
                 MonsterSpawner.Instance.SpawnMonster(monsterList[randomNumber], transform.position);
                 if (soundRequester != null) {
                     soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.ACTIVE);

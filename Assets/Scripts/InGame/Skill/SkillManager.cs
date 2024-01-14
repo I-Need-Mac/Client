@@ -21,6 +21,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
+    private Dictionary<int, Vector2> projectileOriginalSize;
     private ObjectPool<SkillRangeCircle> rangeCirclePool;
     private Dictionary<int, IEnumerator> skillCoroutineList;
 
@@ -31,6 +32,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         skillTable = CSVReader.Read("SkillTable");
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
+        projectileOriginalSize = new Dictionary<int, Vector2>();
         skillCoroutineList = new Dictionary<int, IEnumerator>();
 
         foreach (string skillId in skillTable.Keys)
@@ -100,22 +102,25 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     {
         int poolId = skillData.skillId / 100;
         T projectile = (T)skillPools[poolId].GetObject();
+        if (!projectileOriginalSize.ContainsKey(poolId))
+        {
+            projectileOriginalSize.Add(poolId, projectile.transform.localScale);
+        }
         projectile.transform.parent = shooter;
         projectile.gameObject.layer = (int)layer;
         projectile.transform.localPosition = Vector2.zero;
         if (scaleType == SCALE_TYPE.NONE)
         {
-            projectile.transform.localScale *= skillData.projectileSizeMulti;
+            projectile.transform.localScale = projectileOriginalSize[poolId] * skillData.projectileSizeMulti;
         }
         else if (scaleType == SCALE_TYPE.HORIZON)
         {
-            projectile.transform.localScale = new Vector2(projectile.transform.localScale.x, skillData.projectileSizeMulti);
+            projectile.transform.localScale = new Vector2(projectileOriginalSize[poolId].x * skillData.projectileSizeMulti, projectileOriginalSize[poolId].y);
         }
         else if (scaleType == SCALE_TYPE.VERTICAL)
         {
-            projectile.transform.localScale = new Vector2(skillData.projectileSizeMulti, projectile.transform.localScale.y);
+            projectile.transform.localScale = new Vector2(projectileOriginalSize[poolId].x, projectileOriginalSize[poolId].y * skillData.projectileSizeMulti);
         }
-        
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
         return projectile;

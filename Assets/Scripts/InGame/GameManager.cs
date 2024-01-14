@@ -2,7 +2,6 @@ using UnityEngine;
 
 using System;
 using BFM;
-using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonBehaviour<GameManager>

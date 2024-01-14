@@ -4,6 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PROJECTILE_DIRECTION
+{
+    LEFT,
+    RIGHT,
+}
+
 public class Projectile : MonoBehaviour
 {
     private const string BOUNCE_PATH = "Prefabs/InGame/Skill/Bounce";
@@ -55,6 +61,11 @@ public class Projectile : MonoBehaviour
         //    DebugManager.Instance.PrintError(this.transform.position);
         //    SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.projectileSizeMulti, this.transform.localPosition);
         //}
+    }
+
+    public void SetDirection(PROJECTILE_DIRECTION direction)
+    {
+        spriteRenderer.flipX = direction == PROJECTILE_DIRECTION.LEFT ? true : false;
     }
 
     public void SetAnimation(Sprite sprite, RuntimeAnimatorController controller)

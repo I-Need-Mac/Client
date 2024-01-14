@@ -86,10 +86,10 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         return SpawnProjectile<T>(skillData, transform, layer);
     }
 
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, shooter);
-    }
+    //public T SpawnProjectile<T>(ActiveData skillData, Transform shooter) where T : Projectile
+    //{
+    //    return SpawnProjectile<T>(skillData, shooter);
+    //}
 
     //public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, SCALE_TYPE scaleType) where T : Projectile
     //{

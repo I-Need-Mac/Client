@@ -436,7 +436,11 @@ public class Monster : MonoBehaviour
         }
         monsterCollider.enabled = false;
         monsterCollider2.enabled = false;
-        StartCoroutine(DieAnimation());
+        
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(DieAnimation());
+        }
 
         if (isDrop)
         {

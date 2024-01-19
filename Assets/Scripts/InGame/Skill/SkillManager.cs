@@ -20,6 +20,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     [SerializeField] private int skillNum = 10801;
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
+    private Dictionary<string, Dictionary<string, object>> passiveTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
     private Dictionary<int, Vector2> projectileOriginalSize;
     private ObjectPool<SkillRangeCircle> rangeCirclePool;
@@ -31,6 +32,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     protected override void Awake()
     {
         skillTable = CSVReader.Read("SkillTable");
+        passiveTable = CSVReader.Read("PassiveTable");
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
         projectileOriginalSize = new Dictionary<int, Vector2>();
         skillCoroutineList = new Dictionary<int, IEnumerator>();
@@ -111,9 +113,37 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         return projectile;
     }
 
+    public T SpawnProjectile<T>(PassiveData skillData, LayerConstant layer = LayerConstant.SKILL) where T : Projectile
+    {
+        return SpawnProjectile<T>(skillData, transform, layer);
+    }
+
+    public T SpawnProjectile<T>(PassiveData skillData, Transform shooter, LayerConstant layer = LayerConstant.SKILL) where T : Projectile
+    {
+        int id = skillData.skillId / 100;
+        if (!skillPools.ContainsKey(id))
+        {
+            skillPools.Add(id, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(passiveTable[skillData.skillId.ToString()]["PassivePrefabPath"].ToString()), shooter));
+        }
+
+        T projectile = (T)skillPools[id].GetObject();
+        projectile.transform.parent = shooter;
+        projectile.gameObject.layer = (int)layer;
+        projectile.transform.localPosition = Vector2.zero;
+        //projectile.CollisionPower(false);
+        projectile.gameObject.SetActive(true);
+        return projectile;
+    }
+
     public void DeSpawnProjectile(Projectile projectile)
     {
         skillPools[projectile.skillData.skillId / 100].ReleaseObject(projectile);
+        projectile.transform.parent = transform;
+    }
+
+    public void DeSpawnProjectile(Projectile projectile, int skillId)
+    {
+        skillPools[skillId / 100].ReleaseObject(projectile);
         projectile.transform.parent = transform;
     }
     #endregion

@@ -46,9 +46,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
+  m_Offset: {x: -0.15812303, y: -0.007528898}
+  m_Size: {x: 4.665561, y: 0.47910348}
+  m_Direction: 1
 --- !u!212 &2503711700765518908
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -89,7 +89,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 34587324d412940a79d530020c957dc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c755d1bac2698a945a893a58089c3ac5, type: 3}
   m_Color: {r: 0, g: 1, b: 0.0123586655, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -112,3 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb609c993063ee4b94ff341dd3c1ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootAudioClip: {fileID: 0}
+  hitAudioClip: {fileID: 0}
+  destroyAudioClip: {fileID: 0}

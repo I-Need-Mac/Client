@@ -146,7 +146,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             meshRender.sortingLayerName = layer.ToString();
         }
-        trans.localPosition = new Vector3(trans.localPosition.x, trans.localPosition.y, (int)layer);
+        //trans.localPosition = new Vector3(trans.localPosition.x, trans.localPosition.y, (int)layer);
 
         foreach (Transform child in trans)
         {

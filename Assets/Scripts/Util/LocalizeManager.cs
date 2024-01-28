@@ -60,7 +60,36 @@ public class LocalizeManager : SingleTon<LocalizeManager>
     private string ConvertString(String targetString) {
         targetString  = targetString.Replace("\\n","\n");
         targetString = targetString.Replace("\\c", ",");
+        targetString = targetString.Replace("\\dq", "\"");
+        targetString = targetString.Replace("\\q", "\'");
+        targetString = ChangeDoubleQuotationMarks(targetString);
+        
         return targetString;
     }
+
+    private string ChangeDoubleQuotationMarks(string target)
+    {
+        char lastCharacter;
+        char firstCharacter;
+
+        if (target.Length > 0) {
+            firstCharacter = target[0];
+            lastCharacter = target[target.Length - 1];
+        }
+        else {
+            return target;
+        }
+
+        if (firstCharacter.Equals("\"") && lastCharacter.Equals("\"")) {
+            target = target.Substring(0, target.Length - 1);
+            target = target.Substring(1, target.Length - 1);
+            target = target.Replace("\"\"", "\"");
+        }
+
+        return target;
+
+    }
+
 }
+
 

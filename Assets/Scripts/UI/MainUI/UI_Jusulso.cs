@@ -27,7 +27,7 @@ public class UI_Jusulso : UI_Popup
     [SerializeField]
     GameObject progressSlot;
     [SerializeField]
-    List<GameObject> progressList = new List<GameObject>();
+    public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>();
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +52,7 @@ public class UI_Jusulso : UI_Popup
         UI_JusulsoProgressBox progressBox = Util.UILoad<UI_JusulsoProgressBox>(Define.UiPrefabsPath + "/UI_JusulsoProgressBox");
         for(int i = 0; i<3; i++)
         {
-            GameObject slot = Instantiate(progressBox.gameObject);
+            UI_JusulsoProgressBox slot = Instantiate(progressBox);
             slot.GetComponent<UI_JusulsoProgressBox>();
             slot.transform.SetParent(progressSlot.transform);
             progressList.Add(slot);

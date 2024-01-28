@@ -1,0 +1,9 @@
+PageID,PageType,TextBox1,TextBox2,TextBox3,VoicePath1,VoicePath2,VoicePath3,ImagePath
+,,3개의 문단 텍스트 아이디,,,문단에 해당하는 보이스 패스,,,이미지 패스
+PageID,PageType,TextBox1,TextBox2,TextBox3,VoicePath1,VoicePath2,VoicePath3,ImagePath
+2001,PictureTextTop,Story_Chapter01_Before_0017,,,None,None,None,Arts\Sabhwa\Sabhwa_Sketch_04
+2002,Text,Story_Chapter01_Before_0018,Story_Chapter01_Before_0019,Story_Chapter01_Before_0020,None,None,None,
+2003,Text,Story_Chapter01_Before_0021,Story_Chapter01_Before_0022,Story_Chapter01_Before_0023,None,None,None,
+2004,PictureTextBottom,Story_Chapter01_Before_0024,,,None,None,None,Arts\Sabhwa\Sabhwa_Sketch_05
+2005,Picture,,,,None,None,None,Arts\Sabhwa\Sabhwa_Sketch_06
+2006,Text,Story_Chapter01_Before_0025,Story_Blank,Story_Blank,None,None,None,

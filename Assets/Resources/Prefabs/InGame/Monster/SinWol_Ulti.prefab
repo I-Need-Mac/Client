@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2089917544645273743}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.37929, y: 0.37929, z: 0.37929}
   m_Children:
   - {fileID: 7608091660064748941}
   - {fileID: 8583630607310605280}
@@ -78,6 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings:
   - speakerName: Shooter
     _audioType: 1
@@ -101,6 +103,7 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 11
     audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
+    audioClipList: []
 --- !u!114 &6935377583905371248
 MonoBehaviour:
   m_ObjectHideFlags: 0

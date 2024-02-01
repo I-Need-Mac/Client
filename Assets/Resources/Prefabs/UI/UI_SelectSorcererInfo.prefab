@@ -1957,7 +1957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2692833131645881364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2079,6 +2079,7 @@ MonoBehaviour:
   Skill_2_Context: {fileID: 6752434881954038015}
   Skill_Icon_1_Image: {fileID: 3932956636786433017}
   Skill_Icon_2_Image: {fileID: 2431832563514512801}
+  backgound: {fileID: 2692833131822882337}
   gaugeList:
   - {fileID: 4412720805231731823}
   - {fileID: 1985271498242600437}
@@ -2088,14 +2089,24 @@ MonoBehaviour:
   - {fileID: 4719418718023430501}
   - {fileID: 6655638602177824676}
   - {fileID: 2304806736348909901}
+  backgroundImage:
+  - {fileID: 21300000, guid: 9d6a179a8d341d047a321552537d2b13, type: 3}
+  - {fileID: 21300000, guid: d6f5be269b817f24a9fd576dd5e564e5, type: 3}
+  - {fileID: 21300000, guid: bbff405a02fe24f49ba2dd2dfccf435e, type: 3}
   hojin:
   - {fileID: 8300000, guid: 44454e5725984b44fb252d73f56fbfae, type: 3}
   - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
   - {fileID: 8300000, guid: 96664b1d7ab577240879138d74e20335, type: 3}
   siwoo: []
-  sinwol: []
+  sinwol:
+  - {fileID: 8300000, guid: cab49499d5c52ba47888a2b209393797, type: 3}
+  - {fileID: 8300000, guid: ab97f2970b4e2af448171e9470a4a5ae, type: 3}
+  - {fileID: 8300000, guid: c2fecc14baf0b014f892e9a5e2b3294b, type: 3}
   seimei: []
-  macia: []
+  macia:
+  - {fileID: 8300000, guid: eac2fa385fded9847846dc7135b057c1, type: 3}
+  - {fileID: 8300000, guid: 1b70622084011fd49abd8019a2e9b125, type: 3}
+  - {fileID: 8300000, guid: 35b1b17f49d61ef47b2f3cd5730e3cda, type: 3}
   ulises: []
   voiceShooter: {fileID: 3555940498570662950}
 --- !u!1 &2692833131822882339
@@ -4167,8 +4178,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12, y: -23.13}
-  m_SizeDelta: {x: 1659.98, y: 933.74}
+  m_AnchoredPosition: {x: 67, y: -50}
+  m_SizeDelta: {x: 1554.28, y: 874.28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1707042494824944144
 CanvasRenderer:
@@ -4198,7 +4209,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2bf465801265e944d9588fd1162c7b62, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 973a1fac01183a7479ac36f9010e8d8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

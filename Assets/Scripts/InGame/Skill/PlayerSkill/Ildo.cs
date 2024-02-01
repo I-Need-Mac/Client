@@ -47,7 +47,7 @@ public class Ildo : ActiveSkill
             yield return frame;
             diff = Vector2.Distance(projectile.transform.position, targetPos);
             projectile.SetAlpha(diff / distance);
-        } while (diff > 1.5f);
+        } while (diff > 0.25f);
 
         projectile.SetAlpha(1.0f);
         projectile.transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f);

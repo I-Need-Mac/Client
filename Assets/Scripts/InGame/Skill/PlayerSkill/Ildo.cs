@@ -46,12 +46,15 @@ public class Ildo : ActiveSkill
             projectile.transform.position = Vector3.SmoothDamp(projectile.transform.position, targetPos, ref speed, 0.25f);
             yield return frame;
             diff = Vector2.Distance(projectile.transform.position, targetPos);
-            projectile.SetAlpha(diff / distance);
+            if (diff < 0.75f)
+            {
+                projectile.SetAlpha(diff / distance);
+            }
         } while (diff > 0.25f);
 
         projectile.SetAlpha(1.0f);
         projectile.transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f);
-        projectile.transform.position = targetPos + new Vector2(0.0f, 2.5f);
+        projectile.transform.position = targetPos + new Vector2(0.0f, 1.5f);
         projectile.CollisionPower(true);
 
         do

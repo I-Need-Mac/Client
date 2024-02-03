@@ -57,6 +57,9 @@ public class UI_Hon_Under : UI_Popup
 
     public void Setting(int mainCategoryId)
     {
+        GetImage(0).sprite = ResourcesManager.Load<Sprite>("Arts/" + CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainImagePath").ToString());
+        GetImage(0).GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainNameText").ToString());
+
         Dictionary<string, Dictionary<string, object>> table = CSVReader.Read("UnderSoul");
 
         foreach (string id in  table.Keys)

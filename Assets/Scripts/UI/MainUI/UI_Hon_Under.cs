@@ -72,7 +72,6 @@ public class UI_Hon_Under : UI_Popup
             catch (KeyNotFoundException e)
             {
                 DebugManager.Instance.PrintError("[UI_Hon_Under: Error] UnderSoul 테이블에 빈 줄이 삽입되어 있습니다.");
-                DebugManager.Instance.PrintError(e);
             }
         }
     }
@@ -88,7 +87,7 @@ public class UI_Hon_Under : UI_Popup
 
     public void IsSelected(GameObject obj, bool isSelected)
     {
-        obj.transform.Find("BackGround").GetComponent<Image>().enabled = !isSelected;
+        obj.transform.Find("Shadow").GetComponent<Image>().enabled = !isSelected;
     }
 
     public void OnClickImage(PointerEventData data)

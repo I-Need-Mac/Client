@@ -61,12 +61,16 @@ public class UI_Hon : UI_Popup
             return;
         Debug.Log(data.pointerClick.name);
 
-        switch(imageValue)
+        UI_Hon_Under honUnder;
+        switch (imageValue)
         {
             case GameObjects.Hon_Page1:
                 UI_Honpage honPage1 = GetGameObject(0).GetComponent<UI_Honpage>();
+                
                 if (honPage1 != null && honPage1.unlocked)
                 {
+                    honUnder = UIManager.Instance.OpenUI<UI_Hon_Under>();
+                    honUnder.Setting(101);
                     Debug.Log("Hon_Page1 is Unlocked");
                 }
                 else
@@ -79,6 +83,7 @@ public class UI_Hon : UI_Popup
                 UI_Honpage honPage2 = GetGameObject(1).GetComponent<UI_Honpage>();
                 if (honPage2 != null && honPage2.unlocked)
                 {
+                    honUnder = UIManager.Instance.OpenUI<UI_Hon_Under>();
                     Debug.Log("Hon_Page2 is Unlocked");
                 }
                 else
@@ -91,6 +96,7 @@ public class UI_Hon : UI_Popup
                 UI_Honpage honPage3 = GetGameObject(2).GetComponent<UI_Honpage>();
                 if (honPage3 != null && honPage3.unlocked)
                 {
+                    honUnder = UIManager.Instance.OpenUI<UI_Hon_Under>();
                     Debug.Log("Hon_Page3 is Unlocked");
                 }
                 else
@@ -103,6 +109,7 @@ public class UI_Hon : UI_Popup
                 UI_Honpage honPage4 = GetGameObject(3).GetComponent<UI_Honpage>();
                 if (honPage4 != null && honPage4.unlocked)
                 {
+                    honUnder = UIManager.Instance.OpenUI<UI_Hon_Under>();
                     Debug.Log("Hon_Page4 is Unlocked");
                 }
                 else
@@ -116,6 +123,7 @@ public class UI_Hon : UI_Popup
                 UI_Honpage honPage5 = GetGameObject(4).GetComponent<UI_Honpage>();
                 if (honPage5 != null && honPage5.unlocked)
                 {
+                    honUnder = UIManager.Instance.OpenUI<UI_Hon_Under>();
                     Debug.Log("Hon_Page5 is Unlocked");
                 }
                 else

@@ -9,10 +9,13 @@ using UnityEngine.UI;
 
 public class UI_Hon_Under : UI_Popup
 {
+    private int[] soulIds;
+
     enum Images
     {
         Hon_MainBox,
-        Backbutton,
+        Back,
+        Save,
     }
 
     enum GameObjects
@@ -39,6 +42,8 @@ public class UI_Hon_Under : UI_Popup
 
     private void Awake()
     {
+        soulIds = new int[18];
+
         Bind<Image>(typeof(Images));
         Array imageValue = Enum.GetValues(typeof(Images));
         for (int i = 0; i < imageValue.Length; i++)
@@ -68,8 +73,10 @@ public class UI_Hon_Under : UI_Popup
             {
                 if (mainCategoryId == Convert.ToInt32(table[id]["SoulMainCategory"]))
                 {
-                    GameObject underSoul = GetGameObject(3 * (Convert.ToInt32(table[id]["SoulColumnGroup"]) - 1) + Convert.ToInt32(table[id]["SoulOrderInColumn"]) - 1);
+                    int num = 3 * (Convert.ToInt32(table[id]["SoulColumnGroup"]) - 1) + Convert.ToInt32(table[id]["SoulOrderInColumn"]) - 1;
+                    GameObject underSoul = GetGameObject(num);
                     SetSoulIconSet(underSoul, id);
+                    soulIds[num] = Convert.ToInt32(id);
                 }
             }
             catch (KeyNotFoundException e)
@@ -105,8 +112,12 @@ public class UI_Hon_Under : UI_Popup
 
         switch (imageValue)
         {
-            case Images.Backbutton:
+            case Images.Back:
                 this.CloseUI<UI_Hon_Under>();
+                break;
+            case Images.Save:
+                this.CloseUI<UI_Hon_Under>();
+                Save();
                 break;
             default:
                 break;
@@ -150,5 +161,18 @@ public class UI_Hon_Under : UI_Popup
             }
         }
 
+    }
+
+    public void Save()
+    {
+        for (int i = 0; i < Enum.GetValues(typeof(GameObjects)).Length; i++)
+        {
+            if (GetGameObject(i).transform.Find("Shadow").GetComponent<Image>().enabled == false)
+            {
+                SoulManager.Instance.Add(new Soul(soulIds[i]));
+            }
+        }
+
+        SoulManager.Instance.PrintSoulList();
     }
 }

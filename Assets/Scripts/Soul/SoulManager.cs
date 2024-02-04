@@ -2,15 +2,17 @@ using BFM;
 using SKILLCONSTANT;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
-public class SoulManager : SingleTon<SoulManager>
+public class SoulManager : SingletonBehaviour<SoulManager>
 {
     private List<Soul> soulList;
     private Dictionary<SoulEffect, float> soulEffects;
 
-    public SoulManager()
+    protected override void Awake()
     {
+        base.Awake();
         soulList = new List<Soul>();
         soulEffects = new Dictionary<SoulEffect, float>();
     }
@@ -45,6 +47,18 @@ public class SoulManager : SingleTon<SoulManager>
             DebugManager.Instance.PrintError("[Error: SoulManager] 혼 테이블을 체크해 주세요. (SoulID: {0})", soul.soulData.soulId);
         }
         
+    }
+
+    public void PrintSoulList()
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (Soul soul in soulList)
+        {
+            sb.Append(soul.soulData.soulId);
+            sb.Append(", ");
+        }
+        sb.Remove(sb.Length - 2, 2);
+        DebugManager.Instance.PrintDebug(sb.ToString());
     }
 
     //Default Mode: Plus

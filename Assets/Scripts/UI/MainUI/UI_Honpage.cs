@@ -17,10 +17,4 @@ public class UI_Honpage : UI_Popup
             Unlock_Hon_Shadow.gameObject.SetActive(false);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

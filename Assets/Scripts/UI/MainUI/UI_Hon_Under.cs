@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class UI_Hon_Under : UI_Popup
 {
     private int[] soulIds;
+    private int seonghonId;
 
     enum Images
     {
@@ -62,6 +63,8 @@ public class UI_Hon_Under : UI_Popup
 
     public void Setting(int mainCategoryId)
     {
+        this.seonghonId = mainCategoryId;
+
         GetImage(0).sprite = ResourcesManager.Load<Sprite>("Arts/" + CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainImagePath").ToString());
         GetImage(0).GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainNameText").ToString());
 
@@ -84,6 +87,8 @@ public class UI_Hon_Under : UI_Popup
                 DebugManager.Instance.PrintError("[UI_Hon_Under: Error] UnderSoul 테이블에 빈 줄이 삽입되어 있습니다.");
             }
         }
+
+        UnderSoulInit();
     }
 
     public void SetSoulIconSet(GameObject obj, string id)
@@ -163,16 +168,31 @@ public class UI_Hon_Under : UI_Popup
 
     }
 
+    private void UnderSoulInit()
+    {
+        foreach (int id in SoulManager.Instance.GetSoulIdList(seonghonId))
+        {
+            for (int i = 0; i < soulIds.Length; i++)
+            {
+                if (soulIds[i] == id)
+                {
+                    GetGameObject(i).transform.Find("Shadow").GetComponent<Image>().enabled = false;
+                }
+            }
+        }
+    }
+
     public void Save()
     {
+        SoulManager.Instance.SeonghonReset(seonghonId);
         for (int i = 0; i < Enum.GetValues(typeof(GameObjects)).Length; i++)
         {
             if (GetGameObject(i).transform.Find("Shadow").GetComponent<Image>().enabled == false)
             {
-                SoulManager.Instance.Add(new Soul(soulIds[i]));
+                SoulManager.Instance.Add(seonghonId, new Soul(soulIds[i]));
             }
         }
 
-        SoulManager.Instance.PrintSoulList();
+        SoulManager.Instance.PrintSoulList(seonghonId);
     }
 }

@@ -7,29 +7,45 @@ using UnityEngine;
 
 public class SoulManager : SingletonBehaviour<SoulManager>
 {
-    private List<Soul> soulList;
+    private Dictionary<int, List<Soul>> soulList;
+    //private List<Soul> soulList;
     private Dictionary<SoulEffect, float> soulEffects;
 
     protected override void Awake()
     {
         base.Awake();
-        soulList = new List<Soul>();
+        //soulList = new List<Soul>();
+        soulList = new Dictionary<int, List<Soul>>();
         soulEffects = new Dictionary<SoulEffect, float>();
     }
 
-    public void Add(Soul soul)
+    public void SeonghonReset(int seonghon)
+    {
+        soulList.Remove(seonghon);
+    }
+
+    public void Add(int seonghon, Soul soul)
     {
         try
         {
-            foreach (Soul s in soulList)
+            if (!soulList.ContainsKey(seonghon))
             {
-                if (s.soulData.soulId == soul.soulData.soulId)
-                {
-                    DebugManager.Instance.PrintError("[SoulManager] 이미 장착된 혼 입니다. (SoulID: {0})", soul.soulData.soulId);
-                    return;
-                }
+                soulList.Add(seonghon, new List<Soul>() { soul, });
             }
-            soulList.Add(soul);
+            else
+            {
+                foreach (Soul s in soulList[seonghon])
+                {
+                    if (s.soulData.soulId == soul.soulData.soulId)
+                    {
+                        DebugManager.Instance.PrintError("[SoulManager] 이미 장착된 혼 입니다. (SoulID: {0})", soul.soulData.soulId);
+                        return;
+                    }
+                }
+                soulList[seonghon].Add(soul);
+            }
+
+            
             for (int i = 0; i < soul.soulData.soulEffects.Count; i++)
             {
                 if (soulEffects.ContainsKey(soul.soulData.soulEffects[i]))
@@ -49,15 +65,68 @@ public class SoulManager : SingletonBehaviour<SoulManager>
         
     }
 
-    public void PrintSoulList()
+    public void Remove(int seonghon, Soul soul)
+    {
+        try
+        {
+            foreach (Soul s in soulList[seonghon])
+            {
+                if (s.soulData.soulId == soul.soulData.soulId)
+                {
+                    soulList[seonghon].Remove(s);
+
+                    for (int i = 0; i < soul.soulData.soulEffects.Count; i++)
+                    {
+                        soulEffects[soul.soulData.soulEffects[i]] -= soul.soulData.effectParams[i];
+                    }
+                }
+            }
+        }
+        catch
+        {
+            DebugManager.Instance.PrintError("[Error: SoulManager] 혼 테이블을 체크해 주세요. (SoulID: {0})", soul.soulData.soulId);
+        }
+    }
+
+    public void PrintSoulList(int seonghon)
     {
         StringBuilder sb = new StringBuilder();
-        foreach (Soul soul in soulList)
+        foreach (Soul soul in soulList[seonghon])
         {
             sb.Append(soul.soulData.soulId);
             sb.Append(", ");
         }
         sb.Remove(sb.Length - 2, 2);
+        DebugManager.Instance.PrintDebug(sb.ToString());
+    }
+
+    public List<int> GetSoulIdList(int seonghon)
+    {
+        if (!soulList.ContainsKey(seonghon))
+        {
+            return new List<int>();
+        }
+
+        List<int> list = new List<int>();
+        foreach (Soul soul in soulList[seonghon])
+        {
+            list.Add(soul.soulData.soulId);
+        }
+        return list;
+    }
+
+    public void PrintAllSoulList()
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (int seonghon in soulList.Keys)
+        {
+            foreach (Soul soul in soulList[seonghon])
+            {
+                sb.Append(soul.soulData.soulId);
+                sb.Append(", ");
+            }
+            sb.Remove(sb.Length - 2, 2);
+        }
         DebugManager.Instance.PrintDebug(sb.ToString());
     }
 

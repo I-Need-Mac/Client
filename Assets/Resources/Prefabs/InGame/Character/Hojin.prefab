@@ -515,19 +515,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startVoice:
-  - {fileID: 8300000, guid: 79ead8b9c27f6fd4a8a62e24c6a13f7f, type: 3}
-  randomVoice:
-  - {fileID: 8300000, guid: 44454e5725984b44fb252d73f56fbfae, type: 3}
-  - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
-  - {fileID: 8300000, guid: 96664b1d7ab577240879138d74e20335, type: 3}
-  - {fileID: 8300000, guid: 79ead8b9c27f6fd4a8a62e24c6a13f7f, type: 3}
-  - {fileID: 8300000, guid: 296938cfe32d2f34e8ee4d4366df3345, type: 3}
-  - {fileID: 8300000, guid: f9e7f64782dbf9a4088470e96fe5a279, type: 3}
-  - {fileID: 8300000, guid: 160f11d298c390448b8c6015d77c5d61, type: 3}
-  dieVoice:
-  - {fileID: 8300000, guid: b6c5ee2905b293b41bda0d84cdd6cff5, type: 3}
-  - {fileID: 8300000, guid: 2b511bd64d826264b9ba765d06bfeeb4, type: 3}
+  voicePackItems:
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: 79ead8b9c27f6fd4a8a62e24c6a13f7f, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: 44454e5725984b44fb252d73f56fbfae, type: 3}
+    - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
+    - {fileID: 8300000, guid: 9689ded84f060194f8738f1018e2de82, type: 3}
+    - {fileID: 8300000, guid: 79ead8b9c27f6fd4a8a62e24c6a13f7f, type: 3}
+    - {fileID: 8300000, guid: 296938cfe32d2f34e8ee4d4366df3345, type: 3}
+    - {fileID: 8300000, guid: f9e7f64782dbf9a4088470e96fe5a279, type: 3}
+    - {fileID: 8300000, guid: 160f11d298c390448b8c6015d77c5d61, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: b6c5ee2905b293b41bda0d84cdd6cff5, type: 3}
+    - {fileID: 8300000, guid: 2b511bd64d826264b9ba765d06bfeeb4, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &2084806861268700656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,6 +702,8 @@ MonoBehaviour:
     SOUNDSITUATION: 6
     audioClip: {fileID: 0}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   - usingSpeaker: Hojin
     delay: 0
     priority: 0
@@ -703,6 +712,9 @@ MonoBehaviour:
     audioClipList:
     - {fileID: 8300000, guid: 361a43452acad5c4e9e4c5e97b72cfc0, type: 3}
     - {fileID: 8300000, guid: 00072d1f60c491149a4c406c29fe18b1, type: 3}
+    audioClipList_ENG:
+    - {fileID: 8300000, guid: 2539712ea20fce344a7b6d0eeec408a1, type: 3}
+    audioClipList_JP: []
 --- !u!1 &7603766091490081587
 GameObject:
   m_ObjectHideFlags: 0

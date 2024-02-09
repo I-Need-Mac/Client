@@ -206,6 +206,7 @@ public class UI_SelectSorcererInfo : UI_Popup
                 DebugManager.Instance.PrintDebug("[SelectSorcerer] Selected Char to " + sorcererInfoID);
                 UIStatus.Instance.selectedChar = sorcererInfoID;
                 UIStatus.Instance.uI_SelectSorcerer.SetCharacterState();
+                SetSorcerer();
                 CloseUI<UI_SelectSorcererInfo>();
                 break;
             default:
@@ -335,5 +336,11 @@ public class UI_SelectSorcererInfo : UI_Popup
                 break;
         }
         voiceShooter.ChangeSituation(SoundSituation.SOUNDSITUATION.INTERECT);
+    }
+
+    async void SetSorcerer()
+    {
+        if (!SteamManager.Initialized) { return; }
+        await APIManager.Instance.SetSorcererRequest(UIStatus.Instance.GetSorcerer(sorcererInfoID));
     }
 }

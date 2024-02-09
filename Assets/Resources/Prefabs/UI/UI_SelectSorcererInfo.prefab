@@ -2094,20 +2094,39 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d6f5be269b817f24a9fd576dd5e564e5, type: 3}
   - {fileID: 21300000, guid: bbff405a02fe24f49ba2dd2dfccf435e, type: 3}
   hojin:
-  - {fileID: 8300000, guid: 44454e5725984b44fb252d73f56fbfae, type: 3}
-  - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
-  - {fileID: 8300000, guid: 96664b1d7ab577240879138d74e20335, type: 3}
-  siwoo: []
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: 44454e5725984b44fb252d73f56fbfae, type: 3}
+    - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
+    - {fileID: 8300000, guid: 96664b1d7ab577240879138d74e20335, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  siwoo:
+    audioClipList_KOR: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   sinwol:
-  - {fileID: 8300000, guid: cab49499d5c52ba47888a2b209393797, type: 3}
-  - {fileID: 8300000, guid: ab97f2970b4e2af448171e9470a4a5ae, type: 3}
-  - {fileID: 8300000, guid: c2fecc14baf0b014f892e9a5e2b3294b, type: 3}
-  seimei: []
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: cab49499d5c52ba47888a2b209393797, type: 3}
+    - {fileID: 8300000, guid: ab97f2970b4e2af448171e9470a4a5ae, type: 3}
+    - {fileID: 8300000, guid: c2fecc14baf0b014f892e9a5e2b3294b, type: 3}
+    audioClipList_ENG:
+    - {fileID: 8300000, guid: cf3f39f7e6465c347a5003fd22348a08, type: 3}
+    audioClipList_JP: []
+  seimei:
+    audioClipList_KOR: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   macia:
-  - {fileID: 8300000, guid: eac2fa385fded9847846dc7135b057c1, type: 3}
-  - {fileID: 8300000, guid: 1b70622084011fd49abd8019a2e9b125, type: 3}
-  - {fileID: 8300000, guid: 35b1b17f49d61ef47b2f3cd5730e3cda, type: 3}
-  ulises: []
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: eac2fa385fded9847846dc7135b057c1, type: 3}
+    - {fileID: 8300000, guid: 1b70622084011fd49abd8019a2e9b125, type: 3}
+    - {fileID: 8300000, guid: 35b1b17f49d61ef47b2f3cd5730e3cda, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  ulises:
+    audioClipList_KOR: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   voiceShooter: {fileID: 3555940498570662950}
 --- !u!1 &2692833131822882339
 GameObject:
@@ -4605,6 +4624,8 @@ MonoBehaviour:
     SOUNDSITUATION: 2
     audioClip: {fileID: 0}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &4400181789157082930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8906,6 +8927,8 @@ MonoBehaviour:
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: fd92546304880dc49940d35275db1064, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &8901311497459098974
 GameObject:
   m_ObjectHideFlags: 0

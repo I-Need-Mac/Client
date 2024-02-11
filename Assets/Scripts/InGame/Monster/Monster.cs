@@ -93,7 +93,15 @@ public class Monster : MonoBehaviour
         {
             if (target == null)
             {
-                this.target = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, });
+                this.target = FindEnemy();
+            }
+            else
+            {
+                Transform enemy = FindEnemy();
+                if (this.target != enemy)
+                {
+                    this.target = enemy;
+                }
             }
         }
     }
@@ -258,7 +266,7 @@ public class Monster : MonoBehaviour
     
     private Node FriendlyAI()
     {
-        gameObject.layer = (int)LayerConstant.HIT;
+        //gameObject.layer = (int)LayerConstant.HIT;
         this.SetTarget(Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, }), true);
 
         return BoldAI();
@@ -375,6 +383,17 @@ public class Monster : MonoBehaviour
         attackCollider.AttackColliderSwitch(false);
         isAttack = false;
     }
+
+    private Transform FindEnemy()
+    {
+        Transform enemy = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, });
+        if (enemy.TryGetComponent(out Monster monster))
+        {
+            return monster.isFriendly == false ? enemy : null;
+        }
+
+        return null;
+    }
     #endregion
 
     #region Logic
@@ -473,10 +492,17 @@ public class Monster : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Monster monster;
-        if (collision.gameObject.layer == (int)LayerConstant.HIT && (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster)))
+        if (!isFriendly)
         {
-            Hit(monster.monsterData.attack);
+            if (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster))
+            {
+                if (monster.isFriendly)
+                {
+                    Hit(monsterData.attack);
+                }
+            }
         }
+        
     }
     #endregion
 

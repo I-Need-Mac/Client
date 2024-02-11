@@ -54,7 +54,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed3b2ffb7eee9d74fa3126e5852d89b5, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -325,6 +325,8 @@ MonoBehaviour:
     SOUNDSITUATION: 11
     audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &4321437561977631542
 MonoBehaviour:
   m_ObjectHideFlags: 0

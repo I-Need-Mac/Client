@@ -318,7 +318,7 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator SpawnMob(float n)
     {
-        Monster summoner = MonsterSpawner.Instance.SpawnMonster((int)n, GameManager.Instance.player.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle, LayerConstant.HIT);
+        Monster summoner = MonsterSpawner.Instance.SpawnMonster((int)n, GameManager.Instance.player.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle);
         summoner.SetTarget(Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { summoner.transform, }), true);
 
         yield return new WaitForSeconds(20.0f);

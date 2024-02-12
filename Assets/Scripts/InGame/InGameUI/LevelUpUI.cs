@@ -83,14 +83,14 @@ public class LevelUpUI : MonoBehaviour
         isSelect = false;
         float height = 175 + 120 * num;
         bodyRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-        for (int i = 0; i < num; i++)
+        for (int i = 0, j = 0; i < num; i++)
         {
             int skillId = RandomSkillId();
             if (skillId == 99999)
             {
                 continue;
             }
-            Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * i);
+            Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * j++);
             SkillUI skillUi = (SkillUI)UIPoolManager.Instance.SpawnUI("SkillUI", body.transform, pos);
             if (skillId / 10000 == 1)
             {

@@ -1,5 +1,5 @@
 MonsterID,MonsterName,SizeMultiple,HP,Attack,MoveSpeed,AtkSpeed,ViewDistance,AtkDistance,SkillID,GroupSource,GroupSourceRate,MonsterPrefabPath,AttackType,MonsterType
-몬스터 ID,몬스터 이름,몬스터 사이즈,몬스터 체력,몬스터 공격력,몬스터 이동속도,몬스터 공격속도,몬스터 인지범위,몬스터 공격범위,몬스터 스킬 존재 시 스킬 아이디,몬스터 처치 시 exp,,몬스터 프리팹,몬스터 공격 타입,몬스터 타입
+몬스??ID,몬스???�름,몬스???�이�?몬스??체력,몬스??공격??몬스???�동?�도,몬스??공격?�도,몬스???��?범위,몬스??공격범위,몬스???�킬 존재 ???�킬 ?�이??몬스??처치 ??exp,,몬스???�리??몬스??공격 ?�??몬스???�??,,,,,
 int,String,Float,int,int,float,int,int,int,String,int,String,Enum,Enum,Enum
 101,Lesser_Demon,0.5,43,15,1,4,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/Lesser_Demon,Bold,Normal
 102,HwaGwangSu,0.3,25,8,1.5,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/HwaGwangSu,Bold,Normal
@@ -19,5 +19,5 @@ int,String,Float,int,int,float,int,int,int,String,int,String,Enum,Enum,Enum
 601,Lesser_Demon,0.5,120,10,0.5,4,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/Lesser_Demon,Bold,Normal
 602,HwaGwangSu,0.3,75,8,1.2,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/HwaGwangSu,Bold,Normal
 603,GeoSeunDae,0.5,60,20,1.1,1,99999,0.05,0,Small_EXP,10000,Prefabs/InGame/Monster/GeuSeunDae,Bold,Normal
-701,SinWol_Base,0.5,300,30,1.5,1,99999,0.05,0,0,0,Prefabs/InGame/Monster/SinWol_Base,Friendly,Elite
+701,SinWol_Base,0.3,300,50,1.5,1,99999,0.05,0,0,0,Prefabs/InGame/Monster/SinWol_Base,Friendly,Elite
 702,SinWol_Ulti,0.5,300,40,1.5,1,99999,0.05,0,0,0,Prefabs/InGame/Monster/SinWol_Ulti,Friendly,Boss

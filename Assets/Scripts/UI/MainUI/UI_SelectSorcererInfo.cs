@@ -56,6 +56,7 @@ public class UI_SelectSorcererInfo : UI_Popup
     [SerializeField]
     GameObject skillSelect;
 
+
     [SerializeField]
     GameObject StatContents;
     
@@ -78,20 +79,25 @@ public class UI_SelectSorcererInfo : UI_Popup
     [SerializeField]
     Image Skill_Icon_2_Image;
     [SerializeField]
+    Image backgound;
+    [SerializeField]
     UI_SorcererGauge[] gaugeList;
 
+
     [SerializeField]
-    public AudioClip[] hojin;
+    public Sprite[] backgroundImage;
     [SerializeField]
-    public AudioClip[] siwoo;
+    public VoicePackItem hojin;
     [SerializeField]
-    public AudioClip[] sinwol;
+    public VoicePackItem siwoo;
     [SerializeField]
-    public AudioClip[] seimei;
+    public VoicePackItem sinwol;
     [SerializeField]
-    public AudioClip[] macia;
+    public VoicePackItem seimei;
     [SerializeField]
-    public AudioClip[] ulises;
+    public VoicePackItem macia;
+    [SerializeField]
+    public VoicePackItem ulises;
     [SerializeField]
     public SoundRequesterSFX voiceShooter;
 
@@ -200,6 +206,7 @@ public class UI_SelectSorcererInfo : UI_Popup
                 DebugManager.Instance.PrintDebug("[SelectSorcerer] Selected Char to " + sorcererInfoID);
                 UIStatus.Instance.selectedChar = sorcererInfoID;
                 UIStatus.Instance.uI_SelectSorcerer.SetCharacterState();
+                SetSorcerer();
                 CloseUI<UI_SelectSorcererInfo>();
                 break;
             default:
@@ -302,26 +309,38 @@ public class UI_SelectSorcererInfo : UI_Popup
         switch (sorcererID)
         {
             case (int)UIStatus.Sorcerers.hojin:
-                voiceShooter.soundPackItems[0].audioClipList=hojin;
+                voiceShooter.soundPackItems[0].audioClipList=hojin.GetSoundList();
+                backgound.sprite =backgroundImage[0];
                 break;
             case (int)UIStatus.Sorcerers.sinwol:
-                voiceShooter.soundPackItems[0].audioClipList = sinwol;
+                voiceShooter.soundPackItems[0].audioClipList = sinwol.GetSoundList();
+                backgound.sprite = backgroundImage[0];
                 break;
             case (int)UIStatus.Sorcerers.siWoo:
-                voiceShooter.soundPackItems[0].audioClipList = siwoo;
+                voiceShooter.soundPackItems[0].audioClipList = siwoo.GetSoundList();
+                backgound.sprite = backgroundImage[2];
                 break;
             case (int)UIStatus.Sorcerers.seimei:
-                voiceShooter.soundPackItems[0].audioClipList = seimei;
+                voiceShooter.soundPackItems[0].audioClipList = seimei.GetSoundList();
+                backgound.sprite = backgroundImage[1];
                 break;
             case (int)UIStatus.Sorcerers.ulises:
-                voiceShooter.soundPackItems[0].audioClipList = ulises;
+                voiceShooter.soundPackItems[0].audioClipList = ulises.GetSoundList();
+                backgound.sprite = backgroundImage[1];
                 break;
             case (int)UIStatus.Sorcerers.macia:
-                voiceShooter.soundPackItems[0].audioClipList = macia;
+                voiceShooter.soundPackItems[0].audioClipList = macia.GetSoundList();
+                backgound.sprite = backgroundImage[2];
                 break;
             default:
                 break;
         }
         voiceShooter.ChangeSituation(SoundSituation.SOUNDSITUATION.INTERECT);
+    }
+
+    async void SetSorcerer()
+    {
+        if (!SteamManager.Initialized) { return; }
+        await APIManager.Instance.SetSorcererRequest(UIStatus.Instance.GetSorcerer(sorcererInfoID));
     }
 }

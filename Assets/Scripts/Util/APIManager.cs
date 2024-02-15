@@ -94,7 +94,7 @@ public class APIManager : SingleTon<APIManager>
         UIStatus.Instance.last_soul4 = startGame.data.last_soul4;
         UIStatus.Instance.last_soul5 = startGame.data.last_soul5;
         UIStatus.Instance.last_soul6 = startGame.data.last_soul6;
-        UIStatus.Instance.last_character = startGame.data.last_character;
+        UIStatus.Instance.selectedChar = UIStatus.Instance.GetSorcerer( startGame.data.last_character);
         UIStatus.Instance.key = startGame.data.key;
         UIStatus.Instance.hojin= startGame.data.hojin;
         UIStatus.Instance.seimei= startGame.data.seimei;
@@ -114,6 +114,17 @@ public class APIManager : SingleTon<APIManager>
         nr = (BuySorcererResult)await requestManager.Patch<BuySorcererResult>(APIAddressManager.REQUEST_OPEN_SORCERER, sendData);
         UIStatus.Instance.key = nr.data.keys;
         return nr;
+    }
+
+    public async Task<NormalResult> SetSorcererRequest(string name)
+    {
+        DebugManager.Instance.PrintDebug("[WebRequest] " + "Reqested GetStartData ");
+        Dictionary<string, object> sendData = new Dictionary<string, object>();
+        sendData.Add("steam_id", UIStatus.Instance.steam_id);
+        sendData.Add("character", name);
+        NormalResult result = (NormalResult)await requestManager.Patch<NormalResult>(APIAddressManager.REQUEST_SELECT_SORCERER, sendData);
+        
+        return result;
     }
 
 }

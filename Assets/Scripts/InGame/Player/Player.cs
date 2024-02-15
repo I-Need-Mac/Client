@@ -27,12 +27,12 @@ public class Player : MonoBehaviour
     private HpBar hpBar;
     private Vector3 hpBarPos = new Vector3(0.0f, -0.6f, 0.0f);
 
+    private AudioClip[] startVoice;
+    private AudioClip[] randomVoice;
+    private AudioClip[] dieVoice;
+
     [SerializeField]
-    public AudioClip[] startVoice;
-    [SerializeField]
-    public AudioClip[] randomVoice;
-    [SerializeField]
-    public AudioClip[] dieVoice;
+    public VoicePackItem[] voicePackItems;
 
     public Transform character { get; private set; }
     public PlayerManager playerManager { get; private set; }
@@ -226,7 +226,9 @@ public class Player : MonoBehaviour
         playerAudioSource.volume = SoundManager.Instance.GetSettingSound( SettingManager.EFFECT_SOUND);
         playerVoiceAudioSource.volume = SoundManager.Instance.GetSettingSound(SettingManager.VOCIE_SOUND);
 
-
+        startVoice = voicePackItems[0].GetSoundList();
+        randomVoice = voicePackItems[1].GetSoundList();
+        dieVoice = voicePackItems[2].GetSoundList();
 
     }
     #endregion

@@ -719,19 +719,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startVoice:
-  - {fileID: 8300000, guid: 2ee877f80f3e76343a5b42af653052e5, type: 3}
-  randomVoice:
-  - {fileID: 8300000, guid: eac2fa385fded9847846dc7135b057c1, type: 3}
-  - {fileID: 8300000, guid: 1b70622084011fd49abd8019a2e9b125, type: 3}
-  - {fileID: 8300000, guid: 35b1b17f49d61ef47b2f3cd5730e3cda, type: 3}
-  - {fileID: 8300000, guid: e84e02e88649edf429d20dcd02557f85, type: 3}
-  - {fileID: 8300000, guid: 435edaa4f2c140c4cab464602fb4b183, type: 3}
-  - {fileID: 8300000, guid: 86ab22d630aca2042b72f26a0f0ba3d2, type: 3}
-  - {fileID: 8300000, guid: 5bddd90ff7b66eb4e82ad7d32956e278, type: 3}
-  dieVoice:
-  - {fileID: 8300000, guid: e7439bd88385b514c9e82d6692ebafd3, type: 3}
-  - {fileID: 8300000, guid: f43214ecc34c635499908c39d3fb0665, type: 3}
+  voicePackItems:
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: e84e02e88649edf429d20dcd02557f85, type: 3}
+    audioClipList_ENG:
+    - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: eac2fa385fded9847846dc7135b057c1, type: 3}
+    - {fileID: 8300000, guid: 1b70622084011fd49abd8019a2e9b125, type: 3}
+    - {fileID: 8300000, guid: 35b1b17f49d61ef47b2f3cd5730e3cda, type: 3}
+    - {fileID: 8300000, guid: e84e02e88649edf429d20dcd02557f85, type: 3}
+    - {fileID: 8300000, guid: 435edaa4f2c140c4cab464602fb4b183, type: 3}
+    - {fileID: 8300000, guid: 86ab22d630aca2042b72f26a0f0ba3d2, type: 3}
+    - {fileID: 8300000, guid: 5bddd90ff7b66eb4e82ad7d32956e278, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: e7439bd88385b514c9e82d6692ebafd3, type: 3}
+    - {fileID: 8300000, guid: f43214ecc34c635499908c39d3fb0665, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &4963921792173515779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,6 +907,8 @@ MonoBehaviour:
     SOUNDSITUATION: 6
     audioClip: {fileID: 8300000, guid: 56b74cd01be2dcd438c82bce74225092, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   - usingSpeaker: Macia
     delay: 0
     priority: 0
@@ -909,6 +919,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 2539712ea20fce344a7b6d0eeec408a1, type: 3}
     - {fileID: 8300000, guid: c905624db5f46c94088174dfe7c86cac, type: 3}
     - {fileID: 8300000, guid: 75d2a4ccce1825244a4ebb32726478f1, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &5948073490916353557
 GameObject:
   m_ObjectHideFlags: 0

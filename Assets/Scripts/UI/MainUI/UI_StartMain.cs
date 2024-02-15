@@ -11,7 +11,8 @@ public class UI_StartMain : UI_Base
     enum Images
     {
         Title,
-        PressKey
+        PressKey,
+        TouchPanel
     }
 
     float time = 0.0f;
@@ -59,9 +60,27 @@ public class UI_StartMain : UI_Base
 
         switch (imageValue)
         {
-        
-                //UIManager.Instance.OpenUI<UI_StoryMain>();
-              
+              case Images.TouchPanel:
+                    if (isFirst)
+                {
+                    UIManager.Instance.OpenUI<UI_Login>();
+                }
+                else
+                {
+                    if (isAutoLogin)
+                    {
+                        //soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.PRESS);
+                        RequestLogin();
+
+                    }
+                    else
+                    {
+                        UIManager.Instance.OpenUI<UI_Login>();
+                    }
+                }
+            //UIManager.Instance.OpenUI<UI_StoryMain>();
+            break;
+
             default:
                 break;
         }
@@ -94,23 +113,7 @@ public class UI_StartMain : UI_Base
                 UIManager.Instance.CloseUI<UI_ESCPopup>();
         }
         else if(Input.anyKeyDown){
-            if (isFirst)
-            {
-                UIManager.Instance.OpenUI<UI_Login>();
-            }
-            else
-            {
-                if (isAutoLogin)
-                {
-                    soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.PRESS);
-                    RequestLogin();
-                       
-                }
-                else
-                {
-                    UIManager.Instance.OpenUI<UI_Login>();
-                }
-            }
+
         }
    
     }

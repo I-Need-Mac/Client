@@ -12,4 +12,9 @@ public static class APIAddressManager
     public const string REQUEST_GAME_START = "api/game/start";
     public const string REQUEST_OPEN_SORCERER = "api/characters/open";
     public const string REQUEST_SELECT_SORCERER = "api/preset/character";
+    public const string REQUEST_OPEN_SOUL = "api/souls/open";
+    public const string REQUEST_SOUL = "api/souls/start";
+    public const string REQUEST_PRESET_SOUL = "api/preset/soul";
+    public const string REQUEST_PROGRESS_SOUL_UPDATE = "api/soul-progress-count/progress";
+    public const string REQUEST_PROGRESS_SOUL = "api/soul-progress-count/soul-progress";
 }

@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -91,13 +93,13 @@ public class UI_Hon_Under : UI_Popup
         UnderSoulInit();
     }
 
-    public void SetSoulIconSet(GameObject obj, string id)
+    public async void SetSoulIconSet(GameObject obj, string id)
     {
         obj.GetComponent<Image>().sprite = ResourcesManager.Load<Sprite>("Arts/Hon/" + CSVReader.Read("UnderSoul", id, "SoulImagePath").ToString());
         obj.GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(CSVReader.Read("UnderSoul", id, "SoulNameText").ToString());
 
         //언락체크
-        obj.transform.Find("Lock").GetComponent<Image>().enabled = false;
+        obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(id, 100);
     }
 
     public void IsSelected(GameObject obj, bool isSelected)

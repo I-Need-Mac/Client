@@ -127,4 +127,18 @@ public class APIManager : SingleTon<APIManager>
         return result;
     }
 
+    public async Task<bool> UnlockSoul(string soulId, int count)
+    {
+        DebugManager.Instance.PrintDebug("[WebRequest] Reqested Soul Progress (Soul ID: {0})", soulId);
+
+        Dictionary<string, object> sendData = new Dictionary<string, object>()
+        {
+            {"steam_id", GetSteamID() },
+            {"souls_id", soulId},
+        };
+
+        SoulProgress soulProgress = (SoulProgress)await requestManager.Get<SoulProgress>(APIAddressManager.REQUEST_PROGRESS_SOUL, sendData);
+        return count >= soulProgress.data;
+    }
+
 }

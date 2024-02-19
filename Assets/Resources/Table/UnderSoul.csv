@@ -6,7 +6,7 @@ int,LocalizeID,string,LocalizeID,SoulEffect_Arr,int_arr,SoulMainCategotyID,int,i
 1010103,Soul_Name_Soul_1_1_3,Reuse/Hon_Icon_GGaedalum,Soul_Description_Soul_1_1_3,,,101,1,3,KillMonster,701,1
 1010201,Soul_Name_Soul_1_2_1,Reuse/Hon_Icon_Baram,Soul_Description_Soul_1_2_1,,,101,2,1,OpenCharacter,103,1
 1010202,Soul_Name_Soul_1_2_2,Reuse/Hon_Icon_SaengMyong,Soul_Description_Soul_1_2_2,,,101,2,2,ClearStage,10101,1
-1010203,Soul_Name_Soul_1_2_3,Reuse/Hon_Icon_Boho,Soul_Description_Soul_1_2_3,,,101,2,3,UseGimmik,201,1
+1010203,Soul_Name_Soul_1_2_3,Reuse/Hon_Icon_Boho,Soul_Description_Soul_1_2_3,,,101,2,3,UseGimmick,201,1
 1010301,Soul_Name_Soul_1_3_1,Reuse/Hon_Icon_SumGyul,Soul_Description_Soul_1_3_1,,,101,3,1,KillMonster,203,300
 1010302,Soul_Name_Soul_1_3_2,Reuse/Hon_Icon_SokSaim,Soul_Description_Soul_1_3_2,,,101,3,2,UseKey,,250
 1010303,Soul_Name_Soul_1_3_3,Reuse/Hon_Icon_SonGil,Soul_Description_Soul_1_3_3,,,101,3,3,OpenBox,101,100

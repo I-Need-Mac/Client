@@ -62,26 +62,25 @@ public class UI_Hon_Under : UI_Popup
         {
             BindUIEvent(GetGameObject(i), (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
         }
-
     }
 
     public void Setting(int mainCategoryId)
     {
+        //TestFunction();
         this.soulTable = CSVReader.Read("UnderSoul");
         this.seonghonId = mainCategoryId;
 
         GetImage(0).sprite = ResourcesManager.Load<Sprite>("Arts/" + CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainImagePath").ToString());
         GetImage(0).GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainNameText").ToString());
 
-        Dictionary<string, Dictionary<string, object>> table = CSVReader.Read("UnderSoul");
-
-        foreach (string id in  table.Keys)
+        foreach (string id in  soulTable.Keys)
         {
             try
             {
-                if (mainCategoryId == Convert.ToInt32(table[id]["SoulMainCategory"]))
+                if (mainCategoryId == Convert.ToInt32(soulTable[id]["SoulMainCategory"]))
                 {
-                    int num = 3 * (Convert.ToInt32(table[id]["SoulColumnGroup"]) - 1) + Convert.ToInt32(table[id]["SoulOrderInColumn"]) - 1;
+                    int num = 3 * (Convert.ToInt32(soulTable[id]["SoulColumnGroup"]) - 1) + Convert.ToInt32(soulTable[id]["SoulOrderInColumn"]) - 1;
+                    DebugManager.Instance.PrintError("ID: {0}, Num: {1}", id, num);
                     GameObject underSoul = GetGameObject(num);
                     SetSoulIconSet(underSoul, id);
                     soulIds[num] = Convert.ToInt32(id);
@@ -96,40 +95,50 @@ public class UI_Hon_Under : UI_Popup
         UnderSoulInit();
     }
 
+    public async void TestFunction()
+    {
+        SoulProgress t = new SoulProgress();
+        NormalResult nr = await APIManager.Instance.SoulProgressUpdate(seonghonId, t);
+        DebugManager.Instance.PrintError(nr.message);
+    }
+
     public async void SetSoulIconSet(GameObject obj, string id)
     {
         obj.GetComponent<Image>().sprite = ResourcesManager.Load<Sprite>("Arts/Hon/" + soulTable[id]["SoulImagePath"].ToString());
         obj.GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(soulTable[id]["SoulNameText"].ToString());
-
         //언락체크
         if (Enum.TryParse(soulTable[id]["SoulUnlock"].ToString(), true, out SOUL_UNLOCK unlock))
         {
-            List<string> list = soulTable[id]["UnlockParam"] as List<string>;
-            if (list == null)
+            //List<string> list = soulTable[id]["UnlockParam"] as List<string>;
+            //if (list == null)
+            //{
+            //    if (int.TryParse(soulTable[id]["UnlockParam"].ToString(), out int result))
+            //    {
+            //        int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, new List<int>() { result });
+            //        obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(seonghonId, int.Parse(id), count);
+            //    }
+            //    else
+            //    {
+            //        int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, new List<int>());
+            //        obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(seonghonId, int.Parse(id), count);
+            //    }
+            //}
+            //else
+            //{
+            //    List<int> list2 = new List<int>();
+            //    foreach (string s in list)
+            //    {
+            //        if (int.TryParse(s, out int result))
+            //        {
+            //            list2.Add(result);
+            //        }
+            //    }
+            //    int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, list2);
+            //    obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(seonghonId, int.Parse(id), count);
+            //}
+            if (int.TryParse(soulTable[id]["Count"].ToString(), out int count))
             {
-                if (int.TryParse(soulTable[id]["UnlockParam"].ToString(), out int result))
-                {
-                    int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, new List<int>() { result });
-                    obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(id, count);
-                }
-                else
-                {
-                    int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, new List<int>());
-                    obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(id, count);
-                }
-            }
-            else
-            {
-                List<int> list2 = new List<int>();
-                foreach (string s in list)
-                {
-                    if (int.TryParse(s, out int result))
-                    {
-                        list2.Add(result);
-                    }
-                }
-                int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, list2);
-                obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(id, count);
+                obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(seonghonId, int.Parse(id), count);
             }
         }
     }

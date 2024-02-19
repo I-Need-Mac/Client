@@ -8,9 +8,11 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.Networking.UnityWebRequest;
 
 public class UI_Hon_Under : UI_Popup
 {
+    private Dictionary<string, Dictionary<string, object>> soulTable;
     private int[] soulIds;
     private int seonghonId;
 
@@ -65,6 +67,7 @@ public class UI_Hon_Under : UI_Popup
 
     public void Setting(int mainCategoryId)
     {
+        this.soulTable = CSVReader.Read("UnderSoul");
         this.seonghonId = mainCategoryId;
 
         GetImage(0).sprite = ResourcesManager.Load<Sprite>("Arts/" + CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainImagePath").ToString());
@@ -95,11 +98,40 @@ public class UI_Hon_Under : UI_Popup
 
     public async void SetSoulIconSet(GameObject obj, string id)
     {
-        obj.GetComponent<Image>().sprite = ResourcesManager.Load<Sprite>("Arts/Hon/" + CSVReader.Read("UnderSoul", id, "SoulImagePath").ToString());
-        obj.GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(CSVReader.Read("UnderSoul", id, "SoulNameText").ToString());
+        obj.GetComponent<Image>().sprite = ResourcesManager.Load<Sprite>("Arts/Hon/" + soulTable[id]["SoulImagePath"].ToString());
+        obj.GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(soulTable[id]["SoulNameText"].ToString());
 
         //언락체크
-        obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(id, 100);
+        if (Enum.TryParse(soulTable[id]["SoulUnlock"].ToString(), true, out SOUL_UNLOCK unlock))
+        {
+            List<string> list = soulTable[id]["UnlockParam"] as List<string>;
+            if (list == null)
+            {
+                if (int.TryParse(soulTable[id]["UnlockParam"].ToString(), out int result))
+                {
+                    int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, new List<int>() { result });
+                    obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(id, count);
+                }
+                else
+                {
+                    int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, new List<int>());
+                    obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(id, count);
+                }
+            }
+            else
+            {
+                List<int> list2 = new List<int>();
+                foreach (string s in list)
+                {
+                    if (int.TryParse(s, out int result))
+                    {
+                        list2.Add(result);
+                    }
+                }
+                int count = AchievementManager.Instance.GetSoulUnlockCount(unlock, list2);
+                obj.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(id, count);
+            }
+        }
     }
 
     public void IsSelected(GameObject obj, bool isSelected)
@@ -139,13 +171,17 @@ public class UI_Hon_Under : UI_Popup
             return;
         }
 
-        string targetName = data.pointerClick.name;
         //우클릭일 경우
         if (data.button == PointerEventData.InputButton.Right)
         {
         }
         else
         {
+            if (data.pointerClick.transform.Find("Lock").GetComponent<Image>().enabled)
+            {
+                return;
+            }
+
             switch(soulNum % 3)
             {
                 case 0:

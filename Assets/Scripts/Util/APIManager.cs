@@ -138,6 +138,7 @@ public class APIManager : SingleTon<APIManager>
         };
 
         SoulProgress soulProgress = (SoulProgress)await requestManager.Get<SoulProgress>(APIAddressManager.REQUEST_PROGRESS_SOUL, sendData);
+        DebugManager.Instance.PrintDebug("[Soul API Test] Soul ID: {0}, message: {1}, data: {2}", soulId, soulProgress.message, soulProgress.data);
         return count >= soulProgress.data;
     }
 

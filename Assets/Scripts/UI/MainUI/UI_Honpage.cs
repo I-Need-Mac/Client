@@ -7,14 +7,14 @@ using UnityEngine.UI;
 
 public class UI_Honpage : UI_Popup
 {
-    public bool unlocked=false;
+    //public bool unlocked=true;
     public Image Unlock_Hon_Shadow;
     // Start is called before the first frame update
-    void Start()
-    {
-        if (unlocked)
-        {
-            Unlock_Hon_Shadow.gameObject.SetActive(false);
-        }
-    }
+    //void Start()
+    //{
+    //    if (unlocked)
+    //    {
+    //        Unlock_Hon_Shadow.gameObject.SetActive(false);
+    //    }
+    //}
 }

@@ -128,6 +128,13 @@ public class APIManager : SingleTon<APIManager>
         return result;
     }
 
+    /// <summary>
+    /// 혼의 해금 여부를 반환해주는 함수
+    /// </summary>
+    /// <param name="mainSoulId">성흔 아이디</param>
+    /// <param name="soulId">혼 아이디</param>
+    /// <param name="count">최대치</param>
+    /// <returns></returns>
     public async Task<bool> UnlockSoul(int mainSoulId, int soulId, int count)
     {
         DebugManager.Instance.PrintDebug("[WebRequest] Reqested Soul Progress (Main Soul ID: {0})", mainSoulId);
@@ -183,15 +190,27 @@ public class APIManager : SingleTon<APIManager>
         }
     }
 
-    public async Task<NormalResult> SoulProgressUpdate(int mainSoulId, SoulProgress soulProgress)
+    /// <summary>
+    /// 해당 성흔에 있는 혼들의 진척도 업데이트 (크기가 18인 int형 배열 필요)
+    /// </summary>
+    /// <param name="mainSoulId"></param>
+    /// <param name="array"></param>
+    /// <returns></returns>
+    public async Task<NormalResult> SoulProgressUpdate(int mainSoulId, int[] array)
     {
-        DebugManager.Instance.PrintDebug("[WebRequest] " + "Patch Soul Progress ");
+        if (array.Length != 18)
+        {
+            DebugManager.Instance.PrintDebug("[WebRequest] SoulProgressUpdate Failed. (배열 사이즈를 확인해 주세요)");
+            return null;
+        }
+
+        DebugManager.Instance.PrintDebug("[WebRequest] Patch Soul Progress ");
 
         Dictionary<string, object> sendData = new Dictionary<string, object>()
         {
             {"steam_id", GetSteamID() },
             {"souls_id", mainSoulId % 100},
-            {"now_count_list", soulProgress},
+            {"now_count_list", array},
         };
 
         NormalResult result = (NormalResult)await requestManager.Patch<NormalResult>(APIAddressManager.REQUEST_PROGRESS_SOUL_UPDATE, sendData);

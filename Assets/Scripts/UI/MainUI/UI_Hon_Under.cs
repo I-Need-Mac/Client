@@ -66,7 +66,7 @@ public class UI_Hon_Under : UI_Popup
 
     public void Setting(int mainCategoryId)
     {
-        //TestFunction();
+        TestFunction();
         this.soulTable = CSVReader.Read("UnderSoul");
         this.seonghonId = mainCategoryId;
 
@@ -80,7 +80,6 @@ public class UI_Hon_Under : UI_Popup
                 if (mainCategoryId == Convert.ToInt32(soulTable[id]["SoulMainCategory"]))
                 {
                     int num = 3 * (Convert.ToInt32(soulTable[id]["SoulColumnGroup"]) - 1) + Convert.ToInt32(soulTable[id]["SoulOrderInColumn"]) - 1;
-                    DebugManager.Instance.PrintError("ID: {0}, Num: {1}", id, num);
                     GameObject underSoul = GetGameObject(num);
                     SetSoulIconSet(underSoul, id);
                     soulIds[num] = Convert.ToInt32(id);
@@ -97,7 +96,7 @@ public class UI_Hon_Under : UI_Popup
 
     public async void TestFunction()
     {
-        SoulProgress t = new SoulProgress();
+        int[] t = new int[18];
         NormalResult nr = await APIManager.Instance.SoulProgressUpdate(seonghonId, t);
         DebugManager.Instance.PrintError(nr.message);
     }

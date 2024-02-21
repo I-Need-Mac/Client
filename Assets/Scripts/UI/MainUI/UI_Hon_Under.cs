@@ -2,24 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_Hon_Under : UI_Popup
 {
+    private Dictionary<string, Dictionary<string, object>> soulTable;
     private int[] soulIds;
     private int seonghonId;
 
-    enum Images
+    private enum Images
     {
         Hon_MainBox,
         Back,
         Save,
     }
 
-    enum GameObjects
+    private enum GameObjects
     {
         UnderSoul_1,
         UnderSoul_2,
@@ -41,8 +44,9 @@ public class UI_Hon_Under : UI_Popup
         UnderSoul_18,
     }
 
-    private void Awake()
+    public async void Setting(int mainCategoryId)
     {
+        transform.GetComponent<Canvas>().enabled = false;
         soulIds = new int[18];
 
         Bind<Image>(typeof(Images));
@@ -59,26 +63,36 @@ public class UI_Hon_Under : UI_Popup
             BindUIEvent(GetGameObject(i), (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
         }
 
+        await Init(mainCategoryId);
+        transform.GetComponent<Canvas>().enabled = true;
     }
 
-    public void Setting(int mainCategoryId)
+    public async Task Init(int mainCategoryId)
     {
+        this.soulTable = CSVReader.Read("UnderSoul");
         this.seonghonId = mainCategoryId;
 
         GetImage(0).sprite = ResourcesManager.Load<Sprite>("Arts/" + CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainImagePath").ToString());
         GetImage(0).GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainNameText").ToString());
 
-        Dictionary<string, Dictionary<string, object>> table = CSVReader.Read("UnderSoul");
-
-        foreach (string id in  table.Keys)
+        foreach (string id in soulTable.Keys)
         {
             try
             {
-                if (mainCategoryId == Convert.ToInt32(table[id]["SoulMainCategory"]))
+                if (mainCategoryId == Convert.ToInt32(soulTable[id]["SoulMainCategory"]))
                 {
-                    int num = 3 * (Convert.ToInt32(table[id]["SoulColumnGroup"]) - 1) + Convert.ToInt32(table[id]["SoulOrderInColumn"]) - 1;
+                    int num = 3 * (Convert.ToInt32(soulTable[id]["SoulColumnGroup"]) - 1) + Convert.ToInt32(soulTable[id]["SoulOrderInColumn"]) - 1;
                     GameObject underSoul = GetGameObject(num);
-                    SetSoulIconSet(underSoul, id);
+                    underSoul.GetComponent<Image>().sprite = ResourcesManager.Load<Sprite>("Arts/Hon/" + soulTable[id]["SoulImagePath"].ToString());
+                    underSoul.GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(soulTable[id]["SoulNameText"].ToString());
+                    //언락체크
+                    if (Enum.TryParse(soulTable[id]["SoulUnlock"].ToString(), true, out SOUL_UNLOCK unlock))
+                    {
+                        if (int.TryParse(soulTable[id]["Count"].ToString(), out int count))
+                        {
+                            underSoul.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(seonghonId, int.Parse(id), count);
+                        }
+                    }
                     soulIds[num] = Convert.ToInt32(id);
                 }
             }
@@ -88,16 +102,16 @@ public class UI_Hon_Under : UI_Popup
             }
         }
 
-        UnderSoulInit();
-    }
-
-    public void SetSoulIconSet(GameObject obj, string id)
-    {
-        obj.GetComponent<Image>().sprite = ResourcesManager.Load<Sprite>("Arts/Hon/" + CSVReader.Read("UnderSoul", id, "SoulImagePath").ToString());
-        obj.GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(CSVReader.Read("UnderSoul", id, "SoulNameText").ToString());
-
-        //언락체크
-        obj.transform.Find("Lock").GetComponent<Image>().enabled = false;
+        foreach (int id in SoulManager.Instance.GetSoulIdList(seonghonId))
+        {
+            for (int i = 0; i < soulIds.Length; i++)
+            {
+                if (soulIds[i] == id)
+                {
+                    GetGameObject(i).transform.Find("Shadow").GetComponent<Image>().enabled = false;
+                }
+            }
+        }
     }
 
     public void IsSelected(GameObject obj, bool isSelected)
@@ -137,13 +151,17 @@ public class UI_Hon_Under : UI_Popup
             return;
         }
 
-        string targetName = data.pointerClick.name;
         //우클릭일 경우
         if (data.button == PointerEventData.InputButton.Right)
         {
         }
         else
         {
+            if (data.pointerClick.transform.Find("Lock").GetComponent<Image>().enabled)
+            {
+                return;
+            }
+
             switch(soulNum % 3)
             {
                 case 0:
@@ -166,20 +184,6 @@ public class UI_Hon_Under : UI_Popup
             }
         }
 
-    }
-
-    private void UnderSoulInit()
-    {
-        foreach (int id in SoulManager.Instance.GetSoulIdList(seonghonId))
-        {
-            for (int i = 0; i < soulIds.Length; i++)
-            {
-                if (soulIds[i] == id)
-                {
-                    GetGameObject(i).transform.Find("Shadow").GetComponent<Image>().enabled = false;
-                }
-            }
-        }
     }
 
     public void Save()

@@ -5,6 +5,23 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+public enum SOUL_UNLOCK
+{
+    KILLMONSTER,           //몬스터 처치
+    LEVELUP,               //레벨업
+    OPENCHARACTER,         //캐릭터 해금
+    CLEARSTAGE,            //스테이지 클리어
+    USEGIMMICK,            //기믹 사용
+    USEKEY,                //열쇠 사용
+    OPENBOX,               //상자 오픈
+    DEATH,                  //사망
+    LEVELUPSKILL,         //스킬 레벨업
+    PLAYGAME,              //스테이지 플레이
+    USEITEM,               //아이템 사용
+    DONTMOVE,              //움직이지 않은 시간
+    PLAYTIME,              //플레이 타임
+}
+
 public class SoulManager : SingletonBehaviour<SoulManager>
 {
     private Dictionary<int, List<Soul>> soulList;
@@ -19,6 +36,7 @@ public class SoulManager : SingletonBehaviour<SoulManager>
         soulEffects = new Dictionary<SoulEffect, float>();
     }
 
+    #region Soul Data & Init
     public void SeonghonReset(int seonghon)
     {
         soulList.Remove(seonghon);
@@ -147,4 +165,5 @@ public class SoulManager : SingletonBehaviour<SoulManager>
 
         return 0.0f;
     }
+    #endregion
 }

@@ -1741,8 +1741,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skill Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
-  m_sharedMaterial: {fileID: -3305390525445643378, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 04da2dedfa4f3e6458f1f6d27db06861, type: 2}
+  m_sharedMaterial: {fileID: -5439839470407881533, guid: 04da2dedfa4f3e6458f1f6d27db06861, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4859,8 +4859,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skill Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 588a518fb193dd643a801f27304f97f8, type: 2}
-  m_sharedMaterial: {fileID: -944256075130403144, guid: 588a518fb193dd643a801f27304f97f8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 04da2dedfa4f3e6458f1f6d27db06861, type: 2}
+  m_sharedMaterial: {fileID: -5439839470407881533, guid: 04da2dedfa4f3e6458f1f6d27db06861, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -21,7 +21,7 @@ public class LevelUpUI : MonoBehaviour
     private List<int> skillBenList;
     private SoundRequester soundRequester;
     //private List<int> skillNums = new List<int>();
-    private Dictionary<int, int> skillNums = new Dictionary<int, int>();
+    private Dictionary<int, int> skillIds;
 
     public bool isSelect { get; private set; }
     public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
@@ -61,9 +61,12 @@ public class LevelUpUI : MonoBehaviour
 
     private void CloseBox(int skillId)
     {
-        int skillNum = skillId / 10000 == 1 ? PlayerUI.Instance.activeSkillCount : PlayerUI.Instance.passiveSkillCount;
-        SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, skillNum);
 
+        if (skillId != 99999)
+        {
+            SkillManager.Instance.SkillAdd(skillId, GameManager.Instance.player.transform, skillId / 10000 == 1 ? PlayerUI.Instance.activeSkillCount : PlayerUI.Instance.passiveSkillCount);
+        }
+        
         foreach (SkillUI ui in skillUis)
         {
             UIPoolManager.Instance.DeSpawnUI("SkillUI", ui);
@@ -72,8 +75,7 @@ public class LevelUpUI : MonoBehaviour
         {
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DEMISE);
         }
-        //Time.timeScale = 1f;
-        GameManager.Instance.Pause();
+        GameManager.Instance.UnPause();
         gameObject.SetActive(false);
         isSelect = true;
     }
@@ -83,7 +85,8 @@ public class LevelUpUI : MonoBehaviour
         isSelect = false;
         float height = 175 + 120 * num;
         bodyRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
-        for (int i = 0, j = 0; i < num; i++)
+        int j = 0;
+        for (int i = 0; i < num; i++)
         {
             int skillId = RandomSkillId();
             if (skillId == 99999)
@@ -104,6 +107,15 @@ public class LevelUpUI : MonoBehaviour
             skillUi.btn.onClick.AddListener(() => CloseBox(skillId));
             skillUis.Add(skillUi);
         }
+
+        for (int i = j; i < num; i++)
+        {
+            Vector2 pos = new Vector2(0, height * 0.5f - 175 - 120 * i);
+            SkillUI skillUi = (SkillUI)UIPoolManager.Instance.SpawnUI("SkillUI", body.transform, pos);
+            skillUi.UISetting("Arts/Dummy", "", "");
+            skillUi.btn.onClick.RemoveAllListeners();
+            skillUi.btn.onClick.AddListener(() => CloseBox(99999));
+        }
     }
 
     /*
@@ -114,20 +126,19 @@ public class LevelUpUI : MonoBehaviour
     private int RandomSkillId()
     {
         //Dictionary<int, SkillInfo> skillList = SkillManager.Instance.skillList;
-        Dictionary<int, Skill> skillList = SkillManager.Instance.skillList;
         int skillId = 0;
-        int c = skillNums.Count;
+        //int c = skillNums.Count;
         if (PlayerUI.Instance.skillCount < SkillManager.SKILL_MAX_COUNT) //스킬칸이 남은 경우
         {
-            while (c-- != 0)
+            //while (c-- != 0)
+            for (int i = 0; i < skillIds.Count; i++)
             {
                 //skillId = skillNums[UnityEngine.Random.Range(0, skillNums.Count)];
-                skillId = skillNums.ElementAt(UnityEngine.Random.Range(0, skillNums.Count)).Key;
-                //if (skillBenList.Contains(skillId))
-                //{
-                //    continue;
-                //}
-
+                skillId = skillIds.ElementAt(UnityEngine.Random.Range(0, skillIds.Count)).Key;
+                if (skillBenList.Contains(skillId / 100))
+                {
+                    continue;
+                }
                 if (skills.Contains(skillId))
                 {
                     continue;
@@ -141,40 +152,34 @@ public class LevelUpUI : MonoBehaviour
                     continue;
                 }
 
-                //skillId = skillId * 100 + 1;
-
-                foreach (int id in skillList.Keys)
+                int fullId = 0;
+                foreach (int id in SkillManager.Instance.skillList.Keys)
                 {
                     if (id / 100 == skillId) //가지고 있는 스킬일 때
                     {
-                        if (id % 100 != skillNums[id / 100]) //만렙이 아니라면
+                        if (id % 100 != skillIds[skillId]) //만렙이 아니라면
                         {
                             skills.Add(skillId);
                             return id + 1;
                         }
-                        else if (id % 100 == skillNums[id / 100]) //만렙이면 리스트에서 제거
-                        {
-                            skillNums.Remove(skillId);
-                            break;
-                        }
+                        //else if (id % 100 == skillNums[id / 100]) //만렙이면 리스트에서 제거
+                        //{
+                        //    skillNums.Remove(skillId);
+                        //    break;
+                        //}
+                        fullId = id;
                     }
                 }
 
-                if (!skillNums.ContainsKey(skillId))
+                if (fullId % 100 == skillIds[skillId])
                 {
                     continue;
                 }
-                //if (skillId / 10000 == 1 && PlayerUI.Instance.activeSkillCount == SkillManager.ACTIVE_SKILL_MAX_COUNT)
-                //{
-                //    continue;
-                //}
-                //if (skillId / 10000 == 2 && PlayerUI.Instance.passiveSkillCount == SkillManager.PASSIVE_SKILL_MAX_COUNT)
-                //{
-                //    continue;
-                //}
-
-                skills.Add(skillId);
-                return skillId * 100 + 1;
+                else
+                {
+                    skills.Add(skillId);
+                    return skillId * 100 + 1;
+                }
             }
         }
         else
@@ -182,16 +187,17 @@ public class LevelUpUI : MonoBehaviour
             int index = UnityEngine.Random.Range(0, SkillManager.SKILL_MAX_COUNT);
             for (int i = 0; i < SkillManager.SKILL_MAX_COUNT; i++)
             {
-                skillId = skillList.Keys.ElementAt((i + index) % SkillManager.SKILL_MAX_COUNT);
+                skillId = SkillManager.Instance.skillList.Keys.ElementAt((i + index) % SkillManager.SKILL_MAX_COUNT);
                 if (skills.Contains(skillId / 100))
                 {
                     continue;
                 }
-                if (skillId % 100 != skillNums[skillId / 100])
+                if (skillId % 100 != skillIds[skillId / 100])
                 {
                     skills.Add(skillId / 100);
                     return skillId + 1;
                 }
+
             }
         }
 
@@ -200,23 +206,21 @@ public class LevelUpUI : MonoBehaviour
 
     private void SkillNumRead()
     {
+        skillIds = new Dictionary<int, int>();
+
         foreach (string id in skillTable.Keys)
         {
             try
             {
                 int i = Convert.ToInt32(id) / 100;
-                if (skillBenList.Contains(i))
+                if (!skillIds.ContainsKey(i))
                 {
-                    continue;
+                    skillIds.Add(i, 1);
                 }
-                if (!skillNums.ContainsKey(i))
-                {
-                    skillNums.Add(i, 1);
-                }
-                else
-                {
-                    skillNums[i]++;
-                }
+                //else
+                //{
+                //    skillNums[i]++;
+                //}
             }
             catch
             {
@@ -229,18 +233,14 @@ public class LevelUpUI : MonoBehaviour
             try
             {
                 int i = Convert.ToInt32(id) / 100;
-                if (skillBenList.Contains(i))
+                if (!skillIds.ContainsKey(i))
                 {
-                    continue;
+                    skillIds.Add(i, 1);
                 }
-                if (!skillNums.ContainsKey(i))
-                {
-                    skillNums.Add(i, 1);
-                }
-                else
-                {
-                    skillNums[i]++;
-                }
+                //else
+                //{
+                //    skillNums[i]++;
+                //}
             }
             catch
             {

@@ -30,4 +30,11 @@ public class SkillUI : InGameUI
         skillInfo.text = LocalizeManager.Instance.GetText(skillData["Desc"].ToString());
     }
 
+    public void UISetting(string icon, string name, string info)
+    {
+        skillIcon.sprite = ResourcesManager.Load<Sprite>(icon);
+        skillName.text = name;
+        skillInfo.text = info;
+    }
+
 }

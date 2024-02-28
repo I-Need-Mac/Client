@@ -73,6 +73,20 @@ public class MonsterSpawner : SingletonBehaviour<MonsterSpawner>
         return monster;
     }
 
+    public Monster SpawnFriendlyMonster(int monsterId, Vector2 pos)
+    {
+        DebugManager.Instance.PrintDebug("[MonsterSpawnData] MonsterSpawnRequest (Friendly) " + monsterId);
+        Monster monster = spawner[monsterId].GetObject();
+        monster.monsterId = monsterId;
+        monster.gameObject.layer = (int)LayerConstant.SPAWNOBJECT;
+        monster.GetComponentInChildren<MeshRenderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
+        monster.SpawnSet(1.0f, 1.0f);
+        monster.transform.localScale = Vector3.one * monster.monsterData.sizeMultiple;
+        monster.transform.localPosition = new Vector3(pos.x, pos.y, (int)LayerConstant.MONSTER);
+        monster.gameObject.SetActive(true);
+        return monster;
+    }
+
     public void DeSpawnMonster(Monster monster)
     {
         spawner[monster.monsterId].ReleaseObject(monster);

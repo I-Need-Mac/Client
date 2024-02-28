@@ -104,6 +104,8 @@ MonoBehaviour:
     SOUNDSITUATION: 11
     audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &6935377583905371248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,8 +361,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.964836, y: 2.0737364}
-  m_Size: {x: 3.3228545, y: 2.6145027}
+  m_Offset: {x: -1.0796003, y: 2.0778327}
+  m_Size: {x: 3.9950938, y: 3.1145794}
   m_Direction: 1
 --- !u!114 &5060545765316546406
 MonoBehaviour:

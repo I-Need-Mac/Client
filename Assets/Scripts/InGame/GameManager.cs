@@ -59,7 +59,14 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Pause();
+            if (Time.timeScale == 0.0f)
+            {
+                UnPause();
+            }
+            else
+            {
+                Pause();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -178,18 +185,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     #region Game State
     public void Pause()
     {
-        if (Time.timeScale == 1f)
-        {
-            SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.EFFECT);
-            //SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.VOICE);
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
-            //SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
-            Time.timeScale = 1f;
-        }
+        SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.EFFECT);
+        Time.timeScale = 0f;
+    }
+
+    public void UnPause()
+    {
+        SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
+        Time.timeScale = 1f;
     }
 
     private void ESC()

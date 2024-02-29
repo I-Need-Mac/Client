@@ -17,10 +17,8 @@ public class Monster : MonoBehaviour
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
-    //private bool isSlow;
     private bool spineSwitch;
     private StatusEffect statusEffect;
-    private bool isFriendly;
     private BehaviorTreeManager btManager;
 
     private float weightX;
@@ -38,6 +36,8 @@ public class Monster : MonoBehaviour
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
     private int exState = 0;
+
+    public bool isFriendly { get; private set; }
     public int monsterId { get; set; }
     public bool isHit { get; set; }
     public bool isAttack { get; private set; }
@@ -130,6 +130,14 @@ public class Monster : MonoBehaviour
         isHit = false;
         spineSwitch = true;
         //isSlow = false;
+    }
+
+    public void StatusUpdate(int hp, int attack, float moveSpeed)
+    {
+        monsterData.SetHp(monsterData.hp + hp);
+        monsterData.SetCurrentHp(monsterData.hp);
+        monsterData.SetAttack(monsterData.attack + attack);
+        monsterData.SetMoveSpeed(monsterData.moveSpeed + moveSpeed);
     }
 
     private void OnEnable()
@@ -407,7 +415,6 @@ public class Monster : MonoBehaviour
 
     public void Hit(float totalDamage)
     {
-        //StopCoroutine(HpBarControl());
         if (hpBar == null && gameObject.activeInHierarchy)
         {
             StartCoroutine(HpBarControl());
@@ -492,17 +499,26 @@ public class Monster : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Monster monster;
-        if (!isFriendly)
+        if (isFriendly)
+        {
+            if (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster))
+            {
+                if (!monster.isFriendly)
+                {
+                    Hit(monster.monsterData.attack);
+                }
+            }
+        }
+        else
         {
             if (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster))
             {
                 if (monster.isFriendly)
                 {
-                    Hit(monsterData.attack);
+                    Hit(monster.monsterData.attack);
                 }
             }
         }
-        
     }
     #endregion
 

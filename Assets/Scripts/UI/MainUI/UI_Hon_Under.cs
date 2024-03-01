@@ -17,6 +17,7 @@ public class UI_Hon_Under : UI_Popup
 
     private enum Images
     {
+        Hon_Box,
         Hon_MainBox,
         Back,
         Save,
@@ -72,7 +73,7 @@ public class UI_Hon_Under : UI_Popup
         this.soulTable = CSVReader.Read("UnderSoul");
         this.seonghonId = mainCategoryId;
 
-        GetImage(0).sprite = ResourcesManager.Load<Sprite>("Arts/" + CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainImagePath").ToString());
+        GetImage(1).sprite = ResourcesManager.Load<Sprite>("Arts/" + CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainImagePath").ToString());
         GetImage(0).GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(CSVReader.Read("MainCategorySoul", mainCategoryId.ToString(), "SoulMainNameText").ToString());
 
         foreach (string id in soulTable.Keys)

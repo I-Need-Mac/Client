@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1025801212237496860}
   - component: {fileID: 112204225621752451}
   - component: {fileID: 9202576788742250240}
+  - component: {fileID: 4096010196512580329}
   m_Layer: 0
   m_Name: Seimei2
   m_TagString: ItemCollider
@@ -51,8 +52,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomVoice: []
-  dieVoice: []
+  voicePackItems:
+  - audioClipList_KOR: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: fd28172a90b5f2f4985614f00b3732e3, type: 3}
+    - {fileID: 8300000, guid: 0173682811e3cb14592db111c80acf83, type: 3}
+    - {fileID: 8300000, guid: b79e2bfbe0544b84ba2145215c2a10b9, type: 3}
+    - {fileID: 8300000, guid: 14fe092b1f466da48bb8e9e529b30114, type: 3}
+    - {fileID: 8300000, guid: 5449e2bc74b1ce14f96c711a61643edc, type: 3}
+    - {fileID: 8300000, guid: d1dba350917d9f844910e69fbfe0d21b, type: 3}
+    - {fileID: 8300000, guid: f9a5913687e569443bcde07e4dcb24bc, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: be14e5c8bf99e7544be991a5979188fe, type: 3}
+    - {fileID: 8300000, guid: db40f8ad5c1307f469bc1162241da1ac, type: 3}
+    - {fileID: 8300000, guid: f3cff1b8b34524543b7b05feac4852c3, type: 3}
+    - {fileID: 8300000, guid: a45085beb228ab34588bc32ec07fb520, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &1025801212237496860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,6 +202,56 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4096010196512580329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112204225621752454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
+  speakerSettings:
+  - speakerName: Seimei
+    _audioType: 1
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 1
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
+  soundPackItems:
+  - usingSpeaker: Seimei2
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: 6724bda979293be4fb788daebb780ba0, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - usingSpeaker: Seimei2
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 11
+    audioClip: {fileID: 8300000, guid: 6724bda979293be4fb788daebb780ba0, type: 3}
+    audioClipList:
+    - {fileID: 8300000, guid: 134a5e35267c548459ba45ec9697f830, type: 3}
+    - {fileID: 8300000, guid: 65a68906472da6d438729d5374ef9714, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &112204225862540683
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,6 +863,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings: []
   soundPackItems: []
 --- !u!33 &8938361696430782516

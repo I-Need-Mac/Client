@@ -1957,7 +1957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2692833131645881364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2101,7 +2101,11 @@ MonoBehaviour:
     audioClipList_ENG: []
     audioClipList_JP: []
   siwoo:
-    audioClipList_KOR: []
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: 666b3fbd01a49eb49a216ebf676acfa9, type: 3}
+    - {fileID: 8300000, guid: 6d2bce35adcb7624eba514303d39fc62, type: 3}
+    - {fileID: 8300000, guid: c85e3fc7a354d5e43bdc7b8a64b04878, type: 3}
+    - {fileID: 8300000, guid: 6897a4dc4d713004c90f1600b514f1c0, type: 3}
     audioClipList_ENG: []
     audioClipList_JP: []
   sinwol:
@@ -2113,7 +2117,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: cf3f39f7e6465c347a5003fd22348a08, type: 3}
     audioClipList_JP: []
   seimei:
-    audioClipList_KOR: []
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: 442d526c6bdd85840af7209796e1cfe5, type: 3}
+    - {fileID: 8300000, guid: b8c1d60d9f028f8488b6de158b1684f0, type: 3}
     audioClipList_ENG: []
     audioClipList_JP: []
   macia:

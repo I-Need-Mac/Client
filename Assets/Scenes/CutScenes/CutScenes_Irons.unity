@@ -260,6 +260,8 @@ MonoBehaviour:
     audioClip: {fileID: 0}
     audioClipList:
     - {fileID: 8300000, guid: 9e87278dc8687af48bc96ef0b6ac42c5, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &1519226712
 MonoBehaviour:
   m_ObjectHideFlags: 0

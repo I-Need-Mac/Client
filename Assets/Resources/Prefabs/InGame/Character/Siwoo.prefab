@@ -112,8 +112,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomVoice: []
-  dieVoice: []
+  voicePackItems:
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: 666b3fbd01a49eb49a216ebf676acfa9, type: 3}
+    - {fileID: 8300000, guid: 6d2bce35adcb7624eba514303d39fc62, type: 3}
+    - {fileID: 8300000, guid: 6897a4dc4d713004c90f1600b514f1c0, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: 666b3fbd01a49eb49a216ebf676acfa9, type: 3}
+    - {fileID: 8300000, guid: 6d2bce35adcb7624eba514303d39fc62, type: 3}
+    - {fileID: 8300000, guid: 6897a4dc4d713004c90f1600b514f1c0, type: 3}
+    - {fileID: 8300000, guid: fc9c587f327a6a84e8587615fa165048, type: 3}
+    - {fileID: 8300000, guid: 27e04dd51e0e9734588bcc5027e34675, type: 3}
+    - {fileID: 8300000, guid: e25e3d6b9263d3e4a9e62fa18ffb8c28, type: 3}
+    - {fileID: 8300000, guid: c03b7d0e830593a41b138ce8f06e8e5d, type: 3}
+    - {fileID: 8300000, guid: 3dce107581ef80442b158b94170e02a6, type: 3}
+    - {fileID: 8300000, guid: be8f08e08a0cfb44c8edc950242509b8, type: 3}
+    - {fileID: 8300000, guid: 25c569255e86be542994ed1772172497, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: cdda108743bf7d2459a999bcc240b559, type: 3}
+    - {fileID: 8300000, guid: a410d243e4ce6044989556494ea6f7f6, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &3942313967703177396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings:
   - speakerName: Siwoo
     _audioType: 1
@@ -278,6 +303,19 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 6
     audioClip: {fileID: 8300000, guid: 51cca7bd133780c4ca04bbbb616e8245, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - usingSpeaker: Siwoo
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 11
+    audioClip: {fileID: 0}
+    audioClipList:
+    - {fileID: 8300000, guid: 0babd1cb766f29445b7081d1fe7e0bf8, type: 3}
+    - {fileID: 8300000, guid: e56639c3b38c22f43b383295acfc2f45, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &4109297475406242040
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings: []
   soundPackItems: []
 --- !u!33 &4936782971846787740

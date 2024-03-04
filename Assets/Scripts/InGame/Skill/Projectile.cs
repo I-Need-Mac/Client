@@ -323,7 +323,10 @@ public class Projectile : MonoBehaviour
         summoner.StatusUpdate(0, (int)skillData.damage, skillData.speed);
         yield return new WaitForSeconds(skillData.duration);
 
-        MonsterSpawner.Instance.DeSpawnMonster(summoner);
+        if (summoner.gameObject.activeInHierarchy)
+        {
+            MonsterSpawner.Instance.DeSpawnMonster(summoner);
+        }
     }
 
 }

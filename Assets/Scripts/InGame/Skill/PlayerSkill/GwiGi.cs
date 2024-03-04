@@ -22,7 +22,6 @@ public class GwiGi : ActiveSkill
 
         for (int i = 0; i < skillData.projectileCount; i++)
         {
-            DebugManager.Instance.PrintError("Direction: {0}  /  Pos: {1}", projectileDirection, direction);
             Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter, scaleType: SCALE_TYPE.HORIZON);
             projectile.SetDirection(projectileDirection);
             if (projectileDirection == PROJECTILE_DIRECTION.LEFT)

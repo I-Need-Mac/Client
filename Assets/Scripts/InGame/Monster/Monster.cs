@@ -395,7 +395,7 @@ public class Monster : MonoBehaviour
     private Transform FindEnemy()
     {
         Transform enemy = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, });
-        if (enemy.TryGetComponent(out Monster monster))
+        if (enemy != null && enemy.TryGetComponent(out Monster monster))
         {
             return monster.isFriendly == false ? enemy : null;
         }

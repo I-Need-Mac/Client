@@ -43,6 +43,17 @@ public class Projectile : MonoBehaviour
         {
             renderer.sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
         }
+        else
+        {
+            try
+            {
+                transform.GetComponentInChildren<Renderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
+            }
+            catch
+            {
+                DebugManager.Instance.PrintError("[Projectile: SortingLayer] Not Found Renderer Component.");
+            }
+        }
         animator = GetComponent<Animator>();
     }
 

@@ -30,6 +30,7 @@ public class HwiPung : ActiveSkill
         do
         {
             float distance = Time.fixedDeltaTime * skillData.speed * coefficient / skillData.attackDistance;
+            projectile.transform.GetChild(0).Rotate(Vector3.forward * Time.deltaTime * skillData.speed * 50.0f);
             projectile.transform.Translate(direction * distance);
             travel -= distance;
             weight -= Time.fixedDeltaTime / skillData.attackDistance;

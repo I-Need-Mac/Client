@@ -436,14 +436,11 @@ public class Monster : MonoBehaviour
 
     private IEnumerator HpBarControl()
     {
-        //hpBar.HpBarSwitch(true);
-        //yield return hpBarVisibleTime;
-        //hpBar.HpBarSwitch(false);
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
         float time = 0.0f;
         do
         {
-            hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+            hpBar.HpBarSetting(transform.Find("HpBar").position, monsterData.currentHp, monsterData.hp);
             time += Time.fixedDeltaTime;
             yield return fixedFrame;
         } while (hpBar != null && time < hpBarVisibleTime && monsterData.currentHp > 0);
@@ -460,6 +457,12 @@ public class Monster : MonoBehaviour
         if (soundRequester != null) {
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         }
+        if (hpBar != null)
+        {
+            UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
+            hpBar = null;
+        }
+
         monsterCollider.enabled = false;
         monsterCollider2.enabled = false;
         
@@ -472,11 +475,7 @@ public class Monster : MonoBehaviour
         {
             DropItem();
         }
-        if (hpBar != null)
-        {
-            UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
-            hpBar = null;
-        }
+        
         GameManager.Instance.killCount++;
         StopAllCoroutines();
         MonsterSpawner.Instance.DeSpawnMonster(this);

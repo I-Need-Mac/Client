@@ -69,6 +69,36 @@ CapsuleCollider2D:
   m_Offset: {x: -0.2171961, y: -0.12}
   m_Size: {x: 3.4808319, y: 6.003005}
   m_Direction: 0
+--- !u!1 &2667686793746405835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5252638419744563447}
+  m_Layer: 0
+  m_Name: HpBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5252638419744563447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2667686793746405835}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.97, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8905264666418503441}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2974438684099835032
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,6 +285,7 @@ Transform:
   m_Children:
   - {fileID: 2962664318877677496}
   - {fileID: 6735560551035422607}
+  - {fileID: 5252638419744563447}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -324,21 +355,33 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 7
     audioClip: {fileID: 8300000, guid: 53d5d5d2b28e9fa49b7c758c2e44b2d5, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 11
     audioClip: {fileID: 8300000, guid: 3c0bdce2c3ed1654f9e59a2da3a0b0e0, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 6
     audioClip: {fileID: 8300000, guid: de8b1bfac9da4584b895d85bc3729fe6, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 9
     audioClip: {fileID: 8300000, guid: f2fcde20bf5b05644acf05a678786cf4, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &2357433901565752901
 MonoBehaviour:
   m_ObjectHideFlags: 0

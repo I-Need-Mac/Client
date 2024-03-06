@@ -34,6 +34,7 @@ Transform:
   m_Children:
   - {fileID: 6685921004776834350}
   - {fileID: 7635149511831304522}
+  - {fileID: 36067257303252060}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78,6 +79,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings:
   - speakerName: Shooter
     _audioType: 1
@@ -101,16 +104,25 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 11
     audioClip: {fileID: 8300000, guid: f8c56772fd518834885dee6348156ac2, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 9
     audioClip: {fileID: 8300000, guid: 1c43a9250c82d3f42b108a7720751aff, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 7
     audioClip: {fileID: 8300000, guid: f8c56772fd518834885dee6348156ac2, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &6152796279671637203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +172,36 @@ CapsuleCollider2D:
   m_Offset: {x: 0.07, y: -0.01}
   m_Size: {x: 1.37, y: 0.7}
   m_Direction: 1
+--- !u!1 &5745256171311945305
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 36067257303252060}
+  m_Layer: 0
+  m_Name: HpBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &36067257303252060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5745256171311945305}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.08, y: -0.77, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1027257438284295559}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6670677688976737806
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +367,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings:
   - speakerName: Shooter
     _audioType: 1
@@ -348,6 +392,9 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 8
     audioClip: {fileID: 0}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &8348437220285926542
 GameObject:
   m_ObjectHideFlags: 0

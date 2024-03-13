@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
@@ -115,5 +116,30 @@ public class APIManager : SingleTon<APIManager>
         UIStatus.Instance.key = nr.data.keys;
         return nr;
     }
-
+    public async Task<OwnBoxResult> GetBox()
+    {
+        OwnBoxResult result = null;
+        Dictionary<string, object> sendData = new Dictionary<string, object>();
+        sendData.Add("steam_id", GetSteamID());
+        result = (OwnBoxResult)await requestManager.Get<OwnBoxResult>(APIAddressManager.REQUEST_USER_OWN_BOX, sendData);
+        return result;
+    }
+    public async Task<BoxOpenStart> BoxOpenStart(int id)
+    {
+        BoxOpenStart result = null;
+        Dictionary<string, object> sendData = new Dictionary<string, object>();
+        sendData.Add("steam_id", GetSteamID());
+        sendData.Add("id", id);
+        result = (BoxOpenStart)await requestManager.Patch<BoxOpenStart>(APIAddressManager.REQUEST_BOX_OPEN_START, sendData);
+        return result;
+    }
+    public async Task<BoxOpen> BoxOpen(int id)
+    {
+        BoxOpen result = null;
+        Dictionary<string,object> sendData = new Dictionary<string, object>();
+        sendData.Add("steam_id", GetSteamID());
+        sendData.Add("id", id);
+        result = (BoxOpen)await requestManager.Patch<BoxOpen>(APIAddressManager.REQUEST_BOX_OPEN, sendData);
+        return result;
+    }
 }

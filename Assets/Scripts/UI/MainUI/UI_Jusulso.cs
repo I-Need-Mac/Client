@@ -1,9 +1,14 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
+using static UIStatus;
 
 public class UI_Jusulso : UI_Popup
 {
@@ -23,14 +28,15 @@ public class UI_Jusulso : UI_Popup
     [SerializeField]
     GameObject slot_Page;
     [SerializeField]
-    List<GameObject> slotList = new List<GameObject>();
+    List<UI_JusulsoPossesionSlot> slotList = new List<UI_JusulsoPossesionSlot>();
     [SerializeField]
     GameObject progressSlot;
     [SerializeField]
     public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>();
-    // Start is called before the first frame update
+
     void Start()
     {
+
         jusulso_Title.text = LocalizeManager.Instance.GetText("UI_Sorcere_Title");
         progress_Box.text = LocalizeManager.Instance.GetText("UI_Sorcere_MyBoxes");
         possesion_Box.text = LocalizeManager.Instance.GetText("UI_Sorcere_AllBox");
@@ -40,14 +46,14 @@ public class UI_Jusulso : UI_Popup
         for (int i = 0; i < objectValue.Length; i++)
         {
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
-        }
-        UI_JusulsoPossesionSlot possesionSlot = Util.UILoad<UI_JusulsoPossesionSlot>(Define.UiPrefabsPath + "/UI_JusulsoPossesionSlot");
+        }       
         for (int i = 0; i < 16; i++)
         {
-            GameObject slot = Instantiate(possesionSlot.gameObject);
-            slot.GetComponent<UI_JusulsoPossesionSlot>();
-            slot.transform.SetParent(slot_Page.transform);
-            slotList.Add(slot);
+            UI_JusulsoPossesionSlot possesionSlot = Util.UILoad<UI_JusulsoPossesionSlot>(Define.UiPrefabsPath + "/UI_JusulsoPossesionSlot");
+            GameObject slotGameObject = Instantiate(possesionSlot.gameObject);
+            UI_JusulsoPossesionSlot slotComponent = slotGameObject.GetComponent<UI_JusulsoPossesionSlot>();
+            slotGameObject.transform.SetParent(slot_Page.transform);
+            slotList.Add(slotComponent); // UI_JusulsoPossesionSlot 타입으로 캐스팅하여 추가
         }
         UI_JusulsoProgressBox progressBox = Util.UILoad<UI_JusulsoProgressBox>(Define.UiPrefabsPath + "/UI_JusulsoProgressBox");
         for(int i = 0; i<3; i++)
@@ -59,6 +65,7 @@ public class UI_Jusulso : UI_Popup
         }
         SetSlotPos();
         SetProgressSlotPos();
+        RequestBox();
     }
 
     public void OnClickObject(PointerEventData data)
@@ -107,6 +114,19 @@ public class UI_Jusulso : UI_Popup
         }
     }
 
-    
+    async void RequestBox()
+    {
+        OwnBoxResult result = await APIManager.Instance.GetBox();
+
+        for (int i = 0; i < result.data.Count; i++)
+        {
+            slotList[i].SetItem();
+            slotList[i].SetItemData(result.data[i]);
+            if (slotList[i].box.open_start_time != null)
+            {
+                slotList[i].MoveItemToProgressBox();
+            }
+        }    
+    }
 
 }

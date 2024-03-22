@@ -52,7 +52,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
 
         SetImageAlpha();
     }
-    public void SetItemData(OwnBoxResult.OwnBoxData data)
+    public void SetItemData(OwnBoxData data)
     {
         box.id= data.id;
         box.steam_id= data.steam_id;

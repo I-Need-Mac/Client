@@ -33,6 +33,7 @@ public class UI_Jusulso : UI_Popup
     GameObject progressSlot;
     [SerializeField]
     public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>();
+    public DateTime currentTime;
 
     void Start()
     {
@@ -117,11 +118,11 @@ public class UI_Jusulso : UI_Popup
     async void RequestBox()
     {
         OwnBoxResult result = await APIManager.Instance.GetBox();
-
-        for (int i = 0; i < result.data.Count; i++)
+        currentTime = result.data.current_time;
+        for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
         {
             slotList[i].SetItem();
-            slotList[i].SetItemData(result.data[i]);
+            slotList[i].SetItemData(result.data.userRewardBoxes[i]);
             if (slotList[i].box.open_start_time != null)
             {
                 slotList[i].MoveItemToProgressBox();

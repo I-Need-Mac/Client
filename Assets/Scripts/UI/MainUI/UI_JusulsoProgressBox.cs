@@ -14,13 +14,13 @@ public class UI_JusulsoProgressBox : UI_Base
     public Sprite itemImage;
     public TextMeshProUGUI time;
     private Button slotButton;
-    public DateTime currentTime;
-
+    private UI_Jusulso jusulso;
     private TimeSpan openTime;
     private TimeSpan duringTime;
     // Start is called before the first frame update
     void Start()
     {
+        jusulso = FindObjectOfType<UI_Jusulso>();
         slotButton = GetComponentInChildren<Button>();
         slotButton.onClick.AddListener(RequestBoxOpen);
         if (box != null)
@@ -36,7 +36,7 @@ public class UI_JusulsoProgressBox : UI_Base
         }
         openTime = new TimeSpan(0,100,0);
         StartCoroutine(UpdateTimer());
-        
+        TimeSet();
         SetImageAlpha();
     }
 
@@ -72,12 +72,6 @@ public class UI_JusulsoProgressBox : UI_Base
         if(box != null)
         {
             BoxOpen boxOpen = await APIManager.Instance.BoxOpen(box.id);
-            if (boxOpen.statusCode == 200)
-            {
-                DebugManager.Instance.PrintDebug("박스 열기");
-                StartCoroutine(UpdateTimer());
-            }
-
         }
     }
     public void TimeSet()
@@ -100,18 +94,52 @@ public class UI_JusulsoProgressBox : UI_Base
         {
             if (box != null && box.open_start_time != null)
             {
-                currentTime = DateTime.Now;
-                TimeSpan timeDifference = currentTime - (DateTime)box.open_start_time;
-                duringTime = openTime - timeDifference;           
+                RewardBoxData data = new RewardBoxData();
+                TimeSpan timeDifference = jusulso.currentTime - (DateTime)box.open_start_time;
+                duringTime = openTime - timeDifference;
+                duringTime.Subtract(TimeSpan.FromSeconds(1.0f));
                 time.text = string.Format("남은시간 {0:00}:{1:00}:{2:00}", duringTime.Hours, duringTime.Minutes, duringTime.Seconds);
-
+                DebugManager.Instance.PrintDebug(duringTime);
                 if (duringTime.TotalSeconds < 0)
                 {
                     time.text = "상자 열기";
                 }
             }
-            
             yield return new WaitForSeconds(1.0f);
         }
     }
+    //public IEnumerator UpdateTimer()
+    //{
+    //    float elapsedTime = 0f;
+
+    //    while (true)
+    //    {
+    //        if (box != null && box.open_start_time != null)
+    //        {
+    //            elapsedTime += Time.deltaTime;
+
+    //            if (elapsedTime >= 1.0f)
+    //            {
+    //                elapsedTime = 0f;
+
+    //                TimeSpan timeDifference = jusulso.currentTime - (DateTime)box.open_start_time;
+    //                duringTime = openTime - timeDifference;
+    //                TimeSpan oneSecond = TimeSpan.FromSeconds(1);
+    //                duringTime -= oneSecond;
+    //                //duringTime = duringTime.Subtract(oneSecond);
+    //                DebugManager.Instance.PrintDebug(duringTime);
+
+    //                if (duringTime.TotalSeconds < 0)
+    //                {
+    //                    time.text = "상자 열기";
+    //                }
+    //                else
+    //                {
+    //                    time.text = string.Format("남은시간 {0:00}:{1:00}:{2:00}", duringTime.Hours, duringTime.Minutes, duringTime.Seconds);
+    //                }
+    //            }
+    //        }
+    //        yield return null;
+    //    }
+    //}
 }

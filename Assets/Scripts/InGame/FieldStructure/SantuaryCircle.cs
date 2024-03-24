@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class SantuaryCircle : FieldStructure
@@ -10,6 +11,8 @@ public class SantuaryCircle : FieldStructure
     private WaitForSeconds tick;
     private WaitForSeconds sec;
     private SpriteRenderer sprite;
+
+    private ParticleSystem[] particles;
 
     protected override void Awake()
     {
@@ -24,6 +27,8 @@ public class SantuaryCircle : FieldStructure
 
         sprite = front.GetComponent<SpriteRenderer>();
         sprite.enabled = false;
+
+        particles = GetComponentsInChildren<ParticleSystem>();
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)
@@ -37,7 +42,9 @@ public class SantuaryCircle : FieldStructure
 
     public IEnumerator Activation()
     {
+        top.GetComponent<SpriteRenderer>().enabled = false;
         sprite.enabled = true;
+        OnEffect();
         for (int i = 0; i < duration; i++)
         {
             front.enabled = true;
@@ -47,6 +54,29 @@ public class SantuaryCircle : FieldStructure
             yield return sec;
         }
 
+        top.GetComponent<SpriteRenderer>().enabled = true;
         sprite.enabled = false;
+        OffEffect();
+    }
+
+    public void OnEffect()
+    {
+        foreach (ParticleSystem particle in particles)
+        {
+            particle.Play();
+        }
+
+    }
+
+    public void OffEffect()
+    {
+        foreach (ParticleSystem particle in particles)
+        {
+            if (particle.isPlaying)
+            {
+                particle.Stop();
+                particle.Clear();
+            }
+        }
     }
 }

@@ -76,9 +76,7 @@ public class FieldStructure : MonoBehaviour
 
     private void FieldStructureInit()
     {
-        SetLayer(transform, (LayerConstant)fieldStructureData.layerOrder);
-        top = transform.Find("Top").GetComponent<Collider2D>();
-        SetLayer(top.transform, LayerConstant.DECORATION);
+        //top = transform.Find("Top").GetComponent<Collider2D>();
         if (transform.Find("Top").TryGetComponent(out Collider2D col))
         {
             top = col;
@@ -89,6 +87,9 @@ public class FieldStructure : MonoBehaviour
             front = col2;
             front.isTrigger = fieldStructureData.frontIsPassable;
         }
+
+        SetLayer(transform, (LayerConstant)fieldStructureData.layerOrder);
+        SetLayer(top.transform, LayerConstant.DECORATION);
     }
 
     protected void SetLayer(Transform trans, LayerConstant layer)

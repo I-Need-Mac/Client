@@ -346,6 +346,9 @@ MonoBehaviour:
   slotList: []
   progressSlot: {fileID: 238687729884906150}
   progressList: []
+  reward: {fileID: 3112905273200707601, guid: d834a0f0f2a15334281ee91ac4efaf54, type: 3}
+  item1: box_1
+  item2: key
 --- !u!1 &238687729515637637
 GameObject:
   m_ObjectHideFlags: 0

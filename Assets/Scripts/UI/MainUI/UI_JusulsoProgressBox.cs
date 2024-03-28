@@ -72,6 +72,26 @@ public class UI_JusulsoProgressBox : UI_Base
         if(box != null)
         {
             BoxOpen boxOpen = await APIManager.Instance.BoxOpen(box.id);
+            if(boxOpen.data.reward1 != null)
+            {
+                DebugManager.Instance.PrintDebug(boxOpen.data.reward1.item);
+                BoxReward(boxOpen.data.reward1.item);
+            }
+            if(boxOpen.data.reward2 != null)
+            {
+                DebugManager.Instance.PrintDebug(boxOpen.data.reward2.item);
+                BoxReward(boxOpen.data.reward2.item);
+            }
+            if(boxOpen.data.reward3 != null)
+            {
+                DebugManager.Instance.PrintDebug(boxOpen.data.reward3.item);
+                BoxReward(boxOpen.data.reward3.item);
+            }
+            if(boxOpen.data.reward4 != null)
+            {
+                DebugManager.Instance.PrintDebug(boxOpen.data.reward4.item);
+                BoxReward(boxOpen.data.reward4.item);
+            }
         }
     }
     public void TimeSet()
@@ -107,6 +127,13 @@ public class UI_JusulsoProgressBox : UI_Base
             }
             yield return new WaitForSeconds(1.0f);
         }
+    }
+    public void BoxReward(string item)
+    {
+        UI_JusulsoReward reward = Util.UILoad<UI_JusulsoReward>(Define.UiPrefabsPath + "/UI_JusulsoReward");
+        GameObject rewardGameObject = Instantiate(reward.gameObject);
+        rewardGameObject.GetComponent<UI_JusulsoReward>().SetItemImage(item);
+        rewardGameObject.SetActive(true);
     }
     //public IEnumerator UpdateTimer()
     //{

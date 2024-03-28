@@ -7,6 +7,7 @@ using TMPro;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static UIStatus;
 
@@ -33,11 +34,17 @@ public class UI_Jusulso : UI_Popup
     GameObject progressSlot;
     [SerializeField]
     public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>();
+
+    public UI_JusulsoReward reward;
+
     public DateTime currentTime;
+
+    public string item1 = "box_1";
+    public string item2 = "key";
 
     void Start()
     {
-
+        RequestBox();
         jusulso_Title.text = LocalizeManager.Instance.GetText("UI_Sorcere_Title");
         progress_Box.text = LocalizeManager.Instance.GetText("UI_Sorcere_MyBoxes");
         possesion_Box.text = LocalizeManager.Instance.GetText("UI_Sorcere_AllBox");
@@ -66,7 +73,6 @@ public class UI_Jusulso : UI_Popup
         }
         SetSlotPos();
         SetProgressSlotPos();
-        RequestBox();
     }
 
     public void OnClickObject(PointerEventData data)
@@ -129,5 +135,4 @@ public class UI_Jusulso : UI_Popup
             }
         }    
     }
-
 }

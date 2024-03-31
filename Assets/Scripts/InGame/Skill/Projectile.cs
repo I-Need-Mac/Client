@@ -336,7 +336,7 @@ public class Projectile : MonoBehaviour
 
         if (summoner.gameObject.activeInHierarchy)
         {
-            MonsterSpawner.Instance.DeSpawnMonster(summoner);
+            summoner.Die(false);
         }
     }
 

@@ -34,9 +34,7 @@ public class UI_JusulsoProgressBox : UI_Base
             hasBox= false;
             time.gameObject.SetActive(false);
         }
-        openTime = new TimeSpan(0,100,0);
         StartCoroutine(UpdateTimer());
-        TimeSet();
         SetImageAlpha();
     }
 
@@ -49,6 +47,7 @@ public class UI_JusulsoProgressBox : UI_Base
             hasBox = true;
             time.gameObject.SetActive(true);
             SetImageAlpha();
+            TimeSet();
             StartCoroutine(UpdateTimer());
         }
         else
@@ -74,24 +73,21 @@ public class UI_JusulsoProgressBox : UI_Base
             BoxOpen boxOpen = await APIManager.Instance.BoxOpen(box.id);
             if(boxOpen.data.reward1 != null)
             {
-                DebugManager.Instance.PrintDebug(boxOpen.data.reward1.item);
                 BoxReward(boxOpen.data.reward1.item);
             }
             if(boxOpen.data.reward2 != null)
             {
-                DebugManager.Instance.PrintDebug(boxOpen.data.reward2.item);
                 BoxReward(boxOpen.data.reward2.item);
             }
             if(boxOpen.data.reward3 != null)
             {
-                DebugManager.Instance.PrintDebug(boxOpen.data.reward3.item);
                 BoxReward(boxOpen.data.reward3.item);
             }
             if(boxOpen.data.reward4 != null)
             {
-                DebugManager.Instance.PrintDebug(boxOpen.data.reward4.item);
                 BoxReward(boxOpen.data.reward4.item);
             }
+            SetImageAlpha();
         }
     }
     public void TimeSet()
@@ -100,12 +96,22 @@ public class UI_JusulsoProgressBox : UI_Base
         {
             if(box.box_type == 1)
             {
+                DebugManager.Instance.PrintDebug("박스 타입1");
                 openTime = new TimeSpan(0, 1, 0);
+            }
+            else if(box.box_type == 2)
+            {
+                DebugManager.Instance.PrintDebug("박스 타입2");
+                openTime = new TimeSpan(0, 0, 0);
             }
             else
             {
-                openTime = new TimeSpan(0, 100, 0);
+                DebugManager.Instance.PrintDebug("박스 타입을 찾을 수 없습니다");
             }
+        }
+        else
+        {
+            DebugManager.Instance.PrintDebug("박스가 호출 되기 전입니다");
         }
     }
     public IEnumerator UpdateTimer()

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEditor;
 using System;
 using static UIStatus;
+using UnityEditor.Tilemaps;
 
 public class UI_JusulsoPossesionSlot : UI_Base
 {
@@ -37,7 +38,6 @@ public class UI_JusulsoPossesionSlot : UI_Base
         else
         {
             RequestBoxOpenStart();
-            MoveItemToProgressBox();
         }
     }
     public void SetItem()
@@ -68,7 +68,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
         for (int i = 0; i < progressSlot.Count; i++)
         {
             if (!progressSlot[i].hasBox)
-            {            
+            {
                 progressSlot[i].ReceiveItem(box);
                 box.transform.SetParent(progressSlot[i].transform);
                 box = null;
@@ -103,6 +103,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
             BoxOpenStart boxOpen = await APIManager.Instance.BoxOpenStart(box.id);
             if(boxOpen.statusCode == 200)
             {
+                MoveItemToProgressBox();
                 DebugManager.Instance.PrintDebug("박스 열기 시작!");
             }
         }

@@ -15,7 +15,9 @@ public class UI_Jusulso : UI_Popup
 {
     enum GameObjects
     {
-        Close
+        Close,
+        Left,
+        Right
     }
     [SerializeField]
     TextMeshProUGUI jusulso_Title;
@@ -26,21 +28,29 @@ public class UI_Jusulso : UI_Popup
     [SerializeField]
     TextMeshProUGUI close_Text;
 
+    public UnityEngine.UI.Image right;
+    public UnityEngine.UI.Image left;
+    public Sprite[] lockSprite;
+
     [SerializeField]
     GameObject slot_Page;
+    [SerializeField]
+    Transform possesionSlot;
     [SerializeField]
     List<UI_JusulsoPossesionSlot> slotList = new List<UI_JusulsoPossesionSlot>();
     [SerializeField]
     GameObject progressSlot;
     [SerializeField]
     public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>();
+    
+    public List<GameObject> pageList = new List<GameObject>();
+
+    public int currentPageIndex = 0;
+
 
     public UI_JusulsoReward reward;
 
     public DateTime currentTime;
-
-    public string item1 = "box_1";
-    public string item2 = "key";
 
     void Start()
     {
@@ -54,14 +64,6 @@ public class UI_Jusulso : UI_Popup
         for (int i = 0; i < objectValue.Length; i++)
         {
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
-        }       
-        for (int i = 0; i < 16; i++)
-        {
-            UI_JusulsoPossesionSlot possesionSlot = Util.UILoad<UI_JusulsoPossesionSlot>(Define.UiPrefabsPath + "/UI_JusulsoPossesionSlot");
-            GameObject slotGameObject = Instantiate(possesionSlot.gameObject);
-            UI_JusulsoPossesionSlot slotComponent = slotGameObject.GetComponent<UI_JusulsoPossesionSlot>();
-            slotGameObject.transform.SetParent(slot_Page.transform);
-            slotList.Add(slotComponent); // UI_JusulsoPossesionSlot 타입으로 캐스팅하여 추가
         }
         UI_JusulsoProgressBox progressBox = Util.UILoad<UI_JusulsoProgressBox>(Define.UiPrefabsPath + "/UI_JusulsoProgressBox");
         for(int i = 0; i<3; i++)
@@ -71,8 +73,9 @@ public class UI_Jusulso : UI_Popup
             slot.transform.SetParent(progressSlot.transform);
             progressList.Add(slot);
         }
-        SetSlotPos();
+
         SetProgressSlotPos();
+
     }
 
     public void OnClickObject(PointerEventData data)
@@ -88,6 +91,12 @@ public class UI_Jusulso : UI_Popup
             case GameObjects.Close:
                 UIManager.Instance.CloseUI<UI_Jusulso>();
                 break;
+            case GameObjects.Left:
+                PreviousPage();
+                break;
+            case GameObjects.Right:
+                NextPage();
+                break;
             default:
                 break;
         }
@@ -97,17 +106,36 @@ public class UI_Jusulso : UI_Popup
         int rowSize = 8;
         float horizontalSpacing = 154;
         float verticalSpacing = 140;
+        int maxSlotCount = 16; // 최대 슬롯 개수
+
+        float initialXPos = -540;
+        float initialYPos = -150;
+
+        int row = 0; // 초기 행
 
         for (int i = 0; i < slotList.Count; i++)
         {
             RectTransform r = slotList[i].GetComponent<RectTransform>();
-            int row = i / rowSize;
             int col = i % rowSize;
 
-            float xPos = -540 + col * horizontalSpacing;
-            float yPos = -150 - row * verticalSpacing;
+            float xPos = initialXPos + col * horizontalSpacing;
+            float yPos = initialYPos - row * verticalSpacing;
 
+            // 16의 배수일 때 초기 위치로 설정
+            if (i > 0 && i % maxSlotCount == 0)
+            {
+                yPos = initialYPos; // 초기 yPos로 설정
+                row = 0; // 첫 번째 행으로 리셋
+            }
+
+            DebugManager.Instance.PrintDebug(row);
             r.anchoredPosition3D = new Vector3(xPos, yPos, 0);
+
+            // 16의 배수가 아니면서 한 행이 다 찼을 때 다음 행으로 이동
+            if (i > 0 && (i + 1) % rowSize == 0)
+            {
+                row++;
+            }
         }
     }
     private void SetProgressSlotPos()
@@ -121,10 +149,97 @@ public class UI_Jusulso : UI_Popup
         }
     }
 
-    async void RequestBox()
+    private void NewSlotPage()
+    {
+        GameObject slotPage = Instantiate(slot_Page,possesionSlot);
+        for (int i = 0; i < 16; i++)
+        {
+            UI_JusulsoPossesionSlot possesionSlot = Util.UILoad<UI_JusulsoPossesionSlot>(Define.UiPrefabsPath + "/UI_JusulsoPossesionSlot");
+            GameObject slotGameObject = Instantiate(possesionSlot.gameObject);
+            UI_JusulsoPossesionSlot slotComponent = slotGameObject.GetComponent<UI_JusulsoPossesionSlot>();
+            slotGameObject.transform.SetParent(slotPage.transform);
+            slotList.Add(slotComponent); // UI_JusulsoPossesionSlot 타입으로 캐스팅하여 추가
+        }
+        SetSlotPos();
+        pageList.Add(slotPage);
+
+    }
+    private void SwitchPage(int pageIndex)
+    {
+        if (pageIndex >= 0 && pageIndex < pageList.Count)
+        {
+            currentPageIndex = pageIndex;
+
+            for (int i = 0; i < pageList.Count; i++)
+            {
+                pageList[i].SetActive(i == currentPageIndex);
+            }
+
+            ArrowImageControl(pageIndex);
+        }
+    }
+    private void ArrowImageControl(int pageIndex)
+    {
+        if (pageList.Count >=2&&pageIndex == pageList.Count - 1)
+        {
+            right.sprite = lockSprite[0];
+            right.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+            left.sprite = lockSprite[1];
+            left.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+            DebugManager.Instance.PrintDebug("if");
+        }
+        else if (pageList.Count >=2&&pageIndex == 0)
+        {
+            right.sprite = lockSprite[1];
+            right.rectTransform.localScale = new Vector3(1f, 1f, 1f);
+            left.sprite = lockSprite[0];
+            left.rectTransform.localScale = new Vector3(1f, 1f, 1f);
+            
+            DebugManager.Instance.PrintDebug("else if");
+        }
+        else
+        {
+            right.sprite = lockSprite[1];
+            right.rectTransform.localScale = new Vector3(1f, 1f, 1f);
+            left.sprite = lockSprite[1];
+            left.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+            DebugManager.Instance.PrintDebug("else");
+        }
+    }
+    private void NextPage()
+    {
+        int nextPageIndex = currentPageIndex + 1;
+        if (nextPageIndex < pageList.Count)
+        {
+            SwitchPage(nextPageIndex);
+        }
+
+    }
+    private void PreviousPage()
+    {
+        int previousPageIndex = currentPageIndex - 1;
+        if (previousPageIndex >= 0)
+        {
+            SwitchPage(previousPageIndex);
+        }
+    }
+    public async void RequestBox()
     {
         OwnBoxResult result = await APIManager.Instance.GetBox();
         currentTime = result.data.current_time;
+        int totalBoxes = result.data.userRewardBoxes.Count;
+        int totalPages = (totalBoxes + 15) / 16;
+        while (totalPages > pageList.Count)
+        {
+            NewSlotPage();
+        }
+        if (pageList.Count >= 2)
+        {
+            for (int i = 1; i < pageList.Count; i++)
+            {
+                pageList[i].SetActive(false);
+            }
+        }
         for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
         {
             slotList[i].SetItem();

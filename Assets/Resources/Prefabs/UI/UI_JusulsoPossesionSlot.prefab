@@ -129,8 +129,6 @@ MonoBehaviour:
   box: {fileID: 0}
   itemImage: {fileID: 21300000, guid: 4a90e88839409ba4dbd181be12ed338c, type: 3}
   slotImage: {fileID: 7820892414351009310}
-  id: 0
-  boxType: 0
   progressSlot:
   - {fileID: 0}
   - {fileID: 0}

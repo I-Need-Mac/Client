@@ -40,36 +40,35 @@ public class UI_JusulsoPossesionSlot : UI_Base
             RequestBoxOpenStart();
         }
     }
-    public void SetItem()
-    {       
-        box = Instantiate(ResourcesManager.Load<UI_Jusulso_Box>("Prefabs/InGame/Item/Item_Box"), transform);
-
+    public void SetItem(UI_Jusulso_Box newbox)
+    {
+        box = newbox;
+        box.transform.SetParent(transform);
         if (box.open_start_time==null)
         {
             slotImage.sprite = itemImage;
             hasBox = true;
         }
-
         SetImageAlpha();
     }
-    public void SetItemData(OwnBoxData data)
-    {
-        box.id= data.id;
-        box.steam_id= data.steam_id;
-        box.box_type= data.box_type;
-        box.stage_id= data.stage_id;
-        box.open_start_time= data.open_start_time;
-        box.is_open= data.is_open;
-        box.created_at= data.created_at;
-        box.updated_at= data.updated_at;
-    }
+    //public void SetItemData(OwnBoxData data)
+    //{
+    //    box.id= data.id;
+    //    box.steam_id= data.steam_id;
+    //    box.box_type= data.box_type;
+    //    box.stage_id= data.stage_id;
+    //    box.open_start_time= data.open_start_time;
+    //    box.is_open= data.is_open;
+    //    box.created_at= data.created_at;
+    //    box.updated_at= data.updated_at;
+    //}
     public void MoveItemToProgressBox()
     {
         for (int i = 0; i < progressSlot.Count; i++)
         {
             if (!progressSlot[i].hasBox)
             {
-                progressSlot[i].ReceiveItem(box);
+                progressSlot[i].SetItem(box);
                 box.transform.SetParent(progressSlot[i].transform);
                 box = null;
                 
@@ -84,6 +83,12 @@ public class UI_JusulsoPossesionSlot : UI_Base
         }
 
     }
+
+    public void ArrangeBox()
+    {
+
+    }
+
     public void SetImageAlpha()
     {
         if (!hasBox)
@@ -112,4 +117,5 @@ public class UI_JusulsoPossesionSlot : UI_Base
             DebugManager.Instance.PrintDebug("이미 진행중인 상자입니다");
         }
     }
+
 }

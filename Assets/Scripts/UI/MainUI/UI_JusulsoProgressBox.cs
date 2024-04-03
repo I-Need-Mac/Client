@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
@@ -37,32 +38,37 @@ public class UI_JusulsoProgressBox : UI_Base
         StartCoroutine(UpdateTimer());
         SetImageAlpha();
     }
-
-    public void ReceiveItem(UI_Jusulso_Box newItem)
+    public void SetItem(UI_Jusulso_Box newBox)
     {
         if (!hasBox)
         {
-            box = newItem;
+            box = newBox;
+            box.transform.SetParent(transform);
             slotImage.sprite = itemImage;
             hasBox = true;
             time.gameObject.SetActive(true);
             SetImageAlpha();
             TimeSet();
             StartCoroutine(UpdateTimer());
+            hasBox = true;
         }
         else
         {
-            Debug.Log("박스가 이미 차 있습니다.");
+            DebugManager.Instance.PrintDebug("박스가 이미 차 있습니다.");
         }
     }
     private void SetImageAlpha()
     {
         if (box==null)
         {
+            time.gameObject.SetActive(false);
             slotImage.color = new Color(0, 0, 0, 0);
         }
         else
         {
+            slotImage.sprite = itemImage;
+            hasBox = true;
+            time.gameObject.SetActive(true);
             slotImage.color = new Color(1, 1, 1, 1);
         }
     }
@@ -87,6 +93,7 @@ public class UI_JusulsoProgressBox : UI_Base
             {
                 BoxReward(boxOpen.data.reward4.item);
             }
+            box = null;
             SetImageAlpha();
         }
     }
@@ -141,38 +148,4 @@ public class UI_JusulsoProgressBox : UI_Base
         rewardGameObject.GetComponent<UI_JusulsoReward>().SetItemImage(item);
         rewardGameObject.SetActive(true);
     }
-    //public IEnumerator UpdateTimer()
-    //{
-    //    float elapsedTime = 0f;
-
-    //    while (true)
-    //    {
-    //        if (box != null && box.open_start_time != null)
-    //        {
-    //            elapsedTime += Time.deltaTime;
-
-    //            if (elapsedTime >= 1.0f)
-    //            {
-    //                elapsedTime = 0f;
-
-    //                TimeSpan timeDifference = jusulso.currentTime - (DateTime)box.open_start_time;
-    //                duringTime = openTime - timeDifference;
-    //                TimeSpan oneSecond = TimeSpan.FromSeconds(1);
-    //                duringTime -= oneSecond;
-    //                //duringTime = duringTime.Subtract(oneSecond);
-    //                DebugManager.Instance.PrintDebug(duringTime);
-
-    //                if (duringTime.TotalSeconds < 0)
-    //                {
-    //                    time.text = "상자 열기";
-    //                }
-    //                else
-    //                {
-    //                    time.text = string.Format("남은시간 {0:00}:{1:00}:{2:00}", duringTime.Hours, duringTime.Minutes, duringTime.Seconds);
-    //                }
-    //            }
-    //        }
-    //        yield return null;
-    //    }
-    //}
 }

@@ -41,14 +41,13 @@ public class UI_Jusulso : UI_Popup
     [SerializeField]
     GameObject progressSlot;
     [SerializeField]
-    public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>();
-    
-    public List<GameObject> pageList = new List<GameObject>();
+    public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>(); 
+    private List<List<UI_JusulsoPossesionSlot>> pageList = new List<List<UI_JusulsoPossesionSlot>>();
+    public List<GameObject> pageGamObject = new List<GameObject>();
+
+    public List<UI_Jusulso_Box> boxList = new List<UI_Jusulso_Box>();
 
     public int currentPageIndex = 0;
-
-
-    public UI_JusulsoReward reward;
 
     public DateTime currentTime;
 
@@ -128,7 +127,6 @@ public class UI_Jusulso : UI_Popup
                 row = 0; // 첫 번째 행으로 리셋
             }
 
-            DebugManager.Instance.PrintDebug(row);
             r.anchoredPosition3D = new Vector3(xPos, yPos, 0);
 
             // 16의 배수가 아니면서 한 행이 다 찼을 때 다음 행으로 이동
@@ -161,7 +159,8 @@ public class UI_Jusulso : UI_Popup
             slotList.Add(slotComponent); // UI_JusulsoPossesionSlot 타입으로 캐스팅하여 추가
         }
         SetSlotPos();
-        pageList.Add(slotPage);
+        pageGamObject.Add(slotPage);
+        pageList.Add(slotList);
 
     }
     private void SwitchPage(int pageIndex)
@@ -172,7 +171,7 @@ public class UI_Jusulso : UI_Popup
 
             for (int i = 0; i < pageList.Count; i++)
             {
-                pageList[i].SetActive(i == currentPageIndex);
+                pageGamObject[i].SetActive(i == currentPageIndex);
             }
 
             ArrowImageControl(pageIndex);
@@ -223,9 +222,13 @@ public class UI_Jusulso : UI_Popup
             SwitchPage(previousPageIndex);
         }
     }
+
+
+
     public async void RequestBox()
     {
         OwnBoxResult result = await APIManager.Instance.GetBox();
+        Debug.Log(result.data.userRewardBoxes.Count);
         currentTime = result.data.current_time;
         int totalBoxes = result.data.userRewardBoxes.Count;
         int totalPages = (totalBoxes + 15) / 16;
@@ -233,21 +236,39 @@ public class UI_Jusulso : UI_Popup
         {
             NewSlotPage();
         }
-        if (pageList.Count >= 2)
-        {
-            for (int i = 1; i < pageList.Count; i++)
-            {
-                pageList[i].SetActive(false);
-            }
-        }
+
         for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
         {
-            slotList[i].SetItem();
-            slotList[i].SetItemData(result.data.userRewardBoxes[i]);
-            if (slotList[i].box.open_start_time != null)
+            // UI_Jusulso_Box 프리팹을 Resources에서 로드하여 인스턴스화
+            UI_Jusulso_Box newBox = Instantiate(Resources.Load<UI_Jusulso_Box>("Prefabs/InGame/Item/Item_Box"), transform);
+            boxList.Add(newBox);
+            boxList[i].SetData(result.data.userRewardBoxes[i]);
+            int progressIndex = 0;
+            if (boxList[i].open_start_time == null)
             {
-                slotList[i].MoveItemToProgressBox();
+                slotList[i].SetItem(newBox);
             }
-        }    
+            else if (boxList[i].open_start_time != null)
+            {
+                while (progressIndex < progressList.Count && progressList[progressIndex].hasBox)
+                {
+                    progressIndex++;
+                }
+                if (progressIndex < progressList.Count)
+                {
+                    progressList[progressIndex].SetItem(newBox);
+                    progressIndex++;
+                }
+            }
+        }
+
+        // 페이지가 2개 이상인 경우 두 번째 페이지부터 비활성화
+        if (pageGamObject.Count >= 2)
+        {
+            for (int i = 1; i < pageGamObject.Count; i++)
+            {
+                pageGamObject[i].SetActive(false);
+            }
+        }
     }
 }

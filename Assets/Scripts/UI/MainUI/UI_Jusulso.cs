@@ -37,7 +37,7 @@ public class UI_Jusulso : UI_Popup
     [SerializeField]
     Transform possesionSlot;
     [SerializeField]
-    List<UI_JusulsoPossesionSlot> slotList = new List<UI_JusulsoPossesionSlot>();
+    private List<UI_JusulsoPossesionSlot> slotList = new List<UI_JusulsoPossesionSlot>();
     [SerializeField]
     GameObject progressSlot;
     [SerializeField]
@@ -156,7 +156,7 @@ public class UI_Jusulso : UI_Popup
             GameObject slotGameObject = Instantiate(possesionSlot.gameObject);
             UI_JusulsoPossesionSlot slotComponent = slotGameObject.GetComponent<UI_JusulsoPossesionSlot>();
             slotGameObject.transform.SetParent(slotPage.transform);
-            slotList.Add(slotComponent); // UI_JusulsoPossesionSlot 타입으로 캐스팅하여 추가
+            slotList.Add(slotComponent);
         }
         SetSlotPos();
         pageGamObject.Add(slotPage);
@@ -185,16 +185,13 @@ public class UI_Jusulso : UI_Popup
             right.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
             left.sprite = lockSprite[1];
             left.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
-            DebugManager.Instance.PrintDebug("if");
         }
         else if (pageList.Count >=2&&pageIndex == 0)
         {
             right.sprite = lockSprite[1];
             right.rectTransform.localScale = new Vector3(1f, 1f, 1f);
             left.sprite = lockSprite[0];
-            left.rectTransform.localScale = new Vector3(1f, 1f, 1f);
-            
-            DebugManager.Instance.PrintDebug("else if");
+            left.rectTransform.localScale = new Vector3(1f, 1f, 1f);          
         }
         else
         {
@@ -202,7 +199,6 @@ public class UI_Jusulso : UI_Popup
             right.rectTransform.localScale = new Vector3(1f, 1f, 1f);
             left.sprite = lockSprite[1];
             left.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
-            DebugManager.Instance.PrintDebug("else");
         }
     }
     private void NextPage()
@@ -223,12 +219,9 @@ public class UI_Jusulso : UI_Popup
         }
     }
 
-
-
     public async void RequestBox()
     {
         OwnBoxResult result = await APIManager.Instance.GetBox();
-        Debug.Log(result.data.userRewardBoxes.Count);
         currentTime = result.data.current_time;
         int totalBoxes = result.data.userRewardBoxes.Count;
         int totalPages = (totalBoxes + 15) / 16;
@@ -239,14 +232,13 @@ public class UI_Jusulso : UI_Popup
 
         for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
         {
-            // UI_Jusulso_Box 프리팹을 Resources에서 로드하여 인스턴스화
             UI_Jusulso_Box newBox = Instantiate(Resources.Load<UI_Jusulso_Box>("Prefabs/InGame/Item/Item_Box"), transform);
             boxList.Add(newBox);
             boxList[i].SetData(result.data.userRewardBoxes[i]);
             int progressIndex = 0;
             if (boxList[i].open_start_time == null)
             {
-                slotList[i].SetItem(newBox);
+                slotList[i].SetItem(boxList[i]);
             }
             else if (boxList[i].open_start_time != null)
             {
@@ -256,18 +248,31 @@ public class UI_Jusulso : UI_Popup
                 }
                 if (progressIndex < progressList.Count)
                 {
-                    progressList[progressIndex].SetItem(newBox);
-                    progressIndex++;
+                    progressList[progressIndex].SetItem(boxList[i]);
                 }
             }
         }
-
-        // 페이지가 2개 이상인 경우 두 번째 페이지부터 비활성화
         if (pageGamObject.Count >= 2)
         {
             for (int i = 1; i < pageGamObject.Count; i++)
             {
                 pageGamObject[i].SetActive(false);
+            }
+        }
+    }
+    public async void RefreshBox()
+    {
+        OwnBoxResult result = await APIManager.Instance.GetBox();
+        currentTime = result.data.current_time;
+        boxList.Clear();
+        for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
+        {
+            UI_Jusulso_Box newBox = Instantiate(Resources.Load<UI_Jusulso_Box>("Prefabs/InGame/Item/Item_Box"), transform);
+            boxList.Add(newBox);
+            boxList[i].SetData(result.data.userRewardBoxes[i]);
+            if (boxList[i].open_start_time == null)
+            {
+                slotList[i].SetItem(boxList[i]);
             }
         }
     }

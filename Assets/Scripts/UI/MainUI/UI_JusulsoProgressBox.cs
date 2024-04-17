@@ -35,24 +35,20 @@ public class UI_JusulsoProgressBox : UI_Base
             hasBox= false;
             time.gameObject.SetActive(false);
         }
-        StartCoroutine(UpdateTimer());
         SetImageAlpha();
     }
     public void SetItem(UI_Jusulso_Box newBox)
     {
-        if (!hasBox)
-        {
-            box = newBox;
-            box.transform.SetParent(transform);
-            slotImage.sprite = itemImage;
-            hasBox = true;
-            time.gameObject.SetActive(true);
-            SetImageAlpha();
-            TimeSet();
-            StartCoroutine(UpdateTimer());
-            hasBox = true;
-        }
-        else
+        box = newBox;
+        TimeSet();
+        box.transform.SetParent(transform);
+        slotImage.sprite = itemImage;
+        hasBox = true;
+        time.gameObject.SetActive(true);
+        SetImageAlpha();
+        hasBox = true;
+        StartCoroutine(UpdateTimer());
+        if(hasBox)
         {
             DebugManager.Instance.PrintDebug("박스가 이미 차 있습니다.");
         }
@@ -94,7 +90,9 @@ public class UI_JusulsoProgressBox : UI_Base
                 BoxReward(boxOpen.data.reward4.item);
             }
             box = null;
+            hasBox= false;
             SetImageAlpha();
+            jusulso.RefreshBox();
         }
     }
     public void TimeSet()
@@ -103,40 +101,58 @@ public class UI_JusulsoProgressBox : UI_Base
         {
             if(box.box_type == 1)
             {
-                DebugManager.Instance.PrintDebug("박스 타입1");
+                DebugManager.Instance.PrintDebug("박스타입 1");
                 openTime = new TimeSpan(0, 1, 0);
             }
             else if(box.box_type == 2)
             {
-                DebugManager.Instance.PrintDebug("박스 타입2");
+                DebugManager.Instance.PrintDebug("박스타입 2");
                 openTime = new TimeSpan(0, 0, 0);
             }
-            else
-            {
-                DebugManager.Instance.PrintDebug("박스 타입을 찾을 수 없습니다");
-            }
-        }
-        else
-        {
-            DebugManager.Instance.PrintDebug("박스가 호출 되기 전입니다");
         }
     }
     public IEnumerator UpdateTimer()
     {
+        TimeSet();
+        if (box.open_start_time != null)
+        {
+            TimeSpan timeDifference = jusulso.currentTime - (DateTime)box.open_start_time;
+            if(timeDifference.TotalSeconds <=3)
+            {
+                timeDifference = new TimeSpan(0, 0, 0);
+            }
+            duringTime = openTime - timeDifference;
+            DebugManager.Instance.PrintDebug(jusulso.currentTime + "-" + box.open_start_time + "=" + timeDifference);
+            DebugManager.Instance.PrintDebug(openTime + "-" + timeDifference + "=" + duringTime);
+        }
+        
+        int h = duringTime.Hours;
+        int m = duringTime.Minutes;
+        int s = duringTime.Seconds;
         while (true)
         {
-            if (box != null && box.open_start_time != null)
+            s--;
+            if (s < 0)
             {
-                RewardBoxData data = new RewardBoxData();
-                TimeSpan timeDifference = jusulso.currentTime - (DateTime)box.open_start_time;
-                duringTime = openTime - timeDifference;
-                duringTime.Subtract(TimeSpan.FromSeconds(1.0f));
-                time.text = string.Format("남은시간 {0:00}:{1:00}:{2:00}", duringTime.Hours, duringTime.Minutes, duringTime.Seconds);
-                DebugManager.Instance.PrintDebug(duringTime);
-                if (duringTime.TotalSeconds < 0)
+                m--;
+                if(m>=0)
                 {
-                    time.text = "상자 열기";
+                    s = 59;
                 }
+            }
+            if (m < 0)
+            {
+                h--;
+                if(h>=0)
+                {
+                    m = 59;
+                }
+            }
+            time.text = string.Format("남은시간 {0:00}:{1:00}:{2:00}", h, m, s);
+            if (h + m + s <= 0)
+            {
+                time.text = "상자 열기";
+                break;
             }
             yield return new WaitForSeconds(1.0f);
         }

@@ -6,6 +6,7 @@ using UnityEditor;
 using System;
 using static UIStatus;
 using UnityEditor.Tilemaps;
+using Steamworks;
 
 public class UI_JusulsoPossesionSlot : UI_Base
 {
@@ -44,24 +45,10 @@ public class UI_JusulsoPossesionSlot : UI_Base
     {
         box = newbox;
         box.transform.SetParent(transform);
-        if (box.open_start_time==null)
-        {
-            slotImage.sprite = itemImage;
-            hasBox = true;
-        }
+        slotImage.sprite = itemImage;
+        hasBox = true;       
         SetImageAlpha();
     }
-    //public void SetItemData(OwnBoxData data)
-    //{
-    //    box.id= data.id;
-    //    box.steam_id= data.steam_id;
-    //    box.box_type= data.box_type;
-    //    box.stage_id= data.stage_id;
-    //    box.open_start_time= data.open_start_time;
-    //    box.is_open= data.is_open;
-    //    box.created_at= data.created_at;
-    //    box.updated_at= data.updated_at;
-    //}
     public void MoveItemToProgressBox()
     {
         for (int i = 0; i < progressSlot.Count; i++)
@@ -69,10 +56,9 @@ public class UI_JusulsoPossesionSlot : UI_Base
             if (!progressSlot[i].hasBox)
             {
                 progressSlot[i].SetItem(box);
-                box.transform.SetParent(progressSlot[i].transform);
-                box = null;
-                
+                box.transform.SetParent(progressSlot[i].transform);                            
                 hasBox= false;
+                box = null;
                 SetImageAlpha();
                 break;
             }
@@ -81,14 +67,18 @@ public class UI_JusulsoPossesionSlot : UI_Base
                 DebugManager.Instance.PrintDebug("진행 슬롯이 다 차있습니다");
             }
         }
-
     }
-
-    public void ArrangeBox()
-    {
-
-    }
-
+    //public void Test()
+    //{
+    //    Debug.LogError("box.id:"+box.id
+    //        +" box.steam_id"+box.steam_id
+    //        +" box.box_type"+box.box_type
+    //        +" box.stage_id"+ box.stage_id
+    //        +" box.box_open_start_time"+box.open_start_time
+    //        +" box.is_open" + box.is_open
+    //        +" box.created_at"+box.created_at
+    //        +" box.updated_at" +box.updated_at);
+    //}
     public void SetImageAlpha()
     {
         if (!hasBox)
@@ -103,19 +93,26 @@ public class UI_JusulsoPossesionSlot : UI_Base
 
     async void RequestBoxOpenStart()
     {
-        if (box != null&&box.open_start_time == null)
+        for(int i =0; i<progressSlot.Count; i++)
         {
-            BoxOpenStart boxOpen = await APIManager.Instance.BoxOpenStart(box.id);
-            if(boxOpen.statusCode == 200)
+            if (!progressSlot[i].hasBox)
             {
-                MoveItemToProgressBox();
-                DebugManager.Instance.PrintDebug("박스 열기 시작!");
+                BoxOpenStart boxOpen = await APIManager.Instance.BoxOpenStart(box.id);
+                if (boxOpen.statusCode == 200)
+                {
+                    box.open_start_time = boxOpen.data.open_start_time;
+                    MoveItemToProgressBox();
+                    jusulso.RefreshBox();
+                    DebugManager.Instance.PrintDebug("박스 열기 시작!");
+                    break;
+                }
+            }
+            else
+            {
+                DebugManager.Instance.PrintDebug("슬롯이 차있습니다");
             }
         }
-        else if(box.open_start_time !=null)
-        {
-            DebugManager.Instance.PrintDebug("이미 진행중인 상자입니다");
-        }
+ 
     }
 
 }

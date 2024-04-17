@@ -121,7 +121,7 @@ public class APIManager : SingleTon<APIManager>
         OwnBoxResult result = null;
         Dictionary<string, object> sendData = new Dictionary<string, object>();
         sendData.Add("steam_id", GetSteamID());
-        result = (OwnBoxResult)await requestManager.Get<OwnBoxResult>(APIAddressManager.REQUEST_USER_OWN_BOX, sendData);
+        result = (OwnBoxResult)await requestManager.Get<OwnBoxResult>(APIAddressManager.REQUEST_USER_OWN_BOX+GetSteamID(), sendData);
         return result;
     }
     public async Task<BoxOpenStart> BoxOpenStart(int id)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,5 +14,6 @@ public class BoxOpenStart
     {
         public string steam_id { get; set; }
         public int id { get; set; }
+        public DateTime? open_start_time { get; set; }
     }
 }

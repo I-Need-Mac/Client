@@ -19346,6 +19346,7 @@ Transform:
   m_Children:
   - {fileID: 1031709731724698518}
   - {fileID: 6026263086600970723}
+  - {fileID: 7489237088200610717}
   - {fileID: 4785985439232766356}
   - {fileID: 2098854962076635312}
   m_Father: {fileID: 0}
@@ -19409,12 +19410,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3340602967767096695}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00171, y: -0.25126, z: 0}
-  m_LocalScale: {x: 0.1736326, y: 0.29710084, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.01, y: 0.95, z: 0}
+  m_LocalScale: {x: 1.48, y: 1.41, z: 1}
   m_Children: []
-  m_Father: {fileID: 2098854962076635312}
-  m_RootOrder: 3
+  m_Father: {fileID: 4940477034588173352}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!331 &4213627702577226202
 SpriteMask:
@@ -19456,7 +19457,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7eb14db1cca6e3847878794992845c8b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fb376583583dbf14792244ecabe595be, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 0
   m_BackSortingLayerID: 0
@@ -33912,7 +33913,7 @@ Transform:
   - {fileID: 5871595519899499019}
   - {fileID: 1237268664290973078}
   m_Father: {fileID: 4940477034588173352}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4859585576358111987
 GameObject:
@@ -34574,14 +34575,14 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 0
+    angle: 90
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 0
     donutRadius: 0.2
     m_Position: {x: 0, y: -0.000017601184, z: -0.0000006738024}
-    m_Rotation: {x: 0.002388259, y: -0, z: -0}
-    m_Scale: {x: 0.1538849, y: 0.15312606, z: 0.28129733}
+    m_Rotation: {x: 0.0024068279, y: -0, z: -0}
+    m_Scale: {x: 0.1538849, y: 0.15710106, z: 0.3}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -38847,9 +38848,8 @@ Transform:
   - {fileID: 4042412541226574609}
   - {fileID: 6619846509275609063}
   - {fileID: 2123570262388698900}
-  - {fileID: 7489237088200610717}
   m_Father: {fileID: 4940477034588173352}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8267851770236419242
 GameObject:

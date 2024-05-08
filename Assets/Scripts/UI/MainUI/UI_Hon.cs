@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -33,7 +34,38 @@ public class UI_Hon : UI_Popup
         for (int i = 0; i < objectValue.Length; i++)
         {
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
+            SetSoulTitle(GetGameObject(i).gameObject);
         }
+    }
+
+    private void SetSoulTitle(GameObject page)
+    {
+        string id = string.Empty;
+        switch (page.name)
+        {
+            case "Hon_Page1":
+                id = "101";
+                break;
+            case "Hon_Page2":
+                id = "102";
+                break;
+            case "Hon_Page3":
+                id = "103";
+                break;
+            case "Hon_Page4":
+                id = "104";
+                break;
+            case "Hon_Page5":
+                id = "105";
+                break;
+            default:
+                DebugManager.Instance.PrintError("[Error: UI_Hon] 존재하지 않는 페이지 이름입니다.");
+                return;
+        }
+
+        TextMeshProUGUI title = page.transform.Find("Hon_Name").GetComponent<TextMeshProUGUI>();
+        Dictionary<string, Dictionary<string, object>> mainSoulTable = CSVReader.Read("MainCategorySoul");
+        title.text = LocalizeManager.Instance.GetText(mainSoulTable[id]["SoulMainNameText"].ToString());
     }
 
     public void OnClickImage(PointerEventData data)

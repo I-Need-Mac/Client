@@ -16,6 +16,8 @@ public class UI_Jusulso_Box : MonoBehaviour
     public DateTime created_at;
     public DateTime updated_at;
 
+    public bool openable = false;
+
     public void SetData(OwnBoxData data)
     {
         id = data.id;

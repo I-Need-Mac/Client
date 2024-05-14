@@ -43,11 +43,20 @@ public class UI_JusulsoPossesionSlot : UI_Base
     }
     public void SetItem(UI_Jusulso_Box newbox)
     {
-        box = newbox;
-        box.transform.SetParent(transform);
-        slotImage.sprite = itemImage;
-        hasBox = true;       
-        SetImageAlpha();
+        if (newbox != null)
+        {
+            box = newbox;
+            box.transform.SetParent(transform);
+            slotImage.sprite = itemImage;
+            hasBox = true;
+            SetImageAlpha();
+        }
+        else if (newbox == null)
+        {
+            box = null;
+            hasBox = false;
+            SetImageAlpha();
+        }
     }
     public void MoveItemToProgressBox()
     {
@@ -56,10 +65,11 @@ public class UI_JusulsoPossesionSlot : UI_Base
             if (!progressSlot[i].hasBox)
             {
                 progressSlot[i].SetItem(box);
-                box.transform.SetParent(progressSlot[i].transform);                            
-                hasBox= false;
+                box.transform.SetParent(progressSlot[i].transform);
+                hasBox = false;
                 box = null;
                 SetImageAlpha();
+                jusulso.BoxSort();
                 break;
             }
             else
@@ -68,16 +78,16 @@ public class UI_JusulsoPossesionSlot : UI_Base
             }
         }
     }
-    //public void Test()
+    //public void test()
     //{
-    //    Debug.LogError("box.id:"+box.id
-    //        +" box.steam_id"+box.steam_id
-    //        +" box.box_type"+box.box_type
-    //        +" box.stage_id"+ box.stage_id
-    //        +" box.box_open_start_time"+box.open_start_time
-    //        +" box.is_open" + box.is_open
-    //        +" box.created_at"+box.created_at
-    //        +" box.updated_at" +box.updated_at);
+    //    debug.logerror("box.id:" + box.id
+    //        + " box.steam_id" + box.steam_id
+    //        + " box.box_type" + box.box_type
+    //        + " box.stage_id" + box.stage_id
+    //        + " box.box_open_start_time" + box.open_start_time
+    //        + " box.is_open" + box.is_open
+    //        + " box.created_at" + box.created_at
+    //        + " box.updated_at" + box.updated_at);
     //}
     public void SetImageAlpha()
     {
@@ -93,7 +103,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
 
     async void RequestBoxOpenStart()
     {
-        for(int i =0; i<progressSlot.Count; i++)
+        for (int i = 0; i < progressSlot.Count; i++)
         {
             if (!progressSlot[i].hasBox)
             {
@@ -112,7 +122,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
                 DebugManager.Instance.PrintDebug("슬롯이 차있습니다");
             }
         }
- 
+
     }
 
 }

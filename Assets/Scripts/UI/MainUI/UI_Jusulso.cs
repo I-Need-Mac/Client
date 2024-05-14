@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
+using UnityEditor.UI;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,10 +28,12 @@ public class UI_Jusulso : UI_Popup
     TextMeshProUGUI possesion_Box;
     [SerializeField]
     TextMeshProUGUI close_Text;
-
-    public UnityEngine.UI.Image right;
-    public UnityEngine.UI.Image left;
-    public Sprite[] lockSprite;
+    [SerializeField]
+    private UnityEngine.UI.Image right;
+    [SerializeField]
+    private UnityEngine.UI.Image left;
+    [SerializeField]
+    private Sprite[] lockSprite;
 
     [SerializeField]
     GameObject slot_Page;
@@ -41,18 +44,21 @@ public class UI_Jusulso : UI_Popup
     [SerializeField]
     GameObject progressSlot;
     [SerializeField]
-    public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>(); 
+    public List<UI_JusulsoProgressBox> progressList = new List<UI_JusulsoProgressBox>();
     private List<List<UI_JusulsoPossesionSlot>> pageList = new List<List<UI_JusulsoPossesionSlot>>();
-    public List<GameObject> pageGamObject = new List<GameObject>();
+    private List<GameObject> pageGamObject = new List<GameObject>();
 
-    public List<UI_Jusulso_Box> boxList = new List<UI_Jusulso_Box>();
+    private List<UI_Jusulso_Box> boxList = new List<UI_Jusulso_Box>();
 
-    public int currentPageIndex = 0;
+    private int currentPageIndex = 0;
 
     public DateTime currentTime;
 
+    public UnityEngine.UI.Button testBtn;
+
     void Start()
     {
+        testBtn.onClick.AddListener(BoxSort);
         RequestBox();
         jusulso_Title.text = LocalizeManager.Instance.GetText("UI_Sorcere_Title");
         progress_Box.text = LocalizeManager.Instance.GetText("UI_Sorcere_MyBoxes");
@@ -65,7 +71,7 @@ public class UI_Jusulso : UI_Popup
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
         }
         UI_JusulsoProgressBox progressBox = Util.UILoad<UI_JusulsoProgressBox>(Define.UiPrefabsPath + "/UI_JusulsoProgressBox");
-        for(int i = 0; i<3; i++)
+        for (int i = 0; i < 3; i++)
         {
             UI_JusulsoProgressBox slot = Instantiate(progressBox);
             slot.GetComponent<UI_JusulsoProgressBox>();
@@ -149,7 +155,7 @@ public class UI_Jusulso : UI_Popup
 
     private void NewSlotPage()
     {
-        GameObject slotPage = Instantiate(slot_Page,possesionSlot);
+        GameObject slotPage = Instantiate(slot_Page, possesionSlot);
         for (int i = 0; i < 16; i++)
         {
             UI_JusulsoPossesionSlot possesionSlot = Util.UILoad<UI_JusulsoPossesionSlot>(Define.UiPrefabsPath + "/UI_JusulsoPossesionSlot");
@@ -179,19 +185,19 @@ public class UI_Jusulso : UI_Popup
     }
     private void ArrowImageControl(int pageIndex)
     {
-        if (pageList.Count >=2&&pageIndex == pageList.Count - 1)
+        if (pageList.Count >= 2 && pageIndex == pageList.Count - 1)
         {
             right.sprite = lockSprite[0];
             right.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
             left.sprite = lockSprite[1];
             left.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
         }
-        else if (pageList.Count >=2&&pageIndex == 0)
+        else if (pageList.Count >= 2 && pageIndex == 0)
         {
             right.sprite = lockSprite[1];
             right.rectTransform.localScale = new Vector3(1f, 1f, 1f);
             left.sprite = lockSprite[0];
-            left.rectTransform.localScale = new Vector3(1f, 1f, 1f);          
+            left.rectTransform.localScale = new Vector3(1f, 1f, 1f);
         }
         else
         {
@@ -219,60 +225,91 @@ public class UI_Jusulso : UI_Popup
         }
     }
 
-    public async void RequestBox()
+
+    public void BoxSort()
+    {
+        // 빈 슬롯이 발견될 때마다 그 뒤의 모든 슬롯을 한 칸씩 앞으로 이동합니다.
+        for (int i = 0; i < slotList.Count; i++)
+        {
+            if (slotList[i].box == null)
+            {
+                // 빈 슬롯이 발견되면 뒤에 있는 슬롯을 한 칸씩 앞으로 이동합니다.
+                for (int j = i + 1; j < slotList.Count; j++)
+                {
+                    // 빈 슬롯의 위치에 박스가 있는 슬롯을 이동합니다.
+                    if (slotList[j].box != null)
+                    {
+                        slotList[i].SetItem(slotList[j].box);
+                        slotList[j].SetItem(null);
+                        break; // 한 칸씩만 이동하므로 이동 후 반복문을 종료합니다.
+                    }
+                }
+            }
+        }
+    }
+
+    private async void RequestBox()
     {
         OwnBoxResult result = await APIManager.Instance.GetBox();
-        currentTime = result.data.current_time;
-        int totalBoxes = result.data.userRewardBoxes.Count;
-        int totalPages = (totalBoxes + 15) / 16;
-        while (totalPages > pageList.Count)
+        if (result.statusCode == 200)
         {
-            NewSlotPage();
-        }
+            currentTime = result.data.current_time;
+            int totalBoxes = result.data.userRewardBoxes.Count;
+            int totalPages = (totalBoxes + 15) / 16;
+            while (totalPages > pageList.Count)
+            {
+                NewSlotPage();
+            }
 
-        for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
-        {
-            UI_Jusulso_Box newBox = Instantiate(Resources.Load<UI_Jusulso_Box>("Prefabs/InGame/Item/Item_Box"), transform);
-            boxList.Add(newBox);
-            boxList[i].SetData(result.data.userRewardBoxes[i]);
-            int progressIndex = 0;
-            if (boxList[i].open_start_time == null)
+            for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
             {
-                slotList[i].SetItem(boxList[i]);
-            }
-            else if (boxList[i].open_start_time != null)
-            {
-                while (progressIndex < progressList.Count && progressList[progressIndex].hasBox)
+                UI_Jusulso_Box newBox = Instantiate(Resources.Load<UI_Jusulso_Box>("Prefabs/InGame/Item/Item_Box"), transform);
+                boxList.Add(newBox);
+                boxList[i].SetData(result.data.userRewardBoxes[i]);
+                int progressIndex = 0;
+                if (boxList[i].open_start_time == null)
                 {
-                    progressIndex++;
+                    slotList[i].SetItem(boxList[i]);
                 }
-                if (progressIndex < progressList.Count)
+                else if (boxList[i].open_start_time != null)
                 {
-                    progressList[progressIndex].SetItem(boxList[i]);
+                    while (progressIndex < progressList.Count && progressList[progressIndex].hasBox)
+                    {
+                        progressIndex++;
+                    }
+                    if (progressIndex < progressList.Count)
+                    {
+                        progressList[progressIndex].SetItem(boxList[i]);
+                    }
                 }
             }
-        }
-        if (pageGamObject.Count >= 2)
-        {
-            for (int i = 1; i < pageGamObject.Count; i++)
+
+            if (pageGamObject.Count >= 2)
             {
-                pageGamObject[i].SetActive(false);
+                for (int i = 1; i < pageGamObject.Count; i++)
+                {
+                    pageGamObject[i].SetActive(false);
+                }
             }
+            //BoxSort();
         }
     }
     public async void RefreshBox()
     {
         OwnBoxResult result = await APIManager.Instance.GetBox();
-        currentTime = result.data.current_time;
-        boxList.Clear();
-        for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
+        if (result.statusCode == 200)
         {
-            UI_Jusulso_Box newBox = Instantiate(Resources.Load<UI_Jusulso_Box>("Prefabs/InGame/Item/Item_Box"), transform);
-            boxList.Add(newBox);
-            boxList[i].SetData(result.data.userRewardBoxes[i]);
-            if (boxList[i].open_start_time == null)
+            currentTime = result.data.current_time;
+            boxList.Clear();
+            for (int i = 0; i < result.data.userRewardBoxes.Count; i++)
             {
-                slotList[i].SetItem(boxList[i]);
+                if (result.data.userRewardBoxes[i].open_start_time == null)
+                {
+                    UI_Jusulso_Box newBox = Instantiate(Resources.Load<UI_Jusulso_Box>("Prefabs/InGame/Item/Item_Box"), transform);
+                    boxList.Add(newBox);
+                    boxList[boxList.Count - 1].SetData(result.data.userRewardBoxes[i]);
+                    slotList[i].SetItem(boxList[boxList.Count - 1]);
+                }
             }
         }
     }

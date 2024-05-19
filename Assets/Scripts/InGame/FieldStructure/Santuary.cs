@@ -25,6 +25,7 @@ public class Santuary : FieldStructure
         needKillCount = int.Parse(this.fieldStructureData.gimmickParam[0]);
         beadSize = top.transform.localScale;
         santuaryCircle = Instantiate(ResourcesManager.Load<SantuaryCircle>(SANTUARY_CIRCLE_PATH), transform);
+        santuaryCircle.transform.localPosition = new Vector3(0.0f, -7.5f, 0.0f);
     }
 
     private void Update()

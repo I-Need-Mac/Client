@@ -89,7 +89,8 @@ public class FieldStructure : MonoBehaviour
         }
 
         SetLayer(transform, (LayerConstant)fieldStructureData.layerOrder);
-        SetLayer(top.transform, LayerConstant.DECORATION);
+        //SetLayer(top.transform, LayerConstant.DECORATION);
+        SetLayer(top.transform, LayerConstant.GIMMICK);
     }
 
     protected void SetLayer(Transform trans, LayerConstant layer)

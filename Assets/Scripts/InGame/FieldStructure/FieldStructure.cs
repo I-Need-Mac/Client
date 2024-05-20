@@ -108,6 +108,10 @@ public class FieldStructure : MonoBehaviour
 
         foreach (Transform child in trans)
         {
+            if (child.name.Equals("Effect"))
+            {
+                return;
+            }
             SetLayer(child, layer);
         }
     }

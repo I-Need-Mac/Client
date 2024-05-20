@@ -152,13 +152,13 @@ SpriteMask:
   m_SortingOrder: 0
   m_Sprite: {fileID: -8985027392925030378, guid: 4fbd5e43ee726274c87fc95d60fe0ea9, type: 3}
   m_MaskAlphaCutoff: 0.005
-  m_FrontSortingLayerID: 0
-  m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 0
-  m_BackSortingLayer: 0
-  m_FrontSortingOrder: 0
-  m_BackSortingOrder: 0
-  m_IsCustomRangeActive: 0
+  m_FrontSortingLayerID: -1666129385
+  m_BackSortingLayerID: -1666129385
+  m_FrontSortingLayer: 3
+  m_BackSortingLayer: 3
+  m_FrontSortingOrder: 2
+  m_BackSortingOrder: -1
+  m_IsCustomRangeActive: 1
   m_SpriteSortPoint: 0
 --- !u!1 &7365484524580613250
 GameObject:

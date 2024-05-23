@@ -17,6 +17,8 @@ public class UI_JusulsoPossesionSlot : UI_Base
     private Button slotButton;
     public List<UI_JusulsoProgressBox> progressSlot;
     private UI_Jusulso jusulso;
+
+    public Text boxId;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
 
         slotButton = GetComponentInChildren<Button>();
         slotButton.onClick.AddListener(ClickSlot);
+
     }
     public void ClickSlot()
     {
@@ -49,6 +52,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
             box.transform.SetParent(transform);
             slotImage.sprite = itemImage;
             hasBox = true;
+            boxId.text = box.id.ToString();
             SetImageAlpha();
         }
         else if (newbox == null)
@@ -56,6 +60,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
             box = null;
             hasBox = false;
             SetImageAlpha();
+            boxId.text = " ";
         }
     }
     public void MoveItemToProgressBox()
@@ -66,10 +71,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
             {
                 progressSlot[i].SetItem(box);
                 box.transform.SetParent(progressSlot[i].transform);
-                hasBox = false;
-                box = null;
-                SetImageAlpha();
-                jusulso.BoxSort();
+                SetItem(null);
                 break;
             }
             else
@@ -112,7 +114,7 @@ public class UI_JusulsoPossesionSlot : UI_Base
                 {
                     box.open_start_time = boxOpen.data.open_start_time;
                     MoveItemToProgressBox();
-                    jusulso.RefreshBox();
+                    jusulso.BoxSort();
                     DebugManager.Instance.PrintDebug("박스 열기 시작!");
                     break;
                 }

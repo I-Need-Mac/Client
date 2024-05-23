@@ -54,11 +54,9 @@ public class UI_Jusulso : UI_Popup
 
     public DateTime currentTime;
 
-    public UnityEngine.UI.Button testBtn;
 
     void Start()
     {
-        testBtn.onClick.AddListener(BoxSort);
         RequestBox();
         jusulso_Title.text = LocalizeManager.Instance.GetText("UI_Sorcere_Title");
         progress_Box.text = LocalizeManager.Instance.GetText("UI_Sorcere_MyBoxes");
@@ -291,12 +289,18 @@ public class UI_Jusulso : UI_Popup
                     pageGamObject[i].SetActive(false);
                 }
             }
-            //BoxSort();
+            BoxSort();
         }
     }
     public async void RefreshBox()
     {
         OwnBoxResult result = await APIManager.Instance.GetBox();
+        int totalBoxes = result.data.userRewardBoxes.Count;
+        int totalPages = (totalBoxes + 15) / 16;
+        while (totalPages > pageList.Count)
+        {
+            NewSlotPage();
+        }
         if (result.statusCode == 200)
         {
             currentTime = result.data.current_time;

@@ -14,6 +14,7 @@ public class UI_JusulsoProgressBox : UI_Base
     public Image slotImage;
     public Sprite itemImage;
     public TextMeshProUGUI time;
+    public TextMeshProUGUI itemId;
     private Button slotButton;
     private UI_Jusulso jusulso;
     private TimeSpan openTime;
@@ -48,6 +49,7 @@ public class UI_JusulsoProgressBox : UI_Base
         SetImageAlpha();
         hasBox = true;
         StartCoroutine(UpdateTimer());
+        itemId.text = box.id.ToString();
         if (hasBox)
         {
             DebugManager.Instance.PrintDebug("박스가 이미 차 있습니다.");
@@ -57,6 +59,7 @@ public class UI_JusulsoProgressBox : UI_Base
     {
         if (box == null)
         {
+            itemId.text = " ";
             time.gameObject.SetActive(false);
             slotImage.color = new Color(0, 0, 0, 0);
         }

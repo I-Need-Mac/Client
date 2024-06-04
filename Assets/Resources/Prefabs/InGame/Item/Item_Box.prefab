@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6106501323779793283}
   - component: {fileID: 6715938136026022724}
   - component: {fileID: 5594477815817217741}
+  - component: {fileID: -954295047228815755}
   m_Layer: 0
   m_Name: Item_Box
   m_TagString: Untagged
@@ -126,6 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings: []
   soundPackItems:
   - usingSpeaker: EFFECT
@@ -133,3 +136,21 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 13
     audioClip: {fileID: 8300000, guid: 7ab448bebc4ab7a438048086c1ba403b, type: 3}
+    audioClipList: []
+--- !u!114 &-954295047228815755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5825917033139895007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c239ae17f0cea1e4fb2e0b8083f73a52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 4
+  steam_id: 990321
+  box_type: 2
+  stage_id: 1
+  is_open: 0

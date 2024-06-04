@@ -1,40 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &199326218701545343
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2684452969894459700}
-  m_Layer: 5
-  m_Name: Slot_Page
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2684452969894459700
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 199326218701545343}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 238687728751058807}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &238687728728195264
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,9 +104,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 238687729515637636}
-  - {fileID: 7868544031298153747}
   - {fileID: 4748315643105278835}
-  - {fileID: 2684452969894459700}
+  - {fileID: 7868544031298153747}
   m_Father: {fileID: 5190113709133785414}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -342,10 +306,17 @@ MonoBehaviour:
   progress_Box: {fileID: 238687730263841081}
   possesion_Box: {fileID: 238687729515637635}
   close_Text: {fileID: 5943617892443935377}
-  slot_Page: {fileID: 199326218701545343}
+  right: {fileID: 7739823375090042409}
+  left: {fileID: 625107271340392253}
+  lockSprite:
+  - {fileID: 21300000, guid: 8f0dc4b01a41e434daaaceb691f44690, type: 3}
+  - {fileID: 21300000, guid: a759d46d4216b0446b4337e972c3197e, type: 3}
+  slot_Page: {fileID: 2123512079687453956, guid: dfa64c088d2904d42bf6c9102def8d07, type: 3}
+  possesionSlot: {fileID: 238687728751058807}
   slotList: []
   progressSlot: {fileID: 238687729884906150}
   progressList: []
+  testBtn: {fileID: 0}
 --- !u!1 &238687729515637637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,7 +1049,7 @@ GameObject:
   - component: {fileID: 7949466444004433063}
   - component: {fileID: 7739823375090042409}
   m_Layer: 5
-  m_Name: Right button
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1096,7 +1067,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 238687728751058807}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1153,7 +1124,7 @@ GameObject:
   - component: {fileID: 7352463824395631037}
   - component: {fileID: 625107271340392253}
   m_Layer: 5
-  m_Name: Left button
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1166,12 +1137,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3012874064146967786}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 238687728751058807}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

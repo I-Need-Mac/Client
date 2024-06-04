@@ -68,7 +68,7 @@ public struct Scanner
             case SKILLCONSTANT.SKILL_TARGET.MOUSE:
                 return MouseTarget(exceptions);
             default:
-                return RandomTarget(shooter, attackDistance);
+                return null;
         }
     }
 
@@ -208,6 +208,22 @@ public struct Scanner
         foreach (int layer in layers)
         {
             targets = Physics2D.CircleCastAll(shooter.position, attackDistance, Vector2.zero, 0, 1 << layer);
+
+            foreach (RaycastHit2D target in targets)
+            {
+                resultTargets.Add(target.transform);
+            }
+        }
+
+        return resultTargets;
+    }
+
+    public static List<Transform> RangeTarget(Vector2 pos, float attackDistance, params int[] layers)
+    {
+        List<Transform> resultTargets = new List<Transform>();
+        foreach (int layer in layers)
+        {
+            targets = Physics2D.CircleCastAll(pos, attackDistance, Vector2.zero, 0, 1 << layer);
 
             foreach (RaycastHit2D target in targets)
             {

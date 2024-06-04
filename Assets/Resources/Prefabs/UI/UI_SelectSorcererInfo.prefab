@@ -2130,7 +2130,13 @@ MonoBehaviour:
     audioClipList_ENG: []
     audioClipList_JP: []
   ulises:
-    audioClipList_KOR: []
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: 5d02208f49f777548b3933f7bc199d97, type: 3}
+    - {fileID: 8300000, guid: e7b7b9e406cf6d6469296fda09b0bdec, type: 3}
+    - {fileID: 8300000, guid: 44615e58e1d093547aea1d45b23a1d6c, type: 3}
+    - {fileID: 8300000, guid: 417a3e3af7be8404aa9be84d5bbee59c, type: 3}
+    - {fileID: 8300000, guid: 8e30f9aa0bc7e324dab437f076532272, type: 3}
+    - {fileID: 8300000, guid: 0c9a152628fc5b34a9d4f1d91f75c212, type: 3}
     audioClipList_ENG: []
     audioClipList_JP: []
   voiceShooter: {fileID: 3555940498570662950}

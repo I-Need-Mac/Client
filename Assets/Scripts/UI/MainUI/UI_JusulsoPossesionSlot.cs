@@ -1,12 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
-using System;
-using static UIStatus;
-using UnityEditor.Tilemaps;
-using Steamworks;
 
 public class UI_JusulsoPossesionSlot : UI_Base
 {

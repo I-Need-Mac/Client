@@ -1,16 +1,8 @@
-using Steamworks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
-using UnityEditor.UI;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UIStatus;
 
 public class UI_Jusulso : UI_Popup
 {

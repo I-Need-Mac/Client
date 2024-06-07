@@ -17,10 +17,8 @@ public class Monster : MonoBehaviour
     private Rigidbody2D monsterRigidbody;
     private Vector2 monsterDirection;
 
-    //private bool isSlow;
     private bool spineSwitch;
     private StatusEffect statusEffect;
-    private bool isFriendly;
     private BehaviorTreeManager btManager;
 
     private float weightX;
@@ -38,6 +36,8 @@ public class Monster : MonoBehaviour
     private SoundRequester soundRequester;
     private SoundSituation.SOUNDSITUATION situation;
     private int exState = 0;
+
+    public bool isFriendly { get; private set; }
     public int monsterId { get; set; }
     public bool isHit { get; set; }
     public bool isAttack { get; private set; }
@@ -93,7 +93,15 @@ public class Monster : MonoBehaviour
         {
             if (target == null)
             {
-                this.target = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, });
+                this.target = FindEnemy();
+            }
+            else
+            {
+                Transform enemy = FindEnemy();
+                if (this.target != enemy)
+                {
+                    this.target = enemy;
+                }
             }
         }
     }
@@ -124,11 +132,22 @@ public class Monster : MonoBehaviour
         //isSlow = false;
     }
 
+    public void StatusUpdate(int hp, int attack, float moveSpeed)
+    {
+        monsterData.SetHp(monsterData.hp + hp);
+        monsterData.SetCurrentHp(monsterData.hp);
+        monsterData.SetAttack(monsterData.attack + attack);
+        monsterData.SetMoveSpeed(monsterData.moveSpeed + moveSpeed);
+    }
+
     private void OnEnable()
     {
+
         if (soundRequester != null)
         {
+            soundRequester.GetBackSpeakers();
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.SPAWN);
+         
         }
     }
     public string GetMonsterID() { 
@@ -255,7 +274,7 @@ public class Monster : MonoBehaviour
     
     private Node FriendlyAI()
     {
-        gameObject.layer = (int)LayerConstant.HIT;
+        //gameObject.layer = (int)LayerConstant.HIT;
         this.SetTarget(Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, }), true);
 
         return BoldAI();
@@ -372,6 +391,17 @@ public class Monster : MonoBehaviour
         attackCollider.AttackColliderSwitch(false);
         isAttack = false;
     }
+
+    private Transform FindEnemy()
+    {
+        Transform enemy = Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { transform, });
+        if (enemy != null && enemy.TryGetComponent(out Monster monster))
+        {
+            return monster.isFriendly == false ? enemy : null;
+        }
+
+        return null;
+    }
     #endregion
 
     #region Logic
@@ -385,15 +415,14 @@ public class Monster : MonoBehaviour
 
     public void Hit(float totalDamage)
     {
-        //StopCoroutine(HpBarControl());
-        if (hpBar == null)
+        if (hpBar == null && gameObject.activeInHierarchy)
         {
             StartCoroutine(HpBarControl());
         }
 
         isHit = true;
 
-        if (soundRequester != null)
+        if (soundRequester != null && gameObject.activeInHierarchy)
         {
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.HIT);
         }
@@ -407,14 +436,11 @@ public class Monster : MonoBehaviour
 
     private IEnumerator HpBarControl()
     {
-        //hpBar.HpBarSwitch(true);
-        //yield return hpBarVisibleTime;
-        //hpBar.HpBarSwitch(false);
         hpBar = (HpBar)UIPoolManager.Instance.SpawnUI("HpBar", PlayerUI.Instance.transform.Find("HpBarUI"), transform.position);
         float time = 0.0f;
         do
         {
-            hpBar.HpBarSetting(transform.position, monsterData.currentHp, monsterData.hp);
+            hpBar.HpBarSetting(transform.Find("HpBar").position, monsterData.currentHp, monsterData.hp);
             time += Time.fixedDeltaTime;
             yield return fixedFrame;
         } while (hpBar != null && time < hpBarVisibleTime && monsterData.currentHp > 0);
@@ -431,20 +457,28 @@ public class Monster : MonoBehaviour
         if (soundRequester != null) {
             soundRequester.ChangeSituation(SoundSituation.SOUNDSITUATION.DIE);
         }
-        monsterCollider.enabled = false;
-        monsterCollider2.enabled = false;
-        StartCoroutine(DieAnimation());
-
-        if (isDrop)
-        {
-            DropItem();
-        }
         if (hpBar != null)
         {
             UIPoolManager.Instance.DeSpawnUI("HpBar", hpBar);
             hpBar = null;
         }
+
+        monsterCollider.enabled = false;
+        monsterCollider2.enabled = false;
+        
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(DieAnimation());
+        }
+
+        if (isDrop)
+        {
+            DropItem();
+        }
+        
         GameManager.Instance.killCount++;
+        StopAllCoroutines();
+        MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
     private IEnumerator DieAnimation()
@@ -459,15 +493,30 @@ public class Monster : MonoBehaviour
             DebugManager.Instance.PrintDebug("[ERROR]: 스파인에 죽는 애니메이션이 없는 몬스터입니다");
         }
         yield return new WaitForSeconds(1.0f);
-        MonsterSpawner.Instance.DeSpawnMonster(this);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Monster monster;
-        if (collision.gameObject.layer == (int)LayerConstant.HIT && (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster)))
+        if (isFriendly)
         {
-            Hit(monster.monsterData.attack);
+            if (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster))
+            {
+                if (!monster.isFriendly)
+                {
+                    Hit(monster.monsterData.attack);
+                }
+            }
+        }
+        else
+        {
+            if (collision.transform.parent.TryGetComponent(out monster) || collision.TryGetComponent(out monster))
+            {
+                if (monster.isFriendly)
+                {
+                    Hit(monster.monsterData.attack);
+                }
+            }
         }
     }
     #endregion

@@ -272,6 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings: []
   soundPackItems:
   - usingSpeaker: EFFECT
@@ -279,6 +281,7 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: 82b48c5d03374e24e8ed98be1001f1df, type: 3}
+    audioClipList: []
 --- !u!1 &2347785819612788377
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,7 +855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6450794914416429441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1044,6 +1047,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings: []
   soundPackItems:
   - usingSpeaker: EFFECT
@@ -1051,11 +1056,13 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 17
     audioClip: {fileID: 8300000, guid: a1496dd2464f85145b54dc13354782e1, type: 3}
+    audioClipList: []
   - usingSpeaker: EFFECT
     delay: 0
     priority: 0
     SOUNDSITUATION: 18
     audioClip: {fileID: 8300000, guid: ea9a00dc65a01ed47b29658d1fda1a12, type: 3}
+    audioClipList: []
 --- !u!1 &7104679208290339956
 GameObject:
   m_ObjectHideFlags: 0

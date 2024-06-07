@@ -2,7 +2,14 @@ using SKILLCONSTANT;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+
+public enum PROJECTILE_DIRECTION
+{
+    LEFT,
+    RIGHT,
+}
 
 public class Projectile : MonoBehaviour
 {
@@ -23,6 +30,7 @@ public class Projectile : MonoBehaviour
 
     //public float totalDamage { get; private set; }
     public ActiveData skillData { get; private set; }
+    public Monster collisionMonster { get; private set; }
 
     private void Awake()
     {
@@ -32,12 +40,32 @@ public class Projectile : MonoBehaviour
         }
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        transform.GetComponent<Renderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
-        animator = GetComponent<Animator>();
+        //transform.GetComponent<Renderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
+        if (transform.TryGetComponent(out Renderer renderer))
+        {
+            renderer.sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
+        }
+        else
+        {
+            try
+            {
+                transform.GetComponentInChildren<Renderer>().sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
+            }
+            catch
+            {
+                DebugManager.Instance.PrintError("[Projectile: SortingLayer] Not Found Renderer Component.");
+            }
+        }
+
+        if (TryGetComponent(out Animator animator))
+        {
+            this.animator = animator;
+        }
     }
 
     protected virtual void OnEnable()
     {
+        collisionMonster = null;
         hitCount = 0;
         if (projectileCollider != null)
         {
@@ -48,13 +76,11 @@ public class Projectile : MonoBehaviour
         {
             SoundManager.Instance.PlayAudioClip("Skill", shootAudioClip);
         }
+    }
 
-        //if (this.skillData != null && skillData.skillType == SKILL_TYPE.RANGES)
-        //{
-        //    DebugManager.Instance.PrintError(this.transform.localPosition);
-        //    DebugManager.Instance.PrintError(this.transform.position);
-        //    SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.projectileSizeMulti, this.transform.localPosition);
-        //}
+    public void SetDirection(PROJECTILE_DIRECTION direction)
+    {
+        spriteRenderer.flipX = direction == PROJECTILE_DIRECTION.LEFT ? true : false;
     }
 
     public void SetAnimation(Sprite sprite, RuntimeAnimatorController controller)
@@ -94,17 +120,8 @@ public class Projectile : MonoBehaviour
 
         if (skillData.skillType == SKILL_TYPE.RANGES)
         {
-            //if(skillData.splashRange > 0) {
-            //    SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.splashRange, this.transform);
-            //}
-            //else {
-            //    SkillManager.Instance.SpawnRangeCircle(skillData.duration, skillData.attackDistance, this.transform);
-
-            //}
             SkillManager.Instance.SpawnRangeCircle(skillData.duration, this.transform);
         }
-        //transform.localScale *= this.skillData.projectileSizeMulti;
-        //this.totalDamage = skillData.damage;
     }
 
     public void SetAlpha(float alpha)
@@ -134,27 +151,30 @@ public class Projectile : MonoBehaviour
     {
         if (collision.TryGetComponent(out Monster monster))
         {
-            float totalDamage = skillData.damage;
-            hitCount++;
-            if (hitCount == 1)
-            {
-                totalDamage += SoulManager.Instance.GetEffect(SoulEffect.SINGLEDAMAGE, skillData._damage);
-            }
-            else if (hitCount > 1)
-            {
-                totalDamage += hitCount * SoulManager.Instance.GetEffect(SoulEffect.MULTIATTACK, skillData._damage);
-            }
+            collisionMonster = monster;
 
-            if (monster.monsterData.monsterType == MonsterType.BOSS)
-            {
-                totalDamage += SoulManager.Instance.GetEffect(SoulEffect.BOSSDAMAGE, skillData._damage);
-            }
-            else
-            {
-                totalDamage += SoulManager.Instance.GetEffect(SoulEffect.NORMALDAMAGE, skillData._damage);
-            }
+            //float totalDamage = skillData.damage;
+            //hitCount++;
+            //if (hitCount == 1)
+            //{
+            //    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.SINGLEDAMAGE, skillData._damage);
+            //}
+            //else if (hitCount > 1)
+            //{
+            //    totalDamage += hitCount * SoulManager.Instance.GetEffect(SoulEffect.MULTIATTACK, skillData._damage);
+            //}
 
-            monster.Hit(totalDamage);
+            //if (monster.monsterData.monsterType == MonsterType.BOSS)
+            //{
+            //    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.BOSSDAMAGE, skillData._damage);
+            //}
+            //else
+            //{
+            //    totalDamage += SoulManager.Instance.GetEffect(SoulEffect.NORMALDAMAGE, skillData._damage);
+            //}
+
+            //monster.Hit(totalDamage);
+            monster.Hit(CalTotalDamage(monster));
             
             SkillEffect(monster);
             //충돌 사운드
@@ -169,6 +189,31 @@ public class Projectile : MonoBehaviour
             }
             DebugManager.Instance.PrintDebug("[TEST]: Hit");
         }
+    }
+
+    public float CalTotalDamage(Monster monster)
+    {
+        float totalDamage = skillData.damage;
+        hitCount++;
+        if (hitCount == 1)
+        {
+            totalDamage += SoulManager.Instance.GetEffect(SoulEffect.SINGLEDAMAGE, skillData._damage);
+        }
+        else if (hitCount > 1)
+        {
+            totalDamage += hitCount * SoulManager.Instance.GetEffect(SoulEffect.MULTIATTACK, skillData._damage);
+        }
+
+        if (monster.monsterData.monsterType == MonsterType.BOSS)
+        {
+            totalDamage += SoulManager.Instance.GetEffect(SoulEffect.BOSSDAMAGE, skillData._damage);
+        }
+        else
+        {
+            totalDamage += SoulManager.Instance.GetEffect(SoulEffect.NORMALDAMAGE, skillData._damage);
+        }
+
+        return totalDamage;
     }
 
     //private void OnBecameInvisible()
@@ -303,12 +348,14 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator SpawnMob(float n)
     {
-        Monster summoner = MonsterSpawner.Instance.SpawnMonster((int)n, GameManager.Instance.player.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle, LayerConstant.HIT);
+        Monster summoner = MonsterSpawner.Instance.SpawnFriendlyMonster((int)n, Scanner.GetTarget(skillData.skillTarget, transform, skillData.attackDistance));
         summoner.SetTarget(Scanner.GetTargetTransform(SKILL_TARGET.MELEE, transform, 999, new List<Transform>() { summoner.transform, }), true);
+        summoner.StatusUpdate(0, (int)skillData.damage, skillData.speed);
+        yield return new WaitForSeconds(skillData.duration);
 
-        yield return new WaitForSeconds(20.0f);
-
-        MonsterSpawner.Instance.DeSpawnMonster(summoner);
+        if (summoner.gameObject.activeInHierarchy)
+        {
+            summoner.Die(false);
+        }
     }
-
 }

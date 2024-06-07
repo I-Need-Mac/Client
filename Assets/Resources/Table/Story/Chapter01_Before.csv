@@ -1,8 +1,10 @@
 PageID,PageType,TextBox1,TextBox2,TextBox3,VoicePath1,VoicePath2,VoicePath3,ImagePath
-,,3°³ÀÇ ¹®´Ü ÅØ½ºÆ® ¾ÆÀÌµğ,,,¹®´Ü¿¡ ÇØ´çÇÏ´Â º¸ÀÌ½º ÆĞ½º,,,ÀÌ¹ÌÁö ÆĞ½º
+,,3ê°œì˜ ë¬¸ë‹¨ í…ìŠ¤íŠ¸ ì•„ì´ë””,,,ë¬¸ë‹¨ì— í•´ë‹¹í•˜ëŠ” ë³´ì´ìŠ¤ íŒ¨ìŠ¤,,,ì´ë¯¸ì§€ íŒ¨ìŠ¤
 PageID,PageType,TextBox1,TextBox2,TextBox3,VoicePath1,VoicePath2,VoicePath3,ImagePath
-1001,PictureTextBottom,Story_Chapter01_Before_0001,,,None,None,None,Arts\Sabhwa\Sabhwa_Sketch_01
+1001,PictureTextTop,Story_Chapter01_Before_0001,,,None,None,None,Arts\Sabhwa\Sabhwa_Sketch_01
 1002,Text,Story_Chapter01_Before_0002,Story_Chapter01_Before_0003,Story_Chapter01_Before_0004,None,None,None,
 1003,PictureTextBottom,Story_Chapter01_Before_0005,,,None,None,None,Arts\Sabhwa\Sabhwa_Sketch_02
 1004,Text,Story_Chapter01_Before_0006,Story_Chapter01_Before_0007,Story_Chapter01_Before_0008,None,None,None,
-1005,PictureTextTop,Story_Chapter01_Before_0009,,,None,None,None,Arts\Sabhwa\Sabhwa_Sketch_03
+1005,Text,Story_Chapter01_Before_0009,Story_Chapter01_Before_0010,Story_Chapter01_Before_0011,,,,
+1006,PictureTextTop,Story_Chapter01_Before_0012,,,None,None,None,Arts\Sabhwa\Sabhwa_Sketch_03
+1007,Text,Story_Chapter01_Before_0013,Story_Chapter01_Before_0014,Story_Chapter01_Before_0015,None,None,None,

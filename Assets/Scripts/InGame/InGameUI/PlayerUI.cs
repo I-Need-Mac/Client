@@ -60,7 +60,6 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
     public IEnumerator SkillSelectWindowOpen()
     {
         levelUi.gameObject.SetActive(true);
-        //Time.timeScale = 0f;
         GameManager.Instance.Pause();
         levelUi.skills.Clear();
         levelUi.SkillBoxInit(3);

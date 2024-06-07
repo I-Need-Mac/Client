@@ -14,6 +14,8 @@ public abstract class PassiveSkill : Skill
     //protected WaitForSeconds coolTime;
     protected WaitForFixedUpdate frame;
 
+    protected Projectile projectile;
+
     public abstract IEnumerator Activation();
 
     public PassiveSkill(int skillId, Transform shooter, int skillNum)

@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SCALE_TYPE
+{
+    NONE,
+    VERTICAL,
+    HORIZON,
+}
+
 public class SkillManager : SingletonBehaviour<SkillManager>
 {
     //public static readonly int SKILL_MAX_LEVEL = 8;
@@ -13,7 +20,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     [SerializeField] private int skillNum = 10801;
 
     private Dictionary<string, Dictionary<string, object>> skillTable;
+    private Dictionary<string, Dictionary<string, object>> passiveTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
+    private Dictionary<int, Vector2> projectileOriginalSize;
     private ObjectPool<SkillRangeCircle> rangeCirclePool;
     private Dictionary<int, IEnumerator> skillCoroutineList;
 
@@ -23,7 +32,9 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     protected override void Awake()
     {
         skillTable = CSVReader.Read("SkillTable");
+        passiveTable = CSVReader.Read("PassiveTable");
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
+        projectileOriginalSize = new Dictionary<int, Vector2>();
         skillCoroutineList = new Dictionary<int, IEnumerator>();
 
         foreach (string skillId in skillTable.Keys)
@@ -66,7 +77,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     public T SpawnProjectile<T>(ActiveData skillData) where T : Projectile
     {
-        return SpawnProjectile<T>(skillData, transform, LayerConstant.SKILL);
+        return SpawnProjectile<T>(skillData, transform);
     }
 
     public T SpawnProjectile<T>(ActiveData skillData, LayerConstant layer) where T : Projectile
@@ -74,59 +85,52 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         return SpawnProjectile<T>(skillData, transform, layer);
     }
 
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, shooter, LayerConstant.SKILL);
-    }
-
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, shooter, position, LayerConstant.SKILL);
-    }
-
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, LayerConstant layer) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, shooter, Vector2.zero, LayerConstant.SKILL);
-    }
-
-    public T SpawnProjectile<T>(ActiveData skillData, Vector2 position) where T : Projectile
-    {
-        return SpawnProjectile<T>(skillData, transform, position, LayerConstant.SKILL);
-    }
-
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, Vector2 position, LayerConstant layer) where T : Projectile
+    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, LayerConstant layer = LayerConstant.SKILL, SCALE_TYPE scaleType = SCALE_TYPE.NONE) where T : Projectile
     {
         int poolId = skillData.skillId / 100;
         T projectile = (T)skillPools[poolId].GetObject();
+        if (!projectileOriginalSize.ContainsKey(poolId))
+        {
+            projectileOriginalSize.Add(poolId, projectile.transform.localScale);
+        }
         projectile.transform.parent = shooter;
         projectile.gameObject.layer = (int)layer;
         projectile.transform.localPosition = Vector2.zero;
-        projectile.gameObject.layer = (int)LayerConstant.SKILL;
-        //projectile.transform.localPosition = Vector3.zero;
-        projectile.transform.localPosition = position;
-        //projectile.transform.position = position;
-        projectile.transform.localScale = Vector3.one * skillData.projectileSizeMulti;
+        if (scaleType == SCALE_TYPE.NONE)
+        {
+            projectile.transform.localScale = projectileOriginalSize[poolId] * skillData.projectileSizeMulti;
+        }
+        else if (scaleType == SCALE_TYPE.HORIZON)
+        {
+            projectile.transform.localScale = new Vector2(projectileOriginalSize[poolId].x * skillData.projectileSizeMulti, projectileOriginalSize[poolId].y);
+        }
+        else if (scaleType == SCALE_TYPE.VERTICAL)
+        {
+            projectile.transform.localScale = new Vector2(projectileOriginalSize[poolId].x, projectileOriginalSize[poolId].y * skillData.projectileSizeMulti);
+        }
         projectile.SetProjectile(skillData);
         projectile.gameObject.SetActive(true);
         return projectile;
     }
 
-    //true -> h / false -> v
-    public T SpawnProjectile<T>(ActiveData skillData, Transform shooter, bool direction) where T : Projectile
+    public T SpawnProjectile<T>(PassiveData skillData, LayerConstant layer = LayerConstant.SKILL) where T : Projectile
     {
-        int poolId = skillData.skillId / 100;
-        T projectile = (T)skillPools[poolId].GetObject();
+        return SpawnProjectile<T>(skillData, transform, layer);
+    }
+
+    public T SpawnProjectile<T>(PassiveData skillData, Transform shooter, LayerConstant layer = LayerConstant.SKILL) where T : Projectile
+    {
+        int id = skillData.skillId / 100;
+        if (!skillPools.ContainsKey(id))
+        {
+            skillPools.Add(id, new ObjectPool<Projectile>(ResourcesManager.Load<Projectile>(passiveTable[skillData.skillId.ToString()]["PassivePrefabPath"].ToString()), shooter));
+        }
+
+        T projectile = (T)skillPools[id].GetObject();
         projectile.transform.parent = shooter;
-        projectile.gameObject.layer = (int)LayerConstant.SKILL;
-        if (direction)
-        {
-            projectile.transform.localScale = new Vector3(skillData.projectileSizeMulti, 1.0f, 1.0f);
-        }
-        else
-        {
-            projectile.transform.localScale = new Vector3(1.0f, skillData.projectileSizeMulti, 1.0f);
-        }
-        projectile.SetProjectile(skillData);
+        projectile.gameObject.layer = (int)layer;
+        projectile.transform.localPosition = Vector2.zero;
+        //projectile.CollisionPower(false);
         projectile.gameObject.SetActive(true);
         return projectile;
     }
@@ -134,6 +138,12 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     public void DeSpawnProjectile(Projectile projectile)
     {
         skillPools[projectile.skillData.skillId / 100].ReleaseObject(projectile);
+        projectile.transform.parent = transform;
+    }
+
+    public void DeSpawnProjectile(Projectile projectile, int skillId)
+    {
+        skillPools[skillId / 100].ReleaseObject(projectile);
         projectile.transform.parent = transform;
     }
     #endregion

@@ -612,6 +612,8 @@ MonoBehaviour:
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &6329926287381495612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,6 +706,8 @@ MonoBehaviour:
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &5152335398159802511
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,6 +785,8 @@ MonoBehaviour:
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &5333588589294448135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1427,6 +1433,8 @@ MonoBehaviour:
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!65 &61340846482778318
 BoxCollider:
   m_ObjectHideFlags: 0

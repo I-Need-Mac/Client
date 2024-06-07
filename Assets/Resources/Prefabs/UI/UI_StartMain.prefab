@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fec208b9995124baaccdfc1e5dce96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings: []
   soundPackItems:
   - usingSpeaker: BGM
@@ -624,6 +626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings: []
   soundPackItems:
   - usingSpeaker: EFFECT
@@ -631,8 +635,10 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: a1496dd2464f85145b54dc13354782e1, type: 3}
+    audioClipList: []
   - usingSpeaker: EFFECT
     delay: 0
     priority: 0
     SOUNDSITUATION: 17
     audioClip: {fileID: 8300000, guid: a1496dd2464f85145b54dc13354782e1, type: 3}
+    audioClipList: []

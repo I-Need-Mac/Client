@@ -280,9 +280,16 @@ public class UI_StoryBook : UI_Popup
             preBtn.GetComponent<FadeInImage>().StartFadeIn();
             nextBtn.GetComponent<FadeInImage>().StartFadeIn();
         }
-        else
+        else if (currentPage  >= totalPage)
+         {
+            preBtn.gameObject.SetActive(true);
+            nextBtn.gameObject.SetActive(true);
+            preBtn.GetComponent<FadeInImage>().StartFadeIn();
+            nextBtn.GetComponent<FadeInImage>().StartFadeIn();
+        }
+       else
         {
-            if (currentPage + 1 < totalPage)
+            if (currentPage + 1 <= totalPage)
             {
                 pageList[currentPage].ActivePage();
                 pageText.text = (currentPage) + "/" + (PAGE_UNIT);

@@ -29,13 +29,16 @@ public class UIManager : MonoSingleton<UIManager>
         UI_SelectSorcererInfo,
         UI_Sorcerer_Unlock_conditions,
         UI_Hon,
+        UI_Hon_Under,
         UI_Hon_Unlock_conditions,
         UI_Jusulso,
-        
+        UI_JusulsoReward,
+        UI_Jusulso_Boxopen_Popup,
+
         UI_Settings
     }
 
-    public int selectCharacterID =0;
+    public int selectCharacterID = 0;
     public int selectStageID;
     public List<UI_StageElement> stageList = new List<UI_StageElement>();
 
@@ -53,11 +56,11 @@ public class UIManager : MonoSingleton<UIManager>
     List<UI_Popup> popupList = new List<UI_Popup>();
 
     // 실시간 팝업 목록
-   public LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
+    public LinkedList<UI_Popup> currentPopup = new LinkedList<UI_Popup>();
 
     private void Update()
     {
-        
+
     }
 
     public void Init()
@@ -67,7 +70,7 @@ public class UIManager : MonoSingleton<UIManager>
 
         // 이벤트 시스템을 추가합니다.
         GameObject go = GameObject.Find("EventSystem");
-        if( go == null )
+        if (go == null)
         {   // 이벤트 시스템이 없다면 하나 생성합니다.
             go = new GameObject("EventSystem");
             Util.GetOrAddComponent<EventSystem>(go);
@@ -136,14 +139,14 @@ public class UIManager : MonoSingleton<UIManager>
         mainUI.gameObject.SetActive(true);
 
         // 전체 UI리스트를 셋팅합니다.
-        for ( int i = 0; i < names.Length; i++ )
+        for (int i = 0; i < names.Length; i++)
         {
             if (i == (int)UI_Prefab.UI_StartMain)
                 continue;
 
             // 팝업 UI를 생성합니다.
             UI_Popup popup = Util.UILoad<UI_Popup>($"{Define.UiPrefabsPath}/{names[i]}");
-            if ( popup == null )
+            if (popup == null)
             {
                 Debug.Log(names[i] + " is NULL");
                 continue;
@@ -162,9 +165,9 @@ public class UIManager : MonoSingleton<UIManager>
 
     public bool IsUiPopup(string uiName)
     {
-        foreach(UI_Popup popup in currentPopup)
+        foreach (UI_Popup popup in currentPopup)
         {
-            if( popup.name == uiName )
+            if (popup.name == uiName)
             {
                 return true;
             }
@@ -198,7 +201,7 @@ public class UIManager : MonoSingleton<UIManager>
         // 이미 띄위져있는 팝업 입니다.
         if (IsCurrentPopup(popup))
             return null;
-        
+
         // 오브젝트로 생성합니다.
         GameObject go = Util.CreateObject(popup.gameObject);
 
@@ -237,7 +240,7 @@ public class UIManager : MonoSingleton<UIManager>
         // 리스트에서 제외
         LinkedList<UI_Popup>.Enumerator enummerator = currentPopup.GetEnumerator();
         UI_Popup pop = enummerator.Current;
-        while(pop == null)
+        while (pop == null)
         {
             enummerator.MoveNext();
             pop = enummerator.Current;
@@ -260,9 +263,9 @@ public class UIManager : MonoSingleton<UIManager>
     private UI_Popup FindPopupUI(string name)
     {
         // 팝업 리스트에서 해당하는 팝업을 찾습니다.
-        for( int i = 0; i < popupList.Count; i++ )
+        for (int i = 0; i < popupList.Count; i++)
         {
-            if(popupList[i].name == name)
+            if (popupList[i].name == name)
             {
                 return popupList[i];
             }

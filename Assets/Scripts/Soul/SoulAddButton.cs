@@ -20,6 +20,7 @@ public class SoulAddButton : MonoBehaviour
 
     private void test()
     {
-        SoulManager.Instance.Add(new Soul(int.Parse(inputField.text)));
+        //SoulManager.Instance.Add(new Soul(int.Parse(inputField.text)));
+        DebugManager.Instance.PrintError("[SoulAddButton: Error] 임시로 폐쇄된 기능입니다.");
     }
 }

@@ -15,11 +15,12 @@ public abstract class SoundRequester : MonoBehaviour
     protected Dictionary<string,AudioSource> audioSources = new Dictionary<string, AudioSource>();
     protected GameObject soundRequester;
     protected GameObject soundManager = SoundManager.Instance.GetSoundManagerGameObject();
+    protected List<GameObject> givenSpeaker = new List<GameObject>();
     protected SoundSituation.SOUNDSITUATION lastSoundSituation = SoundSituation.SOUNDSITUATION.NONE;
     protected bool isBlockSituation = false;
     
     public bool isBlockAllSituation = false;
-    public float situationBlockTime = 1.0f;
+    public float situationBlockTime = 0.5f;
 
 
 
@@ -85,19 +86,24 @@ public abstract class SoundRequester : MonoBehaviour
                 soundManager = SoundManager.Instance.GetSoundManagerGameObject();
             }
        
-            target.transform.position = new Vector3(soundManager.transform.position.x, soundManager.transform.position.y, soundManager.transform.position.z);
+          
             target.transform.SetParent(soundManager.transform);
-        
 
-            StartCoroutine(DestroyAudioAfterPlaying(audioSource, audioSource.clip.length));
+            givenSpeaker.Add(target);
+
+            //SoundManager.Instance.soundManagerUpdater.ReturnBackAfterShooting(parentRequester, target, audioSource.clip.length);
         }
     }
 
-
-    protected IEnumerator DestroyAudioAfterPlaying(AudioSource target, float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        Destroy(target);
+    public void GetBackSpeakers() { 
+        if (givenSpeaker.Count != 0) { 
+            for(int i = 0; i< givenSpeaker.Count; ++i) {
+                givenSpeaker[i].transform.position = new Vector3(soundRequester.transform.position.x, soundRequester.transform.position.y, soundRequester.transform.position.z);
+                givenSpeaker[i].transform.SetParent(soundRequester.transform);
+                givenSpeaker.RemoveAt(i);
+                i-=1;
+            } 
+        }
     }
 
     protected GameObject FindChild(GameObject parent, string childName)

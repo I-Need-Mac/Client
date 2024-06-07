@@ -21,10 +21,13 @@ public class DaeHum : PassiveSkill
 
     private IEnumerator Crash()
     {
+        projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
         do
         {
             prevShield = GameManager.Instance.player.playerManager.playerData.shield;
             yield return frame;
         } while (prevShield <= GameManager.Instance.player.playerManager.playerData.shield);
+        SkillManager.Instance.DeSpawnProjectile(projectile, skillData.skillId);
+        projectile = null;
     }
 }

@@ -8,13 +8,32 @@ public class GwiGi : ActiveSkill
 
     public override IEnumerator Activation()
     {
-        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+        PROJECTILE_DIRECTION projectileDirection;
+
+        Vector2 direction = (Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance) - (Vector2)shooter.position).normalized;
+        if (direction.x < 0)
+        {
+            projectileDirection = PROJECTILE_DIRECTION.LEFT;
+        }
+        else
+        {
+            projectileDirection = PROJECTILE_DIRECTION.RIGHT;
+        }
 
         for (int i = 0; i < skillData.projectileCount; i++)
         {
-            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter, false);
-            projectile.transform.localPosition = Vector2.up * skillData.attackDistance;
-            projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
+            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter, scaleType: SCALE_TYPE.HORIZON);
+            projectile.SetDirection(projectileDirection);
+            if (projectileDirection == PROJECTILE_DIRECTION.LEFT)
+            {
+                projectile.transform.localPosition = new Vector2(-projectile.transform.localScale.x * 2, projectile.transform.localScale.y);
+                projectileDirection = PROJECTILE_DIRECTION.RIGHT;
+            }
+            else
+            {
+                projectile.transform.localPosition = new Vector2(projectile.transform.localScale.x * 2, projectile.transform.localScale.y);
+                projectileDirection = PROJECTILE_DIRECTION.LEFT;
+            }
             SkillManager.Instance.CoroutineStarter(Move(projectile));
             yield return intervalTime;
         }
@@ -22,53 +41,10 @@ public class GwiGi : ActiveSkill
 
     private IEnumerator Move(Projectile projectile)
     {
-        float angle = 0.0f;
-        float weight = 0.0f;
-        if (shooter.TryGetComponent(out Player player))
-        {
-            if (player.lookDirection.x >= 0)
-            {
-                do
-                {
-                    weight += 0.002f;
-                    angle -= Time.fixedDeltaTime * skillData.speed + weight;
-                    projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
-                    yield return frame;
-                } while (projectile.transform.localEulerAngles.z > 240.0f);
-            }
-            else
-            {
-                while (projectile.transform.localEulerAngles.z < 100.0f)
-                {
-                    weight += 0.001f;
-                    angle += Time.fixedDeltaTime * skillData.speed + weight;
-                    projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
-                    yield return frame;
-                }
-            }
-        }
+        
+        
 
-        //if (Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance).x >= 0)
-        //{
-        //    do
-        //    {
-        //        weight += 0.002f;
-        //        angle -= Time.fixedDeltaTime * skillData.speed + weight;
-        //        projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
-        //        yield return frame;
-        //    } while (projectile.transform.localEulerAngles.z > 240.0f);
-        //}
-        //else
-        //{
-        //    while (projectile.transform.localEulerAngles.z < 100.0f)
-        //    {
-        //        weight += 0.001f;
-        //        angle += Time.fixedDeltaTime * skillData.speed + weight;
-        //        projectile.transform.RotateAround(shooter.position, Vector3.forward, angle);
-        //        yield return frame;
-        //    }
-        //}
-
+        yield return duration;
         SkillManager.Instance.DeSpawnProjectile(projectile);
     }
 

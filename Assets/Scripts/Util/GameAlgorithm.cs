@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class GameAlgorithm
@@ -17,5 +18,10 @@ public static class GameAlgorithm
             list[k] = list[n];
             list[n] = value;
         }
+    }
+
+    public static Dictionary<TKey, TValue> FisherVateShuffle<TKey, TValue>(this Dictionary<TKey, TValue> dict)
+    {
+        return dict.OrderBy(x => random.Next()).ToDictionary(item => item.Key, item => item.Value);
     }
 }

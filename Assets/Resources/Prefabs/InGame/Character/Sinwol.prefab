@@ -298,8 +298,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomVoice: []
-  dieVoice: []
+  voicePackItems:
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: 99567e55421c18249aa146508543b3f4, type: 3}
+    - {fileID: 8300000, guid: cab49499d5c52ba47888a2b209393797, type: 3}
+    - {fileID: 8300000, guid: ab97f2970b4e2af448171e9470a4a5ae, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: cab49499d5c52ba47888a2b209393797, type: 3}
+    - {fileID: 8300000, guid: ab97f2970b4e2af448171e9470a4a5ae, type: 3}
+    - {fileID: 8300000, guid: c2fecc14baf0b014f892e9a5e2b3294b, type: 3}
+    - {fileID: 8300000, guid: 1626fb1f25eef2d458c40a0e589afa1c, type: 3}
+    - {fileID: 8300000, guid: d72b209d4e553274b8e21580afe2ea94, type: 3}
+    - {fileID: 8300000, guid: 99567e55421c18249aa146508543b3f4, type: 3}
+    - {fileID: 8300000, guid: 7794502a19c5e4c4886d9a60128d8be8, type: 3}
+    - {fileID: 8300000, guid: f0eae836bb028db4a92eefdd8a0b8842, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: caa177f0cb5c93b45ae7618923dbafc2, type: 3}
+    - {fileID: 8300000, guid: 79781d59755433047af65866a5852bcb, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &3819438005419506193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings:
   - speakerName: Sinwol
     _audioType: 1
@@ -462,8 +485,13 @@ MonoBehaviour:
   - usingSpeaker: Sinwol
     delay: 0
     priority: 0
-    SOUNDSITUATION: 6
+    SOUNDSITUATION: 11
     audioClip: {fileID: 8300000, guid: 587b3aed23cab654781f28b09cb9a8cc, type: 3}
+    audioClipList:
+    - {fileID: 8300000, guid: b55261a8191e44d408388d787c588d03, type: 3}
+    - {fileID: 8300000, guid: 76157c1cbef16ee4d81cdec4275f732a, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &4229899588456256851
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings: []
   soundPackItems: []
 --- !u!33 &5131375683876274233

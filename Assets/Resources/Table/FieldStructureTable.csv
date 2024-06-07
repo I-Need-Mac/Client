@@ -25,8 +25,8 @@ int,LocalizeID,String,String,GimmickEnum,int_Arr,Bool,Bool,int,int,int,bool
 21001,FieldStructure_Blueflame,Map/Structure/Gimmick/Map_Gimmick_Blueflame_00,Null,Damage,5|5|5|5,TRUE,TRUE,0,2,100000,FALSE
 22101,FieldStructure_Mobstatue,Map/Structure/Gimmick/Map_Gimmick_MobStatue_00,Map/Structure/Gimmick/Map_Gimmick_MobStatueTop_00,Durability,1|Stone,TRUE,TRUE,0,4,100000,FALSE
 23001,FieldStructure_Teleportcircle,Map/Structure/Gimmick/Map_Gimmick_TeleportCircle_00,Null,Teleport,5,TRUE,TRUE,1,1,100000,FALSE
-24001,FieldStructure_Santuary,Map/Structure/Gimmick/Map_Gimmick_Santuary_00,Map/Structure/Gimmick/Map_Gimmick_SantuaryTop_00,Heal,2|50,TRUE,FALSE,0,4,100000,FALSE
-25001,FieldStructure_Santuarycircle,Map/Structure/Gimmick/Map_Gimmick_SantuaryCircle_00,Null,Heal,5|3,TRUE,TRUE,0,1,100000,FALSE
+24001,FieldStructure_Santuary,Map/Structure/Gimmick/Map_Gimmick_Santuary_00,Map/Structure/Gimmick/Map_Gimmick_SantuaryTop_00,Heal,2|50,TRUE,FALSE,0,1,100000,FALSE
+25001,FieldStructure_Santuarycircle,Map/Structure/Gimmick/Map_Gimmick_SantuaryCircle_00,Null,Heal,50|50,TRUE,TRUE,0,1,100000,FALSE
 26101,FieldStructure_Destructionstone1,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_01,Null,BeamLine,5|1|10,TRUE,TRUE,1,2,100000,FALSE
 26201,FieldStructure_Destructionstone2,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_02,Null,BeamLine,1|5,TRUE,TRUE,1,2,100000,FALSE
 26301,FieldStructure_Destructionstone3,Map/Structure/Gimmick/Map_Gimmick_DestructionStone_03,Null,BeamCircle,1,TRUE,TRUE,1,2,100000,FALSE

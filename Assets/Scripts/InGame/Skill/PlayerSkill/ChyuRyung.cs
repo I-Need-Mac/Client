@@ -9,7 +9,7 @@ public class ChyuRyung : ActiveSkill
     public ChyuRyung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
     public override IEnumerator Activation()
     {
-        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData,shooter);
+        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
         projectile.transform.position = (Vector2)shooter.position;
 
         lineRenderer = projectile.gameObject.AddComponent<LineRenderer>();
@@ -17,23 +17,22 @@ public class ChyuRyung : ActiveSkill
         lineRenderer.endWidth = 0.1f;
         lineRenderer.material.color = Color.red;
         float elapsedTime = 0.0f;
-        while(true)
+        while (true)
         {
-
-            if (elapsedTime>0.2f)
+            if (elapsedTime > 0.2f)
             {
                 Vector2 path = shooter.transform.position;
                 pathList.Add(path);
                 elapsedTime = 0.0f;
                 SkillManager.Instance.CoroutineStarter(Despawn());
             }
-            if (pathList.Count > 3&&Vector2.Distance(pathList[0], shooter.transform.position) < 0.3f)
+            if (pathList.Count > 3 && Vector2.Distance(pathList[0], shooter.transform.position) < 0.3f)
             {
                 List<Vector2> fourPoints = new List<Vector2>
                 {
                     pathList[0],
-                    pathList[pathList.Count / 3],
-                    pathList[(2 * pathList.Count) / 3],
+                    pathList[pathList.Count / 4],
+                    pathList[(2 * pathList.Count) / 4],
                     pathList[pathList.Count - 1]
                 };
                 float area = CalculateMinimumArea(fourPoints.ToArray());
@@ -48,9 +47,9 @@ public class ChyuRyung : ActiveSkill
                     }
                     else
                     {
-                        yield return Active(area,center);
+                        yield return Active(area, center);
                     }
-                }              
+                }
             }
             UpdateLineRenderer();
 
@@ -100,10 +99,10 @@ public class ChyuRyung : ActiveSkill
 
         return centroid;
     }
-    private IEnumerator Active(float area,Vector2 center)
+    private IEnumerator Active(float area, Vector2 center)
     {
         Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
-        projectile.transform.localScale = Vector2.one* area;
+        projectile.transform.localScale = Vector2.one * area;
         projectile.transform.localPosition = center;
         lineRenderer.gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
@@ -112,7 +111,7 @@ public class ChyuRyung : ActiveSkill
     }
     private IEnumerator Despawn()
     {
-        if (pathList.Count > skillData.duration*1000)
+        if (pathList.Count > skillData.duration * 1000)
         {
             pathList.RemoveAt(0);
         }

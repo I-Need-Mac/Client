@@ -329,8 +329,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53fb3cb7668bc34493a904d26bc7335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomVoice: []
-  dieVoice: []
+  voicePackItems:
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: 6939244c2ee63f04d951aa55f1a6c440, type: 3}
+    - {fileID: 8300000, guid: b8c1d60d9f028f8488b6de158b1684f0, type: 3}
+    - {fileID: 8300000, guid: 8837ba429fd4801458da735d5f929059, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: 442d526c6bdd85840af7209796e1cfe5, type: 3}
+    - {fileID: 8300000, guid: b8c1d60d9f028f8488b6de158b1684f0, type: 3}
+    - {fileID: 8300000, guid: 6939244c2ee63f04d951aa55f1a6c440, type: 3}
+    - {fileID: 8300000, guid: 5064f662c77aa4a469ad618b82d6f2f2, type: 3}
+    - {fileID: 8300000, guid: 8837ba429fd4801458da735d5f929059, type: 3}
+    - {fileID: 8300000, guid: 105cf116a13bff14aae87a74e75ab81a, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - audioClipList_KOR:
+    - {fileID: 8300000, guid: be14e5c8bf99e7544be991a5979188fe, type: 3}
+    - {fileID: 8300000, guid: a45085beb228ab34588bc32ec07fb520, type: 3}
+    - {fileID: 8300000, guid: db40f8ad5c1307f469bc1162241da1ac, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &4387514153110122160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,6 +492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 0.5
   speakerSettings:
   - speakerName: Seimei
     _audioType: 1
@@ -495,6 +517,19 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 6
     audioClip: {fileID: 8300000, guid: 6724bda979293be4fb788daebb780ba0, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - usingSpeaker: Seimei
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 11
+    audioClip: {fileID: 8300000, guid: 6724bda979293be4fb788daebb780ba0, type: 3}
+    audioClipList:
+    - {fileID: 8300000, guid: 57fea8ede003c5d4f82c17fd45f1beff, type: 3}
+    - {fileID: 8300000, guid: 229acd7e61e5afe4d86c19c4dd08bbe2, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &3697830240125579559
 GameObject:
   m_ObjectHideFlags: 0

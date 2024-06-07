@@ -1741,8 +1741,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skill Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
-  m_sharedMaterial: {fileID: -3305390525445643378, guid: b5c192cd4d914514d9b338d5f422377c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 04da2dedfa4f3e6458f1f6d27db06861, type: 2}
+  m_sharedMaterial: {fileID: -5439839470407881533, guid: 04da2dedfa4f3e6458f1f6d27db06861, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1957,7 +1957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2692833131645881364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2079,6 +2079,7 @@ MonoBehaviour:
   Skill_2_Context: {fileID: 6752434881954038015}
   Skill_Icon_1_Image: {fileID: 3932956636786433017}
   Skill_Icon_2_Image: {fileID: 2431832563514512801}
+  backgound: {fileID: 2692833131822882337}
   gaugeList:
   - {fileID: 4412720805231731823}
   - {fileID: 1985271498242600437}
@@ -2088,15 +2089,56 @@ MonoBehaviour:
   - {fileID: 4719418718023430501}
   - {fileID: 6655638602177824676}
   - {fileID: 2304806736348909901}
+  backgroundImage:
+  - {fileID: 21300000, guid: 9d6a179a8d341d047a321552537d2b13, type: 3}
+  - {fileID: 21300000, guid: d6f5be269b817f24a9fd576dd5e564e5, type: 3}
+  - {fileID: 21300000, guid: bbff405a02fe24f49ba2dd2dfccf435e, type: 3}
   hojin:
-  - {fileID: 8300000, guid: 44454e5725984b44fb252d73f56fbfae, type: 3}
-  - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
-  - {fileID: 8300000, guid: 96664b1d7ab577240879138d74e20335, type: 3}
-  siwoo: []
-  sinwol: []
-  seimei: []
-  macia: []
-  ulises: []
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: 44454e5725984b44fb252d73f56fbfae, type: 3}
+    - {fileID: 8300000, guid: 7916bcadc7c39494ca6dff089e5aaa9b, type: 3}
+    - {fileID: 8300000, guid: 96664b1d7ab577240879138d74e20335, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  siwoo:
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: 666b3fbd01a49eb49a216ebf676acfa9, type: 3}
+    - {fileID: 8300000, guid: 6d2bce35adcb7624eba514303d39fc62, type: 3}
+    - {fileID: 8300000, guid: c85e3fc7a354d5e43bdc7b8a64b04878, type: 3}
+    - {fileID: 8300000, guid: 6897a4dc4d713004c90f1600b514f1c0, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  sinwol:
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: cab49499d5c52ba47888a2b209393797, type: 3}
+    - {fileID: 8300000, guid: ab97f2970b4e2af448171e9470a4a5ae, type: 3}
+    - {fileID: 8300000, guid: c2fecc14baf0b014f892e9a5e2b3294b, type: 3}
+    audioClipList_ENG:
+    - {fileID: 8300000, guid: cf3f39f7e6465c347a5003fd22348a08, type: 3}
+    audioClipList_JP: []
+  seimei:
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: 442d526c6bdd85840af7209796e1cfe5, type: 3}
+    - {fileID: 8300000, guid: b8c1d60d9f028f8488b6de158b1684f0, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  macia:
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: eac2fa385fded9847846dc7135b057c1, type: 3}
+    - {fileID: 8300000, guid: 1b70622084011fd49abd8019a2e9b125, type: 3}
+    - {fileID: 8300000, guid: 35b1b17f49d61ef47b2f3cd5730e3cda, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  ulises:
+    audioClipList_KOR:
+    - {fileID: 8300000, guid: 5d02208f49f777548b3933f7bc199d97, type: 3}
+    - {fileID: 8300000, guid: e7b7b9e406cf6d6469296fda09b0bdec, type: 3}
+    - {fileID: 8300000, guid: 44615e58e1d093547aea1d45b23a1d6c, type: 3}
+    - {fileID: 8300000, guid: 417a3e3af7be8404aa9be84d5bbee59c, type: 3}
+    - {fileID: 8300000, guid: 8e30f9aa0bc7e324dab437f076532272, type: 3}
+    - {fileID: 8300000, guid: 0c9a152628fc5b34a9d4f1d91f75c212, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
   voiceShooter: {fileID: 3555940498570662950}
 --- !u!1 &2692833131822882339
 GameObject:
@@ -4167,8 +4209,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12, y: -23.13}
-  m_SizeDelta: {x: 1659.98, y: 933.74}
+  m_AnchoredPosition: {x: 67, y: -50}
+  m_SizeDelta: {x: 1554.28, y: 874.28}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1707042494824944144
 CanvasRenderer:
@@ -4198,7 +4240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2bf465801265e944d9588fd1162c7b62, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 973a1fac01183a7479ac36f9010e8d8b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4594,6 +4636,8 @@ MonoBehaviour:
     SOUNDSITUATION: 2
     audioClip: {fileID: 0}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &4400181789157082930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4827,8 +4871,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skill Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 588a518fb193dd643a801f27304f97f8, type: 2}
-  m_sharedMaterial: {fileID: -944256075130403144, guid: 588a518fb193dd643a801f27304f97f8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 04da2dedfa4f3e6458f1f6d27db06861, type: 2}
+  m_sharedMaterial: {fileID: -5439839470407881533, guid: 04da2dedfa4f3e6458f1f6d27db06861, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8895,6 +8939,8 @@ MonoBehaviour:
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: fd92546304880dc49940d35275db1064, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &8901311497459098974
 GameObject:
   m_ObjectHideFlags: 0

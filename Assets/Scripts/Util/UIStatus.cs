@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class UIStatus : SingleTon<UIStatus>
 {
@@ -18,10 +19,10 @@ public class UIStatus : SingleTon<UIStatus>
 
 
 
-    public int sorcererCost {get=> Convert.ToInt32(SettingManager.Instance.GetConfigSetting("Sorcerer"));}
+    public int sorcererCost { get => Convert.ToInt32(SettingManager.Instance.GetConfigSetting("Sorcerer")); }
     public string steam_id { get; set; }
     public string nickname { get; set; }
-    public int selectedChar { get;set; }
+    public int selectedChar { get; set; }
     public string selectedChar_string { get; set; }
 
     public UI_SelectSorcerer uI_SelectSorcerer { get; set; }
@@ -45,7 +46,7 @@ public class UIStatus : SingleTon<UIStatus>
     public bool sinwol { get; set; }
     public bool siWoo { get; set; }
     public bool ulises { get; set; }
-
+    public List<UI_Jusulso_Box> boxList { get; set; }
     private int GetSorcerer() {
         if (selectedChar_string.Equals(Sorcerers.hojin.ToString())) { 
             return (int)Sorcerers.hojin;

@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6232933752542367378
 RectTransform:
   m_ObjectHideFlags: 0
@@ -842,6 +842,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13dc5d5cecfe1304486261b5fddc6be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
   speakerSettings: []
   soundPackItems:
   - usingSpeaker: EFFECT
@@ -849,6 +851,7 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 18
     audioClip: {fileID: 8300000, guid: ea9a00dc65a01ed47b29658d1fda1a12, type: 3}
+    audioClipList: []
 --- !u!1 &1758859433154865581
 GameObject:
   m_ObjectHideFlags: 0

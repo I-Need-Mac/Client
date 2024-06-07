@@ -140,10 +140,23 @@ public class SoundRequesterSFX : SoundRequester
 
         if (!((isBlockSituation&& situation == lastSoundSituation)||(isBlockSituation&&isBlockAllSituation)))
         {
+     
             try
             {
                 lastSoundSituation = situation;
-                audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].targetClip);
+                
+
+                if (situation == SoundSituation.SOUNDSITUATION.DIE)
+                {
+                    audioSources[shootingSounds[situation].usingSpeaker].clip =(shootingSounds[situation].targetClip);
+                    audioSources[shootingSounds[situation].usingSpeaker].Play();
+
+                    MoveToSoundManager(audioGameObjectDict[shootingSounds[situation].usingSpeaker]);
+                }
+                else {
+                    audioSources[shootingSounds[situation].usingSpeaker].PlayOneShot(shootingSounds[situation].targetClip);
+                }
+                DebugManager.Instance.PrintDebug("[SoundRequester] Shoot Sound With" + shootingSounds[situation].usingSpeaker+" Shooted : "+ situation);
                 BlockSituation();
 
             }
@@ -164,10 +177,7 @@ public class SoundRequesterSFX : SoundRequester
                 BlockSituation();
 
             }
-            if (situation == SoundSituation.SOUNDSITUATION.DIE)
-            {
-                MoveToSoundManager(audioGameObjectDict[shootingSounds[situation].usingSpeaker]);
-            }
+     
         }
     }
 

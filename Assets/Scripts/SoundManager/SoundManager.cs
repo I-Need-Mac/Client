@@ -13,8 +13,10 @@ public class SoundManager : SingleTon<SoundManager>
     
 
     GameObject soundManager;
+    GameObject soundRequester;
     GameObject bgmRequester;
-    SoundManagerUpdater soundManagerUpdater;
+
+    public  SoundManagerUpdater soundManagerUpdater;
 
     public string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
     private const float soundNomalizer = 10.0f;
@@ -303,6 +305,11 @@ public class SoundManager : SingleTon<SoundManager>
         return soundManager;
     }
 
+    public GameObject GetSoundManagerRequesterGameObject()
+    {
+        return soundManager;
+    }
+
     public string GetSpeakerNameWithType(string speakerName) {
         if (audioTypeDict.ContainsKey(speakerName)) {
             return audioTypeDict[speakerName]+"@"+speakerName;
@@ -329,4 +336,6 @@ public class SoundManager : SingleTon<SoundManager>
     }
 
    
+     
+
 }

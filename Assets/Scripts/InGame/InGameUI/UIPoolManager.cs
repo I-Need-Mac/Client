@@ -40,8 +40,9 @@ public class UIPoolManager : SingletonBehaviour<UIPoolManager>
 
     public void DeSpawnUI(string type, InGameUI ui)
     {
-        pools[type].ReleaseObject(ui);
+        ui.gameObject.SetActive(false);
         ui.transform.SetParent(transform);
+        pools[type].ReleaseObject(ui);
     }
 
     //public SkillUI SpawnButton(Transform transform, Vector2 pos)

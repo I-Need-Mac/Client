@@ -221,6 +221,36 @@ CapsuleCollider2D:
   m_Offset: {x: 0.022126377, y: -0.2}
   m_Size: {x: 1.3585018, y: 2.920566}
   m_Direction: 0
+--- !u!1 &7537407652079447192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2168748993674061567}
+  m_Layer: 0
+  m_Name: HpBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2168748993674061567
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537407652079447192}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.21, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6065118994211841279}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8229970969470832980
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,6 +285,7 @@ Transform:
   m_Children:
   - {fileID: 478231617100532822}
   - {fileID: 8270858778725268577}
+  - {fileID: 2168748993674061567}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -324,11 +355,17 @@ MonoBehaviour:
     priority: 0
     SOUNDSITUATION: 7
     audioClip: {fileID: 8300000, guid: 1a87006310c740c4889b5a5357788272, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
   - usingSpeaker: Shooter
     delay: 0
     priority: 0
     SOUNDSITUATION: 9
     audioClip: {fileID: 8300000, guid: 6c58a0b6f077ea8418c682865669f450, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &1083453517588647339
 MonoBehaviour:
   m_ObjectHideFlags: 0

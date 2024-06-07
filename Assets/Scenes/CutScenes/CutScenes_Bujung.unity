@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 233282560}
   - component: {fileID: 233282559}
   - component: {fileID: 233282558}
+  - component: {fileID: 233282557}
   m_Layer: 5
   m_Name: CutSceneImage
   m_TagString: Untagged
@@ -161,6 +162,31 @@ RectTransform:
   m_AnchoredPosition: {x: 465, y: -68.595}
   m_SizeDelta: {x: 2316.1074, y: 1302.8108}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &233282557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233282555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd450b15381b94f9f87d81a69d7c8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isBlockAllSituation: 0
+  situationBlockTime: 1
+  speakerSettings: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 1
+    audioClip: {fileID: 8300000, guid: 77cde2c2db6849e469c5096ac64481c4, type: 3}
+    audioClipList:
+    - {fileID: 8300000, guid: 9e87278dc8687af48bc96ef0b6ac42c5, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &233282558
 MonoBehaviour:
   m_ObjectHideFlags: 0

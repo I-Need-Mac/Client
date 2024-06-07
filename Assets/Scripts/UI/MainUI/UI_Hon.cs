@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,7 +21,6 @@ public class UI_Hon : UI_Popup
         Hon_Page5
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         Bind<Image>(typeof(Images));
@@ -34,7 +34,38 @@ public class UI_Hon : UI_Popup
         for (int i = 0; i < objectValue.Length; i++)
         {
             BindUIEvent(GetGameObject(i).gameObject, (PointerEventData data) => { OnClickObject(data); }, Define.UIEvent.Click);
+            SetSoulTitle(GetGameObject(i).gameObject);
         }
+    }
+
+    private void SetSoulTitle(GameObject page)
+    {
+        string id = string.Empty;
+        switch (page.name)
+        {
+            case "Hon_Page1":
+                id = "101";
+                break;
+            case "Hon_Page2":
+                id = "102";
+                break;
+            case "Hon_Page3":
+                id = "103";
+                break;
+            case "Hon_Page4":
+                id = "104";
+                break;
+            case "Hon_Page5":
+                id = "105";
+                break;
+            default:
+                DebugManager.Instance.PrintError("[Error: UI_Hon] 존재하지 않는 페이지 이름입니다.");
+                return;
+        }
+
+        TextMeshProUGUI title = page.transform.Find("Hon_Name").GetComponent<TextMeshProUGUI>();
+        Dictionary<string, Dictionary<string, object>> mainSoulTable = CSVReader.Read("MainCategorySoul");
+        title.text = LocalizeManager.Instance.GetText(mainSoulTable[id]["SoulMainNameText"].ToString());
     }
 
     public void OnClickImage(PointerEventData data)
@@ -43,7 +74,7 @@ public class UI_Hon : UI_Popup
         if ((int)imageValue < -1)
             return;
 
-        Debug.Log(data.pointerClick.name);
+        DebugManager.Instance.PrintDebug(data.pointerClick.name);
 
         switch (imageValue)
         {
@@ -59,70 +90,25 @@ public class UI_Hon : UI_Popup
         GameObjects imageValue = (GameObjects)FindEnumValue<GameObjects>(data.pointerClick.name);
         if ((int)imageValue < -1)
             return;
-        Debug.Log(data.pointerClick.name);
+        DebugManager.Instance.PrintDebug(data.pointerClick.name);
 
-        switch(imageValue)
+        UI_Hon_Under honUnder = UIManager.Instance.OpenUI<UI_Hon_Under>();
+        switch (imageValue)
         {
             case GameObjects.Hon_Page1:
-                UI_Honpage honPage1 = GetGameObject(0).GetComponent<UI_Honpage>();
-                if (honPage1 != null && honPage1.unlocked)
-                {
-                    Debug.Log("Hon_Page1 is Unlocked");
-                }
-                else
-                {
-                    UIManager.Instance.OpenUI<UI_Hon_Unlock_conditions>();
-                    Debug.Log("Hon_Page1 is locked");
-                }
+                honUnder.Setting(101);
                 break;
             case GameObjects.Hon_Page2:
-                UI_Honpage honPage2 = GetGameObject(1).GetComponent<UI_Honpage>();
-                if (honPage2 != null && honPage2.unlocked)
-                {
-                    Debug.Log("Hon_Page2 is Unlocked");
-                }
-                else
-                {
-                    UIManager.Instance.OpenUI<UI_Hon_Unlock_conditions>();
-                    Debug.Log("Hon_Page2 is locked");
-                }
+                honUnder.Setting(102);
                 break;
             case GameObjects.Hon_Page3:
-                UI_Honpage honPage3 = GetGameObject(2).GetComponent<UI_Honpage>();
-                if (honPage3 != null && honPage3.unlocked)
-                {
-                    Debug.Log("Hon_Page3 is Unlocked");
-                }
-                else
-                {
-                    UIManager.Instance.OpenUI<UI_Hon_Unlock_conditions>();
-                    Debug.Log("Hon_Page3 is locked");
-                }
+                honUnder.Setting(103);
                 break;
             case GameObjects.Hon_Page4:
-                UI_Honpage honPage4 = GetGameObject(3).GetComponent<UI_Honpage>();
-                if (honPage4 != null && honPage4.unlocked)
-                {
-                    Debug.Log("Hon_Page4 is Unlocked");
-                }
-                else
-                {
-                    UIManager.Instance.OpenUI<UI_Hon_Unlock_conditions>();
-                    Debug.Log("Hon_Page4 is locked");
-
-                }
+                honUnder.Setting(104);
                 break;
             case GameObjects.Hon_Page5:
-                UI_Honpage honPage5 = GetGameObject(4).GetComponent<UI_Honpage>();
-                if (honPage5 != null && honPage5.unlocked)
-                {
-                    Debug.Log("Hon_Page5 is Unlocked");
-                }
-                else
-                {
-                    UIManager.Instance.OpenUI<UI_Hon_Unlock_conditions>();
-                    Debug.Log("Hon_Page5 is locked");
-                }
+                honUnder.Setting(105);
                 break;
 
 

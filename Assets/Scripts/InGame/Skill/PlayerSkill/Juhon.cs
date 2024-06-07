@@ -10,7 +10,7 @@ public class Juhon : ActiveSkill
     {
         shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
 
-        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter, Vector3.zero);
+        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
         //projectile.CollisionRadius(skillData.attackDistance);
         for (int i = 0; i < skillData.projectileCount; i++)
         {

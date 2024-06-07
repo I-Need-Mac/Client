@@ -42,7 +42,7 @@ public class ProjectileStraight : Projectile
         else
         {
             float speed = skillData.speed * Time.fixedDeltaTime;
-            transform.Translate(Vector2.up * speed);
+            transform.Translate(Vector2.right * speed);
             shiftingDistance += speed;
             if (shiftingDistance > skillData.attackDistance)
             {

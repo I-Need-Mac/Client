@@ -265,7 +265,9 @@ MonoBehaviour:
     delay: 0
     priority: 0
     SOUNDSITUATION: 1
-    audioClip: {fileID: 8300000, guid: e9d341f7a943eae4f8dff20591fb85a2, type: 3}
+    audioClip: {fileID: 0}
+    audioClipList:
+    - {fileID: 8300000, guid: e9d341f7a943eae4f8dff20591fb85a2, type: 3}
 --- !u!114 &1680593882
 MonoBehaviour:
   m_ObjectHideFlags: 0

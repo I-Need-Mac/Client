@@ -35,9 +35,8 @@ public class Aliento : ActiveSkill
         {
             ProjectileStraight projectile = SkillManager.Instance.SpawnProjectile<ProjectileStraight>(skillData);
             projectile.transform.localPosition = shooter.position;
-            Vector2 pos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
-            pos -= (Vector2)shooter.position;
-            projectile.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg - 90.0f);
+            Vector2 pos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance) - (Vector2)shooter.position;
+            projectile.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg);
             yield return intervalTime;
         }
     }

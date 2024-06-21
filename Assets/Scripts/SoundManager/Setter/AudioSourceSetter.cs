@@ -11,7 +11,8 @@ public class AudioSourceSetter {
     {
         BGM,
         EFFECT,
-        VOICE
+        VOICE,
+        ETERNAL
     }
     [Tooltip("스피커 이름 - 동일한 이름을 사용할 경우 사운드가 교체됨")]
     public string speakerName = "Default";
@@ -57,7 +58,7 @@ public class AudioSourceSetter {
         }
     }
 
-    private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND" };
+    private string[] audioTypeList = { "BGM_SOUND", "EFFECT_SOUND", "VOCIE_SOUND", "EFFECT_SOUND" };
 
     public string audioType
     {

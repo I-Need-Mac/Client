@@ -464,6 +464,8 @@ MonoBehaviour:
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: fd92546304880dc49940d35275db1064, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &4237373287304542446
 GameObject:
   m_ObjectHideFlags: 0

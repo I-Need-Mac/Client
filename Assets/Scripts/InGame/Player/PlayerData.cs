@@ -229,6 +229,7 @@ public class PlayerData
             ++level;
             this.exp -= this.needExp;
             this.needExp = Convert.ToInt32(CSVReader.Read("LevelUpTable", (level + 1).ToString(), "NeedExp"));
+            
             yield return GameManager.Instance.playerUi.SkillSelectWindowOpen();
         }
         GameManager.Instance.playerUi.expBar.SetExpBar(this.exp, this.needExp);

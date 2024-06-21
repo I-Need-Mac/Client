@@ -700,7 +700,7 @@ MonoBehaviour:
     delay: 0
     priority: 0
     SOUNDSITUATION: 6
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 0f43c9da94d83c94baa813c60d40b188, type: 3}
     audioClipList: []
     audioClipList_ENG: []
     audioClipList_JP: []

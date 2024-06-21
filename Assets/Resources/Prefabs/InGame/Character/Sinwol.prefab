@@ -486,10 +486,18 @@ MonoBehaviour:
     delay: 0
     priority: 0
     SOUNDSITUATION: 11
-    audioClip: {fileID: 8300000, guid: 587b3aed23cab654781f28b09cb9a8cc, type: 3}
+    audioClip: {fileID: 0}
     audioClipList:
     - {fileID: 8300000, guid: b55261a8191e44d408388d787c588d03, type: 3}
     - {fileID: 8300000, guid: 76157c1cbef16ee4d81cdec4275f732a, type: 3}
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - usingSpeaker: Sinwol
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: 587b3aed23cab654781f28b09cb9a8cc, type: 3}
+    audioClipList: []
     audioClipList_ENG: []
     audioClipList_JP: []
 --- !u!1 &4229899588456256851

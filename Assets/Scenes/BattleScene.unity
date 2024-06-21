@@ -7000,7 +7000,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBlockAllSituation: 0
   situationBlockTime: 1
-  speakerSettings: []
+  speakerSettings:
+  - speakerName: LEVEL_UP
+    _audioType: 3
+    loadSettingFrom: {fileID: 0}
+    audioMixerGroup: {fileID: 0}
+    isLoop: 0
+    isBypassEffects: 0
+    priority: 128
+    pitch: 1
+    streoPan: 0
+    volume: 1
+    is3D: 0
+    audioRolloffMode: 0
+    dropperLevel: 0
+    spread: 0
+    minDistance: 0
+    maxDistance: 0
   soundPackItems:
   - usingSpeaker: EFFECT
     delay: 0
@@ -7008,6 +7024,16 @@ MonoBehaviour:
     SOUNDSITUATION: 16
     audioClip: {fileID: 8300000, guid: fd92546304880dc49940d35275db1064, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - usingSpeaker: LEVEL_UP
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 1
+    audioClip: {fileID: 8300000, guid: de9a805c35cf56a4cb3171471b9aec08, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &1765820609
 GameObject:
   m_ObjectHideFlags: 0
@@ -7714,6 +7740,8 @@ MonoBehaviour:
     SOUNDSITUATION: 21
     audioClip: {fileID: 8300000, guid: ea9a00dc65a01ed47b29658d1fda1a12, type: 3}
     audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!114 &1909131675
 MonoBehaviour:
   m_ObjectHideFlags: 0

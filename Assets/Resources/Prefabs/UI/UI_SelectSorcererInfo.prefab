@@ -4488,7 +4488,7 @@ GameObject:
   - component: {fileID: 5753972661903183228}
   - component: {fileID: 4818668632609311804}
   - component: {fileID: 3555940498570662950}
-  - component: {fileID: 4400181789157082930}
+  - component: {fileID: 7389390969418080347}
   m_Layer: 5
   m_Name: Select
   m_TagString: Untagged
@@ -4638,7 +4638,15 @@ MonoBehaviour:
     audioClipList: []
     audioClipList_ENG: []
     audioClipList_JP: []
---- !u!114 &4400181789157082930
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: 993d99dc7685a8945bd7f60fd75d2d91, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
+--- !u!114 &7389390969418080347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4651,9 +4659,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBlockAllSituation: 0
-  situationBlockTime: 1
+  situationBlockTime: 0.5
   speakerSettings: []
-  soundPackItems: []
+  soundPackItems:
+  - usingSpeaker: EFFECT
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 21
+    audioClip: {fileID: 8300000, guid: 2403fcca19bb4034db794007787e106d, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
 --- !u!1 &5173809335679606735
 GameObject:
   m_ObjectHideFlags: 0

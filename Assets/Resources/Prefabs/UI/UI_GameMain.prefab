@@ -432,7 +432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9158019123545299572
 RectTransform:
   m_ObjectHideFlags: 0
@@ -610,7 +610,7 @@ MonoBehaviour:
     delay: 0
     priority: 5
     SOUNDSITUATION: 21
-    audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClip: {fileID: 8300000, guid: 7bcbda09077c060409325c913a16a568, type: 3}
     audioClipList: []
     audioClipList_ENG: []
     audioClipList_JP: []
@@ -704,7 +704,7 @@ MonoBehaviour:
     delay: 0
     priority: 5
     SOUNDSITUATION: 21
-    audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClip: {fileID: 8300000, guid: 7bcbda09077c060409325c913a16a568, type: 3}
     audioClipList: []
     audioClipList_ENG: []
     audioClipList_JP: []
@@ -783,7 +783,7 @@ MonoBehaviour:
     delay: 0
     priority: 5
     SOUNDSITUATION: 21
-    audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClip: {fileID: 8300000, guid: 7bcbda09077c060409325c913a16a568, type: 3}
     audioClipList: []
     audioClipList_ENG: []
     audioClipList_JP: []
@@ -1431,7 +1431,7 @@ MonoBehaviour:
     delay: 0
     priority: 5
     SOUNDSITUATION: 21
-    audioClip: {fileID: 8300000, guid: e1dc2b94ebef3da4e99774b51fb4de19, type: 3}
+    audioClip: {fileID: 8300000, guid: 7bcbda09077c060409325c913a16a568, type: 3}
     audioClipList: []
     audioClipList_ENG: []
     audioClipList_JP: []

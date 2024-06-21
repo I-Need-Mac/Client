@@ -61,6 +61,7 @@ public class PlayerUI : SingletonBehaviour<PlayerUI>
     {
         levelUi.gameObject.SetActive(true);
         GameManager.Instance.Pause();
+        levelUi.ShootLevelUPSound();
         levelUi.skills.Clear();
         levelUi.SkillBoxInit(3);
 

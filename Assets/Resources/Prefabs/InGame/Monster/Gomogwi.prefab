@@ -172,7 +172,23 @@ MonoBehaviour:
     delay: 0
     priority: 0
     SOUNDSITUATION: 11
-    audioClip: {fileID: 8300000, guid: e986056f914f4974896a49527ca80041, type: 3}
+    audioClip: {fileID: 8300000, guid: a246356d7b06b354fb81b9fbf5cf31eb, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 9
+    audioClip: {fileID: 8300000, guid: afea167dc18553f46be12d68137b43a4, type: 3}
+    audioClipList: []
+    audioClipList_ENG: []
+    audioClipList_JP: []
+  - usingSpeaker: Shooter
+    delay: 0
+    priority: 0
+    SOUNDSITUATION: 6
+    audioClip: {fileID: 8300000, guid: 8b7e3d78d46d0c14aa91fa7b7dc50dc2, type: 3}
     audioClipList: []
     audioClipList_ENG: []
     audioClipList_JP: []

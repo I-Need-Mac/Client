@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &238687729391629099
 RectTransform:
   m_ObjectHideFlags: 0
@@ -316,7 +316,6 @@ MonoBehaviour:
   slotList: []
   progressSlot: {fileID: 238687729884906150}
   progressList: []
-  testBtn: {fileID: 0}
 --- !u!1 &238687729515637637
 GameObject:
   m_ObjectHideFlags: 0

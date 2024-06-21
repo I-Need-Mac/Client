@@ -14,6 +14,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private bool gameOver = true;
     private float defaultScale;
     private float defaultCharScale;
+    private SoundRequesterSFX soundRequester;
     private UI_ESCPopup esc;
 
     public bool playerTrigger { get; set; } = true;
@@ -35,6 +36,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         playerUi = GameObject.FindWithTag("PlayerUI").GetComponent<PlayerUI>();
         SoundManager.Instance.CreateSoundManager();
         LocalizeManager.Instance.SetLocalizeManager();
+
+        soundRequester = GetComponent<SoundRequesterSFX>();
+
+
         //mapId = UIManager.Instance.selectStageID;
         
         if (UIStatus.Instance.selectedChar != 0)
@@ -186,12 +191,14 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void Pause()
     {
         SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.EFFECT);
+        SoundManager.Instance.PauseType(AudioSourceSetter.EAudioType.VOICE);
         Time.timeScale = 0f;
     }
 
     public void UnPause()
     {
         SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.EFFECT);
+        SoundManager.Instance.UnPauseType(AudioSourceSetter.EAudioType.VOICE);
         Time.timeScale = 1f;
     }
 
@@ -214,4 +221,16 @@ public class GameManager : SingletonBehaviour<GameManager>
     }
 
     #endregion
+
+    public void SetSoundRequesterSituation(SoundSituation.SOUNDSITUATION sitiation) { 
+        if (soundRequester != null) { 
+            soundRequester.ChangeSituation(sitiation);
+        }
+        else
+        {
+            soundRequester = GetComponent<SoundRequesterSFX>();
+            soundRequester.ChangeSituation(sitiation);
+        }
+    }
+    
 }

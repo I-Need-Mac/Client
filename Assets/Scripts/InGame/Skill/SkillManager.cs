@@ -22,7 +22,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<string, Dictionary<string, object>> passiveTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
-    private Dictionary<int, Vector2> projectileOriginalSize;
+    private Dictionary<int, Vector3> projectileOriginalSize;
     private ObjectPool<SkillRangeCircle> rangeCirclePool;
     private Dictionary<int, IEnumerator> skillCoroutineList;
 
@@ -34,7 +34,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillTable = CSVReader.Read("SkillTable");
         passiveTable = CSVReader.Read("PassiveTable");
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
-        projectileOriginalSize = new Dictionary<int, Vector2>();
+        projectileOriginalSize = new Dictionary<int, Vector3>();
         skillCoroutineList = new Dictionary<int, IEnumerator>();
 
         foreach (string skillId in skillTable.Keys)

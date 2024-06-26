@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HwiPung : ActiveSkill
 {
+    private const float ROTATE_SPEED = 90.0f;
+
     public HwiPung(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum)
     {
     }
@@ -30,7 +32,7 @@ public class HwiPung : ActiveSkill
         do
         {
             float distance = Time.fixedDeltaTime * skillData.speed * coefficient / skillData.attackDistance;
-            projectile.transform.GetChild(0).Rotate(Vector3.forward * Time.deltaTime * skillData.speed * 50.0f);
+            projectile.transform.GetChild(0).Rotate(Vector3.forward * Time.deltaTime * skillData.speed * ROTATE_SPEED);
             projectile.transform.Translate(direction * distance);
             travel -= distance;
             weight -= Time.fixedDeltaTime / skillData.attackDistance;

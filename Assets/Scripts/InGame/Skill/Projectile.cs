@@ -57,9 +57,28 @@ public class Projectile : MonoBehaviour
             }
         }
 
+        SetSortingLayer(transform.Find("Effect"));
+
         if (TryGetComponent(out Animator animator))
         {
             this.animator = animator;
+        }
+    }
+
+    private void SetSortingLayer(Transform trans)
+    {
+        if (trans == null)
+        {
+            return;
+        }
+        if (trans.TryGetComponent(out Renderer renderer))
+        {
+            renderer.sortingLayerName = LayerConstant.SPAWNOBJECT.ToString();
+        }
+
+        foreach (Transform child in trans)
+        {
+            SetSortingLayer(child);
         }
     }
 

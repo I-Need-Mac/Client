@@ -21,8 +21,8 @@ public class Ildo : ActiveSkill
 
     private IEnumerator Effect(Projectile projectile)
     {
-        ParticleSystem effect = projectile.GetComponentInChildren<ParticleSystem>();
-        effect.Play();
+        ParticleSystem[] effects = projectile.GetComponentsInChildren<ParticleSystem>();
+        effects[0].Play();
 
         Vector2 targetPos = Scanner.GetTarget(skillData.skillTarget, shooter, skillData.attackDistance);
         Vector2 direction = (targetPos - (Vector2)shooter.position).normalized;
@@ -44,12 +44,13 @@ public class Ildo : ActiveSkill
             }
         } while (diff > 0.25f);
 
-        effect.Clear();
+        effects[0].Clear();
         projectile.SetAlpha(1.0f);
         projectile.transform.rotation = Quaternion.Euler(0.0f, 0.0f, -90.0f);
         projectile.transform.position = targetPos + new Vector2(0.0f, 1.5f);
         projectile.CollisionPower(true);
 
+        effects[1].Play();
         do
         {
             projectile.transform.position = Vector3.Lerp(projectile.transform.position, targetPos, 15.0f * Time.fixedDeltaTime);

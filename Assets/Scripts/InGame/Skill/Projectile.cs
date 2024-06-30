@@ -137,10 +137,10 @@ public class Projectile : MonoBehaviour
 
         SkillEffect(null);
 
-        if (skillData.skillType == SKILL_TYPE.RANGES)
-        {
-            SkillManager.Instance.SpawnRangeCircle(skillData.duration, this.transform);
-        }
+        //if (skillData.skillType == SKILL_TYPE.RANGES)
+        //{
+        //    SkillManager.Instance.SpawnRangeCircle(skillData.duration, this.transform);
+        //}
     }
 
     public void SetAlpha(float alpha)

@@ -22,7 +22,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     private Dictionary<string, Dictionary<string, object>> skillTable;
     private Dictionary<string, Dictionary<string, object>> passiveTable;
     private Dictionary<int, ObjectPool<Projectile>> skillPools;
-    private Dictionary<int, Vector2> projectileOriginalSize;
+    private Dictionary<int, Vector3> projectileOriginalSize;
     private ObjectPool<SkillRangeCircle> rangeCirclePool;
     private Dictionary<int, IEnumerator> skillCoroutineList;
 
@@ -34,7 +34,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         skillTable = CSVReader.Read("SkillTable");
         passiveTable = CSVReader.Read("PassiveTable");
         skillPools = new Dictionary<int, ObjectPool<Projectile>>();
-        projectileOriginalSize = new Dictionary<int, Vector2>();
+        projectileOriginalSize = new Dictionary<int, Vector3>();
         skillCoroutineList = new Dictionary<int, IEnumerator>();
 
         foreach (string skillId in skillTable.Keys)
@@ -54,20 +54,20 @@ public class SkillManager : SingletonBehaviour<SkillManager>
     }
 
     #region Spawn Projectile
-    public SkillRangeCircle SpawnRangeCircle(float duration, Transform parent)
-    {
-        return SpawnRangeCircle(duration, 1.0f, parent);
-    }
+    //public SkillRangeCircle SpawnRangeCircle(float duration, Transform parent)
+    //{
+    //    return SpawnRangeCircle(duration, 1.0f, parent);
+    //}
 
-    public SkillRangeCircle SpawnRangeCircle(float duration, float size, Transform parent)
-    {
-        SkillRangeCircle circle = rangeCirclePool.GetObject();
-        circle.transform.SetParent(parent);
-        circle.Activation(duration, size);
-        circle.transform.localPosition = Vector3.zero;
-        circle.gameObject.SetActive(true);
-        return circle;
-    }
+    //public SkillRangeCircle SpawnRangeCircle(float duration, float size, Transform parent)
+    //{
+    //    SkillRangeCircle circle = rangeCirclePool.GetObject();
+    //    circle.transform.SetParent(parent);
+    //    circle.Activation(duration, size);
+    //    circle.transform.localPosition = Vector3.zero;
+    //    circle.gameObject.SetActive(true);
+    //    return circle;
+    //}
 
     public void DeSpawnRangeCircle(SkillRangeCircle circle)
     {

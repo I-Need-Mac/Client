@@ -10,7 +10,7 @@ public class GodBless : ActiveSkill
     {
         List<Transform> targets = Scanner.GetVisibleTargets(shooter, (int)LayerConstant.MONSTER);
 
-        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
         projectile.transform.localScale = Vector3.one * 5.0f;
 
         yield return new WaitForSeconds(3.0f);

@@ -4,39 +4,24 @@ using UnityEngine;
 
 public class GodBless : ActiveSkill
 {
-    private List<Projectile> projectiles = new List<Projectile>();
-
     public GodBless(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
 
     public override IEnumerator Activation()
     {
-        shooter = Scanner.GetTargetTransform(skillData.skillTarget, shooter, skillData.attackDistance);
+        List<Transform> targets = Scanner.GetVisibleTargets(shooter, (int)LayerConstant.MONSTER);
 
-        for (int i = 0; i < skillData.projectileCount; i++)
+        Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
+        projectile.transform.localScale = Vector3.one * 5.0f;
+
+        yield return new WaitForSeconds(3.0f);
+        foreach (Transform target in targets)
         {
-            Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData, shooter);
-            projectile.transform.localScale = Vector2.one * skillData.splashRange;
-            projectiles.Add(projectile);
-
-            if (skillData.splashRange >= 10)
+            if (target.TryGetComponent(out Monster monster))
             {
-                projectile.CollisionPower(false);
-
-                foreach (Monster monster in MonsterSpawner.Instance.monsters)
-                {
-                    if (CameraManager.Instance.IsTargetVisible(monster.transform.position))
-                    {
-                        monster.Hit(skillData.damage);
-                    }
-                }
+                monster.Hit(GameManager.Instance.player.playerManager.TotalDamage(skillData.damage));
             }
         }
 
-        yield return intervalTime;
-
-        foreach (Projectile projectile in projectiles)
-        {
-            SkillManager.Instance.DeSpawnProjectile(projectile);
-        }
+        SkillManager.Instance.DeSpawnProjectile(projectile);
     }
 }

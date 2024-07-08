@@ -33,7 +33,9 @@ public class Crepitus : ActiveSkill
 
     private IEnumerator Boom(Projectile projectile)
     {
-        yield return new WaitForSeconds(3.0f);
+        DebugManager.Instance.PrintError(projectile.particleSpeed);
+        yield return new WaitForSeconds(3.0f / projectile.particleSpeed);
+        DebugManager.Instance.PrintError(1);
         foreach(Transform t in Scanner.RangeTarget(projectile.transform, skillData.splashRange, (int)LayerConstant.MONSTER))
         {
             if (t.TryGetComponent(out Monster monster))

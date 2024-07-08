@@ -31,6 +31,7 @@ public class Projectile : MonoBehaviour
     //public float totalDamage { get; private set; }
     public ActiveData skillData { get; private set; }
     public Monster collisionMonster { get; private set; }
+    public float particleSpeed { get; private set; }
 
     private void Awake()
     {
@@ -63,6 +64,13 @@ public class Projectile : MonoBehaviour
         {
             this.animator = animator;
         }
+
+        ParticleControll pc = GetComponentInChildren<ParticleControll>();
+        if (pc != null)
+        {
+            particleSpeed = pc.GetParticleSpeed();
+        }
+
     }
 
     private void SetSortingLayer(Transform trans)

@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class JuckHwa : ActiveSkill
 {
-
     private List<Projectile> projectiles = new List<Projectile>();
+
     public JuckHwa(int skillId, Transform shooter, int skillNum) : base(skillId, shooter, skillNum) { }
+
     public override IEnumerator Activation()
     {
         //float ignitionTime = 0.1f;
@@ -38,7 +39,7 @@ public class JuckHwa : ActiveSkill
         do
         {
             activeTime -= Time.fixedDeltaTime;
-            if (((int)activeTime) % 97 == 0)
+            if (((int)(activeTime * 1000)) % 13 == 0)
             {
                 Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
                 Vector3 pos = shooter.position;
@@ -52,6 +53,8 @@ public class JuckHwa : ActiveSkill
 
     private IEnumerator Ignition(Projectile projectile)
     {
+        ParticleSystem.MainModule main = projectile.GetComponentInChildren<ParticleSystem>().main;
+        main.startLifetime = skillData.duration;
         yield return duration;
         SkillManager.Instance.DeSpawnProjectile(projectile);
     }

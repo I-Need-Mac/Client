@@ -16,6 +16,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private float defaultCharScale;
     private SoundRequesterSFX soundRequester;
     private UI_ESCPopup esc;
+    private GameObject developerMode;
 
     public bool playerTrigger { get; set; } = true;
     public bool skillTrigger { get; set; } = true;
@@ -41,7 +42,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 
         //mapId = UIManager.Instance.selectStageID;
-        
+
+        developerMode = playerUi.transform.Find("DevelopmentTools").gameObject;
+
         if (UIStatus.Instance.selectedChar != 0)
             playerId = UIStatus.Instance.selectedChar;
         //playerPoolManager.playerId = playerId;
@@ -86,6 +89,10 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             gameOver = false;
             playerUi.GameOver(false);
+        }
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            developerMode.SetActive(!developerMode.activeInHierarchy);
         }
 
 

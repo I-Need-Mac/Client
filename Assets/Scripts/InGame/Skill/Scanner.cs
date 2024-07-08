@@ -234,6 +234,53 @@ public struct Scanner
         return resultTargets;
     }
 
+    //public static List<Transform> CapsuleTarget(Transform shooter, float attackDistance, params int[] layers)
+    //{
+    //    List<Transform> resultTargets = new List<Transform>();
+
+    //    foreach (int layer in layers)
+    //    {
+    //        targets = Physics2D.CapsuleCastAll(shooter.position, attackDistance * Vector2.one, CapsuleDirection2D.Horizontal, 0.0f, Vector2.zero, 0, 1 << layer);
+
+    //        foreach (RaycastHit2D target in targets)
+    //        {
+    //            resultTargets.Add(target.transform);
+    //        }
+    //    }
+
+    //    return resultTargets;
+    //}
+
+    public static List<Transform> GetVisibleTargets(Transform shooter, float attackDistance = 15, params int[] layers)
+    {
+        List<Transform> resultTargets = new List<Transform>();
+        foreach (int layer in layers)
+        {
+            targets = Physics2D.CircleCastAll(shooter.position, attackDistance, Vector2.zero, 0, 1 << layer);
+
+            foreach (RaycastHit2D target in targets)
+            {
+                if (target.transform.TryGetComponent(out Renderer renderer))
+                {
+                    if (renderer.isVisible)
+                    {
+                        resultTargets.Add(target.transform);
+                    }
+                }
+                else if (target.transform.TryGetComponent(out MeshRenderer renderer2))
+                {
+                    if (renderer2.isVisible)
+                    {
+                        resultTargets.Add(target.transform);
+                    }
+                }
+                
+            }
+        }
+
+        return resultTargets;
+    }
+
     //public static Vector2 RandomTargetPos(Transform shooter, float attackDistance, float angle)
     //{
     //    Vector2 pos = shooter.position;

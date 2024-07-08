@@ -9,15 +9,13 @@ public class GodBless : ActiveSkill
 
     public override IEnumerator Activation()
     {
-        List<Transform> targets = Scanner.GetVisibleTargets(shooter, (int)LayerConstant.MONSTER);
-
         Projectile projectile = SkillManager.Instance.SpawnProjectile<Projectile>(skillData);
         projectile.transform.position = shooter.position;
         projectile.transform.localScale = Vector3.one * 10.0f;
-        //SceneManager.LoadScene("EffectScenes_GodBless", LoadSceneMode.Additive);
 
         yield return new WaitForSeconds(2.5f);
-        DebugManager.Instance.PrintError(1);
+
+        List<Transform> targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
         foreach (Transform target in targets)
         {
             if (target.TryGetComponent(out Monster monster))
@@ -27,7 +25,6 @@ public class GodBless : ActiveSkill
         }
         yield return new WaitForSeconds(1.5f);
 
-        //SceneManager.UnloadSceneAsync("EffectScenes_GodBless");
         SkillManager.Instance.DeSpawnProjectile(projectile);
     }
 }

@@ -44,6 +44,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         //mapId = UIManager.Instance.selectStageID;
 
         developerMode = playerUi.transform.Find("DevelopmentTools").gameObject;
+        developerMode.SetActive(false);
 
         if (UIStatus.Instance.selectedChar != 0)
             playerId = UIStatus.Instance.selectedChar;

@@ -15,7 +15,8 @@ public class GodBless : ActiveSkill
 
         yield return new WaitForSeconds(2.5f);
 
-        List<Transform> targets = Scanner.RangeTarget(shooter, skillData.attackDistance, (int)LayerConstant.MONSTER);
+        List<Transform> targets = Scanner.RangeTarget(shooter, skillData.splashRange, (int)LayerConstant.MONSTER);
+        DebugManager.Instance.PrintError(targets.Count);
         foreach (Transform target in targets)
         {
             if (target.TryGetComponent(out Monster monster))

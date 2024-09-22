@@ -14,6 +14,7 @@ public class UI_Hon_Under : UI_Popup
     private Dictionary<string, Dictionary<string, object>> soulTable;
     private int[] soulIds;
     private int seonghonId;
+    private GameObject hover;
 
     private enum Images
     {
@@ -43,6 +44,12 @@ public class UI_Hon_Under : UI_Popup
         UnderSoul_16,
         UnderSoul_17,
         UnderSoul_18,
+    }
+
+    private void Start()
+    {
+        hover = Instantiate(ResourcesManager.Load<GameObject>("Prefabs/UI/SoulExplainWindow"), transform);
+        hover.SetActive(false);
     }
 
     public async void Setting(int mainCategoryId)
@@ -86,6 +93,7 @@ public class UI_Hon_Under : UI_Popup
                     GameObject underSoul = GetGameObject(num);
                     underSoul.GetComponent<Image>().sprite = ResourcesManager.Load<Sprite>("Arts/Hon/" + soulTable[id]["SoulImagePath"].ToString());
                     underSoul.GetComponentInChildren<TMP_Text>().text = LocalizeManager.Instance.GetText(soulTable[id]["SoulNameText"].ToString());
+                    SoulExplainPopUp(underSoul);
                     //언락체크
                     if (Enum.TryParse(soulTable[id]["SoulUnlock"].ToString(), true, out SOUL_UNLOCK unlock))
                     {
@@ -199,5 +207,30 @@ public class UI_Hon_Under : UI_Popup
         }
 
         SoulManager.Instance.PrintSoulList(seonghonId);
+    }
+
+    public void SoulExplainPopUp(GameObject obj)
+    {
+        EventTrigger trigger = obj.GetComponent<EventTrigger>() ?? obj.AddComponent<EventTrigger>();
+        trigger.triggers.Clear();
+
+        EventTrigger.Entry enter = new EventTrigger.Entry();
+        enter.eventID = EventTriggerType.PointerEnter;
+        enter.callback.AddListener((eventData) =>
+        {
+            Vector3 offset = obj.transform.position.x >= 0.0f ? Vector3.left : Vector3.right;
+            offset += obj.transform.position;
+            hover.GetComponent<RectTransform>().position = offset;
+            hover.gameObject.SetActive(true);
+        });
+        trigger.triggers.Add(enter);
+
+        EventTrigger.Entry exit = new EventTrigger.Entry();
+        exit.eventID = EventTriggerType.PointerExit;
+        exit.callback.AddListener((eventData) =>
+        {
+            hover.gameObject.SetActive(false);
+        });
+        trigger.triggers.Add(exit);
     }
 }

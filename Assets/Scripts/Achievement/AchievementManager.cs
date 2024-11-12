@@ -1,24 +1,52 @@
 using BFM;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class AchievementManager : SingletonBehaviour<AchievementManager>
 {
+    private const string FILE_PATH = "./Acheievement.json";
+
     public AchievementData data { get; private set; }
 
-    private void Start()
+    protected override void Awake()
     {
-        AchievementDataInit();
+        base.Awake();
+
+
     }
 
-    private void AchievementDataInit()
+    private void LoadAchievementData()
     {
-        TestFunction();
-        //API 연결
+        if (File.Exists(FILE_PATH))
+        {
+            Initialize();
+        }
+        else
+        {
+            using (FileStream fs = new FileStream(FILE_PATH, FileMode.Open, FileAccess.Read))
+            using (StreamReader sr = new StreamReader(fs))
+            {
+                string json = sr.ReadToEnd();
+                data = JsonConvert.DeserializeObject<AchievementData>(json);
+            }
+        }
     }
 
-    private void TestFunction()
+    private void SaveAchievementData()
+    {
+        string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+
+        using (FileStream fs = new FileStream(FILE_PATH, FileMode.Create, FileAccess.Write))
+        using (StreamWriter sw = new StreamWriter(fs))
+        {
+            sw.Write(json);
+        }
+    }
+
+    private void Initialize()
     {
         data = new AchievementData();
 

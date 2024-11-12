@@ -99,7 +99,8 @@ public class UI_Hon_Under : UI_Popup
                     {
                         if (int.TryParse(soulTable[id]["Count"].ToString(), out int count))
                         {
-                            underSoul.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(seonghonId, int.Parse(id), count);
+                            //underSoul.transform.Find("Lock").GetComponent<Image>().enabled = !await APIManager.Instance.UnlockSoul(seonghonId, int.Parse(id), count);
+                            underSoul.transform.Find("Lock").GetComponent<Image>().enabled = false;
                         }
                     }
                     soulIds[num] = Convert.ToInt32(id);

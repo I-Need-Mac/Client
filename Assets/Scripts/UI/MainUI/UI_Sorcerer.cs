@@ -175,6 +175,7 @@ public class UI_Sorcerer : UI_Base
     }
     public void SetIsLocked(bool isLock)
     {
-        locked.SetActive(!isLock);
+        //locked.SetActive(!isLock);
+        locked.SetActive(false);
     }
 }

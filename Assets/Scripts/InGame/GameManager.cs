@@ -99,6 +99,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         if (player.playerManager.playerData.currentHp <= 0 && gameOver)
         {
+            AchievementManager.Instance.DeathCount(player.level);
             player.DiePlayerVoice();
             gameOver = false;
             StopAllCoroutines();
@@ -135,6 +136,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         this.map = Instantiate(map, transform);
         this.map.transform.localScale = Vector3.one * defaultScale;
         this.map.SetActive(true);
+        AchievementManager.Instance.StagePlayCount(mapId);
     }
 
     private void PlayerLoad(int playerId)

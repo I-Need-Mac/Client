@@ -479,6 +479,8 @@ public class Monster : MonoBehaviour
         GameManager.Instance.killCount++;
         StopAllCoroutines();
         MonsterSpawner.Instance.DeSpawnMonster(this);
+
+        AchievementManager.Instance.MonsterKillCount(this.monsterId);
     }
 
     private IEnumerator DieAnimation()

@@ -1,4 +1,5 @@
 using BFM;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,7 @@ public class SkillManager : SingletonBehaviour<SkillManager>
 
     //public Dictionary<int, SkillInfo> skillList { get; private set; } = new Dictionary<int, SkillInfo>();
     public Dictionary<int, Skill> skillList { get; private set; } = new Dictionary<int, Skill>();
+    public Dictionary<int, int> skillIds { get; private set; }          //스킬별 최대 레벨
 
     protected override void Awake()
     {
@@ -180,6 +182,16 @@ public class SkillManager : SingletonBehaviour<SkillManager>
             PlayerUI.Instance.passiveSkillCount++;
         }
 
+        AchievementManager.Instance.SkillLevelUpCount(skillId / 100);
+
+        if (skillIds[skillId / 100] == skillId % 100){
+            AchievementManager.Instance.SkillMaxLevelCount(skillId / 100);
+        }
+        else if (skillId % 100 == 1)
+        {
+            AchievementManager.Instance.SkillAcquireCount(skillId / 100);
+        }
+
         IEnumerator enumerator = skill.SkillActivation();
         StartCoroutine(enumerator);
         skillList.Add(skillId, skill);
@@ -310,6 +322,50 @@ public class SkillManager : SingletonBehaviour<SkillManager>
         }
     }
 
-    
+    private void SkillNumRead()
+    {
+        skillIds = new Dictionary<int, int>();
+
+        foreach (string id in skillTable.Keys)
+        {
+            try
+            {
+                int i = Convert.ToInt32(id) / 100;
+                if (!skillIds.ContainsKey(i))
+                {
+                    skillIds.Add(i, 1);
+                    skillIds[i]++;
+                }
+                else
+                {
+                    skillIds[i]++;
+                }
+            }
+            catch
+            {
+                continue;
+            }
+        }
+
+        foreach (string id in passiveTable.Keys)
+        {
+            try
+            {
+                int i = Convert.ToInt32(id) / 100;
+                if (!skillIds.ContainsKey(i))
+                {
+                    skillIds.Add(i, 1);
+                }
+                else
+                {
+                    skillIds[i]++;
+                }
+            }
+            catch
+            {
+                continue;
+            }
+        }
+    }
 
 }

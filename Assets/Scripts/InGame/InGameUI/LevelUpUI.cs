@@ -21,8 +21,7 @@ public class LevelUpUI : MonoBehaviour
     private List<int> skillBenList;
     private SoundRequesterSFX soundRequester;
     //private List<int> skillNums = new List<int>();
-    private Dictionary<int, int> skillIds;
-
+    
     public bool isSelect { get; private set; }
     public List<SkillUI> skillUis { get; private set; } = new List<SkillUI>();
     //public int skillCount { get; private set; } = 0;
@@ -48,7 +47,6 @@ public class LevelUpUI : MonoBehaviour
 
         soundRequester = GetComponent<SoundRequesterSFX>();
 
-        SkillNumRead();
         body = transform.Find("Body");
         bodyRect = body.GetComponent<RectTransform>();
     }
@@ -127,9 +125,9 @@ public class LevelUpUI : MonoBehaviour
         int skillId = -1;
         if (PlayerUI.Instance.skillCount < SkillManager.SKILL_MAX_COUNT) //스킬칸이 남은 경우
         {
-            skillIds = skillIds.FisherVateShuffle();
+            SkillManager.Instance.skillIds.FisherVateShuffle();
             //for (int i = 0; i < skillIds.Count; i++)
-            foreach (int i in skillIds.Keys)
+            foreach (int i in SkillManager.Instance.skillIds.Keys)
             {
                 skillId = i;
                 
@@ -151,7 +149,7 @@ public class LevelUpUI : MonoBehaviour
                 {
                     if (id / 100 == skillId) //가지고 있는 스킬일 때
                     {
-                        if (id % 100 != skillIds[skillId]) //만렙이 아니라면
+                        if (id % 100 != SkillManager.Instance.skillIds[skillId]) //만렙이 아니라면
                         {
                             skills.Add(skillId);
                             return id + 1;
@@ -187,7 +185,7 @@ public class LevelUpUI : MonoBehaviour
                 {
                     continue;
                 }
-                if (skillId % 100 != skillIds[skillId / 100])
+                if (skillId % 100 != SkillManager.Instance.skillIds[skillId / 100])
                 {
                     skills.Add(skillId / 100);
                     return skillId + 1;
@@ -197,51 +195,5 @@ public class LevelUpUI : MonoBehaviour
         }
 
         return -1;
-    }
-
-    private void SkillNumRead()
-    {
-        skillIds = new Dictionary<int, int>();
-
-        foreach (string id in skillTable.Keys)
-        {
-            try
-            {
-                int i = Convert.ToInt32(id) / 100;
-                if (!skillIds.ContainsKey(i))
-                {
-                    skillIds.Add(i, 1);
-                    skillIds[i]++;
-                }
-                else
-                {
-                    skillIds[i]++;
-                }
-            }
-            catch
-            {
-                continue;
-            }
-        }
-
-        foreach (string id in passiveTable.Keys)
-        {
-            try
-            {
-                int i = Convert.ToInt32(id) / 100;
-                if (!skillIds.ContainsKey(i))
-                {
-                    skillIds.Add(i, 1);
-                }
-                else
-                {
-                    skillIds[i]++;
-                }
-            }
-            catch
-            {
-                continue;
-            }
-        }
     }
 }

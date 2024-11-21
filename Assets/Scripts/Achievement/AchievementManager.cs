@@ -15,12 +15,12 @@ public class AchievementManager : SingletonBehaviour<AchievementManager>
     {
         base.Awake();
 
-
+        LoadAchievementData();
     }
 
     private void LoadAchievementData()
     {
-        if (File.Exists(FILE_PATH))
+        if (!File.Exists(FILE_PATH))
         {
             Initialize();
         }
@@ -108,6 +108,82 @@ public class AchievementManager : SingletonBehaviour<AchievementManager>
                 data.skillLevelCount.Add(id, 0);
             }
         }
+    }
+
+    public void MonsterKillCount(int monsterId)
+    {
+        data.monsterKillCount[monsterId]++;
+    }
+
+    public void GimmickCount(int gimmickId)
+    {
+        data.gimmickCount[gimmickId]++;
+    }
+
+    //미적용
+    public void UseBoxCount()
+    {
+        data.useBoxCount++;
+    }
+
+    //미적용
+    public void UseKeyCount()
+    {
+        data.useKeyCount++;
+    }
+
+    public void DeathCount(int currentLevel)
+    {
+        data.deathCount[currentLevel]++;
+    }
+
+    public void SkillLevelUpCount(int skillId)
+    {
+        data.skillLevelCount[skillId]++;
+    }
+
+    public void SkillMaxLevelCount(int skillId)
+    {
+        data.skillLevelMaxCount[skillId]++;
+    }
+
+    public void SkillAcquireCount(int skillId)
+    {
+        data.acquireSkillCount[skillId]++;
+    }
+
+    public void UseItemCount(int itemId)
+    {
+        data.useItemCount[itemId]++;
+    }
+
+    public void StagePlayCount(int stageId)
+    {
+        data.stagePlayCount[stageId]++;
+    }
+
+    //미적용
+    public void StageClearCount(int stageId)
+    {
+        data.stageClearCount[stageId]++;
+    }
+
+    //미적용
+    public void StageLoseCount(int stageId)
+    {
+        data.stageLoseCount[stageId]++;
+    }
+
+    //미적용
+    public void PlayTimeCount(int playTime)
+    {
+        data.playTime += playTime;
+    }
+
+    //미적용
+    public void StopMoveTime(int stopMoveTime)
+    {
+        data.dontMoveTime += stopMoveTime;
     }
 
     public int GetSoulUnlockCount(SOUL_UNLOCK condition, List<int> param)

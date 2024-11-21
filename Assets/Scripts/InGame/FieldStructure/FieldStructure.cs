@@ -118,6 +118,7 @@ public class FieldStructure : MonoBehaviour
 
     public virtual void Remove()
     {
+        AchievementManager.Instance.GimmickCount(this.structureId);
         StopAllCoroutines();
         Destroy(this.gameObject);
     }

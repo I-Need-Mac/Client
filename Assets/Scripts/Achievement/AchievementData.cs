@@ -26,13 +26,13 @@ public class AchievementData
     #endregion
 
     #region Data
-    public Dictionary<int, int> monsterKillCount { get; private set; }                       //몬스터별 킬 횟수
-    public int levelUpCount { get; private set; }                                            //레벨업 횟수
-    public int maxLevel { get; private set; }                                                //최고 레벨
-    public int statueDestroyCount { get; private set; }                                      //석상 파괴 개수
-    public Dictionary<int, bool> characterUnlock { get; private set; }
+    public Dictionary<int, int> monsterKillCount { get; set; }                       //몬스터별 킬 횟수
+    public int levelUpCount { get; set; }                                            //레벨업 횟수
+    public int maxLevel { get; set; }                                                //최고 레벨
+    public int statueDestroyCount { get; set; }                                      //석상 파괴 개수
+    public Dictionary<int, bool> characterUnlock { get; set; }
 
-    public Dictionary<int, int> stagePlayCount { get; private set; }                         //스테이지별 플레이 횟수
+    public Dictionary<int, int> stagePlayCount { get; set; }                         //스테이지별 플레이 횟수
     public int stagePlayTotalCount                                                           //총 스테이지 플레이 횟수
     {
         get
@@ -50,9 +50,9 @@ public class AchievementData
         }
     }
 
-    public Dictionary<int, bool> isStageClear { get; private set; }                          //스테이지별 클리어 여부
-    public Dictionary<int, int> stageClearCount { get; private set; }                        //스테이지별 클리어 횟수
-    public Dictionary<int, int> stageLoseCount { get; private set; }                         //스테이지별 패배 횟수
+    public Dictionary<int, bool> isStageClear { get; set; }                          //스테이지별 클리어 여부
+    public Dictionary<int, int> stageClearCount { get; set; }                        //스테이지별 클리어 횟수
+    public Dictionary<int, int> stageLoseCount { get; set; }                         //스테이지별 패배 횟수
     public int stageClearTotalCount                                                          //총 스테이지 클리어 횟수
     {
         get
@@ -86,7 +86,7 @@ public class AchievementData
         }
     }
 
-    public Dictionary<int, int> useItemCount { get; private set; }                          //아이템별 사용 횟수
+    public Dictionary<int, int> useItemCount { get; set; }                          //아이템별 사용 횟수
     public int useItemTotalCount                                                            //총 아이템 사용 횟수
     {
         get
@@ -104,18 +104,18 @@ public class AchievementData
         }
     }
 
-    public Dictionary<int, int> gimmickCount { get; private set; }                           //기믹 사용 횟수
+    public Dictionary<int, int> gimmickCount { get; set; }                           //기믹 사용 횟수
     
-    public int useKeyCount { get; private set; }                                             //열쇠 사용 횟수
-    public int acquireKeyCount { get; private set; }                                         //획득한 열쇠 개수
-    public int useBoxCount { get; private set; }                                             //박스 사용 횟수
-    public int acquireBoxCount { get; private set; }                                         //획득한 박스 개수
+    public int useKeyCount { get; set; }                                             //열쇠 사용 횟수
+    public int acquireKeyCount { get; set; }                                         //획득한 열쇠 개수
+    public int useBoxCount { get; set; }                                             //박스 사용 횟수
+    public int acquireBoxCount { get; set; }                                         //획득한 박스 개수
 
-    public Dictionary<int, int> skillLevelMaxCount { get; private set; }                     //스킬별 만렙 달성 횟수
-    public Dictionary<int, int> acquireSkillCount { get; private set; }                      //스킬별 획득 횟수
-    public Dictionary<int, int> skillLevelCount { get; private set; }       //스킬별 특정 레벨 도달 횟수
+    public Dictionary<int, int> skillLevelMaxCount { get; set; }                     //스킬별 만렙 달성 횟수
+    public Dictionary<int, int> acquireSkillCount { get; set; }                      //스킬별 획득 횟수
+    public Dictionary<int, int> skillLevelCount { get; set; }                        //스킬별 레벨업 횟수
 
-    public Dictionary<int, int> deathCount { get; private set; }                             //레벨별 사망 횟수
+    public Dictionary<int, int> deathCount { get; set; }                             //레벨별 사망 횟수
     public int deathTotalCount
     {
         get
@@ -132,10 +132,10 @@ public class AchievementData
 
         }
     }
-    public Dictionary<int, int> deathFrom { get; private set; }                              //사망시 피격당한 몬스터, 횟수
+    public Dictionary<int, int> deathFrom { get; set; }                              //사망시 피격당한 몬스터, 횟수
     
-    public int dontMoveTime { get; private set; }                                            //총 움직이지 않은 시간
-    public int playTime { get; private set; }                                                //총 플레이 타임
+    public int dontMoveTime { get; set; }                                            //총 움직이지 않은 시간
+    public int playTime { get; set; }                                                //총 플레이 타임
 
     #endregion
 }
